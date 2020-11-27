@@ -1,0 +1,226 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+
+.label {
+  width: 4em;
+  float: left;
+  text-align: right;
+  margin-right: 0.5em;
+  display: block
+}
+
+.user-line {
+  border: 1px solid $primary-light;
+  border-radius: 4px;
+  padding: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  // background-color: $primary-light;
+  color: $primary-light;
+}
+
+.search-field .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.readonly-text-data {
+  font-size: 0.8rem;
+  padding-left: 1rem;
+}
+
+button.btn-del {
+  border: none;
+  background-color: white;
+}
+.del-icon {
+  color: $danger;
+}
+
+// Droppable
+.droppable-list {
+  overflow: hidden;
+}
+
+.draggable-box {
+  // display: block;
+  // box-sizing: border-box;
+  cursor: move;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// .draggable-box:last-child {
+//   border: none;
+// }
+
+.droppable-list.cdk-drop-list-dragging .draggable-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+
+.arrows-move {
+  color: $gray;
+}
+
+.buttons-spacer {
+  flex: 1 1 0;
+}
+
+.tool-button {
+  background-color: $white; //  #F7F7F7;  // #ffffff;
+  color: #25265E;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.34px;
+  line-height: 18px;
+  border: 1px solid #F7F7F7;
+  border-radius: 7px;
+  height: 34px;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+  // background-color: $gray-semi;
+  // padding: 0.5rem;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  // text-transform: uppercase;
+  // color: $secondary;
+  // font-size: 0.7rem;
+  // line-height: 0.85rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    color: $moderate-cyan;
+    background-color: white;
+    border: 1px solid $moderate-cyan;
+
+    .button-icon2 {
+      color: $moderate-cyan;
+    }
+  }
+
+  &-name {
+    background-color: $primary-lightest;
+  }
+  &-right {
+    background-color: transparent;
+    color: $primary;
+    border: 1px solid $primary;
+    border-radius: 2px;
+    margin-right: 0;
+  }
+  &-right-reorder {
+    color: white;
+    background-color: $primary;
+  }
+  &-active {
+    color: white;
+    background-color: $primary;
+  }
+}
+
+.tool-button-active .button-icon {
+  color: white;
+}
+
+
+.button-icon1 {
+  font-size: 0.7rem;
+  line-height: 0.85rem;
+  margin-right: 0.5rem;
+  color: $secondary;
+  &-right {
+    color: $primary;
+  }
+  &-right-reorder {
+    color: white;
+  }
+}
+
+.button-icon2 {
+  font-size: 0.7rem;
+  margin-right: 0.5rem;
+  color: $secondary;
+}
+
+.side-menu-item-disabled {
+  color: $gray;
+}
+
+.product-label-container{
+  background-color: white;
+  max-width:1140px;
+}
+
+.prefill-button {
+  margin-top: -14px;
+}
+
+.link-error {
+  color: $danger;
+  font-weight: 500;
+}
+
+.link-normal {
+  color: $primary;
+  font-weight: 500;
+}
+
+.tool-button-product {
+  background-color: #ffffff;  // #ffffff;
+  color: #25265E;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.34px;
+  line-height: 18px;
+  border: 1px solid #F7F7F7;
+  border-radius: 7px;
+  height: 34px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    color: $moderate-cyan;
+    background-color: white;
+    border: 1px solid $moderate-cyan;
+
+    .button-icon2 {
+      color: $moderate-cyan;
+    }
+  }
+
+  &-active {
+    color: $moderate-cyan;
+    background-color: white;
+    border: 1px solid $moderate-cyan;
+  }
+}

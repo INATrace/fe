@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-dots</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.145098 0 0 0 0 0.149020 0 0 0 0 0.368627 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <path d="M9,13 C10.1045695,13 11,13.8954305 11,15 C11,16.1045695 10.1045695,17 9,17 C7.8954305,17 7,16.1045695 7,15 C7,13.8954305 7.8954305,13 9,13 L9,13 Z M9,7 C10.1045695,7 11,7.8954305 11,9 C11,10.1045695 10.1045695,11 9,11 C7.8954305,11 7,10.1045695 7,9 C7,7.8954305 7.8954305,7 9,7 L9,7 Z M9,1 C10.1045695,1 11,1.8954305 11,3 C11,4.1045695 10.1045695,5 9,5 C7.8954305,5 7,4.1045695 7,3 C7,1.8954305 7.8954305,1 9,1 Z" id="path-2"></path>
+    </defs>
+    <g id="icon-dots" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Button/Icon-Copy-2" transform="translate(3.000000, 3.000000)" filter="url(#filter-1)">
+            <g>
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Shape" stroke="#25265E" fill="#25265E" transform="translate(9.000000, 9.000000) rotate(90.000000) translate(-9.000000, -9.000000) " xlink:href="#path-2"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>journey-leaf</title>
+    <g id="journey-leaf" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M2,2.86111111 L0,2.86111111 C0,6.72673611 3.134375,9.86111111 7,9.86111111 L7,14.3611111 C7,14.6361111 7.225,14.8611111 7.5,14.8611111 L8.5,14.8611111 C8.775,14.8611111 9,14.6361111 9,14.3611111 L9,9.86111111 C9,5.99548611 5.865625,2.86111111 2,2.86111111 Z M14,0.861111111 C11.36875,0.861111111 9.08125,2.31423611 7.884375,4.46111111 C8.75,5.40486111 9.390625,6.55173611 9.728125,7.82361111 C13.25,7.45798611 16,4.48298611 16,0.861111111 L14,0.861111111 Z" id="Shape-Copy" fill="#FFFFFF" fill-rule="nonzero"></path>
+    </g>
+</svg>

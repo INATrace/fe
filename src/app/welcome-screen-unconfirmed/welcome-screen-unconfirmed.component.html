@@ -1,0 +1,45 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <div class="col-sm-12 col-lg-7">
+      <h2 class="modal-title" i18n="@@welcomeScreen.modal.title">Congratulations!</h2>
+      <div class=spacer1rem></div>
+      <h5 i18n="@@welcomeScreen.modal.bodyTodal.subtitle">You have successfully registered for {{appName}} and are on your way towards introducing transparency for better returns of your business!
+      </h5>
+    </div>
+    <div class="col-sm-0 col-lg-5"></div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row" style="margin-left: 2px;">
+      <div class="col-sm-12 col-lg-7" style="font-weight: 300;" i18n="@@welcomeScreen.modal.bodyText">
+        <p>The next step is to verify your account. Please follow the instructions in the email you received to prepare the right documentation needed to verify your account and company for this process to be as efficient as possible.</p>
+        <p>You can also start preparing your profile by completing your personal user profile information as well as adding company information. This will be mandatory information that you will need once your account is verified. Still, to make the process quicker, you can do it now.</p>
+        <p>If your company is already part of {{appName}}, finish your personal profile information, and you will be added to your company. You do not need to add a new company.</p>
+        <p>If you need any assistance, you can contact us through the support chat (green button in the bottom right corner) or email <a class="wel-link" href="mailto:info@af-coffee.com">info@af-coffee.com</a>.</p>
+      </div>
+      <div class="col-sm-12 col-lg-5 d-flex" style="flex-direction:
+        column; justify-content: start;">
+        <button class="btn btn-solid round" style="width: 255px; margin-bottom: 2rem; margin-left: 10px;"
+          (click)="closeModalAndRedirect('user-profile', null)" i18n="@@welcomeScreen.modal.button.profile">
+          <span>Complete your profile</span>
+        </button>
+        <button *ngIf="!companyId" class="btn btn-solid round"
+          style="width: 255px; margin-bottom: 2rem; margin-left: 10px;"
+          (click)="closeModalAndRedirect('companies/new', null)" i18n="@@welcomeScreen.modal.button.addCompany">
+          <span>Add company</span>
+        </button>
+        <button *ngIf="companyId" class="btn btn-solid round"
+          style="width: 255px; margin-bottom: 2rem; margin-left: 10px;"
+          (click)="closeModalAndRedirect('companies/',companyId)" i18n="@@welcomeScreen.modal.button.editCompany">
+          <span>Edit company</span>
+        </button>
+        <button class="btn btn-solid round"
+          style="width: 255px; margin-left: 10px;"
+          (click)="logout()" i18n="@@welcomeScreen.modal.button.logout">
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

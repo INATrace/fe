@@ -1,0 +1,25 @@
+<div class="tinymce-container" >
+    <label class="sp-textinput-label" [class.sc-invalid-feedback-label-color]="invalid">{{label}}<span *ngIf="this.isRequired() && !hideRequired">*</span></label>
+    <editor
+        [formControl]="formControlInput"
+        [init]="init"
+        [class.sc-invalid-feedback-border]="invalid"
+        [disabled]="formControlInput.disabled"
+        [ngClass]="{'tmce-disabled': formControlInput.disabled}"
+        ></editor>
+    <ng-content></ng-content>
+
+    <div class="mt-2 af-overrides-mt-2" *ngIf="counter">
+        <span [class.text-danger]="counter && tooManyCharacters()">
+            <span
+                *ngIf="counter"
+                class="mt-1 pl-1"
+                i18n="char count label|@@ui.textinput.charCount.label">Num. of chars: {{getSteviloZnakov()}}
+            </span>
+            <span *ngIf="counter && this.getMaxLength()">/ {{this.getMaxLength()}}</span>
+            <span *ngIf="counter && this.getMinLength()"> (vnesti jih morate vsaj {{this.getMinLength()}})</span>
+        </span>
+    </div>
+</div>
+
+<!-- style="pointer-events: none;" -->

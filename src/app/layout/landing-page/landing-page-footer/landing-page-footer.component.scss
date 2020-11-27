@@ -1,0 +1,9 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.container-footer{
+  background-color: $tertiary;
+  color: $gray;
+}

@@ -1,0 +1,22 @@
+<div class="panel-header">
+
+    <h3 *ngIf="title" class="panel-title" (click)="toggle()">{{ title }}</h3>
+    <div *ngIf="htmlTitle" class="panel-title" (click)="toggle()" [innerHTML]="htmlTitle"></div>
+    <!-- <div class="panel-menu-button">
+        <fa-icon class="icon-menu" [icon]="faBars" size="1x"></fa-icon>
+    </div> -->
+    <div class="panel-toggle-wrapper" (click)="toggle()">
+        <span>{{open ? 'Skrij odgovor' : 'Prikaži odgovor'}}</span>
+        <div class="panel-toggle"  *ngIf="showArrow">
+            <div [@rotateIconOpen]="open ? 'open' : 'closed'" class="arrow-box">
+                <fa-icon class="icon-closed" [icon]="faChevronRight" size="1x"></fa-icon>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="panel-content-wrapper" [@slideOpen]="open ? 'open' : 'closed'">
+    <div class="panel-content">
+        <ng-content></ng-content>
+    </div>
+</div>

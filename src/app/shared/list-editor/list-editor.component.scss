@@ -1,0 +1,109 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+// @import 'styles-basic.scss';
+
+$button-color: $primary;
+$circle-size: 1em;
+$bigger-circle-size: $circle-size*1.1;
+
+.addbutton {
+    width: $circle-size;
+    height: $circle-size;
+    min-width: $circle-size;
+    min-height: $circle-size;
+    cursor: pointer;
+}
+
+.plusicon {
+    box-sizing: content-box;
+    display: inline-flex;
+    position: absolute;
+    color: $button-color;
+}
+
+// .addbutton, .removebutton {
+//     width: $circle-size;
+//     height: $circle-size;
+//     vertical-align: baseline;
+//     border-radius: $circle-size;
+//     background-color: $button-color;
+//     color: white;
+//     display: inline-flex;
+//     align-items: center;
+//     justify-content: center
+// }
+
+// .addbutton {
+//     font-weight: bold;
+// }
+
+.card-border {
+    border-width: 1px;
+}
+
+.icon-fix {
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+}
+
+.border-3 {
+    border-right-width: 3px !important;
+}
+
+.on-the-overlay {
+    position: relative;
+    z-index: 1040;   // raising this over fixed-top
+    // outline: 200px solid rgba(0,0,0,0.5);
+    // // box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+    // // overflow: visible;
+    // position: relative;
+    // box-sizing:border-box;
+}
+
+.overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1039;   // raising this over fixed-top
+    background-color: rgba(0,0,0,0.5);
+}
+
+.green-label {
+  text-transform: none;
+  cursor: pointer;
+  margin-bottom: 0;
+  text-decoration: underline;
+  color: $secondary;
+  margin-left: 0.5rem;
+}
+
+.list-editor-container {
+  // @include media-breakpoint-up(md) {
+  //   // width: 50%;
+  //   width: calc(100% - 2rem);
+  //   // min-width: 260px;
+  // }
+}
+
+
+.le-tagitem {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  color: $secondary;
+  // background-color: $tag-background;
+  border: $gray;
+  border-style: dashed;
+  border-width: 1px;
+  border-radius: 0.25rem;
+}
+
+.le-tagitem-empty-text {
+    // color: $gray; // #ccc;    // override in styles.scss alongside placehodler classes
+    font-size: 1rem; // 1.5rem;
+    font-weight: 300;
+}

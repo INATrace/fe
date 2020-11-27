@@ -1,0 +1,29 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.card {
+  width: 12rem;
+  height: 18rem;
+  border-radius: 4px;
+  border-color: $gray;
+  padding :1.5rem;
+}
+
+.text{
+  font-size: 1rem;
+  font-weight: 300;
+  color: $secondary;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: $secondary;
+}
+
+.icon {
+  font-size: 2rem;
+  color: $secondary;
+}

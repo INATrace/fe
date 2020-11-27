@@ -1,0 +1,59 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+
+.blog-part-container {
+  max-width:1140px;
+  background-color: white;
+  @include media-breakpoint-up(lg) {
+    width: 1140px;
+  }
+  @include media-breakpoint-down(lg) {
+    padding-left: 2rem;
+  }
+}
+
+
+.tool-button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+  background-color: $gray-semi;
+  padding: 0.5rem;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-transform: uppercase;
+  color: $secondary;
+  font-size: 0.7rem;
+  line-height: 0.85rem;
+  cursor: pointer;
+  &-name {
+    background-color: $primary-lightest;
+  }
+  &-right {
+    background-color: transparent;
+    color: $primary;
+    border: 1px solid $primary;
+    border-radius: 2px;
+    margin-right: 0;
+  }
+  &-right-reorder {
+    color: white;
+    background-color: $primary;
+  }
+  &-active {
+    color: white;
+    background-color: $primary;
+  }
+}
+
+.tool-button-active .button-icon {
+  color: white;
+}
+
+.toll-button-disabled {
+  color: $gray;
+}

@@ -1,0 +1,60 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$button-color: $primary;
+$circle-size: 1em;
+$bigger-circle-size: $circle-size*1.1;
+
+.icon-button-inner-div {
+    width: $circle-size;
+    height: $circle-size;
+    line-height: $circle-size;
+    text-align: center;
+    border-radius: $circle-size;
+}
+
+.addbutton {
+    width: $circle-size;
+    height: $circle-size;
+    min-width: $circle-size;
+    min-height: $circle-size;
+    cursor: pointer;
+}
+
+.removebutton {
+    width: $circle-size;
+    height: $circle-size;
+    min-width: $circle-size;
+    min-height: $circle-size;
+    cursor: pointer;
+    margin-left: map-get($spacers, 2)
+}
+
+.addbutton-container {
+    width: 2*$circle-size;
+    padding-left: 0.25rem;
+}
+
+.plusicon {
+    box-sizing: content-box;
+    display: inline-flex;
+    position: absolute;
+    color: $button-color;
+    // width: $circle-size;
+    // height: $circle-size;
+    // align-items: center;
+    // justify-content: center
+}
+
+.addbutton {
+    font-weight: bold;
+}
+
+.emphasize-link {
+    color: $primary;
+}
+
+.emphasize-link:hover {
+    color: white;
+}

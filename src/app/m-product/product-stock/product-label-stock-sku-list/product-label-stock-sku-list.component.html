@@ -1,0 +1,64 @@
+
+      <div class="main-inside-top">
+        <ng-container *ngIf="organizationId">
+          <single-choice
+            label="Select facility"
+            i18n-label="@@productLabelSkus.facilityId.label"
+            [formControlInput]="facilityForm"
+            [organizationId]="organizationId"
+            [codebookService]="activeFacilitiesForOrganizationService"
+            (onChange)="setFacilityId($event)">
+          </single-choice>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="facilityForm && facilityForm.value && facilityForm.value['_id']">
+
+        <ng-container *ngIf="skus$ | async as skus">
+          <div class="main-inside-top">
+            <div class="d-flex justify-content-end">
+              <ngb-pagination
+                [(page)]="page"
+                [pageSize]="pageSize"
+                [collectionSize]="skus.count"
+                (pageChange)="onPageChange($event)"
+                [maxSize]="7"
+                [rotate]="true">
+              </ngb-pagination>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <div></div>
+            </div>
+          </div>
+          <div class="main-inside-main">
+            <table *ngIf="skus && skus.items && skus.items.length> 0" class="af-table">
+              <thead>
+                <tr scope="col" result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sku of skus.items">
+                  <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{sku.measurementUnitType.label}}</span></td>
+                  <td [attr.data-label]="sortOptions[1].name"><span>{{sku.totalQuantity}}</span></td>
+                  <td [attr.data-label]="sortOptions[2].name"><span>{{sku.creationDate}}</span></td>
+                  <td [attr.data-label]="sortOptions[3].name"><span>{{sku.productionDate}}</span></td>
+                  <td [attr.data-label]="sortOptions[4].name">
+                    <span>
+                    <a i18n="@@productLabelskus.tableCol.edit"
+                      (click)="editSku(sku)"
+                      class="company-action"
+                      [class.enabled-action]="true">
+                      Edit
+                    </a>
+                  </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="skus && skus.items && skus.items.length == 0" class="no-list-results" i18n="@@productLabelSkus.noSkus">
+              No SKUs found
+            </div>
+          </div>
+        </ng-container>
+
+
+      </ng-container>
+

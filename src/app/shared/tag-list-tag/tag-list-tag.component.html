@@ -1,0 +1,11 @@
+<div class="tagitem" #tagElement style="overflow: hidden; white-space: nowrap"
+    [@deleteAnimate]="deleted ? 'deleted' : 'active'"
+    (@deleteAnimate.done)="deleteAfterAnimation($event)"
+>
+    <div style="display: inline-block">
+            {{ text }}
+            <span class="removebutton" (mousedown)="onDelete($event)">
+                <fa-icon icon="times" transform="shrink-2"></fa-icon>
+            </span>
+    </div>
+</div>

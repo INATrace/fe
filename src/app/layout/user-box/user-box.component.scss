@@ -1,0 +1,176 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.user-box {
+  display: flex;
+  // color: white;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 22px;
+  padding: 0.5rem;
+  border-radius: 4px;
+  align-items: center;
+  cursor: pointer;
+
+  @include media-breakpoint-down(md) {
+    font-size: 1rem;
+    // color: white;
+    margin-top: 0.25rem;
+  }
+
+  // &:hover {
+  //   color: red !important;
+  // }
+}
+
+
+.user-box-name {
+  // color: $secondary;
+  vertical-align: middle;
+
+  // &:hover {
+  //   color: $moderate-cyan;
+  // }
+}
+.user-box-company {
+  // color: $secondary;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 8ch;
+
+  @include media-breakpoint-up(lg) {
+    max-width: 24ch;
+  }
+}
+
+.whole-name:hover {
+  // color: $secondary;
+  color: $moderate-cyan;
+  // text-decoration: underline;
+}
+
+.user-icon-box {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary;
+  margin-left: 0.5rem;
+  @include media-breakpoint-down(md) {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.25rem;
+    background-color: white
+  }
+
+}
+
+.user-icon {
+  color: white;
+  font-size: 1rem;
+  @include media-breakpoint-down(md) {
+    color: $primary;
+  }
+}
+
+
+
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  left: unset;
+  right: -3.5rem;
+}
+
+// .white-texts {
+//   color: white;
+// }
+
+.line{
+  height: 1px;
+  background-color: $gray-semi;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+
+.af-user {
+  color: $secondary;
+
+  &--displayname {
+    color: inherit;
+  }
+
+  &--displaycompany {
+    color: inherit;
+    // padding-right: 0.5rem;
+  }
+
+  &:hover {
+    color: $moderate-cyan;
+    // text-decoration: underline;
+  }
+
+  &-caret-box {
+    width: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.75rem;
+
+    @include media-breakpoint-down(md) {
+      margin-right: 0.5rem;
+    }
+
+    // &--careticon {
+      // color: $secondary;
+      // @include media-breakpoint-down(md) {
+        // color: white;
+    //   }
+    // }
+  }
+}
+
+.af-user {
+  .white-texts {
+    color: white;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.subMenu {
+  padding-left: 40px;
+  padding-right: 10px;
+}
+
+.subMenuTab {
+  padding-left: 55px;
+  padding-right: 10px;
+}
+
+
+.af-mobnav {
+  &--block {
+    button {
+      display: none;
+      opacity: 0;
+
+      @include media-breakpoint-down(lg) {
+        opacity: 1;
+        display: block;
+      }
+    }
+  }
+}

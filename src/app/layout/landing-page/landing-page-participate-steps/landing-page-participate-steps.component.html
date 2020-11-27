@@ -1,0 +1,99 @@
+<section id="getstarted" style="margin-top: 80px">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 class="h2 text-center" style=" margin-bottom:.5rem">5 simple steps for participating firms</h2>
+        <h6 class="h6 text-center" style=" margin-bottom:.5rem">Capacity-building for agricultural SMEs to apply digital traceability tools for
+          better returns.</h6>
+        <div class="spacer-landing"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="getstarted" style="padding-bottom: 40px">
+  <div class="container">
+    <div class="row">
+      <div class="col-md">
+        <div style="position: relative">
+          <div class="ld-pb-top">
+            <figure><img src="/assets/landing-page/fruits-market-colors.jpg">
+            </figure>
+            <span class="ld-pb-num">1</span>
+          </div>
+        </div>
+        <div class="ld-pb-content text-center">
+          <h3>Your Product</h3>
+          <p>Information on product level</p>
+        </div>
+      </div>
+      <div class="col-md">
+        <div style="position: relative">
+          <div class="ld-pb-top">
+            <figure><img src="/assets/landing-page/path.jpg">
+            </figure>
+            <span class="ld-pb-num">2</span>
+          </div>
+        </div>
+        <div class="ld-pb-content text-center">
+          <h3>Your Process</h3>
+          <p>Information on process level</p>
+        </div>
+      </div>
+      <div class="col-md">
+        <div style="position: relative">
+          <div class="ld-pb-top">
+            <figure><img src="/assets/landing-page/business-agreement-shaking-hands.jpg">
+            </figure>
+            <span class="ld-pb-num">3</span>
+          </div>
+        </div>
+        <div class="ld-pb-content text-center">
+          <h3>Your social responsibility</h3>
+          <p>Information about social responsibility</p>
+        </div>
+      </div>
+      <div class="col-md">
+        <div style="position: relative">
+          <div class="ld-pb-top">
+            <figure><img src="/assets/landing-page/leaf.jpg">
+            </figure>
+            <span class="ld-pb-num">4</span>
+          </div>
+        </div>
+        <div class="ld-pb-content text-center">
+          <h3>Environmental practice</h3>
+          <p>Information on environmental practice</p>
+        </div>
+      </div>
+      <div class="col-md">
+        <div style="position: relative">
+          <div class="last ld-pb-top">
+            <figure><img src="/assets/landing-page/who.jpg">
+            </figure>
+            <span class="ld-pb-num">5</span>
+          </div>
+        </div>
+        <div class="ld-pb-content text-center">
+          <h3>Who are you</h3>
+          <p>Information on firm level</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="margin-top: 30px; margin-bottom: 80px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <button *ngIf="_isLandingPage$.value; else isGetStartedPage" class="btn btn-solid round btn-landing" (click)="goToGetStarted()">
+            Want to join?
+        </button>
+        <ng-template #isGetStartedPage>
+        <!-- <button *ngIf="_isLandingPage$.value; else isGetStartedPage" class="btn btn-solid round btn-landing" (click)="goToGetRegister()">
+            Register
+        </button> -->
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</section>

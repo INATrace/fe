@@ -1,0 +1,27 @@
+<button
+    type="button"
+    class="btn btn-secondary mx-1"
+    (click)="onCancel.next($event)">
+    <span i18n="create update delete buttons prekliči napis|@@ui.createUpdateDeleteButtons.cancel.btn.label">Cancel</span>
+</button>
+<button
+    *ngIf="mode === 'create'"
+    type="button"
+    class="btn btn-success mx-1"
+    (click)="onCreate.next($event)">
+    <span i18n="create update delete buttons ustvari napis|@@ui.createUpdateDeleteButtons.create.btn.label">Create</span>
+</button>
+<button
+    *ngIf="mode === 'update'"
+    type="button"
+    class="btn btn-success mx-1"
+    (click)="onUpdate.next($event)">
+    <span i18n="create update delete buttons popravi shrani napis|@@ui.createUpdateDeleteButtons.update.btn.label">Save</span>
+</button>
+<button
+    *ngIf="mode === 'delete'"
+    type="button"
+    class="btn btn-danger mx-1"
+    (click)="onDelete.next($event)">
+    <span i18n="create update delete buttons briši napis|@@ui.createUpdateDeleteButtons.delete.btn.label">Delete</span>
+</button>

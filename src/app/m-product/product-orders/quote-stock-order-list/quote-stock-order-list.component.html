@@ -1,0 +1,106 @@
+
+<ng-container *ngIf="orders$ | async as orders">
+  <div class="main-inside-main">
+    <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
+      <thead>
+        <tr scope="col"
+          result-sorter
+          [sortOptions]="sortOptions"
+          [cbChecked]="cbCheckedAll"
+          [defaultSortingIndex]="7"
+          (sortByKey)="changeSort($event)"></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders.items; index as i">
+          <td *ngIf="!sortOptions[0].hide" scope="row" [attr.data-label]="sortOptions[0].name"><span>{{order.deliveryTime | date: 'yyyy-MM-dd'}}</span></td>
+          <td *ngIf="!sortOptions[1].hide" scope="row" [attr.data-label]="sortOptions[1].name"><span>{{order.semiProduct?.name}}</span></td>
+          <td *ngIf="!sortOptions[2].hide" scope="row" [attr.data-label]="sortOptions[2].name"><span>{{order.facility?.organization?.name}}</span></td>
+          <td *ngIf="!sortOptions[3].hide" scope="row" [attr.data-label]="sortOptions[3].name"><span>{{order.consumerCompanyCustomer?.name}}</span></td>
+          <td *ngIf="!sortOptions[4].hide" scope="row" [attr.data-label]="sortOptions[4].name"><span>{{order.productOrder?.id}}</span></td>
+          <td *ngIf="!sortOptions[5].hide" scope="row" [attr.data-label]="sortOptions[5].name"><span>{{order.facility?.name}}</span></td>
+          <td *ngIf="!sortOptions[6].hide" scope="row" [attr.data-label]="sortOptions[6].name"><span>{{order.quoteFacility?.organization?.name}} ({{order.quoteFacility?.name}})</span></td>
+          <td *ngIf="!sortOptions[7].hide" scope="row" [attr.data-label]="sortOptions[7].name"><span>{{order.totalQuantity}} / {{order.fullfilledQuantity}}</span></td>
+          <td *ngIf="!sortOptions[8].hide" scope="row" [attr.data-label]="sortOptions[8].name"><span>{{order.measurementUnitType?.label}}</span></td>
+          <td *ngIf="!sortOptions[9].hide" scope="row" [attr.data-label]="sortOptions[9].name"><span>{{kgsOf(order)}}</span></td>
+          <td *ngIf="!sortOptions[10].hide" scope="row" [attr.data-label]="sortOptions[10].name"><span>{{order.lastChange | date: 'yyyy-MM-dd hh:mm'}}</span></td>
+          <!-- <td *ngIf="!sortOptions[5].hide" scope="row" [attr.data-label]="sortOptions[5].name">{{order.isOpenOrder}}</td> -->
+          <td [attr.data-label]="sortOptions[11].name">
+            <span>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.edit"
+                (click)="edit(order)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.view"
+                (click)="history(order)"
+                class="company-action"
+                [class.enabled-action]="true">
+                View
+              </a>
+              <a *ngIf="this.mode === 'CUSTOMER'"
+                i18n="@@productLabelPurchaseOrder.tableCol.approveRejectOrder"
+                (click)="approveReject(order)"
+                class="company-action"
+                [class.enabled-action]="order.fullfilledQuantity >= order.totalQuantity">
+                Approve/Reject
+              </a>
+              <!-- <a i18n="@@productLabelPurchaseOrder.tableCol.debug"
+              (click)="view(order)"
+              class="company-action"
+              [class.enabled-action]="true">
+              Debug
+            </a> -->
+
+              <!-- <a i18n="@@productLabelPurchaseOrder.tableCol.history"
+              (click)="history(order)"
+              class="company-action"
+              [class.enabled-action]="true">
+              History
+            </a> -->
+              <a i18n="@@productLabelPurchaseOrder.tableCol.payment"
+                *ngIf="this.mode === 'CUSTOMER'"
+                (click)="payment(order)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Add payment
+              </a>
+              <a *ngIf="canDelete(order)"
+                i18n="@@productLabelPurchaseOrder.tableCol.delete"
+                (click)="delete(order)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Delete
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.qr"
+                *ngIf="mode == 'CUSTOMER'"
+                (click)="generateQRCodes(order)"
+                class="company-action"
+                [class.enabled-action]="true">
+                QR
+              </a>
+
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="orders && orders.items && orders.items.length == 0" class="no-list-results" i18n="@@productLabelPurchaseOrder.noOrders">
+      No orders found
+    </div>
+  </div>
+
+  <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="orders.count"
+      (pageChange)="onPageChange($event)"
+      [maxSize]="7"
+      [rotate]="true">
+    </ngb-pagination>
+  </div>
+
+  <pre *ngIf="itemToShow">{{itemToShow | json}}</pre>
+
+</ng-container>

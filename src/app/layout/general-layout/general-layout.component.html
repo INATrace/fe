@@ -1,0 +1,36 @@
+<div class="layout-full-page">
+  <div class="layout-navigation-bar">
+      <ng-content select="navbar"></ng-content>
+  </div>
+  <div class="layout-page-content" (click)="hideMenu()">
+      <div class="layout-sidebar" [class.menu-shown]="smallMenuShown$ | async">
+          <ng-content select="sidebar"></ng-content>
+      </div>
+      <div class="layout-content-and-right"
+          [class.right-half-size]="rightPanel && rightPanel.half != null"
+          [class.right-in-content]="rightPanel && rightPanel.content != null">
+          <div class="layout-title-and-content">
+              <div class="layout-error-panel">
+                  <ng-content select="page-error-panel"></ng-content>
+              </div>
+
+              <div class="layout-title-panel">
+                  <ng-content select="title-panel"></ng-content>
+              </div>
+
+              <div class="layout-content-internal">
+                  <div class="layout-main-panel">
+                      <ng-content select="[main-panel]"></ng-content>
+                  </div>
+                  <div class="layout-right-panel" *ngIf="rightPanel && rightPanel.content != null">
+                      <ng-content select="right-panel[content]"></ng-content>
+                  </div>
+              </div>
+          </div>
+          <div class="layout-right-panel" *ngIf="rightPanel && rightPanel.full != null">
+              <ng-content select="right-panel[full]"></ng-content>
+          </div>
+      </div>
+  </div>
+
+</div>

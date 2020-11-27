@@ -1,0 +1,158 @@
+
+
+<div class="modal-container" style="max-width: 500px;">
+  <div class="modal-header">
+    <h4 class="modal-title" i18n="@@productLabelFrontFeedback.modal.title">Give Feedback</h4>
+    <button type="button" class="close" aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <div class="modal-body">
+      <textinput
+        [form]="feedbackForm.get('feedback')"
+        label="The producers of Angelique’s Finest look forward to your feedback (what do you like / not)"
+        style="width: 100%;"
+        [textarea]="true"
+        i18n-label="@@productLabelFrontFeedback.modal.body.textinput.text.label"
+        [readOnly]="readOnly">
+        <small i18n="@@productLabelFrontFeedback.modal.body.textinput.feedback.small">Describe in max 500 characters.</small>
+        <ng-container *ngIf="submitted">
+          <div *ngIf="feedbackForm.get('feedback').errors as errors" class="sc-invalid-feedback" i18n="@@productLabelFrontFeedback.modal.body.textinput.feedback.errorMaxLength">
+            Feedback should not exceed 500 characters.
+          </div>
+        </ng-container>
+      </textinput>
+
+
+      <div i18n="@@productLabelFrontFeedback.modal.body.questions">Please also answer the following questions:</div>
+
+      <single-choice
+        label="1. How would you rate the taste of Angelique's Finest in comparison to other coffee which you drink?"
+        i18n-label="@@productLabelFrontFeedback.modal.body.taste"
+        [formControlInput]="feedbackForm.get('questionnaireAnswers.rateTaste')"
+        [codebookService]="codebookTasteCodes"
+        style="min-width: 150px;">
+      </single-choice>
+
+
+
+      <div>2. How did you prepare Angelique’s Finest? (multiple selection possible)</div>
+      <checkbox-input
+        [form]="filterCoffeeForm"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;"
+          i18n="@@productLabelFrontFeedback.checkbox-input.filterCoffee">
+          Filter coffee
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+      <checkbox-input
+        [form]="espressoForm"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;margin-top: -20px"
+          i18n="@@productLabelFrontFeedback.checkbox-input.espresso">
+          Espresso machine
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+      <checkbox-input
+        [form]="frenchPressForm"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;"
+          i18n="@@productLabelFrontFeedback.checkbox-input.frenchPress">
+          French press
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+      <checkbox-input
+        [form]="fullyAutomaticForm"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;"
+          i18n="@@productLabelFrontFeedback.checkbox-input.fullyAutomatic">
+          Fully automatic machine
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+      <checkbox-input
+        [form]="stovetopForm"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;"
+          i18n="@@productLabelFrontFeedback.checkbox-input.stovetop">
+          Stovetop moka pot
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+      <textinput
+        [form]="otherForm"
+        label="Other"
+        style="width: 100%;"
+        placeholder=""
+        i18n-label="@@productLabelFrontFeedback.modal.body.textinput.other.label"
+        i18n-placeholder="@@productLabelFrontFeedback.modal.body.textinput.other.placeholder"
+        [readOnly]="readOnly">
+      </textinput>
+
+
+      <textinput
+        [form]="feedbackForm.get('questionnaireAnswers.age')"
+        label="3. Your age"
+        style="width: 100%;"
+        placeholder="Enter your age"
+        i18n-label="@@productLabelFrontFeedback.modal.body.textinput.age.label"
+        i18n-placeholder="@@productLabelFrontFeedback.modal.body.textinput.age.placeholder"
+        [readOnly]="readOnly">
+      </textinput>
+
+      <single-choice
+        label="4. Gender"
+        i18n-label="@@productLabelFrontFeedback.modal.body.gender"
+        [formControlInput]="feedbackForm.get('questionnaireAnswers.gender')"
+        [codebookService]="codebookAgeCodes"
+        style="min-width: 150px;">
+      </single-choice>
+
+      <textinput
+        [form]="feedbackForm.get('email')"
+        label="In case you would like to receive an answer from us, please provide your email address"
+        style="width: 100%;"
+        placeholder="Enter e-mail"
+        i18n-label="@@productLabelFrontFeedback.modal.body.textinput.email.label"
+        i18n-placeholder="@@productLabelFrontFeedback.modal.body.textinput.email.placeholder"
+        [readOnly]="readOnly">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="feedbackForm.get('email').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.wrongEmail" i18n="@@productLabelFrontFeedback.modal.body.textinput.email.error">
+              E-mail is in the wrong format
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+
+      <div i18n="@@productLabelFrontFeedback.modal.body.permissioToContact">Permission to Contact</div>
+      <div [innerHTML]="this.gdprHtmlContext"></div>
+
+      <checkbox-input
+        [form]="feedbackForm.get('gdprConsent')"
+        [disabled]="readOnly">
+        <checkbox-input-rich-label
+          style="font-weight: 300;"
+          i18n="@@productLabelFrontFeedback.checkbox-input.gdprConsent">
+          GDPR consent
+        </checkbox-input-rich-label>
+      </checkbox-input>
+
+
+    </div>
+  </div>
+  <div class="modal-footer" i18n="@@productLabelFrontFeedback.modal.footer.buttons">
+    <button class="btn btn-outlined" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+    <button *ngIf="!readOnly" class="btn" type="button" (click)="submitFeedback()"><span>Submit</span></button>
+  </div>

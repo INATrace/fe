@@ -1,0 +1,21 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h4 class="modal-title sp-faq-modal-title">{{title}}</h4>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="instructionsHtml" [innerHTML]="instructionsHtml"></div>
+    <single-choice
+      [label]="null"
+      [formControlInput]="companyForm"
+      [codebookService]="codebookMyCompanies">
+    </single-choice>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-outlined" (click)="cancel()" i18n="@@selectUserCompany.modal.button.cancel">
+        <span>Cancel</span>
+    </button> -->
+    <button type="button" class="btn" [class.disabled]="!companyForm.value" (click)="onConfirm()" i18n="@@selectUserCompany.modal.button.confirm">
+        <span>Confirm</span>
+    </button>
+  </div>
+</div>

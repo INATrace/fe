@@ -1,0 +1,96 @@
+<app-front-page-sliding
+  [tab]="this.tab">
+
+  <div class="af-b2c-wrapper">
+
+    <app-front-page-header
+      [tab]="this.tab">
+    </app-front-page-header>
+
+    <main class="af-b2c-main">
+
+      <h1>{{titleFarmers}}</h1>
+      <div class="af-b2c-header-arrows--both" *ngIf="pageYoffset > 150"></div>
+
+      <ng-container *ngIf="videoMeetTheFarmers">
+        <iframe [src]="this.videoMeetTheFarmers" frameborder="0" allowfullscreen></iframe>
+      </ng-container>
+
+      <app-front-page-carousel
+        [slides]="picsMeetTheFarmers">
+      </app-front-page-carousel>
+
+
+      <h1>{{titleCooperative}}</h1>
+
+      <h2>{{companyNameCooperative}}</h2>
+
+      <p *ngIf="this.coopAbout">{{this.coopAbout}}</p>
+
+      <h2 i18n="@@frontPage.producers.subtitle.processingStory">Processing story</h2>
+
+      <app-front-page-carousel
+        [slides]="picsProduction"
+        [productionRecords]=true>
+      </app-front-page-carousel>
+
+      <h1>{{titleOwner}}</h1>
+
+      <ng-container *ngIf="videoRWurl">
+        <iframe [src]="this.videoRWurl" frameborder="0" allowfullscreen></iframe>
+      </ng-container>
+
+<!--
+      <h2 *ngIf="companyName">{{companyName}}</h2>
+
+      <img *ngIf="companyLogo"
+        src="/api/public/image/{{companyLogo.storageKey}}/SMALL"
+        default="/api/public/image/{{companyLogo.storageKey}}"
+        style="width: 150px; max-height: 150px;">
+
+      <p *ngIf="companyAbout">{{companyAbout}}</p>
+
+      <div *ngIf="companyHeadquarters" class="af-b2c--headquarters">
+        <h2>{{headquarters}}</h2>
+        <ng-container *ngIf="companyHeadquarters.address">
+          <p>{{companyHeadquarters.address}}</p>
+        </ng-container>
+        <ng-container *ngIf="companyHeadquarters.city">
+          <p>{{companyHeadquarters.city}}</p>
+        </ng-container>
+        <ng-container *ngIf="companyHeadquarters.zip">
+          <p>{{companyHeadquarters.zip}}</p>
+        </ng-container>
+        <ng-container *ngIf="companyHeadquarters.state">
+          <p>{{companyHeadquarters.state}}</p>
+        </ng-container>
+        <ng-container *ngIf="companyHeadquarters.country">
+          <p>{{companyHeadquarters.country.name}}</p>
+        </ng-container>
+      </div>
+
+      <ng-container *ngIf="companyEmail">
+        <h2>{{email}}</h2>
+        <p>{{companyEmail}}</p>
+      </ng-container>
+      <ng-container *ngIf="companyNumber">
+        <h2>{{phone}}</h2>
+        <p>{{companyNumber}}</p>
+      </ng-container>
+      <ng-container *ngIf="companyPage">
+        <h2>{{webPage}}</h2>
+        <p>{{companyPage}}</p>
+      </ng-container> -->
+
+
+      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYoffset>0">&nbsp;</a>
+
+    </main>
+
+
+
+    <app-front-page-footer>
+    </app-front-page-footer>
+
+  </div>
+</app-front-page-sliding>

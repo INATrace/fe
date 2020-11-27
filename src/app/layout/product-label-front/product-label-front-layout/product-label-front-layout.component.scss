@@ -1,0 +1,50 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.green-padding {
+  height: 365px;
+  background-color: $primary-lightest;
+}
+.breadcrumbs-space {
+  height: 44px;
+  background-color: $primary-lightest;
+}
+.container-drobtinice {
+    // margin-left: 42px;
+    background-color: $primary-lightest;
+}
+.drobtinice-separator {
+   margin-left: 1rem;
+   margin-right: 1rem;
+   @include media-breakpoint-down(md) {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+   }
+}
+
+
+ul.drobtinice {
+  padding: 8px;
+  list-style: none;
+}
+ul.drobtinice li {
+  display: inline;
+  font-size: 14px;
+  font-weight: 300;
+  color: $secondary;
+}
+ul.drobtinice li a {
+  text-decoration: none;
+}
+ul.drobtinice li a:hover {
+  text-decoration: underline;
+}

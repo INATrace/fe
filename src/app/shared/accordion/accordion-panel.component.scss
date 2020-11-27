@@ -1,0 +1,78 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+// @import 'styles-basic.scss';
+
+$gap: map-get($spacers, 3);
+$btn-pad-vert: 0.5rem;
+$header-pad-vert: 1.25rem;
+
+.panel-header {
+    border-bottom: 1px solid $gray-300;
+
+    // padding: $header-pad-vert $gap;
+
+    display: flex;
+    align-items: center;
+}
+.panel-toggle-wrapper {
+    position: relative;
+    align-self: flex-start;
+    margin-top: .5rem;
+    text-align: right;
+    cursor: pointer;
+
+    .panel-toggle {
+        cursor: pointer;
+        padding: $btn-pad-vert 0.5rem;
+        width: 2rem;
+        // background-color: orange;
+        color: $secondary;
+    }
+    span {
+        display: block;
+        position: absolute;
+        right: 2rem;
+        top: 0.5rem;
+        color: $secondary;
+        width: 150px;
+    }
+}
+
+.panel-title {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 1rem 0 1rem $gap;
+    margin: 0 $gap 0 0;
+    padding-bottom: 0rem;
+}
+
+.panel-menu-button {
+    cursor: pointer;
+}
+
+.panel-content {
+    padding: $gap;
+    padding-bottom: 0.5rem;
+}
+
+.panel-content-wrapper {
+    border-bottom: 1px solid $gray-300;
+    overflow: hidden;
+}
+
+:host:last-child .panel-content-wrapper {
+    border-bottom: none;
+}
+
+.arrow-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    margin-right: 2rem;
+    width: 1rem;
+    height: 1rem;
+    // border: 1px solid red;
+}

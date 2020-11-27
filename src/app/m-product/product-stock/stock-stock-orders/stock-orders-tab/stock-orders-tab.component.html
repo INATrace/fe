@@ -1,0 +1,140 @@
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main">
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock orders</div>
+        <!-- <div>
+          <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newSalesOrder()" i18n="@@productLabelStock.button.newSalesOrder">
+            <span>+ Add sales order</span>
+          </button>
+          <button class="btn btn-solid ml-2 round btn-table-new content-element--btn" (click)="newGeneralOrder()" i18n="@@productLabelStock.button.newGeneralOrder">
+            <span>+ Add transfer order</span>
+          </button>
+        </div> -->
+      </div>
+
+      <!-- <div class="d-flex justify-content-between main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.facility.select.title">Selected facility</div>
+        </div>
+      </div> -->
+
+
+      <div class="af-form-row af-form-row--nomargin">
+        <!-- <div class="af-form-row" style="background-color: inherit;"> -->
+        <div class="af-form-block--c6">
+
+          <div class="af-form-element">
+            <div class="af-row">
+              <div class="af-c12">
+
+
+                <single-choice *ngIf="facilityCodebook"
+                  label="Selected facility"
+                  i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.facilityForStockOrder"
+                  [formControlInput]="facilityForStockOrderForm"
+                  [codebookService]="facilityCodebook"
+                  (onChange)="facilityForStockOrderChanged($event)"
+                  style="min-width: 150px;">
+                </single-choice>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="af-form-block--c6">
+          <div *ngIf="!this.facilityId" style="max-width: 260px; font-size: 14px; color: #8788AA; line-height: 20px;" i18n="@@productLabelStock.facility.select.desc">Please select one facility to see the list of all stock orders.</div>
+          <!-- <div *ngIf="this.facilityId" style="max-width: 260px; font-size: 14px; color: #8788AA; line-height: 20px;">Please change facitly to see other lists of orders.</div> -->
+        </div>
+
+      </div>
+
+      <!-- [codebookService]="collectingFacilityForStockOrderCodebook" -->
+
+      <div class="d-flex justify-content-between main-inside-top--row2" *ngIf="this.facilityId">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingOrders">Showing {{showedPurchaseOrders}}/{{allPurchaseOrders}}</div>
+        </div>
+
+        <div class="d-flex align-items-top">
+
+          <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+
+            <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.openBalanceOnly.filter">Open balance
+              <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <div *ngIf="purchaseOrderOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.purchaseOrderOnly.filter">Purchase order only
+              <div style="margin-left: 0.5rem;" (click)="setPurchaseOrdersOnly(false)">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <div *ngIf="availableOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.availableOnly.filter">Available only
+              <div style="margin-left: 0.5rem;" (click)="setAvailableOnly(false)">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+              <div class="button-icon">
+                <span class="button-icon-shape button-icon-shape--filter"></span>
+              </div>
+              <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+            </button>
+
+            <div class="dropdown-menu" ngbDropdownMenu>
+              <button *ngIf="!availableOnly" ngbDropdownItem (click)="setAvailableOnly(true)" i18n="@@productLabelStock.filter.availableOnly.button">Available only</button>
+              <!-- <button *ngIf="!purchaseOrderOnly" ngbDropdownItem (click)="setPurchaseOrdersOnly(true)" i18n="@@productLabelStock.filter.purchaseOrderOnly.button">Purchase orders only</button> -->
+            </div>
+
+            <!-- <div class="ml-2" style="min-width: 10rem"> -->
+            <div class="ml-2">
+              <single-choice
+                [noMargin]="true"
+                i18n-label="@@productLabelStockPurchaseOrdersModal.semiProduct.label"
+                [formControlInput]="semiProductFrom"
+                [codebookService]="activeSemiProductsForProduct">
+              </single-choice>
+            </div>
+            <!-- <button class="af-actions-btn" [class.af-actions-btn--disabled]="selectedOrders.length == 0" (click)="selectedOrders.length> 0 && deleteSelectedOrders()">
+              <span class="af-actions-btn-label" i18n="@@productLabelStock.button.deleteOrders">Delete orders</span>
+            </button> -->
+
+          </div>
+
+        </div>
+      </div>
+
+      <app-product-label-stock-order-list *ngIf="this.facilityId"
+        mode="GENERAL"
+        [reloadPingList$]="reloadDataPing$"
+        (countAll)="onCountAllPO($event)"
+        [facilityId$]="facilityIdPing$"
+        (showing)="onShowPO($event)"
+        [openBalanceOnly$]="openBalancePing$"
+        [purchaseOrderOnly$]="purchaseOrderOnly$"
+        [availableOnly$]="availableOnly$"
+        [semiProductId$]="semiProductId$"
+        [pageListingMode]="pageMode"
+        [selectedOrders]="selectedOrders"
+        (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+        [clickAddPaymentsPing$]="clickAddPaymentsPing$">
+      </app-product-label-stock-order-list>
+
+    </div>
+
+  </div>
+</app-authorised-layout>

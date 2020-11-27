@@ -1,0 +1,122 @@
+
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main" *ngIf="isAdmin">
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.facilities">Facilities</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" style="margin-bottom: 1rem;" i18n="@@productLabelStock.button.newFacility">
+          <span>+ Add facility</span>
+        </button>
+      </div>
+
+      <!-- <single-choice
+        label="Company"
+        i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.company"
+        [formControlInput]="companyForFacilityForm"
+        [codebookService]="chainOrganizationCodebook"
+        (onChange)="organizationForFacilityChanged($event)"
+        style="min-width: 150px;">
+      </single-choice> -->
+
+      <div class="d-flex align-items-start content-element--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfFacilities">List of facilities</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingFacilities" style="margin-top: 0px;">Showing {{showedFacilities}}/{{allFacilities}}</div>
+        </div>
+      </div>
+    </div>
+
+    <app-product-label-stock-facility-list
+      [reloadPingList$]="reloadFacilitiesListPing$"
+      (countAll)="onCountAll($event)"
+      [organizationId]="organizationId"
+      (showing)="onShow($event)">
+    </app-product-label-stock-facility-list>
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.semiProduct">Semi-products</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newSemiProduct()" i18n="@@productLabelStock.button.newSemiProduct">
+          <span>+ Add semi-product</span>
+        </button>
+      </div>
+      <div class="d-flex justify-content-between content-element--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfSemiProduct">List of semi-products</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingSemiProduct">Showing {{showedSemiProducts}}/{{allSemiProducts}}</div>
+        </div>
+
+        <div class="d-flex align-items-top">
+          <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+            <div *ngIf="buyableSemiProductStatus && buyableSemiProductStatus?.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.buyable.label">Buyable
+              <div (click)="setBuyableSemiProductStatus(false)" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+            <div *ngIf="skuSemiProductStatus && skuSemiProductStatus?.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.sku.label">SKU
+              <div (click)="setSKUSemiProductStatus(false)" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+              <div class="button-icon">
+                <span class="button-icon-shape button-icon-shape--filter"></span>
+              </div>
+              <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+            </button>
+
+            <div class="dropdown-menu" ngbDropdownMenu>
+              <button ngbDropdownItem (click)="setBuyableSemiProductStatus(true)" i18n="@@productLabelStock.filter.buyable">Buyable</button>
+              <button ngbDropdownItem (click)="setSKUSemiProductStatus(true)" i18n="@@productLabelStock.filter.sku">SKU</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <app-semi-product-listing
+        [reloadPingList$]="reloadSemiProductsListPing$"
+        (showing)="onShowSP($event)"
+        (countAll)="onCountAllSP($event)"
+        [semiProductBuyableStatusPing$]="semiProductBuyableStatusPing$"
+        [semiProductSKUStatusPing$]="semiProductSKUStatusPing$">
+      </app-semi-product-listing>
+
+
+
+      <div class="main-inside-top content-element">
+        <div class="d-flex justify-content-between content-element--row1">
+          <div class="title-page content-element--title" i18n="@@productLabelStock.title.processingActions">Processing actions</div>
+          <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessingAction()" i18n="@@productLabelStock.button.newProcessingActions">
+            <span>+ Add processing action</span>
+          </button>
+        </div>
+        <div class="d-flex align-items-start content-element--row2">
+          <div>
+            <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfProcessingActions">List of processing actions</div>
+            <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingProcessingActions">Showing {{showedProcessingActions}}/{{allProcessingActions}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-product-label-stock-processing-action-list
+      [reloadPingList$]="reloadProcessingActionsListPing$"
+      (showing)="onShowSP($event,'ACTION')"
+      (countAll)="onCountAllSP($event,'ACTION')"
+      [organizationId]="organizationId"
+      [chainProductId]="chainProductId">
+    </app-product-label-stock-processing-action-list>
+  </div>
+
+  <div class="main" *ngIf="!isAdmin">
+    <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
+  </div>
+</app-authorised-layout>

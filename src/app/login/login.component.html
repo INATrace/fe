@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="row login-row">
+    <div class="col-sm-12 col-lg-6 align-self-center">
+      <div class="login-left-inner">
+        <div class="login-title" i18n="@@login.title">Welcome back!</div>
+        <div class="login-small-spacer"></div>
+        <div class="login-subtitle" i18n="@@login.subtitle">Sign in to continue</div>
+        <div class="login-big-spacer"></div>
+        <form class="form-group">
+          <label for="username" class="mb-0 mt-3">
+            <div class="text-input-label" [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('username').invalid" i18n="@@login.input.username.label">
+              Username
+            </div>
+          </label>
+          <input
+            #inputfield
+            class="form-control text-input-bigger"
+            id="username"
+            [ngClass]="{ 'is-invalid': submitted && loginForm.get('username').invalid }"
+            style="margin-bottom: 0px;"
+            placeholder="Enter your username"
+            type="text"
+            i18n-placeholder="@@login.input.username.placeholder"
+            [formControl]="loginForm.get('username')">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="loginForm.get('username').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@login.input.username.error">
+                Username is required
+              </div>
+              <div *ngIf="errors.wrongEmail" i18n="@@login.input.username.errorWrongFormat">
+                Username is in the wrong format.
+              </div>
+            </div>
+          </ng-container>
+          <div class="login-small-spacer"></div>
+          <div class="login-small-spacer"></div>
+          <label for="password" class="mb-0 mt-3 text-input-label">
+            <div class="text-input-label" [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('password').invalid" i18n="@@login.input.password.label">
+              Password
+            </div>
+          </label>
+          <div class="input-group">
+            <input
+              #inputfield
+              class="form-control text-input-bigger"
+              id="password"
+              [ngClass]="{ 'is-invalid': submitted && loginForm.get('password').invalid }"
+              style="margin-bottom: 0px;"
+              type="password"
+              placeholder="Enter your password"
+              i18n-placeholder="@@login.input.password.placeholder"
+              [formControl]="loginForm.get('password')"
+              (keyup.enter)="login()">
+
+            <!-- <span class="input-group-append bg-white border-left-0">
+            <span class="input-group-text bg-transparent">
+              <fa-icon
+                [icon]="faEyeSlash">
+              </fa-icon>
+              <fa-icon
+                [icon]="faEye">
+              </fa-icon>
+            </span>
+          </span> -->
+
+          </div>
+          <div *ngIf="submitted">
+            <div *ngIf="loginForm.get('password').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@login.input.password.error">
+                <span>
+                  Password is required
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="login-medium-spacer"></div>
+
+        <div>
+          <a [routerLink]="['/', 'reset-password']" i18n="@@login.link.forgotYourPassword"><span class="login-forgot-password">Forgot password?</span></a>
+        </div>
+
+        <div class="login-small-spacer"></div>
+        <div class="login-small-spacer"></div>
+        <div class="login-small-spacer"></div>
+        <div class="login-small-spacer"></div>
+        <button class="btn btn-solid round btn-register" (click)="login()" i18n="@@login.button.login">
+          <span>Login</span>
+        </button>
+        <!-- <div>
+        <a [routerLink]="['/', 'register']" i18n="@@login.link.notAUser">Not a user? <span style="font-weight: 600">Register</span></a>
+      </div>-->
+
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-6" style="background-color: rgba(247,247,247,0.56); border-radius: 32px;">
+
+      <div class="login-right-side-text">
+        Everything starts with the good coffee.
+      </div>
+      <div class="login-right-side-subtext">
+        <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,25 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.clear-button {
+    color: $gray;
+    position: absolute;
+    right: 2rem;
+    bottom: 0.2rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    right: 0rem;
+    // @include breakpoint(medium up) {
+    //     right: 2rem;
+    // }
+}
+
+
+

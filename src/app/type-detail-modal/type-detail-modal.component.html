@@ -1,0 +1,195 @@
+
+
+<div class="modal-container" style="max-width: 500px;">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+    <div class="modal-body">
+      <textinput
+        hideAsterisk="true"
+        [form]="form.get('id')"
+        label="Id"
+        [disabled]="update"
+        style="width: 100%"
+        placeholder="Enter id"
+        i18n-label="@@facilityTypeDetail.textinput.id.label"
+        i18n-placeholder="@@facilityTypeDetail.textinput.id.placeholder"
+        [isInvalid]="submitted && form.get('id').invalid"
+        [readOnly]="this.update">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('id').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.wrongInput" i18n="@@facilityTypeDetail.textinput.id.error">
+              Id should contain only capital letters, numbers and / or underscores
+            </div>
+            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.id.errorRequired">
+              Id is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        hideAsterisk="true"
+        [form]="form.get('label')"
+        label="Label"
+        style="width: 100%"
+        placeholder="Enter label"
+        i18n-label="@@facilityTypeDetail.textinput.label.label"
+        i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
+        [isInvalid]="submitted && form.get('label').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('label').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.label.error">
+              Label is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <ng-container *ngIf="this.type === 'measurement-unit-types'">
+        <textinput
+          hideAsterisk="true"
+          [form]="form.get('weight')"
+          label="Weight (in kg)"
+          style="width: 100%"
+          placeholder="Enter weight"
+          i18n-label="@@facilityTypeDetail.textinput.weight.label"
+          i18n-placeholder="@@facilityTypeDetail.textinput.weight.placeholder"
+          [isInvalid]="submitted && form.get('weight').invalid"
+          type="number">
+          <!--<ng-container *ngIf="submitted">
+          <div *ngIf="form.get('weight').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.weight.error">
+              Weight is required
+            </div>
+          </div>
+        </ng-container>-->
+        </textinput>
+
+
+        <single-choice
+          label="Underlying measure unit"
+          i18n-label="@@facilityTypeDetail.single-choice.underlyingMeasurementUnit.label"
+          [formControlInput]="form.get('underlyingMeasurementUnitType')"
+          [codebookService]="activeMeasureUnitTypeService">
+        </single-choice>
+
+      </ng-container>
+
+      <ng-container *ngIf="this.type === 'processing-evidence-types'">
+
+        <!-- <single-choice
+          label="Select product"
+          i18n-label="@@typeDetailModal.selectProduct.label"
+          [formControlInput]="productForm"
+          [codebookService]="productCodebook"
+          (onChange)="onProductSelected($event)"
+          [isInvalidChoice]="submitted && productForm.invalid">
+        </single-choice>
+        <ng-container *ngIf="submitted">
+          <div *ngIf="productForm.errors as errors" class="sc-invalid-feedback" i18n="@@typeDetailModal.selectProduct.error.required">
+            Product is required
+          </div>
+        </ng-container>
+
+        <single-choice
+          *ngIf="activeSemiProductsForProduct"
+          label="Select semi-product"
+          i18n-label="@@typeDetailModal.semiProduct.label"
+          [formControlInput]="form.get('semiProduct')"
+          [codebookService]="activeSemiProductsForProduct"
+          [isInvalidChoice]="submitted && form.get('semiProduct').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('semiProduct').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@typeDetailModal.semiProduct.error.required">
+                Semi-product is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+-->
+        <single-choice
+          label="Type"
+          i18n-label="@@productLabelProcessingAction.transactionType.label"
+          [formControlInput]="form.get('type')"
+          [codebookService]="codebookProcessingEvidenceTypeType"
+          [isInvalidChoice]="submitted && form.get('type').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.type.error.requred">
+                Type is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+
+        <!-- <checkbox-input
+          [form]="form.get('mandatoryOnQuote')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.mandatoryOnQuote.label">
+            Mandatory on quote
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input
+          [form]="form.get('requiredOnQuote')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.requiredOnQuote.label">
+            Required on quote
+          </checkbox-input-rich-label>
+        </checkbox-input> -->
+
+        <label class="mb-0 mt-3">
+          Indicators
+        </label>
+        <checkbox-input [form]="form.get('fairness')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.fairness">
+            Fairness
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('provenance')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.provenance">
+            Provenance
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('quality')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.quality">
+            Quality
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+      </ng-container>
+
+      <ng-container *ngIf="this.type === 'order-evidence-types'">
+
+        <checkbox-input [form]="form.get('fairness')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.fairness">
+            Fairness
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('provenance')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.provenance">
+            Provenance
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('quality')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.quality">
+            Quality
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+      </ng-container>
+
+    </div>
+  </div>
+  <div class="modal-footer" i18n="@@collectorDetail.modal.footer.buttons">
+    <button class="btn btn-outlined" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+    <button class="btn" type="button" (click)="save(); saveCallback && saveCallback();"><span>Save</span></button>
+  </div>

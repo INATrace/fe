@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-card-seedling</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.145098 0 0 0 0 0.149020 0 0 0 0 0.368627 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="icon-card-seedling" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.504231771">
+        <g id="icons-32/fa-seedling-copy-3" filter="url(#filter-1)">
+            <g>
+                <path d="M7,8.5 L4,8.5 C4,14.2984375 8.7015625,19 14.5,19 L14.5,25.75 C14.5,26.1625 14.8375,26.5 15.25,26.5 L16.75,26.5 C17.1625,26.5 17.5,26.1625 17.5,25.75 L17.5,19 C17.5,13.2015625 12.7984375,8.5 7,8.5 Z M25,5.5 C21.053125,5.5 17.621875,7.6796875 15.8265625,10.9 C17.125,12.315625 18.0859375,14.0359375 18.5921875,15.94375 C23.875,15.3953125 28,10.9328125 28,5.5 L25,5.5 Z" id="Shape" fill="#181B31" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

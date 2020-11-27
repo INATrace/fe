@@ -1,0 +1,64 @@
+import { SimpleValidationScheme } from 'src/interfaces/Validation';
+import { ApiProductLabelBatch } from 'src/api/model/apiProductLabelBatch';
+import { Validators, FormGroup, ValidationErrors } from '@angular/forms';
+import { dateAtNoonISOString } from 'src/shared/utils';
+import { multiFieldValidator } from 'src/shared/validation';
+
+
+function expiryDateBeforeProductionDate(control: FormGroup): ValidationErrors | null {
+  let productionDate = control.value && control.value['productionDate'];
+  if (!productionDate) return null
+  let expiryDate = control.value && control.value['expiryDate'];
+  if (!expiryDate) return null
+  productionDate = dateAtNoonISOString(productionDate)
+  expiryDate = dateAtNoonISOString(expiryDate)
+  return expiryDate < productionDate
+      ? { endBeforeStart: true }
+      : null
+}
+
+function atLeastOneDate(control: FormGroup): ValidationErrors | null {
+  if (control.value && (control.value['checkAuthenticity'] == null || !control.value['checkAuthenticity'])) return null;
+  let productionDate = control.value && control.value['productionDate'];
+  let expiryDate = control.value && control.value['expiryDate'];
+  return productionDate == null && expiryDate == null
+    ? { atLeastOneDate: true }
+    : null
+}
+
+
+  export const ApiProductLabelBatchValidationScheme = {
+      validators: [
+      multiFieldValidator(['expiryDate'], expiryDateBeforeProductionDate, ['endBeforeStart']),
+      multiFieldValidator(['productionDate', 'expiryDate'], atLeastOneDate, ['atLeastOneDate'])
+      ],
+      fields: {
+                checkAuthenticity: {
+                    validators: []
+                },
+                expiryDate: {
+                    validators: []
+                },
+                id: {
+                    validators: []
+                },
+                labelId: {
+                    validators: []
+                },
+                locations: {
+                    validators: []
+                },
+                number: {
+                    validators: [Validators.required]
+                },
+                photo: {
+                    validators: []
+                },
+                productionDate: {
+                    validators: []
+                },
+                traceOrigin: {
+                    validators: []
+                },
+      }
+  } as SimpleValidationScheme<ApiProductLabelBatch>;

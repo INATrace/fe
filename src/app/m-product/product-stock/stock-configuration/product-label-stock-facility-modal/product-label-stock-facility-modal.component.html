@@ -1,0 +1,187 @@
+<app-authorised-layout>
+  <div *ngIf="form" class="af-layout--authorised">
+
+    <div class="af-form-wrapper">
+
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <!-- <h4 class="modal-title" i18n="@@productLabelStockFacilityModal.title">{{title}} (at {{organization?.name}})</h4> -->
+          <div class="title-page content-element--title">{{title}}</div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockFacilityModal.section.basicInfo">Basic information</h2>
+          <div class="af-form-element">
+
+            <textinput
+              [form]="form.get('name')"
+              label="Facility name"
+              style="width: 100%"
+              placeholder="Enter facility name"
+              i18n-label="@@productLabelStockFacilityModal.textinput.name.label"
+              i18n-placeholder="@@productLabelStockFacilityModal.textinput.name.placeholder"
+              [isInvalid]="submitted && form.get('name').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                    Facility name is required
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+
+            <single-choice
+              label="Facility type"
+              i18n-label="@@productLabelStockFacilityModal.facilityType.label"
+              [formControlInput]="form.get('facilityType')"
+              [codebookService]="activeFacilityTypeService"
+              [isInvalidChoice]="submitted && form.get('facilityType').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('facilityType').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                    Facility type is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabelStockFacilityModal.section.location">Location</h2>
+          <div class="af-form-element">
+
+            <location-form
+              [form]="form.get('location')"
+              [submitted]="submitted">
+            </location-form>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockFacilityModal.section.additional">Additional attributes</h2>
+          <div class="af-form-element">
+
+            <single-choice
+              label="Is this a collection facility?"
+              i18n-label="@@productLabelStockFacilityModal.textinput.collection.semi-product.label"
+              [formControlInput]="form.get('isCollectionFacility')"
+              [codebookService]="codebookStatus"
+              [isInvalidChoice]="submitted && form.get('isCollectionFacility').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('isCollectionFacility').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                    Choice is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+
+            <single-choice
+              label="Contains sellable semi-products?"
+              i18n-label="@@productLabelStockFacilityModal.textinput.sellable.semi-products.label"
+              [formControlInput]="form.get('isPublic')"
+              [codebookService]="codebookStatus"
+              [isInvalidChoice]="submitted && form.get('isPublic').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('isPublic').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                    Choice is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+
+          </div>
+        </div>
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockFacilityModal.section.semi-products">Contained semi-products</h2>
+          <div class="af-form-element">
+
+            <div class="search-field">
+              <textinput
+                label=""
+                [form]="semiProductsForm"
+                placeholder="Type semi-product ..."
+                i18n-placeholder="@@productLabelStockFacilityModal.textinput.search-field.placeholder"
+                [codebookService]="activeSemiProducstForProduct"
+                [organizationId]="chainProductId"
+                [resultFormatter]="spResultFormatter"
+                [inputFormatter]="spInputFormatter"
+                (itemMatching)="addSelectedSP($event)">
+              </textinput>
+            </div>
+            <div *ngFor="let sp of form.get('semiProducts').value; index as i">
+              <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                <div>{{sp?.name}}</div>
+                <div (click)="deleteSP(sp)">
+                  <fa-icon
+                    class="del-icon"
+                    [icon]="faTimes"></fa-icon>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockFacilityModal.section.suggestePrice">Suggested semi-product prices</h2>
+          <div class="af-form-element">
+
+            <div *ngFor="let semi of form.get('semiProductPrices')?.controls;index as idx">
+
+              <div class="row align-items-center">
+                <div class="col-7">
+                  {{semiProductName(semi.get('semiProductId').value)}}
+                </div>
+                <div class="col-5">
+                  <div class="d-flex justify-content-end align-items-center">
+                    <textinput
+                      [form]="semi.get('price')"
+                      step="0.01"
+                      type="number"
+                      style="width: 100px">
+                    </textinput>
+                    <div style="margin-left: 4px;">{{semi.get('currency').value}}</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons" i18n="@@productLabelStockFacilityModal.modal.footer.buttons">
+            <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+            <button class="btn" type="button" (click)="updateFacility();"><span>Save</span></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-authorised-layout>

@@ -1,0 +1,119 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+
+// .custom-navbar-white {
+//   border-bottom: 1px solid $top-bar-border;
+//   background-color:$body-background;
+//   margin-left: 80px;
+//   padding-left: 378px;
+//   height: 80px;
+// }
+
+.drobtinice {
+  margin-top: 16px;
+  margin-left: 56px;
+  height: 1.875rem;
+  font-size: inherit;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.875rem;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: -378px;
+    font-size: 1.375rem;
+    margin-top: 0;
+  }
+
+  &--title {
+    max-width: 15ch;
+    display: block;
+    @include ellipsis-1-row;
+
+    @include media-breakpoint-up(md) {
+      max-width: calc(100% - 150px);          // 150 being rough estimation of user+company lenght
+    }
+    @include media-breakpoint-up(lg) {
+      max-width: calc(100% - 200px);          // 150 being rough estimation of user+company lenght
+    }
+  }
+}
+
+.topbar-authorised-mobile {
+  @include media-breakpoint-down(md) {
+    height: 16px;
+    background-color: $primary-lighter;
+    width: 100%;
+  }
+}
+
+
+.locked {
+  color: $gray;
+}
+
+.locked:hover {
+  color: $gray;
+  text-decoration: unset;
+}
+
+ul {
+  list-style-type: none;
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+//   font-size: 1.5rem;
+//   @include media-breakpoint-down(md) {
+//     font-size: 1rem;
+//   }
+}
+
+// li {
+//   float: left;
+//   color: $primary;
+// }
+
+// li a {
+//   font-size: 1.5rem;
+//   color: $primary;
+//   font-weight: normal;
+//   @include media-breakpoint-down(md) {
+//     font-size: 1rem;
+//   }
+// }
+
+// .drobtinice {
+//     margin-left: 42px;
+//     @include media-breakpoint-down(md) {
+//       display: none;
+//    }
+// }
+// .drobtinice-separator {
+//    margin-left: 1rem;
+//    margin-right: 1rem;
+//    @include media-breakpoint-down(md) {
+//     margin-left: 0.25rem;
+//     margin-right: 0.25rem;
+//    }
+
+// }
+
+.logo-container{
+  display:none;
+    @include media-breakpoint-down(md) {
+    display: inline;
+  }
+}
+
+
+// .drobtinice-mobile {
+//   display:none;
+//   @include media-breakpoint-down(md) {
+//     display: flex;
+//     margin-top: 96px;
+//     width: 100vw;
+//     padding-left: 16px;
+//   }
+// }

@@ -1,0 +1,144 @@
+
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main">
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.payments">Payments</div>
+        <button *ngIf="!(!clickCoopPing$.value || this.clickAssocPing$.value)" class="btn btn-solid round btn-table-new content-element--btn" (click)="newPayment()" i18n="@@productLabelStock.button.newPayment">
+          <span>+ Add payment</span>
+        </button>
+      </div>
+
+      <div class="d-flex justify-content-between main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfPayments">List of payments</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingPayments">Showing {{showedPayments}}/{{allPayments}}</div>
+        </div>
+        <div class="d-flex align-items-top" *ngIf="clickCoopPing$.value">
+          <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+            <div *ngIf="filterStatus && filterStatus?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.paymentStatus.status">Status {{filterStatus.value | lowercase}}
+              <div (click)="setPaymentStatus('')" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <div *ngIf="filterWayOfPayment && filterWayOfPayment?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">{{filterWayOfPayment.value | formatWayOfPayment}}
+              <div (click)="setWayOfPayment('')" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <div class="dropdown-menu" ngbDropdownMenu>
+              <button ngbDropdownItem (click)="setPaymentStatus('CONFIRMED')" i18n="@@productLabelStock.filter.paymentStatus.confirmed">Confirmed</button>
+              <button ngbDropdownItem (click)="setPaymentStatus('UNCONFIRMED')" i18n="@@productLabelStock.filter.paymentStatus.unconfirmed">Unconfirmed</button>
+              <div class="line"></div>
+              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COOPERATIVE')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCooperative">Cash via cooperative</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COLLECTOR')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCollector">Cash via collector</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('BANK_TRANSFER')" i18n="@@productLabelStock.filter.wayOfPayment.bankTransfer">Bank transfer</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('UNKNOWN')" i18n="@@productLabelStock.filter.wayOfPayment.unknown">Unknown</button>
+            </div>
+
+            <button ngbDropdownToggle class="af-actions-btn" i18n-placeholder="@@productLabelStock.filter.payments.placeholder">
+              <div class="af-actions-btn-icon">
+                <span class="af-actions-btn-icon-shape af-actions-btn-icon-shape--filter"></span>
+              </div>
+              <span class="af-actions-btn-icon-label">Filter</span>
+            </button>
+
+            <app-search-textinput
+              [form]="searchNameFacility"
+              (valueChange)="searchInput($event)">
+            </app-search-textinput>
+
+            <!-- <app-search-textinput
+              --[form]="searchNameCollectors"
+              --(valueChange)="serchInput($event, 'collectors')"
+              --[items]="items"
+              --byCategory="true"
+              [searchCategory]="this.byCategoryCollector"
+              --(categoryChange)="onCategoryChange($event, 'collectors')">
+            </app-search-textinput> -->
+
+
+            <button class="af-actions-btn" [class.af-actions-btn--disabled]="selectedIds.length == 0" (click)="selectedIds.length> 0 && clickConfirmPaymentsPing$.next(true)">
+              <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.confirmPayments">Confirm payments</span>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-flex" *ngIf="this.clickCoopPing$.value">
+      <app-datepicker
+        label="From"
+        i18n-label="@@productLabelPayments.datepicker.date.from"
+        [form]="fromFilterDatePayments"
+        [invalid]="fromFilterDatePayments.invalid"
+        (onChange)="onChange('PAYMENTS')"
+        style="width: 130px; margin-right: 1rem;">
+      </app-datepicker>
+
+      <app-datepicker
+        label="To"
+        i18n-label="@@productLabelPayments.datepicker.date.to"
+        [form]="toFilterDatePayments"
+        [invalid]="toFilterDatePayments.invalid"
+        (onChange)="onChange('PAYMENTS')"
+        style="width: 130px">
+      </app-datepicker>
+
+    </div>
+
+
+    <app-product-label-stock-payment-list *ngIf="this.organizationId"
+      [paymentStatusPing$]="paymentStatusPing$"
+      [queryPing$]="queryPing$"
+      [byCategoryPing$]="byCategoryPing$"
+      [reloadPingList$]="reloadPaymentsPing$"
+      (countAll)="onCountAllPayments($event)"
+      [organizationId]="this.organizationId"
+      (showing)="onShowPayments($event)"
+      (pageChanged)="pageChangedPaymentList()"
+      [selectedIds]="selectedIds"
+      (selectedIdsChanged)="selectedIdsChanged($event)"
+      [clickConfirmPaymentsPing$]="clickConfirmPaymentsPing$"
+      [wayOfPaymentPing$]="wayOfPaymentPing$"
+      [deliveryDatesPingPayments$]="deliveryDatesPingPayments$"
+      [clickCoopPing$]="clickCoopPing$"
+      [clickAssocPing$]="clickAssocPing$"
+      [sortOptions]="sortOptions">
+    </app-product-label-stock-payment-list>
+
+
+    <ng-container *ngIf="this.clickCoopPing$.value">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.bulkPayments">Bulk payments</div>
+      </div>
+
+      <div class="d-flex justify-content-between main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfBulkPayments">List of bulk payments</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingBulkPayments">Showing {{showedBulkPayments}}/{{allBulkPayments}}</div>
+        </div>
+
+      </div>
+      <app-product-label-stock-bulk-payment-list *ngIf="this.organizationId"
+        [reloadPingList$]="reloadBulkPaymentsPing$"
+        (countAll)="onCountAllPayments($event, 'BULK')"
+        [organizationId]="this.organizationId"
+        (showing)="onShowPayments($event, 'BULK')"
+        [clickAssocPing$]="clickAssocPing$">
+      </app-product-label-stock-bulk-payment-list>
+    </ng-container>
+
+  </div>
+</app-authorised-layout>

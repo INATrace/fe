@@ -1,0 +1,245 @@
+// @import "src/_variables";
+// @import "~bootstrap/scss/functions";
+// @import "~bootstrap/scss/variables";
+// @import "~bootstrap/scss/mixins";
+
+
+
+// // HERE be dragons.
+// $af-wrapper: $white;
+// $af-header:  #5C267B;
+// $af-header-logo: inherit;
+
+// $af-b2c-basefontsize: 16px;
+// $af-b2c-paragraph: 16px;
+// $af-b2c-small: 15px;
+// $af-b2c-nav: 10px;
+// $af-b2c-h1: 25px;
+// $af-b2c-h2: 18px;
+
+// @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+// $af-b2c-font-family: 'Raleway', sans-serif;
+
+// .af-b2c {
+//   &-wrapper {
+//     background: $af-wrapper;
+//   }
+//   &-header {
+//     background-color: $af-header;
+//     background-image: url(/assets/logo/header-bg-graphics.svg);
+//     background-position: 0 -78px;
+//     background-repeat: no-repeat;
+
+//     border-top: 20px solid #ac1a56a6;
+//     text-align: center;
+
+//     &--logo {
+//       background: $af-header-logo;
+//       text-align: center;
+//       padding-top: 27px;
+//       padding-bottom: 44px;
+//     }
+//   }
+
+//   &-nav {       // ul
+//     padding-left: 0;
+//     margin: 0 auto;
+
+//     li {
+//       display: inline-block;
+//       list-style: none;
+
+//       font-family: $af-b2c-font-family;
+//       text-transform: uppercase;
+//       font-weight: 600;
+//       font-size: 10px;
+//       color: #FFFFFF;
+//       letter-spacing: 0;
+//       text-align: center;
+//       line-height: 32px;
+
+//       margin: 0 0.5rem;
+//       padding-bottom: 1rem;
+//       padding-left: 0;
+//     }
+//     &--selected {
+//       border-bottom: 2px solid white;
+//       border-radius: 1px solid;
+//     }
+//   }
+
+//   &-main {
+//     padding-left: 25px;
+//     padding-right: 25px;
+
+//     h1 {
+//       font-family: $af-b2c-font-family;
+//       font-size: 25px;
+//       line-height: 48px;
+//       font-weight: 700;
+//       color: #3C4858;
+//       letter-spacing: 0;
+//       text-align: center;
+//       padding-top: 48px;
+//       padding-bottom: 42px;
+//     }
+//     h2 {
+//       font-family: $af-b2c-font-family;
+//       font-size: 18px;
+//       font-weight: 700;
+//       color: #3C4858;
+//       line-height: 27px;
+
+//       padding-top: 30px;
+//       padding-bottom: 14px;
+//     }
+//     h3 {
+//       font-weight: 700;
+//     }
+//     img {
+//       width: 100%;
+//       max-width: 100%;
+//       border-radius: 16px;
+
+//       background: #ECECEC;
+//       box-shadow: 0 8px 48px 0 rgba(0,0,0,0.08);
+//       border-radius: 16px;
+//     }
+//     blockquote {
+//       padding-left: 40px;
+//       padding-right: 40px;
+
+//       span {
+//         position: relative;
+//         padding-top: 44px;
+
+//         display: inline-block;
+//         // background: yellow;
+
+//         font-family: $af-b2c-font-family;
+//         font-style: italic;
+//         font-size: 15px;
+//         color: rgba(0,0,0,0.90);
+//         line-height: 22px;
+
+
+//         &::before {
+//           display: block;
+//           position: absolute;
+//           top: 0;
+//           left: 0;
+//           content: " ";
+//           height: 44px;
+//           width: 52px;
+//           background-image: url(/assets/icons/af-b2c-quote.svg);
+//           background-repeat: no-repeat;
+//         }
+//       }
+//     }
+//     p {
+//       font-family: $af-b2c-font-family;
+//       font-size: 15px;
+//       color: rgba(0,0,0,0.70);
+//       line-height: 22px;
+//     }
+//     .small {
+//       font-size: 14px;
+//       line-height: 21px;
+//       color: #ABABAB;
+//       text-align: center;
+
+//       padding-top: 16px;            // TODO: convert inot rem's
+//       padding-bottom: 28px;
+//     }
+//   }
+
+//   &-sliders {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-top: 48px;
+//     margin-bottom: 30px;
+
+
+//     // &--prev {
+//     //   display: block;
+//     //   position: absolute;
+//     //   height: 48px;
+//     //   width: 48px;
+
+//     //   span {
+//     //     display: inline-block;
+//     //     height: 48px;
+//     //     width: 48px;
+//     //     border-radius: 24px;
+//     //     background: red;
+//     //     text-align: center;
+//     //   }
+//     // }
+
+//     &-arrows {
+//       display: inline-block;
+//       // position: absolute;
+//       height: 48px;
+//       width: 48px;
+//       // top: 0;
+//       background: inherit;
+//       background: gainsboro;
+//       border-radius: 24px;
+
+//       &--inactive {
+//         background: red;
+//       }
+//       // span {
+//       //   display: inline-block;
+//       //   height: 48px;
+//       //   width: 48px;
+//       //   border-radius: 24px;
+//       //   background: orange;
+//       //   text-align: center;
+//       // }
+
+
+//       // background-color: inherit;
+//       // height: $card-icon-size;
+//       // width: $card-icon-size;
+//       // right: 10px;
+//       // top: 0;
+
+//       &-shape {
+//         display: inline-block;
+//         height: 48px;
+//         width: 48px;
+//         background: #8F92A1;  // this will be color of icon, default is --BLUE
+//         mask-size: cover;
+//         margin-left: 4px;
+//         margin-top: 4px;
+
+//         &--prev {
+//           mask: url(/assets/icons/icon-arrow--left.svg) no-repeat;
+//         }
+//         &--next {
+//           mask: url(/assets/icons/icon-arrow--right.svg) no-repeat;
+//         }
+//       }
+//     }
+//     &--main {
+//       display: inline-block;
+//       // background: blue;
+//       width: 136px;
+
+//       img {
+//         box-shadow: 0 8px 48px 0 rgba(0,0,0,0.08);
+//         border-radius: 50px 50px 50px 0;
+
+//         min-height: 136px;
+//         height: 100%;
+
+//         -o-object-fit:cover;          // lets make it full height
+//         object-fit:cover;
+//       }
+//     }
+//   }
+
+// }
+

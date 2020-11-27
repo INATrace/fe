@@ -1,0 +1,16 @@
+<div class="wrapper-outer">
+
+  <app-authorised-side-nav></app-authorised-side-nav>
+
+  <div class="wrapper-inner">
+
+    <app-authorised-top-nav
+      [returnUrl]="returnUrl">
+    </app-authorised-top-nav>
+    <!-- <div class="top-spacer"></div> -->
+
+    <!-- <app-page-content></app-page-content> -->
+    <ng-content></ng-content>
+
+  </div>
+</div>

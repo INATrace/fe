@@ -1,0 +1,23 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.enabled-action {
+  color: $primary;
+}
+
+.enabled-action:hover {
+  text-decoration: underline;
+}
+
+.disabled-action {
+  color: $gray;
+}
+
+
+.spacer {
+  height: 1.5rem
+}
+
+

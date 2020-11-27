@@ -1,0 +1,44 @@
+<!-- <div i18n="@@contactForm.section.additionalInfo" class="modal-sub-title">Additional information about user</div>
+
+<textinput
+  [form]="form.get('phone')"
+  label="Phone number"
+  style="width: 100%"
+  placeholder="Enter phone number"
+  i18n-label="@@contactForm.textinput.phone.label"
+  i18n-placeholder="@@contactForm.textinput.phone.placeholder"
+  [isInvalid]="submitted && form.get('name').invalid">
+  <ng-container *ngIf="submitted">
+    <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
+      <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.name.error">
+        Phone is required
+      </div>
+    </div>
+  </ng-container>
+
+</textinput>
+
+<textinput
+  [form]="form.get('email')"
+  label="E-mail"
+  style="width: 100%"
+  placeholder="Enter e-mail address"
+  i18n-label="@@contactForm.textinput.email.label"
+  i18n-placeholder="@@contactForm.textinput.email.placeholder"
+  [isInvalid]="submitted && form.get('name').invalid">
+  <ng-container *ngIf="submitted">
+    <div *ngIf="form.get('email').errors as errors" class="sc-invalid-feedback">
+      <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.name.error">
+        Email is required
+      </div>
+    </div>
+  </ng-container>
+
+</textinput>
+
+<checkbox-input [form]="form.get('contact.hasSmartPhone')"
+  [invalid]="submitted && form.get('hasSmartPhone')">
+  <checkbox-input-rich-label style="font-weight: 300;" i18n="@@contactForm.checkbox-input.hasSmartPhone">
+    Smart phone
+  </checkbox-input-rich-label>
+</checkbox-input> -->

@@ -1,0 +1,93 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.top-block{
+  margin-left: -24px;
+  margin-right: -24px;
+  height: 365px;
+  margin-top: -365px;
+  background-color: $primary-lightest;
+}
+.watermark{
+  width: 100%;
+  padding: 20px;
+  position: absolute;
+  height: 356px;
+}
+.watermark p{
+  font-size: 5rem;
+  color: $gray-semi;
+  transform-origin: 33% 50%;
+  transform: rotate(-45deg);
+}
+
+.h2-style{
+  color: $secondary;
+}
+.p-desc-block{
+  margin-top: 60px;
+  margin-bottom: 54px;
+}
+.social-icon{
+  color: $secondary;
+  font-size: 2.75rem;
+}
+.content-text{
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: $secondary;
+}
+li {
+  list-style-type: none;
+  position: relative;    /* It's needed for setting position to absolute in the next rule. */
+}
+li::before {
+  content: '';
+  position: absolute;
+  left: -1.1em;          /* Adjust this value so that it appears where you want. */
+  top: 0.3rem;
+  height:1em;
+  width:1em;
+  background-image:url("/assets/front-label/file-image-regular.svg");
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+li.back-img-pdf::before {
+  background-image:url("/assets/front-label/file-pdf-solid.svg");
+}
+li.back-img-jpg::before {
+  background-image:url("/assets/front-label/file-image-regular.svg");
+}
+
+.list-block{
+  margin-top: -32px;
+  margin-bottom:32px;
+  margin-left: 24px;
+}
+
+.img-farmer {
+  max-width: 50%;
+  max-height: 240px;
+
+  @include media-breakpoint-down(md) {
+      max-width: 100%;
+  }
+
+}
+
+
+.logo-container {
+    padding: 1rem;
+    @include media-breakpoint-up(lg) {
+      @include float-right;
+      margin-right: 48px;
+  }
+}
+
+.left{
+     @include media-breakpoint-down(md) {
+      margin-left: 0px;
+  }
+}

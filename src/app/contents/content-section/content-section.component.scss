@@ -1,0 +1,160 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+
+.section-wrapper {
+    // margin-top: 1rem;
+    // margin-top: $sp-spacing-three;
+}
+
+.active-content {
+    // border-left-color: $secondary !important;
+    transition: border-left-color 0.3s ease-out;
+}
+
+.active-content.sc-invalid-section-border {
+    border-left-color: $danger !important;
+    transition: border-left-color 0.3s ease-out;
+}
+
+.active-title {
+    @include media-breakpoint-up(md) {
+        color: $primary !important;
+    }
+}
+
+.active-title.sc-invalid-section-text {
+    @include media-breakpoint-up(md) {
+        color: $danger !important;
+    }
+}
+
+.content-title {
+    font-weight: 500;
+    color: $secondary;
+    text-align: left;
+    white-space: nowrap;
+    // padding-left: 0.6rem;
+    // padding-right: 1.25rem;
+
+    @include media-breakpoint-down(sm) {
+        // font-size: 1.2rem;
+        white-space: nowrap;
+        font-size: 1.75rem;
+        text-align: left;
+        padding-left: 0.6rem;
+        font-weight: normal;
+    }
+
+}
+
+.content-title.sc-invalid-section-text {
+    color: $danger !important;
+}
+
+
+.content-section {
+    // padding-left: 1rem;
+    // padding-right: 1rem;
+    // border-left-width: 4px;
+    // border-left-style: solid;
+    // border-left-color: transparent;
+    // @include media-breakpoint-down(sm) {
+    //     border-left-width: 0px;
+    // }
+
+}
+
+.content-comment {
+    padding-right: 1rem;
+    @include media-breakpoint-down(sm) {
+        font-size: 0.9rem;
+        padding-left: 0.5rem;
+        font-weight: normal;
+    }
+}
+
+.faq-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.sp-faq-icon-large {
+    // color: red;
+    // color: $primary-color;
+    font-size: 1rem;
+    // height: 24px;
+    // width: 24px;
+    color: $primary;
+    // border-radius: 50%;
+    // padding-right: 4px;
+    // padding-top: 1px;
+    // position: absolute;
+
+    &:hover {
+        color: $secondary;
+    }
+
+    // .ng-fa-icon {
+    //     height: 24px;
+    //     width: 24px;
+    //     background-color: $primary-color;
+    //     border-radius: 50%;
+    //     padding-right: 4px;
+    //     padding-top: 2px;
+
+    //     &:hover {
+    //         color: $secondary-color;
+    //     }
+    // }
+
+    .ng-fa-icon {
+        position: relative;
+        // position: absolute;
+        right:0;
+        top: 0;
+
+        // @include breakpoint(medium) {
+        //     right: -660px;
+        // }
+
+        @include media-breakpoint-only(md) {
+            position: absolute;
+            right:0;
+            top: 0;
+        }
+    //     height: 24px;
+    //     width: 24px;
+        color: $primary;
+    //     border-radius: 50%;
+    //     padding-right: 4px;
+    //     padding-top: 2px;
+
+        &:hover {
+            color: $secondary;
+        }
+    }
+}
+
+.title-icon {
+  color: $primary;
+  font-size: 0.8rem;
+  position: absolute;
+  margin-left: 6px;
+  margin-top: -6px;
+}
+
+
+.dot {
+  position: relative;
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid $primary;
+  cursor: pointer;
+}
+

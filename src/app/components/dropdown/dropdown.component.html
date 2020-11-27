@@ -1,0 +1,14 @@
+<ul class="dropdown-container" #dropdownContainer>
+  <li *ngFor="let dropdown of links;index as i">
+    <span (click)="openDropdown(i)" (mouseenter)="openDropdown(i)" (mouseleave)="leave(i)" class="sp-text sp-text--dropdown" [ngClass]="{dark: dark}">{{getTitle(dropdown)}}
+      <img *ngIf="arrow" class="sp-dropdown-arrow" src="assets/sp-dropdown-arrow.svg" />
+      <img *ngIf="arrowBrand" class="sp-dropdown-arrow" src="assets/sp-dropdown-arrow-brand.svg" /></span>
+    <ul *ngIf="open === i" class="dropdown grid-y" [ngClass]="{top: top}" (mouseenter)="registerEnter(i)" (mouseleave)="closeDropdownsWithDelay(i)">
+      <li *ngFor="let link of dropdown.links" class="cell">
+        <a *ngIf="link.externalLink && !link.onClick" class="link dark sp-text" (click)="navigateTo(link.link)">{{link.title}}</a>
+        <a *ngIf="!link.externalLink && !link.onClick" class="link dark sp-text" (click)="navigateTo(link.link)">{{link.title}}</a>
+        <button *ngIf="link.onClick" class="sp-text dark link btn-like-link" (click)="closeDropdowns(); link.onClick(); setSelectedLink(link); ">{{link.title}}</button>
+      </li>
+    </ul>
+  </li>
+</ul>

@@ -1,0 +1,20 @@
+{
+    "/api": {
+        "target": "",
+        "secure": false,
+        "logLevel": "debug",
+        "pathRewrite": {
+
+        },
+        "changeOrigin": true
+    },
+    "/chain-api": {
+      "target": "",
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+
+      },
+      "changeOrigin": true
+  }
+}

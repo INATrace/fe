@@ -1,0 +1,25 @@
+.modal-header {
+    border-bottom: 0 none;
+}
+.modal-footer {
+    border-top: 0 none;
+}
+
+.sp-cookie-management-table {
+    margin: 1rem;
+}
+
+.sp-cookie-management-label {
+
+    span:first-child {
+        display: block;
+    }
+    span:last-child {
+        display: inline-block;
+        margin-bottom: 1rem;
+        padding-right: 1rem;
+        font-size: 85%;
+        font-style: italic;
+        color: #888;
+    }
+}

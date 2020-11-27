@@ -1,0 +1,30 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.sorter-oznacen {
+    font-weight: bold !important;
+}
+
+th {
+  border: none;
+  padding: 10px;
+  padding-left: 5px;                     // we're going ot align it to cells below.
+  background-color: #FFFFFF;
+  font-size: .875em;
+}
+
+.sorter-icon {
+  font-size: 1.125rem;
+  margin-left: 0.5rem;
+  line-height: 0.75rem;
+}
+
+.sorter-box-disabled {
+  color: $gray-semi;
+}
+
+:host {
+  cursor: pointer;
+}

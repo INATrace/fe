@@ -1,0 +1,192 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.user-box {
+  display: flex;
+  color: white;
+  font-size: 1.2rem;
+  // border: 1px solid white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-box:hover {
+  // background-color: rgba(0,0,0,0.3);
+}
+
+.user-box-name {
+    margin-left: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 15rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.user-box-name:hover {
+  text-decoration: underline;
+}
+.user-icon-box {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary;
+  margin-left: 0.5rem;
+  margin-top: 2rem;
+}
+
+.user-icon {
+  color: white;
+  font-size: 1.7rem;
+}
+
+.caret-icon-box {
+  width: 1rem;
+  // height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color:white;
+  margin-left: 0.5rem;
+}
+
+.caret-icon {
+  color: white;
+}
+
+
+
+
+
+//*** from demo//
+.btn:not(.dropdown-toggle).btn-underlined{
+    border:none!important;
+    background-color:transparent!important;
+    position:relative
+}
+.btn:not(.dropdown-toggle).btn-underlined>span{
+    padding:.4em 0
+}
+.btn-underlined.border-thin:after,.btn-underlined.border-thin:before{
+    height:1px
+}
+.special3:before{
+    background:linear-gradient(90deg,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,.03))
+}
+.btn-underlined:after,.btn-underlined:before{
+    content:"";
+    display:inline-block;
+    width:100%;
+    height:1px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background-color:rgba(39,174,96,.25)
+}
+.btn-underlined:hover:after{
+    transform-origin:left center;
+    transform:scaleX(1)
+}
+.btn-underlined:after{
+    background:$primary;
+    transform:scaleX(0);
+    transform-origin:right center;
+    transition:transform .3s cubic-bezier(.4,0,.2,1)
+}
+.special3:after{
+    background:#fff
+}
+.btn:not(.dropdown-toggle).special3{
+    color:hsla(0,0%,100%,.68);
+    font-size:15px!important;
+    font-weight:900!important;
+    letter-spacing:.03em!important
+}
+.btn-group-sm>.btn:not(.dropdown-toggle)>span,.btn-group-sm>input.btn[type=button],.btn-group-sm>input.btn[type=submit],.btn:not(.dropdown-toggle).btn-sm>span,input[type=button].btn-sm,input[type=submit].btn-sm{
+    padding:.85em 1.5em
+}
+.btn-group-sm>.btn>span,.btn-sm>span{
+    padding:.85em 1.5em
+}
+.btn-group-sm>.btn:not(.dropdown-toggle).btn-x,.btn:not(.dropdown-toggle).btn-sm.btn-x{
+    padding:.5em 1em
+}
+.special3.btn-bordered:hover{
+    border-color:#fff
+}
+.btn.special8.btn-bordered{
+    border-color:hsla(0,0%,100%,0)
+}
+.btn:not(.dropdown-toggle).special8.btn-bordered:hover{
+    border-color:#fff
+}
+.btn:not(.dropdown-toggle).border-thin{
+    border-width:1px
+}
+.btn:not(.dropdown-toggle).border-thin>span{
+    margin:-.5px
+}
+.btn-underlined.border-thin:after,.btn-underlined.border-thin:before{
+    height:1px
+}
+.btn:not(.dropdown-toggle).special1{
+    color:#fff;
+    border-color:hsla(0,0%,100%,.29);
+    font-size:15px!important;
+    font-weight:900!important;
+    letter-spacing:.03em!important
+}
+.btn:not(.dropdown-toggle).special1:hover{
+    background-color:$primary;
+    border-color:$primary;
+    color:#fff
+}
+.special2{
+    margin-left:15px!important
+}
+.btn>span{
+    display:inline-flex;
+    padding:0.563rem 1rem;
+    border-radius:inherit;
+    border-color:inherit;
+    flex-flow:row wrap;
+    align-items:center;
+    transition:transform .3s cubic-bezier(.22,.665,.34,.875)
+}
+.special5{
+    color:#000;
+    border-color:rgba(0,0,0,.66);
+    font-size:15px!important;
+    font-weight:500!important;
+    letter-spacing:.03em!important
+}
+.special6{
+    margin-left:15px!important
+}
+.special7.btn{
+    color:#000;
+    font-size:15px!important;
+    font-weight:500!important;
+    letter-spacing:.03em!important
+}
+.btn.special8.btn-bordered{
+    border-color:hsla(0,0%,100%,0)
+}
+.btn:not(.dropdown-toggle).special8.btn-bordered:hover{
+    border-color:#fff
+}
+.btn:not(.dropdown-toggle).special8:hover{
+    color:rgba(0,0,0,.8)
+}
+.btn:not(.dropdown-toggle).special8:before{
+    background:linear-gradient(90deg,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,.03))
+}

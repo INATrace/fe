@@ -1,0 +1,62 @@
+<div class="form-group" [class.no-formgroup-margin]="noMargin">
+    <label class="d-flex mb-0 text-input-label" [class.sc-invalid-feedback-label-color]="isInvalidChoice">{{label}}<span *ngIf="isRequired()">*</span></label>
+    <ng-select
+        #ngSelect
+        *ngIf="codebookService || enumChoices || this.isBooleanSelector()"
+        [items]="this.options"
+        [placeholder]="isDisabled() ? '' : (codebookService ? codebookService.placeholder() : (enumChoices ? enumPlaceholder : ''))"
+        [ngModel]="modelChoice"
+        (ngModelChange)="onChangeHandler($event)"
+        [clearable]="clearable"
+        [readonly]="readonly"
+        (clear)="onClear($event)"
+        (blur)="onBlur($event)"
+        (focus)="onFocus($event)"
+        [typeahead]="typeahead$"
+        [class.ng-invalid]="isInvalidChoice"
+        [class.ng-dirty]="isInvalidChoice"
+        [class.ng-touched]="isInvalidChoice"
+        notFoundText="Nothing found"
+        i18-notFoundText="single choice ni izbir text|@@ui.singleChoice.niIzbir.text"
+        i18-typeToSearchText="@@ui.singleChoice.enterSearchTerm"
+        typeToSearchText="Enter search term"
+        [disabled]="isDisabled()"
+        class="custom labelPlaceholder"
+        style="border:none">
+        <ng-template ng-header-tmp *ngIf="headerTemplate">
+            <div class="hover-pointer ">
+                <ng-template *ngTemplateOutlet="headerTemplate"></ng-template>
+            </div>
+        </ng-template>
+        <ng-template ng-label-tmp let-item="item">
+            <div [ngClass]="{'ng-value-simple-style-label': useSimpleStyle, 'ng-value-label': !useSimpleStyle, 'sp-custom-ng-select-label': true}" class="labelPlaceholder">
+                <fa-icon *ngIf="item.icon"
+                    class="ml-1 mr-2"
+                    [icon]="item.icon"
+                    [class]="item.class"></fa-icon>
+                {{this.formatter(item)}}
+            </div>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div [ngClass]="{'ng-value-simple-style-label': useSimpleStyle, 'ng-value-label': !useSimpleStyle, 'sp-custom-ng-select-option': true}" class="labelPlaceholder">
+                <fa-icon *ngIf="item.icon"
+                    class="ml-1 mr-2"
+                    [icon]="item.icon"
+                    [class]="item.class"></fa-icon>
+                {{this.formatter(item)}}
+            </div>
+        </ng-template>
+        <ng-container *ngIf="pagingData$ | async as paging">
+            <ng-template ng-footer-tmp *ngIf="paging.totalCount> 0">
+                <div class="d-flex align-items-center pl-3" style="height: 1.5rem">
+                    Zadetki:
+                    <button *ngIf="isPagePrev()" class="btn btn-link ml-3" (click)="onPagePrev()">&lt;</button>
+                    {{paging.offset + 1}}-{{min(paging.offset + paging.limit, paging.totalCount)}} od
+                    {{paging.totalCount}}
+                    <button *ngIf="isPageNext()" class="btn btn-link ml-3" (click)="onPageNext()">&gt;</button>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-select>
+    <ng-content></ng-content>
+</div>

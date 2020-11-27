@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-dashboard</title>
+    <g id="icon-dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Group" transform="translate(3.000000, 3.000000)" stroke="#B7BFCB" stroke-width="2">
+            <polygon id="Stroke-1" points="0.0004 30 30.0004 30 30.0004 0 0.0004 0"></polygon>
+            <line x1="0" y1="4" x2="30" y2="4" id="Stroke-3"></line>
+            <polygon id="Stroke-5" points="7.0034 15.002 13.0034 15.002 13.0034 9.002 7.0034 9.002"></polygon>
+            <polygon id="Stroke-6" points="17.0094 15.002 23.0094 15.002 23.0094 9.002 17.0094 9.002"></polygon>
+            <polygon id="Stroke-7" points="7.0034 25.008 13.0034 25.008 13.0034 19.008 7.0034 19.008"></polygon>
+            <polygon id="Stroke-8" points="17.0094 25.008 23.0094 25.008 23.0094 19.008 17.0094 19.008"></polygon>
+        </g>
+    </g>
+</svg>

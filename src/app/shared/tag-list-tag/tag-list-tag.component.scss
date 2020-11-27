@@ -1,0 +1,15 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$circle-size: 1em;
+
+.removebutton {
+    width: $circle-size;
+    height: $circle-size;
+    min-width: $circle-size;
+    min-height: $circle-size;
+    cursor: pointer;
+    margin-left: map-get($spacers, 2)
+}
+

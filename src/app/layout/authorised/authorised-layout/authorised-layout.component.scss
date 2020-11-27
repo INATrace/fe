@@ -1,0 +1,60 @@
+@import 'src/_variables';
+@import '../../../../variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+$wrapper-inner-height: 80px;
+$wrapper-inner-height2x: 160px;
+
+.wrapper-inner {
+  // margin-left: 90px;
+
+  margin-top: $wrapper-inner-height; // 160px;
+  // margin-right: 10px;
+  height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+  width: 100%; // why is .main different for product and settings?
+  border: $af-debugging-box-borders;
+}
+
+
+@media (min-width:576px){
+  .wrapper-inner {
+    margin-right: $wrapper-spacing--small;
+    margin-left: $wrapper-spacing--small;
+  }
+}
+@media (min-width:768px){
+  .wrapper-inner {
+    margin-top: $wrapper-inner-height;
+    height: calc(100vh - 80px);
+    margin-right: $wrapper-spacing--medium;
+    margin-left: $wrapper-spacing--medium;
+  }
+}
+@media (min-width:992px){
+  .wrapper-inner {
+    // margin-right: $wrapper-spacing--large;
+    margin-right: $wrapper-spacing--medium;
+    margin-left: $wrapper-spacing--xlarge-left;
+  }
+}
+@media (min-width:1200px){
+  .wrapper-inner {
+    // margin-right: $wrapper-spacing--xlarge;
+    margin-right: $wrapper-spacing--medium;
+    margin-left: $wrapper-spacing--xlarge-left;
+  }
+}
+
+
+.wrapper-outer {
+  display: flex;
+  flex-direction: row;
+}
+.top-spacer{
+  height: 80px;
+}
+

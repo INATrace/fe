@@ -1,0 +1,18 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.link-normal{
+  padding-left: 33px;
+}
+ul {
+  list-style-type: none;
+}
+.spacer-mobile {
+  height: 0.5rem;
+}
+
+.spacer {
+  height: 3rem;
+}

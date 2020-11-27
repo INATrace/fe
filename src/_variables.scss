@@ -1,0 +1,431 @@
+// https://github.com/angular/angular-cli/wiki/stories-include-bootstrap
+$icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
+
+$fa-font-path: "../src/assets/webfonts";
+// Below one can override variables from:
+// https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
+
+
+
+@font-face {
+  font-family: 'graystroke';
+  src: url('../src/assets/webfonts/graystroke_regular-webfont.woff2') format('woff2'),
+       url('../src/assets/webfonts/graystroke_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/// SYNC COLORS WITH theme.service.ts !!!!
+
+$gray-dark:   #666666 !default;
+$gray:        #939393 !default;
+$gray-semi:   #E6E6E6 !default;
+$gray-light:  #FCFCFC !default;
+$black:       #212121 !default;
+$blue:        #1E90FF !default;
+$blue-light:  #4BA6FF !default;
+$red:         #DF1642 !default;
+$red-light:   #E95C7B !default;
+$yellow:      #FFBB38 !default;
+$yellow-light:#FFCF74 !default;
+$green:       #26AE60 !default;
+
+$primary-light:#A29891;
+$primary-lighter:#C5BFBB;
+$primary-lightest:#E8E6E4;
+
+// bootstrap theme colors
+$primary:       #5DBCCF;
+$secondary:     #25265E;
+$tertiary:      #3C4859;
+$success:       $primary !default;
+$info:          $blue !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $gray-light !default;
+$dark:          $gray-dark !default;
+
+
+$body-background: #F7F7F7;
+$top-bar-border: #F1F2F5;
+$login-title-color: #8F92A1;
+$checkbox-border: #ECECEE;
+$odd-table-color: #F8F8F8;
+$counting-page: #8F92A1;
+$side-nav-active-bar: #B7BFCB;
+
+
+// a brush of af-card related colours
+$af-card-border: #F1F2F5;
+$white: #ffffff;
+
+$very-pale-cyan: #EAFDFF;
+$soft-cyan: #D3FAFF;
+$moderate-cyan: #5DBCCF;
+
+$pale-orange: #FEECE1;
+$soft-orange:#FDDECB;
+$moderate-orange: #F47E35;
+
+$pale-red: #FFF6F6;
+$soft-red: #FFD9DB;
+$moderate-red: #FF8080;
+
+$pale-blue: #E7ECFF;
+$soft-blue: #C2D1FB;
+$moderate-blue: #6286ED;
+
+$pale-green: #E1F7ED;
+$soft-green: #ACEACB;
+$moderate-green: #2DC76D;
+$darker-green: #1E934F;
+
+$pale-yellow: #FFF5E6;
+$soft-yellow: #FFDC9D;
+$moderate-yellow: #D0A757;
+$darker-yellow: #AC893D;
+
+$icons-color: #25265E;
+
+$placeholder-color: #999999; // #939393;
+// $placeholder-color: red;
+
+// tags
+// $tag-background: lighten($primary, 47%);
+$tag-background: lighten($primary, 20%);
+
+// $tag-text: $gray-800;
+$tag-border: lighten($primary, 20%);
+// $tag-border-color: lighten($primary, 20%);
+// $tag-border: 1px solid $tag-border-color;
+
+// $info: #71B6D0
+
+// selectorji single-choice in taglist
+$selector-marked-color:$gray-semi;
+$selector-selected-color:$gray-semi;
+
+// $dropdown-link-color:               $gray-900 !default;
+// $dropdown-link-hover-color:         darken($gray-900, 5%) !default;
+
+// $line-navigator-color: $gray-500;
+$line-navigator-width: 4px;
+
+$btn-line-height: 2.5;
+
+// $default-body-background: $gray-100;
+
+// navbar and sidebar backgrounds for different themes
+$navbar-bg-rnpd: $primary;
+$sidebar-bg-rnpd: $primary;
+
+$navbar-bg-rnsd: $primary;
+$sidebar-bg-rnsd: $primary;
+
+// RNSD ima temnejša: #00666F
+// svetlejša: #46A6AF)
+//////////// NE UPORABLJAT DIREKTNO !!!
+$primary-rnsd: #46A6AF;
+$secondary-rnsd: #00666F;
+// $primary-rnsd: $primary;
+// $secondary-rnsd: $secondary;
+
+//////////////////////////////////////////////
+
+$themes: (
+  'rnpd': (
+    'primary':  #369BC1,
+    // 'secondary': $gray-600,
+    // 'primary': orange,
+    // 'secondary': red,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+    'light': $light,
+    'dark': $dark,
+    'navbar-bg': $secondary,
+    'sidebar-bg': $dark,
+    'tag-background': lighten($primary, 47%),
+    // 'tag-text': $gray-800,
+    'tag-border': lighten($primary, 20%),
+  ),
+  'rnsd': (
+    'primary': $primary-rnsd,
+    'secondary':$secondary-rnsd,
+    'success': $success,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+    'light': $light,
+    'dark': $dark,
+    'navbar-bg': #254a58,
+    'sidebar-bg': #1c3944,
+    'tag-background': lighten($primary-rnsd, 47%),
+    // 'tag-text': $gray-800,
+    'tag-border': lighten($primary-rnsd, 20%),
+  )
+) !default;
+
+// Initialize our variables as `null` so that when used outside of `themify`,
+// they actually output nothing.
+$color-primary: null;
+$color-secondary: null;
+$color-success: null;
+$color-info: null;
+$color-warning: null;
+$color-danger: null;
+$color-light: null;
+$color-dark: null;
+$color-comment: null;
+$color-navbar-bg: null;
+$color-sidebar-bg: null;
+$color-tag-background: null;
+$color-tag-text: null;
+$color-tag-border: null;
+
+
+
+// https://www.sitepoint.com/sass-theming-neverending-story/
+// POZOR: themify deluje samo na 2. levelu. Konkretno ne smeš delat
+// .bs-tooltip-right {
+//     .arrow::before {
+//         @include themify {
+//             border-top-color: $color-primary;
+//         }
+//     }
+// }
+//
+// ampak
+//
+// .bs-tooltip-right {
+//     @include themify {
+//         .arrow::before {
+//             border-top-color: $color-primary;
+//         }
+//     }
+// }
+
+
+@mixin themify($themes: $themes) {
+  @each $theme, $colors in $themes {
+    &.theme-#{$theme},
+    :host-context(.theme-#{$theme}) &,
+    .theme-#{$theme} & {
+      $color-primary: map-get($colors, 'primary') !global;
+      $color-secondary: map-get($colors, 'secondary') !global;
+      $color-success: map-get($colors, 'success') !global;
+      $color-info: map-get($colors, 'info') !global;
+      $color-warning: map-get($colors, 'warning') !global;
+      $color-danger: map-get($colors, 'danger') !global;
+      $color-light: map-get($colors, 'light') !global;
+      $color-dark: map-get($colors, 'dark') !global;
+      $color-comment: map-get($colors, 'comment') !global;
+      $color-navbar-bg: map-get($colors, 'navbar-bg') !global;
+      $color-sidebar-bg: map-get($colors, 'sidebar-bg') !global;
+      $color-tag-background: map-get($colors, 'tag-background') !global;
+      $color-tag-text: map-get($colors, 'tag-text') !global;
+      $color-tag-border: map-get($colors, 'tag-border') !global;
+
+      @content;
+
+      $color-primary: null !global;
+      $color-secondary: null !global;
+      $color-success: null !global;
+      $color-info: null !global;
+      $color-warning: null !global;
+      $color-danger: null !global;
+      $color-light: null !global;
+      $color-dark: null !global;
+      $color-comment: null !global;
+      $color-navbar-bg: null !global;
+      $color-sidebar-bg: null !global;
+      $color-tag-background: null !global;
+      $color-tag-text: null !global;
+      $color-tag-border: null !global;
+    }
+  }
+}
+
+//
+// Values for Icons
+//
+$dark-blue: #25265E;
+
+// sidenav
+$sidenav-icon-size: 24px;
+$sidenav-icon-bg-size: 34px;
+
+// sidebar
+$sidebar-icon-size: 36px;
+$sidebar-icon-bg-size: 50px;
+
+$navbar-width: 70px;
+$navbar-logo-width: 50px;
+
+$sidenav-a--lineheight: 48px;
+
+$button-icon-size: 24px;
+$button-icon-bg-size: 34px;
+
+$sidenav-bg-colour: #FFFFFF;
+
+$card-icon-size: 32px;
+$card-icon-bg-size: 32px;
+
+// inner wrapper margin, before change was 418px
+// 367px was without padding between side and main content
+$wrapper-margin--base: 368px;
+$wrapper-spacing--small: 10px;
+$wrapper-spacing--medium: 20px;
+$wrapper-spacing--large: 50px;
+$wrapper-spacing--xlarge: 60px;
+$wrapper-spacing--xlarge-left: 90px;
+
+
+$small-corner-radius: 4px; // 0.25rem
+$larger-corner-radius: 16px; // 1rem
+
+//
+// Q: How to use content-element debugger delux?
+// A: To show colours just comment second part of instructions
+//
+
+// we add bg colours for debugging purposes
+$row-1: yellow;
+$row-2: greenyellow;
+$row-1-title: greenyellow;
+$row-2-subtitle: blanchedalmond;
+$row-2-counting: floralwhite;
+
+// we override them debugging colours
+$row-1: inherit;
+$row-2: inherit;
+$row-1-title: inherit;
+$row-2-subtitle: inherit;
+$row-2-counting: inherit;
+
+
+// AF grid
+//
+$af-row: floralwhite;
+
+// we override them debugging colours
+$af-row: inherit;
+
+
+
+// FONTS
+// -----------------------------
+$weight-book: 300;
+$weight-medium: 500;
+
+$font-size-jumbo:         rem-calc(64px);
+$font-size-headline:      rem-calc(48px);
+$font-size-subheading:    rem-calc(24px);
+$font-size-body:          rem-calc(14px);
+$font-size-caption:       rem-calc(14px);
+$font-size-link:          rem-calc(14px);
+$font-size-button:        rem-calc(16px);
+$font-size-small-button:  rem-calc(14px);
+
+$font-size-table:         rem-calc(14px);
+$font-size-table-small:   rem-calc(12.5px);
+
+
+//
+// SPACINGS
+//
+
+$horizontal-aside-height: 6rem;
+$hero-links-width: 6rem;
+
+// Variables and Settings
+// -----------------------------
+
+// Margins and paddings
+$af-spacing-base: 1rem;
+
+// 0.25, 0.5, 0.75
+$af-spacing-quarter:			      $af-spacing-base / 4;
+$af-spacing-half: 			      	$af-spacing-base / 2;
+$af-spacing-three-quarters:	  	($af-spacing-base /4 ) * 3;
+// 1, 1.5, 1.75
+$af-spacing-one: 				        ($af-spacing-base * 1);
+$af-spacing-one-and-a-half: 	  ($af-spacing-base * 1) + $af-spacing-half;
+$af-spacing-one-and-a-treequarters: ($af-spacing-base * 2) - $af-spacing-quarter;
+// 2, 2.5
+$af-spacing-two: 			      	  ($af-spacing-base * 2);
+$af-spacing-two-and-a-half: 	  ($af-spacing-base * 2) + $af-spacing-half;
+// 3, 3.5
+$af-spacing-three: 				      ($af-spacing-base * 3);
+$af-spacing-three-and-a-half: 	($af-spacing-base * 3) + $af-spacing-half;
+// 4, 4.5
+$af-spacing-four: 				      ($af-spacing-base * 4);
+$af-spacing-four-and-a-half: 	  ($af-spacing-base * 4) + $af-spacing-half;
+// 5, 5.5
+$af-spacing-five: 				      ($af-spacing-base * 5);
+$af-spacing-five-and-a-half: 	  ($af-spacing-base * 5) + $af-spacing-half;
+// 6, 6.5
+$af-spacing-six: 				        ($af-spacing-base * 6);
+$af-spacing-six-and-a-half: 	  ($af-spacing-base * 6) + $af-spacing-half;
+
+
+// named ones!
+$af-spacing-sectionElement:     $af-spacing-four-and-a-half;	// 4.5rem
+$af-spacing-bottom: 			      $af-spacing-two;				// 2rem
+
+
+
+// BASE STYLE FOR CARDS
+// -----------------------------
+
+// default one is with --cyan for upper side
+// and white for bottom part
+
+$af-card-bg: $white;
+
+// upper part of card
+$af-card-content-border: $moderate-cyan;
+$af-card-content-bg:  $white; // #EAFDFF;
+
+// text in card
+$af-card-title: #3C4858;
+$af-card-subtitle: #585858;
+$af-card-description: #585858;
+$af-card-title-lineheight: 1.4;
+$af-card-description-lineheight: 1.3;
+
+// indicator up top right
+$af-card-indicator-bg: $very-pale-cyan;           // move these to --cyan, replace with --default
+$af-card-indicator-border: $moderate-cyan;
+
+// icon bottom right in upper section
+$af-icon-shape-bg: $moderate-cyan;
+
+
+// Introducing ellipsis for titles/description
+@mixin ellipsis-1-row {
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin ellipsis-2-rows {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// $af-debugging-box-borders: 1px solid blue;
+$af-debugging-box-borders: none;
+
+// Debugging tables, we're
+// catching spans inside td's
+// $spans-in-tables: red;
+$spans-in-tables: inherit;
+

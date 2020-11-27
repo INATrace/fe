@@ -1,0 +1,226 @@
+<smart-tag
+  [isOpen]="isOpen && !rawObjectData"
+  [readOnly]="rawObjectData"
+  (onDelete)="delete()"
+  (onEdit)="toggle($event)"
+  [formControlInput]="originalFormControl"
+  [disableDelete]="disableDelete"
+  [disableRowClick]="true">
+  <tag-closed>
+    <div *ngIf="contentObject" class="c-capitalize-first">
+      <div class="af-tagitem-container">
+        <span class="af-tagitem-text">{{name}}</span>
+        <!-- <div (click)="viewImage()" class="af-tagitem-image">
+          <img *ngIf="isImageToShow()"
+            src="/chain-api/data/document/download/{{this.contentObject.document.storageKey}}">
+        </div> -->
+      </div>
+    </div>
+  </tag-closed>
+  <tag-open>
+    <subform-layout *ngIf="this.form">
+      <subform-form>
+
+        <div class="af-row">
+          <div class="af-c8">
+            <single-choice *ngIf="codebookOrderingProcessingActions"
+              label="Semi product"
+              i18n-label="@@stockOrderItem.processingAction.label"
+              [formControlInput]="form.get('processingAction')"
+              [codebookService]="codebookOrderingProcessingActions"
+              (onChange)="setProcessingAction($event)"
+              [isInvalidChoice]="submitted && form.get('processingAction').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('processingAction').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@stockOrderItem.singleChoice.semiProduct.error">
+                    Semi product is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+          </div>
+
+        </div>
+
+
+        <div class="af-row">
+          <div class="af-c12">
+
+            <single-choice
+              *ngIf="inputFacilitiesCodebook"
+              label="Order from"
+              i18n-label="@@stockOrderItem.inputFacilityForm.label"
+              [formControlInput]="form.get('inputFacilityForm')"
+              [codebookService]="inputFacilitiesCodebook"
+              style="min-width: 150px;"
+              [isInvalidChoice]="submitted && inputFacilityForm.invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="inputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@stockOrderItem.inputFacilityForm.error.required">
+                  Input facility is required
+                </div>
+              </ng-container>
+            </single-choice>
+
+          </div>
+        </div>
+
+        <!-- <div class="af-row">
+          <div class="af-c12">
+
+            <single-choice
+              *ngIf="outputFacilitiesCodebook"
+              label="Order to"
+              i18n-label="@@stockOrderItem.outputFacilityForm.label"
+              [formControlInput]="form.get('outputFacilityForm')"
+              [codebookService]="outputFacilitiesCodebook"
+              style="min-width: 150px;"
+              [isInvalidChoice]="submitted && outputFacilityForm.invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="outputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@stockOrderItem.outputFacilityForm.error.required">
+                  Output facility is required
+                </div>
+              </ng-container>
+            </single-choice>
+
+          </div>
+        </div> -->
+
+
+        <div class="af-row">
+          <div class="af-c6">
+            <textinput
+              [form]="form.get('totalQuantity')"
+              [label]="outputQuantityLabel"
+              style="width: 100%"
+              type="number"
+              placeholder="Enter quantity"
+              i18n-placeholder="@@stockOrderItem.textinput.quantity.placeholder"
+              [readOnly]="isUsingInput"
+              [isInvalid]="submitted && form.get('totalQuantity').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@stockOrderItem.quantity.textinput.error">
+                    Quantity is required
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+          </div>
+        </div>
+
+        <div class="af-row">
+          <div class="af-c6">
+            <textinput
+              [form]="form.get('internalLotNumber')"
+              label="Internal lot name"
+              i18n-label="@@stockOrderItem.textinput.internalLotName.label"
+              style="width: 100%"
+              [readOnly]="true">
+            </textinput>
+          </div>
+        </div>
+
+        <div class="af-row">
+          <div class="af-c6">
+            <textinput
+              [form]="form.get('pricePerUnitForEndCustomer')"
+              label="Price per item at end customer (EUR)"
+              i18n-label="@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label"
+              style="width: 100%"
+              type="number"
+              placeholder="Enter price in EUR"
+              i18n-placeholder="@@stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder"
+              [readOnly]="isUsingInput"
+              [isInvalid]="submitted && form.get('pricePerUnitForEndCustomer').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('pricePerUnitForEndCustomer').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@stockOrderItem.pricePerUnitForEndCustomer.textinput.error">
+                    Price is required
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+          </div>
+        </div>
+
+        <!-- <div class="af-row">
+            <div class="af-c4">
+              <app-datepicker
+                label="Date"
+                i18n-label="@@additionalProofItem.datepicker.date.label"
+                [form]="form.get('formalCreationDate')"
+                [invalid]="submitted && form.get('formalCreationDate').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('formalCreationDate').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@additionalProofItem.datepicker.date.error">
+                      Date is required
+                    </div>
+                  </div>
+                </ng-container>
+              </app-datepicker>
+            </div>
+            <div class="af-c8">
+              <single-choice
+                label="Type"
+                i18n-label="@@additionalProofItem.label.type"
+                [formControlInput]="form.get('type')"
+                [codebookService]="codebookAdditionalProofs"
+                [isInvalidChoice]="submitted && form.get('type').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@additionalProofItem.textinput.type.error">
+                      Type is required
+                    </div>
+                  </div>
+                </ng-container>
+              </single-choice>
+            </div>
+          </div>
+
+          <div class="af-c6">
+            <ng-container>
+              <attachment-uploader
+                [chainFile]="true"
+                url="{{chainRootUrl}}"
+                downloadUrl="{{chainDownloadRootUrl}}"
+                allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
+                allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+                mode="simpleAsTextField"
+                label="Document (JPG, PNG, PDF)"
+                i18n-label="@@additionalProofItem.attachment-uploader.label"
+                i18n-allowedMimeTypeErrorMessage="@@additionalProofItem.attachment-uploader.allowedMimeTypeErrorMessage"
+                [form]="form.get('document')"
+                [attachmentUploaderId]="'standardsAndCertificates'+listEditorManagerPosition"
+                [invalid]="submitted && form.get('document').invalid"
+                [readOnly]="form.get('document').disabled">
+                <attachment-uploader-content i18n="@@additionalProofItem.attachment-uploader.content">
+                  Upload document
+                </attachment-uploader-content>
+              </attachment-uploader>
+              <attachment-uploader-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('document').errors as errors" validation-error class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@additionalProofItem.attachment-uploader.error">
+                      <span>
+                        Document is required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </attachment-uploader-errors>
+            </ng-container>
+          </div> -->
+      </subform-form>
+
+      <subform-mini-buttons style="width: 100%;" class="d-flex justify-content-end">
+        <mini-buttons
+          (onSave)="save()"
+          (onCancel)="cancel()"
+          [error]="submitted && form.invalid">
+        </mini-buttons>
+      </subform-mini-buttons>
+
+    </subform-layout>
+
+  </tag-open>
+</smart-tag>

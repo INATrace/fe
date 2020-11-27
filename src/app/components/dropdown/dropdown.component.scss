@@ -1,0 +1,41 @@
+// @import 'styles-basic.scss';
+
+ul {
+    position: relative;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+li {
+    display: inline-block;
+    // text-transform: uppercase;
+    // padding-right: $sp-spacing-two;
+    // color: $white;
+}
+
+.sp-dropdown-arrow {
+    margin-left: 0.5rem;
+}
+
+ul.dropdown {
+    position: absolute;
+    // background: $white;
+    // border: 1px solid $brand-pri;
+    top: 100%;
+    margin-left: 0;
+    padding: 0.5rem 1rem;
+    z-index: 99999;
+}
+
+ul.dropdown.top {
+    top: -100px;
+}
+
+ul.dropdown button {
+    // font-weight: $weight-book;
+}
+
+.btn-like-link:hover {
+    text-decoration: underline !important;
+}

@@ -1,0 +1,157 @@
+<app-authorised-layout class="af-layout--system">
+
+  <app-system-left-panel
+    i18n="@@settingsPage.navTitle"
+    title="System">
+  </app-system-left-panel>
+
+  <div class="main">
+
+
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.facilityType">Facility types</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('facility-types')" style="" i18n="@@settingsPage.button.newFacilityType">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfFacilitiesTypes">List of facility types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingFacilitiesTypes">Showing {{showedFacilities}}/{{allFacilities}}</div>
+        </div>
+      </div>
+
+    </div>
+    <app-type-list
+      [parentReload]="parentReloadFacility"
+      type='facility-types'
+      (countAll)="onCountAll($event, 'facility-types')"
+      (showing)="onShow($event, 'facility-types')">
+    </app-type-list>
+
+
+
+
+    <div class="main-inside-top content-element">
+
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.measurementUnitTypes">Measurement unit types</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('measurement-unit-types')" i18n="@@settingsPage.button.newMeasurementUnitType">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfMeasurementUnitTypes">List of measurement unit types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingMeasurementUnitTypes">Showing {{showedMeasurements}}/{{allMeasurements}}</div>
+        </div>
+      </div>
+    </div>
+    <app-type-list
+      [parentReload]="parentReloadMeasure"
+      type='measurement-unit-types'
+      (countAll)="onCountAll($event, 'measurement-unit-types')"
+      (showing)="onShow($event, 'measurement-unit-types')">
+    </app-type-list>
+
+
+
+
+
+    <!-- <div class="main-inside-top content-element">
+
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.actionTypes">Action types</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('action-types')" i18n="@@settingsPage.button.newActionType">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfActionTypes">List of action types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingActionTypes">Showing {{showedActions}}/{{allActions}}</div>
+        </div>
+      </div>
+    </div>
+
+    <app-type-list
+      [parentReload]="parentReloadAction"
+      type='action-types'
+      (countAll)="onCountAll($event, 'action-types')"
+      (showing)="onShow($event, 'action-types')">
+    </app-type-list> -->
+
+
+
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.GradeAbbreviations">Grade abbreviations</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('grade-abbreviation')" i18n="@@settingsPage.button.newGradeAbbreviation">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfGradeAbbreviations">List of grade abbreviaions</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingGradeAbbreviations">Showing {{showedGrades}}/{{allGrades}}</div>
+        </div>
+      </div>
+    </div>
+
+    <app-type-list
+      [parentReload]="parentReloadGrade"
+      type='grade-abbreviation'
+      (countAll)="onCountAll($event, 'grade-abbreviation')"
+      (showing)="onShow($event, 'grade-abbreviation')">
+    </app-type-list>
+
+
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.processingEvidenceType">Processing evidence types</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('processing-evidence-types')" i18n="@@settingsPage.button.newProcessingEvidenceType">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfProcessingEvidenceType">List of processing evidence types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingProcessingEvidenceType">Showing {{showedProcEvidTypes}}/{{allProcEvidTypes}}</div>
+        </div>
+      </div>
+    </div>
+
+    <app-type-list
+      [parentReload]="parentReloadProcEvidTypes"
+      type='processing-evidence-types'
+      (countAll)="onCountAll($event, 'processing-evidence-types')"
+      (showing)="onShow($event, 'processing-evidence-types')">
+    </app-type-list>
+
+
+
+
+     <!--
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfOrderEvidenceType">List of order evidence types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingOrderEvidenceType">Showing {{showedOrderEvidTypes}}/{{allOrderEvidTypes}}</div>
+        </div>
+      </div>
+    </div>
+
+    <app-type-list
+      [parentReload]="parentReloadOrderEvidTypes"
+      type='order-evidence-types'
+      (countAll)="onCountAll($event, 'order-evidence-types')"
+      (showing)="onShow($event, 'order-evidence-types')">
+    </app-type-list> -->
+
+
+  </div>
+</app-authorised-layout>

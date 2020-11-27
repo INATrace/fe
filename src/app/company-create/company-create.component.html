@@ -1,0 +1,236 @@
+<div *ngIf="companyCreateForm" class="container">
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-6">
+      <h5>Company</h5>
+
+      <p style="font-weight: 300">
+        Add information about your company including your company name, logo,
+        address, contact information, website and social media URLs.
+      </p>
+
+      <div class="spacer2-3-7-5rem"></div>
+
+      <textinput [form]="companyCreateForm.get('name')" label="Company name"
+        style="width: 100%" placeholder="Enter company name"
+        [isInvalid]="submitted && companyCreateForm.get('name').invalid">
+        <div *ngIf="submitted && companyCreateForm.get('name').invalid"
+          class="sc-invalid-feedback">
+          <div *ngIf="companyCreateForm.get('name').errors.required">
+            <span>
+              Company name is required
+            </span>
+          </div>
+        </div>
+      </textinput>
+
+      <attachment-uploader
+        mode="simpleAsTextField"
+        label="Company logo"
+        (onFileInfoLoad)="onFileUpload($event)"
+        [form]="companyCreateForm.get('logo')"
+        [attachmentUploaderId]="'logo'"
+        [readOnly]="companyCreateForm.disabled">
+        <attachment-uploader-content>
+          Upload company logo
+        </attachment-uploader-content>
+      </attachment-uploader>
+      <small style="font-weight: 300;">Upload a high-resolution logo of your
+        company (jpeg, jpg, png)</small>
+      <div class="spacer3-5rem"></div>
+
+      <h5 class="fontTertiary">Company headquarters</h5>
+      <div class="spacer2rem"></div>
+      <div class="row">
+        <div class="col">
+          <textinput [form]="companyCreateForm.get('headquarters.address')"
+            label="Street address" style="width: 100%"
+            placeholder="Enter street address">
+          </textinput>
+          <textinput [form]="companyCreateForm.get('headquarters.city')"
+            label="City" style="width: 100%"
+            placeholder="Enter city">
+          </textinput>
+          <textinput [form]="companyCreateForm.get('headquarters.state')"
+            label="State / Province / Region" style="width: 100%"
+            placeholder="Enter State / Province / Region">
+          </textinput>
+        </div>
+        <div class="col d-flex justify-content-end" style="flex-direction:
+          column">
+          <textinput [form]="companyCreateForm.get('headquarters.zip')"
+            label="Zip / Postal Code / P.O. Box" style="width: 100%"
+            placeholder="Enter Zip / Postal Code / P.O. Box">
+          </textinput>
+
+          <single-choice label="Country"
+            [formControlInput]="companyCreateForm.get('headquarters.country')"
+            [codebookService]="countryCodes">
+          </single-choice>
+
+        </div>
+      </div>
+      <textinput [form]="companyCreateForm.get('about')" label="About company"
+        style="width: 100%"
+        [textarea]="true"
+        helpText="Briefly describe your company and its history. Include the
+        company mission and vision as well as core values. (max 500
+        characters)">
+      </textinput>
+      <textinput [form]="companyCreateForm.get('manager')" label="Name of
+        manager / CEO" style="width: 100%"
+        placeholder="Enter name of manager / CEO">
+      </textinput>
+      <textinput [form]="companyCreateForm.get('email')" label="Name of manager
+        / CEO" style="width: 100%"
+        placeholder="Enter contact e-mail"
+        [isInvalid]="submitted && companyCreateForm.get('email').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="companyCreateForm.get('email').errors as errors"
+            class="sc-invalid-feedback">
+            <div *ngIf="errors.wrongEmail">
+              <span>
+                E-mail is in the wrong format.
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+      <textinput [form]="companyCreateForm.get('phone')" label="Contact E-mail"
+        style="width: 100%"
+        placeholder="Enter contact e-mail">
+      </textinput>
+
+      <textinput [form]="companyCreateForm.get('webPage')" label="Contact phone
+        number" style="width: 100%"
+        placeholder="Enter phone number">
+      </textinput>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="companyCreateForm.get('webPage')" label="Company
+        webpage URL" style="width: 100%; color: #939393"
+        placeholder="Enter company webpage URL"
+        [showInputField]="!this._hideWebPageField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideWebPageField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-6">
+      <div class="spacer3-5rem"></div>
+      <h5 class="fontTertiary">Social media</h5>
+      <p style="font-weight: 300">Provide the URL links to your social media
+        accounts (Facebook, Instagram, Twitter,
+        YouTube, other)</p>
+    </div>
+    <div class="col-2"></div>
+
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="socialMediaForm.get('facebook')" label="Facebook
+        webpage URL" style="width: 100%; color: #939393"
+        placeholder="Enter Facebook URL"
+        [showInputField]="!this._hideFacebookField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideFacebookField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="socialMediaForm.get('instagram')" label="Instagram
+        webpage URL" style="width: 100%; color: #939393"
+        placeholder="Enter Instagram URL"
+        [showInputField]="!this._hideInstagramField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideInstagramField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="socialMediaForm.get('twitter')" label="Twitter webpage
+        URL" style="width: 100%; color: #939393"
+        placeholder="Enter Twitter URL"
+        [showInputField]="!this._hideTwitterField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideTwitterField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="socialMediaForm.get('youtube')" label="YouTube
+        webpage URL" style="width: 100%; color: #939393"
+        placeholder="Enter YouTube URL"
+        [showInputField]="!this._hideYouTubeField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideYouTubeField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+
+    <div class="col-4"></div>
+    <div class="col-6">
+      <textinput [form]="socialMediaForm.get('other')" label="Other
+        webpage URL" style="width: 100%; color: #939393"
+        placeholder="Enter Other URL"
+        [showInputField]="!this._hideOtherField$.value">
+      </textinput>
+    </div>
+    <div class="col-2">
+      <button class="bg-transparent border-0 shadow-none"
+        (click)="toggleField(this._hideOtherField$)">
+        <span class="btn-icon" style="color: #939393">
+          <i class="fa fa-plus-square"></i>
+        </span>
+      </button>
+    </div>
+
+
+    <div class="col-8"></div>
+    <div class="col-2">
+      <div class="spacer2-3-7-5rem"></div>
+      <button class="btn btn-solid round" style="width: 160px;"
+        (click)="create()">
+        <span>Create</span>
+      </button>
+
+    </div>
+    <div class="col-2"></div>
+    <!-- <div *ngIf="!!_companyErrorStatus$.value">
+    Something went wrong.
+  </div> -->
+  </div>
+</div>

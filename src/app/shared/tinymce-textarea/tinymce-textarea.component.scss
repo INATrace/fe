@@ -1,0 +1,18 @@
+
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.tinymce-container {
+  @include media-breakpoint-up(md) {
+    // width: 50%;
+    width: 100%;
+    // min-width: 260px;
+  }
+  margin-bottom: 1.5rem;
+}
+
+.tmce-disabled {
+    pointer-events: none;
+}

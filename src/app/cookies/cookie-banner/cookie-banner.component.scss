@@ -1,0 +1,82 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.cookieWrap {
+    background-color: $primary;
+    padding-bottom: 3.1875rem;
+    height: auto;
+    position: absolute;
+    z-index: 9999;
+
+    @include media-breakpoint-up(lg) {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        overflow: hidden;
+    }
+}
+
+
+.sp-cookie {
+    text-align: left;
+    color: #fff;
+
+    @include media-breakpoint-up(lg) {
+        text-align: center;
+    }
+
+    &-header {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    &-text {
+        font-size: 1.125rem;
+        line-height: 1.35;
+        padding: 0.5rem 0;
+        display: inline-block;
+        font-weight: 300;
+
+        @include media-breakpoint-up(lg) {
+            padding: 0 0.5rem 0.5rem 0.5rem;
+            text-align: center;
+        }
+
+        a {
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: white;
+            text-decoration: underline;
+        }
+    }
+    &-btn {
+      border-color: white;
+      color: white;
+      border-radius: 4px;
+      padding-top: 0.875rem;
+      padding-bottom: 0.875rem;
+
+        &:hover {
+          box-shadow: none;
+          transform: none;
+          color: white;
+          border-color: white;
+          border-radius: 4px;
+          padding-top: 0.875rem;
+          padding-bottom: 0.875rem;
+        }
+    }
+}
+.cookie-nav {
+  height: 80px;
+  background-attachment: $primary;
+}
+.nav-banner-spacer {
+  height: 3.1875rem;
+}
+
+.btn-span {
+  padding: 0.5rem 4rem;
+}

@@ -1,0 +1,51 @@
+@import "src/_variables";
+
+
+.af-order-status {
+  background: #E7ECFF;
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-width: 250px;
+  margin-top: 0.375rem;
+
+  &-icon {
+    // This adds basic shape of icon with a background
+    background-color: #E7ECFF;
+    height: $sidenav-icon-bg-size;
+    width: $sidenav-icon-bg-size;
+    margin-right: 10px;
+    border-radius: 17px;
+    float: left;
+
+    &-shape {
+      // This defines placement of icon as mask, backtround color defines color of icon
+      display: inline-block;
+      width: $sidenav-icon-bg-size;
+      height: $sidenav-icon-bg-size;
+      background: $dark-blue;  // initiall color of icon
+      mask-size: cover;
+      // margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
+
+      // &:hover,
+      // &:focus {
+      //   background: $moderate-cyan;  // this overrides color of icon for states
+      // }
+
+      // list icon sources here
+      &--view {
+        mask: url(/assets/icons/icon-status-eye.svg) no-repeat;
+      }
+    }
+
+  }
+
+  &-description {
+    p {
+      font-size: 14px;
+      color: #25265E;
+      letter-spacing: 0;
+      line-height: 16px;
+      margin-bottom: 0;
+    }
+  }
+}

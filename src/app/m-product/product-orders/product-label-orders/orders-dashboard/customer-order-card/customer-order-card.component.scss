@@ -1,0 +1,437 @@
+@import "src/_variables";
+@import '~bootstrap/scss/bootstrap';
+
+
+.af-card-icon {
+  background-color: $af-card-bg;
+  // width: 90px;
+  color: $secondary;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.34px;
+  line-height: 18px;
+  border: none;
+  border-radius: 7px;
+  height: $card-icon-bg-size;
+}
+.af-card-icon:hover{
+  background-color: $af-card-bg;
+  color: $secondary;
+}
+.af-card-icon {
+  height: $card-icon-bg-size;
+}
+
+.af-card {
+  background: $white;
+  border: 1px solid $af-card-border;
+  box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
+  border-radius: 5px;
+
+  min-height: 162px;
+  // width: 280px;
+  // min-width: 284px;
+
+  // based paddings and margings
+  //for both content blocks
+  &-section {
+
+    &-content {
+      // default padding for whole top card
+      padding-top: 5px;
+      padding-right: 20px;
+      padding-bottom: 10px;
+      padding-left: 15px;
+      background: $af-card-content-bg;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+          height: 8px;
+          width: 8px;
+          border-radius: 4px;
+          float: right;
+          margin-top: 6px;
+          margin-right: -10px;
+        }
+        &-title {
+          font-size: 18px;
+          color: $af-card-title;
+          letter-spacing: 0;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          margin-right: 5px;
+          display: inline-block;
+          height: (2 * $af-card-title-lineheight) + rem;
+
+          // https://stackoverflow.com/questions/15909489/text-overflow-ellipsis-on-two-lines
+
+          line-height: $af-card-title-lineheight;
+          @include ellipsis-2-rows;
+        }
+        &-subtitle {
+          font-size: 14px;
+          color: $af-card-subtitle;
+          letter-spacing: 0;
+          line-height: 14px;
+          // padding-bottom: 15px;
+          display: inline-block;
+        }
+        &-description {
+          font-size: 10px;
+          color: $af-card-description;
+          margin-top: 10px;
+          margin-bottom: 0;
+          display: inline-block;
+
+          line-height: $af-card-description-lineheight;
+          @include ellipsis-2-rows;
+        }
+
+        // HERE BE ICONS for cards
+        &-icon {
+          // This adds basic shape of
+          // icon with a background
+          background-color: inherit;
+          height: $card-icon-size;
+          width: $card-icon-size;
+          margin-right: -12px;
+          margin-top: -4px;
+          display: block;
+          float: right;
+
+          &-shape {
+            // This defines placement of icon as mask, backtround color defines color of icon
+            display: inline-block;
+            width: $card-icon-size;
+            height: $card-icon-size;
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+            mask-size: cover;
+
+            // list icon
+            // sources here
+            &--proto {
+              mask: url(/assets/icons/icon-card-map.svg) no-repeat;
+            }
+            &--home {
+              mask: url(/assets/icons/icon-card-home.svg) no-repeat;
+            }
+            &--seedling {
+              mask: url(/assets/icons/icon-card-seedling.svg) no-repeat;
+            }
+            &--cogwheel {
+              mask: url(/assets/icons/icon-card-cogwheel.svg) no-repeat;
+            }
+          }
+        }
+      }
+
+    }
+
+
+
+
+    // HERE WE START
+    // THEMING & Changing
+    // colors to --cyan, ...
+
+    &-content--cyan {
+
+      // let's adjust values for cyan
+      // upper part of card
+      $af-card-content-border: $moderate-cyan;
+      $af-card-content-bg: $very-pale-cyan;
+      // $af-card-content-bg:  $white;
+
+      // indicator up top right
+      $af-card-indicator-bg: $soft-cyan;           // move these to --cyan, replace with --default
+      $af-card-indicator-bg: $white;
+      $af-card-indicator-border: $moderate-cyan;
+
+      // icon bottom right in upper section
+      $af-icon-shape-bg: $moderate-cyan;
+
+
+      background: $af-card-content-bg;
+      border: 0.5px solid $af-card-content-border;
+      border-radius: 4px 4px 0 0;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+        }
+        &-title {
+          color: $af-card-title;
+        }
+        &-subtitle {
+          color: $af-card-subtitle;
+        }
+        &-description {
+          color: $af-card-description;
+        }
+        &-icon {
+          background-color: inherit;
+
+          &-shape {
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+          }
+        }
+      }
+    }
+
+    &-content--red {
+      $af-card-content-border: $moderate-red;         // moderate
+      $af-card-content-bg: $pale-red;                 // pale
+      // $af-card-content-bg:  $white;
+
+      $af-card-indicator-bg: $pale-red;               // soft
+      $af-card-indicator-border: $moderate-red;       // moderate
+      $af-icon-shape-bg: $moderate-red;               // moderate
+
+
+      background: $af-card-content-bg;
+      border: 0.5px solid $af-card-content-border;
+      border-radius: 4px 4px 0 0;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+        }
+        &-title {
+          color: $af-card-title;
+        }
+        &-subtitle {
+          color: $af-card-subtitle;
+        }
+        &-description {
+          color: $af-card-description;
+        }
+        &-icon {
+          background-color: inherit;
+
+          &-shape {
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+          }
+        }
+      }
+    }
+
+    &-content--green {
+      $af-card-content-border: $moderate-green;         // moderate
+      $af-card-content-bg: $pale-green;                 // pale
+      // $af-card-content-bg:  $white;
+      $af-card-indicator-bg: $pale-green;               // soft
+      $af-card-indicator-border: $moderate-green;       // moderate
+      $af-icon-shape-bg: $moderate-green;               // moderate
+
+
+      background: $af-card-content-bg;
+      border: 0.5px solid $af-card-content-border;
+      border-radius: 4px 4px 0 0;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+        }
+        &-title {
+          color: $af-card-title;
+        }
+        &-subtitle {
+          color: $af-card-subtitle;
+        }
+        &-description {
+          color: $af-card-description;
+        }
+        &-icon {
+          background-color: inherit;
+
+          &-shape {
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+          }
+        }
+      }
+    }
+
+    &-content--orange {
+      $af-card-content-border: $moderate-orange;         // moderate
+      $af-card-content-bg: $pale-orange;                 // pale
+      // $af-card-content-bg:  $white;
+      $af-card-indicator-bg: $pale-orange;               // soft
+      $af-card-indicator-border: $moderate-orange;       // moderate
+      $af-icon-shape-bg: $moderate-orange;               // moderate
+
+
+      background: $af-card-content-bg;
+      border: 0.5px solid $af-card-content-border;
+      border-radius: 4px 4px 0 0;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+        }
+        &-title {
+          color: $af-card-title;
+        }
+        &-subtitle {
+          color: $af-card-subtitle;
+        }
+        &-description {
+          color: $af-card-description;
+        }
+        &-icon {
+          background-color: inherit;
+
+          &-shape {
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+          }
+        }
+      }
+    }
+
+    &-content--yellow {
+      $af-card-content-border: $moderate-yellow;         // moderate
+      $af-card-content-bg: $pale-yellow;                 // pale
+      // $af-card-content-bg:  $white;
+      $af-card-indicator-bg: $pale-yellow;               // soft
+      $af-card-indicator-border: $moderate-yellow;       // moderate
+      $af-icon-shape-bg: $moderate-yellow;               // moderate
+
+      background: $af-card-content-bg;
+      border: 0.5px solid $af-card-content-border;
+      border-radius: 4px 4px 0 0;
+
+      .af-card {
+        &-indicator {
+          background: $af-card-indicator-bg;
+          border: 0.5px solid $af-card-indicator-border;
+        }
+        &-title {
+          color: $af-card-title;
+        }
+        &-subtitle {
+          color: $af-card-subtitle;
+        }
+        &-description {
+          color: $af-card-description;
+        }
+        &-icon {
+          background-color: inherit;
+
+          &-shape {
+            background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
+
+.af-card {
+  position: relative;
+}
+
+.af-popover {
+  &-wrapper {
+    position: absolute;
+    /* top: -23px; */
+    left: 5px;
+    background: transparent;
+    height: calc(100% - 5px);
+    width: calc(100% - 10px);
+
+    &:hover {
+      .af-popover-content {
+        z-index: 10;
+        opacity: 1;
+        visibility: visible;
+        transform: translate(0, -5px);
+        transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+      }
+    }
+  }
+
+  &-content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+
+    top: 105px;
+    transform: translate(0, 5px);
+    padding: 1.5rem;
+    width: 300px;
+    max-width: 100%;
+
+    background: #FFFFFF;
+    border: 1px solid #E0E3E7;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.13);
+    border-radius: 7px;
+
+    // left: 60px;
+    right: 0;
+
+    // We're trying to adjust it for larger screens.
+    @include media-breakpoint-up(xl) {
+      right: calc(50% - 150px);
+    }
+
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      line-height: 28px;
+      margin-bottom: 0;
+
+      li {
+        position: relative;
+        width: 100%;
+        color: $dark-blue;
+
+        &:hover {
+          color: $moderate-cyan;
+          cursor: pointer;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: 8px;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-style: solid;
+          border-width: 5px 0 5px 5px;
+          border-color: transparent transparent transparent $dark-blue;
+        }
+      }
+    }
+
+    &:before {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      right: calc(50% - 10px);
+      top: -8px;
+      border-style: solid;
+      border-width: 0 10px 10px 10px;
+      border-color: transparent transparent #fff transparent;
+      transition-duration: 0.3s;
+      transition-property: transform;
+
+
+    }
+  }
+
+
+  .popover__message {
+    text-align: center;
+  }
+}

@@ -1,0 +1,232 @@
+
+@import "src/_variables";
+
+.af-card-icon {
+  background-color: $af-card-bg;
+  // width: 90px;
+  color: $secondary;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.34px;
+  line-height: 18px;
+  border: none;
+  border-radius: 7px;
+  height: $card-icon-bg-size;
+}
+.af-card-icon:hover{
+  background-color: $af-card-bg;
+  color: $secondary;
+}
+.af-card-icon {
+  height: $card-icon-bg-size;
+}
+
+.af-card-file-present {
+  background-color: green !important;
+}
+
+.af-card-file-missing {
+  background-color: red !important;
+}
+
+
+.af-docs {
+  background: $white;
+  border: 1px solid $af-card-border;
+  box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
+  border-radius: 5px;
+
+  min-height: 90px;
+  // width: 280px;
+  // min-width: 284px;
+
+  &-aside {
+    float: left;
+    margin-left: 1rem;
+    margin-top: 2rem;
+  }
+
+  &-content {
+    padding: 1rem;
+    padding-left: 4rem;
+    padding-top: 1.75rem;
+
+    .af-docs {
+      margin-right: -10px;
+
+      &-title {
+        font-size: 14px;
+        color: #585858;
+        letter-spacing: 0;
+        line-height: 14px;
+        display: block;
+
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      &-description {
+        font-size: 10px;
+        color: $af-card-description;
+        margin-top: 5px;
+        margin-bottom: 0;
+        display: inline-block;
+
+        line-height: $af-card-description-lineheight;
+        @include ellipsis-2-rows;
+      }
+    }
+
+  }
+
+  // &-icon {
+  //   // This adds basic shape of
+  //   // icon with a background
+  //   background-color: inherit;
+  //   height: $card-icon-size;
+  //   width: $card-icon-size;
+  //   margin-right: -12px;
+  //   margin-top: -4px;
+  //   // display: block;
+
+  //   &-shape {
+  //     // This defines placement of icon as mask, backtround color defines color of icon
+  //     display: inline-block;
+  //     width: $card-icon-size;
+  //     height: $card-icon-size;
+  //     // background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+  //     background: red;
+  //     mask-size: cover;
+
+  //     // list icon
+  //     // sources here
+  //     &--proto {
+  //       mask: url(/assets/icons/icon-doc-dot-pdf.svg) no-repeat;
+  //     }
+  //   }
+
+  // }
+
+  // HERE BE ICONS for cards
+  &-icon {
+    // This adds basic shape of
+    // icon with a background
+    background-color: inherit;
+    height: 36px; // $card-icon-size;
+    width: 30px; // $card-icon-size;
+    margin-right: -12px;
+    margin-top: -4px;
+    display: block;
+    float: right;
+
+    &-shape {
+      // This defines placement of icon as mask, backtround color defines color of icon
+      display: inline-block;
+      // width: $card-icon-size;
+      // height: $card-icon-size;
+      height: 36px; // $card-icon-size;
+      width: 30px; // $card-icon-size;
+      background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+      mask-size: cover;
+
+      // list icon
+      // sources here
+      &--doc {
+        mask: url(/assets/icons/icon-doc.svg) no-repeat;
+      }
+      &--doc-dot {
+        mask: url(/assets/icons/icon-doc-dot.svg) no-repeat;
+      }
+      &--doc-check {
+        mask: url(/assets/icons/icon-doc-check.svg) no-repeat;
+      }
+
+      &--doc-archive {
+        mask: url(/assets/icons/icon-doc-archive.svg) no-repeat;
+      }
+      &--doc-archive-dot {
+        mask: url(/assets/icons/icon-doc-archive-dot.svg) no-repeat;
+      }
+      &--doc-archive-check {
+        mask: url(/assets/icons/icon-doc-archive-check.svg) no-repeat;
+      }
+
+      &--doc-inf {
+        mask: url(/assets/icons/icon-doc-inf.svg) no-repeat;
+      }
+      &--doc-inf-dot {
+        mask: url(/assets/icons/icon-doc-inf-dot.svg) no-repeat;
+      }
+      &--doc-inf-check {
+        mask: url(/assets/icons/icon-doc-inf-check.svg) no-repeat;
+      }
+
+      &--doc-xls {
+        mask: url(/assets/icons/icon-doc-xls.svg) no-repeat;
+      }
+      &--doc-xls-check {
+        mask: url(/assets/icons/icon-doc-xls-check.svg) no-repeat;
+      }
+      &--doc-xls-dot {
+        mask: url(/assets/icons/icon-doc-xls-check.svg) no-repeat;
+      }
+
+      &--doc-img {
+        mask: url(/assets/icons/icon-doc-img.svg) no-repeat;
+      }
+      &--doc-img-check {
+        mask: url(/assets/icons/icon-doc-img-check.svg) no-repeat;
+      }
+      &--doc-img-dot {
+        mask: url(/assets/icons/icon-doc-img-check.svg) no-repeat;
+      }
+
+      &--doc-word {
+        mask: url(/assets/icons/icon-doc-word.svg) no-repeat;
+      }
+      &--doc-word-dot {
+        mask: url(/assets/icons/icon-doc-word-check.svg) no-repeat;
+      }
+      &--doc-word-check {
+        mask: url(/assets/icons/icon-doc-word-check.svg) no-repeat;
+      }
+
+      &--doc-pdf {
+        mask: url(/assets/icons/icon-doc-pdf.svg) no-repeat;
+      }
+      &--doc-pdf-dot {
+        mask: url(/assets/icons/icon-doc-pdf-dot.svg) no-repeat;
+      }
+      &--doc-pdf-check {
+        mask: url(/assets/icons/icon-doc-pdf-check.svg) no-repeat;
+      }
+
+    }
+  }
+
+  &-dots {
+    background-color: inherit;
+    height: $card-icon-size;
+    width: $card-icon-size;
+    right: 10px;
+    top: 0;
+    display: block;
+    position: absolute;
+
+    &-shape {
+      display: inline-block;
+      height: $card-icon-size;
+      width: $card-icon-size;
+      background: #8F92A1;  // this will be color of icon, default is --BLUE
+      mask-size: cover;
+      margin-left: 4px;
+      margin-top: 4px;
+
+      &--dots {
+        mask: url(/assets/icons/icon-dots.svg) no-repeat;
+      }
+    }
+  }
+
+}

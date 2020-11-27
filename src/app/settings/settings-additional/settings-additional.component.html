@@ -1,0 +1,75 @@
+<app-authorised-layout class="af-layout--system">
+
+  <app-system-left-panel
+    i18n="@@settingsPage.navTitle"
+    title="System">
+  </app-system-left-panel>
+
+  <div class="main">
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex align-items-start content-element--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.additionalSettings">Additional settings</div>
+      </div>
+    </div>
+
+    <div class="af-form-wrapper">
+      <div class="af-form-row">
+
+        <div class="af-form-block--c12">
+          <div class="af-form-element">
+
+            <div *ngIf="labelsHelperLink" class="d-flex align-items-end">
+              <textinput
+                [form]="labelsHelperLink"
+                label="Additional information for QR multiple labels (URL)"
+                style="width: 100%;"
+                placeholder="Enter URL"
+                hideAsterisk="true"
+                i18n-label="@@settingsPage.labelsHelperLink.label"
+                i18n-placeholder="@@settingsPage.labelsHelperLink.placeholder">
+              </textinput>
+              <!-- <div class="ml-1">
+              <button class="btn btn-solid round" (click)="save('PRODUCT_LABELS_HELPER_LINK', labelsHelperLink, false)" [class.button-disabled]="!saveEnabled(labelsHelperLink)" style="margin-bottom: 1rem;" i18n="@@settingsPage.labelsHelperLink.save">
+                <span>Save</span>
+              </button>
+            </div> -->
+            </div>
+
+
+            <div *ngIf="unpublishedProductLabelText" class="d-flex align-items-end">
+              <textinput
+                [form]="unpublishedProductLabelText"
+                label="Unpublished product labels text"
+                placeholder="Enter text"
+                style="width: 100%;"
+                hideAsterisk="true"
+                [textarea]="true"
+                i18n-label="@@settingsPage.unpublishedProductLabelText.label"
+                i18n-placeholder="@@settingsPage.unpublishedProductLabelText.placeholder">
+              </textinput>
+              <!-- <div class="ml-1">
+              <button class="btn btn-solid round" (click)="save('UNPUBLISHED_PRODUCT_LABEL_TEXT', unpublishedProductLabelText, true)" [class.button-disabled]="!saveEnabled(unpublishedProductLabelText)" style="margin-bottom: 1rem;" i18n="@@settingsPage.unpublishedProductLabelText.save">
+                <span>Save</span>
+              </button>
+            </div> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons">
+            <button class="btn btn-solid round" (click)="save()" [class.button-disabled]="!saveEnabled()" i18n="@@settingsPage.unpublishedProductLabelText.save">
+              <span>Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</app-authorised-layout>

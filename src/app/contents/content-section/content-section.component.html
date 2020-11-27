@@ -1,0 +1,40 @@
+<section class="section-wrapper col">
+  <div
+    #parent
+    class="row"
+    style="position: relative;">
+    <!-- <div class="faq-icon sp-faq-icon-large show-for-small" (click)="openFaqs()" *ngIf="faqs.length > 0">
+                <fa-icon [icon]="faQuestionCircle" fsize="2x" style="color: red;"></fa-icon>
+            </div> -->
+    <div *ngIf="spacingNedded" class="col-sm-0 col-lg-1"></div>
+    <div class="d-flex d-flex-column">
+      <h5
+        #sideTitle
+        class="col-11 pl-lg-0 content-title"
+        [class.active-title]="isActive"
+        [style.margin-top]="marginTop"
+        [class.sc-invalid-section-text]="error$ | async">{{title || data?.title}}
+      </h5>
+
+      <div *ngIf="titleIcon" (click)="onIconClick()">
+        <span class="dot">
+          <fa-icon
+            class="title-icon"
+            icon={{titleIcon}}
+            size="xs">
+          </fa-icon>
+        </span>
+      </div>
+
+    </div>
+    <div *ngIf="data" class="content-comment" [innerHTML]="data.comment" routeTransformer></div>
+  </div>
+  <div class="content-section"
+    [class.active-content]="isActive"
+    [class.sc-invalid-section-border]="error$ | async">
+    <!-- <div class="faq-icon sp-faq-icon-large" (click)="openFaqs()" *ngIf="faqs.length> 0">
+      <fa-icon [icon]="faQuestionCircle"></fa-icon>
+    </div> -->
+    <ng-content></ng-content>
+  </div>
+</section>

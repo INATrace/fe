@@ -1,0 +1,22 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$max-lang-button-width: 3rem;
+.button-on {
+  max-width: $max-lang-button-width;
+  min-width: 2rem;
+}
+
+.button-off {
+  max-width: $max-lang-button-width;
+  min-width: 2rem;
+  background-color: $gray-semi;
+}
+
+
+.offscreen {
+  position: fixed;
+  left: -1000px;
+}

@@ -1,0 +1,195 @@
+<!--
+<app-authorised-layout>
+  <app-order-left-panel-content>
+  </app-order-left-panel-content>
+
+  <div class="main">
+
+    <div class="row">
+
+      <div class="col">
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex align-items-start content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelOrder.title.allOrders">All orders</div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+</app-authorised-layout>
+ -->
+
+
+
+
+<app-authorised-layout>
+  <app-order-left-panel-content
+    *ngIf="product$ | async as product"
+    [product]="product"
+    [orderId]="orderID">
+  </app-order-left-panel-content>
+
+  <div class="main">
+    <ng-container *ngIf="history$ | async as history">
+      <ng-container *ngIf="rootStockOrder(history) as stockOrder">
+
+        <!-- <div class="main"> -->
+
+        <div class="af-form-wrapper">
+
+          <div class="af-form-row">
+            <div class="af-form-block--c12">
+              <!-- <h4 class="modal-title" i18n="@@productLabel.title">QR labels</h4> -->
+              <!-- <div class="title-page content-element--title" i18n="@@orderHistoryView.title.orderDetails">Order details</div> -->
+
+              <!--
+              title + {{stockOrder.identifier}} + {{processingAction?.outputSemiProduct?.name}} + ( {{order.totalQuantity}} {{order.measurementUnitType?.label}}) )
+            -->
+              <div class="title-page content-element--title d-flex justify-content-between">
+                <div i18n="@@orderHistoryView.title.orderDetails">Order details</div>
+                <!-- <button class="btn btn-solid round btn-table-new content-element--btn" (click)="edit(stockOrder)" i18n="@@orderHistoryView.button.edit">
+                <span>Edit</span>
+              </button> -->
+
+                <!--
+                <span *ngIf="isPurchaseOrder">- {{stockOrder.identifier}} </span>
+                <span *ngIf="stockOrder.processingAction">{{stockOrder.processingAction?.name}} ({{stockOrder.processingAction?.type}} {{order.totalQuantity}} {{order.measurementUnitType?.label}}), </span>
+                <ng-container *ngIf="stockOrder.processingOrder && stockOrder.processingOrder.processingAction.type === 'PROCESSING'">
+                <span *ngIf="isThisOrder(stockOrder, order)"> <span>
+              </ng-container>
+             -->
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="af-form-row">
+            <span i18n="@@orderHistoryView.history.legend">Legend:</span>
+            <ul>
+              <li i18n="@@orderHistoryView.history.requiredPresent"><span class="required-present">required in process - present</span></li>
+              <li i18n="@@orderHistoryView.history.requiredMissing"><span class="required-missing">required in process - missing</span></li>
+              <li i18n="@@orderHistoryView.history.additionalDocument"><span class="non-required-present">additional document in process</span></li>
+              <li i18n="@@orderHistoryView.history.requiredOnQuotePresent">
+                <fa-icon
+                  class="quote-required-present"
+                  [icon]="faCheckCircle">
+                </fa-icon>
+                required on quote - present</li>
+              <li i18n="@@orderHistoryView.history.requiredOnQuoteMissing">
+                <fa-icon
+                  class="quote-required-missing"
+                  [icon]="faExclamationCircle">
+                </fa-icon>
+                required on quote - missing</li>
+              <li i18n="@@orderHistoryView.history.requiredOnQuoteOneOfPresent">
+                <div
+                  class="quote-required-one-of quote-required-one-of-present">G1
+                </div>
+
+                one of required documents on quote in group G1 present</li>
+              <li i18n="@@orderHistoryView.history.requiredOnQuoteOneOfMissing">
+                <div
+                  class="quote-required-one-of quote-required-one-of-missing">G1
+                </div>
+
+                all of required documents on quote in group G1 missing</li>
+            </ul>
+          </div>
+          <div class="af-form-row">
+
+            <div class="af-form-block--c12">
+
+              <div>
+                <h2 i18n="@@orderHistoryView.title.history">History</h2>
+              </div>
+
+              <!-- <pre>{{stockOrder.processingAction | json}}</pre> -->
+              <div class="af-form-element" style="background-color: inherit;">
+
+                <ng-container *ngIf="history">
+                  <!-- <pre>{{actionData}}</pre> -->
+                  <ng-container *ngFor="let aggregate of history; let i= index; let last= last">
+                    <div class="af-timeline-box" [class.last-box]="last">
+                      <h4 class="af-timeline-box-subtitle">
+                        <span *ngIf="processingCreationDate(aggregate) as dateOfCreation">{{dateOfCreation | date: 'yyyy-MM-dd hh:mm'}} - </span>{{processingOrderName(aggregate)}}
+
+                        <!-- <span>Last change: {{processingCreationDate(processingLastChangeDate(aggregate))}}</span> -->
+                        <!-- {{processingOrderName(aggregate)}} -->
+                      </h4>
+
+                      <ul>
+                        <ng-container *ngFor="let agg of aggregate.stockOrderAggs">
+                          <li *ngIf="agg.stockOrder as oneStockOrder">
+                            <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, oneStockOrder)" (click)="goToOrderView(oneStockOrder)">{{oneStockOrder.created | date: 'yyyy-MM-dd hh:mm'}} @ {{oneStockOrder.facility?.name}} : {{oneStockOrder.internalLotNumber || oneStockOrder.identifier}} - {{oneStockOrder.totalQuantity}} {{oneStockOrder.measurementUnitType?.label}}
+                              <span *ngIf="isRoot(stockOrder, oneStockOrder)">&nbsp;(<span i18n="@@orderHistoryView.thisOrder.notice">this order</span>)</span>
+                            </a>
+
+                            <ul>
+                              <ng-container *ngFor="let field of agg.fields">
+                                <li><app-field-or-doc-info [field]="field"></app-field-or-doc-info></li>
+                              </ng-container>
+                              <ng-container *ngFor="let doc of agg.documents">
+                                <li><app-field-or-doc-info [document]="doc"></app-field-or-doc-info></li>
+                              </ng-container>
+                            </ul>
+                          </li>
+                        </ng-container>
+                      </ul>
+                      <!-- <ng-container *ngIf="areAnyFields(aggregate)">
+                      <div i18n="@@orderHistoryView.subtitle.fields" class="af-timeline-box-label">Fields</div>
+                      <ul>
+                        <ng-container *ngFor="let fieldAgg of aggregate.fieldAggregates">
+                          <ng-container *ngIf="fieldAgg.key != '__CONFIG__'">
+                            <li>
+                              <a class="ab-edit-link" (click)="goToOrderView(fieldAgg.stockOrderId)">{{fieldAgg.identifier}} ({{fieldAgg.quantity}} {{fieldAgg.measurementUnit}}) - {{fieldAgg.stockOrderId}}</a>
+                              <ul>
+                                <ng-container *ngFor="let field of fieldAgg.aggregates">
+                                  <li><app-field-or-doc-info [field]="field"></app-field-or-doc-info></li>
+                                </ng-container>
+                              </ul>
+                            </li>
+                          </ng-container>
+                        </ng-container>
+                      </ul>
+                    </ng-container> -->
+                      <!-- <ng-container *ngIf="aggregate.docAggregates.length> 0">
+                      <div i18n="@@orderHistoryView.subtitle.documents" class="af-timeline-box-label">Documents</div>
+                      <ul>
+                        <ng-container *ngFor="let docAgg of aggregate.docAggregates">
+                          <ng-container *ngFor="let doc of docAgg.aggregates">
+                            <li><app-field-or-doc-info [document]="doc"></app-field-or-doc-info></li>
+                          </ng-container>
+                        </ng-container>
+                      </ul>
+                    </ng-container> -->
+                      <div class="af-timeline-bullet"></div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <!-- </div> -->
+
+
+
+
+
+      </ng-container>
+      <!-- <pre *ngIf="actionData$ | async as actionData">{{actionData | json}}</pre> -->
+      <!-- <pre>{{history | json}}</pre> -->
+    </ng-container>
+  </div>
+
+</app-authorised-layout>

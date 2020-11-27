@@ -1,0 +1,42 @@
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main">
+
+    <div class="row">
+
+      <div class="col">
+
+
+          <div class="main-inside-top content-element">
+            <div class="d-flex justify-content-between content-element--row1">
+              <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.customers">Customers</div>
+              <button class="btn btn-solid round btn-table-new content-element--btn" (click)="customerDetail()" i18n="@@productLabelStakeholders.button.newCustomer">
+                <span>+ Add customer</span>
+              </button>
+            </div>
+            <div class="d-flex justify-content-between content-element--row2">
+              <div>
+                <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStakeholders.subTitle.listOfCustomers">List of customers</div>
+                <div class="counting-page content-element--counting" i18n="@@productLabelStakeholders.subTitle.showingCustomers">Showing {{showedCustomers}}/{{allCustomers}}</div>
+              </div>
+              <!-- <app-search-textinput
+              [form]="searchNameCustomers"
+              (valueChange)="serchInput($event, 'customers')">
+            </app-search-textinput> -->
+            </div>
+          </div>
+
+          <app-product-label-stakeholders-customers *ngIf="this.organizationId"
+            [query]="searchNameFarmers.value"
+            [reloadPingList$]="reloadCustomersPing$"
+            (countAll)="onCountAll($event, 'customers')"
+            (showing)="onShow($event, 'customers')"
+            organizationId="{{this.organizationId}}">
+          </app-product-label-stakeholders-customers>
+
+      </div>
+    </div>
+  </div>
+</app-authorised-layout>

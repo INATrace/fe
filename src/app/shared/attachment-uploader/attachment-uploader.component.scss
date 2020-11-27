@@ -1,0 +1,124 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.drop-zone {
+    border: dotted 3px #d0d0d0;
+    &.file-over {
+        border-color: #71b6d0;
+        background: #f8f8f8;
+    }
+    padding: 0.5em 1em;
+    // margin: 0.5rem 0;
+    margin-bottom: 1rem;
+}
+
+.drop-icon, .upload-prompt {
+    // color: #909090;
+    color: $primary;
+}
+
+.upload-prompt {
+    font-size: 1.5rem;
+    font-weight: 300;
+    // margin-top: -0.75rem;
+    // margin-bottom: 0.25rem;
+}
+
+.upload-prevent-text-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.upload-prompt-ok, .upload-prompt-error {
+    font-size: 1.5rem;
+    // margin-top: -0.25rem;
+    // margin-bottom: 0.25rem;
+}
+
+.upload-prompt-error {
+    color: $danger;
+}
+
+input.file-input {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+label.file-input {
+    // font-weight: normal;
+    text-transform: none;
+    // color: #007bff;
+    cursor: pointer;
+    margin-bottom: 0;
+    text-decoration: underline;
+    color: $primary;
+}
+
+.delete-file {
+    cursor: pointer;
+    color: #909090;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    &:hover {
+        color: black;
+    }
+}
+
+.show-file {
+  cursor: pointer;
+  color: #909090;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  &:hover {
+      color: black;
+  }
+}
+
+.upload-prevent-text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 50vw;
+  white-space: nowrap;
+  display: block;
+}
+
+.addbutton {
+  text-decoration: underline !important;
+  color: $primary !important;
+  cursor: pointer !important;
+}
+
+.attachement-uploader-container {
+  @include media-breakpoint-up(md) {
+      width: calc(100%);
+  }
+
+}
+
+.btn-clear{
+  border-color: #E6E6E6;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-weight: 300;
+}
+
+.in-focus {
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+.simple-view-view{
+  color: $primary;
+  font-size: 1.5rem;
+}
+.simple-view-clear{
+  color: $danger;
+  font-size: 1.5rem;
+}

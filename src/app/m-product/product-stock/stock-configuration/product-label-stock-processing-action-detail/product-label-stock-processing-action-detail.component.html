@@ -1,0 +1,436 @@
+<app-authorised-layout>
+  <div *ngIf="form" class="af-layout--authorised">
+    <div class="af-form-wrapper">
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <!-- <h4 class="modal-title">{{title}}</h4> -->
+          <div class="title-page content-element--title">{{title}}</div>
+        </div>
+      </div>
+
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelProcessingAction.section.basicInfo">Basic information</h2>
+
+          <div class="af-form-element">
+
+            <single-choice
+              label="Action type"
+              i18n-label="@@productLabelProcessingAction.transactionType.label"
+              [formControlInput]="form.get('type')"
+              [codebookService]="codebookProcessingTransaction"
+              [organizationId]="chainProductId"
+              (onChange)="changeTransactionType($event)"
+              [isInvalidChoice]="submitted && form.get('type').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.type.error.requred">
+                    Type is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+
+            <textinput
+              label="Name of process"
+              [form]="form.get('name')"
+              style="width: 100%"
+              placeholder="Enter name"
+              i18n-label="@@productLabelProcessingAction.textinput.name.label"
+              i18n-placeholder="@@productLabelProcessingAction.textinput.name.helpText"
+              [isInvalid]="submitted && form.get('name').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.name.error">
+                    <span>
+                      Name of process is required
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+
+            <textinput
+              label="Description"
+              [form]="form.get('description')"
+              style="width: 100%"
+              [textarea]="true"
+              helpText="Enter short processing action description."
+              i18n-label="@@productLabelProcessingAction.textinput.description.label"
+              i18n-helpText="@@productLabelProcessingAction.textinput.description.helpText"
+              [isInvalid]="submitted && form.get('description').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.description.error">
+                    <span>
+                      Description is required
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+
+            <ng-container *ngIf="transactionType === 'SHIPMENT' || transactionType === 'TRANSFER'">
+              <single-choice
+                label="Select semi-product"
+                i18n-label="@@productLabelProcessingAction.semiProduct.label"
+                [formControlInput]="form.get('inputSemiProduct')"
+                [codebookService]="activeSemiProducstForProduct"
+                [organizationId]="chainProductId"
+                [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.inputSemiProduct.error.requred">
+                      Semi-product is required
+                    </div>
+                  </div>
+                </ng-container>
+              </single-choice>
+            </ng-container>
+
+            <ng-container *ngIf="transactionType === 'PROCESSING'">
+              <single-choice
+                label="Select input semi-product"
+                i18n-label="@@productLabelProcessingAction.inputSemiProduct.label"
+                [formControlInput]="form.get('inputSemiProduct')"
+                [codebookService]="activeSemiProducstForProduct"
+                [organizationId]="chainProductId"
+                [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.inputSemiProduct.error.requred">
+                      Input semi-product is required
+                    </div>
+                  </div>
+                </ng-container>
+              </single-choice>
+
+              <single-choice
+                label="Select output semi-product"
+                i18n-label="@@productLabelProcessingAction.outputSemiProduct.label"
+                [formControlInput]="form.get('outputSemiProduct')"
+                [codebookService]="activeSemiProducstForProduct"
+                [organizationId]="chainProductId"
+                [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.outputSemiProduct.error.requred">
+                      Output semi-product is required
+                    </div>
+                  </div>
+                </ng-container>
+              </single-choice>
+            </ng-container>
+            <ng-container *ngFor="let item of requiredFields; index as i">
+              <div class="af-row" *ngIf="item.id == 'PREFILL_OUTPUT_FACILITY'">
+                <div class="af-c2">
+                  <checkbox-input inTable="true" (onClick)="cbSelected(i)" [checked]="this.requiredFields[i].selected"></checkbox-input>
+                </div>
+                <div class="af-c10">
+                  {{fieldName(item)}}
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+
+        </div>
+
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelProcessingAction.section.settings">Settings</h2>
+
+
+          <div class="af-form-element">
+
+            <div class="af-row">
+              <div class="af-c12">
+                <textinput
+                  label="Internal lot name prefix"
+                  [form]="form.get('prefix')"
+                  style="width: 100%"
+                  placeholder="Enter prefix"
+                  i18n-label="@@productLabelProcessingAction.textinput.prefix.label"
+                  i18n-placeholder="@@productLabelProcessingAction.textinput.prefix.helpText"
+                  [isInvalid]="submitted && form.get('prefix').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('prefix').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.prefix.error">
+                        <span>
+                          Alias for the process is required
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+
+            </div>
+
+            <div class="af-row">
+              <div class="af-c12">
+                <textinput
+                  label="Public timeline label"
+                  [form]="form.get('publicTimelineLabel')"
+                  style="width: 100%"
+                  placeholder="Enter timeline label"
+                  i18n-label="@@productLabelProcessingAction.textinput.timeline.label"
+                  i18n-placeholder="@@productLabelProcessingAction.textinput.timeline.helpText"
+                  [isInvalid]="submitted && form.get('publicTimelineLabel').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('publicTimelineLabel').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.timeline.error">
+                        <span>
+                          Public timeline label is required
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
+            <div class="af-row" *ngIf="form.get('publicTimelineLabel').value">
+              <div class="af-c12">
+                <textinput
+
+                  label="Public timeline location"
+                  [form]="form.get('publicTimelineLocation')"
+                  style="width: 100%"
+                  placeholder="Enter timeline location"
+                  i18n-label="@@productLabelProcessingAction.textinput.timelineLocation.label"
+                  i18n-placeholder="@@productLabelProcessingAction.textinput.timelineLocation.helpText"
+                  [isInvalid]="submitted && form.get('publicTimelineLocation').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('publicTimelineLocation').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.timelineLocation.error">
+                        <span>
+                          Public timeline location is required
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
+            <div class="af-row" *ngIf="form.get('publicTimelineLabel').value">
+              <div class="af-c12">
+                <single-choice
+                  label="Public timeline icon"
+                  i18n-label="@@productLabelProcessingAction.textinput.timelineIcon.label"
+                  [formControlInput]="form.get('publicTimelineIcon')"
+                  [codebookService]="codebookIcons"
+                  style="min-width: 150px;"
+                  class="af-b2c-form-element af-b2c-form-element--singlechoice af-b2c-spacer--top-two">
+                </single-choice>
+              </div>
+            </div>
+
+
+
+
+            <div class="af-row">
+
+              <div class="af-c12">
+                <label *ngIf="this.transactionType === 'SHIPMENT'" i18n="@@productLabelProcessingAction.selectRequiredMandatoryQuoteRequiredFields">Select required/mandatory/required on quote fields:</label>
+                <label *ngIf="this.transactionType != 'SHIPMENT'" i18n="@@productLabelProcessingAction.selectRequiredMandatoryFields">Select required/mandatory fields:</label>
+              </div>
+            </div>
+            <ng-container *ngFor="let item of requiredFields; index as i">
+              <div class="af-row" *ngIf="item.id != 'PREFILL_OUTPUT_FACILITY'">
+                <div class="af-c2">
+                  <div class="af-row">
+                    <checkbox-input inTable="true" (onClick)="cbSelected(i, 'required')" [checked]="this.requiredFields[i].selected"></checkbox-input>
+                    <checkbox-input class="ml-1" inTable="true" (onClick)="cbSelected(i, 'mandatory')" [checked]="this.requiredFields[i].mandatory"></checkbox-input>
+                    <checkbox-input *ngIf="this.transactionType === 'SHIPMENT'" class="ml-1" inTable="true" (onClick)="cbSelected(i, 'requiredOnQuote')" [checked]="this.requiredFields[i].requiredOnQuote"></checkbox-input>
+                  </div>
+                </div>
+                <div class="af-c10">
+                  {{fieldName(item)}}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="af-form-element">
+
+            <div class="af-row">
+
+              <div class="af-c12">
+                <!-- <label i18n="@@productLabelProcessingAction.selectRequiredFields">Select required fields:</label> -->
+                <label *ngIf="this.transactionType === 'SHIPMENT'" i18n="@@productLabelProcessingAction.selectRequiredMandatoryQuoteRequiredFields">Select required/mandatory/required on quote fields:</label>
+                <label *ngIf="this.transactionType != 'SHIPMENT'" i18n="@@productLabelProcessingAction.selectRequiredMandatoryFields">Select required/mandatory fields:</label>
+              </div>
+            </div>
+            <ng-container *ngFor="let item of requiredFieldsDE; index as i">
+              <div class="af-row">
+                <div class="af-c2">
+                  <div class="af-row">
+                    <checkbox-input inTable="true" (onClick)="cbSelectedDE(i, 'required')" [checked]="this.requiredFieldsDE[i].selected"></checkbox-input>
+                    <checkbox-input class="ml-1" inTable="true" (onClick)="cbSelectedDE(i, 'mandatory')" [checked]="this.requiredFieldsDE[i].mandatory"></checkbox-input>
+                    <checkbox-input *ngIf="this.transactionType === 'SHIPMENT'" class="ml-1" inTable="true" (onClick)="cbSelectedDE(i, 'requiredOnQuote')" [checked]="this.requiredFieldsDE[i].requiredOnQuote"></checkbox-input>
+                  </div>
+                </div>
+                <div class="af-c10">
+                  {{fieldName(item)}}
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+
+          <div class="af-form-element">
+
+            <div class="af-row" *ngIf="transactionType === 'PROCESSING'">
+
+              <div class="af-c6">
+                <!-- <single-choice
+                label="Repacked outputs"
+                i18n-label="@@productLabelProcessingAction.singleChoice.repackedOutputs"
+                [formControlInput]="repackedOutputsForm"
+                [codebookService]="codebookRepackedOutputs"
+                (onChange)="setRepacked($event)">
+              </single-choice> -->
+
+                <single-choice
+                  label="Repacked outputs"
+                  i18n-label="@@productLabelProcessingAction.singleChoice.repackedOutputs"
+                  [formControlInput]="form.get('repackedOutputs')"
+                  [enumFormatter]="repackedFormatter"
+                  [booleanTrue]="booleanTrue"
+                  [booleanFalse]="booleanFalse"
+                  (onChange)="repackedOutputsSet($event)">
+                </single-choice>
+
+              </div>
+
+
+
+
+
+              <div class="af-c6">
+                <textinput
+                  [label]="maxOutputQuantityLabel"
+                  type="number"
+                  step="0.01"
+                  [form]="form.get('maxOutputWeight')"
+                  style="width: 100%"
+                  placeholder="Enter max output quantity"
+                  i18n-label="@@productLabelProcessingAction.textinput.maxOutputWeight.label"
+                  i18n-placeholder="@@productLabelProcessingAction.textinput.maxOutputWeight.placeholder"
+                  [isInvalid]="submitted && form.get('maxOutputWeight').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('maxOutputWeight').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n-label="@@productLabelProcessingAction.textinput.maxOutputWeight.error">
+                        <span>
+                          Max output weight is required
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+
+              </div>
+
+            </div>
+
+
+            <div class="af-row">
+              <div class="af-c12">
+
+                <div class="search-field">
+                  <textinput
+                    i18n-label="@@productLabelProcessingAction.textinput.search-field-docs.label"
+                    label="Required processing evidence document types (mandatory/req. on quote/required one in group on quote)"
+                    [form]="docTypeForm"
+                    placeholder="Select document type ..."
+                    i18n-placeholder="@@productLabelProcessingAction.textinput.search-field.placeholder"
+                    [codebookService]="processingEvidenceTypeaService"
+                    [resultFormatter]="typeResultFormatter"
+                    [inputFormatter]="typeInputFormatter"
+                    (itemMatching)="addSelectedType($event)">
+                  </textinput>
+                </div>
+                <ng-container *ngIf="this.form.get('requiredDocTypes')">
+                  <div *ngFor="let sp of this.form.get('requiredDocTypes').value; index as i">
+                    <div class="af-row user-line pl-3 pr-3 mb-1">
+                      <div class="af-c6 d-flex align-items-center">{{sp?.label}}</div>
+
+                      <div class="af-c5 d-flex align-items-center">
+                        <checkbox-input
+                          [noBottomMargin]="true"
+                          [inTable]="true"
+                          (onClick)="cbSelectedSP(sp, i, 'mandatory')"
+                          [checked]="sp.required">
+                        </checkbox-input>
+                        <ng-container class="af-row" *ngIf="this.transactionType === 'SHIPMENT'">
+                          <checkbox-input
+                            [noBottomMargin]="true"
+                            class="ml-1"
+                            [inTable]="true"
+                            (onClick)="cbSelectedSP(sp, i, 'quote')"
+                            [checked]="sp.requiredOnQuote">
+                          </checkbox-input>
+                          <checkbox-input
+                            class="ml-1"
+                            [noBottomMargin]="true"
+                            [inTable]="true"
+                            (onClick)="groupDecided(sp, i)"
+                            [checked]="!!sp.requiredOneOfGroupIdForQuote">
+                          </checkbox-input>
+
+                          <input *ngIf="sp.requiredOneOfGroupIdForQuote != null"
+                            class="form-control text-input labelPlaceholder ml-3"
+                            style="max-width: 5rem;"
+                            [ngModel]="sp.requiredOneOfGroupIdForQuote"
+                            (ngModelChange)="changeRequiredOneOf($event, sp, i)">
+                        </ng-container>
+                        <!-- <div class="ml-1" i18n="@@productLabelProcessingAction.checkbox.mandatory">Mandatory</div> -->
+                      </div>
+
+                      <!-- <div class="af-c3 d-flex">
+                        <ng-container *ngIf="this.transactionType === 'SHIPMENT'">
+                          <checkbox-input [inTable]="true" (onClick)="cbSelectedSP(sp, i, 'quote')" [checked]="sp.requiredOnQuote">
+                          </checkbox-input>
+                          <div class="ml-1" i18n="@@productLabelProcessingAction.checkbox.requiredOnQuote">Req. on quote</div>
+                        </ng-container>
+                      </div> -->
+
+                      <div class="af-c1 d-flex align-items-center" (click)="deleteDocType(sp)">
+                        <fa-icon
+                          class="del-icon"
+                          [icon]="faTimes"></fa-icon>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons" i18n="@@customerDetail.modal.footer.buttons" i18n="@@productLabelProcessingAction.button.actions">
+            <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+            <button class="btn" type="button" (click)="updateEntity();"><span>Save</span></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-authorised-layout>

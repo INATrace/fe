@@ -1,0 +1,72 @@
+<div class="d-lg-none">
+  <header>
+    <nav class="navbar navbar-light bg-white">
+      <a class="navbar-brand white" [routerLink]="['/']"><img src="/assets/INATrace/logo-INATrace.svg">
+      </a>
+      <button type="button" class="navbar-toggler" (click)="toggleNavButtons()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div *ngIf="_showNavButtons$.value" class="navbar-collapse" id="headercontet">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item font-italic">
+            <a class="nav-link" [routerLink]="['/','login']">Login</a>
+          </li>
+          <li class="nav-item font-italic">
+            <a class="nav-link" [routerLink]="['/','register']">Get started</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+</div>
+<div *ngIf="_isLandingPage$.value" class="d-none d-lg-block">
+  <header id="main-header-overlay">
+    <div class="mainbar-wrap">
+      <nav class="navbar navbar-light">
+        <a class="navbar-brand white" [routerLink]="['/']"><img src="/assets/INATrace/logo-INATrace-w-symbol.svg">
+        </a>
+        <form class="form-inline">
+          <ng-container *ngIf="userProfile">
+            <app-user-box [whitetexts]="true"></app-user-box>
+          </ng-container>
+          <ng-container *ngIf="!userProfile">
+            <a class="btn btn-underlined btn-bordered border-thin btn-bordered-gradient special3"
+              [routerLink]="['/','login']"><span>
+                <span class="btn-txt" style="color: white;">Login</span>
+              </span>
+            </a><a
+              class="btn btn-default btn-sm round btn-bordered border-thin special1 special2"
+              [routerLink]="['/','register']"><span>
+                <span class="btn-txt">Get started</span>
+              </span>
+            </a>
+          </ng-container>
+        </form>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<div *ngIf="!_isLandingPage$.value" class='d-none d-lg-block'>
+  <header>
+    <div class='mainbar-wrap'>
+      <div class='container-fluid'>
+        <nav class='navbar navbar-light'>
+          <a class="navbar-brand white" [routerLink]="['/']"><img
+              src="/assets/INATrace/logo-INATrace.svg" />
+          </a>
+          <form class='form-inline'>
+            <a class="btn btn-underlined btn-bordered border-thin btn-bordered-gradient special7 special8"
+              [routerLink]="['/','login']"><span>
+                <span class='btn-txt'>Login</span>
+              </span>
+            </a><a class="btn btn-default btn-sm round btn-bordered border-thin special5 special6"
+              [routerLink]="['/','products', 'new']"><span>
+                <span class='btn-txt'>Get started</span>
+              </span>
+            </a></form>
+        </nav>
+      </div>
+    </div>
+  </header>
+</div>

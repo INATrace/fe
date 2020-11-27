@@ -1,0 +1,25 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+
+
+.on-the-overlay {
+    position: relative;
+    z-index: 1050;   // raising this over fixed-top
+    // outline: 200px solid rgba(0,0,0,0.5);
+    // // box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+    // // overflow: visible;
+    // position: relative;
+    // box-sizing:border-box;
+}
+
+.overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1050;   // raising this over fixed-top
+    background-color: rgba(0,0,0,0.5);
+}

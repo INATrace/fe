@@ -1,0 +1,24 @@
+<div class="container-fluid cookieWrap">
+  <div class="container">
+    <div class="row">
+      <nav class="navbar navbar-dark bg-primary" style="height: 80px;">
+        <a class="container" href="#">
+          <img src="/assets/INATrace/logo-INATrace-w.svg" width="128px" height="39px" style="margin-bottom: 8px;">
+        </a>
+      </nav>
+    </div>
+    <div class="nav-banner-spacer"></div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-0 col-lg-2"></div>
+      <div class="col-sm-12 col-lg-8 sp-cookie" i18n="@@cookies.cookieBanner.segmentWithButton">
+        <p class="sp-cookie-header">Cookies on this page</p>
+        <p class="sp-cookie-text">The website uses cookies for a variety of purposes. Some are essential for the operation of online services. However, cookies for analytics and your settings provide a better user experience, easier site usage.</p>
+        <p class="sp-cookie-text">You can read more about cookies in <a [href]="cookieInfoUrl">Cookies</a>. By continuing to use the site you agree to the cookies. You can edit your cookie <a [href]="cookieInfoUrl">settings here</a>.</p>
+        <div class="btn no-shadow sp-cookie-btn">
+          <a (click)="onAccept.next($event)"><span class="btn-span">OK</span></a>
+        </div>
+      </div>
+      <div class="col-sm-0 col-lg-2"></div>
+    </div>
+  </div>
+</div>

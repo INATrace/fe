@@ -1,0 +1,16 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// @import 'styles-basic.scss';
+
+.action-error {
+  border-color: $danger !important;
+  color: $danger !important;
+}
+
+.action-success {
+  border-color: $success !important;
+  color: $success !important;
+}

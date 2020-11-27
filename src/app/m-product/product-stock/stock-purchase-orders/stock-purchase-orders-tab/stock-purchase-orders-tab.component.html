@@ -1,0 +1,292 @@
+
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main">
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.purchaseOrders">Purchase orders</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newPurchaseOrder()" i18n="@@productLabelStock.button.newPurchaseOrders">
+          <span>+ Add purchase</span>
+        </button>
+      </div>
+
+
+      <div class="af-form-row af-form-row--nomargin">
+        <!-- <div class="af-form-row" style="background-color: inherit;"> -->
+        <div class="af-form-block--c6">
+          <div class="af-form-element">
+            <div class="af-row">
+              <div class="af-c12">
+
+
+                <single-choice *ngIf="facilityCodebook"
+                  label="Facility"
+                  i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.facilityForStockOrder"
+                  [formControlInput]="facilityForStockOrderForm"
+                  [codebookService]="facilityCodebook"
+                  (onChange)="facilityForStockOrderChanged($event)"
+                  style="min-width: 150px;">
+                </single-choice>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- [codebookService]="collectingFacilityForStockOrderCodebook" -->
+
+      <div class="d-flex justify-content-between main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfPurchaseOrders">List of purchase orders</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingPurchaseOrders">Showing {{showedPurchaseOrders}}/{{allPurchaseOrders}}</div>
+        </div>
+
+        <div class="d-flex align-items-top">
+          <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+
+
+            <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.openBalanceOnly.filter">Open balance
+              <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <!-- <div *ngIf="purchaseOrderOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.purchaseOrderOnly.filter">Purchase order only
+              <div style="margin-left: 0.5rem;" (click)="setPurchaseOrdersOnly(false)">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div> -->
+
+            <div *ngIf="filterWayOfPayment && filterWayOfPayment?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">{{filterWayOfPayment.value | formatWayOfPayment}}
+              <div (click)="setWayOfPayment('')" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <div *ngIf="filterWomenOnly.value != null" class="d-flex filter-text" style="margin-left: 1rem"> {{womensOnlyStatusValue}}
+              <div (click)="setWomenOnly(null)" style="margin-left: 0.5rem;">
+                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                </fa-icon>
+              </div>
+            </div>
+
+            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+              <div class="button-icon">
+                <span class="button-icon-shape button-icon-shape--filter"></span>
+              </div>
+              <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+            </button>
+
+            <div class="dropdown-menu" ngbDropdownMenu>
+              <button *ngIf="!openBalanceOnly" ngbDropdownItem (click)="setOpenBalanceOnly(true)" i18n="@@productLabelStock.filter.openBalanceOnly.button">Open balance</button>
+              <!-- <button *ngIf="!purchaseOrderOnly" ngbDropdownItem (click)="setPurchaseOrdersOnly(true)" i18n="@@productLabelStock.filter.purchaseOrderOnly.button">Purchase orders only</button> -->
+              <div *ngIf="!openBalanceOnly" class="line"></div>
+              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COOPERATIVE')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCooperative">Cash via cooperative</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COLLECTOR')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCollector">Cash via collector</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('BANK_TRANSFER')" i18n="@@productLabelStock.filter.wayOfPayment.bankTransfer">Bank transfer</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('UNKNOWN')" i18n="@@productLabelStock.filter.wayOfPayment.unknown">Unknown</button>
+              <div class="line"></div>
+              <button ngbDropdownItem (click)="setWomenOnly(true)" i18n="@@productLabelStock.filter.womensOnly.yes">Womens only coffee</button>
+              <button ngbDropdownItem (click)="setWomenOnly(false)" i18n="@@productLabelStock.filter.womensOnly.no">Non-womens only coffee</button>
+            </div>
+
+            <app-search-textinput
+              [form]="searchFarmerNameAndSurname"
+              (valueChange)="searchPurchaseInput($event)">
+            </app-search-textinput>
+
+            <button class="af-actions-btn" [class.af-actions-btn--disabled]="selectedOrders.length == 0" (click)="selectedOrders.length> 0 && clickAddPaymentsPing$.next(true)">
+              <span class="af-actions-btn-label" i18n="@@productLabelStock.button.bulkPayments">Add payments</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="d-flex">
+        <app-datepicker
+          label="From"
+          i18n-label="@@productLabelStock.datepicker.date.from"
+          [form]="fromFilterDate"
+          [invalid]="fromFilterDate.invalid"
+          (onChange)="onChange()"
+          style="width: 130px; margin-right: 1rem;">
+        </app-datepicker>
+
+        <app-datepicker
+          label="To"
+          i18n-label="@@productLabelStock.datepicker.date.to"
+          [form]="toFilterDate"
+          [invalid]="toFilterDate.invalid"
+          (onChange)="onChange()"
+          style="width: 130px">
+        </app-datepicker>
+
+        <button style="margin-top: 1.7rem" class="af-actions-btn" [class.af-actions-btn--disabled]="selectedOrders.length == 0" (click)="selectedOrders.length> 0 && clickClearCheckboxesPing$.next(true)">
+          <span class="af-actions-btn-label" i18n="@@productLabelStock.button.clearCheckbox">Clear checkboxes</span>
+        </button>
+
+      </div>
+
+      <app-product-label-stock-order-list
+        [reloadPingList$]="reloadPurchaseOrdersPing$"
+        (countAll)="onCountAllPO($event)"
+        [facilityId$]="facilityIdPing$"
+        (showing)="onShowPO($event)"
+        [openBalanceOnly$]="openBalancePing$"
+        [selectedOrders]="selectedOrders"
+        (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+        [clickAddPaymentsPing$]="clickAddPaymentsPing$"
+        [organizationId]="organizationId"
+        [wayOfPaymentPing$]="wayOfPaymentPing$"
+        [womenOnlyPing$]="womenOnlyPing$"
+        [deliveryDatesPing$]="deliveryDatesPing$"
+        [queryFarmerNameSurnamePing$]="queryFarmerNameSurnamePing$"
+        [clickClearCheckboxesPing$]="clickClearCheckboxesPing$">
+      </app-product-label-stock-order-list>
+
+    </div>
+
+
+    <div class="main-inside-top content-element" style="margin-bottom: 20vh;">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.seasonOverview">Season overview</div>
+        <button [disabled]="!isDataAvailable" class="btn btn-solid round btn-table-new content-element--btn" (click)="newSeasonalPayment()" i18n="@@productLabelStock.button.newSeasonalPayment">
+          <span>+ Add seasonal payment</span>
+        </button>
+      </div>
+
+
+      <div class="d-flex">
+        <app-datepicker
+          label="From"
+          i18n-label="@@productLabelStock.datepicker.date.from"
+          [form]="fromSeasonalFilterDate"
+          [invalid]="this.submitSeasonalData && fromSeasonalFilterDate.invalid"
+          (onChange)="setQuoteOrdersForSeasonal()"
+          style="width: 130px; margin-right: 1rem;">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="fromSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.fromSeasonalFilterDate.error">
+                From date is required
+              </div>
+            </div>
+          </ng-container>
+        </app-datepicker>
+
+        <app-datepicker
+          label="To"
+          i18n-label="@@productLabelStock.datepicker.date.to"
+          [form]="toSeasonalFilterDate"
+          [invalid]="this.submitSeasonalData && toSeasonalFilterDate.invalid"
+          (onChange)="setQuoteOrdersForSeasonal()"
+          style="width: 130px; margin-right: 1rem;">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="toSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.toSeasonalFilterDate.error">
+                To date is required
+              </div>
+            </div>
+          </ng-container>
+        </app-datepicker>
+
+        <single-choice
+          label="Producer"
+          i18n-label="@@productLabelStock.label.producer"
+          [formControlInput]="producerListForm"
+          [codebookService]="codebookCoop"
+          [isInvalidChoice]="this.submitSeasonalData && producerListForm.invalid"
+          (onChange)="setQuoteOrdersForSeasonal()"
+          [readonly]="producerListFormReadOnly">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="producerListForm.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.producer.error">
+                Producer is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+      </div>
+
+      <!-- *ngIf="showOrdersSeasonal" -->
+
+
+      <div class="d-flex main-inside-top--row2 justify-content-between">
+        <div class="d-flex">
+          <single-choice
+            label="Orders"
+            i18n-label="@@productLabelStock.label.order"
+            [formControlInput]="orderListForm"
+            [codebookService]="quoteOrdersOnOrganizationCodebook"
+            [readonly]="orderListFormReadOnly"
+            [isInvalidChoice]="orderListError">
+            <ng-container *ngIf="orderListError">
+              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">
+                Order is required
+              </div>
+            </ng-container>
+          </single-choice>
+
+
+          <checkbox-input
+            style="margin-left: 1rem; margin-top: 0.4rem"
+            [form]="orderListCheckbox"
+            class="af-b2c-form-element af-b2c-form-element--checkbox af-b2c-spacer--top-one af-b2c-form-element--nolabel"
+            (onClick)="clickOrderListCheckbox()"
+            [disabled]="!showSeasonalButtonShowEnable">
+            <checkbox-input-rich-label
+              style="font-weight: 300;"
+              i18n="@@productLabelStock.checkbox-input.orderListCheckbox">
+              Include all orders
+            </checkbox-input-rich-label>
+          </checkbox-input>
+        </div>
+        <div>
+          <button [disabled]="!showSeasonalButtonShowEnable" class="btn btn-solid round btn-table-new content-element--btn" style="margin-top:22px" (click)="showSeasonalPayments()" i18n="@@productLabelStock.button.showSeasonalPayments">
+            <span>Show</span>
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="isDataAvailable">
+        <div class="main-inside-main">
+          <table *ngIf="isDataAvailable" class="af-table af-checkbox--small">
+            <thead>
+              <tr
+                scope="col"
+                result-sorter
+                [sortOptions]="sortOptionsSeasonalData"
+                [defaultSortingIndex]="10"></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[0].name">{{seasonalData.totalSeason}}</td>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[1].name">{{seasonalData.totalOrder}}</td>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[2].name">{{seasonalData.paymentAdvanced}}</td>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[3].name">{{seasonalData.paymentCherry}}</td>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[4].name">{{seasonalData.paymentBonus}}</td>
+                <td scope="row" [attr.data-label]="sortOptionsSeasonalData[5].name">{{seasonalData.paymentPremium}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!isDataAvailable" class="no-list-results" i18n="@@productLabelStock.noData">
+            No data found
+          </div>
+        </div>
+      </ng-container>
+
+
+
+    </div>
+
+
+  </div>
+</app-authorised-layout>

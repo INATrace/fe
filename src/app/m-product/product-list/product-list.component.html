@@ -1,0 +1,97 @@
+<app-authorised-layout>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <ng-container *ngIf="products$ | async as products">
+
+
+          <div class="main-inside-top content-element">
+            <div class="d-flex justify-content-between content-element--row1">
+              <div class="title-page content-element--title" i18n="@@productList.title.companies">Products</div>
+              <button class="btn btn-solid round btn-table-new content-element--btn" (click)="createProductForCompany()" i18n="@@productList.button.newProducts">
+                <span>New product</span>
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-between content-element--row2">
+              <div>
+                <div class="sub-title-page content-element--subtitle" i18n="@@productList.subTitle.listOfProducts">List of products</div>
+                <div class="counting-page content-element--counting" i18n="@@productList.subTitle.showing">Showing {{showedProducts}}/{{allProducts}}</div>
+              </div>
+
+              <div class="d-flex align-items-top">
+                <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+                  <div *ngIf="searchStatus && searchStatus?.value.length>0" class="d-flex filter-text" i18n="@@productList.filter.show"> Show {{searchStatus.value | lowercase}}
+                    <div (click)="clearValue(searchStatus)" style="margin-left: 0.5rem;">
+                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      </fa-icon>
+                    </div>
+                  </div>
+                  <div *ngIf="this.isAdmin && myProducts && myProducts.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productList.filter.myProducts">My products
+                    <div (click)="clearValue(myProducts, true)" style="margin-left: 0.5rem;">
+                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      </fa-icon>
+                    </div>
+                  </div>
+
+                  <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@userList.filter.placeholder">
+                    <!-- <fa-icon
+                    style="margin-right: 9px; font-size: 14px;"
+                    [icon]="faFilter">
+                  </fa-icon> -->
+                    <div class="button-icon">
+                      <span class="button-icon-shape button-icon-shape--filter"></span>
+                    </div>
+                    <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+                  </button>
+
+
+                  <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="showStatus('ACTIVE')" i18n="@@productList.filter.showActive">Show active</button>
+                    <button ngbDropdownItem (click)="showStatus('DISABLED')" i18n="@@productList.filter.showDisabled">Show disabled</button>
+                    <ng-container *ngIf="this.isAdmin">
+                      <div class="line"></div>
+                      <button ngbDropdownItem (click)="myProductsOnly(true)" i18n="@@productList.filter.showMyProducts">Show my products</button>
+                    </ng-container>
+                  </div>
+
+
+                </div>
+
+                <app-search-textinput
+                  [form]="searchName">
+                </app-search-textinput>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <!-- <div class="main-inside-main"> -->
+          <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products.items">
+              <app-product-card
+                [product]= product>
+              </app-product-card>
+            </div>
+          </div>
+          <div *ngIf="products && products.items && products.items.length == 0" class="no-list-results" i18n="@@productList.noProducts">
+            No products
+          </div>
+          <!-- </div> -->
+          <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+            <ngb-pagination
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="products.count"
+              (pageChange)="onPageChange($event)"
+              [maxSize]="7"
+              [rotate]="true">
+            </ngb-pagination>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</app-authorised-layout>

@@ -1,0 +1,14 @@
+  <header class="af-b2c-header">
+    <div></div>
+    <div class="af-b2c-header--logo" (click)="goTo(null)">
+      <img src="/assets/logo/af-b2c-logo--angeliques-finest.svg" />
+      <!-- <h1 i18n="@@frontPage.header.AngeliquesFinest">Angelique's finest</h1> -->
+    </div>
+    <ul class="af-b2c-nav" *ngIf="this.doShowTabs">
+      <li i18n="@@frontPage.header.tab.journey" [ngClass]="this.tab == 'journey' ? 'af-b2c-nav--selected' : 'af-b2c-nav'" (click)="goTo('journey')">journey</li>
+      <li i18n="@@frontPage.header.tab.fair-prices" [ngClass]="this.tab == 'fair-prices' ? 'af-b2c-nav--selected'  : 'af-b2c-nav'" (click)="goTo('fair-prices')">fair prices</li>
+      <li i18n="@@frontPage.header.tab.producers" [ngClass]="this.tab == 'producers' ? 'af-b2c-nav--selected'  : 'af-b2c-nav'" (click)="goTo('producers')">producers</li>
+      <li i18n="@@frontPage.header.tab.quality" [ngClass]="this.tab == 'quality' ? 'af-b2c-nav--selected'  : 'af-b2c-nav'" (click)="goTo('quality')">quality</li>
+      <li i18n="@@frontPage.header.tab.feedback" [ngClass]="this.tab == 'feedback' ? 'af-b2c-nav--selected'  : 'af-b2c-nav'" (click)="goTo('feedback')">feedback</li>
+    </ul>
+  </header>

@@ -1,0 +1,333 @@
+// .card-elevation {
+//   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+//   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+// }
+
+// .card-elevation:hover {
+//   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+// }
+
+// .card-img-top {
+//   width: 100%;
+//   max-height: 28vh;
+//   object-fit: cover;
+// }
+
+// .card-box {
+//   width: 100%;
+//   max-height:18rem;
+//   margin-bottom: 2rem;
+//   background-color: #FFFFFF;
+// }
+
+@import "src/_variables";
+
+$card-bg: white;
+
+
+// BASE STYLE
+// -----------------------------
+
+// default one is with --cyan for upper side
+// and white for bottom part
+
+$af-card-bg: $white;
+
+// upper part of card
+$af-card-content-border: $moderate-cyan;
+$af-card-content-bg:  $white; // #EAFDFF;
+
+// text in card
+$af-card-title: #3C4858;
+$af-card-subtitle: #585858;
+$af-card-description: #585858;
+$af-card-title-lineheight: 1.4;
+$af-card-description-lineheight: 1.3;
+
+// indicator up top right
+$af-card-indicator-bg: $very-pale-cyan;           // move these to --cyan, replace with --default
+$af-card-indicator-border: $moderate-cyan;
+
+// icon bottom right in upper section
+$af-icon-shape-bg: $moderate-cyan;
+
+
+// Introducing ellipsis for titles/description
+@mixin ellipsis-2-rows {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// .card {
+//   &-box {
+//     background: $card-bg;
+//     width: 100%;
+//     max-height:18rem;
+//     margin-bottom: 2rem;
+//   }
+
+//   &-elevation {
+//     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+//     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+//     &:hover {
+//       box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+//     }
+//   }
+
+//   &-img-top {
+//     width: 100%;
+//     max-height: 28vh;
+//     object-fit: cover;
+//   }
+
+//   &-body {
+//     flex: 1 1 auto;
+//     padding: 1rem;
+//   }
+//   &-text {
+//     h5 {
+//       font-size: 14px;
+//       margin-bottom: 0;
+//     }
+//   }
+
+// }
+
+
+
+
+
+.af-stakeholder {
+  background: $white;
+  border: 1px solid $af-card-border;
+  box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
+  border-radius: 5px;
+
+  min-height: 90px;
+  width: auto;
+  max-width: 100%;
+  min-width: 100%;
+
+  &:hover {
+    // color: red;
+    // This adds basic shape of
+    // icon with a background
+    background-color: inherit;
+    height: 30px; // $card-icon-size;
+    width: 30px; // $card-icon-size;
+    // margin-right: -12px;
+    // margin-top: -4px;
+    display: block;
+
+
+
+    &::before {
+      $size-matters-not: 30px;
+      $size-matters-not-halved: ($size-matters-not / 2);
+
+      position: absolute;
+      height: $size-matters-not;
+      width: $size-matters-not;
+      margin-top: -$size-matters-not-halved;
+      margin-left: -$size-matters-not-halved;
+      content: "";
+      // background-color: orange;
+      mask: url(/assets/icons/icon-remove.png) no-repeat;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      display: inline-block;
+
+
+      // This defines placement of icon as mask, backtround color defines color of icon
+      width: $card-icon-size;
+      height: $card-icon-size;
+
+      background: #333;  // this will be color of icon, default is --BLUE
+      mask-size: cover;
+
+
+    }
+    &::after {
+      background-color: #ccc;
+      background-color: #c8c7c7b3; // rgba(200, 199, 199, 0.7)
+
+      // background-color: #5DBCCF;
+      // background-color:rgba(93, 188, 207, 0.5);
+      // background-color:#5DBCCF80;
+
+      position: absolute;
+
+      width: calc(100% - 10px);
+
+      content: "";
+      left: 5px;
+      top: 0;
+
+      border: 1px solid $af-card-border;
+      box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
+      border-radius: 5px;
+
+      min-height: 90px;
+    }
+  }
+
+
+
+  &-aside {
+    float: left;
+    margin-left: 1rem;
+    margin-top: 2rem;
+  }
+
+  &-content {
+    padding: 1rem;
+    padding-left: 4rem;
+    padding-top: 1.75rem;
+
+    .af-stakeholder {
+      margin-right: -10px;
+
+      &-title {
+        font-size: 14px;
+        color: #585858;
+        letter-spacing: 0;
+        line-height: 14px;
+        display: block;
+
+
+        // width: 100%;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        line-height: $af-card-description-lineheight;
+
+        @include ellipsis-2-rows;
+
+        &:hover {
+          color: red;
+          width: calc(100%);
+          background-color: yellow;
+        }
+
+      }
+      // &-description {
+      //   font-size: 10px;
+      //   color: $af-card-description;
+      //   margin-top: 5px;
+      //   margin-bottom: 0;
+      //   display: inline-block;
+
+      //   line-height: $af-card-description-lineheight;
+      //   @include ellipsis-2-rows;
+      // }
+    }
+
+  }
+
+  // &-icon {
+  //   // This adds basic shape of
+  //   // icon with a background
+  //   background-color: inherit;
+  //   height: $card-icon-size;
+  //   width: $card-icon-size;
+  //   margin-right: -12px;
+  //   margin-top: -4px;
+  //   // display: block;
+
+  //   &-shape {
+  //     // This defines placement of icon as mask, backtround color defines color of icon
+  //     display: inline-block;
+  //     width: $card-icon-size;
+  //     height: $card-icon-size;
+  //     // background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+  //     background: red;
+  //     mask-size: cover;
+
+  //     // list icon
+  //     // sources here
+  //     &--proto {
+  //       mask: url(/assets/icons/icon-doc-dot-pdf.svg) no-repeat;
+  //     }
+  //   }
+
+  // }
+
+  // HERE BE ICONS for cards
+  &-icon {
+    // This adds basic shape of
+    // icon with a background
+    background-color: inherit;
+    height: 36px; // $card-icon-size;
+    width: 30px; // $card-icon-size;
+    margin-right: -12px;
+    margin-top: -4px;
+    display: block;
+    float: right;
+
+    &-shape {
+      // This defines placement of icon as mask, backtround color defines color of icon
+      display: inline-block;
+      // width: $card-icon-size;
+      // height: $card-icon-size;
+      height: 36px; // $card-icon-size;
+      width: 30px; // $card-icon-size;
+      background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+      mask-size: cover;
+
+      // list icon
+      // sources here
+      &--doc {
+        mask: url(/assets/icons/icon-doc.svg) no-repeat;
+      }
+      &--pdf-dot {
+        mask: url(/assets/icons/icon-doc-pdf-dot.svg) no-repeat;
+      }
+      &--pdf-check {
+        mask: url(/assets/icons/icon-doc-pdf-check.svg) no-repeat;
+      }
+
+
+
+      &--stakeholder-chain {
+        mask: url(/assets/icons/icon-stakeholder-chain.svg) no-repeat;
+      }
+      &--stakeholder-pair {
+        mask: url(/assets/icons/icon-stakeholder-pair.svg) no-repeat;
+      }
+      &--stakeholder-factory {
+        mask: url(/assets/icons/icon-stakeholder-factory.svg) no-repeat;
+      }
+    }
+  }
+
+  &-dots {
+    background-color: inherit;
+    height: $card-icon-size;
+    width: $card-icon-size;
+    right: 10px;
+    top: 0;
+    display: block;
+    position: absolute;
+
+    &-shape {
+      display: inline-block;
+      height: $card-icon-size;
+      width: $card-icon-size;
+      background: #8F92A1;  // this will be color of icon, default is --BLUE
+      mask-size: cover;
+      margin-left: 4px;
+      margin-top: 4px;
+
+      &--dots {
+        mask: url(/assets/icons/icon-dots.svg) no-repeat;
+      }
+    }
+  }
+
+}

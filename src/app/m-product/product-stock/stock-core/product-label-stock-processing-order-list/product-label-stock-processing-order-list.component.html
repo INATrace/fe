@@ -1,0 +1,56 @@
+
+<ng-container *ngIf="orders$ | async as orders">
+  <div class="main-inside-main">
+    <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
+      <thead>
+        <tr scope="col" result-sorter [sortOptions]="sortOptions" [cbChecked]="cbCheckedAll" (sortByKey)="changeSort($event)"></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders.items; index as i">
+          <!-- <td *ngIf="!sortOptions[0].hide" scope="row" [attr.data-label]="sortOptions[0].name"><checkbox-input *ngIf="order.balance> 0" inTable="true" (onClick)="cbSelected(order, i)" [checked]="this.currentData[i].selected && order.balance > 0"> </checkbox-input></td> -->
+          <td *ngIf="!sortOptions[0].hide" scope="row" [attr.data-label]="sortOptions[0].name"><span>{{order.lastChange | date: 'yyyy-MM-dd hh:mm'}}</span></td>
+          <td *ngIf="!sortOptions[1].hide" scope="row" [attr.data-label]="sortOptions[1].name"><span>{{order?.processingAction?.name}}</span></td>
+          <td [attr.data-label]="sortOptions[2].name">
+            <span>
+            <a i18n="@@processingOrderList.tableCol.view"
+              (click)="view(order)"
+              class="company-action"
+              [class.enabled-action]="true">
+              View
+            </a>
+            <a i18n="@@processingOrderList.tableCol.edit"
+              (click)="edit(order)"
+              class="company-action"
+              [class.enabled-action]="true">
+              Edit
+            </a>
+            <a i18n="@@processingOrderList.tableCol.delete"
+              (click)="delete(order)"
+              class="company-action"
+              [class.enabled-action]="true">
+              Delete
+            </a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="orders && orders.items && orders.items.length == 0" class="no-list-results" i18n="@@processingOrderList.noOrders">
+      No orders found
+    </div>
+  </div>
+
+  <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="orders.count"
+      (pageChange)="onPageChange($event)"
+      [maxSize]="7"
+      [rotate]="true">
+    </ngb-pagination>
+  </div>
+
+  <pre *ngIf="processingOrderToShow">{{processingOrderToShow | json}}</pre>
+
+</ng-container>

@@ -1,0 +1,452 @@
+<div *ngIf="!published" >
+  <div class="container" style="margin-top: 0px; height: calc(100vh - 208px);">
+    <div class="row top-block align-items-center">
+      <h4 class="h2-style" i18n="@@productLabelFrontPage.unpublished">{{unpublishedText}}</h4>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="(product | keyvalue)?.length">
+  <div class="container" style="margin-top: 0px;">
+    <div class="row top-block align-items-center">
+      <div class="col-sm-6" style="padding-left: 24px;">
+        <ng-container *ngIf="product.name">
+          <h2 class="h2-style">{{product.name.value}}</h2>
+          <button *ngIf="showCheckAuthenticity" class="btn btn-solid round mb-1 mr-1" (click)="checkBatchNumber(false)" i18n="@@productLabelFrontPage.button.checkAuthenticity">
+            <span>
+              <fa-icon
+                style="margin-right: 10px;"
+                [icon]="faSeedling">
+              </fa-icon>
+              CHECK AUTHENTICITY
+            </span>
+          </button>
+          <button *ngIf="showFeedback" class="btn btn-outlined left mb-1" (click)="giveFeedback()" i18n="@@productLabelFrontPage.button.giveFeedback">
+            <span>
+              <fa-icon
+                style="margin-right: 10px;"
+                [icon]="faEye">
+              </fa-icon>
+              GIVE FEEDBACK
+            </span>
+          </button>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="product.photo">
+        <div class="col-sm-6">
+          <img *ngIf="product?.photo?.value?.storageKey"
+            src="/api/public/image/{{product.photo.value.storageKey}}/SMALL"
+            default="/api/public/image/{{product.photo.value.storageKey}}"
+            style="width: 100%; max-height: 314px; border-radius: 4px;">
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-container>
+      <div class="p-desc-block row justify-content-center">
+        <div class="col-sm-0 col-lg-3"></div>
+        <div class="col-sm-12 col-lg-6 text-center">
+          <img src="/assets/front-label/fpq-w-titles.png">
+        </div>
+        <div class="col-sm-0 col-lg-3"></div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="product.description">
+      <div class="p-desc-block row justify-content-center">
+        <div class="col-sm-0 col-lg-3"></div>
+        <div class="col-sm-12 col-lg-6 text-center">
+          <h4 i18n="@@productLabelFrontPage.title.productDescription">Product description</h4>
+          <h4 style="font-weight: 300;">{{product.description.value}}</h4>
+        </div>
+        <div class="col-sm-0 col-lg-3"></div>
+      </div>
+    </ng-container>
+    <div class="row">
+      <div class="col-sm-6">
+
+        <div style="display: flex; flex-direction: column;">
+          <ng-container *ngIf="showProduct">
+            <app-section-title
+              i18n-title="@@productLabelFrontPage.app-section.product"
+              title="Product">
+            </app-section-title>
+            <div *ngIf="product.ingredients" [ngStyle]="{order: product.ingredients.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.ingredients"
+                title="Ingredients"
+                content="{{product.ingredients.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.nutritionalValue" [ngStyle]="{order: product.nutritionalValue.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.nutritionalValue"
+                title="Nutritional value"
+                content="{{product.nutritionalValue.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.howToUse" [ngStyle]="{order: product.howToUse.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.recipes"
+                title="How to Use / Recipes"
+                content="{{product.howToUse.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product?.origin?.value" [ngStyle]="{order: product.origin.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.origin"
+                title="Origin"
+                content="{{product.origin.value.text}}">
+              </app-section-content-piece>
+
+              <button *ngIf="showTraceOrigin" class="btn btn-outlined" (click)="checkBatchNumber(true)" style="margin-top: -24px; margin-bottom: 16px;" i18n="@@productLabelFrontPage.button.traceOrigin">
+                <span>
+                  TRACE ORIGIN
+                </span>
+              </button>
+              <div style="margin-right: 30px;">
+                <google-map
+                  *ngIf="isGoogleMapsLoaded"
+                  height="380px"
+                  width="100%">
+                  <map-marker
+                    #gMarker="mapMarker"
+                    *ngFor="let marker of markers; index as i"
+                    [position]="marker.position"
+                    [label]="marker.label"
+                    (mapClick)="openInfoWindow(gMarker, marker)">
+                  </map-marker>
+                  <map-info-window>{{gInfoWindowText}}</map-info-window>
+                </google-map>
+              </div>
+              <div style="height: 48px;"></div>
+            </div>
+
+            <div *ngIf="product.keyMarketsShare" [ngStyle]="{order: product.keyMarketsShare.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.keyMarkets"
+                title="Key Markets">
+              </app-section-content-piece>
+              <div class="content-text" style="margin-top: -32px; margin-bottom:32px">
+
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.yourCountry">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.ourCountry">% Share sold in our country: {{product.keyMarketsShare.value.yourCountry}}</div>
+                </ng-container>
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.europe">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.europe">% Share sold in Europe: {{product.keyMarketsShare.value.europe}}</div>
+                </ng-container>
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.usa">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.usa">% Share sold in USA: {{product.keyMarketsShare.value.usa}}</div>
+                </ng-container>
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.eastAfrica">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.eastafrica">% Share sold in East Africa: {{product.keyMarketsShare.value.eastAfrica}}</div>
+                </ng-container>
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.restOfAfrica">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.africa">% Share sold in rest of Africa: {{product.keyMarketsShare.value.restOfAfrica}}</div>
+                </ng-container>
+                <ng-container *ngIf="product?.keyMarketsShare?.value?.elsewhere">
+                  <div i18n="@@productLabelFrontPage.app-section.keyMarkets.elsewhere">% Share sold elsewhere: {{product.keyMarketsShare.value.elsewhere}}</div>
+                </ng-container>
+
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <ng-container *ngIf="showProcess">
+            <app-section-title
+              i18n-title="@@productLabelFrontPage.app-section.process"
+              title="Process">
+            </app-section-title>
+            <div *ngIf="product.process_production" [ngStyle]="{order: product.process_production.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.production"
+                title="Production"
+                content="{{product.process_production.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.process_storage" [ngStyle]="{order: product.process_storage.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.storage"
+                title="Storage"
+                content="{{product.process_storage.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.process_codesOfConduct" [ngStyle]="{order: product.process_codesOfConduct.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.codesOfConduct"
+                title="Codes of Conduct"
+                content="{{product.process_codesOfConduct.value}}">
+              </app-section-content-piece>
+            </div>
+
+            <div *ngIf="product.process_standards" [ngStyle]="{order: product.process_standards.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.certifications"
+                title="Certifications and Standards">
+              </app-section-content-piece>
+              <div class="list-block">
+                <ng-container *ngFor="let item of product.process_standards.value">
+                  <li [ngClass]="item.certificate?.contentType == 'application/pdf' ? 'back-img-pdf' : 'back-img-jpg'">
+                    <ng-container *ngIf="item.certificate?.storageKey">
+                      <a class="content-text" href="/api/public/document/{{item.certificate.storageKey}}" target="_blank" (click)="click('CLICK_CERT_STD')">{{item.description}}</a>
+                    </ng-container>
+                  </li>
+                </ng-container>
+              </div>
+            </div>
+
+            <div *ngIf="product.process_records" [ngStyle]="{order: product.process_records.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.records"
+                title="Production Records">
+              </app-section-content-piece>
+              <div class="list-block">
+                <ng-container *ngFor="let item of product.process_records.value">
+                  <li [ngClass]="item.document?.contentType == 'application/pdf' ? 'back-img-pdf' : 'back-img-jpg'">
+                    <ng-container *ngIf="item.document?.storageKey">
+                      <a type="none" class="content-text" href="/api/public/document/{{item.document.storageKey}}" target="_blank" (click)="click('CLICK_PROD_REC')">{{item.description}}</a>
+                    </ng-container>
+                  </li>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+
+        <div style="display: flex; flex-direction: column;">
+          <ng-container *ngIf="showResponsibility">
+            <app-section-title
+              i18n-title="@@productLabelFrontPage.app-section.responsibility"
+              title="Social responsibility">
+            </app-section-title>
+            <div *ngIf="product.responsibility_laborPolicies" [ngStyle]="{order: product.responsibility_laborPolicies.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.laborPolicies"
+                title="Labor Policies"
+                content="{{product.responsibility_laborPolicies.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.responsibility_relationship" [ngStyle]="{order: product.responsibility_relationship.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.relationshipFarmers"
+                title="Relationship with Farmers / Suppliers"
+                content="{{product.responsibility_relationship.value}}">
+              </app-section-content-piece>
+            </div>
+
+            <div *ngIf="product.responsibility_farmer" [ngStyle]="{order: product.responsibility_farmer.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.FarmerName"
+                title="Farmer or Community Name"
+                content="{{product.responsibility_farmer.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.responsibility_pictures" [ngStyle]="{order: product.responsibility_pictures.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.farmerGroup"
+                title="Farmer Group Pictures">
+              </app-section-content-piece>
+              <div class="content-text" style="margin-top: -32px; margin-bottom:32px; margin-right: 30px;">
+                <ng-container *ngFor="let item of product.responsibility_pictures.value">
+                  <div>{{item.description}}</div>
+                  <img *ngIf="item.document?.storageKey"
+                    class="img-farmer"
+                    src="/api/public/image/{{item.document.storageKey}}/SMALL"
+                    default="/api/public/image/{{item.document.storageKey}}">
+                </ng-container>
+              </div>
+
+
+            </div>
+            <div *ngIf="product.responsibility_story" [ngStyle]="{order: product.responsibility_story.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.story"
+                title="Story"
+                content="{{product.responsibility_story.value}}">
+              </app-section-content-piece>
+            </div>
+          </ng-container>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <ng-container *ngIf="showSustainability">
+            <app-section-title
+              i18n-title="@@productLabelFrontPage.app-section.sustainability"
+              title="Environmental sustainability">
+            </app-section-title>
+            <div *ngIf="product.sustainability_production" [ngStyle]="{order: product.sustainability_production.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.production"
+                title="Environmentally friendly production"
+                content="{{product.sustainability_production.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.sustainability_packaging" [ngStyle]="{order: product.sustainability_packaging.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.packaging"
+                title="Sustainable packaging"
+                content="{{product.sustainability_packaging.value}}">
+              </app-section-content-piece>
+            </div>
+            <div *ngIf="product.sustainability_co2Footprint" [ngStyle]="{order: product.sustainability_co2Footprint.id}">
+              <app-section-content-piece
+                i18n-title="@@productLabelFrontPage.app-section.footprint"
+                title="Carbon footprint"
+                content="{{product.sustainability_co2Footprint.value}}">
+              </app-section-content-piece>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+      <div class="col-sm-6">
+
+        <ng-container *ngIf="showCompany">
+          <app-section-title
+            i18n-title="@@productLabelFrontPage.app-section.company"
+            title="Company">
+          </app-section-title>
+
+          <ng-container style="display: inline-block">
+
+            <div class="logo-container" style="padding: 1rem;">
+              <img *ngIf="product.company_logo?.value?.storageKey"
+                src="/api/public/image/{{product.company_logo.value.storageKey}}/SMALL"
+                default="/api/public/image/{{product.company_logo.value.storageKey}}"
+                style="width: 150px; max-height: 150px;">
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+
+              <div *ngIf="product.company_name" [ngStyle]="{order: product.company_name.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyName"
+                  title="Company name"
+                  content="{{product.company_name.value}}">
+                </app-section-content-piece>
+              </div>
+              <div *ngIf="product.company_headquarters" [ngStyle]="{order: product.company_headquarters.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyHeadquarters"
+                  title="Company headquarters">
+                </app-section-content-piece>
+                <div class="content-text" style="margin-top: -24px; margin-bottom:24px">
+                  <ng-container *ngIf="product.company_headquarters.value?.address">
+                    <div>{{product.company_headquarters.value.address}}</div>
+                  </ng-container>
+                  <ng-container *ngIf="product.company_headquarters.value?.city">
+                    <div>{{product.company_headquarters.value.city}}</div>
+                  </ng-container>
+                  <ng-container *ngIf="product.company_headquarters.value?.zip">
+                    <div>{{product.company_headquarters.value.zip}}</div>
+                  </ng-container>
+                  <ng-container *ngIf="product.company_headquarters.value?.state">
+                    <div>{{product.company_headquarters.value.state}}</div>
+                  </ng-container>
+                  <ng-container *ngIf="product.company_headquarters.value?.country">
+                    <div>{{product.company_headquarters.value.country.name}}</div>
+                  </ng-container>
+                </div>
+              </div>
+              <div *ngIf="product.company_about" [ngStyle]="{order: product.company_about.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyAbout"
+                  title="About company"
+                  content="{{product.company_about.value}}">
+                </app-section-content-piece>
+              </div>
+              <div *ngIf="product.company_manager" [ngStyle]="{order: product.company_manager.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyCEO"
+                  title="Manager / CEO"
+                  content="{{product.company_manager.value}}">
+                </app-section-content-piece>
+              </div>
+              <div *ngIf="product.company_email" [ngStyle]="{order: product.company_email.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyEmail"
+                  title="Email"
+                  href="mailto:{{product.company_email.value}}"
+                  content="{{product.company_email.value}}">
+                </app-section-content-piece>
+              </div>
+              <div *ngIf="product.company_phone" [ngStyle]="{order: product.company_phone.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyPhone"
+                  title="Phone"
+                  content="{{product.company_phone.value}}">
+                </app-section-content-piece>
+              </div>
+              <div *ngIf="product.company_webPage" [ngStyle]="{order: product.company_webPage.id}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companyWebPage"
+                  title="Web Page"
+                  href="{{hrefWebPage}}"
+                  content="{{product.company_webPage.value}}"
+                  (click)="click('CLICK_COMPANY_PAGE')">
+                </app-section-content-piece>
+              </div>
+
+              <div *ngIf="showMediaLinks" [ngStyle]="{order: mediaLinksOrder}">
+                <app-section-content-piece
+                  i18n-title="@@productLabelFrontPage.app-section.companySocial"
+                  title="Social media">
+                </app-section-content-piece>
+                <div class="d-flex flex-row" style="margin-top:-48px; margin-left: -8px;">
+                  <div *ngIf="product.company_mediaLinks_facebook" class="p-2" [ngStyle]="{order: product.company_mediaLinks_facebook.id}">
+                    <a role="button" href="{{hrefMedilaLinks[product.company_mediaLinks_facebook.id]}}" target="_blank" (click)="click('CLICK_SOCIAL_MEDIA', 'facebook')">
+                      <fa-icon class="social-icon" [icon]="faFacebookSquare"></fa-icon></a>
+                  </div>
+                  <div *ngIf="product.company_mediaLinks_instagram" class="p-2" [ngStyle]="{order: product.company_mediaLinks_instagram.id}">
+                    <a role="button" href="{{hrefMedilaLinks[product.company_mediaLinks_instagram.id]}}" target="_blank" (click)="click('CLICK_SOCIAL_MEDIA', 'instagram')">
+                      <fa-icon class="social-icon" [icon]="faInstagramSquare"></fa-icon></a>
+                  </div>
+                  <div *ngIf="product.company_mediaLinks_youtube" class="p-2" [ngStyle]="{order: product.company_mediaLinks_youtube.id}">
+                    <a role="button" href="{{hrefMedilaLinks[product.company_mediaLinks_youtube.id]}}" target="_blank" (click)="click('CLICK_SOCIAL_MEDIA', 'youtube')">
+                      <fa-icon class="social-icon" [icon]="faYoutubeSquare"></fa-icon></a>
+                  </div>
+                  <div *ngIf="product.company_mediaLinks_twitter" class="p-2" [ngStyle]="{order: product.company_mediaLinks_twitter.id}">
+                    <a role="button" href="{{hrefMedilaLinks[product.company_mediaLinks_twitter.id]}}" target="_blank" (click)="click('CLICK_SOCIAL_MEDIA', 'twitter')">
+                      <fa-icon class="social-icon" [icon]="faTwitterSquare"></fa-icon></a>
+                  </div>
+                  <div *ngIf="product.company_mediaLinks_other" class="p-2" [ngStyle]="{order: product.company_mediaLinks_other.id}">
+                    <a role="button" href="{{hrefMedilaLinks[product.company_mediaLinks_other.id]}}" target="_blank" (click)="click('CLICK_SOCIAL_MEDIA', 'other')">
+                      <fa-icon class="social-icon" [icon]="faGlobeAmericas"></fa-icon></a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+          <!-- </div> -->
+          <!--col-->
+
+          <!-- <div class="col"> -->
+
+
+          <!-- </div> -->
+          <!--row-->
+
+        </ng-container>
+
+
+        <app-section-title
+          i18n-title="@@productLabelFrontPage.app-section.standard"
+          title="Standard">
+        </app-section-title>
+        <div class="d-flex justify-content-center">
+          <!-- <img
+            src="/assets/front-label/bronze-standard.svg"
+            style="width: 50%; margin-top: 24px;"> -->
+        </div>
+
+      </div>
+    </div>
+
+    <div style="height: 200px;"></div>
+  </div>
+</ng-container>

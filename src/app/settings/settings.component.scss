@@ -1,0 +1,28 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+
+.settings-container {
+  max-width:1140px;
+  background-color: white;
+  @include media-breakpoint-up(lg) {
+    width: 960px;
+  }
+  @include media-breakpoint-down(lg) {
+    width: 720px;
+  }
+  @include media-breakpoint-down(md) {
+    width: 540px;
+  }
+  @include media-breakpoint-down(sm) {
+    width: 320px;
+  }
+}
+
+
+.button-disabled {
+  border-color: $gray-semi !important;
+  background-color: $gray-semi !important;;
+}

@@ -1,0 +1,1729 @@
+<app-authorised-layout>
+  <app-product-label-left-panel-content
+    [create]="this.mode === 'create'">
+  </app-product-label-left-panel-content>
+
+  <div class="main"
+    *ngIf="productForm"
+    onDragStart="return false;"
+    onDragEnter="return false;"
+    onDragOver="return false;"
+    onDrop="return false;"
+    contents
+    [initialValue]="labelsSection.anchor"
+    [submitted]="submitted">
+
+
+
+    <div class="af-form-wrapper">
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <!-- <h4 class="modal-title" i18n="@@productLabel.title">QR labels</h4> -->
+          <div *ngIf="this.action === 'labels'" class="title-page content-element--title" i18n="@@productLabel.title.qrLabels">QR labels</div>
+          <div *ngIf="this.action != 'labels'" class="title-page content-element--title" i18n="@@productLabel.title.productSettings">Product settings</div>
+        </div>
+      </div>
+
+      <!-- <div class="tool-button-product" [class.tool-button-product-active]="!this.currentLabel" (click)="updateProductData()">
+        {{updateProductText}}
+      </div> -->
+
+      <div class="af-form-row">
+
+        <ng-container *ngIf="this.action === 'labels'">
+          <div class="af-form-block--c12">
+            <h2 i18n="@@productLabel.section.qrLabels">QR labels</h2>
+            <div class="af-form-element af-form-element--inheritbg">
+
+              <section
+                cdkDropList
+                class="droppable-list"
+                (onIconClickChange)="labelsInfo()">
+                <!-- <div class="row">
+              <div class="col offset-md-1 pl-md-0"> -->
+                <app-label-selector
+                  [labels]="labels$ | async"
+                  (onCreate)="createLabel()"
+                  [toSelect]="labelSelect$"
+                  (onSelect)="loadLabel($event)"
+                  (onDelete)="deleteLabel($event)"
+                  (onTitleChange)="toggleEditTitleMode()"
+                  [currentLabelForm]="labelTitleForm"
+                  [changed]="changed">
+                </app-label-selector>
+
+                <div class="d-flex flex-column flex-md-row align-items-start justify-content-between" *ngIf="currentLabel">
+
+                  <div>
+                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="viewLabel()" i18n="@@productLabel.labelActions.viewPage">
+                      <fa-icon [icon]="faCompass" class="button-icon2"></fa-icon>View page (only label data are visible)
+                    </div>
+                    <div class="tool-button" (click)="togglePublish()" [class.side-menu-item-disabled]="changed">
+                      <fa-icon [icon]="faEye" class="button-icon2"></fa-icon>{{publishText}}
+                    </div>
+                    <!-- <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="downloadInstructions()" i18n="@@productLabel.labelActions.download">
+                      <fa-icon [icon]="faArrowAltCircleDown" class="button-icon2"></fa-icon>Download
+                    </div> -->
+                  </div>
+
+                  <div style="margin-right: -8px;">
+
+                    <!--
+                    I am sample button, reminding you, to refactor classes used on buttons below to
+                    follow same synatx as other buttons do these days
+                  -->
+                    <!-- <button class="btn btn-filter" style="margin-left: 1rem;">
+                    <div class="button-icon">
+                      <span class="button-icon-shape button-icon-shape--filter"></span>
+                    </div>
+                    <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+                  </button> -->
+
+                    <div *ngIf="showBatches" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
+                      <fa-icon [icon]="faCodeBranch" class="button-icon2"></fa-icon>Batches
+                    </div>
+                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
+                      <fa-icon [icon]="faQrcode" class="button-icon2"></fa-icon>Feedback
+                    </div>
+                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="statistics()" i18n="@@productLabel.labelActions.statistics">
+                      <fa-icon [icon]="faSlidersH" class="button-icon2"></fa-icon>Statistics
+                    </div>
+                  </div>
+                </div>
+
+                <!-- </div>
+            </div> -->
+                <div [@expandCollapse]="editTitleMode ? 'open' : 'closed'" class="row">
+                  <div class="col-11 offset-1">
+                    <div class="col">
+                      <textinput
+                        #labelTitleInput
+                        [form]="labelTitleForm"
+                        (onKeyUpEnter)="toggleEditTitleMode()"
+                        (onBlur)="toggleEditTitleMode(false)"
+                        style="width: 100%"
+                        label=""
+                        placeholder="Enter label name"
+                        i18n-placeholder="@@productLabel.labelActions.textinput.editLabelName">
+                      </textinput>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class=spacer-between-sections></div>
+      <div *ngIf="currentLabel" style="position:relative;">
+        <div class="tool-button tool-button-right" (click)="toggleReorder()" [class.tool-button-right-reorder]="reorderMode"
+          style="position:absolute; right:0; z-index: 10;" i18n="@@productLabel.button.reorder">
+          <fa-icon [icon]="faListOl" class="button-icon1 button-icon1-right" [class.button-icon-right-reorder]="reorderMode"></fa-icon>Reorder
+        </div>
+      </div>
+
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c12">
+          <!-- <h2 i18n="@@productLabel.section.product">Product</h2> -->
+          <h2 *ngIf="!this.currentLabel" i18n="@@productLabel.section.productData">Product data</h2>
+          <h2 *ngIf="this.currentLabel" i18n="@@productLabel.section.labelData">Label data</h2>
+          <div class="af-form-element" style="margin-top: 20px;">
+
+            <section [class.sp-page-fade-in]="fadeInProduct"
+              cdkDropList (cdkDropListDropped)="onDropProductSection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of productElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div cdkDragHandle class="col-1 px-0 d-flex justify-content-start">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.process">Process</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropProcessSection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of processElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.socialResponsibility">Social responsibility</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropSocialResponsibilitySection($event)"
+              class="droppable-list">
+              <div class="row">
+                <div class="col-1 px-0"></div>
+                <div class="col-11">
+                  <div class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" (click)="prefillFromOther(true)" i18n="@@productLabel.button.prefillFromOther.resp.prefill">
+                    Prefill
+                  </div>
+                </div>
+              </div>
+
+              <ng-container *ngFor="let element of socialResponsibilityElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.environmentalSustainability">Environmental sustainability</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropEnvironmentalSustainabilitySection($event)"
+              class="droppable-list">
+              <div class="row">
+                <div class="col-1 px-0"></div>
+                <div class="col-11">
+                  <div class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" (click)="prefillFromOther(false)" i18n="@@productLabel.button.prefillFromOther.sust.prefill">
+                    Prefill
+                  </div>
+                </div>
+              </div>
+
+              <ng-container *ngFor="let element of environmentalSustainabilityElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.pricingTransparency">Pricing Transparency</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropSettingsSection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of pricingTransparencyElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.comparisonOfPrice">Comparison of prices</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropComparisonOfPriceElementsSection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of comparisonOfPriceElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.settings">Settings</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropSettingsSection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of settingsElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.company">Company</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropCompanySection($event)"
+              class="droppable-list">
+              <div class="row">
+                <div class="col-1 px-0">
+                </div>
+                <div class="col-11 px-0" i18n="@@productLabel.companySection.subtitle">
+                  <p style="font-weight: 300">If you want to edit company details, please first save all changes and proceed to the <a *ngIf="productForm?.get('company.id')?.value" [routerLink]="['/', 'companies', productForm.get('company.id')?.value]" style="font-weight: 300; font-size: 1rem; text-decoration: underline;">company section</a>. Please note that company information will change on all of your products.</p>
+                </div>
+              </div>
+
+
+              <ng-container *ngFor="let element of companyElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+
+            </section>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons">
+            <ng-container *ngIf="mode === 'update'">
+              <bottom-buttons
+                [changed]="changed"
+                [invalid]="submitted && invalid"
+                (onSave)="save()"
+                (onBack)="goBack()"
+                customBackFn="true"
+                [floatingValidate]="true"
+                [error]="submitted && productForm.invalid"
+                [success]="submitted && !productForm.invalid"></bottom-buttons>
+            </ng-container>
+            <ng-container *ngIf="mode === 'create'">
+              <bottom-buttons
+                [changed]="changed"
+                [invalid]="submitted && invalid"
+                (onSave)="create()"
+                (onBack)="goBack()"
+                customBackFn="true"
+                saveButtonLabel="Create"
+                i18n-saveButtonLabel="@@productLabel.botomButtoms.saveButtonLabel"
+                [floatingValidate]="true"
+                [error]="submitted && productForm.invalid"
+                [success]="submitted && !productForm.invalid"></bottom-buttons>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-authorised-layout>
+
+<!-- PRODUCT TEMPLATES -->
+
+<ng-template #productName>
+  <app-closable
+    [nonClosable]="true"
+    [visibilityForm]="visibilityMap.get('name')"
+    [reorderMode]="reorderMode"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('name')"
+      [label]="this.productNameLabelAndPlaceholder('LABEL', 'name')"
+      [placeholder]="this.productNameLabelAndPlaceholder('PLACEHOLDER', 'name')"
+      style="width: 100%;"
+      hideAsterisk="true"
+      [isInvalid]="submitted && productForm.get('name').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('name').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n="@@productLabel.textinput.productName.error">
+            <span>
+              Product name is required
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #productLogo>
+  <app-closable
+    [nonClosable]="true"
+    [visibilityForm]="visibilityMap.get('photo')"
+    [reorderMode]="reorderMode"
+    [openOnValueChange]="openOnStart">
+    <attachment-uploader
+      rootImageUrl="{{rootImageUrl}}"
+      allowedMimeType="[image/png', 'image/jpeg']"
+      allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+      mode="simpleAsTextField"
+      [label]="this.productNameLabelAndPlaceholder('LABEL', 'photo')"
+      i18n-label="@@productLabel.attachment-uploader.productPhoto.label"
+      [flexCol]="true"
+      (onFileInfoLoad)="onFileUpload($event)"
+      [form]="productForm.get('photo')"
+      [attachmentUploaderId]="'product_image'"
+      [readOnly]="productForm.disabled"
+      comment="Please upload a high-quality photo of your product – make sure the photo is of marketing quality. (72dpi and 1200x2000px recommended)"
+      i18n-comment="@@productLabel.attachment-uploader.productPhoto.comment"
+      [invalid]="submitted && productForm.get('photo').invalid">
+      <attachment-uploader-content i18n-label="@@productLabel.attachment-uploader.productPhoto.content">
+        Upload product photo
+      </attachment-uploader-content>
+      <attachment-uploader-errors>
+      </attachment-uploader-errors>
+    </attachment-uploader>
+    <ng-container *ngIf="submitted">
+      <div *ngIf="productForm.get('photo').errors as errors" validation-error class="sc-invalid-feedback">
+        <div *ngIf="errors.required" i18n-label="@@productLabel.attachment-uploader.productPhoto.error">
+          <span>
+            Product photo is required
+          </span>
+        </div>
+      </div>
+    </ng-container>
+    <div style="height: 1rem;"></div>
+  </app-closable>
+</ng-template>
+
+<ng-template #productDescription>
+  <app-closable
+    [nonClosable]="true"
+    [visibilityForm]="visibilityMap.get('description')"
+    [reorderMode]="reorderMode"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('description')"
+      i18n-label="@@productLabel.textinput.productDesc.label"
+      i18n-helpText="@@productLabel.textinput.productDesc.helpText"
+      [label]="this.productNameLabelAndPlaceholder('LABEL', 'description')"
+      hideAsterisk="true"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Briefly describe the product AND reasons why your product is worth buying. (example: special properties, health benefits, great value, organic production....)"
+      [isInvalid]="submitted && productForm.get('description').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('description').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n-label="@@productLabel.textinput.productDesc.error">
+            <span>
+              Product description is required
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #ingredients>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('ingredients')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('ingredients')"
+      label="Ingredients"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="List the ingredients in the product and describe their properties. (example: Organic Shea Butter, Fair Trade Mango....)"
+      i18n-label="@@productLabel.textinput.ingredients.label"
+      i18n-helpText="@@productLabel.textinput.ingredients.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #nutritionalValue>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('nutritionalValue')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('nutritionalValue')"
+      label="Nutritional Value"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Per 100g serving. Calories, carbohydrates, fats, proteins, minerals, additives, vitamins,..."
+      i18n-label="@@productLabel.textinput.nutritionalValue.label"
+      i18n-helpText="@@productLabel.textinput.nutritionalValue.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #howToUse>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('howToUse')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('howToUse')"
+      label="How to Use / Recipes"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Describe the best way to use the product. (e.g. recipes, how to apply the product...)"
+      i18n-label="@@productLabel.textinput.recipes.label"
+      i18n-helpText="@@productLabel.textinput.recipes.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #origin>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('origin')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Origin"
+    i18n-label="@@productLabel.textinput.origin.label"
+    [form]="productForm.get('origin.locations')"
+    [openOnValueChange]="openOnStart"
+    [nonClosable]="true">
+    <textinput [form]="productForm.get('origin.text')"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Briefly describe where the product or its ingredients are coming from."
+      i18n-helpText="@@productLabel.textinput.originText.helpText"
+      [isInvalid]="submitted && productForm.get('origin.text').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('origin.text').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n="@@productLabel.textinput.originText.error">
+            <span>
+              Origin is required
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+    <google-map
+      *ngIf="isGoogleMapsLoaded"
+      width="100%"
+      [zoom]="defaultZoom"
+      [center]="defaultCenter"
+      [options]="{disableDoubleClickZoom: true}"
+      (mapDblclick)="dblClick($event)">
+      <map-marker
+        #gMarker="mapMarker"
+        *ngFor="let marker of markers; index as i"
+        [position]="marker.position"
+        [label]="marker.label"
+        [options]="{draggable:true}"
+        (mapRightclick)="removeOriginLocation(i)"
+        (mapDragend)="dragend($event, i)"
+        (mapClick)="openInfoWindow(gMarker, marker)">
+      </map-marker>
+      <map-info-window>{{gInfoWindowText}}</map-info-window>
+    </google-map>
+    <small style="font-weight: 300;" i18n="@@productLabel.origin.helpText">
+      Double click on the map to drop a pin and mark the locations of farmers / suppliers. Indicate the number of farmers / suppliers you work with directly or indirectly at each location. You can also name each location.
+    </small>
+    <ng-container *ngIf="submitted">
+      <div *ngIf="productForm.get('origin.locations').errors as errors" class="sc-invalid-feedback">
+        <div *ngIf="errors.required" i18n="@@productLabel.origin.error">
+          <span>
+            Origin is required
+          </span>
+        </div>
+      </div>
+    </ng-container>
+    <div class="spacer-between-fields"></div>
+
+    <div class="tool-button tool-button-right prefill-button" (click)="resetMap()" i18n="@@productLabel.button.resetMap">
+      Reset map
+    </div>
+
+    <div *ngFor="let loc of productForm.get('origin.locations')?.controls;
+      index as idx">
+      <div class="row">
+        <div class="col-6">
+          <textinput [form]="loc.get('pinName')"
+            i18n-label="@@productLabel.textinput.origin.pinName"
+            label="Pin name"
+            (keyup)="onKey($event, idx)">
+          </textinput>
+        </div>
+        <div class="col-4">
+          <textinput [form]="loc.get('numberOfFarmers')"
+            label="# of farmers" type="number"
+            i18n-label="@@productLabel.textinput.origin.numberOfFarmers">
+          </textinput>
+        </div>
+        <div class="col-2 d-flex align-self-center" style="margin-top: 0.5rem">
+          <button class="btn round" (click)="removeOriginLocation(idx)" class="btn-del">
+            <span><fa-icon
+                class="del-icon"
+                [icon]="faTrashAlt">
+              </fa-icon></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #keyMarkets>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('keyMarketsShare')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Key Markets"
+    i18n-label="@@productLabel.textinput.keyMarkets.label">
+    <div>
+      <app-number-row label="% Share sold in your country:" i18n-label="@@productLabel.textinput.keyMarkets.ourCountry">
+        <textinput
+          [form]="productForm.get('keyMarketsShare.yourCountry')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="% Share sold in East Africa:" i18n-label="@@productLabel.textinput.keyMarkets.eastAfrica">
+        <textinput
+          [form]="productForm.get('keyMarketsShare.eastAfrica')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="% Share sold in the rest of Africa:" i18n-label="@@productLabel.textinput.keyMarkets.africa">
+        <textinput
+          [form]="productForm.get('keyMarketsShare.restOfAfrica')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="% Share sold in Europe:" i18n-label="@@productLabel.textinput.keyMarkets.europe">
+        <textinput [form]="productForm.get('keyMarketsShare.europe')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="% Share sold in USA:" i18n-label="@@productLabel.textinput.keyMarkets.usa">
+        <textinput [form]="productForm.get('keyMarketsShare.usa')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="% Share sold elsewhere:" i18n-label="@@productLabel.textinput.keyMarkets.elsewhere">
+        <textinput [form]="productForm.get('keyMarketsShare.elsewhere')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #speciality>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('speciality')"
+    [reorderMode]="reorderMode"
+    label="Speciality"
+    i18n-label="@@productLabel.speciality.label"
+    mode="simple">
+
+    <textinput [form]="productForm.get('specialityDescription')"
+      label="Description"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Speciality of this product in comparison to other products on the market."
+      i18n-label="@@productLabel.textinput.specialityDescription.label">
+    </textinput>
+
+    <attachment-uploader
+      rootImageUrl="{{rootImageUrl}}"
+      allowedMimeType="[image/png', 'image/jpeg']"
+      allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+      mode="simpleAsTextField"
+      label="Photo"
+      i18n-label="@@productLabel.attachment-uploader.specialityDocument.label"
+      i18n-placeholder="@@productLabel.attachment-uploader.specialityDocument.allowedMimeTypeErrorMessage"
+      (onFileInfoLoad)="onFileUpload($event)"
+      [form]="productForm.get('specialityDocument')"
+      [attachmentUploaderId]="'speciality_document'"
+      [readOnly]="productForm.disabled">
+      <attachment-uploader-content i18n="@@productLabel.attachment-uploader.specialityDocument.content">
+        Upload photo
+      </attachment-uploader-content>
+    </attachment-uploader>
+
+  </app-closable>
+</ng-template>
+
+<!-- PROCESS TEMPLATES -->
+<ng-template #production>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('process.production')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('process.production')"
+      label="Production"
+      style="width: 100%"
+      [textarea]="true"
+      hideAsterisk="true"
+      helpText="Briefly describe your production process. If the ingredients are organic, describe how you achieve that. (e.g. organic seedlings, no chemical fertilizers, etc.)"
+      i18n-label="@@productLabel.textinput.production.label"
+      i18n-helpText="@@productLabel.textinput.production.helpText"
+      [isInvalid]="submitted && productForm.get('process.production').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('process.production').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n-label="@@productLabel.textinput.production.error">
+            <span>
+              Production is required
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #storage>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('process.storage')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('process.storage')"
+      label="Storage"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Briefly describe your storage procedures. (e.g. cold storage at farmer group aggregation centers, warehouse storage at processing site before distribution…)"
+      i18n-label="@@productLabel.textinput.storage.label"
+      i18n-helpText="@@productLabel.textinput.storage.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #codesOfConduct>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('process.codesOfConduct')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('process.codesOfConduct')"
+      label="Codes of Conduct"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Briefly describe your company codes of conduct that your employees, suppliers and farmers have to adhere to. Also briefly describe the general sanitary / hygiene protocols and specific measures you put in place due coronavirus crises."
+      i18n-label="@@productLabel.textinput.codesOfConduct.label"
+      i18n-helpText="@@productLabel.textinput.codesOfConduct.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #certificationsAndStandards>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('process.standards')"
+    [reorderMode]="reorderMode">
+    <list-editor
+      label="Certifications and Standards"
+      [listEditorManager]="standardsListManager"
+      addText="Add new"
+      [canAdd]="true"
+      i18n-label="@@productLabel.list-editor.certificationsAndStandards.label"
+      i18n-addText="@@productLabel.list-editor.certificationsAndStandards.addText"
+      [invalid]="submitted &&
+      productForm.get('process.standards')?.invalid">
+      <list-editor-items>
+        <div class="tool-button tool-button-right prefill-button" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.certs.prefill">
+          Prefill
+        </div>
+        <div cdkDropList
+          (cdkDropListDropped)="standardsListManager.onDrop($event)">
+          <div *ngFor="let item of
+            productForm.get('process.standards')?.controls; let i=
+            index;">
+            <app-certification-and-standard-item
+              title="Certification, Standard"
+              i18n-title="@@productLabel.list-editor.certificationsAndStandards.title"
+              [formControlInput]="item"
+              [isOpen]="standardsListManager.isOpen(i)"
+              [listEditorManager]="this.standardsListManager"
+              [listEditorManagerPosition]="i">
+            </app-certification-and-standard-item>
+          </div>
+        </div>
+      </list-editor-items>
+      <list-editor-errors>
+        <ng-container *ngIf="submitted">
+          <div *ngIf="productForm.get('process.standards').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n-title="@@productLabel.list-editor.certificationsAndStandards.error">
+              <span>
+                Certifications and Standards are required
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </list-editor-errors>
+    </list-editor>
+  </app-closable>
+</ng-template>
+
+<ng-template #productionRecords>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('process.records')"
+    [reorderMode]="reorderMode">
+    <list-editor
+      label="Production Records"
+      [listEditorManager]="recordsListManager"
+      addText="Add new"
+      i18n-label="@@productLabel.list-editor.productionRecords.label"
+      i18n-addText="@@productLabel.list-editor.productionRecords.addText"
+      [canAdd]="true"
+      [invalid]="submitted && productForm.get('process.records')?.invalid">
+      <list-editor-items>
+        <!-- <div class="tool-button tool-button-right prefill-button" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.recs.prefill">
+          Prefill
+        </div> -->
+        <div cdkDropList
+          (cdkDropListDropped)="recordsListManager.onDrop($event)">
+          <div *ngFor="let item of
+            productForm.get('process.records').controls; let i=
+            index;">
+            <app-production-record-item
+              title="Production Record"
+              i18n-title="@@productLabel.list-editor.productionRecords.title"
+              [formControlInput]="item"
+              [isOpen]="recordsListManager.isOpen(i)"
+              [listEditorManager]="this.recordsListManager"
+              [listEditorManagerPosition]="i">
+            </app-production-record-item>
+          </div>
+        </div>
+      </list-editor-items>
+      <list-editor-errors>
+        <ng-container *ngIf="submitted">
+          <!-- <div *ngIf="form.get('quarter.mentorReport.events')?.errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.niVnesenihUr">
+              <span>
+                Vnos ur je obvezen
+              </span>
+            </div>
+          </div> -->
+        </ng-container>
+      </list-editor-errors>
+    </list-editor>
+  </app-closable>
+
+  <!-- <app-closable [reorderMode]="reorderMode">
+    <attachment-uploader
+      allowedMimeType="[image/png', 'image/jpeg']"
+      allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and
+      JPEG."
+      mode="simpleAsTextField"
+      label="Production Records"
+      (onFileInfoLoad)="onFileUpload($event)"
+      [form]="formProductionRecord"
+      [attachmentUploaderId]="'production-record'"
+      comment="Upload pdf/image of your production records (farming records, production protocols…)"
+      [readOnly]="productForm.disabled">
+      <attachment-uploader-content>
+        Upload product logo
+      </attachment-uploader-content>
+    </attachment-uploader>
+  </app-closable> -->
+</ng-template>
+
+<!-- SOCIAL RESPONSIBILITY TEMPLATES -->
+
+<ng-template #laborPolicies>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.laborPolicies')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('responsibility.laborPolicies')"
+      label="Labor Policies"
+      style="width: 100%"
+      [textarea]="true"
+      hideAsterisk="true"
+      helpText="Briefly describe labor policies you have in place in your company and activities you pursue to make them happen. (example: women inclusion, no child labor, etc.)"
+      i18n-label="@@productLabel.textinput.laborPolicies.label"
+      i18n-helpText="@@productLabel.textinput.laborPolicies.helpText"
+      [isInvalid]="submitted && productForm.get('responsibility.laborPolicies').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('responsibility.laborPolicies').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n="@@productLabel.textinput.laborPolicies.error">
+            <span>
+              Labor Policies are required
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #relationshipWithFarmersSuppliers>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.relationship')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('responsibility.relationship')"
+      label="Relationship with Farmers / Suppliers"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Describe your working relationship with your farmers and suppliers. Do you support farmers’ livelihoods in any special way? (e.g. trainings, Inputs, agriculture extensions, education for their kids, employment of women etc.)"
+      i18n-label="@@productLabel.textinput.relationshipWithFarmersSuppliers.label"
+      i18n-helpText="@@productLabel.textinput.relationshipWithFarmersSuppliers.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #farmerStory>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.farmerStory')"
+    [reorderMode]="reorderMode"
+    label="Farmer's Story"
+    i18n-label="@@productLabel.farmerStory.label"
+    mode="simple">
+
+    <textinput [form]="productForm.get('responsibility.farmer')"
+      label="Farmer or Community Name"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Provide a name of a farmer or a farmer group you work with that best represents your company/brand."
+      i18n-label="@@productLabel.textinput.farmerResponsibility.label"
+      i18n-helpText="@@productLabel.textinput.farmerResponsibility.helpText">
+    </textinput>
+
+    <list-editor
+      label="Farmer or Farmer Group Pictures"
+      [listEditorManager]="farmerPhotosListManager"
+      addText="Add new"
+      [canAdd]="true"
+      i18n-label="@@productLabel.list-editor.farmerPics.label"
+      i18n-addText="@@productLabel.list-editor.farmerPics.addText"
+      [invalid]="submitted && productForm.get('responsibility.pictures')?.invalid">
+      <list-editor-items>
+        <div cdkDropList
+          (cdkDropListDropped)="farmerPhotosListManager.onDrop($event)">
+          <div *ngFor="let item of productForm.get('responsibility.pictures').controls; let i=index;">
+            <app-farmer-story-photos
+              title="Farmer or Farmer Group Picture"
+              i18n-title="@@productLabel.list-editor.farmerPics.title"
+              [formControlInput]="item"
+              [isOpen]="farmerPhotosListManager.isOpen(i)"
+              [listEditorManager]="this.farmerPhotosListManager"
+              [listEditorManagerPosition]="i">
+            </app-farmer-story-photos>
+          </div>
+        </div>
+      </list-editor-items>
+      <list-editor-errors>
+        <ng-container *ngIf="submitted">
+        </ng-container>
+      </list-editor-errors>
+    </list-editor>
+
+    <textinput [form]="productForm.get('responsibility.story')"
+      label="Short story"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Write about one selected farmer or a group of farmers that best represent your company/brand."
+      i18n-label="@@productLabel.textinput.responsibility.label"
+      i18n-helpText="@@productLabel.textinput.responsibility.helpText">
+    </textinput>
+
+  </app-closable>
+</ng-template>
+
+<!-- <ng-template #farmerStoryName>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.farmer')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('responsibility.farmer')"
+      label="Farmer or Community Name"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Provide a name of a farmer or a farmer group you work
+      with
+      that best represents your company/brand">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #farmerStoryPhotos>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.pictures')"
+    [reorderMode]="reorderMode">
+    <list-editor
+      label="Farmer or Farmer Group Pictures"
+      [listEditorManager]="farmerPhotosListManager"
+      addText="Add new"
+      [canAdd]="true"
+      [invalid]="submitted &&
+      productForm.get('responsibility.pictures')?.invalid">
+      <list-editor-items>
+        <div cdkDropList
+          (cdkDropListDropped)="farmerPhotosListManager.onDrop($event)">
+          <div *ngFor="let item of productForm.get('responsibility.pictures').controls; let i=index;">
+            <app-farmer-story-photos
+              title="Farmer or Farmer Group Picture"
+              [formControlInput]="item"
+              [isOpen]="farmerPhotosListManager.isOpen(i)"
+              [listEditorManager]="this.farmerPhotosListManager"
+              [listEditorManagerPosition]="i">
+            </app-farmer-story-photos>
+          </div>
+        </div>
+      </list-editor-items>
+      <list-editor-errors>
+        <ng-container *ngIf="submitted">
+
+        </ng-container>
+      </list-editor-errors>
+    </list-editor>
+  </app-closable>
+</ng-template>
+
+<ng-template #farmerStoryStory>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('responsibility.story')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('responsibility.story')"
+      label="Short story"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Write about one selected farmer or a group of farmers
+      that
+      best represent your company/brand">
+    </textinput>
+  </app-closable>
+</ng-template> -->
+
+<!-- <ng-template #farmerStory>
+    <h5>Farmer’s Story</h5>
+    <app-closable [reorderMode]="reorderMode">
+
+      <attachment-uploader
+        allowedMimeType="[image/png', 'image/jpeg']"
+        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and
+        JPEG."
+        mode="simpleAsTextField"
+        label="Farmer or Farmer Group Picture"
+        (onFileInfoLoad)="onFileUpload($event)"
+        [form]="productForm.get('responsibility.picture')"
+        [attachmentUploaderId]="'production-record'"
+        comment="Upload a high-quality photo of the farmer or group of farmers that best represent your company/brand"
+        [readOnly]="productForm.disabled">
+        <attachment-uploader-content>
+          Upload product logo
+        </attachment-uploader-content>
+      </attachment-uploader>
+    </app-closable>
+  </ng-template> -->
+<!-- ENVIRONMENTAL SUSTAINABILITY TEMPLATES -->
+
+<ng-template #environmentalyFriendlyProduction>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('sustainability.production')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('sustainability.production')"
+      label="Environmentally Friendly Production"
+      style="width: 100%"
+      [textarea]="true"
+      hideAsterisk="true"
+      helpText="Describe how your production impacts the environment and how you mitigate the pollution, how you utilize your waste, if you practice circular production... (max 1000 characters)"
+      i18n-label="@@productLabel.textinput.environmentalyFriendlyProduction.label"
+      i18n-helpText="@@productLabel.textinput.environmentalyFriendlyProduction.helpText"
+      [isInvalid]="submitted && productForm.get('sustainability.production').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('sustainability.production').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required" i18n-label="@@productLabel.textinput.environmentalyFriendlyProduction.error">
+            <span>
+              Production is required
+            </span>
+          </div>
+          <div *ngIf="errors.maxlength" i18n="@@productLabel.textinput.environmentalyFriendlyProduction.errorLimit">
+            <span>
+              Entry exceeds allowed max characters limit
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+  </app-closable>
+
+</ng-template>
+
+<ng-template #sustainablePackaging>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('sustainability.packaging')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('sustainability.packaging')"
+      label="Sustainable Packaging"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="Describe the environmental sustainability of your packaging – do you use recycled packing, is your packing recyclable, do you collect the packaging and reuse it? (max 1000 characters)"
+      i18n-label="@@productLabel.textinput.sustainablePackaging.label"
+      i18n-helpText="@@productLabel.textinput.sustainablePackaging.helpText"
+      [isInvalid]="submitted && productForm.get('sustainability.packaging').invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="productForm.get('sustainability.packaging').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.maxlength" i18n="@@productLabel.textinput.sustainablePackaging.error">
+            <span>
+              Entry exceeds allowed max characters limit
+            </span>
+          </div>
+        </div>
+      </ng-container>
+
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #co2Footprint>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('sustainability.co2Footprint')"
+    [reorderMode]="reorderMode">
+    <textinput [form]="productForm.get('sustainability.co2Footprint')"
+      label="CO2 Footprint"
+      style="width: 100%"
+      [textarea]="true"
+      helpText="If you have calculated your company CO2 footprint, please add this information. Make sure to include your annual CO2 footprint."
+      i18n-label="@@productLabel.textinput.co2Footprint.label"
+      i18n-helpText="@@productLabel.textinput.co2Footprint.helpText">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<!-- SETTINGS TEMPLATES -->
+
+<ng-template #language>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.language')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('settings.language')"
+      label="Language"
+      style="width: 100%"
+      i18n-label="@@productLabel.languge.label"
+      [readOnly]="true">
+    </textinput>
+  </app-closable>
+</ng-template>
+
+<ng-template #knowledgeBlog>
+  <app-closable
+  [visibilityForm]="visibilityMap.get('knowledgeBlog')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <checkbox-input
+    [form]="productForm.get('knowledgeBlog')">
+      <checkbox-input-rich-label
+        style="font-weight: 300;"
+        i18n="@@productLabel.knowledgeBlog.label">
+        Show "Knowledge blog" section
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #checkAuthenticity>
+  <span>Visible by end users</span>
+
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.checkAuthenticity')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    class="af-form-element--nolabel"
+    [openOnValueChange]="openOnStart">
+    <checkbox-input
+      [form]="productForm.get('settings.checkAuthenticity')">
+      <checkbox-input-rich-label
+        style="font-weight: 300;"
+        i18n="@@productLabel.checkbox.checkAuthenticity.label">
+        Button "Check Authenticity"
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #traceOrigin>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.traceOrigin')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    class="af-form-element--nolabel"
+    [openOnValueChange]="openOnStart">
+    <checkbox-input
+      [form]="productForm.get('settings.traceOrigin')">
+      <checkbox-input-rich-label
+        style="font-weight: 300;"
+        i18n="@@productLabel.checkbox.traceOrigin.label">
+        Button "Trace origin"
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #giveFeedback>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.giveFeedback')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    class="af-form-element--last"
+    [openOnValueChange]="openOnStart">
+    <checkbox-input
+      [form]="productForm.get('settings.giveFeedback')">
+      <checkbox-input-rich-label
+        style="font-weight: 300;"
+        i18n="@@productLabel.checkbox.giveFeedback.label">
+        Button "Give feedback"
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+
+<ng-template #gdprText>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.gdprText')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+
+    <tinymce-textarea
+      [formControlInput]="productForm.get('settings.gdprText')"
+      label="GDPR text"
+      style="width: 100%;"
+      hideRequired="true"
+      i18n-label="@@productLabel.textinput.gdprText.label">
+    </tinymce-textarea>
+
+  </app-closable>
+</ng-template>
+
+<ng-template #privacyPolicyText>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.privacyPolicyText')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+
+    <tinymce-textarea
+      [formControlInput]="productForm.get('settings.privacyPolicyText')"
+      label="Privacy policy text"
+      style="width: 100%;"
+      hideRequired="true"
+      i18n-label="@@productLabel.textinput.privacyPolicyText.label">
+    </tinymce-textarea>
+
+  </app-closable>
+</ng-template>
+
+
+<ng-template #termsOfUseText>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.termsOfUseText')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+
+    <tinymce-textarea
+      [formControlInput]="productForm.get('settings.termsOfUseText')"
+      label="Terms of use text"
+      style="width: 100%;"
+      hideRequired="true"
+      i18n-label="@@productLabel.textinput.termsOfUseText.label">
+    </tinymce-textarea>
+
+  </app-closable>
+</ng-template>
+
+<!-- <ng-template #pricingTransparency>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.pricingTransparency')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Cost breakdown"
+    i18n-label="@@productLabel.textinput.pricingTransparency.label">
+    <div>
+      <small i18n="@@productLabel.textinput.pricingTransparency.desc">Cost breakdown per kg of semi-product (on average) in EUR.</small>
+      <app-number-row label="Exchange rate, 1 EUR (in RWF)" i18n-label="@@productLabel.textinput.pricingTransparency.exchangeRate">
+        <textinput
+          [form]="productForm.get('settings.pricingTransparency.exchangeRate')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Price at end customer" i18n-label="@@productLabel.textinput.pricingTransparency.priceAtEndCustomer">
+        <textinput
+          [form]="productForm.get('settings.pricingTransparency.priceAtEndCustomer')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at buyer (importer)" i18n-label="@@productLabel.textinput.pricingTransparency.costAtBuyer">
+        <textinput
+          [form]="productForm.get('settings.pricingTransparency.costAtBuyer')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at owner (exporter)" i18n-label="@@productLabel.textinput.pricingTransparency.costAtOwner">
+        <textinput [form]="productForm.get('settings.pricingTransparency.costAtOwner')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at producer (cooperative)" i18n-label="@@productLabel.textinput.pricingTransparency.costAtProducer">
+        <textinput [form]="productForm.get('settings.pricingTransparency.costAtProducer')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at farmer with premiums included (association)" i18n-label="@@productLabel.textinput.pricingTransparency.costAtFarmerWithPremium">
+        <textinput [form]="productForm.get('settings.pricingTransparency.costAtFarmerWithPremium')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at farmer" i18n-label="@@productLabel.textinput.pricingTransparency.costAtFarmer">
+        <textinput [form]="productForm.get('settings.pricingTransparency.costAtFarmer')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Cost at farmer at competition" i18n-label="@@productLabel.textinput.pricingTransparency.costAtFarmerAtCompetition">
+        <textinput [form]="productForm.get('settings.pricingTransparency.costAtFarmerAtCompetition')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+    </div>
+  </app-closable>
+</ng-template> -->
+
+
+
+
+<ng-template #increaseIncome>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.increaseIncome')"
+    [reorderMode]="reorderMode"
+    label="Increase in income on this value chain"
+    i18n-label="@@productLabel.increaseIncome.label"
+    mode="simple"
+    [openOnValueChange]="openOnStart">
+    <div>
+      <!--<tinymce-textarea
+        [formControlInput]="productForm.get('settings.incomeIncreaseDescription')"
+        label="Description"
+        style="width: 100%;"
+        hideRequired="true"
+        i18n-label="@@productLabel.tinymce.incomeIncreaseDescription.label">
+      </tinymce-textarea>-->
+
+      <textinput
+        [form]="productForm.get('settings.increaseOfCoffee')"
+        label="Increase per kg of coffee cherries sold (%)"
+        style="width: 100%"
+        i18n-label="@@productLabel.textinput.increaseOfCoffee.label">
+      </textinput>
+
+      <attachment-uploader
+        rootImageUrl="{{rootImageUrl}}"
+        allowedMimeType="[image/png', 'image/jpeg']"
+        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+        mode="simpleAsTextField"
+        label="Photo"
+        i18n-label="@@productLabel.attachment-uploader.incomeIncreaseDocument.label"
+        i18n-placeholder="@@productLabel.attachment-uploader.incomeIncreaseDocument.allowedMimeTypeErrorMessage"
+        (onFileInfoLoad)="onFileUpload($event)"
+        [form]="productForm.get('settings.incomeIncreaseDocument')"
+        [attachmentUploaderId]="'income_increase_document'"
+        [readOnly]="productForm.disabled">
+        <attachment-uploader-content i18n="@@productLabel.attachment-uploader.incomeIncreaseDocument.content">
+          Upload photo
+        </attachment-uploader-content>
+      </attachment-uploader>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #increaseIncomeDescription>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.incomeIncreaseDescription')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Description"
+    i18n-label="@@productLabel.tinymce.incomeIncreaseDescription.label"
+    [openOnValueChange]="openOnStart"
+    [nonClosable]="true">
+
+    <tinymce-textarea
+      [formControlInput]="productForm.get('settings.incomeIncreaseDescription')"
+      style="width: 100%;">
+    </tinymce-textarea>
+
+  </app-closable>
+</ng-template>
+
+
+<!--<ng-template #costBreakdown>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('settings.costBreakdown')"
+    [reorderMode]="reorderMode"
+    [nonClosable]="true"
+    class="af-form-element--last"
+    [openOnValueChange]="openOnStart">
+    <checkbox-input
+      [form]="productForm.get('settings.costBreakdown')">
+      <checkbox-input-rich-label
+        style="font-weight: 300;"
+        i18n="@@productLabel.costBreakdown.label">
+        Cost breakdown graphic is visible
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>-->
+
+
+<!-- COMPARISON OF PRICES TEMPLATES -->
+<ng-template #description>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('comparisonOfPrice.description')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Description"
+    i18n-label="@@productLabel.tinymce.comparisonOfPriceDescription.label"
+    [openOnValueChange]="openOnStart"
+    [nonClosable]="true">
+
+    <tinymce-textarea
+      [formControlInput]="productForm.get('comparisonOfPrice.description')"
+      style="width: 100%;">
+    </tinymce-textarea>
+
+  </app-closable>
+</ng-template>
+
+<ng-template #prices>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('comparisonOfPrice.prices')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Comparison of prices"
+    i18n-label="@@productLabel.textinput.comparisonOfPrice.label">
+    <div>
+      <app-number-row label="World market price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.worldMarket">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.worldMarket')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Fairtrade Minimum Price + Premium (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.fairTrade">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.fairTrade')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="EUR to RWF" i18n-label="@@productLabel.textinput.comparisonOfPrice.EURtoRWF">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.EURtoRWF')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="EUR to USD" i18n-label="@@productLabel.textinput.comparisonOfPrice.EURtoUSD">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.EURtoUSD')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Pound to kg" i18n-label="@@productLabel.textinput.comparisonOfPrice.poundToKg">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.poundToKg')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Container size" i18n-label="@@productLabel.textinput.comparisonOfPrice.containerSize">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.containerSize')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Angelique's finest estimated price" i18n-label="@@productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice">
+        <textinput
+          [form]="productForm.get('comparisonOfPrice.prices.estimatedAdditionalPrice')"
+          [label]="null"
+          [noBottomMargin]="true"
+          style="width: 100%">
+        </textinput>
+      </app-number-row>
+    </div>
+  </app-closable>
+</ng-template>
+
+
+<!-- COMPANY TEMPLATES -->
+
+<ng-template #companyName>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.name')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Company name"
+    i18n-label="@@productLabel.companyName.label"
+    [form]="productForm.get('company.name')"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <div class="readonly-text-data">
+      {{productForm.get('company.name').value}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #companyLogo>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.logo')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Company logo"
+    i18n-label="@@productLabel.companyLogo.label"
+    [form]="productForm.get('company.logo')"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <div class="readonly-text-data">
+      <img *ngIf="productForm.get('company.logo').value && productForm.get('company.logo').value.storageKey"
+        src="/api/common/image/{{productForm.get('company.logo').value.storageKey}}/SMALL"
+        default="/api/common/image/{{productForm.get('company.logo').value.storageKey}}"
+        style="width: 100%">
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #companyHeadquarters>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.headquarters')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Company headquarters"
+    i18n-label="@@productLabel.companyHeadquarters.label"
+    [form]="productForm.get('company.headquarters')"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <div class="readonly-text-data" *ngIf="productForm.get('company.headquarters').value as address">
+      {{address.address}}<span *ngIf="address.city">, {{address.zip}} {{address.city}}</span>
+      <span *ngIf="address.state">, {{address.state}}</span><span *ngIf="address.country">, {{address.country.name}}</span>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #aboutTheCompany>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.about')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="About company"
+    i18n-label="@@productLabel.aboutTheCompany.label"
+    [form]="productForm.get('company.about')"
+    [nonClosable]="true"
+    [openOnValueChange]="openOnStart">
+    <div class="readonly-text-data">
+      {{productForm.get('company.about').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #nameOfManagerCEO>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.manager')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Name of manager/CEO"
+    i18n-label="@@productLabel.nameOfManagerCEO.label"
+    [form]="productForm.get('company.manager')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.manager').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #contactEmail>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.email')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Contact E-mail"
+    i18n-label="@@productLabel.contactEmail.label"
+    [form]="productForm.get('company.email')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.email').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #contactPhoneNumber>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.phone')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Contact phone number"
+    i18n-label="@@productLabel.contactPhoneNumber.label"
+    [form]="productForm.get('company.phone')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.phone').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #companyWebPage>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.webPage')"
+    [reorderMode]="reorderMode"
+    mode="simple"
+    label="Company webpage URL"
+    i18n-label="@@productLabel.companyWebPage.label"
+    [form]="productForm.get('company.webPage')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.webPage').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #facebook>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.mediaLinks.facebook')"
+    [reorderMode]="reorderMode"
+    *ngIf="productForm.get('company.mediaLinks')?.get('facebook')"
+    mode="simple"
+    label="Facebook webpage URL"
+    i18n-label="@@productLabel.facebook.label"
+    [form]="productForm.get('company.mediaLinks.facebook')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.mediaLinks.facebook').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #instagram>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.mediaLinks.instagram')"
+    [reorderMode]="reorderMode"
+    *ngIf="productForm.get('company.mediaLinks')?.get('instagram')"
+    mode="simple" label="Instagram webpage URL"
+    i18n-label="@@productLabel.instagram.label"
+    [form]="productForm.get('company.mediaLinks.instagram')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.mediaLinks.instagram').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #twitter>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.mediaLinks.twitter')"
+    [reorderMode]="reorderMode"
+    *ngIf="productForm.get('company.mediaLinks')?.get('twitter')"
+    mode="simple"
+    label="Twitter webpage URL"
+    i18n-label="@@productLabel.twitter.label"
+    [form]="productForm.get('company.mediaLinks.twitter')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.mediaLinks.twitter').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #youtube>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.mediaLinks.youtube')"
+    [reorderMode]="reorderMode"
+    *ngIf="productForm.get('company.mediaLinks')?.get('youtube')"
+    mode="simple" label="YouTube webpage URL"
+    i18n-label="@@productLabel.youtube.label"
+    [form]="productForm.get('company.mediaLinks.youtube')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.mediaLinks.youtube').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #other>
+  <app-closable
+    [visibilityForm]="visibilityMap.get('company.mediaLinks.other')"
+    [reorderMode]="reorderMode"
+    *ngIf="productForm.get('company.mediaLinks')?.get('other')"
+    mode="simple" label="Other webpage URL"
+    i18n-label="@@productLabel.other.label"
+    [form]="productForm.get('company.mediaLinks.other')">
+    <div class="readonly-text-data">
+      {{productForm.get('company.mediaLinks.other').value || emptyField}}
+    </div>
+  </app-closable>
+</ng-template>

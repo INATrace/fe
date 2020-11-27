@@ -1,0 +1,51 @@
+// @import 'src/_variables';
+
+// .edit-link {
+//     color: $primary;
+//     cursor: pointer;
+// }
+
+// .no-resize {
+//     resize: none;
+// }
+
+// .fake-textarea {
+//     // max-height: 8em;
+//     min-height: 8em;
+//     overflow: hidden;
+//     width: 100%;
+//     padding: 0.375rem 0.75rem;
+//     background-color: #fff;
+//     background-clip: padding-box;
+//     border: 1px solid $gray-semi;
+//     border-radius: 0.25rem;
+//     margin: 0;
+//   }
+
+// .dropdown-menu-warning .dropdown-menu {
+//     background-color: $warning !important;
+// }
+
+// .dropdown-header {
+//     color: $warning !important;
+//     margin-left: -1.5rem;
+//     font-size: inherit;
+//     font-weight: bold;
+// }
+
+// .no-bottom-margin {
+//   margin-bottom: 0;
+// }
+
+
+
+.icon-inside {
+      position: absolute;
+      right: 10px;
+      top: calc(50% - 12px);
+      pointer-events: none;
+      font-size: 16px;
+      font-size: 1.125rem;
+      color: #c4c3c3;
+      z-index:3;
+    }

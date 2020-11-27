@@ -1,0 +1,116 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$gap: map-get($spacers, 3);
+
+.layout-full-page {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout-page-content {
+    width: 100%;
+    perspective: 1500px;
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+    @include media-breakpoint-down(sm) {
+        flex-wrap: wrap;
+    }
+}
+
+.layout-sidebar {
+    max-width: 120px;
+    display: flex;
+    flex-direction: column;
+    @include media-breakpoint-down(sm) {
+        position: absolute;
+        top: 0px;
+        left: -120px;
+        z-index: 100;
+        height: 100%;
+        transition: left 0.3s;
+        &.menu-shown {
+            left: 0px;
+        }
+    }
+}
+
+.layout-content-and-right {
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.layout-title-and-content {
+    width: 0px; // allow it to shrink (otherwise trailbar keeps it open)
+    flex-grow: 100;
+    flex-basis: 36rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-title-panel {
+    padding: $gap;
+    padding-bottom: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.layout-content-internal {
+    padding-right: $gap;
+    padding-top: $gap;
+    display: flex;
+    align-content: stretch;
+    flex-wrap: wrap;
+    flex-grow: 100;
+}
+
+.layout-main-panel {
+    transition: all 0.3s;
+    flex-grow: 100;
+    flex-basis: 36rem;
+    padding-left: $gap;
+    padding-bottom: $gap;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.layout-right-panel {
+    transition: all 0.3s;
+    flex-grow: 1;
+    flex-basis: 22rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.right-in-content {
+    .layout-right-panel {
+        padding-left: $gap;
+        padding-bottom: $gap;
+    }
+}
+
+.right-half-size {
+    .layout-title-and-content {
+        flex-grow: 1;
+        flex-basis: 24rem;
+    }
+
+    .layout-main-panel {
+        flex-grow: 1;
+        flex-basis: 24rem;
+    }
+
+    .layout-right-panel {
+        flex-grow: 1;
+        flex-basis: 24rem;
+    }
+}

@@ -1,0 +1,10 @@
+
+.btn>span{
+    display:inline-flex;
+    padding:0.563rem 1rem;
+    border-radius:inherit;
+    border-color:inherit;
+    flex-flow:row wrap;
+    align-items:center;
+    transition:transform .3s cubic-bezier(.22,.665,.34,.875)
+}

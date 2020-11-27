@@ -1,0 +1,61 @@
+<app-authorised-layout>
+  <app-product-label-left-panel-content>
+  </app-product-label-left-panel-content>
+
+  <div class="main">
+
+    <div class="row">
+
+      <div class="col">
+
+
+          <div class="main-inside-top content-element">
+            <div class="d-flex justify-content-between content-element--row1">
+              <div class="title-page" i18n="@@productLabelStakeholders.title.collectors">Collectors</div>
+              <button class="btn btn-solid round btn-table-new content-element--btn" (click)="collectorDetail('collectors')" i18n="@@productLabelStakeholders.button.newCollector">
+                <span>+ Add collector</span>
+              </button>
+            </div>
+            <!-- <single-choice
+            label="Company"
+            i18n-label="@@productLabelStakeholders.singleChoice.company"
+            [formControlInput]="companyForCollectorForm"
+            [codebookService]="chainOrganizationCodebook"
+            (onChange)="organizationForCollectorChanged($event)"
+            style="min-width: 150px;">
+          </single-choice> -->
+
+            <div class="d-flex justify-content-between content-element--row2">
+              <div>
+                <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStakeholders.subTitle.listOfCollectors">List of collectors</div>
+                <div class="counting-page content-element--counting" i18n="@@productLabelStakeholders.subTitle.showingCollectors">Showing {{showedCollectors}}/{{allCollectors}}</div>
+              </div>
+              <app-search-textinput
+                [form]="searchNameCollectors"
+                (valueChange)="serchInput($event, 'collectors')"
+                [items]="items"
+                byCategory="true"
+                [searchCategory]="this.byCategoryCollector"
+                (categoryChange)="onCategoryChange($event, 'collectors')">
+              </app-search-textinput>
+            </div>
+          </div>
+
+
+          <app-product-label-stakeholders-collectors *ngIf="this.organizationId"
+            [query]="searchNameCollectors.value"
+            [reloadPingList$]="reloadCollectorsPing$"
+            [sortingParams$]="sortingParamsCollector$"
+            (countAll)="onCountAll($event, 'collectors')"
+            (showing)="onShow($event, 'collectors')"
+            (onSortChanged)="onSortChanged($event, 'collectors')"
+            organizationId="{{this.organizationId}}"
+            role="COLLECTOR"
+            byCategory="{{byCategoryCollector}}">
+          </app-product-label-stakeholders-collectors>
+
+
+      </div>
+    </div>
+  </div>
+</app-authorised-layout>

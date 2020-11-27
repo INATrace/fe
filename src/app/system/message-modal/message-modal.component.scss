@@ -1,0 +1,49 @@
+@import "src/_variables";
+
+.modal-header {
+    align-items: center;
+    background-color: $primary;
+    border-bottom: none;
+    h4 {
+        margin-top: 0;
+    }
+    button.close {
+        outline: none !important;
+        line-height: 0;
+    }
+}
+
+.modal-title {
+  color: white;
+}
+
+.icon-div {
+    margin-right: 1rem;
+}
+
+.icon-info {
+    color: $green;
+}
+.icon-question {
+    color: $blue;
+}
+.icon-warning {
+    // color: $yellow;
+    color: white;
+}
+.icon-error {
+    color: $red;
+}
+
+.modal-body {
+  color: $primary;
+}
+
+.modal-footer {
+   border-top: none;
+   justify-content: space-evenly;
+   button.btn {
+       padding-left: 2rem;
+       padding-right: 2rem;
+   }
+}

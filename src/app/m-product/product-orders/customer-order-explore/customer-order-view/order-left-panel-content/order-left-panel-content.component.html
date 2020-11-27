@@ -1,0 +1,235 @@
+
+<div>
+  <div class="above-sidenav">
+    <div class="above-sidenav-title d-flex">
+      <div class="above-sidenav-title-cursor" (click)="goUp()">
+        <div *ngIf="showIcon" class="above-sidenav-icon">
+          <span class="above-sidenav-icon-shape above-sidenav-icon-shape--back"></span>
+        </div>
+      </div>
+      {{title}}
+    </div>
+  </div>
+
+  <ul class="sidenav">
+    <!-- <pre>{{product | json}}</pre> -->
+    <div class="mt-3">{{product?.name}}</div>
+    <div class="img-container">
+      <span class="img-container--overlay"></span>
+      <img *ngIf="product?.photo?.storageKey"
+        src="/api/common/image/{{product?.photo?.storageKey}}/SMALL"
+        default="/api/common/image/{{product?.photo?.storageKey}}"
+        class="img-style">
+    </div>
+    <ng-container *ngIf="order$ | async as order">
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.orderId">Order ID</div>
+        <div class="af-side-line-value">{{order.id}}</div>
+      </div>
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.customer">Customer</div>
+        <div class="af-side-line-value">{{order.customer?.name}}</div>
+      </div>
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.producer">Producer</div>
+        <div class="af-side-line-value">{{producersString$ | async}}</div>
+      </div>
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.latestDelivery">Latest delivery</div>
+        <div class="af-side-line-value">{{formatDate(order.deliveryDeadline)}}</div>
+      </div>
+
+      <div class="af-side-title-line">
+        <div i18n="@@orderLeftPanel.lineTitle.productsOrderd" class="af-side-title-line-title">Products ordered (SKU)</div>
+        <div *ngIf="onTime(order)" i18n="@@orderLeftPanel.badge.onTime" class="af-badge af-badge--on-time">On time</div>
+        <div *ngIf="!onTime(order)" i18n="@@orderLeftPanel.badge.late" class="af-badge af-badge--late">Late</div>
+      </div>
+
+      <div class="af-side-parameter-line" *ngFor="let item of order.items">
+        <div class="af-side-line-label">{{item.semiProduct?.name}}</div>
+        <div class="af-side-line-value">{{item.totalQuantity}}</div>
+      </div>
+
+      <div class="af-side-parameter-line mt-4">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.quantity">Quantity</div>
+        <div class="af-side-line-value">{{itemsQuantityString(order)}}</div>
+      </div>
+
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.womensOnly">Womens only</div>
+        <div class="af-side-line-value">
+          <checkbox-input
+          [noBottomMargin]="true"
+          [inTable]="true"
+          [disabled]="true"
+          [checked]="order.requiredwomensOnly">
+        </checkbox-input>
+        </div>
+      </div>
+      <div class="af-side-parameter-line">
+        <div class="af-side-line-label" i18n="@@orderLeftPanel.lineLabel.quantityValue">Quality</div>
+        <div class="af-side-line-value">{{order.requiredGrade?.label}}</div>
+      </div>
+
+    </ng-container>
+    <li style="max-width:100%; margin-bottom: 3.875rem; margin-top: 2.375rem">
+      <!-- <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'dashboard']"
+        i18n="@@productLabel.sideTitle.dashboard">
+        Dashboard
+      </a>
+      <div class="spacer"></div> -->
+      <!-- <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('orders')"
+        i18n="@@productLabel.sideTitle.orders">
+        Orders
+      </a>
+      <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('stock')"
+        i18n="@@productLabel.sideTitle.stock">
+        My stock
+      </a>
+      <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('supply')"
+        i18n="@@productLabel.sideTitle.supply">
+        Supply
+      </a>
+      <a class="link-normal"
+        [routerLinkActiveOptions]="{exact: true}"
+        routerLinkActive="active"
+        [ngClass]="{'active': labelsActive.isActive}"
+        routerLink="/product-labels/{{this.productId}}"
+        i18n="@@productLabel.sideTitle.qrLabels">
+        QR labels
+      </a>
+      <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('knowledge-blog')"
+        i18n="@@productLabel.sideTitle.knowledgeBlog">
+        Knowledge blog
+      </a>
+      <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('f-p-q-explorer')"
+        i18n="@@productLabel.sideTitle.FPQExplorer">
+        F-P-Q explorer
+      </a>
+      <a class="link-normal"
+        routerLinkActive="active"
+        [routerLink]="goTo('stakeholders')"
+        i18n="@@productLabel.sideTitle.stakeholders">
+        Stakeholders
+      </a>
+      <div class="spacer"></div>
+      <a class="link-error">
+        <div (click)="deleteCurrentProduct()" [class.side-menu-item-disabled]="changed" i18n="@@productLabel.sideTitle.archiveProduct">
+          <fa-icon
+            style="margin-right: 8px;"
+            [icon]="faTrashAlt">
+          </fa-icon>
+          Archive product
+        </div>
+      </a> -->
+    </li>
+    <div style="height: 32px;"></div>
+  </ul>
+</div>
+
+<!-- <button [routerLink]="['/product-labels', this.productId, 'labels']" routerLinkActive #labelsActive="routerLinkActive" style="display: none"></button> -->
+
+
+<!--
+<div class="d-lg-none d-block">
+  <img *ngIf="this.imgStorageKey"
+    src="/api/common/image/{{this.imgStorageKey}}/SMALL"
+    default="/api/common/image/{{this.imgStorageKey}}"
+    style="max-width:200px; width: 85%; border-radius: 4px;">
+  <div style="max-width:200px; margin-bottom: 3.875rem; margin-top: 1.5rem">
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'dashboard']"
+        i18n="@@productLabel.sideTitle.dashboard">
+        Dashboard
+      </a>
+    </div>
+    <div class="spacer"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'orders']"
+        i18n="@@productLabel.sideTitle.orders">
+        Orders
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'stock']"
+        i18n="@@productLabel.sideTitle.stock">
+        My stock
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'supply']"
+        i18n="@@productLabel.sideTitle.supply">
+        Supply
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        [routerLinkActiveOptions]="{exact: true}"
+        routerLinkActive="active"
+        routerLink="/product-labels/{{this.productId}}"
+        i18n="@@productLabel.sideTitle.qrLabels">
+        QR labels
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'knowledge-blog']"
+        i18n="@@productLabel.sideTitle.knowledgeBlog">
+        Knowledge blog
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'f-p-q-explorer']"
+        i18n="@@productLabel.sideTitle.FPQExplorer">
+        F-P-Q explorer
+      </a>
+    </div>
+    <div class="spacer-mobile"></div>
+    <div>
+      <a class="link-normal-mobile"
+        routerLinkActive="active"
+        [routerLink]="['/product-labels', this.productId, 'stakeholders']"
+        i18n="@@productLabel.sideTitle.stakeholders">
+        Stakeholders
+      </a>
+    </div>
+    <div class="spacer"></div>
+    <a class="link-error-mobile">
+      <div (click)="deleteCurrentProduct()" [class.side-menu-item-disabled]="changed" i18n="@@productLabel.sideTitle.archiveProduct">
+        <fa-icon
+          style="margin-right: 8px;"
+          [icon]="faTrashAlt">
+        </fa-icon>
+        Archive product
+      </div>
+    </a>
+  </div>
+</div> -->

@@ -1,0 +1,44 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+.bottom-buttons {
+  margin-top: 3rem;
+  // @include media-breakpoint-up(md) {
+  //   width: calc(100% - 2rem);
+  // }
+}
+
+
+.razpis-button-disabled {
+  border-color: $gray-semi !important;
+  // color: $gray-semi !important;
+  background-color: $gray-semi !important;;
+}
+
+.razpis-button-disabled-outline {
+  border-color: $gray-semi !important;
+  color: $gray-semi !important;
+  // background-color: $gray-semi !important;;
+}
+
+.action-error {
+  border-color: $danger !important;
+  background-color: $danger !important;
+}
+
+.action-error-outline {
+  border-color: $danger !important;
+  color: $danger !important;
+}
+
+.action-success {
+  border-color: $success !important;
+  background-color: $success !important;
+}
+
+.action-success-outline {
+  border-color: $success !important;
+  color: $success !important;
+}

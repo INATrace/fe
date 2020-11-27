@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button *ngIf="dismissable" type="button" class="close" aria-label="Close" i18n-aria-label="modal textinput close label|@@ui.textinputModal.close.label" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <textinput
+        #textinput
+        dir-heavyLabel
+        [autosize]=true
+        [textarea]="true"
+        [rows]="rows"
+        [id]="id"
+        [form]="form"
+        [counter]="counter"
+        [maxLength]="maxLength"
+        [hideCounterForModalView]=true
+        ></textinput>
+</div>
+<div class="modal-footer space-between">
+        <div>
+            <span [class.text-danger]="textinput.counter && textinput.tooManyCharacters()">
+                <span
+                    *ngIf="textinput.counter"
+                    class="mt-1 pl-1"
+                    i18n="char count label|@@ui.textinput.charCount.label">Num. of chars: {{textinput.getSteviloZnakov()}}
+                </span>
+                <span *ngIf="textinput.counter && textinput.getMaxLength()">/ {{textinput.getMaxLength()}}</span>
+            </span>
+        </div>
+        <mini-buttons
+            (onSave)="onSave()"
+            (onCancel)="onCancel()"
+            [error]="submitted && form.invalid">
+        </mini-buttons>
+
+    <!-- <button type="button" class="btn btn-secondary" (click)="activeModal.close('Cancel click'); cancelCallback && cancelCallback()" i18n="textinput modal cancel|@@shared.textinput-modal.button.cancel">Prekliči</button>
+    <button type="button" class="btn btn-primary" (click)="activeModal.close('Save click'); saveCallback && saveCallback()" i18n="textinput modal save|@@shared.textinput-modal.button.save">Shrani</button> -->
+</div>

@@ -1,0 +1,59 @@
+@import "src/_variables";
+
+
+.af-payment-status {
+  background: $pale-green;
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-width: 250px;
+  // margin-top: 0.375rem; // was needed for af-order, to align with title
+  margin-bottom: 1rem;
+
+  &-icon {
+    // This adds basic shape of icon with a background
+    background-color: $pale-green;
+    height: $sidenav-icon-bg-size;
+    width: $sidenav-icon-bg-size;
+    margin-right: 10px;
+    border-radius: 17px;
+    float: left;
+
+    &-shape {
+      // This defines placement of icon as mask, backtround color defines color of icon
+      display: inline-block;
+      width: $sidenav-icon-bg-size;
+      height: $sidenav-icon-bg-size;
+      background: $darker-green; // initiall color of icon
+      mask-size: cover;
+      // margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
+
+      // &:hover,
+      // &:focus {
+      //   background: $moderate-cyan;  // this overrides color of icon for states
+      // }
+
+      // list icon sources here
+      &--confirmed {
+        mask: url(/assets/icons/icon-confirmed.svg) no-repeat;
+      }
+    }
+
+  }
+
+  &-description {
+    color: $darker-green;
+    font-size: 14px;
+    color: $darker-green;
+    letter-spacing: 0;
+    line-height: 16px;
+    margin-bottom: 0;
+
+    p {
+      font-size: 14px;
+      color: $moderate-green;
+      letter-spacing: 0;
+      line-height: 16px;
+      margin-bottom: 0;
+    }
+  }
+}

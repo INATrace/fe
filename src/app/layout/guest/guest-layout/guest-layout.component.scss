@@ -1,0 +1,27 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  @include media-breakpoint-down(md) {
+    margin-top: -80px;
+  }
+}
+
+.wrapper-inside {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.top-nav {
+  display:none;
+    @include media-breakpoint-down(md) {
+    display: inline;
+  }
+}

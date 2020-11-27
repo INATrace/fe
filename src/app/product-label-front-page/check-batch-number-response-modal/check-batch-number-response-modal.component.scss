@@ -1,0 +1,24 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.modal-header {
+  border-bottom: none;
+  text-align: center;
+  height: 160px;
+}
+
+.modal-success {
+  background-color: $success;
+}
+
+.modal-counterfeit {
+  background-color: $danger;
+}
+
+.icon-box {
+  color: white;
+  font-size: 6rem;
+  padding: 35px;
+}

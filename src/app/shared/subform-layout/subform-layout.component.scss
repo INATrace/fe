@@ -1,0 +1,55 @@
+@import 'src/_variables';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+// .mini-button-media-align {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-end;
+//     align-items: flex-start;
+// }
+
+// @media all and (max-width: map-get($grid-breakpoints, "md")) {
+//     .mini-button-media-align {
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: flex-end;
+//         align-items: center;
+//     }
+// }
+
+.mini-button-media-align {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subform-content {
+    flex: 1 1 0;
+}
+
+// .subform-table {
+//     display: flex;
+//     flex-direction: row;
+// }
+
+// @media all and (max-width: map-get($grid-breakpoints, "md")) {
+//     .subform-table {
+//         flex-direction: column;
+//     }
+// }
+
+.subform-table {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.card-border-like-textfield {
+  // background-color: #fff;
+  background-clip: padding-box;
+  // border: 1px solid $gray-400;
+  border-radius: 0.25rem;
+}
+

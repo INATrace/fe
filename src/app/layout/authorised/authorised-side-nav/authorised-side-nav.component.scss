@@ -1,0 +1,64 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.auth-side-icon-spacer{
+  height: 20px;
+}
+.auth-img-container{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.left-border-active{
+  width: 4px;
+  background-color: $secondary;
+  margin-left: - ($navbar-width / 2);
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+
+.left-border-active.active,
+.left-border-active:hover {
+     background-color: $side-nav-active-bar;
+}
+
+button.btn-icon-sidebar{
+  background-color: transparent;
+  border:  none;
+  font-size: 1.313rem;
+  color:white;
+  width: $navbar-width;
+  height: 50px;
+}
+
+img {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+// button.btn-icon-sidebar.active,
+// button.btn-icon-sidebar:hover {
+//     border-left: 4px solid $side-nav-active-bar;
+// }
+
+#info_sidebar_button {
+    font-size:1rem;
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    left: 0;
+}
+
+// @import 'src/_variables';
+// @import '~bootstrap/scss/functions';
+// @import '~bootstrap/scss/variables';
+// @import '~bootstrap/scss/mixins';
+
+
+
+

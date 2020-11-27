@@ -1,0 +1,163 @@
+<app-front-page-sliding
+  [tab]="this.tab">
+
+  <div class="af-b2c-wrapper">
+
+    <app-front-page-header
+      [tab]="this.tab">
+    </app-front-page-header>
+
+    <main class="af-b2c-main">
+
+      <h1>{{title}}</h1>
+      <div class="af-b2c-header-arrows--rightonly" *ngIf="pageYoffset> 150"></div>
+
+      <google-map
+        *ngIf="isGoogleMapsLoaded"
+        height="380px"
+        width="100%">
+        <map-marker
+          #gMarker="mapMarker"
+          *ngFor="let marker of markers; index as i"
+          [position]="marker.position"
+          [options]="markerOption(i)">
+        </map-marker>
+        <map-polyline [path]="locations" [options]="polyOptions"></map-polyline>
+      </google-map>
+
+      <!-- <button (click)="toggleShort()" class="mt-4">Toggle timeline</button> -->
+
+      <ul class="af-journey-wrapper">
+
+        <li class="af-journey">
+
+          <div class="af-journey-dot"
+            [class.spin]="processingShorter.length === 0">
+            <a role="button" target="_blank">
+              <span class="af-journey-dot-shape af-journey-dot-shape--qr-code"></span>
+            </a>
+          </div>
+          <div class="af-journey-info">
+            <span>{{formatDate(null)}}</span>
+            <span i18n="@@frontPage.journey.yourScan">Your scan</span>
+            <span>&nbsp;</span>
+          </div>
+
+        </li>
+
+
+        <ng-container *ngIf="this.processing.length>0 && !short">
+          <ng-container *ngFor="let item of this.processing">
+            <!-- <li  class="af-journey">
+
+              <div class="af-journey-dot">
+                <a role="button" target="_blank">
+                  <span class="af-journey-dot-shape af-journey-dot-shape--warehouse"></span>
+                </a>
+              </div>
+              <div class="af-journey-info">
+                <span>10.9.2020</span>
+                <span>Roasting</span>
+                <span>Hamburg, Germany</span>
+              </div>
+
+            </li> -->
+            <li *ngIf="item.type === 'TRANSFER'" class="af-journey">
+
+              <div class="af-journey-dot">
+                <a role="button" target="_blank">
+                  <span class="af-journey-dot-shape af-journey-dot-shape--ship"></span>
+                </a>
+              </div>
+              <div class="af-journey-info">
+                <span>{{formatDate(item.date)}}</span>
+                <span>{{item.name}}</span>
+                <span>{{item.location}}</span>
+              </div>
+
+            </li>
+            <li *ngIf="item.type != 'TRANSFER' && item.type != null" class="af-journey">
+
+              <div class="af-journey-dot">
+                <a role="button" target="_blank">
+                  <span class="af-journey-dot-shape af-journey-dot-shape--leaf"></span>
+                </a>
+              </div>
+              <div class="af-journey-info">
+                <span>{{formatDate(item.date)}}</span>
+                <span>{{item.name}}</span>
+                <span>{{item.location}}</span>
+              </div>
+
+            </li>
+            <li *ngIf="!item.type" class="af-journey">
+
+              <div class="af-journey-dot">
+                <a role="button" target="_blank">
+                  <span class="af-journey-dot-shape af-journey-dot-shape--leaf"></span>
+                </a>
+              </div>
+              <div class="af-journey-info">
+                <span>{{formatDate(item.date)}}</span>
+                <span i18n="@@front-page.journey.processing">Processing</span>
+                <span>{{item.location}}</span>
+              </div>
+
+            </li>
+          </ng-container>
+
+
+
+        </ng-container>
+
+        <ng-container *ngIf="this.processingShorter.length>0 && short">
+          <ng-container *ngFor="let item of this.processingShorter">
+
+            <li class="af-journey" *ngIf="item.type">
+
+              <div class="af-journey-dot">
+                <a role="button" target="_blank">
+                  <span class="af-journey-dot-shape {{item.iconClass}}"></span>
+                </a>
+              </div>
+              <div class="af-journey-info">
+                <span>{{formatDate(item.date)}}</span>
+                <span>{{item.name}}</span>
+                <span>{{item.location}}</span>
+              </div>
+
+            </li>
+          </ng-container>
+
+
+          <li class="af-journey">
+
+            <div class="af-journey-dot">
+              <a role="button" target="_blank">
+                <span class="af-journey-dot-shape af-journey-dot-shape--leaf"></span>
+              </a>
+            </div>
+            <div class="af-journey-info">
+              <span>&nbsp;</span>
+              <span i18n="@@frontPage.journey.harvesting">Harvesting</span>
+              <span i18n="@@frontPage.journey.farmersFromCooperative">Farmers from {{this.coopName}}</span>
+            </div>
+
+          </li>
+        </ng-container>
+
+
+      </ul>
+
+
+      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYoffset> 0">&nbsp;</a>
+
+
+    </main>
+
+    <app-front-page-footer>
+    </app-front-page-footer>
+
+  </div>
+
+</app-front-page-sliding>

@@ -1,0 +1,170 @@
+<app-authorised-layout class="af-layout--system">
+
+  <app-system-left-panel
+    i18n="@@userList.navTitle"
+    title="System">
+  </app-system-left-panel>
+
+  <div class="main">
+
+
+    <div class="row">
+      <div class="col">
+
+        <ng-container *ngIf="users$ | async as users">
+
+          <div class="main-inside-top content-element">
+
+            <div class="d-flex align-items-start content-element--row1">
+              <div class="title-page content-element--title" i18n="@@userList.title.users">Users</div>
+            </div>
+
+            <div class="d-flex justify-content-between content-element--row2">
+              <div>
+                <div class="sub-title-page content-element--subtitle" i18n="@@userList.subTitle.listOfUsers">List of users</div>
+                <div class="counting-page content-element--counting" i18n="@@userList.subTitle.showing">Showing {{showedUsers}}/{{allUsers}}</div>
+              </div>
+
+              <div class="d-flex align-items-top">
+
+                <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+                  <div *ngIf="searchStatus && searchStatus?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.showStatus"> Show {{searchStatus.value | lowercase}}
+                    <div (click)="clearValue(searchStatus)" style="margin-left: 0.5rem;">
+                      <fa-icon [icon]="faTimes" size="xs">
+                      </fa-icon>
+                    </div>
+                  </div>
+                  <div *ngIf="searchRole && searchRole?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.showRole"> Show {{searchRole.value | lowercase}}
+                    <div (click)="clearValue(searchRole)" style="margin-left: 0.5rem;">
+                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      </fa-icon>
+                    </div>
+                  </div>
+                  <div *ngIf="myUsers && myUsers.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.myUsers">My users
+                    <div (click)="clearValue(myUsers, true)" style="margin-left: 0.5rem;">
+                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      </fa-icon>
+                    </div>
+                  </div>
+
+                  <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@userList.filter.placeholder">
+                    <!-- <fa-icon
+                    style="margin-right: 9px; font-size: 14px;"
+                    [icon]="faFilter">
+                  </fa-icon> -->
+                    <div class="button-icon">
+                      <span class="button-icon-shape button-icon-shape--filter"></span>
+                    </div>
+                    <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+                  </button>
+
+
+                  <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="showStatus('ACTIVE')" i18n="@@userList.filter.showActive">Show active</button>
+                    <button ngbDropdownItem (click)="showStatus('DEACTIVATED')" i18n="@@userList.filter.showDeactivated">Show deactivated</button>
+                    <button ngbDropdownItem (click)="showStatus('CONFIRMED_EMAIL')" i18n="@@userList.filter.showConfirmed">Show confirmed email</button>
+                    <button ngbDropdownItem (click)="showStatus('UNCONFIRMED')" i18n="@@userList.filter.showUnconfirmed">Show unconfirmed</button>
+                    <div class="line"></div>
+                    <button ngbDropdownItem (click)="showStatus('ADMIN', true)" i18n="@@userList.filter.showAdmin">Show admin</button>
+                    <button ngbDropdownItem (click)="showStatus('USER', true)" i18n="@@userList.filter.showedUsers">Show user</button>
+                    <div class="line"></div>
+                    <button ngbDropdownItem (click)="myUsersOnly(true)" i18n="@@userList.filter.showMyUsers">Show my users</button>
+                  </div>
+                </div>
+
+                <app-search-textinput
+                  [form]="searchQuery">
+                </app-search-textinput>
+              </div>
+            </div>
+
+          </div>
+          <div class="main-inside-main">
+
+            <table *ngIf="users && users.items && users.items.length> 0" class="af-table">
+              <thead>
+                <tr scope="col" result-sorter [sortOptions]="sortOptions"
+                  (sortByKey)="changeSort($event)"></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users.items">
+                  <td class="limit-chars" scope="row" [attr.data-label]="sortOptions[0].name"><span>{{user.name}}</span></td>
+                  <td class="limit-chars" [attr.data-label]="sortOptions[1].name"><span>{{user.surname}}</span></td>
+                  <td class="limit-chars" [attr.data-label]="sortOptions[2].name"><span>{{user.email}}</span></td>
+                  <td [attr.data-label]="sortOptions[3].name"><span>{{user.role}}</span></td>
+                  <td class="limit-chars" [attr.data-label]="sortOptions[4].name"><span>{{user.status}}</span></td>
+                  <td [attr.data-label]="sortOptions[5].name">
+                    <span>
+                    <a i18n="@@userList.tableCol.edit"
+                      (click)="editUser(user.id)"
+                      class="user-action"
+                      [class.enabled-action]="true">
+                      Edit
+                    </a>
+                    <a i18n="@@userList.tableCol.activate"
+                      (click)="user.status != 'ACTIVE' && activate(user.id)"
+                      class="user-action"
+                      [class.enabled-action]="user.status != 'ACTIVE'"
+                      [class.disabled-action]="user.status === 'ACTIVE'">
+                      Activate
+                    </a>
+                    <a i18n="@@userList.tableCol.deactivate"
+                      (click)="user.status != 'DEACTIVATED' &&
+                      deactivate(user.id)"
+                      class="user-action"
+                      [class.enabled-action]="user.status != 'DEACTIVATED'"
+                      [class.disabled-action]="user.status === 'DEACTIVATED'">
+                      Deactivate
+                    </a>
+                    <a
+                      (click)="user.status == 'ACTIVE' &&
+                      setAdmin(user.id, user.role)"
+                      class="user-action"
+                      [class.enabled-action]="user.status === 'ACTIVE'"
+                      [class.disabled-action]="user.status != 'ACTIVE'">
+                      <ng-container *ngIf="user.role === 'USER'" i18n="@@userList.tableCol.setAdmin">
+                        Set admin
+                      </ng-container>
+                      <ng-container *ngIf="user.role === 'ADMIN'" i18n="@@userList.tableCol.unsetAdmin">
+                        Unset admin
+                      </ng-container>
+                    </a>
+                  </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <div *ngIf="users && users.items && users.items.length == 0" class="no-list-results" i18n="@@userList.noUsers">
+              No users
+            </div>
+          </div>
+
+          <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+            <ngb-pagination
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="users.count"
+              (pageChange)="onPageChange($event)"
+              [maxSize]="7"
+              [rotate]="true">
+            </ngb-pagination>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+
+
+    <div *ngIf="_listErrorStatus$.value === 'UNAUTHORIZED'" i18n="@@userList.unauthorized">
+      Not authorised to see the list of users.
+    </div>
+
+    <div *ngIf="!!_listErrorStatus$.value && _listErrorStatus$.value != 'UNAUTHORIZED'" i18n="@@userList.somethingWentWrong">
+      Something went wrong while loading the users.
+    </div>
+
+  </div>
+</app-authorised-layout>

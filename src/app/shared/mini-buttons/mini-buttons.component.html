@@ -1,0 +1,30 @@
+<div class="d-flex flex-row justify-content-start align-items-end pb-3 pl-2 mt-3">
+  <!-- <button #okButton
+        class="btn btn-success btn-circle mr-1"
+        (click)="save($event)"
+        >
+            <fa-icon [icon]="'check'"></fa-icon>
+        </button>
+        <button
+            class="btn btn-secondary btn-circle"
+            (click)="cancel($event)"
+        >
+            <fa-icon [icon]="'times'"></fa-icon>
+        </button> -->
+  <button
+    class="btn btn-outlined"
+    style="margin-right: 1rem; min-width: 7rem;"
+    (click)="cancel($event)"
+    i18n="@@miniButtons.button.cancel">
+    <span>Cancel</span>
+  </button>
+  <button #okButton *ngIf="!cancelButtonOnly"
+    class="btn btn-solid rounded btn-primary"
+    style="min-width: 7rem;"
+    [class.action-error]="error"
+    (click)="save($event)"
+    i18n="@@miniButtons.button.confirm">
+    <span>Confirm</span>
+  </button>
+
+</div>

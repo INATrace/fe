@@ -1,0 +1,92 @@
+<smart-tag
+  [isOpen]="isOpen && !rawObjectData"
+  [readOnly]="rawObjectData"
+  (onDelete)="delete()"
+  (onEdit)="toggle($event)"
+  [formControlInput]="originalFormControl"
+  [disableDelete]="disableDelete">
+  <tag-closed>
+    <div *ngIf="contentObject" class="c-capitalize-first">
+      <div class="tagitem-text-container">
+        <div *ngIf="contentObject.description">
+          <a *ngIf="contentObject?.document?.storageKey" (click)="onDownload(); $event.stopPropagation()">
+            <fa-icon class="tagitem-download-icon" style="margin-left: 0.5rem" [icon]="faStamp" size="1x"></fa-icon>
+          </a>
+          {{contentObject.description}}
+        </div>
+      </div>
+    </div>
+  </tag-closed>
+  <tag-open>
+    <subform-layout *ngIf="this.form">
+      <subform-form>
+        <h5 class="sp-subform-title">{{title}}
+        </h5>
+
+        <textinput
+          label="Description"
+          [form]="form.get('description')"
+          style="width: 100%"
+          [textarea]="true"
+          helpText=""
+          i18n-label="@@farmerStoryPhotos.textinput.description.label"
+          [isInvalid]="submitted && form.get('description').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@farmerStoryPhotos.textinput.description.error">
+                <span>
+                  Description is required
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+
+        <ng-container>
+          <attachment-uploader
+            rootImageUrl="{{rootImageUrl}}"
+            allowedMimeType="[image/png', 'image/jpeg']"
+            allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+            mode="simpleAsTextField"
+            label="Farmer or farmer group picture (PNG/JPG)"
+            i18n-label="@@farmerStoryPhotos.attachment-uploader.label"
+            i18n-allowedMimeTypeErrorMessage="@@farmerStoryPhotos.attachment-uploader.allowedMimeTypeErrorMessage"
+            [form]="form.get('document')"
+            [attachmentUploaderId]="'productionRecord'+listEditorManagerPosition"
+            [invalid]="submitted && form.get('document').invalid"
+            [readOnly]="form.get('document').disabled">
+            <attachment-uploader-content i18n="@@farmerStoryPhotos.attachment-uploader.content">
+              Upload document
+            </attachment-uploader-content>
+            <attachment-uploader-errors>
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('document').errors as errors" validation-error class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@farmerStoryPhotos.attachment-uploader.error">
+                    <span>
+                      Document is required
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </attachment-uploader-errors>
+          </attachment-uploader>
+          <small style="font-weight: 300;" i18n="@@farmerStoryPhotos.attachment-uploader.small">Upload a high-quality photo of the farmer or group of farmers that best represents your company/brand.</small>
+
+        </ng-container>
+
+
+
+      </subform-form>
+
+      <subform-mini-buttons style="width: 100%;" class="d-flex justify-content-end">
+        <mini-buttons
+          (onSave)="save()"
+          (onCancel)="cancel()"
+          [error]="submitted && form.invalid">
+        </mini-buttons>
+      </subform-mini-buttons>
+
+    </subform-layout>
+
+  </tag-open>
+</smart-tag>

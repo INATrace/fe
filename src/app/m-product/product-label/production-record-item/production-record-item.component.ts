@@ -1,0 +1,68 @@
+import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { faStamp } from '@fortawesome/free-solid-svg-icons';
+import { FileSaverService } from 'ngx-filesaver';
+import { CommonControllerService } from 'src/api/api/commonController.service';
+import { ApiDocument } from 'src/api/model/apiDocument';
+import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
+import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
+import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
+import { ApiProcessDocumentValidationScheme } from '../validation';
+
+
+@Component({
+  selector: 'app-production-record-item',
+  templateUrl: './production-record-item.component.html',
+  styleUrls: ['./production-record-item.component.scss']
+})
+export class ProductionRecordItemComponent extends GenericEditableItemComponent<ApiProcessDocument> {
+
+    constructor(
+        protected globalEventsManager: GlobalEventManagerService,
+        protected router: Router,
+        private fileSaverService: FileSaverService,
+        private commonController: CommonControllerService
+
+    ) {
+        super(globalEventsManager)
+    }
+
+    @Input()
+    disableDelete = false
+
+    @Input()
+    title = null
+
+    faStamp = faStamp;
+
+    public generateForm(value: any): FormGroup {
+        return generateFormFromMetadata(ApiProcessDocument.formMetadata(), value, ApiProcessDocumentValidationScheme)
+    }
+
+    static createEmptyObject(): ApiProcessDocument {
+        let market = ApiProcessDocument.formMetadata();
+        return defaultEmptyObject(market) as ApiProcessDocument
+    }
+
+    static emptyObjectFormFactory(): () => FormControl {
+        return () => {
+            let f = new FormControl(ProductionRecordItemComponent.createEmptyObject(), ApiProcessDocumentValidationScheme.validators)
+            return f
+        }
+    }
+
+    onDownload() {
+      let apiDoc = this.form.get('document').value as ApiDocument
+      if (apiDoc && apiDoc.storageKey) {
+        let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+          this.fileSaverService.save(res, apiDoc.name);
+          sub.unsubscribe()
+        })
+      }
+    }
+}
+
+
+
