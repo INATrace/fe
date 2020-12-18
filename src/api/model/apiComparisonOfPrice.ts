@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 

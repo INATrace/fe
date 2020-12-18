@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -83,7 +83,7 @@ export namespace ExecuteActionUsingPOST {
       /**
        * action
        */
-      action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY';
+      action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'SET_USER_COMPANY_ROLE' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY';
       /**
        * request
        */
@@ -565,10 +565,10 @@ export class CompanyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'SET_USER_COMPANY_ROLE' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'SET_USER_COMPANY_ROLE' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'SET_USER_COMPANY_ROLE' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public executeActionUsingPOST(action: 'VIEW_COMPANY_PROFILE' | 'UPDATE_COMPANY_PROFILE' | 'ACTIVATE_COMPANY' | 'DEACTIVATE_COMPANY' | 'ADD_USER_TO_COMPANY' | 'SET_USER_COMPANY_ROLE' | 'REMOVE_USER_FROM_COMPANY' | 'MERGE_TO_COMPANY', ApiCompanyActionRequest: ApiCompanyActionRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (action === null || action === undefined) {
             throw new Error('Required parameter action was null or undefined when calling executeActionUsingPOST.');
         }

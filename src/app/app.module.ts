@@ -84,6 +84,7 @@ import { FrontPageCarouselComponent } from './front-page/front-page-carousel/fro
 import { FrontPageSlidingComponent } from './front-page/front-page-sliding/front-page-sliding.component';
 import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
 import { CompanyDetailTabManagerComponent } from './company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
+import { CompanyUserRoleComponent } from './company-user-role/company-user-role.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -158,7 +159,8 @@ export function getConfiguration(): Configuration {
     FrontPageCarouselComponent,
     FrontPageSlidingComponent,
     CompanyDetailTranslateComponent,
-    CompanyDetailTabManagerComponent
+    CompanyDetailTabManagerComponent,
+    CompanyUserRoleComponent
   ],
   entryComponents: [
     CompanySelectModalComponent

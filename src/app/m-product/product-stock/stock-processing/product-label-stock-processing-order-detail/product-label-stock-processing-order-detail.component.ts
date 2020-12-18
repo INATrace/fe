@@ -1659,8 +1659,8 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
           (this.outputStockOrders as FormArray).push(new FormGroup({
             identifier: new FormControl(null),
             id: new FormControl(null),
-            totalQuantity: new FormControl(w, Validators.max(this.prAction.maxOutputWeight)),
-            sacNumber: new FormControl(i+1, [Validators.required])
+            totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
+            sacNumber: new FormControl(null, [Validators.required])
           }))
         }
       }

@@ -14,7 +14,7 @@ import { ComponentCanDeactivate } from '../shared-services/component-can-deactiv
 import { CountryService } from '../shared-services/countries.service';
 import { UsersService } from '../shared-services/users.service';
 import { GlobalEventManagerService } from '../system/global-event-manager.service';
-import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
+import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme, ApiCompanyUserValidationScheme } from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ChainFileInfo } from 'src/api-chain/model/chainFileInfo';
@@ -24,13 +24,14 @@ import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
 import { ApiCertificationValidationScheme } from '../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
+import { ApiCompanyUser } from 'src/api/model/apiCompanyUser';
 
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
   styleUrls: ['./company-detail.component.scss']
 })
-export class CompanyDetailComponent extends CompanyDetailTabManagerComponent  implements OnInit {
+export class CompanyDetailComponent extends CompanyDetailTabManagerComponent implements OnInit {
 
   rootTab = 0
   public canDeactivate(): boolean {
@@ -406,6 +407,13 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent  im
     }
   }
 
+  static ApiCompanyUserCreateEmptyObject(): () => FormControl {
+    return () => {
+      let f = new FormControl(CompanyDetailComponent.ApiCompanyUserCreateEmptyObject(), ApiCompanyUserValidationScheme.validators)
+      return f
+    }
+  }
+
   static ApiCompanyDocumentCreateEmptyObject(): ApiCompanyDocument {
     let obj = ApiCompanyDocument.formMetadata();
     return defaultEmptyObject(obj) as ApiCompanyDocument
@@ -418,12 +426,25 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent  im
     }
   }
 
+  static ApiCompanyUserEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      let f = new FormControl(CompanyDetailComponent.ApiCompanyUserCreateEmptyObject(), ApiCompanyUserValidationScheme.validators)
+      return f
+    }
+  }
+
   certificationListManager = null
   videosListManager = null
   productionRecordListManager = null
   meetTheFarmerListManager = null
+  companyUserListManager = null;
 
   initializeListManagers() {
+    this.companyUserListManager = new ListEditorManager<ApiCompanyUser>(
+      this.companyDetailForm.get('users') as FormArray,
+      CompanyDetailComponent.ApiCompanyUserEmptyObjectFormFactory(),
+      ApiCompanyUserValidationScheme
+    )
     this.certificationListManager = new ListEditorManager<ApiCertification>(
       (this.companyDetailForm.get('certifications')) as FormArray,
       CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),

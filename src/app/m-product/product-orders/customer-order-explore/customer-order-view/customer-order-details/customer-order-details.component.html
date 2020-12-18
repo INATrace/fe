@@ -132,7 +132,7 @@
 
               <div class="row af-details-line">
                 <div class="col-4" i18n="@@customerOrderDetails.lineLabel.womenShare">Women's share</div>
-                <div class="col-8">100%</div>
+                <div class="col-8">{{this.getWomenOnlyLabel(order.requiredwomensOnly)}}</div>
               </div>
 
 
@@ -178,6 +178,14 @@
             </div>
           </div>
 
+          <div class="af-section-documents-title" i18n="@@customerOrderDetails.subtitle.label.payments">Payments</div>
+          <div class="af-section-documents-count">{{countPayments[0]}} / {{countPayments[1]}}</div>
+          <div *ngIf="this.payments" class="d-flex flex-wrap">
+            <div *ngFor="let report of this.payments">
+              <app-document-card [report]="report" mode='big'></app-document-card>
+            </div>
+          </div>
+
         </div>
 
         <!-- <ng-container *ngIf="fairnessDocs$ | async as entity">
@@ -189,5 +197,7 @@
         </ng-container> -->
       </div>
     </div>
+    <div style="height: 10vh;"></div>
   </div>
+
 </app-authorised-layout>

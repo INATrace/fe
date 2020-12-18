@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -117,7 +117,8 @@ export namespace ApiUserGet {
         CONFIRMUSEREMAIL = 'CONFIRM_USER_EMAIL',
         DEACTIVATEUSER = 'DEACTIVATE_USER',
         SETUSERADMIN = 'SET_USER_ADMIN',
-        UNSETUSERADMIN = 'UNSET_USER_ADMIN'
+        UNSETUSERADMIN = 'UNSET_USER_ADMIN',
+        SETUSERROLE = 'SET_USER_ROLE'
     }
 
     /**
@@ -134,7 +135,9 @@ export namespace ApiUserGet {
      */
     export enum RoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN'
+        ADMIN = 'ADMIN',
+        MANAGER = 'MANAGER',
+        ACCOUNTANT = 'ACCOUNTANT'
     }
 
     /**

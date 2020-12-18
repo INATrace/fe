@@ -28,6 +28,8 @@ export interface ChainGradeAbbreviation {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     id: string;
     label: string;
 }
@@ -43,6 +45,8 @@ export namespace ChainGradeAbbreviation {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         id = 'id',
         label = 'label'
     }
@@ -89,6 +93,28 @@ export namespace ChainGradeAbbreviation {
                 {
                     isReadOnly: false,
                     isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainGradeAbbreviation',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainGradeAbbreviation',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
                     required: true,
                     name: 'id',
                     classname: 'ChainGradeAbbreviation',
@@ -116,6 +142,10 @@ export namespace ChainGradeAbbreviation {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 id: [
                         ['required'],
                 ],
@@ -136,6 +166,12 @@ export namespace ChainGradeAbbreviation {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               id: {

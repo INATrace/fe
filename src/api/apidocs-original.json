@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "Abelium INATrace Services API swagger documentation",
+    "description": "INATrace Services API swagger documentation",
     "title": "INATrace Services API",
     "version": "1.0"
   },
@@ -523,6 +523,7 @@
                 "ACTIVATE_COMPANY",
                 "DEACTIVATE_COMPANY",
                 "ADD_USER_TO_COMPANY",
+                "SET_USER_COMPANY_ROLE",
                 "REMOVE_USER_FROM_COMPANY",
                 "MERGE_TO_COMPANY"
               ],
@@ -2957,7 +2958,8 @@
                 "CONFIRM_USER_EMAIL",
                 "DEACTIVATE_USER",
                 "SET_USER_ADMIN",
-                "UNSET_USER_ADMIN"
+                "UNSET_USER_ADMIN",
+                "SET_USER_ROLE"
               ],
               "type": "string"
             }
@@ -2983,7 +2985,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApiBaseEntity"
+                "$ref": "#/components/schemas/ApiUserRole"
               }
             }
           },
@@ -3077,7 +3079,9 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN"
+                "ADMIN",
+                "MANAGER",
+                "ACCOUNTANT"
               ],
               "type": "string"
             }
@@ -3310,7 +3314,9 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN"
+                "ADMIN",
+                "MANAGER",
+                "ACCOUNTANT"
               ],
               "type": "string"
             }
@@ -3721,17 +3727,6 @@
   },
   "components": {
     "requestBodies": {
-      "ApiBaseEntity": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ApiBaseEntity"
-            }
-          }
-        },
-        "description": "request",
-        "required": true
-      },
       "ApiCompanyCustomer": {
         "content": {
           "application/json": {
@@ -3962,6 +3957,16 @@
             "format": "int64",
             "type": "integer"
           },
+          "companyUserRole": {
+            "description": "Company user role",
+            "enum": [
+              "USER",
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
+            ],
+            "type": "string"
+          },
           "otherCompanyId": {
             "description": "Other company id",
             "format": "int64",
@@ -4079,6 +4084,7 @@
                 "ACTIVATE_COMPANY",
                 "DEACTIVATE_COMPANY",
                 "ADD_USER_TO_COMPANY",
+                "SET_USER_COMPANY_ROLE",
                 "REMOVE_USER_FROM_COMPANY",
                 "MERGE_TO_COMPANY"
               ],
@@ -4143,7 +4149,7 @@
           "users": {
             "description": "Company users",
             "items": {
-              "$ref": "#/components/schemas/ApiUserBase"
+              "$ref": "#/components/schemas/ApiCompanyUser"
             },
             "type": "array"
           },
@@ -4301,6 +4307,67 @@
           },
           "webPage": {
             "description": "webpage",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiCompanyUser": {
+        "properties": {
+          "companyRole": {
+            "description": "company role",
+            "enum": [
+              "USER",
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
+            ],
+            "type": "string"
+          },
+          "email": {
+            "description": "Email/username",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "language": {
+            "description": "language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Name",
+            "type": "string"
+          },
+          "role": {
+            "description": "User role",
+            "enum": [
+              "USER",
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "Status",
+            "enum": [
+              "UNCONFIRMED",
+              "CONFIRMED_EMAIL",
+              "ACTIVE",
+              "DEACTIVATED"
+            ],
+            "type": "string"
+          },
+          "surname": {
+            "description": "Surname",
             "type": "string"
           }
         },
@@ -6926,7 +6993,9 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
             ],
             "type": "string"
           },
@@ -6975,7 +7044,9 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
             ],
             "type": "string"
           },
@@ -7060,7 +7131,8 @@
                 "CONFIRM_USER_EMAIL",
                 "DEACTIVATE_USER",
                 "SET_USER_ADMIN",
-                "UNSET_USER_ADMIN"
+                "UNSET_USER_ADMIN",
+                "SET_USER_ROLE"
               ],
               "type": "string"
             },
@@ -7100,7 +7172,9 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
             ],
             "type": "string"
           },
@@ -7116,6 +7190,26 @@
           },
           "surname": {
             "description": "Surname",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserRole": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "role": {
+            "description": "Role",
+            "enum": [
+              "USER",
+              "ADMIN",
+              "MANAGER",
+              "ACCOUNTANT"
+            ],
             "type": "string"
           }
         },

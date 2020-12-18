@@ -30,6 +30,8 @@ export interface ChainDocumentRequirement {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     /**
      * Document name (label)
      */
@@ -67,6 +69,8 @@ export namespace ChainDocumentRequirement {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         /**
          * Document name (label)
          */
@@ -128,6 +132,28 @@ export namespace ChainDocumentRequirement {
                     name: '_rev',
                     classname: 'ChainDocumentRequirement',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainDocumentRequirement',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainDocumentRequirement',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -208,6 +234,10 @@ export namespace ChainDocumentRequirement {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 name: [
                         ['required'],
                 ],
@@ -239,6 +269,12 @@ export namespace ChainDocumentRequirement {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               name: {

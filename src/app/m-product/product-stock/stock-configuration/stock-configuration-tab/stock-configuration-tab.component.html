@@ -3,7 +3,7 @@
   <app-product-label-left-panel-content>
   </app-product-label-left-panel-content>
 
-  <div class="main" *ngIf="isAdmin">
+  <div class="main" *ngIf="this.isAuthRoleToSeeConfiguration">
     <div class="main-inside-top content-element">
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@productLabelStock.title.facilities">Facilities</div>
@@ -116,7 +116,7 @@
     </app-product-label-stock-processing-action-list>
   </div>
 
-  <div class="main" *ngIf="!isAdmin">
+  <div class="main" *ngIf="!this.isAuthRoleToSeeConfiguration">
     <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
   </div>
 </app-authorised-layout>

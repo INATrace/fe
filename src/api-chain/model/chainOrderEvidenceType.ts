@@ -28,6 +28,8 @@ export interface ChainOrderEvidenceType {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     id: string;
     label: string;
     fairness?: boolean;
@@ -46,6 +48,8 @@ export namespace ChainOrderEvidenceType {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         id = 'id',
         label = 'label',
         fairness = 'fairness',
@@ -88,6 +92,28 @@ export namespace ChainOrderEvidenceType {
                     name: '_rev',
                     classname: 'ChainOrderEvidenceType',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainOrderEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainOrderEvidenceType',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -155,6 +181,10 @@ export namespace ChainOrderEvidenceType {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 id: [
                         ['required'],
                 ],
@@ -181,6 +211,12 @@ export namespace ChainOrderEvidenceType {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               id: {

@@ -28,6 +28,24 @@ export interface ChainProcessingEvidenceType {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
+    /**
+     * Timestamp of creation
+     */
+    created?: string;
+    /**
+     * Timestamp of last change
+     */
+    lastChange?: string;
+    /**
+     * Id of user that created the document.
+     */
+    userCreatedId?: string;
+    /**
+     * Id of user that changed the document.
+     */
+    userChangedId?: string;
     /**
      * capitalized underscored string that defines the document requirement
      */
@@ -77,6 +95,24 @@ export namespace ChainProcessingEvidenceType {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
+        /**
+         * Timestamp of creation
+         */
+        created = 'created',
+        /**
+         * Timestamp of last change
+         */
+        lastChange = 'lastChange',
+        /**
+         * Id of user that created the document.
+         */
+        userCreatedId = 'userCreatedId',
+        /**
+         * Id of user that changed the document.
+         */
+        userChangedId = 'userChangedId',
         /**
          * capitalized underscored string that defines the document requirement
          */
@@ -148,6 +184,72 @@ export namespace ChainProcessingEvidenceType {
                     isEnum: false,
                     required: false,
                     name: '_rev',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'created',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lastChange',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'userCreatedId',
+                    classname: 'ChainProcessingEvidenceType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'userChangedId',
                     classname: 'ChainProcessingEvidenceType',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -261,6 +363,18 @@ export namespace ChainProcessingEvidenceType {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
+                created: [
+                ],
+                lastChange: [
+                ],
+                userCreatedId: [
+                ],
+                userChangedId: [
+                ],
                 id: [
                         ['required'],
                 ],
@@ -295,6 +409,24 @@ export namespace ChainProcessingEvidenceType {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
+  //                   validators: []
+  //               },
+  //               created: {
+  //                   validators: []
+  //               },
+  //               lastChange: {
+  //                   validators: []
+  //               },
+  //               userCreatedId: {
+  //                   validators: []
+  //               },
+  //               userChangedId: {
   //                   validators: []
   //               },
   //               id: {

@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable, of, Subscribable, Subscription } from 'rxjs';
 import { catchError, filter, map, share, shareReplay, switchMap, take } from 'rxjs/operators';
 import { OrderService } from 'src/api-chain/api/order.service';
+import { PaymentsService } from 'src/api-chain/api/payments.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ChainProduct } from 'src/api-chain/model/chainProduct';
@@ -35,7 +36,8 @@ export class CustomerOrderDetailsComponent extends CustomerOrderViewComponent {
     private chainOrderService: OrderService,
     private productController: ProductControllerService,
     private chainProductService: ProductService,
-    protected codebookTranslations: CodebookTranslations
+    protected codebookTranslations: CodebookTranslations,
+    private chainPaymentContoller: PaymentsService
   ) {
     super(router, route)
   }
@@ -70,6 +72,7 @@ export class CustomerOrderDetailsComponent extends CustomerOrderViewComponent {
     }),
     map(val => {
       if (val && val.status === "OK") {
+        if (val.data && val.data.items) this.initPayments(val.data.items);
         return val.data
       }
       return null
@@ -293,6 +296,22 @@ export class CustomerOrderDetailsComponent extends CustomerOrderViewComponent {
     // this.initializeProduct()
   }
 
+  payments = [];
+  countPayments = [];
+  async initPayments(obj: any) {
+    for (let item of obj) {
+      let res = await this.chainPaymentContoller.listPaymentsForStockOrder(item._id).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data) {
+        for (let item of res.data.items) {
+          this.payments.push(item);
+        }
+        this.countPayments.push(res.data.items.length);
+        this.countPayments.push(res.data.items.length);
+      }
+
+    }
+
+  }
 
   // async initializeProduct() {
   //   let resp = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise()
@@ -325,6 +344,16 @@ export class CustomerOrderDetailsComponent extends CustomerOrderViewComponent {
 
   ngOnDestroy() {
     this.unsubscribeList.cleanup()
+  }
+
+  womensCoffeeList = {
+    'YES': $localize`:@@productLabelStockPurchaseOrdersModal.womensCoffeeList.yes:Yes`,
+    'NO': $localize`:@@productLabelStockPurchaseOrdersModal.womensCoffeeList.no:No`
+  }
+
+  getWomenOnlyLabel(required) {
+    if (required) return this.womensCoffeeList['YES'];
+    return this.womensCoffeeList['NO'];
   }
 
 }

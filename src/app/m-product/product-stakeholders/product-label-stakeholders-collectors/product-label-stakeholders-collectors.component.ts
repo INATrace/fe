@@ -172,8 +172,13 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
   }
 
   getAPI(params) {
-    if (this.organizationId == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
-    else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: this.organizationId, role: this.role })
+    let org = this.organizationId;
+    if (this.role === 'FARMER') { //TODO link together appropriate assoc and producer, check also B2C page
+      if (this.organizationId === '8b7afab6-c9ce-4739-b4b7-2cff8e473304') org = 'ade24b49-8548-45b6-ab12-65ce801803db';
+      if (this.organizationId === '21777c51-8263-4e5c-8b3b-2f03a953dd2a') org = '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4';
+    }
+    if (org == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
+    else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: org, role: this.role })
 
   }
 

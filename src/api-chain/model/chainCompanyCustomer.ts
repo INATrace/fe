@@ -30,6 +30,8 @@ export interface ChainCompanyCustomer {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     /**
      * Timestamp of creation
      */
@@ -112,6 +114,8 @@ export namespace ChainCompanyCustomer {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         /**
          * Timestamp of creation
          */
@@ -218,6 +222,28 @@ export namespace ChainCompanyCustomer {
                     name: '_rev',
                     classname: 'ChainCompanyCustomer',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainCompanyCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainCompanyCustomer',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -430,6 +456,10 @@ export namespace ChainCompanyCustomer {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 created: [
                 ],
                 lastChange: [
@@ -483,6 +513,12 @@ export namespace ChainCompanyCustomer {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               created: {

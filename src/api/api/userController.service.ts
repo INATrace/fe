@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -30,7 +30,6 @@ import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
 import { ApiAdminUserUpdate } from '../model/apiAdminUserUpdate';
-import { ApiBaseEntity } from '../model/apiBaseEntity';
 import { ApiCreateUserRequest } from '../model/apiCreateUserRequest';
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiEmail } from '../model/apiEmail';
@@ -40,6 +39,7 @@ import { ApiResetPasswordRequest } from '../model/apiResetPasswordRequest';
 import { ApiResponseApiUser } from '../model/apiResponseApiUser';
 import { ApiResponseApiUserGet } from '../model/apiResponseApiUserGet';
 import { ApiToken } from '../model/apiToken';
+import { ApiUserRole } from '../model/apiUserRole';
 import { ApiUserUpdate } from '../model/apiUserUpdate';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -56,11 +56,11 @@ export namespace ActivateUserUsingPOST {
       /**
        * action
        */
-      action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN';
+      action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE';
       /**
        * request
        */
-      ApiBaseEntity: ApiBaseEntity;
+      ApiUserRole: ApiUserRole;
     }
 
     /**
@@ -74,7 +74,7 @@ export namespace ActivateUserUsingPOST {
       /**
        * request
        */
-      ApiBaseEntity = 'ApiBaseEntity'
+      ApiUserRole = 'ApiUserRole'
     }
 
     /**
@@ -123,7 +123,7 @@ export namespace AdminListUsersUsingGET {
       /**
        * User role
        */
-      role?: 'USER' | 'ADMIN';
+      role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT';
       /**
        * Email
        */
@@ -402,7 +402,7 @@ export namespace ListUsersUsingGET {
       /**
        * User role
        */
-      role?: 'USER' | 'ADMIN';
+      role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT';
       /**
        * Email
        */
@@ -729,7 +729,7 @@ export class UserControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.activateUserUsingPOST(
       map.action,
-      map.ApiBaseEntity,
+      map.ApiUserRole,
       observe,
       reportProgress
     );
@@ -740,19 +740,19 @@ export class UserControllerService {
      * Execute user (status, role) action. Must be an administrator
      * 
      * @param action action
-     * @param ApiBaseEntity request
+     * @param ApiUserRole request
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN', ApiBaseEntity: ApiBaseEntity, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN', ApiBaseEntity: ApiBaseEntity, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN', ApiBaseEntity: ApiBaseEntity, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN', ApiBaseEntity: ApiBaseEntity, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (action === null || action === undefined) {
             throw new Error('Required parameter action was null or undefined when calling activateUserUsingPOST.');
         }
-        if (ApiBaseEntity === null || ApiBaseEntity === undefined) {
-            throw new Error('Required parameter ApiBaseEntity was null or undefined when calling activateUserUsingPOST.');
+        if (ApiUserRole === null || ApiUserRole === undefined) {
+            throw new Error('Required parameter ApiUserRole was null or undefined when calling activateUserUsingPOST.');
         }
 
         let headers = this.defaultHeaders;
@@ -782,7 +782,7 @@ export class UserControllerService {
             }
 
         const handle = this.httpClient.post<ApiDefaultResponse>(`${this.configuration.basePath}/api/user/admin/execute/${encodeURIComponent(String(action))}`,
-            ApiBaseEntity,
+            ApiUserRole,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -853,10 +853,10 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -1406,10 +1406,10 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'ADMIN' | 'MANAGER' | 'ACCOUNTANT', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {

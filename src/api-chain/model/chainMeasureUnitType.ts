@@ -28,6 +28,8 @@ export interface ChainMeasureUnitType {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     id: string;
     label: string;
     weight?: number;
@@ -46,6 +48,8 @@ export namespace ChainMeasureUnitType {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         id = 'id',
         label = 'label',
         weight = 'weight',
@@ -88,6 +92,28 @@ export namespace ChainMeasureUnitType {
                     name: '_rev',
                     classname: 'ChainMeasureUnitType',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainMeasureUnitType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainMeasureUnitType',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -156,6 +182,10 @@ export namespace ChainMeasureUnitType {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 id: [
                         ['required'],
                 ],
@@ -182,6 +212,12 @@ export namespace ChainMeasureUnitType {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               id: {

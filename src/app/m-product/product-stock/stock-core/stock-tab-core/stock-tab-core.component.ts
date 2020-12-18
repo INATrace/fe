@@ -14,6 +14,8 @@ import { ChainFacility } from 'src/api-chain/model/chainFacility';
 import { ChainPayment } from 'src/api-chain/model/chainPayment';
 import { ChainProduct } from 'src/api-chain/model/chainProduct';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
+import { CompanyControllerService } from 'src/api/api/companyController.service';
+import { UserControllerService } from 'src/api/api/userController.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { ActiveCollectingFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-collecting-facilities-for-organization-codebook.service';
 import { ActiveFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-facilities-for-organization-codebook.service';
@@ -160,7 +162,9 @@ export class StockTabCore implements OnInit {
     protected modalService: NgbModalImproved,
     protected codebookTranslations: CodebookTranslations,
     protected chainPaymentsContoller: PaymentsService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService,
+    protected userController: UserControllerService
   ) { }
 
   // TABS ////////////////
@@ -298,6 +302,7 @@ export class StockTabCore implements OnInit {
 
   ngOnInit(): void {
 
+    this.isAuthorisedCompanyRole();
     this.unsubsribeList.add(
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -777,7 +782,7 @@ export class StockTabCore implements OnInit {
         }
       }
     }
-   }
+  }
 
   sortOptions = [];
   async isBuyer() {
@@ -857,5 +862,32 @@ export class StockTabCore implements OnInit {
   get isAdmin() {
     return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN'
   }
+
+  isAuthRoleToSeeConfiguration: boolean = true;
+  isAuthRoleToSeeProcessing: boolean = true;
+  isAuthRoleToSeeMyStock: boolean = true;
+  public async isAuthorisedCompanyRole() {
+    let orgId = localStorage.getItem("selectedUserCompany");
+    let currrentUser = await this.userController.getProfileForUserUsingGET().pipe(take(1)).toPromise();
+    if (currrentUser && currrentUser.status === 'OK' && currrentUser.data) {
+      let res = await this.chainOrganizationService.getOrganization(orgId).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data) {
+        let resC = await this.companyController.getCompanyUsingGET(res.data.id).pipe(take(1)).toPromise();
+        if (resC && resC.status === 'OK' && resC.data) {
+          for (let user of resC.data.users) {
+            if (user.email === currrentUser.data.email) {
+              if (user.companyRole === "USER") this.isAuthRoleToSeeConfiguration = false;
+              if (user.companyRole === "ACCOUNTANT") {
+                this.isAuthRoleToSeeProcessing = false;
+                this.isAuthRoleToSeeMyStock = false;
+              }
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
 
 }

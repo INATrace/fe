@@ -13,6 +13,9 @@ import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { dbKey } from 'src/shared/utils';
 import { LanguageCodeHelper } from '../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
+import { EnumSifrant } from '../shared-services/enum-sifrant';
+import { ApiUserRole } from 'src/api/model/apiUserRole';
+import { ApiUserBaseRoleEnum } from 'src/api-chain/model/apiUserBaseRoleEnum';
 
 @Component({
   selector: 'app-user-detail',
@@ -144,7 +147,8 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       name: new FormControl(user.name, [Validators.required]),
       surname: new FormControl(user.surname, [Validators.required]),
       email: new FormControl(user.email),
-      language: new FormControl(user.language)
+      language: new FormControl(user.language),
+      role: new FormControl(user.role, [Validators.required])
     })
   }
 
@@ -162,7 +166,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       try {
         this.globalEventsManager.showLoading(true);
         let res = await this.userController.updateProfileUsingPUT({ "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
-        if (res && res.status == 'OK') {
+        if (res && res.status === 'OK') {
           this.mapToChain();
           this.userProfileForm.markAsPristine()
           if (goBack) this.goBack();
@@ -181,6 +185,9 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
       try {
         this.globalEventsManager.showLoading(true);
+        let resRole = await this.userController.activateUserUsingPOST('SET_USER_ROLE', { id: this.userId, role: this.userProfileForm.get('role').value as ApiUserRole.RoleEnum  } as ApiUserRole).pipe(take(1)).toPromise();
+        if (resRole && resRole.status === 'OK') {
+        }
         let res = await this.userController.adminUpdateProfileUsingPUT({ "id": this.userId, "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
         if (res && res.status == 'OK') {
           this.mapToChain();
@@ -261,7 +268,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   }
 
 
-  selectLanguage(lang:string) {
+  selectLanguage(lang: string) {
     this.userProfileForm.get('language').setValue(lang as ApiUser.LanguageEnum);
     if (this.mode === 'userProfileView') {
       this.saveUserProfile(false).then(() => this.getUserProfile()).then(() => LanguageCodeHelper.setCurrentLocale(lang.toLowerCase()));;
@@ -269,6 +276,17 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       this.saveAsAdmin(false).then(() => this.getUserProfileAsAdmin());
     }
   }
+
+
+  get role() {
+    let obj = {}
+    obj['USER'] = $localize`:@@userDetail.role.user:User`;
+    obj['MANAGER'] = $localize`:@@userDetail.role.manager:Manager`;
+    obj['ACCOUNTANT'] = $localize`:@@userDetail.role.accountant:Accountant`;
+    obj['ADMIN'] = $localize`:@@userDetail.role.admin:Admin`;
+    return obj;
+  }
+  roleCodebook = EnumSifrant.fromObject(this.role)
 
 }
 

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,8 +21,8 @@
 import { ApiAddress } from './apiAddress';
 import { ApiCertification } from './apiCertification';
 import { ApiCompanyDocument } from './apiCompanyDocument';
+import { ApiCompanyUser } from './apiCompanyUser';
 import { ApiDocument } from './apiDocument';
-import { ApiUserBase } from './apiUserBase';
 
 
 
@@ -80,7 +80,7 @@ export interface ApiCompanyGet {
     /**
      * Company users
      */
-    users?: Array<ApiUserBase>;
+    users?: Array<ApiCompanyUser>;
     /**
      * webpage
      */
@@ -164,6 +164,7 @@ export namespace ApiCompanyGet {
         ACTIVATECOMPANY = 'ACTIVATE_COMPANY',
         DEACTIVATECOMPANY = 'DEACTIVATE_COMPANY',
         ADDUSERTOCOMPANY = 'ADD_USER_TO_COMPANY',
+        SETUSERCOMPANYROLE = 'SET_USER_COMPANY_ROLE',
         REMOVEUSERFROMCOMPANY = 'REMOVE_USER_FROM_COMPANY',
         MERGETOCOMPANY = 'MERGE_TO_COMPANY'
     }
@@ -334,16 +335,16 @@ export namespace ApiCompanyGet {
                     complexType: ''
                 },
                 {
-                    metadata: ApiUserBase.formMetadata,
+                    metadata: ApiCompanyUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'users',
                     classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;ApiUserBase&gt;',
+                    dataType: 'Array&lt;ApiCompanyUser&gt;',
                     isPrimitiveType: false,
                     isListContainer: true,
-                    complexType: 'ApiUserBase'
+                    complexType: 'ApiCompanyUser'
                 },
                 {
                     isReadOnly: false,

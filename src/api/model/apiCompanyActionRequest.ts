@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -26,6 +26,10 @@ export interface ApiCompanyActionRequest {
      * Company id
      */
     companyId?: number;
+    /**
+     * Company user role
+     */
+    companyUserRole?: ApiCompanyActionRequest.CompanyUserRoleEnum;
     /**
      * Other company id
      */
@@ -49,6 +53,10 @@ export namespace ApiCompanyActionRequest {
          */
         companyId = 'companyId',
         /**
+         * Company user role
+         */
+        companyUserRole = 'companyUserRole',
+        /**
          * Other company id
          */
         otherCompanyId = 'otherCompanyId',
@@ -56,6 +64,16 @@ export namespace ApiCompanyActionRequest {
          * User id
          */
         userId = 'userId'
+    }
+
+    /**
+     * All possible values of companyUserRole.
+     */
+    export enum CompanyUserRoleEnum {
+        USER = 'USER',
+        ADMIN = 'ADMIN',
+        MANAGER = 'MANAGER',
+        ACCOUNTANT = 'ACCOUNTANT'
     }
 
 
@@ -71,6 +89,18 @@ export namespace ApiCompanyActionRequest {
                     name: 'companyId',
                     classname: 'ApiCompanyActionRequest',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyActionRequest.CompanyUserRoleEnum',
+                    required: false,
+                    name: 'companyUserRole',
+                    classname: 'ApiCompanyActionRequest',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -101,6 +131,8 @@ export namespace ApiCompanyActionRequest {
             validators: {
                 companyId: [
                 ],
+                companyUserRole: [
+                ],
                 otherCompanyId: [
                 ],
                 userId: [
@@ -113,6 +145,9 @@ export namespace ApiCompanyActionRequest {
   //     validators: [],
   //     fields: {
   //               companyId: {
+  //                   validators: []
+  //               },
+  //               companyUserRole: {
   //                   validators: []
   //               },
   //               otherCompanyId: {

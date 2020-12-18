@@ -32,6 +32,7 @@ import { FormatWayOfPaymentPipe } from './pipes/format-way-of-payment.pipe';
 import { TranslateCodebookPipe } from './pipes/translate-codebook';
 import { FormatCompanyCertsPipe } from './pipes/format-company-certs.pipe';
 import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-qr-code-modal.component';
+import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-type';
 
 
 
@@ -56,7 +57,8 @@ import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-
     FormatWayOfPaymentPipe,
     TranslateCodebookPipe,
     FormatCompanyCertsPipe,
-    GenerateQRCodeModalComponent
+    GenerateQRCodeModalComponent,
+    FormatPaymentPurposeTypePipe
   ],
   imports: [
     CommonModule,
@@ -100,7 +102,11 @@ import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-
     TranslateCodebookPipe,
     FormatCompanyCertsPipe,
     GenerateQRCodeModalComponent,
-    DocumentCardComponent
+    DocumentCardComponent,
+    FormatPaymentPurposeTypePipe
+  ],
+  providers: [
+    FormatPaymentPurposeTypePipe
   ]
 })
 export class ComponentsModule { }

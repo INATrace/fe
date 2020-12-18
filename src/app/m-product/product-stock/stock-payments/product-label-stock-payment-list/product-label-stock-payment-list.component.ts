@@ -90,10 +90,10 @@ export class ProductLabelStockPaymentListComponent implements OnInit {
       if (val) this.confirmPayments();
     });
     this.assocSubscription = this.clickAssocPing$.subscribe(val => {
-      if (val) {this.isAssociation = val; this.reloadPage()}
+      if (val != null) {this.isAssociation = val; this.reloadPage()}
     });
     this.coopSubscription = this.clickCoopPing$.subscribe(val => {
-      if (val) {this.isCooperative = val; this.reloadPage()}
+      if (val != null) {this.isCooperative = val; this.reloadPage()}
     });
   }
 

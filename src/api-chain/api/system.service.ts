@@ -37,26 +37,55 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createDatabases.
+ * Namespace for checkConnection.
  */
-export namespace CreateDatabases {
+export namespace CheckConnection {
     /**
-     * Parameter map for createDatabases.
+     * Parameter map for checkConnection.
+     */
+    export interface PartialParamMap {
+      date: string;
+    }
+
+    /**
+     * Enumeration of all parameters for checkConnection.
+     */
+    export enum Parameters {
+      date = 'date'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of checkConnection
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CheckConnection.PartialParamMap]?: [string, ValidatorFn][]} = {
+      date: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for copyDB.
+ */
+export namespace CopyDB {
+    /**
+     * Parameter map for copyDB.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for createDatabases.
+     * Enumeration of all parameters for copyDB.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createDatabases
+     * A map of tuples with error name and `ValidatorFn` for each parameter of copyDB
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateDatabases.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CopyDB.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
@@ -81,35 +110,6 @@ export namespace CreateIndices {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof CreateIndices.PartialParamMap]?: [string, ValidatorFn][]} = {
-    };
-}
-
-/**
- * Namespace for deleteDatabases.
- */
-export namespace DeleteDatabases {
-    /**
-     * Parameter map for deleteDatabases.
-     */
-    export interface PartialParamMap {
-      password: string;
-    }
-
-    /**
-     * Enumeration of all parameters for deleteDatabases.
-     */
-    export enum Parameters {
-      password = 'password'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteDatabases
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof DeleteDatabases.PartialParamMap]?: [string, ValidatorFn][]} = {
-      password: [
-              ['required', Validators.required],
-      ],
     };
 }
 
@@ -217,30 +217,6 @@ export namespace PostOrganization {
 }
 
 /**
- * Namespace for prefillDB.
- */
-export namespace PrefillDB {
-    /**
-     * Parameter map for prefillDB.
-     */
-    export interface PartialParamMap {
-    }
-
-    /**
-     * Enumeration of all parameters for prefillDB.
-     */
-    export enum Parameters {
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of prefillDB
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof PrefillDB.PartialParamMap]?: [string, ValidatorFn][]} = {
-    };
-}
-
-/**
  * Namespace for test.
  */
 export namespace Test {
@@ -332,23 +308,24 @@ export class SystemService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createDatabasesByMap(
-    map: CreateDatabases.PartialParamMap,
+  public checkConnectionByMap(
+    map: CheckConnection.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseAny>;
-  public createDatabasesByMap(
-    map: CreateDatabases.PartialParamMap,
+  public checkConnectionByMap(
+    map: CheckConnection.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
-  public createDatabasesByMap(
-    map: CreateDatabases.PartialParamMap,
+  public checkConnectionByMap(
+    map: CheckConnection.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
-  public createDatabasesByMap(
-    map: CreateDatabases.PartialParamMap,
+  public checkConnectionByMap(
+    map: CheckConnection.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createDatabases(
+    return this.checkConnection(
+      map.date,
       observe,
       reportProgress
     );
@@ -358,13 +335,17 @@ export class SystemService {
     /**
      * 
      * 
+     * @param date 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createDatabases(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
-    public createDatabases(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
-    public createDatabases(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
-    public createDatabases(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public checkConnection(date: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
+    public checkConnection(date: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
+    public checkConnection(date: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
+    public checkConnection(date: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (date === null || date === undefined) {
+            throw new Error('Required parameter date was null or undefined when calling checkConnection.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -387,7 +368,7 @@ export class SystemService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiResponseAny>(`${this.configuration.basePath}/chain-api/system/create-databases`,
+        const handle = this.httpClient.get<ApiResponseAny>(`${this.configuration.basePath}/chain-api/system/check-connection/${encodeURIComponent(String(date))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -396,7 +377,84 @@ export class SystemService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'CreateDatabases')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'CheckConnection')));
+        }
+        return handle;
+    }
+
+
+  /**
+   *  by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public copyDBByMap(
+    map: CopyDB.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseAny>;
+  public copyDBByMap(
+    map: CopyDB.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
+  public copyDBByMap(
+    map: CopyDB.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
+  public copyDBByMap(
+    map: CopyDB.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.copyDB(
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * 
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public copyDB(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
+    public copyDB(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
+    public copyDB(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
+    public copyDB(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseAny>(`${this.configuration.basePath}/chain-api/system/copy-db`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'CopyDB')));
         }
         return handle;
     }
@@ -474,88 +532,6 @@ export class SystemService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'CreateIndices')));
-        }
-        return handle;
-    }
-
-
-  /**
-   *  by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public deleteDatabasesByMap(
-    map: DeleteDatabases.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseAny>;
-  public deleteDatabasesByMap(
-    map: DeleteDatabases.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
-  public deleteDatabasesByMap(
-    map: DeleteDatabases.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
-  public deleteDatabasesByMap(
-    map: DeleteDatabases.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.deleteDatabases(
-      map.password,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * 
-     * @param password 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteDatabases(password: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
-    public deleteDatabases(password: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
-    public deleteDatabases(password: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
-    public deleteDatabases(password: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (password === null || password === undefined) {
-            throw new Error('Required parameter password was null or undefined when calling deleteDatabases.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseAny>(`${this.configuration.basePath}/chain-api/system/delete-databases/${encodeURIComponent(String(password))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'DeleteDatabases')));
         }
         return handle;
     }
@@ -880,83 +856,6 @@ export class SystemService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'PostOrganization')));
-        }
-        return handle;
-    }
-
-
-  /**
-   *  by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public prefillDBByMap(
-    map: PrefillDB.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseAny>;
-  public prefillDBByMap(
-    map: PrefillDB.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
-  public prefillDBByMap(
-    map: PrefillDB.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
-  public prefillDBByMap(
-    map: PrefillDB.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.prefillDB(
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public prefillDB(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
-    public prefillDB(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
-    public prefillDB(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
-    public prefillDB(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseAny>(`${this.configuration.basePath}/chain-api/system/prefilldb`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'PrefillDB')));
         }
         return handle;
     }

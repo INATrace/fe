@@ -35,13 +35,15 @@ import { ChainUserCustomer } from './chainUserCustomer';
 
 
 /**
- * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label FE.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
+ * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label in FE.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
  */
 
 export interface ChainStockOrder { 
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     /**
      * Timestamp of creation
      */
@@ -314,6 +316,8 @@ export namespace ChainStockOrder {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         /**
          * Timestamp of creation
          */
@@ -610,6 +614,28 @@ export namespace ChainStockOrder {
                     name: '_rev',
                     classname: 'ChainStockOrder',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainStockOrder',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1679,6 +1705,10 @@ export namespace ChainStockOrder {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 created: [
                 ],
                 lastChange: [
@@ -1887,6 +1917,12 @@ export namespace ChainStockOrder {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               created: {

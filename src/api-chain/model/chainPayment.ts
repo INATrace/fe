@@ -19,6 +19,7 @@
 
 
 import { ChainBulkPayment } from './chainBulkPayment';
+import { ChainCompanyCustomer } from './chainCompanyCustomer';
 import { ChainFileInfo } from './chainFileInfo';
 import { ChainOrganization } from './chainOrganization';
 import { ChainUserCustomer } from './chainUserCustomer';
@@ -32,6 +33,8 @@ export interface ChainPayment {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     /**
      * Timestamp of creation
      */
@@ -75,7 +78,7 @@ export interface ChainPayment {
     /**
      * Order for which payment was done (when payment purpose is second_installment aka member bonus).
      */
-    orderId: string;
+    orderId?: string;
     /**
      * Reference to (input) transactions for which payment was actually done.
      */
@@ -144,7 +147,7 @@ export interface ChainPayment {
     payingOrganization?: ChainOrganization;
     recipientOrganization?: ChainOrganization;
     recipientUserCustomer?: ChainUserCustomer;
-    recipientCompanyCustomer?: ChainUserCustomer;
+    recipientCompanyCustomer?: ChainCompanyCustomer;
     bankTransfer?: ChainBulkPayment;
     representativeOfRecipientOrganization?: ChainOrganization;
     representativeOfRecipientUserCustomer?: ChainUserCustomer;
@@ -175,6 +178,8 @@ export namespace ChainPayment {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         /**
          * Timestamp of creation
          */
@@ -350,6 +355,28 @@ export namespace ChainPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'dbKey',
+                    classname: 'ChainPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainPayment',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'created',
                     classname: 'ChainPayment',
                     dataType: 'string',
@@ -459,7 +486,7 @@ export namespace ChainPayment {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: true,
+                    required: false,
                     name: 'orderId',
                     classname: 'ChainPayment',
                     dataType: 'string',
@@ -692,16 +719,16 @@ export namespace ChainPayment {
                     complexType: 'ChainUserCustomer'
                 },
                 {
-                    metadata: ChainUserCustomer.formMetadata,
+                    metadata: ChainCompanyCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'recipientCompanyCustomer',
                     classname: 'ChainPayment',
-                    dataType: 'ChainUserCustomer',
+                    dataType: 'ChainCompanyCustomer',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ChainUserCustomer'
+                    complexType: 'ChainCompanyCustomer'
                 },
                 {
                     metadata: ChainBulkPayment.formMetadata,
@@ -802,6 +829,10 @@ export namespace ChainPayment {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 created: [
                 ],
                 lastChange: [
@@ -828,7 +859,6 @@ export namespace ChainPayment {
                         ['required'],
                 ],
                 orderId: [
-                        ['required'],
                 ],
                 transactionIds: [
                 ],
@@ -904,6 +934,12 @@ export namespace ChainPayment {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               created: {

@@ -28,6 +28,8 @@ export interface ChainFacilityType {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     id: string;
     label: string;
 }
@@ -43,6 +45,8 @@ export namespace ChainFacilityType {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         id = 'id',
         label = 'label'
     }
@@ -89,6 +93,28 @@ export namespace ChainFacilityType {
                 {
                     isReadOnly: false,
                     isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainFacilityType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainFacilityType',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
                     required: true,
                     name: 'id',
                     classname: 'ChainFacilityType',
@@ -116,6 +142,10 @@ export namespace ChainFacilityType {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 id: [
                         ['required'],
                 ],
@@ -136,6 +166,12 @@ export namespace ChainFacilityType {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               id: {

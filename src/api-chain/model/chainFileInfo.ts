@@ -28,6 +28,8 @@ export interface ChainFileInfo {
     docType?: string;
     _id?: string;
     _rev?: string;
+    dbKey?: string;
+    mode__?: any;
     /**
      * Storage key used for access to the actual file.
      */
@@ -57,6 +59,8 @@ export namespace ChainFileInfo {
         docType = 'docType',
         _id = '_id',
         _rev = '_rev',
+        dbKey = 'dbKey',
+        mode__ = 'mode__',
         /**
          * Storage key used for access to the actual file.
          */
@@ -117,6 +121,28 @@ export namespace ChainFileInfo {
                 {
                     isReadOnly: false,
                     isEnum: false,
+                    required: false,
+                    name: 'dbKey',
+                    classname: 'ChainFileInfo',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'mode__',
+                    classname: 'ChainFileInfo',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
                     required: true,
                     name: 'storageKey',
                     classname: 'ChainFileInfo',
@@ -166,6 +192,10 @@ export namespace ChainFileInfo {
                 ],
                 _rev: [
                 ],
+                dbKey: [
+                ],
+                mode__: [
+                ],
                 storageKey: [
                         ['required'],
                 ],
@@ -192,6 +222,12 @@ export namespace ChainFileInfo {
   //                   validators: []
   //               },
   //               _rev: {
+  //                   validators: []
+  //               },
+  //               dbKey: {
+  //                   validators: []
+  //               },
+  //               mode__: {
   //                   validators: []
   //               },
   //               storageKey: {

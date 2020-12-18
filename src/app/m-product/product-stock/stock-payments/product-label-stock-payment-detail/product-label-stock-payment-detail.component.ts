@@ -249,7 +249,6 @@ export class ProductLabelStockPaymentDetailComponent implements OnInit {
       let res = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
       if (res && res.status === "OK" && res.data) data.userCreatedId = dbKey(res.data);
     }
-
     try {
       // this.globalEventsManager.showLoading(true);
       let res = await this.chainPaymentsService.postPayment(data).pipe(take(1)).toPromise()

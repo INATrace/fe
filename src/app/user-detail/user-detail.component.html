@@ -61,6 +61,22 @@
               [readOnly]=true>
             </textinput>
 
+            <!-- <single-choice
+              label="Role"
+              i18n-label="@@userDetail.label.role"
+              [formControlInput]="userProfileForm.get('role')"
+              [codebookService]="roleCodebook"
+              [isInvalidChoice]="submitted && userProfileForm.get('role').invalid"
+              [readonly]="this.mode === 'userProfileView'">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="userProfileForm.get('role').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@userDetail.textinput.name.error">
+                    Role is required
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice> -->
+
             <div class="d-flex flex-column">
               <button class="btn btn-outlined" (click)="showPassReqSentModal()" style="margin-bottom: 0.25rem; width: 220px;">
                 <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem; font-weight: 300;" i18n="@@userDetail.button.reset">Reset password</span>
@@ -73,63 +89,61 @@
               </button>
             </div>
 
+          </div>
 
 
         </div>
 
+        <div class="af-form-block--c6">
+          <h2 i18n="@@userDetail.section.userLanguage">User language</h2>
+          <div class="af-form-element">
 
-      </div>
+            <div class="af-row">
+              <div class="af-c6">
 
-      <div class="af-form-block--c6">
-        <h2 i18n="@@userDetail.section.userLanguage">User language</h2>
-        <div class="af-form-element">
+                <div>
+                  <label i18n="@@userDetail.textinput.userSelectedLanguage.label">Selected</label>
+                  <div class="d-flex af-user-language">
 
-          <div class="af-row">
-            <div class="af-c6">
+                    <!-- <img> -->
+                    <div class="af-user-language--selected">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="assets/icons/icon-flag--united-kingdom.svg">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="assets/icons/icon-flag--germany.svg">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="assets/icons/icon-flag--rwanda.svg">
+                      <span>{{this.userProfileForm.get('language').value}}</span>
+                    </div>
+                  </div>
+                </div>
 
-              <div>
-                <label i18n="@@userDetail.textinput.userSelectedLanguage.label">Selected</label>
-                <div class="d-flex af-user-language">
+              </div>
+              <div class="af-c6">
 
-                  <!-- <img> -->
-                  <div class="af-user-language--selected">
-                    <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="assets/icons/icon-flag--united-kingdom.svg">
-                    <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="assets/icons/icon-flag--germany.svg">
-                    <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="assets/icons/icon-flag--rwanda.svg">
-                    <span>{{this.userProfileForm.get('language').value}}</span>
+                <div>
+                  <label i18n="@@userDetail.textinput.userAvailableLanguage.label">Available</label>
+                  <div class="d-flex af-user-language">
+
+                    <div (click)="selectLanguage('EN')" *ngIf="this.userProfileForm.get('language').value != 'EN'">
+                      <img src="assets/icons/icon-flag--united-kingdom.svg">
+                      <span>EN</span>
+                    </div>
+                    <div (click)="selectLanguage('DE')" *ngIf="this.userProfileForm.get('language').value != 'DE'">
+                      <img src="assets/icons/icon-flag--germany.svg">
+                      <span>DE</span>
+                    </div>
+                    <div (click)="selectLanguage('RW')" *ngIf="this.userProfileForm.get('language').value != 'RW'">
+                      <img src="assets/icons/icon-flag--rwanda.svg">
+                      <span>RW</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
             </div>
-            <div class="af-c6">
-
-              <div>
-                <label i18n="@@userDetail.textinput.userAvailableLanguage.label">Available</label>
-                <div class="d-flex af-user-language">
-
-                  <div (click)="selectLanguage('EN')" *ngIf="this.userProfileForm.get('language').value != 'EN'">
-                    <img src="assets/icons/icon-flag--united-kingdom.svg">
-                    <span>EN</span>
-                  </div>
-                  <div (click)="selectLanguage('DE')" *ngIf="this.userProfileForm.get('language').value != 'DE'">
-                    <img src="assets/icons/icon-flag--germany.svg">
-                    <span>DE</span>
-                  </div>
-                  <div (click)="selectLanguage('RW')" *ngIf="this.userProfileForm.get('language').value != 'RW'">
-                    <img src="assets/icons/icon-flag--rwanda.svg">
-                    <span>RW</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
-    </div>
-    <div class="af-form-row">
-      <div class="af-form-block--c6">
+      <div class="af-form-row">
+        <div class="af-form-block--c6">
 
           <h2 i18n="@@userDetail.myCompanies.label">My companies</h2>
           <div class="af-form-element">

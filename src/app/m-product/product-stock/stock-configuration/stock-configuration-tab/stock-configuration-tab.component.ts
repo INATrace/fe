@@ -6,6 +6,8 @@ import { PaymentsService } from 'src/api-chain/api/payments.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
+import { CompanyControllerService } from 'src/api/api/companyController.service';
+import { UserControllerService } from 'src/api/api/userController.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { AuthService } from 'src/app/system/auth.service';
@@ -37,9 +39,11 @@ export class StockConfigurationTabComponent extends StockTabCore {
     protected modalService: NgbModalImproved,
     protected codebookTranslations: CodebookTranslations,
     protected chainPaymentsContoller: PaymentsService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService,
+    protected userController: UserControllerService
   ) {
-    super(route, chainProductService, chainSemiProductService, router, chainOrganizationService, chainOrganizationCodebook, globalEventManager, chainFacilityService, chainStockOrderService, modalService, codebookTranslations, chainPaymentsContoller, authService)
+    super(route, chainProductService, chainSemiProductService, router, chainOrganizationService, chainOrganizationCodebook, globalEventManager, chainFacilityService, chainStockOrderService, modalService, codebookTranslations, chainPaymentsContoller, authService, companyController, userController)
   }
 
   newFacility() {

@@ -138,6 +138,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -192,6 +221,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -232,6 +290,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "storageKey": {
             "type": "string",
@@ -475,6 +562,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "name": {
             "type": "string",
             "description": "Document name (label)"
@@ -611,6 +727,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -710,6 +855,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -1066,6 +1240,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -1203,6 +1406,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -1293,6 +1525,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -1343,6 +1604,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -1540,6 +1830,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -1685,6 +2004,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -1713,6 +2061,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -2299,6 +2676,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -2488,6 +2894,55 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
+          "created": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of creation"
+          },
+          "lastChange": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of last change"
+          },
+          "userCreatedId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of user that created the document."
+          },
+          "userChangedId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of user that changed the document."
+          },
           "id": {
             "type": "string",
             "description": "capitalized underscored string that defines the document requirement"
@@ -2573,6 +3028,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -2777,6 +3261,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -2915,6 +3428,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -3035,6 +3577,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -4044,6 +4615,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "id": {
             "type": "string"
           },
@@ -4607,6 +5207,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -4665,6 +5294,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -4822,6 +5480,35 @@
           "_rev": {
             "type": "string",
             "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
           },
           "created": {
             "type": "string",
@@ -5070,7 +5757,7 @@
             "description": "Recipient user customer. Not stored. On write _id is used."
           },
           "recipientCompanyCustomer": {
-            "$ref": "#/components/schemas/ChainUserCustomer",
+            "$ref": "#/components/schemas/ChainCompanyCustomer",
             "description": "Recipient user customer. Not stored. On write _id is used."
           },
           "bankTransfer": {
@@ -5115,7 +5802,6 @@
           "currency",
           "amount",
           "stockOrderId",
-          "orderId",
           "payingOrganizationId",
           "recipientType"
         ],
@@ -5860,6 +6546,35 @@
             "type": "string",
             "nullable": true
           },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "insert"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "insert_as_is"
+                ],
+                "nullable": false
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "update"
+                ],
+                "nullable": false
+              }
+            ]
+          },
           "created": {
             "type": "string",
             "nullable": true,
@@ -6144,7 +6859,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6215,7 +6934,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6286,7 +7009,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6317,7 +7044,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6349,7 +7080,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6381,7 +7116,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6414,7 +7153,11 @@
         "tags": [
           "Order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6447,7 +7190,11 @@
         "tags": [
           "Processing order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -6498,7 +7245,11 @@
         "tags": [
           "Processing order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given facility",
@@ -6567,7 +7318,11 @@
         "tags": [
           "Processing order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the product",
@@ -6600,7 +7355,11 @@
         "tags": [
           "Processing order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6633,7 +7392,11 @@
         "tags": [
           "Processing order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6666,7 +7429,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -6717,7 +7484,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6749,7 +7520,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6782,7 +7557,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6815,7 +7594,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -6866,7 +7649,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -6898,7 +7685,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6931,7 +7722,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -6964,7 +7759,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -7015,7 +7814,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -7047,7 +7850,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7080,7 +7887,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7113,7 +7924,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -7164,7 +7979,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -7196,7 +8015,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7229,7 +8052,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7262,7 +8089,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -7313,7 +8144,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -7345,7 +8180,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7378,7 +8217,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7411,7 +8254,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -7462,7 +8309,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -7494,7 +8345,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7527,7 +8382,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7559,7 +8418,11 @@
         "tags": [
           "Codebook"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": []
       }
     },
@@ -7582,7 +8445,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -7633,7 +8500,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the product",
@@ -7666,7 +8537,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "description": "list of external ids",
@@ -7704,7 +8579,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "external database product id",
@@ -7738,7 +8617,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7771,7 +8654,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -7831,7 +8718,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -7899,7 +8790,11 @@
         "tags": [
           "Company Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -7932,7 +8827,11 @@
         "tags": [
           "Document"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": []
       }
     },
@@ -7955,7 +8854,11 @@
         "tags": [
           "Document"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "identifier of a file on server",
@@ -7988,7 +8891,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -8039,7 +8946,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the document requirement",
@@ -8072,7 +8983,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8105,7 +9020,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8138,7 +9057,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -8189,7 +9112,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the document requirement list",
@@ -8222,7 +9149,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8255,7 +9186,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -8311,7 +9246,11 @@
         "tags": [
           "Document requirements"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8344,7 +9283,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -8395,7 +9338,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -8427,7 +9374,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8460,7 +9411,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -8528,7 +9483,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -8597,7 +9556,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -8666,7 +9629,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -8726,7 +9693,11 @@
         "tags": [
           "Facility"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8758,7 +9729,11 @@
         "tags": [
           "Migrations"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": []
       }
     },
@@ -8780,7 +9755,11 @@
         "tags": [
           "Migrations"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": []
       }
     },
@@ -8803,7 +9782,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -8854,7 +9837,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the organization",
@@ -8887,7 +9874,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "external database company id",
@@ -8921,7 +9912,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "description": "list of external ids",
@@ -8959,7 +9954,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -8992,7 +9991,11 @@
         "tags": [
           "Organization"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9025,7 +10028,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the bulk payment",
@@ -9058,7 +10065,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9091,7 +10102,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9150,7 +10165,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9183,7 +10202,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the payment",
@@ -9216,7 +10239,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9249,7 +10276,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9354,7 +10385,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -9414,7 +10449,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9473,7 +10512,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9532,7 +10575,11 @@
         "tags": [
           "Payments"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9565,7 +10612,11 @@
         "tags": [
           "Processing action"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the product",
@@ -9598,7 +10649,11 @@
         "tags": [
           "Processing action"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9631,7 +10686,11 @@
         "tags": [
           "Processing action"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9703,7 +10762,11 @@
         "tags": [
           "Processing action"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9736,7 +10799,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -9787,7 +10854,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -9843,7 +10914,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the product",
@@ -9876,7 +10951,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "external database product id",
@@ -9910,7 +10989,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "description": "list of external ids",
@@ -9948,7 +11031,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -9981,7 +11068,11 @@
         "tags": [
           "Product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10014,7 +11105,11 @@
         "tags": [
           "Semi product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -10065,7 +11160,11 @@
         "tags": [
           "Semi product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database _id of the product",
@@ -10098,7 +11197,11 @@
         "tags": [
           "Semi product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10131,7 +11234,11 @@
         "tags": [
           "Semi product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -10213,7 +11320,11 @@
         "tags": [
           "Semi product"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10246,7 +11357,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given facility",
@@ -10388,7 +11503,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "organizationId",
@@ -10511,7 +11630,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -10597,7 +11720,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "show purhcase orders with open balance",
@@ -10666,7 +11793,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "userCustomerId",
@@ -10734,7 +11865,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -10773,7 +11908,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -10806,7 +11945,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given facility",
@@ -10866,7 +12009,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given facility",
@@ -10959,7 +12106,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -10991,7 +12142,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11023,7 +12178,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11056,7 +12215,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11089,7 +12252,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11125,7 +12292,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "stock order dbID",
@@ -11158,7 +12329,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "stock order dbID",
@@ -11215,7 +12390,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "stock order dbID",
@@ -11271,7 +12450,11 @@
         "tags": [
           "Stock order"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11354,59 +12537,6 @@
         ]
       }
     },
-    "/chain-api/system/create-databases": {
-      "get": {
-        "operationId": "CreateDatabases",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            },
-            "description": "Ok"
-          }
-        },
-        "tags": [
-          "System"
-        ],
-        "security": [],
-        "parameters": []
-      }
-    },
-    "/chain-api/system/delete-databases/{password}": {
-      "get": {
-        "operationId": "DeleteDatabases",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            },
-            "description": "Ok"
-          }
-        },
-        "tags": [
-          "System"
-        ],
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
     "/chain-api/system/create-indices": {
       "get": {
         "operationId": "CreateIndices",
@@ -11425,29 +12555,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
-        "parameters": []
-      }
-    },
-    "/chain-api/system/prefilldb": {
-      "get": {
-        "operationId": "PrefillDB",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            },
-            "description": "Ok"
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
           }
-        },
-        "tags": [
-          "System"
         ],
-        "security": [],
         "parameters": []
       }
     },
@@ -11469,7 +12583,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": []
       }
     },
@@ -11491,7 +12611,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": []
       }
     },
@@ -11513,8 +12639,51 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": []
+      }
+    },
+    "/chain-api/system/check-connection/{date}": {
+      "get": {
+        "operationId": "CheckConnection",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            },
+            "description": "Ok"
+          }
+        },
+        "tags": [
+          "System"
+        ],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/chain-api/system/test": {
@@ -11535,7 +12704,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": []
       }
     },
@@ -11557,7 +12732,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11589,7 +12770,13 @@
         "tags": [
           "System"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11600,6 +12787,34 @@
             }
           }
         ]
+      }
+    },
+    "/chain-api/system/copy-db": {
+      "get": {
+        "operationId": "CopyDB",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            },
+            "description": "Ok"
+          }
+        },
+        "tags": [
+          "System"
+        ],
+        "security": [
+          {
+            "jwt": [
+              "ADMIN"
+            ]
+          }
+        ],
+        "parameters": []
       }
     },
     "/chain-api/data/transaction/query": {
@@ -11621,7 +12836,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "query",
@@ -11721,7 +12940,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11753,7 +12976,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11786,7 +13013,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11819,7 +13050,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -11855,7 +13090,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11911,7 +13150,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -11967,7 +13210,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -12027,7 +13274,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12060,7 +13311,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12096,7 +13351,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -12136,7 +13395,11 @@
         "tags": [
           "Transaction"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -12168,7 +13431,11 @@
         "tags": [
           "User"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -12219,7 +13486,11 @@
         "tags": [
           "User"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the product",
@@ -12252,7 +13523,11 @@
         "tags": [
           "User"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "description": "list of external ids",
@@ -12290,7 +13565,11 @@
         "tags": [
           "User"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "external database product id",
@@ -12324,7 +13603,11 @@
         "tags": [
           "User"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12357,7 +13640,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "sort order ASC or DESC",
@@ -12408,7 +13695,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "database id of the product",
@@ -12441,7 +13732,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "description": "list of external ids",
@@ -12479,7 +13774,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "external database product id",
@@ -12513,7 +13812,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -12546,7 +13849,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -12615,7 +13922,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "desire role (FARMER or COLLECTOR)",
@@ -12684,7 +13995,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "description": "_id of a given organization",
@@ -12768,7 +14083,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -12836,7 +14155,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -12908,7 +14231,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -12980,7 +14307,11 @@
         "tags": [
           "User Customer"
         ],
-        "security": [],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
         "parameters": [],
         "requestBody": {
           "required": true,

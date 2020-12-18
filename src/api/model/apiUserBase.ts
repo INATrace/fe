@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -104,7 +104,9 @@ export namespace ApiUserBase {
      */
     export enum RoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN'
+        ADMIN = 'ADMIN',
+        MANAGER = 'MANAGER',
+        ACCOUNTANT = 'ACCOUNTANT'
     }
 
     /**
