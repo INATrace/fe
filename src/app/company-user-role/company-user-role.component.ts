@@ -78,8 +78,17 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
   async firstSendToServer() {
     if (this.form && this.form.value && this.form.value.id && this.form.value.companyRole) {
       let id = this.route.snapshot.params.id;
-      let res = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE', { companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole }).pipe(take(1)).toPromise();
-      if (res.status == 'OK') this.save();
+      if(this.contentObject && !this.contentObject.name) {
+          //add new user to company first
+          let res = await this.companyController.executeActionUsingPOST('ADD_USER_TO_COMPANY',  {companyId: id, userId: this.form.value.id}).pipe(take(1)).toPromise();
+          if (res.status == 'OK') {
+            let res = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE', { companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole }).pipe(take(1)).toPromise();
+            if (res.status == 'OK') this.save();
+          }
+        } else {
+          let res = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE', { companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole }).pipe(take(1)).toPromise();
+          if (res.status == 'OK') this.save();
+        }
     }
   }
 
