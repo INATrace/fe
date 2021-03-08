@@ -25,6 +25,7 @@ import { ChainDocumentRequirementList } from './chainDocumentRequirementList';
 import { ChainFacility } from './chainFacility';
 import { ChainGradeAbbreviation } from './chainGradeAbbreviation';
 import { ChainLocation } from './chainLocation';
+import { ChainMeasureUnitType } from './chainMeasureUnitType';
 import { ChainOrganization } from './chainOrganization';
 import { ChainProcessingAction } from './chainProcessingAction';
 import { ChainProcessingOrder } from './chainProcessingOrder';
@@ -35,7 +36,7 @@ import { ChainUserCustomer } from './chainUserCustomer';
 
 
 /**
- * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label in FE.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
+ * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label in INATrace.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
  */
 
 export interface ChainStockOrder { 
@@ -43,7 +44,7 @@ export interface ChainStockOrder {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainStockOrder.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -101,7 +102,7 @@ export interface ChainStockOrder {
     /**
      * Quantity unit tipe. Calculated automatically from semiProduct at insertion.
      */
-    measurementUnitType?: any;
+    measurementUnitType?: ChainMeasureUnitType;
     /**
      * Total ordered quantity
      */
@@ -117,7 +118,7 @@ export interface ChainStockOrder {
     /**
      * '1' if availableQuantity > 0. Set automatically.
      */
-    isAvailable?: any;
+    isAvailable?: ChainStockOrder.IsAvailableEnum;
     /**
      * Production date
      */
@@ -166,7 +167,7 @@ export interface ChainStockOrder {
     /**
      * Order type. - PURCHASE_ORDER - created during purchase of coffee from farmers. No input transactions, allows output transactions. - PROCESSING_ORDER - created as a result of a processing transaction. No input transactions, allows output transactions. - SALES_ORDER - created on behalf of final customer. Filled by input transactions. No output transactions allowed. - GENERAL - general (transport) order in the middle of the value chain. Allows input and output transactions. - TRANSFER ORDER - generated through transfer processing actions
      */
-    orderType?: any;
+    orderType?: ChainStockOrder.OrderTypeEnum;
     /**
      * Grade abbreviaton id
      */
@@ -243,7 +244,7 @@ export interface ChainStockOrder {
      */
     processingOrderId?: string;
     processingOrder?: ChainProcessingOrder;
-    preferredWayOfPayment?: any;
+    preferredWayOfPayment?: ChainStockOrder.PreferredWayOfPaymentEnum;
     consumerCompanyCustomer?: ChainCompanyCustomer;
     client?: ChainOrganization;
     /**
@@ -257,7 +258,7 @@ export interface ChainStockOrder {
     /**
      * Calculated property, depending on whether total quantity differs from fullfiled quantity.
      */
-    isOpenOrder?: any;
+    isOpenOrder?: ChainStockOrder.IsOpenOrderEnum;
     /**
      * Quote facility - the facility to which a quote is made
      */
@@ -579,6 +580,52 @@ export namespace ChainStockOrder {
         organization = 'organization'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of isAvailable.
+     */
+    export enum IsAvailableEnum {
+        _0 = '0',
+        _1 = '1'
+    }
+
+    /**
+     * All possible values of orderType.
+     */
+    export enum OrderTypeEnum {
+        PURCHASEORDER = 'PURCHASE_ORDER',
+        PROCESSINGORDER = 'PROCESSING_ORDER',
+        SALESORDER = 'SALES_ORDER',
+        GENERALORDER = 'GENERAL_ORDER',
+        TRANSFERORDER = 'TRANSFER_ORDER'
+    }
+
+    /**
+     * All possible values of preferredWayOfPayment.
+     */
+    export enum PreferredWayOfPaymentEnum {
+        CASHVIACOOPERATIVE = 'CASH_VIA_COOPERATIVE',
+        CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
+        BANKTRANSFER = 'BANK_TRANSFER',
+        UNKNOWN = 'UNKNOWN'
+    }
+
+    /**
+     * All possible values of isOpenOrder.
+     */
+    export enum IsOpenOrderEnum {
+        _0 = '0',
+        _1 = '1'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -631,11 +678,12 @@ export namespace ChainStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainStockOrder.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -808,15 +856,16 @@ export namespace ChainStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ChainMeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'measurementUnitType',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
-                    isPrimitiveType: true,
+                    dataType: 'ChainMeasureUnitType',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ChainMeasureUnitType'
                 },
                 {
                     isReadOnly: false,
@@ -853,11 +902,12 @@ export namespace ChainStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainStockOrder.IsAvailableEnum',
                     required: false,
                     name: 'isAvailable',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -997,11 +1047,12 @@ export namespace ChainStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainStockOrder.OrderTypeEnum',
                     required: false,
                     name: 'orderType',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1293,11 +1344,12 @@ export namespace ChainStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainStockOrder.PreferredWayOfPaymentEnum',
                     required: false,
                     name: 'preferredWayOfPayment',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1350,11 +1402,12 @@ export namespace ChainStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainStockOrder.IsOpenOrderEnum',
                     required: false,
                     name: 'isOpenOrder',
                     classname: 'ChainStockOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

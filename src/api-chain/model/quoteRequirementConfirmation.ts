@@ -28,7 +28,7 @@ export interface QuoteRequirementConfirmation {
     fairness?: boolean;
     provenance?: boolean;
     quality?: boolean;
-    targetValue?: { [key: string]: any; };
+    targetValue?: any;
     aggregates: Array<WeightedAggregateAny>;
 }
 
@@ -116,7 +116,7 @@ export namespace QuoteRequirementConfirmation {
                     required: false,
                     name: 'targetValue',
                     classname: 'QuoteRequirementConfirmation',
-                    dataType: '{ [key: string]: any; }',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

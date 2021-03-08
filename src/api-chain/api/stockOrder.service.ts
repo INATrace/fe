@@ -360,7 +360,7 @@ export namespace ListAvailableStockForFacility {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -432,7 +432,7 @@ export namespace ListAvailableStockForSemiProductInFacility {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -514,7 +514,7 @@ export namespace ListPurchaseOrderForUserCustomer {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -578,8 +578,8 @@ export namespace ListQuoteOrders {
       facilityOrOrganizationId: string;
       openOnly: boolean;
       semiProductId?: string;
-      mode?: any;
-      sort?: any;
+      mode?: 'facility' | 'organization';
+      sort?: 'ASC' | 'DESC';
       sortBy?: string;
       limit?: number;
       offset?: number;
@@ -658,11 +658,11 @@ export namespace ListStockForFacility {
       /**
        * CASH_VIA_COOPERATIVE or CASH_VIA_COLLECTOR or BANK_TRANSFER or UNKNOWN
        */
-      wayOfPayment?: any;
+      wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN';
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       sortBy?: string;
       /**
        * query limit
@@ -773,8 +773,8 @@ export namespace ListStockInFacilityForCustomers {
       facilityOrOrganizationId: string;
       companyCustomerId?: string;
       openOnly?: boolean;
-      mode?: any;
-      sort?: any;
+      mode?: 'facility' | 'organization';
+      sort?: 'ASC' | 'DESC';
       sortBy?: string;
       limit?: number;
       offset?: number;
@@ -838,7 +838,7 @@ export namespace ListStockOrders {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -913,12 +913,12 @@ export namespace ListStockOrdersForOrganization {
        * show only purchase orders
        */
       purchaseOrderOnly?: boolean;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       farmerId?: string;
       /**
        * CASH_VIA_COOPERATIVE or CASH_VIA_COLLECTOR or BANK_TRANSFER or UNKNOWN
        */
-      wayOfPayment?: any;
+      wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN';
       womensCoffee?: boolean;
       limit?: number;
       offset?: number;
@@ -1906,10 +1906,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listAvailableStockForFacility(facilityId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listAvailableStockForFacility(facilityId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listAvailableStockForFacility(facilityId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listAvailableStockForFacility(facilityId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listAvailableStockForFacility(facilityId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listAvailableStockForFacility(facilityId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listAvailableStockForFacility(facilityId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listAvailableStockForFacility(facilityId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling listAvailableStockForFacility.');
         }
@@ -2014,10 +2014,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listAvailableStockForSemiProductInFacility(facilityId: string, semiProductId: string, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling listAvailableStockForSemiProductInFacility.');
         }
@@ -2128,10 +2128,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listPurchaseOrderForUserCustomer(farmerId: string, showOpenBalanceOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (farmerId === null || farmerId === undefined) {
             throw new Error('Required parameter farmerId was null or undefined when calling listPurchaseOrderForUserCustomer.');
         }
@@ -2243,10 +2243,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listQuoteOrders(facilityOrOrganizationId: string, openOnly: boolean, semiProductId?: string, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityOrOrganizationId === null || facilityOrOrganizationId === undefined) {
             throw new Error('Required parameter facilityOrOrganizationId was null or undefined when calling listQuoteOrders.');
         }
@@ -2384,10 +2384,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockForFacility(facilityId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, womensCoffee?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling listStockForFacility.');
         }
@@ -2522,10 +2522,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: any, sort?: any, sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockInFacilityForCustomers(facilityOrOrganizationId: string, companyCustomerId?: string, openOnly?: boolean, mode?: 'facility' | 'organization', sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityOrOrganizationId === null || facilityOrOrganizationId === undefined) {
             throw new Error('Required parameter facilityOrOrganizationId was null or undefined when calling listStockInFacilityForCustomers.');
         }
@@ -2636,10 +2636,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrders(showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (showPurchaseOrderOpenBalanceOnly !== undefined && showPurchaseOrderOpenBalanceOnly !== null) {
@@ -2755,10 +2755,10 @@ export class StockOrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, farmerId?: string, wayOfPayment?: any, womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, farmerId?: string, wayOfPayment?: any, womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, farmerId?: string, wayOfPayment?: any, womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: any, farmerId?: string, wayOfPayment?: any, womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', farmerId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', farmerId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', farmerId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrdersForOrganization(organizationId: string, showPurchaseOrderOpenBalanceOnly?: boolean, purchaseOrderOnly?: boolean, sort?: 'ASC' | 'DESC', farmerId?: string, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', womensCoffee?: boolean, limit?: number, offset?: number, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (organizationId === null || organizationId === undefined) {
             throw new Error('Required parameter organizationId was null or undefined when calling listStockOrdersForOrganization.');
         }

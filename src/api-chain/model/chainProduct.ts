@@ -25,6 +25,7 @@ import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiResponsibility } from './apiResponsibility';
 import { ApiSustainability } from './apiSustainability';
 import { ChainCompanyProductRole } from './chainCompanyProductRole';
+import { ChainOrganization } from './chainOrganization';
 
 
 /**
@@ -36,7 +37,7 @@ export interface ChainProduct {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainProduct.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -72,7 +73,7 @@ export interface ChainProduct {
     /**
      * Chain organization matching companyId, set automatically.
      */
-    organization?: any;
+    organization?: ChainOrganization;
     /**
      * product description
      */
@@ -192,6 +193,15 @@ export namespace ChainProduct {
         sustainability = 'sustainability'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -244,11 +254,12 @@ export namespace ChainProduct {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProduct.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainProduct',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -343,15 +354,16 @@ export namespace ChainProduct {
                     complexType: ''
                 },
                 {
+                    metadata: ChainOrganization.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'organization',
                     classname: 'ChainProduct',
-                    dataType: 'any',
-                    isPrimitiveType: true,
+                    dataType: 'ChainOrganization',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ChainOrganization'
                 },
                 {
                     isReadOnly: false,

@@ -29,7 +29,7 @@ export interface ChainMeasureUnitType {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainMeasureUnitType.ModeEnum;
     id: string;
     label: string;
     weight?: number;
@@ -55,6 +55,15 @@ export namespace ChainMeasureUnitType {
         weight = 'weight',
         underlyingMeasurementUnitTypeId = 'underlyingMeasurementUnitTypeId',
         underlyingMeasurementUnitType = 'underlyingMeasurementUnitType'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
     }
 
 
@@ -109,11 +118,12 @@ export namespace ChainMeasureUnitType {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainMeasureUnitType.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainMeasureUnitType',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

@@ -43,7 +43,7 @@ export class ActiveUserCustomersByOrganizationAndRoleService extends GeneralSifr
       queryBy: 'ALL',
       ...this.requestParams
     }
-    let tmp = this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap(reqPars).pipe(
+    let tmp = this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap(reqPars as any).pipe(
       map((res: ApiResponsePaginatedListChainUserCustomer) => {
         return {
           results: res.data.items,

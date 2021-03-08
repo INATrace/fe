@@ -29,7 +29,7 @@ export interface ChainActionType {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainActionType.ModeEnum;
     id: string;
     label: string;
     facilityId?: string;
@@ -53,6 +53,15 @@ export namespace ChainActionType {
         label = 'label',
         facilityId = 'facilityId',
         facilityType = 'facilityType'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
     }
 
 
@@ -107,11 +116,12 @@ export namespace ChainActionType {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainActionType.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainActionType',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

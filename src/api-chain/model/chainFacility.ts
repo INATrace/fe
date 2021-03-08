@@ -20,6 +20,7 @@
 
 import { ChainFacilityType } from './chainFacilityType';
 import { ChainLocation } from './chainLocation';
+import { ChainOrganization } from './chainOrganization';
 import { ChainSemiProduct } from './chainSemiProduct';
 import { ChainSemiProductPrice } from './chainSemiProductPrice';
 
@@ -33,7 +34,7 @@ export interface ChainFacility {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainFacility.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -71,7 +72,7 @@ export interface ChainFacility {
     /**
      * Organization object. Set automatically on read. Ignored on write (not stored, obtained through organizationId)
      */
-    organization?: any;
+    organization?: ChainOrganization;
     /**
      * Allowable semi products
      */
@@ -151,6 +152,15 @@ export namespace ChainFacility {
         semiProductPrices = 'semiProductPrices'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -203,11 +213,12 @@ export namespace ChainFacility {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainFacility.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainFacility',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -325,15 +336,16 @@ export namespace ChainFacility {
                     complexType: 'ChainLocation'
                 },
                 {
+                    metadata: ChainOrganization.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'organization',
                     classname: 'ChainFacility',
-                    dataType: 'any',
-                    isPrimitiveType: true,
+                    dataType: 'ChainOrganization',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ChainOrganization'
                 },
                 {
                     metadata: ChainSemiProduct.formMetadata,

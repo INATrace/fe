@@ -30,7 +30,7 @@ export interface ChainActivityProof {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainActivityProof.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -58,7 +58,7 @@ export interface ChainActivityProof {
     /**
      * Type of the proof.
      */
-    type: { [key: string]: any; };
+    type: any;
     document?: ChainFileInfo;
 }
 
@@ -104,6 +104,15 @@ export namespace ChainActivityProof {
          */
         type = 'type',
         document = 'document'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
     }
 
 
@@ -158,11 +167,12 @@ export namespace ChainActivityProof {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainActivityProof.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainActivityProof',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -239,7 +249,7 @@ export namespace ChainActivityProof {
                     required: true,
                     name: 'type',
                     classname: 'ChainActivityProof',
-                    dataType: '{ [key: string]: any; }',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

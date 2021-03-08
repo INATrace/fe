@@ -35,7 +35,7 @@ export interface ChainTransaction {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainTransaction.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -88,7 +88,7 @@ export interface ChainTransaction {
     /**
      * Transaction status.
      */
-    status: any;
+    status: ChainTransaction.StatusEnum;
     /**
      * Shippment code
      */
@@ -229,6 +229,24 @@ export namespace ChainTransaction {
         sourceStockOrder = 'sourceStockOrder'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        PENDING = 'PENDING',
+        CANCELED = 'CANCELED',
+        EXECUTED = 'EXECUTED'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -281,11 +299,12 @@ export namespace ChainTransaction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainTransaction.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainTransaction',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -436,11 +455,12 @@ export namespace ChainTransaction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainTransaction.StatusEnum',
                     required: true,
                     name: 'status',
                     classname: 'ChainTransaction',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

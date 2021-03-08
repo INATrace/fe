@@ -18,8 +18,6 @@
  */
 
 
-import { ApiUserBaseRoleEnum } from './apiUserBaseRoleEnum';
-import { ApiUserBaseStatusEnum } from './apiUserBaseStatusEnum';
 import { ChainLocation } from './chainLocation';
 
 
@@ -32,7 +30,7 @@ export interface ChainUser {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainUser.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -66,8 +64,14 @@ export interface ChainUser {
      * Name
      */
     name?: string;
-    role?: ApiUserBaseRoleEnum;
-    status?: ApiUserBaseStatusEnum;
+    /**
+     * All possible values of role.
+     */
+    role?: ChainUser.RoleEnum;
+    /**
+     * All possible values of status.
+     */
+    status?: ChainUser.StatusEnum;
     /**
      * Surname
      */
@@ -120,12 +124,45 @@ export namespace ChainUser {
          * Name
          */
         name = 'name',
+        /**
+         * All possible values of role.
+         */
         role = 'role',
+        /**
+         * All possible values of status.
+         */
         status = 'status',
         /**
          * Surname
          */
         surname = 'surname'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of role.
+     */
+    export enum RoleEnum {
+        USER = 'USER',
+        ADMIN = 'ADMIN'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNCONFIRMED = 'UNCONFIRMED',
+        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
+        ACTIVE = 'ACTIVE',
+        DEACTIVATED = 'DEACTIVATED'
     }
 
 
@@ -180,11 +217,12 @@ export namespace ChainUser {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainUser.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainUser',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -290,28 +328,28 @@ export namespace ChainUser {
                     complexType: ''
                 },
                 {
-                    metadata: ApiUserBaseRoleEnum.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainUser.RoleEnum',
                     required: false,
                     name: 'role',
                     classname: 'ChainUser',
-                    dataType: 'ApiUserBaseRoleEnum',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiUserBaseRoleEnum'
+                    complexType: ''
                 },
                 {
-                    metadata: ApiUserBaseStatusEnum.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainUser.StatusEnum',
                     required: false,
                     name: 'status',
                     classname: 'ChainUser',
-                    dataType: 'ApiUserBaseStatusEnum',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiUserBaseStatusEnum'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,

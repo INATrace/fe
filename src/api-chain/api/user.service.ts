@@ -118,7 +118,7 @@ export namespace ListUsers {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -465,10 +465,10 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUsers(sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUser>;
-    public listUsers(sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUser>>;
-    public listUsers(sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUser>>;
-    public listUsers(sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUsers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUser>;
+    public listUsers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUser>>;
+    public listUsers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUser>>;
+    public listUsers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (sort !== undefined && sort !== null) {

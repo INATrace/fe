@@ -25,7 +25,7 @@ import { ChainProcessingAction } from './chainProcessingAction';
 
 export interface WeightedAggregateAny { 
     fieldID: string;
-    value: { [key: string]: any; };
+    value: any;
     quantity: number;
     measurementUnit: ChainMeasureUnitType;
     stockOrderId?: string;
@@ -85,7 +85,7 @@ export namespace WeightedAggregateAny {
                     required: true,
                     name: 'value',
                     classname: 'WeightedAggregateAny',
-                    dataType: '{ [key: string]: any; }',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

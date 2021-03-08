@@ -75,7 +75,7 @@ export namespace ValidatePublicEmailUsingGET {
 })
 export class TestControllerService {
 
-    protected basePath = '';
+    protected basePath = 'https://INATrace-test.matheo.si';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

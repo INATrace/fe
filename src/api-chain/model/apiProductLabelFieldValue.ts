@@ -33,7 +33,7 @@ export interface ApiProductLabelFieldValue {
     /**
      * Field value in Product
      */
-    value?: { [key: string]: any; };
+    value?: any;
 }
 
 /**
@@ -92,7 +92,7 @@ export namespace ApiProductLabelFieldValue {
                     required: false,
                     name: 'value',
                     classname: 'ApiProductLabelFieldValue',
-                    dataType: '{ [key: string]: any; }',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

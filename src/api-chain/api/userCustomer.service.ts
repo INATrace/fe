@@ -145,7 +145,7 @@ export namespace ListPaymentsorUserCustomer {
      */
     export interface PartialParamMap {
       userCustomerId: string;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
       startDate?: string;
@@ -194,7 +194,7 @@ export namespace ListStockOrdersForUserCustomer {
      */
     export interface PartialParamMap {
       userCustomerId: string;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
       startDate?: string;
@@ -245,7 +245,7 @@ export namespace ListUserCustomers {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -307,7 +307,7 @@ export namespace ListUserCustomersByRole {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -382,7 +382,7 @@ export namespace ListUserCustomersForOrganization {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -458,11 +458,11 @@ export namespace ListUserCustomersForOrganizationAndRole {
        * query by name
        */
       query?: string;
-      queryBy?: any;
+      queryBy?: 'BY_NAME' | 'BY_SURNAME' | 'BY_USER_CUSTOMER_ID' | 'ALL';
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -544,7 +544,7 @@ export namespace ListUserCustomersForProductAndOrganization {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -996,10 +996,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsorUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
-    public listPaymentsorUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsorUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsorUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsorUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
+    public listPaymentsorUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsorUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsorUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (userCustomerId === null || userCustomerId === undefined) {
             throw new Error('Required parameter userCustomerId was null or undefined when calling listPaymentsorUserCustomer.');
         }
@@ -1106,10 +1106,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
-    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
-    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: any, limit?: number, offset?: number, startDate?: string, endDate?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainStockOrder>;
+    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainStockOrder>>;
+    public listStockOrdersForUserCustomer(userCustomerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, startDate?: string, endDate?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (userCustomerId === null || userCustomerId === undefined) {
             throw new Error('Required parameter userCustomerId was null or undefined when calling listStockOrdersForUserCustomer.');
         }
@@ -1210,10 +1210,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUserCustomers(sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
-    public listUserCustomers(sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomers(sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomers(sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUserCustomers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
+    public listUserCustomers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomers(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (sort !== undefined && sort !== null) {
@@ -1309,10 +1309,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUserCustomersByRole(role: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
-    public listUserCustomersByRole(role: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersByRole(role: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersByRole(role: string, query?: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUserCustomersByRole(role: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
+    public listUserCustomersByRole(role: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersByRole(role: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersByRole(role: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (role === null || role === undefined) {
             throw new Error('Required parameter role was null or undefined when calling listUserCustomersByRole.');
         }
@@ -1414,10 +1414,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
-    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
+    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForOrganization(organizationId: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (organizationId === null || organizationId === undefined) {
             throw new Error('Required parameter organizationId was null or undefined when calling listUserCustomersForOrganization.');
         }
@@ -1523,10 +1523,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: any, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
-    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: any, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: any, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: any, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: 'BY_NAME' | 'BY_SURNAME' | 'BY_USER_CUSTOMER_ID' | 'ALL', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
+    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: 'BY_NAME' | 'BY_SURNAME' | 'BY_USER_CUSTOMER_ID' | 'ALL', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: 'BY_NAME' | 'BY_SURNAME' | 'BY_USER_CUSTOMER_ID' | 'ALL', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForOrganizationAndRole(organizationId: string, role: string, query?: string, queryBy?: 'BY_NAME' | 'BY_SURNAME' | 'BY_USER_CUSTOMER_ID' | 'ALL', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (organizationId === null || organizationId === undefined) {
             throw new Error('Required parameter organizationId was null or undefined when calling listUserCustomersForOrganizationAndRole.');
         }
@@ -1634,10 +1634,10 @@ export class UserCustomerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
-    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
-    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainUserCustomer>;
+    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainUserCustomer>>;
+    public listUserCustomersForProductAndOrganization(productId: string, organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling listUserCustomersForProductAndOrganization.');
         }

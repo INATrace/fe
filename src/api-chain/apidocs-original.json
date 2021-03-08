@@ -143,28 +143,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -226,28 +209,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "id": {
@@ -296,28 +262,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "storageKey": {
@@ -355,84 +304,19 @@
             "description": "Label of an entry field"
           },
           "type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "string"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "text"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "number"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "integer"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "date"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "object"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "array"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "price"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "exchange_rate"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "timestamp"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "file"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "string",
+              "text",
+              "number",
+              "integer",
+              "date",
+              "object",
+              "array",
+              "price",
+              "exchange_rate",
+              "timestamp",
+              "file"
             ],
             "description": "Field type (data taype)"
           },
@@ -458,7 +342,6 @@
             "description": "Numeric value if the type is 'number'"
           },
           "objectValue": {
-            "additionalProperties": true,
             "description": "Object value for type 'object'"
           },
           "fileMultiplicity": {
@@ -471,8 +354,7 @@
                 "type": "string",
                 "enum": [
                   "any"
-                ],
-                "nullable": false
+                ]
               }
             ],
             "description": "Number of files if the type is 'file'. For unlimited number use 'any'."
@@ -495,42 +377,13 @@
       "ScoreImpact": {
         "properties": {
           "type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "PROVENANCE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "FAIRNESS"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "QUALITY"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "ORDER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "PAYMENT"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "PROVENANCE",
+              "FAIRNESS",
+              "QUALITY",
+              "ORDER",
+              "PAYMENT"
             ],
             "description": "Type of score"
           },
@@ -567,28 +420,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "name": {
@@ -732,28 +568,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "id": {
@@ -861,28 +680,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -933,18 +735,12 @@
             "description": "Type of entity (table in af-coffee app)"
           },
           "logo": {
-            "anyOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/ChainFileInfo"
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
               }
             ],
+            "nullable": true,
             "description": "Logo"
           },
           "manager": {
@@ -995,7 +791,6 @@
             "description": "Section on FE"
           },
           "value": {
-            "additionalProperties": true,
             "description": "Field value in Product"
           }
         },
@@ -1003,21 +798,10 @@
         "additionalProperties": false
       },
       "ApiProductLabelStatusEnum": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": [
-              "UNPUBLISHED"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "PUBLISHED"
-            ],
-            "nullable": false
-          }
+        "type": "string",
+        "enum": [
+          "UNPUBLISHED",
+          "PUBLISHED"
         ],
         "description": "All possible values of status."
       },
@@ -1245,28 +1029,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -1313,18 +1080,12 @@
             "description": "Chain organization id matching companyId, set automatically from companyId on read or write."
           },
           "organization": {
-            "anyOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/ChainOrganization"
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
               }
             ],
+            "nullable": true,
             "description": "Chain organization matching companyId, set automatically."
           },
           "description": {
@@ -1411,28 +1172,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -1487,18 +1231,12 @@
             "description": "Whether the product is considered as Stock keeping unit (for end customer)"
           },
           "product": {
-            "anyOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/ChainProduct"
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
               }
             ],
+            "nullable": true,
             "description": "Product object. Set automatically on read. Ignored on write (not stored, obtained through productId)"
           }
         },
@@ -1530,28 +1268,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "id": {
@@ -1610,28 +1331,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -1680,18 +1384,12 @@
             "description": "Facility location"
           },
           "organization": {
-            "anyOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/ChainOrganization"
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
               }
             ],
+            "nullable": true,
             "description": "Organization object. Set automatically on read. Ignored on write (not stored, obtained through organizationId)"
           },
           "semiProducts": {
@@ -1835,28 +1533,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -1911,28 +1592,11 @@
             "description": "Surname of the customer;"
           },
           "gender": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "MALE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "FEMALE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "OTHER"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
             ],
             "description": "Gender of the customer"
           },
@@ -2009,28 +1673,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "id": {
@@ -2048,7 +1695,7 @@
         "additionalProperties": false
       },
       "ChainStockOrder": {
-        "description": "Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct.\nProduct unit is located on one facility only. It is measured by some quantity units (unitType) and\nby the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate)\nA product unit may be represented by a label in FE.\n\nProduct unit can be created from nothing (e.g. picking the coffee).\nIn general product unit is created by some transactions (ChainTransaction). Product unit does not\nchange its facility. Instead a product unit is transformed by a list of transactions (Chain)\nto different product unit either in the same facility or in some other facility.",
+        "description": "Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct.\nProduct unit is located on one facility only. It is measured by some quantity units (unitType) and\nby the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate)\nA product unit may be represented by a label in INATrace.\n\nProduct unit can be created from nothing (e.g. picking the coffee).\nIn general product unit is created by some transactions (ChainTransaction). Product unit does not\nchange its facility. Instead a product unit is transformed by a list of transactions (Chain)\nto different product unit either in the same facility or in some other facility.",
         "properties": {
           "docType": {
             "type": "string",
@@ -2067,28 +1714,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -2165,18 +1795,12 @@
             "description": "Calculated from facility during insert."
           },
           "measurementUnitType": {
-            "anyOf": [
+            "allOf": [
               {
                 "$ref": "#/components/schemas/ChainMeasureUnitType"
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
               }
             ],
+            "nullable": true,
             "description": "Quantity unit tipe. Calculated automatically from semiProduct at insertion."
           },
           "totalQuantity": {
@@ -2195,29 +1819,12 @@
             "description": "Available quantity ( <= fulfilledQuantity)"
           },
           "isAvailable": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "0"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "1"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
-              }
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
             ],
+            "nullable": true,
             "description": "'1' if availableQuantity > 0. Set automatically."
           },
           "productionDate": {
@@ -2281,42 +1888,13 @@
             "description": "Is it a purchase order? Depricated, should use orderType: PURCHASE_ORDER"
           },
           "orderType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "PURCHASE_ORDER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "PROCESSING_ORDER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "SALES_ORDER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "GENERAL_ORDER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "TRANSFER_ORDER"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "PURCHASE_ORDER",
+              "PROCESSING_ORDER",
+              "SALES_ORDER",
+              "GENERAL_ORDER",
+              "TRANSFER_ORDER"
             ],
             "description": "Order type.\n- PURCHASE_ORDER - created during purchase of coffee from farmers. No input transactions, allows output transactions.\n- PROCESSING_ORDER - created as a result of a processing transaction. No input transactions, allows output transactions.\n- SALES_ORDER - created on behalf of final customer. Filled by input transactions. No output transactions allowed.\n- GENERAL - general (transport) order in the middle of the value chain. Allows input and output transactions.\n- TRANSFER ORDER - generated through transfer processing actions"
           },
@@ -2443,35 +2021,12 @@
             "description": "Processing order. Read only."
           },
           "preferredWayOfPayment": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "CASH_VIA_COOPERATIVE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "CASH_VIA_COLLECTOR"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "BANK_TRANSFER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "UNKNOWN"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "CASH_VIA_COOPERATIVE",
+              "CASH_VIA_COLLECTOR",
+              "BANK_TRANSFER",
+              "UNKNOWN"
             ]
           },
           "consumerCompanyCustomer": {
@@ -2495,29 +2050,12 @@
             "description": "Id of the quote order that triggered the this order"
           },
           "isOpenOrder": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "0"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "1"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
-              }
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
             ],
+            "nullable": true,
             "description": "Calculated property, depending on whether total quantity differs from fullfiled quantity."
           },
           "quoteFacilityId": {
@@ -2681,28 +2219,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -2762,28 +2283,11 @@
             "description": "Definition of transaction action viewed as a business action."
           },
           "status": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "PENDING"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "CANCELED"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "EXECUTED"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "CANCELED",
+              "EXECUTED"
             ],
             "description": "Transaction status."
           },
@@ -2899,28 +2403,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -2952,28 +2439,11 @@
             "description": "Default english label"
           },
           "type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "DOCUMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "FIELD"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "CALCULATED"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "DOCUMENT",
+              "FIELD",
+              "CALCULATED"
             ],
             "description": "Type of evidence type. DOCUMENT is prescribed (date, type, document). FIELD is any other. Some others can be added."
           },
@@ -3034,28 +2504,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -3150,28 +2603,11 @@
             "description": "Max weight of one of the multiple outputSemiProducts (required if repackedOutputs)"
           },
           "type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "PROCESSING"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "SHIPMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "TRANSFER"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "PROCESSING",
+              "SHIPMENT",
+              "TRANSFER"
             ],
             "description": "Type of processing transaction.\nPROCESSING: many-to-many semi products, consumed and produced quantities not connected\nSHIPMENT: same semiproduct. Acts as an order of the same quantity from target facility"
           },
@@ -3190,50 +2626,15 @@
             "description": "Public timeline location."
           },
           "publicTimelineIcon": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "SHIP"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "LEAF"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "WAREHOUSE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "QRCODE"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "OTHER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "number",
-                "enum": [
-                  null
-                ],
-                "nullable": true
-              }
+            "type": "string",
+            "enum": [
+              "SHIP",
+              "LEAF",
+              "WAREHOUSE",
+              "QRCODE",
+              "OTHER"
             ],
+            "nullable": true,
             "description": "Icon type in public timeline"
           }
         },
@@ -3266,28 +2667,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -3433,28 +2817,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -3493,21 +2860,10 @@
             "description": "Company Id as in af-coffee database"
           },
           "type": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "CUSTOMER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "OTHER"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "CUSTOMER",
+              "OTHER"
             ],
             "description": "Type of company customer;"
           },
@@ -3583,28 +2939,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -3720,77 +3059,18 @@
         "additionalProperties": false
       },
       "ApiDefaultResponseStatusEnum": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": [
-              "OK"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "ERROR"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "REQUEST_BODY_ERROR"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "VALIDATION_ERROR"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "TOO_MANY_REQUESTS"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "UNAUTHORIZED"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "AUTH_ERROR"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "UPSTREAM_HTTP_ERROR"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "INVALID_REQUEST"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "NOT_IMPLEMENTED"
-            ],
-            "nullable": false
-          }
+        "type": "string",
+        "enum": [
+          "OK",
+          "ERROR",
+          "REQUEST_BODY_ERROR",
+          "VALIDATION_ERROR",
+          "TOO_MANY_REQUESTS",
+          "UNAUTHORIZED",
+          "AUTH_ERROR",
+          "UPSTREAM_HTTP_ERROR",
+          "INVALID_REQUEST",
+          "NOT_IMPLEMENTED"
         ],
         "description": "All possible values of status."
       },
@@ -3842,9 +3122,7 @@
           "fieldID": {
             "type": "string"
           },
-          "value": {
-            "additionalProperties": true
-          },
+          "value": {},
           "quantity": {
             "type": "number",
             "format": "double"
@@ -3929,7 +3207,8 @@
               "$ref": "#/components/schemas/StockOrderAgg"
             },
             "type": "array"
-          }
+          },
+          "stockOrderIds": {}
         },
         "required": [
           "depth",
@@ -3989,9 +3268,7 @@
           "quality": {
             "type": "boolean"
           },
-          "targetValue": {
-            "additionalProperties": true
-          },
+          "targetValue": {},
           "aggregates": {
             "items": {
               "$ref": "#/components/schemas/WeightedAggregate_any_"
@@ -4083,9 +3360,7 @@
       },
       "ApiResponse_any_": {
         "properties": {
-          "data": {
-            "additionalProperties": true
-          },
+          "data": {},
           "errorDetails": {
             "type": "string",
             "description": "Optional details for unexpected error responses."
@@ -4620,28 +3895,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "id": {
@@ -5212,28 +4470,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -5265,7 +4506,6 @@
             "description": "Valid until"
           },
           "type": {
-            "additionalProperties": true,
             "description": "Type of the proof."
           },
           "document": {
@@ -5300,28 +4540,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -5361,42 +4584,13 @@
             "description": "Organization that is paying"
           },
           "paymentPurposeType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "ADVANCE_PAYMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "FIRST_INSTALLMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "SECOND_INSTALLMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "WOMEN_PREMIUM"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "INVOICE_PAYMENT"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "ADVANCE_PAYMENT",
+              "FIRST_INSTALLMENT",
+              "SECOND_INSTALLMENT",
+              "WOMEN_PREMIUM",
+              "INVOICE_PAYMENT"
             ],
             "description": "Payment purpose type."
           },
@@ -5486,28 +4680,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -5535,21 +4712,10 @@
             "description": "Formal creation time set while entering."
           },
           "paymentType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "CASH"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "BANK"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "CASH",
+              "BANK"
             ],
             "description": "Type of payment."
           },
@@ -5612,28 +4778,11 @@
             "description": "Recipient company  customer"
           },
           "recipientType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "ORGANIZATION"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "COMPANY_CUSTOMER"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "USER_CUSTOMER"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "ORGANIZATION",
+              "COMPANY_CUSTOMER",
+              "USER_CUSTOMER"
             ],
             "description": "Type of recipient."
           },
@@ -5647,21 +4796,10 @@
             "description": "Receipt document. Required for the cash transfer."
           },
           "receiptDocumentType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "PURCHASE_SHEET"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "RECEIPT"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "PURCHASE_SHEET",
+              "RECEIPT"
             ],
             "description": "Receipt document type."
           },
@@ -5671,61 +4809,21 @@
             "description": "Reference to the bulk payment."
           },
           "paymentPurposeType": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "ADVANCE_PAYMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "FIRST_INSTALLMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "SECOND_INSTALLMENT"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "WOMEN_PREMIUM"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "INVOICE_PAYMENT"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "ADVANCE_PAYMENT",
+              "FIRST_INSTALLMENT",
+              "SECOND_INSTALLMENT",
+              "WOMEN_PREMIUM",
+              "INVOICE_PAYMENT"
             ],
             "description": "Payment purpose type."
           },
           "paymentStatus": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "UNCONFIRMED"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "CONFIRMED"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "UNCONFIRMED",
+              "CONFIRMED"
             ],
             "description": "Payment status."
           },
@@ -6136,6 +5234,85 @@
         "type": "object",
         "additionalProperties": false
       },
+      "B2CHistoryItem": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "iconEnumType": {
+            "type": "string"
+          },
+          "iconClass": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "B2CHistoryTimeline": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/B2CHistoryItem"
+            },
+            "type": "array"
+          },
+          "shortItems": {
+            "items": {
+              "$ref": "#/components/schemas/B2CHistoryItem"
+            },
+            "type": "array"
+          },
+          "coopName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "items",
+          "shortItems"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiResponse_B2CHistoryTimeline_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/B2CHistoryTimeline"
+          },
+          "errorDetails": {
+            "type": "string",
+            "description": "Optional details for unexpected error responses."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Simple message to explain client developers the reason for error."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
+            "description": "Response status. OK for successful reponses."
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
       "PaginatedList_ChainSemiProduct_": {
         "properties": {
           "count": {
@@ -6480,54 +5657,20 @@
         "additionalProperties": false
       },
       "ApiUserBaseRoleEnum": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": [
-              "USER"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "ADMIN"
-            ],
-            "nullable": false
-          }
+        "type": "string",
+        "enum": [
+          "USER",
+          "ADMIN"
         ],
         "description": "All possible values of role."
       },
       "ApiUserBaseStatusEnum": {
-        "anyOf": [
-          {
-            "type": "string",
-            "enum": [
-              "UNCONFIRMED"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "CONFIRMED_EMAIL"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "ACTIVE"
-            ],
-            "nullable": false
-          },
-          {
-            "type": "string",
-            "enum": [
-              "DEACTIVATED"
-            ],
-            "nullable": false
-          }
+        "type": "string",
+        "enum": [
+          "UNCONFIRMED",
+          "CONFIRMED_EMAIL",
+          "ACTIVE",
+          "DEACTIVATED"
         ],
         "description": "All possible values of status."
       },
@@ -6551,28 +5694,11 @@
             "nullable": true
           },
           "mode__": {
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "insert"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "insert_as_is"
-                ],
-                "nullable": false
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "update"
-                ],
-                "nullable": false
-              }
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
             ]
           },
           "created": {
@@ -6837,7 +5963,8 @@
     "version": "1.0.0",
     "license": {
       "name": "ISC"
-    }
+    },
+    "contact": {}
   },
   "openapi": "3.0.0",
   "paths": {
@@ -6846,14 +5973,14 @@
         "operationId": "ListOpenOrdersForFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -6885,7 +6012,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -6921,14 +6054,14 @@
         "operationId": "ListOpenOrdersForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -6960,7 +6093,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -6996,14 +6135,14 @@
         "operationId": "GetAggregatesForOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ProcessingOrderHistory-Array_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -7031,14 +6170,14 @@
         "operationId": "GetQuoteRequirementsVerification",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_QuoteRequirementConfirmationsWithMetaData_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -7066,14 +6205,14 @@
         "operationId": "GetOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProductOrder_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches an order by its _id.",
@@ -7102,14 +6241,14 @@
         "operationId": "PostOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates an order. When inserting fields _id, _rev and docType should not be present.",
@@ -7139,14 +6278,14 @@
         "operationId": "DeleteOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes order.",
@@ -7176,14 +6315,14 @@
         "operationId": "ListProcessingOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProcessingOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of semi products.",
@@ -7201,7 +6340,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7231,14 +6376,14 @@
         "operationId": "ListProcessingOrdersForFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProcessingOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of all stock orders in a given facility",
@@ -7274,7 +6419,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7304,14 +6455,14 @@
         "operationId": "GetProcessingOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProcessingOrder_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches semi product by its _id.",
@@ -7341,14 +6492,14 @@
         "operationId": "PostProcessingOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a semi product. When inserting fields _id, _rev and docType should not be present.",
@@ -7378,14 +6529,14 @@
         "operationId": "DeleteProcessingOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes processing order.",
@@ -7415,14 +6566,14 @@
         "operationId": "GetActionTypeList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainActionType__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of action types.",
@@ -7440,7 +6591,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7470,14 +6627,14 @@
         "operationId": "GetActionType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainActionType_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches an action type by its _id.",
@@ -7506,14 +6663,14 @@
         "operationId": "PostActionType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates an action type. When inserting fields _id, _rev and docType should not be present.",
@@ -7543,14 +6700,14 @@
         "operationId": "DeleteActionType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes action type.",
@@ -7580,14 +6737,14 @@
         "operationId": "GetFacilityTypeList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacilityType__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of facility types.",
@@ -7605,7 +6762,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7635,14 +6798,14 @@
         "operationId": "GetFacilityType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainFacilityType_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a facility type by its _id.",
@@ -7671,14 +6834,14 @@
         "operationId": "PostFacilityType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a facility type. When inserting fields _id, _rev and docType should not be present.",
@@ -7708,14 +6871,14 @@
         "operationId": "DeleteFacilityType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes facility type.",
@@ -7745,14 +6908,14 @@
         "operationId": "GetMeasureUnitTypeList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainMeasureUnitType__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of measure unit types.",
@@ -7770,7 +6933,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7800,14 +6969,14 @@
         "operationId": "GetMeasureUnitType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainMeasureUnitType_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a measure unit type by its _id.",
@@ -7836,14 +7005,14 @@
         "operationId": "PostMeasureUnitType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a measure unit type. When inserting fields _id, _rev and docType should not be present.",
@@ -7873,14 +7042,14 @@
         "operationId": "DeleteMeasureUnitType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes measure unit type.",
@@ -7910,14 +7079,14 @@
         "operationId": "GetGradeAbbreviationList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainGradeAbbreviation__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of grade abbreviations.",
@@ -7935,7 +7104,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -7965,14 +7140,14 @@
         "operationId": "GetGradeAbbreviation",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainGradeAbbreviation_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a grade abbreviation by its _id.",
@@ -8001,14 +7176,14 @@
         "operationId": "PostGradeAbbreviation",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a grade abbreviation. When inserting fields _id, _rev and docType should not be present.",
@@ -8038,14 +7213,14 @@
         "operationId": "DeleteGradeAbbreviation",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes grade abbreviation.",
@@ -8075,14 +7250,14 @@
         "operationId": "GetProcessingEvidenceTypeList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProcessingEvidenceType__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of processing evidence type.",
@@ -8100,7 +7275,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8130,14 +7311,14 @@
         "operationId": "GetProcessingEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProcessingEvidenceType_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a processing evidence type by its _id.",
@@ -8166,14 +7347,14 @@
         "operationId": "PostProcessingEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a rocessing evidence type. When inserting fields _id, _rev and docType should not be present.",
@@ -8203,14 +7384,14 @@
         "operationId": "DeleteProcessingEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes rocessing evidence type.",
@@ -8240,14 +7421,14 @@
         "operationId": "GetOrderEvidenceTypeList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainOrderEvidenceType__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of order evidence type.",
@@ -8265,7 +7446,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8295,14 +7482,14 @@
         "operationId": "GetOrderEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainOrderEvidenceType_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a order evidence type by its _id.",
@@ -8331,14 +7518,14 @@
         "operationId": "PostOrderEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a order evidence type. When inserting fields _id, _rev and docType should not be present.",
@@ -8368,14 +7555,14 @@
         "operationId": "DeleteOrderEvidenceType",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes order evidence type.",
@@ -8405,14 +7592,14 @@
         "operationId": "GetTranslationTemplates",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "string"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -8431,14 +7618,14 @@
         "operationId": "ListCompanyCustomers",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainCompanyCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of company customers.",
@@ -8456,7 +7643,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8486,14 +7679,14 @@
         "operationId": "GetCompanyCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainCompanyCustomer_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches comapny customer by its _id.",
@@ -8523,14 +7716,14 @@
         "operationId": "CompanyCustomersForIds",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainCompanyCustomer-Array_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of company customers matching to the list of external ids.\nWarning: Id lists and response list do not necessary match in length.\nif invalid external id is provided in the request's list the response list is shorter.",
@@ -8565,14 +7758,14 @@
         "operationId": "GetComapnyCustomerByAFId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainCompanyCustomer_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns company customer according to external database id.",
@@ -8603,14 +7796,14 @@
         "operationId": "PostCompanyCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a company customer. When inserting fields _id, _rev and docType should not be present.",
@@ -8640,14 +7833,14 @@
         "operationId": "ListCompanyCustomersForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainCompanyCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of company customers for a given organization",
@@ -8674,7 +7867,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8704,14 +7903,14 @@
         "operationId": "ListCompanyCustomersForProductAndOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainCompanyCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of company customers for a given organization",
@@ -8746,7 +7945,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8776,14 +7981,14 @@
         "operationId": "DeleteCompanyCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes company custoemr",
@@ -8813,14 +8018,12 @@
         "operationId": "UploadFile",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
-                "schema": {
-                  "additionalProperties": true
-                }
+                "schema": {}
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Uploads a file. Returs file info.",
@@ -8840,14 +8043,12 @@
         "operationId": "GetFile",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
-                "schema": {
-                  "additionalProperties": true
-                }
+                "schema": {}
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Downloads the document (file) on the server identified by a storageKey.",
@@ -8877,14 +8078,14 @@
         "operationId": "ListDocumentRequirements",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainDocumentRequirement__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of document requirements.",
@@ -8902,7 +8103,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -8932,14 +8139,14 @@
         "operationId": "GetDocumentRequirement",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainDocumentRequirement_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches document requirement by its _id.",
@@ -8969,14 +8176,14 @@
         "operationId": "PostDocumentRequirement",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a document requirement. When inserting fields _id, _rev and docType should not be present.",
@@ -9006,14 +8213,14 @@
         "operationId": "DeleteDocumentRequirement",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes document requirement.",
@@ -9043,14 +8250,14 @@
         "operationId": "ListDocumentRequirementLists",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainDocumentRequirementList__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of document requrement lists.",
@@ -9068,7 +8275,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9098,14 +8311,14 @@
         "operationId": "GetDocumentRequirementList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainDocumentRequirementList_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches document requirement by its _id.",
@@ -9135,14 +8348,14 @@
         "operationId": "PostDocumentRequirementList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a document requirement. When inserting fields _id, _rev and docType should not be present.",
@@ -9172,14 +8385,14 @@
         "operationId": "ListDocumentRequirementListForSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainDocumentRequirementList__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of document requirement lists for semi-product.",
@@ -9204,7 +8417,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -9232,14 +8451,14 @@
         "operationId": "DeleteDocumentRequirementList",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes semi-product.",
@@ -9269,14 +8488,14 @@
         "operationId": "ListFacilities",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacility__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of facilities.",
@@ -9294,7 +8513,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9324,14 +8549,14 @@
         "operationId": "GetFacilityById",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainFacility_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a facility by its _id.",
@@ -9360,14 +8585,14 @@
         "operationId": "PostFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a facility. When inserting fields _id, _rev and docType should not be present.",
@@ -9397,14 +8622,14 @@
         "operationId": "ListFacilitiesForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacility__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of facilities for a given organization",
@@ -9439,7 +8664,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9469,14 +8700,14 @@
         "operationId": "ListFacilitiesForOrganizationAndSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacility__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of facilities for a given organization and semiProductId",
@@ -9512,7 +8743,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9542,14 +8779,14 @@
         "operationId": "ListSellingFacilitiesForOrganizationAndSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacility__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of sellig facilities for a given organization and semiProductId",
@@ -9585,7 +8822,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9615,14 +8858,14 @@
         "operationId": "ListOfCollectingFacilitiesForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacility__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of COLLECTING facilities for a given organization",
@@ -9649,7 +8892,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9679,14 +8928,14 @@
         "operationId": "DeleteFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes facility.",
@@ -9716,14 +8965,14 @@
         "operationId": "FixQuoteCompanyId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -9742,14 +8991,14 @@
         "operationId": "FixAllStockOrderCompanyId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -9768,14 +9017,14 @@
         "operationId": "ListOrganizations",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainOrganization__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of organization.",
@@ -9793,7 +9042,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -9823,14 +9078,14 @@
         "operationId": "GetOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainOrganization_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches organization by its _id.",
@@ -9860,14 +9115,14 @@
         "operationId": "GetOrganizationByCompanyId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainOrganization_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns organization according to external database id.",
@@ -9898,14 +9153,14 @@
         "operationId": "OrganizationsForIds",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of organization matching to the list of external ids.\nWarning: Id lists and response list do not necessary match in length.\nif invalid external id is provided in the request's list the response list is shorter.",
@@ -9940,14 +9195,14 @@
         "operationId": "PostOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates organization. When inserting fields _id, _rev and docType should not be present.",
@@ -9977,14 +9232,14 @@
         "operationId": "DeleteOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes organization.",
@@ -10014,14 +9269,14 @@
         "operationId": "GetBulkPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainBulkPayment_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a bulk payment by its _id.",
@@ -10051,14 +9306,14 @@
         "operationId": "PostBulkPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a bulk payment. When inserting fields _id, _rev and docType should not be present.",
@@ -10088,14 +9343,14 @@
         "operationId": "ListBulkPaymentsForPayingOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainBulkPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns paginated list of bulk payments for payingOrganization",
@@ -10121,7 +9376,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10148,17 +9409,17 @@
     },
     "/chain-api/data/payment/delete": {
       "post": {
-        "operationId": "DeletePayment",
+        "operationId": "DeleteBulkPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes payment",
@@ -10176,7 +9437,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChainPayment"
+                "$ref": "#/components/schemas/ChainBulkPayment"
               }
             }
           }
@@ -10188,14 +9449,14 @@
         "operationId": "GetPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainPayment_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a payment by its _id.",
@@ -10225,17 +9486,54 @@
         "operationId": "PostPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a payment. When inserting fields _id, _rev and docType should not be present.",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChainPayment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chain-api/data/payment/delete-payment": {
+      "post": {
+        "operationId": "DeletePayment",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Deletes payment",
         "tags": [
           "Payments"
         ],
@@ -10262,14 +9560,14 @@
         "operationId": "ListPaymentsForPayingOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of payments",
@@ -10304,28 +9602,54 @@
             "in": "query",
             "name": "sortBy",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PAYMENT_DATE",
+                "DELIVERY_DATE"
+              ]
+            }
           },
           {
             "description": "CONFIRMED or UNCONFIRMED",
             "in": "query",
             "name": "paymentStatus",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CONFIRMED",
+                "UNCONFIRMED"
+              ]
+            }
           },
           {
             "description": "CASH_VIA_COOPERATIVE or CASH_VIA_COLLECTOR or BANK_TRANSFER or UNKNOWN",
             "in": "query",
             "name": "wayOfPayment",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CASH_VIA_COOPERATIVE",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "UNKNOWN"
+              ]
+            }
           },
           {
             "description": "sort order ASC or DESC",
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10371,14 +9695,14 @@
         "operationId": "ListPaymentsForStockOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of payments for a given stock order",
@@ -10405,7 +9729,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10435,14 +9765,14 @@
         "operationId": "ListPaymentsForRecipientUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of payments for a user customer",
@@ -10468,7 +9798,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10498,14 +9834,14 @@
         "operationId": "ListPaymentsForBankTransfer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of payments for a given",
@@ -10531,7 +9867,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10561,14 +9903,14 @@
         "operationId": "ConfirmPayment",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Confirm payment",
@@ -10598,14 +9940,14 @@
         "operationId": "GetProcessingAction",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProcessingAction_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches processing action by its _id.",
@@ -10635,14 +9977,14 @@
         "operationId": "PostProcessingAction",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a processing action. When inserting fields _id, _rev and docType should not be present.",
@@ -10672,14 +10014,14 @@
         "operationId": "ListProcessingActionsForProductAndOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProcessingAction__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of processing action for product.",
@@ -10720,7 +10062,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -10748,14 +10096,14 @@
         "operationId": "DeleteProcessingAction",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes semi-product.",
@@ -10785,14 +10133,14 @@
         "operationId": "ListProducts",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProduct__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of product.",
@@ -10810,7 +10158,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -10840,14 +10194,14 @@
         "operationId": "ListProductsForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProduct__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of products for organization.",
@@ -10872,7 +10226,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -10900,14 +10260,14 @@
         "operationId": "GetProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProduct_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches product by its _id.",
@@ -10937,14 +10297,14 @@
         "operationId": "GetProductByAFId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainProduct_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns product according to external database id.",
@@ -10975,14 +10335,14 @@
         "operationId": "ProductsForIds",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of products matching to the list of external ids.\nWarning: Id lists and response list do not necessary match in length.\nif invalid external id is provided in the request's list the response list is shorter.",
@@ -11017,14 +10377,14 @@
         "operationId": "PostProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates product. When inserting fields _id, _rev and docType should not be present.",
@@ -11054,14 +10414,14 @@
         "operationId": "DeleteProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes product.",
@@ -11086,19 +10446,109 @@
         }
       }
     },
+    "/chain-api/data/public/aggregates/{stockOrderId}": {
+      "get": {
+        "operationId": "GetAggregatesForStockOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_B2CHistoryTimeline_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns aggregates for stock order",
+        "tags": [
+          "Public"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "description": "stock order dbID",
+            "in": "path",
+            "name": "stockOrderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/public/b2c/{stockOrderId}": {
+      "get": {
+        "operationId": "GetB2CDataForStockOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns B2C relevant data for stock order",
+        "tags": [
+          "Public"
+        ],
+        "security": [],
+        "parameters": [
+          {
+            "description": "stock order dbID",
+            "in": "path",
+            "name": "stockOrderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "orderId",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cooperative",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cuppingGrade",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
     "/chain-api/data/semi-product/list": {
       "get": {
         "operationId": "ListSemiProducts",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainSemiProduct__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of semi products.",
@@ -11116,7 +10566,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -11146,14 +10602,14 @@
         "operationId": "GetSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainSemiProduct_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches semi product by its _id.",
@@ -11183,14 +10639,14 @@
         "operationId": "PostSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a semi product. When inserting fields _id, _rev and docType should not be present.",
@@ -11220,14 +10676,14 @@
         "operationId": "ListSemiProductsForProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainSemiProduct__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of semi-products for product.",
@@ -11278,7 +10734,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -11306,14 +10768,14 @@
         "operationId": "DeleteSemiProduct",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes semi-product.",
@@ -11343,14 +10805,14 @@
         "operationId": "ListStockForFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of all stock orders in a given facility",
@@ -11411,14 +10873,28 @@
             "in": "query",
             "name": "wayOfPayment",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CASH_VIA_COOPERATIVE",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "UNKNOWN"
+              ]
+            }
           },
           {
             "description": "sort order ASC or DESC",
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -11489,14 +10965,14 @@
         "operationId": "ListStockOrdersForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of all stock orders for organizationId",
@@ -11540,7 +11016,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -11555,7 +11037,15 @@
             "in": "query",
             "name": "wayOfPayment",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CASH_VIA_COOPERATIVE",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "UNKNOWN"
+              ]
+            }
           },
           {
             "in": "query",
@@ -11616,14 +11106,14 @@
         "operationId": "ListStockInFacilityForCustomers",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Lists stock orders in facility filtered optionaly by specific customer and possibly only open",
@@ -11664,13 +11154,25 @@
             "in": "query",
             "name": "mode",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "facility",
+                "organization"
+              ]
+            }
           },
           {
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -11706,14 +11208,14 @@
         "operationId": "ListStockOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of all stock orders",
@@ -11749,7 +11251,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -11779,14 +11287,14 @@
         "operationId": "ListPurchaseOrderForUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of all stock orders",
@@ -11821,7 +11329,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -11851,14 +11365,14 @@
         "operationId": "AvailableQuantityOfSemiProductInFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainSemiProductAvailability_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Lists semi-product availability in a facility",
@@ -11895,14 +11409,14 @@
         "operationId": "AvailableQuantityOfSemiProductInFacilities",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainSemiProductAvailability-Array_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -11931,14 +11445,14 @@
         "operationId": "ListAvailableStockForFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of stock orders in a given facility",
@@ -11965,7 +11479,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -11995,14 +11515,14 @@
         "operationId": "ListAvailableStockForSemiProductInFacility",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of stock orders with certain semi-product id in a given facility",
@@ -12062,7 +11582,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -12092,14 +11618,14 @@
         "operationId": "GetStockOrderById",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainStockOrder_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a stock order by its _id.",
@@ -12128,14 +11654,14 @@
         "operationId": "GetStockOrderByIdWithInputOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainStockOrder_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a stock order by its _id.",
@@ -12164,14 +11690,14 @@
         "operationId": "PostStockOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a stock order. When inserting fields _id, _rev and docType should not be present.",
@@ -12201,14 +11727,14 @@
         "operationId": "DeleteStockOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes stock order.",
@@ -12238,14 +11764,14 @@
         "operationId": "DeleteStockOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes stock orders.",
@@ -12278,14 +11804,14 @@
         "operationId": "GetAggregatesForStockOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ProcessingOrderHistory-Array_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns aggregates for stock order",
@@ -12315,14 +11841,14 @@
         "operationId": "GetB2CDataForStockOrder",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns B2C relevant data for stock order",
@@ -12376,14 +11902,14 @@
         "operationId": "GetSeasonalStatisticsForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns seasonal statistics",
@@ -12437,14 +11963,14 @@
         "operationId": "ListQuoteOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12484,13 +12010,25 @@
             "in": "query",
             "name": "mode",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "facility",
+                "organization"
+              ]
+            }
           },
           {
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -12542,14 +12080,14 @@
         "operationId": "CreateIndices",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12570,14 +12108,14 @@
         "operationId": "Initialize",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12598,14 +12136,14 @@
         "operationId": "InitializeBlockchain",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12626,14 +12164,14 @@
         "operationId": "TestBlockchain",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12654,14 +12192,14 @@
         "operationId": "CheckConnection",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12691,14 +12229,14 @@
         "operationId": "Test",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12719,14 +12257,14 @@
         "operationId": "PostOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12757,14 +12295,14 @@
         "operationId": "GetOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainOrganization_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12794,14 +12332,14 @@
         "operationId": "CopyDB",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "tags": [
@@ -12822,14 +12360,14 @@
         "operationId": "ListTransactionQuery",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainTransaction__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a paginated list of all transactions subject to search parameters",
@@ -12896,7 +12434,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -12926,14 +12470,14 @@
         "operationId": "GetTransactionById",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainTransaction_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches a transaction by its _id.",
@@ -12962,14 +12506,14 @@
         "operationId": "PostTransaction",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a transaction. When inserting fields _id, _rev and docType should not be present.",
@@ -12999,14 +12543,14 @@
         "operationId": "PostStockOrdersWithInputTransactions",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a list of stock orders with input transactions.",
@@ -13036,14 +12580,14 @@
         "operationId": "PostProcessingOrdersWithInputTransactionsAndOutputStockOrders",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a list of processing orders with input transactions and output orders",
@@ -13076,14 +12620,14 @@
         "operationId": "ListInputTransactionsForProductUnitId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainTransaction__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of input transactions for a stock order.",
@@ -13108,7 +12652,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -13136,14 +12686,14 @@
         "operationId": "ListOutputTransactionsForProductUnitId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainTransaction__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of output transactions for a stock order.",
@@ -13168,7 +12718,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -13196,14 +12752,14 @@
         "operationId": "ListTransactionsForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainTransaction__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of transactions for a given organization",
@@ -13230,7 +12786,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -13260,14 +12822,14 @@
         "operationId": "DeleteTransaction",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes transaction",
@@ -13297,14 +12859,14 @@
         "operationId": "DeleteTransactions",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes transactions orders.",
@@ -13337,14 +12899,14 @@
         "operationId": "CancelTransactions",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Cancel transaction",
@@ -13381,14 +12943,14 @@
         "operationId": "ApproveTransactions",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Approve transaction",
@@ -13417,14 +12979,14 @@
         "operationId": "ListUsers",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUser__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of users.",
@@ -13442,7 +13004,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -13472,14 +13040,14 @@
         "operationId": "GetUser",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainUser_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches user by its _id.",
@@ -13509,14 +13077,14 @@
         "operationId": "UsersForIds",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of users matching to the list of external ids.\nWarning: Id lists and response list do not necessary match in length.\nif invalid external id is provided in the request's list the response list is shorter.",
@@ -13551,14 +13119,14 @@
         "operationId": "GetUserByAFId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainUser_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns user according to external database id.",
@@ -13589,14 +13157,14 @@
         "operationId": "PostUser",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a user. When inserting fields _id, _rev and docType should not be present.",
@@ -13626,14 +13194,14 @@
         "operationId": "ListUserCustomers",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUserCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of user customer.",
@@ -13651,7 +13219,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -13681,14 +13255,14 @@
         "operationId": "GetUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainUserCustomer_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Fetches user customer by its _id.",
@@ -13718,14 +13292,14 @@
         "operationId": "UserCustomersForIds",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainUserCustomer-Array_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns a list of user customers matching to the list of external ids.\nWarning: Id lists and response list do not necessary match in length.\nif invalid external id is provided in the request's list the response list is shorter.",
@@ -13760,14 +13334,14 @@
         "operationId": "GetUserCustomerByAFId",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_ChainUserCustomer_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Returns user customer according to external database id.",
@@ -13798,14 +13372,14 @@
         "operationId": "PostUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Inserts or updates a user customer. When inserting fields _id, _rev and docType should not be present.",
@@ -13835,14 +13409,14 @@
         "operationId": "ListUserCustomersForOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUserCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of user customers for a given organization",
@@ -13878,7 +13452,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -13908,14 +13488,14 @@
         "operationId": "ListUserCustomersByRole",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUserCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of user customers for a given organization",
@@ -13951,7 +13531,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -13981,14 +13567,14 @@
         "operationId": "ListUserCustomersForOrganizationAndRole",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUserCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of user customers for a given organization and role",
@@ -14032,14 +13618,28 @@
             "in": "query",
             "name": "queryBy",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BY_NAME",
+                "BY_SURNAME",
+                "BY_USER_CUSTOMER_ID",
+                "ALL"
+              ]
+            }
           },
           {
             "description": "sort order ASC or DESC",
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -14069,14 +13669,14 @@
         "operationId": "ListUserCustomersForProductAndOrganization",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainUserCustomer__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of user customers for a given organization",
@@ -14111,7 +13711,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "description": "query limit",
@@ -14141,14 +13747,14 @@
         "operationId": "ListStockOrdersForUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainStockOrder__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of purchase orders (stock ordrs) for a given user customer",
@@ -14173,7 +13779,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -14217,14 +13829,14 @@
         "operationId": "ListPaymentsorUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainPayment__"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Paginated list of payments for a given user customer",
@@ -14249,7 +13861,13 @@
             "in": "query",
             "name": "sort",
             "required": false,
-            "schema": {}
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
           },
           {
             "in": "query",
@@ -14293,14 +13911,14 @@
         "operationId": "DeleteUserCustomer",
         "responses": {
           "200": {
+            "description": "Ok",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse_any_"
                 }
               }
-            },
-            "description": "Ok"
+            }
           }
         },
         "description": "Deletes user custoemr",

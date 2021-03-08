@@ -31,7 +31,7 @@ export interface ChainDocumentRequirement {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainDocumentRequirement.ModeEnum;
     /**
      * Document name (label)
      */
@@ -97,6 +97,15 @@ export namespace ChainDocumentRequirement {
         required = 'required'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -149,11 +158,12 @@ export namespace ChainDocumentRequirement {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainDocumentRequirement.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainDocumentRequirement',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

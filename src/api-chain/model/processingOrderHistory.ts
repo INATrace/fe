@@ -27,6 +27,7 @@ export interface ProcessingOrderHistory {
     depth: number;
     processingOrder: ChainProcessingOrder;
     stockOrderAggs: Array<StockOrderAgg>;
+    stockOrderIds?: any;
 }
 
 /**
@@ -39,7 +40,8 @@ export namespace ProcessingOrderHistory {
     export enum Properties {
         depth = 'depth',
         processingOrder = 'processingOrder',
-        stockOrderAggs = 'stockOrderAggs'
+        stockOrderAggs = 'stockOrderAggs',
+        stockOrderIds = 'stockOrderIds'
     }
 
 
@@ -83,6 +85,17 @@ export namespace ProcessingOrderHistory {
                     isListContainer: true,
                     complexType: 'StockOrderAgg'
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'stockOrderIds',
+                    classname: 'ProcessingOrderHistory',
+                    dataType: 'any',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 depth: [
@@ -93,6 +106,8 @@ export namespace ProcessingOrderHistory {
                 ],
                 stockOrderAggs: [
                         ['required'],
+                ],
+                stockOrderIds: [
                 ],
             }
         }
@@ -108,6 +123,9 @@ export namespace ProcessingOrderHistory {
   //                   validators: []
   //               },
   //               stockOrderAggs: {
+  //                   validators: []
+  //               },
+  //               stockOrderIds: {
   //                   validators: []
   //               },
   //     }

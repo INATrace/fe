@@ -20,103 +20,44 @@
 
 
 
-/**
- * Codebook for type of chain facility
- */
 
-export interface ChainFacilityType { 
-    docType?: string;
-    _id?: string;
-    _rev?: string;
-    dbKey?: string;
-    mode__?: ChainFacilityType.ModeEnum;
-    id: string;
-    label: string;
+export interface B2CHistoryItem { 
+    type?: string;
+    name: string;
+    location?: string;
+    date?: string;
+    iconEnumType?: string;
+    iconClass?: string;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ChainFacilityType.
+ * Namespace for property- and property-value-enumerations of B2CHistoryItem.
  */
-export namespace ChainFacilityType {
+export namespace B2CHistoryItem {
     /**
-     * All properties of ChainFacilityType.
+     * All properties of B2CHistoryItem.
      */
     export enum Properties {
-        docType = 'docType',
-        _id = '_id',
-        _rev = '_rev',
-        dbKey = 'dbKey',
-        mode__ = 'mode__',
-        id = 'id',
-        label = 'label'
-    }
-
-    /**
-     * All possible values of mode__.
-     */
-    export enum ModeEnum {
-        Insert = 'insert',
-        InsertAsIs = 'insert_as_is',
-        Update = 'update'
+        type = 'type',
+        name = 'name',
+        location = 'location',
+        date = 'date',
+        iconEnumType = 'iconEnumType',
+        iconClass = 'iconClass'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ChainFacilityType',
+            classname: 'B2CHistoryItem',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'docType',
-                    classname: 'ChainFacilityType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: '_id',
-                    classname: 'ChainFacilityType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: '_rev',
-                    classname: 'ChainFacilityType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'dbKey',
-                    classname: 'ChainFacilityType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ChainFacilityType.ModeEnum',
-                    required: false,
-                    name: 'mode__',
-                    classname: 'ChainFacilityType',
+                    name: 'type',
+                    classname: 'B2CHistoryItem',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -126,8 +67,8 @@ export namespace ChainFacilityType {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'id',
-                    classname: 'ChainFacilityType',
+                    name: 'name',
+                    classname: 'B2CHistoryItem',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -136,9 +77,42 @@ export namespace ChainFacilityType {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: true,
-                    name: 'label',
-                    classname: 'ChainFacilityType',
+                    required: false,
+                    name: 'location',
+                    classname: 'B2CHistoryItem',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'date',
+                    classname: 'B2CHistoryItem',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'iconEnumType',
+                    classname: 'B2CHistoryItem',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'iconClass',
+                    classname: 'B2CHistoryItem',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -146,52 +120,46 @@ export namespace ChainFacilityType {
                 },
             ],
             validators: {
-                docType: [
+                type: [
                 ],
-                _id: [
-                ],
-                _rev: [
-                ],
-                dbKey: [
-                ],
-                mode__: [
-                ],
-                id: [
+                name: [
                         ['required'],
                 ],
-                label: [
-                        ['required'],
+                location: [
+                ],
+                date: [
+                ],
+                iconEnumType: [
+                ],
+                iconClass: [
                 ],
             }
         }
     }
 
-  // export const ChainFacilityTypeValidationScheme = {
+  // export const B2CHistoryItemValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               docType: {
+  //               type: {
   //                   validators: []
   //               },
-  //               _id: {
+  //               name: {
   //                   validators: []
   //               },
-  //               _rev: {
+  //               location: {
   //                   validators: []
   //               },
-  //               dbKey: {
+  //               date: {
   //                   validators: []
   //               },
-  //               mode__: {
+  //               iconEnumType: {
   //                   validators: []
   //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               label: {
+  //               iconClass: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ChainFacilityType>;
+  // } as SimpleValidationScheme<B2CHistoryItem>;
 
 
 }

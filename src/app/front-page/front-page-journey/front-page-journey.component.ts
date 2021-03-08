@@ -1,13 +1,14 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GoogleMap } from '@angular/google-maps';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { Subscription } from 'rxjs';
-import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
-import { take } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { ViewportScroller } from '@angular/common';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { GoogleMap } from '@angular/google-maps';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { PublicService } from 'src/api-chain/api/public.service';
+import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
+import { B2CHistoryItem } from 'src/api-chain/model/b2CHistoryItem';
 import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
+import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 
 @Component({
   selector: 'app-front-page-journey',
@@ -31,7 +32,7 @@ export class FrontPageJourneyComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public globalEventManager: GlobalEventManagerService,
-    private chainStockOrderController: StockOrderService,
+    private chainPublicController: PublicService,
     private scroll: ViewportScroller
   ) { }
 
@@ -70,12 +71,7 @@ export class FrontPageJourneyComponent implements OnInit {
     this.scroll.scrollToPosition([0, 0]);
   }
 
-  iconStyle(item: ProcessingOrderHistory) {
-    let iconType = item.processingOrder.processingAction.publicTimelineIcon
-    if (!iconType) {
-      if (item.processingOrder.processingAction.type === 'TRANSFER') return 'af-journey-dot-shape--ship'
-      return 'af-journey-dot-shape--leaf'
-    }
+  styleForIconType(iconType: string) {
     switch (iconType) {
       case 'SHIP': return 'af-journey-dot-shape--ship'
       case 'LEAF': return 'af-journey-dot-shape--leaf'
@@ -87,50 +83,78 @@ export class FrontPageJourneyComponent implements OnInit {
     }
   }
 
+  iconStyle(item: ProcessingOrderHistory) {
+    let iconType = item.processingOrder.processingAction.publicTimelineIcon
+    if (!iconType) {
+      if (item.processingOrder.processingAction.type === 'TRANSFER') return 'af-journey-dot-shape--ship'
+      return 'af-journey-dot-shape--leaf'
+    }
+    return this.styleForIconType(iconType)
+  }
+
+  addIconStyleForIconType(item: B2CHistoryItem): B2CHistoryItem {
+    let iconClass = ""
+    if (!item.iconEnumType) {
+      if (item.type === 'TRANSFER') {
+        iconClass = 'af-journey-dot-shape--ship'
+      } else {
+        iconClass = 'af-journey-dot-shape--leaf'
+      }
+    } else {
+      iconClass = this.styleForIconType(item.iconEnumType)
+    }
+    return {...item, iconClass}
+  }
+
   async data() {
     if (this.soid != 'EMPTY') {
 
-      let res = await this.chainStockOrderController.getAggregatesForStockOrder(this.soid).pipe(take(1)).toPromise();
+      let res = await this.chainPublicController.getAggregatesForStockOrder(this.soid).pipe(take(1)).toPromise();
       if (res && res.status === "OK" && res.data) {
         // console.log(res.data)
-        for (let item of res.data) {
-          if (item.processingOrder && item.processingOrder.processingAction) {
-            if (item.stockOrderAggs.length >= 1) {
-              let tmp = {
-                type: item.processingOrder.processingAction.type,
-                name: item.processingOrder.processingAction.name,
-                location: item.stockOrderAggs[0].stockOrder.facility.name,
-                date: item.stockOrderAggs[0].stockOrder.productionDate
-              }
-              this.processing.push(tmp);
-              if (item.processingOrder.processingAction.publicTimelineLabel) {
-                let defaultLocation = item.stockOrderAggs[0].stockOrder.facility.name
-                let publicTimelineLocation = item.processingOrder.processingAction.publicTimelineLocation
-                let tmp = {
-                  type: item.processingOrder.processingAction.type,
-                  name: item.processingOrder.processingAction.publicTimelineLabel,
-                  location: publicTimelineLocation ? publicTimelineLocation : defaultLocation,
-                  date: item.processingOrder.processingDate,
-                  iconClass: this.iconStyle(item)
-                }
-                // console.log(item.processingOrder.processingDate)
-                this.processingShorter.push(tmp)
-              }
-            }
-          } else {
-            if (item.stockOrderAggs.length >= 1) {
-              let tmp = {
-                type: null,
-                name: null,
-                location: item.stockOrderAggs[0].stockOrder.facility.name,
-                date: item.stockOrderAggs[0].stockOrder.productionDate
-              }
-              this.coopName = item.stockOrderAggs[0].stockOrder.organization.name;
-              this.processing.push(tmp);
-              this.processingShorter.push(tmp)
-            }
-          }
-        }
+        // for (let item of res.data) {
+        //   if (item.processingOrder && item.processingOrder.processingAction) {
+        //     if (item.stockOrderAggs.length >= 1) {
+        //       let tmp = {
+        //         type: item.processingOrder.processingAction.type,
+        //         name: item.processingOrder.processingAction.name,
+        //         location: item.stockOrderAggs[0].stockOrder.facility.name,
+        //         date: item.stockOrderAggs[0].stockOrder.productionDate
+        //       }
+        //       this.processing.push(tmp);
+        //       if (item.processingOrder.processingAction.publicTimelineLabel) {
+        //         let defaultLocation = item.stockOrderAggs[0].stockOrder.facility.name
+        //         let publicTimelineLocation = item.processingOrder.processingAction.publicTimelineLocation
+        //         let tmp = {
+        //           type: item.processingOrder.processingAction.type,
+        //           name: item.processingOrder.processingAction.publicTimelineLabel,
+        //           location: publicTimelineLocation ? publicTimelineLocation : defaultLocation,
+        //           date: item.processingOrder.processingDate,
+        //           iconClass: this.iconStyle(item)
+        //         }
+        //         // console.log(item.processingOrder.processingDate)
+        //         this.processingShorter.push(tmp)
+        //       }
+        //     }
+        //   } else {
+        //     if (item.stockOrderAggs.length >= 1) {
+        //       let tmp = {
+        //         type: null,
+        //         name: null,
+        //         location: item.stockOrderAggs[0].stockOrder.facility.name,
+        //         date: item.stockOrderAggs[0].stockOrder.productionDate
+        //       }
+        //       this.coopName = item.stockOrderAggs[0].stockOrder.organization.name;
+        //       this.processing.push(tmp);
+        //       this.processingShorter.push(tmp)
+        //     }
+        //   }
+        // }
+        this.coopName = res.data.coopName
+        this.processing = res.data.items
+        this.processingShorter = res.data.shortItems.map(item => this.addIconStyleForIconType(item))
+        console.log(this.processing)
+        console.log(this.processingShorter)
         // let len = res.data.length;
         // let processingOH = res.data[len - 2];
         // let processingArr = processingOH.stockOrderAggs;

@@ -96,6 +96,9 @@ export class OrderHistoryViewComponent implements OnInit {
         return $localize`:@@orderHistoryView.processingOrderName.corruptedHistory: Corrupted history - processing action deleted`;
       }
     }
+    if(aggregate.stockOrderAggs.length === 0) {
+      return $localize`:@@orderHistoryView.processingOrderName.missingHistory:History too big. Only part is loaded. Follow other order links to view the rest.`;
+    }
     return $localize`:@@orderHistoryView.processingOrderName.purchase:Purchase`;
   }
 

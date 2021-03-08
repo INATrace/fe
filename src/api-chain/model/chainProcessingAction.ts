@@ -30,7 +30,7 @@ export interface ChainProcessingAction {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainProcessingAction.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -100,7 +100,7 @@ export interface ChainProcessingAction {
     /**
      * Type of processing transaction. PROCESSING: many-to-many semi products, consumed and produced quantities not connected SHIPMENT: same semiproduct. Acts as an order of the same quantity from target facility
      */
-    type?: any;
+    type?: ChainProcessingAction.TypeEnum;
     /**
      * Prefix. Used to build internal lot number names.
      */
@@ -116,7 +116,7 @@ export interface ChainProcessingAction {
     /**
      * Icon type in public timeline
      */
-    publicTimelineIcon?: any;
+    publicTimelineIcon?: ChainProcessingAction.PublicTimelineIconEnum;
 }
 
 /**
@@ -220,6 +220,35 @@ export namespace ChainProcessingAction {
         publicTimelineIcon = 'publicTimelineIcon'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        PROCESSING = 'PROCESSING',
+        SHIPMENT = 'SHIPMENT',
+        TRANSFER = 'TRANSFER'
+    }
+
+    /**
+     * All possible values of publicTimelineIcon.
+     */
+    export enum PublicTimelineIconEnum {
+        SHIP = 'SHIP',
+        LEAF = 'LEAF',
+        WAREHOUSE = 'WAREHOUSE',
+        QRCODE = 'QRCODE',
+        OTHER = 'OTHER'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -272,11 +301,12 @@ export namespace ChainProcessingAction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProcessingAction.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainProcessingAction',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -486,11 +516,12 @@ export namespace ChainProcessingAction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProcessingAction.TypeEnum',
                     required: false,
                     name: 'type',
                     classname: 'ChainProcessingAction',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -530,11 +561,12 @@ export namespace ChainProcessingAction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProcessingAction.PublicTimelineIconEnum',
                     required: false,
                     name: 'publicTimelineIcon',
                     classname: 'ChainProcessingAction',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

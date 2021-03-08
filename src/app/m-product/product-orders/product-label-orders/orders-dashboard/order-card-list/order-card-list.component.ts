@@ -92,7 +92,8 @@ export class OrderCardListComponent implements OnInit {
         // tap(val => console.log("RESp:", val)),
         map((resp: ApiResponsePaginatedListChainProductOrder) => {
           if (resp) {
-            this.showedEntities = resp.data.count;
+            // console.log("RESP:", resp)
+            this.showedEntities = resp.data && resp.data.count;
             this.showing.emit(this.showedEntities);
             // this.arrangeFacilities(resp.data.items);
             return resp.data

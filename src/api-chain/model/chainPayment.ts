@@ -34,7 +34,7 @@ export interface ChainPayment {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainPayment.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -58,7 +58,7 @@ export interface ChainPayment {
     /**
      * Type of payment.
      */
-    paymentType: any;
+    paymentType: ChainPayment.PaymentTypeEnum;
     /**
      * Currency of payment
      */
@@ -110,7 +110,7 @@ export interface ChainPayment {
     /**
      * Type of recipient.
      */
-    recipientType: any;
+    recipientType: ChainPayment.RecipientTypeEnum;
     /**
      * Receipt number on the attached receipt (receiptDocumentId). Mandatory for the cash transfer.
      */
@@ -119,7 +119,7 @@ export interface ChainPayment {
     /**
      * Receipt document type.
      */
-    receiptDocumentType?: any;
+    receiptDocumentType?: ChainPayment.ReceiptDocumentTypeEnum;
     /**
      * Reference to the bulk payment.
      */
@@ -127,11 +127,11 @@ export interface ChainPayment {
     /**
      * Payment purpose type.
      */
-    paymentPurposeType?: any;
+    paymentPurposeType?: ChainPayment.PaymentPurposeTypeEnum;
     /**
      * Payment status.
      */
-    paymentStatus?: any;
+    paymentStatus?: ChainPayment.PaymentStatusEnum;
     /**
      * Payment confirmed by userId.
      */
@@ -312,6 +312,59 @@ export namespace ChainPayment {
         productionDate = 'productionDate'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of paymentType.
+     */
+    export enum PaymentTypeEnum {
+        CASH = 'CASH',
+        BANK = 'BANK'
+    }
+
+    /**
+     * All possible values of recipientType.
+     */
+    export enum RecipientTypeEnum {
+        ORGANIZATION = 'ORGANIZATION',
+        COMPANYCUSTOMER = 'COMPANY_CUSTOMER',
+        USERCUSTOMER = 'USER_CUSTOMER'
+    }
+
+    /**
+     * All possible values of receiptDocumentType.
+     */
+    export enum ReceiptDocumentTypeEnum {
+        PURCHASESHEET = 'PURCHASE_SHEET',
+        RECEIPT = 'RECEIPT'
+    }
+
+    /**
+     * All possible values of paymentPurposeType.
+     */
+    export enum PaymentPurposeTypeEnum {
+        ADVANCEPAYMENT = 'ADVANCE_PAYMENT',
+        FIRSTINSTALLMENT = 'FIRST_INSTALLMENT',
+        SECONDINSTALLMENT = 'SECOND_INSTALLMENT',
+        WOMENPREMIUM = 'WOMEN_PREMIUM',
+        INVOICEPAYMENT = 'INVOICE_PAYMENT'
+    }
+
+    /**
+     * All possible values of paymentStatus.
+     */
+    export enum PaymentStatusEnum {
+        UNCONFIRMED = 'UNCONFIRMED',
+        CONFIRMED = 'CONFIRMED'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -364,11 +417,12 @@ export namespace ChainPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -430,11 +484,12 @@ export namespace ChainPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.PaymentTypeEnum',
                     required: true,
                     name: 'paymentType',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -573,11 +628,12 @@ export namespace ChainPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.RecipientTypeEnum',
                     required: true,
                     name: 'recipientType',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -607,11 +663,12 @@ export namespace ChainPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.ReceiptDocumentTypeEnum',
                     required: false,
                     name: 'receiptDocumentType',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -629,22 +686,24 @@ export namespace ChainPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.PaymentPurposeTypeEnum',
                     required: false,
                     name: 'paymentPurposeType',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainPayment.PaymentStatusEnum',
                     required: false,
                     name: 'paymentStatus',
                     classname: 'ChainPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

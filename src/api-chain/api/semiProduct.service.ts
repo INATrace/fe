@@ -109,7 +109,7 @@ export namespace ListSemiProducts {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -170,7 +170,7 @@ export namespace ListSemiProductsForProduct {
        * (at end customer)
        */
       isSKUEndCustomer?: boolean;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
     }
@@ -492,10 +492,10 @@ export class SemiProductService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listSemiProducts(sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainSemiProduct>;
-    public listSemiProducts(sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainSemiProduct>>;
-    public listSemiProducts(sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainSemiProduct>>;
-    public listSemiProducts(sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listSemiProducts(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainSemiProduct>;
+    public listSemiProducts(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainSemiProduct>>;
+    public listSemiProducts(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainSemiProduct>>;
+    public listSemiProducts(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (sort !== undefined && sort !== null) {
@@ -595,10 +595,10 @@ export class SemiProductService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainSemiProduct>;
-    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainSemiProduct>>;
-    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainSemiProduct>>;
-    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainSemiProduct>;
+    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainSemiProduct>>;
+    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainSemiProduct>>;
+    public listSemiProductsForProduct(productId: string, isBuyable?: boolean, isSKU?: boolean, isSKUEndCustomer?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling listSemiProductsForProduct.');
         }

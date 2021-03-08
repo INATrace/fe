@@ -27,7 +27,7 @@ export interface ChainCertification {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainCertification.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -103,6 +103,15 @@ export namespace ChainCertification {
         validity = 'validity'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -155,11 +164,12 @@ export namespace ChainCertification {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainCertification.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainCertification',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

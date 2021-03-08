@@ -67,6 +67,32 @@ export namespace ConfirmPayment {
 }
 
 /**
+ * Namespace for deleteBulkPayment.
+ */
+export namespace DeleteBulkPayment {
+    /**
+     * Parameter map for deleteBulkPayment.
+     */
+    export interface PartialParamMap {
+      ChainBulkPayment: ChainBulkPayment;
+    }
+
+    /**
+     * Enumeration of all parameters for deleteBulkPayment.
+     */
+    export enum Parameters {
+      ChainBulkPayment = 'ChainBulkPayment'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteBulkPayment
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof DeleteBulkPayment.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
  * Namespace for deletePayment.
  */
 export namespace DeletePayment {
@@ -174,7 +200,7 @@ export namespace ListBulkPaymentsForPayingOrganization {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -233,7 +259,7 @@ export namespace ListPaymentsForBankTransfer {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -296,19 +322,19 @@ export namespace ListPaymentsForPayingOrganization {
       /**
        * PAYMENT_DATE or DELIVERY_DATE
        */
-      sortBy?: any;
+      sortBy?: 'PAYMENT_DATE' | 'DELIVERY_DATE';
       /**
        * CONFIRMED or UNCONFIRMED
        */
-      paymentStatus?: any;
+      paymentStatus?: 'CONFIRMED' | 'UNCONFIRMED';
       /**
        * CASH_VIA_COOPERATIVE or CASH_VIA_COLLECTOR or BANK_TRANSFER or UNKNOWN
        */
-      wayOfPayment?: any;
+      wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN';
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -399,7 +425,7 @@ export namespace ListPaymentsForRecipientUserCustomer {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -461,7 +487,7 @@ export namespace ListPaymentsForStockOrder {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -695,6 +721,94 @@ export class PaymentsService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
+  public deleteBulkPaymentByMap(
+    map: DeleteBulkPayment.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseAny>;
+  public deleteBulkPaymentByMap(
+    map: DeleteBulkPayment.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
+  public deleteBulkPaymentByMap(
+    map: DeleteBulkPayment.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
+  public deleteBulkPaymentByMap(
+    map: DeleteBulkPayment.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.deleteBulkPayment(
+      map.ChainBulkPayment,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * 
+     * Deletes payment
+     * @param ChainBulkPayment 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteBulkPayment(ChainBulkPayment: ChainBulkPayment, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
+    public deleteBulkPayment(ChainBulkPayment: ChainBulkPayment, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
+    public deleteBulkPayment(ChainBulkPayment: ChainBulkPayment, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
+    public deleteBulkPayment(ChainBulkPayment: ChainBulkPayment, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ChainBulkPayment === null || ChainBulkPayment === undefined) {
+            throw new Error('Required parameter ChainBulkPayment was null or undefined when calling deleteBulkPayment.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseAny>(`${this.configuration.basePath}/chain-api/data/payment/delete`,
+            ChainBulkPayment,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'DeleteBulkPayment')));
+        }
+        return handle;
+    }
+
+
+  /**
+   *  by map.
+   * Deletes payment
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
   public deletePaymentByMap(
     map: DeletePayment.PartialParamMap,
     observe?: 'body',
@@ -760,7 +874,7 @@ export class PaymentsService {
                 }
             }
 
-        const handle = this.httpClient.post<ApiResponseAny>(`${this.configuration.basePath}/chain-api/data/payment/delete`,
+        const handle = this.httpClient.post<ApiResponseAny>(`${this.configuration.basePath}/chain-api/data/payment/delete-payment`,
             ChainPayment,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -984,10 +1098,10 @@ export class PaymentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainBulkPayment>;
-    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainBulkPayment>>;
-    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainBulkPayment>>;
-    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainBulkPayment>;
+    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainBulkPayment>>;
+    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainBulkPayment>>;
+    public listBulkPaymentsForPayingOrganization(payingOrganizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (payingOrganizationId === null || payingOrganizationId === undefined) {
             throw new Error('Required parameter payingOrganizationId was null or undefined when calling listBulkPaymentsForPayingOrganization.');
         }
@@ -1084,10 +1198,10 @@ export class PaymentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsForBankTransfer(bankTransferId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
-    public listPaymentsForBankTransfer(bankTransferId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForBankTransfer(bankTransferId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForBankTransfer(bankTransferId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsForBankTransfer(bankTransferId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
+    public listPaymentsForBankTransfer(bankTransferId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForBankTransfer(bankTransferId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForBankTransfer(bankTransferId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (bankTransferId === null || bankTransferId === undefined) {
             throw new Error('Required parameter bankTransferId was null or undefined when calling listPaymentsForBankTransfer.');
         }
@@ -1196,10 +1310,10 @@ export class PaymentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: any, paymentStatus?: any, wayOfPayment?: any, sort?: any, limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
-    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: any, paymentStatus?: any, wayOfPayment?: any, sort?: any, limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: any, paymentStatus?: any, wayOfPayment?: any, sort?: any, limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: any, paymentStatus?: any, wayOfPayment?: any, sort?: any, limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: 'PAYMENT_DATE' | 'DELIVERY_DATE', paymentStatus?: 'CONFIRMED' | 'UNCONFIRMED', wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
+    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: 'PAYMENT_DATE' | 'DELIVERY_DATE', paymentStatus?: 'CONFIRMED' | 'UNCONFIRMED', wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: 'PAYMENT_DATE' | 'DELIVERY_DATE', paymentStatus?: 'CONFIRMED' | 'UNCONFIRMED', wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForPayingOrganization(payingOrganizationId: string, query?: string, sortBy?: 'PAYMENT_DATE' | 'DELIVERY_DATE', paymentStatus?: 'CONFIRMED' | 'UNCONFIRMED', wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', sort?: 'ASC' | 'DESC', limit?: number, offset?: number, deliveryDateStart?: string, deliveryDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (payingOrganizationId === null || payingOrganizationId === undefined) {
             throw new Error('Required parameter payingOrganizationId was null or undefined when calling listPaymentsForPayingOrganization.');
         }
@@ -1314,10 +1428,10 @@ export class PaymentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
-    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
+    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForRecipientUserCustomer(farmerId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (farmerId === null || farmerId === undefined) {
             throw new Error('Required parameter farmerId was null or undefined when calling listPaymentsForRecipientUserCustomer.');
         }
@@ -1414,10 +1528,10 @@ export class PaymentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsForStockOrder(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
-    public listPaymentsForStockOrder(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForStockOrder(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
-    public listPaymentsForStockOrder(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsForStockOrder(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainPayment>;
+    public listPaymentsForStockOrder(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForStockOrder(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainPayment>>;
+    public listPaymentsForStockOrder(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (stockOrderId === null || stockOrderId === undefined) {
             throw new Error('Required parameter stockOrderId was null or undefined when calling listPaymentsForStockOrder.');
         }

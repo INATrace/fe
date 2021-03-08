@@ -674,7 +674,7 @@ export namespace UpdateProfileUsingPUT {
 })
 export class UserControllerService {
 
-    protected basePath = '';
+    protected basePath = 'https://coffee.matheo.si';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

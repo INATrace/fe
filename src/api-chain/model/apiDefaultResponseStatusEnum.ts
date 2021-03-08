@@ -23,39 +23,17 @@
 /**
  * All possible values of status.
  */
+export type ApiDefaultResponseStatusEnum = 'OK' | 'ERROR' | 'REQUEST_BODY_ERROR' | 'VALIDATION_ERROR' | 'TOO_MANY_REQUESTS' | 'UNAUTHORIZED' | 'AUTH_ERROR' | 'UPSTREAM_HTTP_ERROR' | 'INVALID_REQUEST' | 'NOT_IMPLEMENTED';
 
-export interface ApiDefaultResponseStatusEnum { 
-}
-
-/**
- * Namespace for property- and property-value-enumerations of ApiDefaultResponseStatusEnum.
- */
-export namespace ApiDefaultResponseStatusEnum {
-    /**
-     * All properties of ApiDefaultResponseStatusEnum.
-     */
-    export enum Properties {
-    }
-
-
-    export function formMetadata() {
-        return  {
-            metadata: formMetadata,
-            classname: 'ApiDefaultResponseStatusEnum',
-            vars: [
-            ],
-            validators: {
-            }
-        }
-    }
-
-  // export const ApiDefaultResponseStatusEnumValidationScheme = {
-  //     validators: [],
-  //     fields: {
-  //     }
-  // } as SimpleValidationScheme<ApiDefaultResponseStatusEnum>;
-
-
-}
-
-
+export const ApiDefaultResponseStatusEnum = {
+    OK: 'OK' as ApiDefaultResponseStatusEnum,
+    ERROR: 'ERROR' as ApiDefaultResponseStatusEnum,
+    REQUESTBODYERROR: 'REQUEST_BODY_ERROR' as ApiDefaultResponseStatusEnum,
+    VALIDATIONERROR: 'VALIDATION_ERROR' as ApiDefaultResponseStatusEnum,
+    TOOMANYREQUESTS: 'TOO_MANY_REQUESTS' as ApiDefaultResponseStatusEnum,
+    UNAUTHORIZED: 'UNAUTHORIZED' as ApiDefaultResponseStatusEnum,
+    AUTHERROR: 'AUTH_ERROR' as ApiDefaultResponseStatusEnum,
+    UPSTREAMHTTPERROR: 'UPSTREAM_HTTP_ERROR' as ApiDefaultResponseStatusEnum,
+    INVALIDREQUEST: 'INVALID_REQUEST' as ApiDefaultResponseStatusEnum,
+    NOTIMPLEMENTED: 'NOT_IMPLEMENTED' as ApiDefaultResponseStatusEnum
+};

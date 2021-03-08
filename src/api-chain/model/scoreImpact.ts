@@ -25,7 +25,7 @@ export interface ScoreImpact {
     /**
      * Type of score
      */
-    type: any;
+    type: ScoreImpact.TypeEnum;
     /**
      * Score weight
      */
@@ -50,6 +50,17 @@ export namespace ScoreImpact {
         score = 'score'
     }
 
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        PROVENANCE = 'PROVENANCE',
+        FAIRNESS = 'FAIRNESS',
+        QUALITY = 'QUALITY',
+        ORDER = 'ORDER',
+        PAYMENT = 'PAYMENT'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -58,11 +69,12 @@ export namespace ScoreImpact {
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ScoreImpact.TypeEnum',
                     required: true,
                     name: 'type',
                     classname: 'ScoreImpact',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

@@ -29,7 +29,7 @@ export interface ChainOrderEvidenceType {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainOrderEvidenceType.ModeEnum;
     id: string;
     label: string;
     fairness?: boolean;
@@ -55,6 +55,15 @@ export namespace ChainOrderEvidenceType {
         fairness = 'fairness',
         provenance = 'provenance',
         quality = 'quality'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
     }
 
 
@@ -109,11 +118,12 @@ export namespace ChainOrderEvidenceType {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainOrderEvidenceType.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainOrderEvidenceType',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

@@ -332,16 +332,33 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
         let orderId = this.route.snapshot.params.orderId as string;
         if (!orderId) throw Error("No order id!")
-        let resp = await this.chainStockOrderService.getStockOrderByIdWithInputOrders(orderId).pipe(take(1)).toPromise()
+        let resp;
+        try {
+          this.globalEventsManager.showLoading(true)
+          resp = await this.chainStockOrderService.getStockOrderByIdWithInputOrders(orderId).pipe(take(1)).toPromise()
+        } catch (e) {
+          throw e
+        } finally {
+          this.globalEventsManager.showLoading(false)
+        }
         if (resp && resp.status === 'OK') {
           this.outputStockOrder = resp.data
           this.prAction = this.outputStockOrder.processingAction
           this.processingActionForm.setValue(this.prAction);
           this.defineInputAndOutputSemiProduct(this.prAction);
           let processingOrderId = this.outputStockOrder.processingOrderId
-          let resp2 = await this.chainProcessingOrderService.getProcessingOrder(processingOrderId).pipe(take(1)).toPromise()
-          if (resp2 && resp2.status === 'OK') {
-            this.editableProcessingOrder = resp2.data
+
+          let procOrder = this.outputStockOrder.processingOrder
+          if (!procOrder) {
+            let resp2 = await this.chainProcessingOrderService.getProcessingOrder(processingOrderId).pipe(take(1)).toPromise()
+            if (resp2 && resp2.status === 'OK') {
+              procOrder = resp2.data
+            }
+          }
+          // let resp2 = await this.chainProcessingOrderService.getProcessingOrder(processingOrderId).pipe(take(1)).toPromise()
+          // if (resp2 && resp2.status === 'OK') {
+          if (procOrder) {
+            this.editableProcessingOrder = procOrder //resp2.data
             this.processingDateForm.setValue(this.editableProcessingOrder.processingDate)
             this.initializeOutputStockOrdersForEdit()
             this.processingOrderInputTransactions = this.editableProcessingOrder.inputTransactions
@@ -886,6 +903,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
         delete data["identifier"]
         delete data["producerUserCustomer"]
         delete data['isPurchaseOrder']
+        delete data['created']
         // TODO - delete all fields
         data["facilityId"] = dbKey(this.outputFacilityForm.value);
         data["creatorId"] = this.creatorId
@@ -909,7 +927,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
         // }
       }
       return stockOrderList;
-    } else {
+    } else { // END TRANSFER
       if (this.actionType === 'PROCESSING' && this.outputStockOrders.value.length > 0) {  // repacked outputs!
 
         for (let [index, item] of this.outputStockOrders.value.entries()) {
@@ -917,7 +935,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
             let stockOrder = {
               _id: item.id,
               _rev: item.rev,
-              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${item.sacNumber}`,
+              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ item.sacNumber }`,
               creatorId: this.creatorId,
               semiProductId: dbKey(this.currentOutputSemiProduct),
               facilityId: dbKey(this.outputFacilityForm.value),
@@ -1128,19 +1146,19 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
           fields: [
             {
               label: "Date",
-              type: "date",
+              type: FieldDefinition.TypeEnum.Date, //"date",
               required: true,
               stringValue: item.value.date ? dateAtMidnightISOString(item.value.date) : null
             },
             {
               label: "Type",
-              type: "object",
+              type: FieldDefinition.TypeEnum.Object, //"object",
               required: true,
               objectValue: item.value.type
             },
             {
               label: "Document",
-              type: "file",
+              type: FieldDefinition.TypeEnum.File, //"file",
               required: true,
               files: item.value.document ? [item.value.document] : []
             }
@@ -1159,19 +1177,19 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
           fields: [
             {
               label: "Date",
-              type: "date",
+              type: FieldDefinition.TypeEnum.Date, //"date",
               required: true,
               stringValue: item.value.formalCreationDate ? dateAtMidnightISOString(item.value.formalCreationDate) : null
             },
             {
               label: "Type",
-              type: "object",
+              type: FieldDefinition.TypeEnum.Object, //"object",
               required: true,
               objectValue: item.value.type
             },
             {
               label: "Document",
-              type: "file",
+              type: FieldDefinition.TypeEnum.File, //"file",
               required: true,
               files: item.value.document ? [item.value.document] : []
             }
@@ -1655,7 +1673,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
         let outputStockOrdersSize = Math.ceil(avQua / this.prAction.maxOutputWeight);
         for (let i = 0; i < outputStockOrdersSize; i++) {
           let w = this.prAction.maxOutputWeight;
-          if (i === outputStockOrdersSize-1) w = avQua-i*this.prAction.maxOutputWeight;
+          if (i === outputStockOrdersSize - 1) w = avQua - i * this.prAction.maxOutputWeight;
           (this.outputStockOrders as FormArray).push(new FormGroup({
             identifier: new FormControl(null),
             id: new FormControl(null),
@@ -1731,7 +1749,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
   get sacNetWLabel() {
     if (this.prAction) {
       let unit = this.underlyingMeasurementUnit ? this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.measurementUnitType.label
-      return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${this.prAction.maxOutputWeight} ${unit})`;
+      return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.prAction.maxOutputWeight } ${ unit })`;
     }
   }
 
@@ -1795,6 +1813,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
   }
 
   deleteTransaction(i: number) {
+    // console.log("DELETING I", i, this.actionType, this.showLeftSide)
     if (!this.showLeftSide) return
     if (this.actionType === 'SHIPMENT') {
       (this.outputStockOrderForm.get('inputTransactions') as FormArray).removeAt(i)
@@ -1987,11 +2006,11 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit {
   }
 
   get inputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, "label") : ""}`
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, "label") : "" }`
   }
 
   get outputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.measurementUnitType, "label") : ""}`
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${ this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.measurementUnitType, "label") : "" }`
   }
 
   get inputFacility() {

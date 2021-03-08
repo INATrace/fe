@@ -7,6 +7,7 @@ import { Label, Color } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ViewportScroller } from '@angular/common';
+import { PublicService } from 'src/api-chain/api/public.service';
 
 @Component({
   selector: 'app-front-page-fair-prices',
@@ -23,7 +24,7 @@ export class FrontPageFairPricesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private publicController: PublicControllerService,
-    private chainStockOrderController: StockOrderService,
+    private chainPublicController: PublicService,
     private scroll: ViewportScroller
   ) { }
 
@@ -66,7 +67,7 @@ export class FrontPageFairPricesComponent implements OnInit {
 
     if (this.soid != 'EMPTY') {
 
-      let res = await this.chainStockOrderController.getB2CDataForStockOrder(this.soid, true).pipe(take(1)).toPromise();
+      let res = await this.chainPublicController.getB2CDataForStockOrder(this.soid, true).pipe(take(1)).toPromise();
       if (res && res.status === "OK" && res.data && res.data.length >= 1) {
         this.numberOrder = res.data[0].orderId;
       }

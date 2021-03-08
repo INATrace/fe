@@ -19,6 +19,7 @@
 
 
 import { ApiAddress } from './apiAddress';
+import { ChainFileInfo } from './chainFileInfo';
 
 
 /**
@@ -30,7 +31,7 @@ export interface ChainOrganization {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainOrganization.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -71,7 +72,7 @@ export interface ChainOrganization {
     /**
      * Logo
      */
-    logo?: any;
+    logo?: ChainFileInfo;
     /**
      * name of manager / CEO
      */
@@ -170,6 +171,15 @@ export namespace ChainOrganization {
         webPage = 'webPage'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -222,11 +232,12 @@ export namespace ChainOrganization {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainOrganization.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainOrganization',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -343,15 +354,16 @@ export namespace ChainOrganization {
                     complexType: ''
                 },
                 {
+                    metadata: ChainFileInfo.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'logo',
                     classname: 'ChainOrganization',
-                    dataType: 'any',
-                    isPrimitiveType: true,
+                    dataType: 'ChainFileInfo',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ChainFileInfo'
                 },
                 {
                     isReadOnly: false,

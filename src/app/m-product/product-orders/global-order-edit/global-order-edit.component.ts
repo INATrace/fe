@@ -284,7 +284,7 @@ export class GlobalOrderEditComponent implements OnInit {
         fullfilledQuantity: 0,
         availableQuantity: 0,
         productionDate: this.calcToday(),
-        orderType: 'GENERAL_ORDER',
+        orderType: ChainStockOrder.OrderTypeEnum.GENERALORDER,
         // processingAction: this.prAction,
         // ...commonFields,
         quoteFacilityId: dbKey((orderData as any).inputFacilityForm),

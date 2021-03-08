@@ -162,7 +162,7 @@ export namespace ListOpenOrdersForFacility {
     export interface PartialParamMap {
       facilityId: string;
       openOnly?: boolean;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       sortBy?: string;
       limit?: number;
       offset?: number;
@@ -211,7 +211,7 @@ export namespace ListOpenOrdersForOrganization {
     export interface PartialParamMap {
       organizationId: string;
       openOnly?: boolean;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       sortBy?: string;
       limit?: number;
       offset?: number;
@@ -695,10 +695,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProductOrder>;
-    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProductOrder>>;
-    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProductOrder>>;
-    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProductOrder>;
+    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProductOrder>>;
+    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProductOrder>>;
+    public listOpenOrdersForFacility(facilityId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling listOpenOrdersForFacility.');
         }
@@ -805,10 +805,10 @@ export class OrderService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProductOrder>;
-    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProductOrder>>;
-    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProductOrder>>;
-    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: any, sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProductOrder>;
+    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProductOrder>>;
+    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProductOrder>>;
+    public listOpenOrdersForOrganization(organizationId: string, openOnly?: boolean, sort?: 'ASC' | 'DESC', sortBy?: string, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (organizationId === null || organizationId === undefined) {
             throw new Error('Required parameter organizationId was null or undefined when calling listOpenOrdersForOrganization.');
         }

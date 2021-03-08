@@ -35,7 +35,7 @@ export interface ChainUserCustomer {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainUserCustomer.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -83,7 +83,7 @@ export interface ChainUserCustomer {
     /**
      * Gender of the customer
      */
-    gender: any;
+    gender: ChainUserCustomer.GenderEnum;
     location?: ChainLocation;
     /**
      * Human readable customer identificator
@@ -191,6 +191,24 @@ export namespace ChainUserCustomer {
         userCustomerId = 'userCustomerId'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of gender.
+     */
+    export enum GenderEnum {
+        MALE = 'MALE',
+        FEMALE = 'FEMALE',
+        OTHER = 'OTHER'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -243,11 +261,12 @@ export namespace ChainUserCustomer {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainUserCustomer.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainUserCustomer',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -375,11 +394,12 @@ export namespace ChainUserCustomer {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainUserCustomer.GenderEnum',
                     required: true,
                     name: 'gender',
                     classname: 'ChainUserCustomer',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

@@ -18,7 +18,6 @@
  */
 
 
-import { ApiDefaultResponseStatusEnum } from './apiDefaultResponseStatusEnum';
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 import { ProcessingOrderHistory } from './processingOrderHistory';
 
@@ -34,7 +33,10 @@ export interface ApiResponseProcessingOrderHistoryArray {
      * Simple message to explain client developers the reason for error.
      */
     errorMessage?: string;
-    status: ApiDefaultResponseStatusEnum;
+    /**
+     * All possible values of status.
+     */
+    status: ApiResponseProcessingOrderHistoryArray.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -55,8 +57,27 @@ export namespace ApiResponseProcessingOrderHistoryArray {
          * Simple message to explain client developers the reason for error.
          */
         errorMessage = 'errorMessage',
+        /**
+         * All possible values of status.
+         */
         status = 'status',
         validationErrorDetails = 'validationErrorDetails'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        OK = 'OK',
+        ERROR = 'ERROR',
+        REQUESTBODYERROR = 'REQUEST_BODY_ERROR',
+        VALIDATIONERROR = 'VALIDATION_ERROR',
+        TOOMANYREQUESTS = 'TOO_MANY_REQUESTS',
+        UNAUTHORIZED = 'UNAUTHORIZED',
+        AUTHERROR = 'AUTH_ERROR',
+        UPSTREAMHTTPERROR = 'UPSTREAM_HTTP_ERROR',
+        INVALIDREQUEST = 'INVALID_REQUEST',
+        NOTIMPLEMENTED = 'NOT_IMPLEMENTED'
     }
 
 
@@ -100,16 +121,16 @@ export namespace ApiResponseProcessingOrderHistoryArray {
                     complexType: ''
                 },
                 {
-                    metadata: ApiDefaultResponseStatusEnum.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseProcessingOrderHistoryArray.StatusEnum',
                     required: true,
                     name: 'status',
                     classname: 'ApiResponseProcessingOrderHistoryArray',
-                    dataType: 'ApiDefaultResponseStatusEnum',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiDefaultResponseStatusEnum'
+                    complexType: ''
                 },
                 {
                     metadata: ApiValidationErrorDetails.formMetadata,

@@ -21,6 +21,7 @@ import { ChainPayment } from 'src/api-chain/model/chainPayment';
 import { ChainSemiProduct } from 'src/api-chain/model/chainSemiProduct';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
+import { FieldDefinition } from 'src/api-chain/model/fieldDefinition';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
@@ -587,19 +588,19 @@ export class StockPurchaseOrderEditComponent implements OnInit {
         fields: [
           {
             label: "Date",
-            type: "date",
+            type: FieldDefinition.TypeEnum.Date, //"date",
             required: true,
             stringValue: item.value.formalCreationDate
           },
           {
             label: "Type",
-            type: "text",
+            type: FieldDefinition.TypeEnum.Text,  //"text",
             required: true,
             stringValue: item.value.type
           },
           {
             label: "Document",
-            type: "file",
+            type: FieldDefinition.TypeEnum.File,//"file",
             required: true,
             files: [
               item.value.document

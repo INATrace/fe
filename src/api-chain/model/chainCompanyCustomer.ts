@@ -31,7 +31,7 @@ export interface ChainCompanyCustomer {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainCompanyCustomer.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -63,7 +63,7 @@ export interface ChainCompanyCustomer {
     /**
      * Type of company customer;
      */
-    type: any;
+    type: ChainCompanyCustomer.TypeEnum;
     /**
      * Organization id. Set automatically from companyId;
      */
@@ -187,6 +187,23 @@ export namespace ChainCompanyCustomer {
         semiProductPrices = 'semiProductPrices'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        CUSTOMER = 'CUSTOMER',
+        OTHER = 'OTHER'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -239,11 +256,12 @@ export namespace ChainCompanyCustomer {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainCompanyCustomer.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainCompanyCustomer',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -327,11 +345,12 @@ export namespace ChainCompanyCustomer {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainCompanyCustomer.TypeEnum',
                     required: true,
                     name: 'type',
                     classname: 'ChainCompanyCustomer',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

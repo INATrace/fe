@@ -9,6 +9,7 @@ import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ViewportScroller } from '@angular/common';
+import { PublicService } from 'src/api-chain/api/public.service';
 
 @Component({
   selector: 'app-front-page-quality',
@@ -25,7 +26,7 @@ export class FrontPageQualityComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private publicController: PublicControllerService,
-    private chainStockOrderController: StockOrderService,
+    private chainPublicController: PublicService,
     private chainOrganizationController: OrganizationService,
     private scroll: ViewportScroller
   ) { }
@@ -88,7 +89,7 @@ export class FrontPageQualityComponent implements OnInit {
           }
         }
 
-        let res = await this.chainStockOrderController.getB2CDataForStockOrder(this.soid, false, true, true).pipe(take(1)).toPromise();
+        let res = await this.chainPublicController.getB2CDataForStockOrder(this.soid, false, true, true).pipe(take(1)).toPromise();
         if (res && res.status === "OK" && res.data && res.data.length >= 1) {
 
           if (res.data.length >= 2) {

@@ -19,6 +19,7 @@
 
 
 import { ChainMeasureUnitType } from './chainMeasureUnitType';
+import { ChainProduct } from './chainProduct';
 
 
 /**
@@ -30,7 +31,7 @@ export interface ChainSemiProduct {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainSemiProduct.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -75,7 +76,7 @@ export interface ChainSemiProduct {
     /**
      * Product object. Set automatically on read. Ignored on write (not stored, obtained through productId)
      */
-    product?: any;
+    product?: ChainProduct;
 }
 
 /**
@@ -138,6 +139,15 @@ export namespace ChainSemiProduct {
         product = 'product'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -190,11 +200,12 @@ export namespace ChainSemiProduct {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainSemiProduct.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainSemiProduct',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -322,15 +333,16 @@ export namespace ChainSemiProduct {
                     complexType: ''
                 },
                 {
+                    metadata: ChainProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'product',
                     classname: 'ChainSemiProduct',
-                    dataType: 'any',
-                    isPrimitiveType: true,
+                    dataType: 'ChainProduct',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ChainProduct'
                 },
             ],
             validators: {

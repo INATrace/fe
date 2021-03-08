@@ -349,7 +349,7 @@ export class ProductLabelTransactionListComponent implements OnInit {
 
   async changeTransactionStatus(transaction: ChainTransaction, newStatus: string) {
     if (['EXECUTED', 'CANCELED'].indexOf(newStatus) < 0) return
-    transaction.status = newStatus
+    transaction.status = newStatus as ChainTransaction.StatusEnum
     if (newStatus === 'CANCELED') {
       transaction.inputQuantity = 0
       transaction.outputQuantity = 0

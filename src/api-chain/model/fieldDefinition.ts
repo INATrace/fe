@@ -33,7 +33,7 @@ export interface FieldDefinition {
     /**
      * Field type (data taype)
      */
-    type: any;
+    type: FieldDefinition.TypeEnum;
     /**
      * Field is required or not
      */
@@ -57,7 +57,7 @@ export interface FieldDefinition {
     /**
      * Object value for type 'object'
      */
-    objectValue?: { [key: string]: any; };
+    objectValue?: any;
     /**
      * Number of files if the type is 'file'. For unlimited number use 'any'.
      */
@@ -118,6 +118,23 @@ export namespace FieldDefinition {
         files = 'files'
     }
 
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        String = 'string',
+        Text = 'text',
+        Number = 'number',
+        Integer = 'integer',
+        Date = 'date',
+        Object = 'object',
+        Array = 'array',
+        Price = 'price',
+        ExchangeRate = 'exchange_rate',
+        Timestamp = 'timestamp',
+        File = 'file'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -137,11 +154,12 @@ export namespace FieldDefinition {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'FieldDefinition.TypeEnum',
                     required: true,
                     name: 'type',
                     classname: 'FieldDefinition',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -207,7 +225,7 @@ export namespace FieldDefinition {
                     required: false,
                     name: 'objectValue',
                     classname: 'FieldDefinition',
-                    dataType: '{ [key: string]: any; }',
+                    dataType: 'any',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

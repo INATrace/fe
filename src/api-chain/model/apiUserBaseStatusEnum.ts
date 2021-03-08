@@ -23,39 +23,11 @@
 /**
  * All possible values of status.
  */
+export type ApiUserBaseStatusEnum = 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED';
 
-export interface ApiUserBaseStatusEnum { 
-}
-
-/**
- * Namespace for property- and property-value-enumerations of ApiUserBaseStatusEnum.
- */
-export namespace ApiUserBaseStatusEnum {
-    /**
-     * All properties of ApiUserBaseStatusEnum.
-     */
-    export enum Properties {
-    }
-
-
-    export function formMetadata() {
-        return  {
-            metadata: formMetadata,
-            classname: 'ApiUserBaseStatusEnum',
-            vars: [
-            ],
-            validators: {
-            }
-        }
-    }
-
-  // export const ApiUserBaseStatusEnumValidationScheme = {
-  //     validators: [],
-  //     fields: {
-  //     }
-  // } as SimpleValidationScheme<ApiUserBaseStatusEnum>;
-
-
-}
-
-
+export const ApiUserBaseStatusEnum = {
+    UNCONFIRMED: 'UNCONFIRMED' as ApiUserBaseStatusEnum,
+    CONFIRMEDEMAIL: 'CONFIRMED_EMAIL' as ApiUserBaseStatusEnum,
+    ACTIVE: 'ACTIVE' as ApiUserBaseStatusEnum,
+    DEACTIVATED: 'DEACTIVATED' as ApiUserBaseStatusEnum
+};

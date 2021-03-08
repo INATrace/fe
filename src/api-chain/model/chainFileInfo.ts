@@ -29,7 +29,7 @@ export interface ChainFileInfo {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainFileInfo.ModeEnum;
     /**
      * Storage key used for access to the actual file.
      */
@@ -77,6 +77,15 @@ export namespace ChainFileInfo {
          * File size.
          */
         size = 'size'
+    }
+
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
     }
 
 
@@ -131,11 +140,12 @@ export namespace ChainFileInfo {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainFileInfo.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainFileInfo',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

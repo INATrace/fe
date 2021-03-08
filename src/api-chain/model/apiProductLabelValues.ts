@@ -19,7 +19,6 @@
 
 
 import { ApiProductLabelFieldValue } from './apiProductLabelFieldValue';
-import { ApiProductLabelStatusEnum } from './apiProductLabelStatusEnum';
 
 
 
@@ -36,7 +35,10 @@ export interface ApiProductLabelValues {
      * Product id
      */
     productId?: number;
-    status?: ApiProductLabelStatusEnum;
+    /**
+     * All possible values of status.
+     */
+    status?: ApiProductLabelValues.StatusEnum;
     /**
      * label title
      */
@@ -67,6 +69,9 @@ export namespace ApiProductLabelValues {
          * Product id
          */
         productId = 'productId',
+        /**
+         * All possible values of status.
+         */
         status = 'status',
         /**
          * label title
@@ -76,6 +81,14 @@ export namespace ApiProductLabelValues {
          * Product label uuid (for url)
          */
         uuid = 'uuid'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNPUBLISHED = 'UNPUBLISHED',
+        PUBLISHED = 'PUBLISHED'
     }
 
 
@@ -119,16 +132,16 @@ export namespace ApiProductLabelValues {
                     complexType: ''
                 },
                 {
-                    metadata: ApiProductLabelStatusEnum.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelValues.StatusEnum',
                     required: false,
                     name: 'status',
                     classname: 'ApiProductLabelValues',
-                    dataType: 'ApiProductLabelStatusEnum',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiProductLabelStatusEnum'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,

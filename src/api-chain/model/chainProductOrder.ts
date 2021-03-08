@@ -34,7 +34,7 @@ export interface ChainProductOrder {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainProductOrder.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -162,6 +162,15 @@ export namespace ChainProductOrder {
         open = 'open'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -214,11 +223,12 @@ export namespace ChainProductOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProductOrder.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainProductOrder',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

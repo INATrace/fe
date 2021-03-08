@@ -260,7 +260,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit 
             role: user.role,
             status: user.status
           }
-          let res = await this.chainUserService.postUser(obj).pipe(take(1)).toPromise()
+          let res = await this.chainUserService.postUser(obj as any).pipe(take(1)).toPromise()
           if (res && 'OK' != res.status) {
             console.log("USER NOT imported to CHAIN", res);
           }

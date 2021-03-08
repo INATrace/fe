@@ -195,7 +195,7 @@ export namespace ListInputTransactionsForProductUnitId {
      */
     export interface PartialParamMap {
       stockOrderId: string;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
     }
@@ -236,7 +236,7 @@ export namespace ListOutputTransactionsForProductUnitId {
      */
     export interface PartialParamMap {
       stockOrderId: string;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
     }
@@ -288,7 +288,7 @@ export namespace ListTransactionQuery {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -367,7 +367,7 @@ export namespace ListTransactionsForOrganization {
       /**
        * sort order ASC or DESC
        */
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       /**
        * query limit
        */
@@ -1014,10 +1014,10 @@ export class TransactionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
-    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
-    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
-    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
+    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
+    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
+    public listInputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (stockOrderId === null || stockOrderId === undefined) {
             throw new Error('Required parameter stockOrderId was null or undefined when calling listInputTransactionsForProductUnitId.');
         }
@@ -1114,10 +1114,10 @@ export class TransactionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
-    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
-    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
-    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
+    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
+    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
+    public listOutputTransactionsForProductUnitId(stockOrderId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (stockOrderId === null || stockOrderId === undefined) {
             throw new Error('Required parameter stockOrderId was null or undefined when calling listOutputTransactionsForProductUnitId.');
         }
@@ -1224,10 +1224,10 @@ export class TransactionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
-    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
-    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
-    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
+    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
+    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
+    public listTransactionQuery(sourceFacilityId?: string, targetFacilityId?: string, semiProductId?: string, startDate?: string, endDate?: string, query?: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (sourceFacilityId !== undefined && sourceFacilityId !== null) {
@@ -1339,10 +1339,10 @@ export class TransactionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listTransactionsForOrganization(organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
-    public listTransactionsForOrganization(organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
-    public listTransactionsForOrganization(organizationId: string, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
-    public listTransactionsForOrganization(organizationId: string, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listTransactionsForOrganization(organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainTransaction>;
+    public listTransactionsForOrganization(organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainTransaction>>;
+    public listTransactionsForOrganization(organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainTransaction>>;
+    public listTransactionsForOrganization(organizationId: string, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (organizationId === null || organizationId === undefined) {
             throw new Error('Required parameter organizationId was null or undefined when calling listTransactionsForOrganization.');
         }

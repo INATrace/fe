@@ -238,7 +238,7 @@ export class ProductLabelStockPaymentListComponent implements OnInit {
 
   async confirmPayment(payment: ChainPayment) {
     delete payment['selected'];
-    payment.paymentStatus = "CONFIRMED";
+    payment.paymentStatus = ChainPayment.PaymentStatusEnum.CONFIRMED //"CONFIRMED";
     payment.paymentConfirmedAtTime = new Date().toUTCString();
     let resUser = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
     if (resUser && resUser.status === "OK" && resUser.data) {

@@ -23,39 +23,9 @@
 /**
  * All possible values of role.
  */
+export type ApiUserBaseRoleEnum = 'USER' | 'ADMIN';
 
-export interface ApiUserBaseRoleEnum { 
-}
-
-/**
- * Namespace for property- and property-value-enumerations of ApiUserBaseRoleEnum.
- */
-export namespace ApiUserBaseRoleEnum {
-    /**
-     * All properties of ApiUserBaseRoleEnum.
-     */
-    export enum Properties {
-    }
-
-
-    export function formMetadata() {
-        return  {
-            metadata: formMetadata,
-            classname: 'ApiUserBaseRoleEnum',
-            vars: [
-            ],
-            validators: {
-            }
-        }
-    }
-
-  // export const ApiUserBaseRoleEnumValidationScheme = {
-  //     validators: [],
-  //     fields: {
-  //     }
-  // } as SimpleValidationScheme<ApiUserBaseRoleEnum>;
-
-
-}
-
-
+export const ApiUserBaseRoleEnum = {
+    USER: 'USER' as ApiUserBaseRoleEnum,
+    ADMIN: 'ADMIN' as ApiUserBaseRoleEnum
+};

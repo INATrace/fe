@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { ViewportScroller } from '@angular/common';
+import { PublicService } from 'src/api-chain/api/public.service';
 
 @Component({
   selector: 'app-front-page-producers',
@@ -23,7 +24,7 @@ export class FrontPageProducersComponent implements OnInit {
     private route: ActivatedRoute,
     private publicController: PublicControllerService,
     private sanitizer: DomSanitizer,
-    private chainStockOrderController: StockOrderService,
+    private chainPublicController: PublicService,
     private chainOrganizationController: OrganizationService,
     private scroll: ViewportScroller
   ) { }
@@ -84,7 +85,7 @@ export class FrontPageProducersComponent implements OnInit {
 
     if (this.soid != 'EMPTY') {
 
-      let res = await this.chainStockOrderController.getB2CDataForStockOrder(this.soid, false, true).pipe(take(1)).toPromise();
+      let res = await this.chainPublicController.getB2CDataForStockOrder(this.soid, false, true).pipe(take(1)).toPromise();
       if (res && res.status === "OK" && res.data && res.data.length >= 1) {
         this.companyNameCooperative = res.data[0].cooperativeName;
 

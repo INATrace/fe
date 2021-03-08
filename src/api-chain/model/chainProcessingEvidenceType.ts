@@ -29,7 +29,7 @@ export interface ChainProcessingEvidenceType {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainProcessingEvidenceType.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -57,7 +57,7 @@ export interface ChainProcessingEvidenceType {
     /**
      * Type of evidence type. DOCUMENT is prescribed (date, type, document). FIELD is any other. Some others can be added.
      */
-    type?: any;
+    type?: ChainProcessingEvidenceType.TypeEnum;
     /**
      * Whether the evidence is of fairness type
      */
@@ -151,6 +151,24 @@ export namespace ChainProcessingEvidenceType {
         requiredOneOfGroupIdForQuote = 'requiredOneOfGroupIdForQuote'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        DOCUMENT = 'DOCUMENT',
+        FIELD = 'FIELD',
+        CALCULATED = 'CALCULATED'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -203,11 +221,12 @@ export namespace ChainProcessingEvidenceType {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProcessingEvidenceType.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainProcessingEvidenceType',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -280,11 +299,12 @@ export namespace ChainProcessingEvidenceType {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainProcessingEvidenceType.TypeEnum',
                     required: false,
                     name: 'type',
                     classname: 'ChainProcessingEvidenceType',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

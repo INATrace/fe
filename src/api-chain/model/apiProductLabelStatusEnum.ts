@@ -23,39 +23,9 @@
 /**
  * All possible values of status.
  */
+export type ApiProductLabelStatusEnum = 'UNPUBLISHED' | 'PUBLISHED';
 
-export interface ApiProductLabelStatusEnum { 
-}
-
-/**
- * Namespace for property- and property-value-enumerations of ApiProductLabelStatusEnum.
- */
-export namespace ApiProductLabelStatusEnum {
-    /**
-     * All properties of ApiProductLabelStatusEnum.
-     */
-    export enum Properties {
-    }
-
-
-    export function formMetadata() {
-        return  {
-            metadata: formMetadata,
-            classname: 'ApiProductLabelStatusEnum',
-            vars: [
-            ],
-            validators: {
-            }
-        }
-    }
-
-  // export const ApiProductLabelStatusEnumValidationScheme = {
-  //     validators: [],
-  //     fields: {
-  //     }
-  // } as SimpleValidationScheme<ApiProductLabelStatusEnum>;
-
-
-}
-
-
+export const ApiProductLabelStatusEnum = {
+    UNPUBLISHED: 'UNPUBLISHED' as ApiProductLabelStatusEnum,
+    PUBLISHED: 'PUBLISHED' as ApiProductLabelStatusEnum
+};

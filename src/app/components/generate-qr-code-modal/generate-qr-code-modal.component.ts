@@ -46,7 +46,8 @@ export class GenerateQRCodeModalComponent implements OnInit {
     if (resp && resp.status === 'OK') {
       this.chainProduct = resp.data
     }
-    this.languageCode = LanguageCodeHelper.getCurrentLocale().toLowerCase();
+    // this.languageCode = LanguageCodeHelper.getCurrentLocale().toLowerCase();
+    this.languageCode = "de"; // set de as defualt
     this.labelEntry = this.chainProduct.labels.find(label => {
       return !!label.fields.find(x => x.name === 'settings.language' && ((x as any).value as string).toLowerCase() === this.languageCode)
     })

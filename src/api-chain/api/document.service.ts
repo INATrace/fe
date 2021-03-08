@@ -222,15 +222,15 @@ export class DocumentService {
   public uploadFileByMap(
     map: UploadFile.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+    reportProgress?: boolean): Observable<any>;
   public uploadFileByMap(
     map: UploadFile.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+    reportProgress?: boolean): Observable<HttpResponse<any>>;
   public uploadFileByMap(
     map: UploadFile.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+    reportProgress?: boolean): Observable<HttpEvent<any>>;
   public uploadFileByMap(
     map: UploadFile.PartialParamMap,
     observe: any = 'body',
@@ -248,9 +248,9 @@ export class DocumentService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public uploadFile(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
-    public uploadFile(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
-    public uploadFile(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public uploadFile(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<any>;
+    public uploadFile(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<any>>;
+    public uploadFile(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<any>>;
     public uploadFile(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -274,7 +274,7 @@ export class DocumentService {
                 }
             }
 
-        const handle = this.httpClient.post<{ [key: string]: any; }>(`${this.configuration.basePath}/chain-api/data/document/upload`,
+        const handle = this.httpClient.post<any>(`${this.configuration.basePath}/chain-api/data/document/upload`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,

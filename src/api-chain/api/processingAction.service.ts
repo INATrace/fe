@@ -109,7 +109,7 @@ export namespace ListProcessingActionsForProductAndOrganization {
       productId: string;
       organizationId: string;
       skuOnly?: boolean;
-      sort?: any;
+      sort?: 'ASC' | 'DESC';
       limit?: number;
       offset?: number;
     }
@@ -429,10 +429,10 @@ export class ProcessingActionService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProcessingAction>;
-    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProcessingAction>>;
-    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: any, limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProcessingAction>>;
-    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: any, limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainProcessingAction>;
+    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainProcessingAction>>;
+    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainProcessingAction>>;
+    public listProcessingActionsForProductAndOrganization(productId: string, organizationId: string, skuOnly?: boolean, sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling listProcessingActionsForProductAndOrganization.');
         }

@@ -33,7 +33,7 @@ export interface ChainBulkPayment {
     _id?: string;
     _rev?: string;
     dbKey?: string;
-    mode__?: any;
+    mode__?: ChainBulkPayment.ModeEnum;
     /**
      * Timestamp of creation
      */
@@ -66,7 +66,7 @@ export interface ChainBulkPayment {
     /**
      * Payment purpose type.
      */
-    paymentPurposeType?: any;
+    paymentPurposeType?: ChainBulkPayment.PaymentPurposeTypeEnum;
     /**
      * Payment description.
      */
@@ -191,6 +191,26 @@ export namespace ChainBulkPayment {
         payments = 'payments'
     }
 
+    /**
+     * All possible values of mode__.
+     */
+    export enum ModeEnum {
+        Insert = 'insert',
+        InsertAsIs = 'insert_as_is',
+        Update = 'update'
+    }
+
+    /**
+     * All possible values of paymentPurposeType.
+     */
+    export enum PaymentPurposeTypeEnum {
+        ADVANCEPAYMENT = 'ADVANCE_PAYMENT',
+        FIRSTINSTALLMENT = 'FIRST_INSTALLMENT',
+        SECONDINSTALLMENT = 'SECOND_INSTALLMENT',
+        WOMENPREMIUM = 'WOMEN_PREMIUM',
+        INVOICEPAYMENT = 'INVOICE_PAYMENT'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -243,11 +263,12 @@ export namespace ChainBulkPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainBulkPayment.ModeEnum',
                     required: false,
                     name: 'mode__',
                     classname: 'ChainBulkPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -343,11 +364,12 @@ export namespace ChainBulkPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ChainBulkPayment.PaymentPurposeTypeEnum',
                     required: false,
                     name: 'paymentPurposeType',
                     classname: 'ChainBulkPayment',
-                    dataType: 'any',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
