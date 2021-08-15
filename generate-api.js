@@ -2,7 +2,7 @@ var fs = require('fs');
 var converter = require('api-spec-converter');
 var child_process = require('child_process');
 
-var swagger_docs_host = ''
+var swagger_docs_host = 'http://localhost:8080/v2/api-docs'
 
 
 // var swagger_docs_host = null

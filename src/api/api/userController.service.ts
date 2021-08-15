@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * INATrace Services API swagger documentation
+ * Abelium INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -674,7 +674,7 @@ export namespace UpdateProfileUsingPUT {
 })
 export class UserControllerService {
 
-    protected basePath = 'https://coffee.matheo.si';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

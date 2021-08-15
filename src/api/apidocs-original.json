@@ -1,16 +1,901 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "INATrace Services API swagger documentation",
+    "description": "Abelium INATrace Services API swagger documentation",
     "title": "INATrace Services API",
     "version": "1.0"
   },
   "servers": [
     {
-      "url": "https://coffee.matheo.si/"
+      "url": "http://localhost:8080/"
     }
   ],
   "paths": {
+    "/api/chain/action-type": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "action-type-controller"
+        ],
+        "operationId": "createOrUpdateActionTypeUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiActionType"
+              }
+            }
+          },
+          "description": "apiActionType",
+          "required": true
+        },
+        "summary": "Create or update action type. If ID is provided the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/action-type/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiActionType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "action-type-controller"
+        ],
+        "operationId": "getActionTypeListUsingGET",
+        "summary": "Get a paginated list of action types."
+      }
+    },
+    "/api/chain/action-type/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Action type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "action-type-controller"
+        ],
+        "operationId": "deleteActionTypeUsingDELETE",
+        "summary": "Deletes an action type with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Record id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiActionType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "action-type-controller"
+        ],
+        "operationId": "getActionTypeUsingGET",
+        "summary": "Get a single action type with the provided ID."
+      }
+    },
+    "/api/chain/facility-type": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiFacilityType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-type-controller"
+        ],
+        "operationId": "createOrUpdateFacilityTypeUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiFacilityType"
+              }
+            }
+          },
+          "description": "apiFacilityType",
+          "required": true
+        },
+        "summary": "Create or update facility type. If ID is provided, the entity entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/facility-type/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacilityType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-type-controller"
+        ],
+        "operationId": "getFacilityTypeListUsingGET",
+        "summary": "Get a paginated list of facility types."
+      }
+    },
+    "/api/chain/facility-type/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Facility type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-type-controller"
+        ],
+        "operationId": "deleteFacilityTypeUsingDELETE",
+        "summary": "Deletes a facility type with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Facility type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiFacilityType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-type-controller"
+        ],
+        "operationId": "getFacilityTypeUsingGET",
+        "summary": "Get a single facility type with the provided ID."
+      }
+    },
+    "/api/chain/grade-abbreviation": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiGradeAbbreviation_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "grade-abbreviation-controller"
+        ],
+        "operationId": "createOrUpdateGradeAbbreviationUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiGradeAbbreviation"
+              }
+            }
+          },
+          "description": "apiGradeAbbreviation",
+          "required": true
+        },
+        "summary": "Create or update grade abbreviation. If ID is provided, the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/grade-abbreviation/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiGradeAbbreviation_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "grade-abbreviation-controller"
+        ],
+        "operationId": "getGradeAbbreviationListUsingGET",
+        "summary": "Get a paginated list of grade abbreviations."
+      }
+    },
+    "/api/chain/grade-abbreviation/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Grade abbreviation ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "grade-abbreviation-controller"
+        ],
+        "operationId": "deleteGradeAbbreviationUsingDELETE",
+        "summary": "Deletes a grade abbreviation with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Grade abbreviation ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiGradeAbbreviation_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "grade-abbreviation-controller"
+        ],
+        "operationId": "getGradeAbbreviationUsingGET",
+        "summary": "Get a single grade abbreviation with the provided ID."
+      }
+    },
+    "/api/chain/measure-unit-type": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiMeasureUnitType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "measure-unit-type-controller"
+        ],
+        "operationId": "createOrUpdateMeasurementUnitTypeUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiMeasureUnitType"
+              }
+            }
+          },
+          "description": "apiMeasureUnitType",
+          "required": true
+        },
+        "summary": "Create or update measurement unit type. If ID is provided, the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/measure-unit-type/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiMeasureUnitType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "measure-unit-type-controller"
+        ],
+        "operationId": "getMeasureUnitTypeListUsingGET",
+        "summary": "Get a paginated list of measurement types."
+      }
+    },
+    "/api/chain/measure-unit-type/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Measurement unit type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "measure-unit-type-controller"
+        ],
+        "operationId": "deleteMeasurementUnitTypeUsingDELETE",
+        "summary": "Deletes a measurement with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Measurement unit type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiMeasureUnitType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "measure-unit-type-controller"
+        ],
+        "operationId": "getMeasurementUnitTypeUsingGET",
+        "summary": "Get a single measurement unit type with the provided ID."
+      }
+    },
+    "/api/chain/processing-evidence-type": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingEvidenceType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "createOrUpdateProcessingEvidenceTypeUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProcessingEvidenceType"
+              }
+            }
+          },
+          "description": "apiProcessingEvidenceType",
+          "required": true
+        },
+        "summary": "Create or update processing evidence type. If ID is provided, the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/processing-evidence-type/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "getProcessingEvidenceTypeListUsingGET",
+        "summary": "Get a paginated list of processing evidence types."
+      }
+    },
+    "/api/chain/processing-evidence-type/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Processing evidence type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "deleteProcessingEvidenceTypeUsingDELETE",
+        "summary": "Deletes a processing evidence type with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Processing evidence type ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingEvidenceType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "getProcessingEvidenceTypeUsingGET",
+        "summary": "Get a single processing evidence type with the provided ID."
+      }
+    },
     "/api/common/countries": {
       "get": {
         "parameters": [
@@ -3594,12 +4479,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3609,19 +4491,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3631,19 +4510,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3653,19 +4529,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3675,19 +4548,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3697,19 +4567,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3719,19 +4586,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -3741,8 +4605,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -3816,6 +4680,24 @@
       }
     },
     "schemas": {
+      "ApiActionType": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiAddress": {
         "properties": {
           "address": {
@@ -4544,6 +5426,24 @@
         },
         "type": "object"
       },
+      "ApiFacilityType": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiGeoAddress": {
         "properties": {
           "address": {
@@ -4588,6 +5488,24 @@
           },
           "value": {
             "description": "Global settings value",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiGradeAbbreviation": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
             "type": "string"
           }
         },
@@ -4754,6 +5672,55 @@
         ],
         "type": "object"
       },
+      "ApiMeasureUnitType": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
+            "type": "string"
+          },
+          "underlyingMeasurementUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "the underlying measurement unit type"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiActionType_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiActionType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiCompanyCustomer_": {
         "properties": {
           "count": {
@@ -4835,6 +5802,60 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiFacilityType_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiFacilityType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiGradeAbbreviation_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiGradeAbbreviation"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiKnowledgeBlogBase_": {
         "properties": {
           "count": {
@@ -4846,6 +5867,60 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiKnowledgeBlogBase"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiMeasureUnitType_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiMeasureUnitType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiProcessingEvidenceType_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceType"
             },
             "type": "array"
           },
@@ -4997,6 +6072,49 @@
         },
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiActionType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiActionType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiCompanyCustomer_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -5126,11 +6244,183 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiFacilityType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiFacilityType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiGradeAbbreviation_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiGradeAbbreviation_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiKnowledgeBlogBase_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiKnowledgeBlogBase_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiMeasureUnitType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiMeasureUnitType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiProcessingEvidenceType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingEvidenceType_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -5424,6 +6714,62 @@
           "document": {
             "$ref": "#/components/schemas/ApiDocument",
             "description": "certificate for this document"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingEvidenceType": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "fairness": {
+            "description": "if evidence is of fairness type",
+            "example": false,
+            "type": "boolean"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
+            "type": "string"
+          },
+          "provenance": {
+            "description": "if evidence is of provenance type",
+            "example": false,
+            "type": "boolean"
+          },
+          "quality": {
+            "description": "if evidence is of quality type",
+            "example": false,
+            "type": "boolean"
+          },
+          "required": {
+            "description": "whether the evidence is required",
+            "example": false,
+            "type": "boolean"
+          },
+          "requiredOnQuote": {
+            "description": "whether the evidence is required on quote",
+            "example": false,
+            "type": "boolean"
+          },
+          "requiredOneOfGroupIdForQuote": {
+            "description": "a group in which at least one document has to be provided",
+            "type": "string"
+          },
+          "type": {
+            "description": "type of evidence",
+            "enum": [
+              "DOCUMENT",
+              "FIELD",
+              "CALCULATED"
+            ],
+            "type": "string"
           }
         },
         "type": "object"
@@ -6166,6 +7512,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiActionType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiActionType",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiBaseEntity_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -6338,6 +7727,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiFacilityType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiFacilityType",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiGlobalSettingsValue_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -6381,11 +7813,140 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiGradeAbbreviation_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiGradeAbbreviation",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiKnowledgeBlog_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiKnowledgeBlog",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiMeasureUnitType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProcessingEvidenceType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProcessingEvidenceType",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -7418,6 +8979,10 @@
   },
   "tags": [
     {
+      "description": "Facility Type Controller",
+      "name": "facility-type-controller"
+    },
+    {
       "description": "Product Controller",
       "name": "product-controller"
     },
@@ -7438,8 +9003,24 @@
       "name": "public-controller"
     },
     {
+      "description": "Action Type Controller",
+      "name": "action-type-controller"
+    },
+    {
+      "description": "Measure Unit Type Controller",
+      "name": "measure-unit-type-controller"
+    },
+    {
       "description": "Basic Error Controller",
       "name": "basic-error-controller"
+    },
+    {
+      "description": "Grade Abbreviation Controller",
+      "name": "grade-abbreviation-controller"
+    },
+    {
+      "description": "Processing Evidence Type Controller",
+      "name": "processing-evidence-type-controller"
     }
   ]
 }
