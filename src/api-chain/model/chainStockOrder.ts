@@ -36,7 +36,7 @@ import { ChainUserCustomer } from './chainUserCustomer';
 
 
 /**
- * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label in INATrace.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
+ * Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct. Product unit is located on one facility only. It is measured by some quantity units (unitType) and by the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate) A product unit may be represented by a label in FE.  Product unit can be created from nothing (e.g. picking the coffee). In general product unit is created by some transactions (ChainTransaction). Product unit does not change its facility. Instead a product unit is transformed by a list of transactions (Chain) to different product unit either in the same facility or in some other facility.
  */
 
 export interface ChainStockOrder { 

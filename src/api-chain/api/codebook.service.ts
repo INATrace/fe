@@ -30,19 +30,16 @@ import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
 import { ApiResponseAny } from '../model/apiResponseAny';
-import { ApiResponseChainActionType } from '../model/apiResponseChainActionType';
 import { ApiResponseChainFacilityType } from '../model/apiResponseChainFacilityType';
 import { ApiResponseChainGradeAbbreviation } from '../model/apiResponseChainGradeAbbreviation';
 import { ApiResponseChainMeasureUnitType } from '../model/apiResponseChainMeasureUnitType';
 import { ApiResponseChainOrderEvidenceType } from '../model/apiResponseChainOrderEvidenceType';
 import { ApiResponseChainProcessingEvidenceType } from '../model/apiResponseChainProcessingEvidenceType';
-import { ApiResponsePaginatedListChainActionType } from '../model/apiResponsePaginatedListChainActionType';
 import { ApiResponsePaginatedListChainFacilityType } from '../model/apiResponsePaginatedListChainFacilityType';
 import { ApiResponsePaginatedListChainGradeAbbreviation } from '../model/apiResponsePaginatedListChainGradeAbbreviation';
 import { ApiResponsePaginatedListChainMeasureUnitType } from '../model/apiResponsePaginatedListChainMeasureUnitType';
 import { ApiResponsePaginatedListChainOrderEvidenceType } from '../model/apiResponsePaginatedListChainOrderEvidenceType';
 import { ApiResponsePaginatedListChainProcessingEvidenceType } from '../model/apiResponsePaginatedListChainProcessingEvidenceType';
-import { ChainActionType } from '../model/chainActionType';
 import { ChainFacilityType } from '../model/chainFacilityType';
 import { ChainGradeAbbreviation } from '../model/chainGradeAbbreviation';
 import { ChainMeasureUnitType } from '../model/chainMeasureUnitType';
@@ -51,32 +48,6 @@ import { ChainProcessingEvidenceType } from '../model/chainProcessingEvidenceTyp
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
-
-/**
- * Namespace for deleteActionType.
- */
-export namespace DeleteActionType {
-    /**
-     * Parameter map for deleteActionType.
-     */
-    export interface PartialParamMap {
-      ChainActionType: ChainActionType;
-    }
-
-    /**
-     * Enumeration of all parameters for deleteActionType.
-     */
-    export enum Parameters {
-      ChainActionType = 'ChainActionType'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteActionType
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof DeleteActionType.PartialParamMap]?: [string, ValidatorFn][]} = {
-    };
-}
 
 /**
  * Namespace for deleteFacilityType.
@@ -205,89 +176,6 @@ export namespace DeleteProcessingEvidenceType {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof DeleteProcessingEvidenceType.PartialParamMap]?: [string, ValidatorFn][]} = {
-    };
-}
-
-/**
- * Namespace for getActionType.
- */
-export namespace GetActionType {
-    /**
-     * Parameter map for getActionType.
-     */
-    export interface PartialParamMap {
-      dbId: string;
-    }
-
-    /**
-     * Enumeration of all parameters for getActionType.
-     */
-    export enum Parameters {
-      dbId = 'dbId'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getActionType
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetActionType.PartialParamMap]?: [string, ValidatorFn][]} = {
-      dbId: [
-              ['required', Validators.required],
-      ],
-    };
-}
-
-/**
- * Namespace for getActionTypeList.
- */
-export namespace GetActionTypeList {
-    /**
-     * Parameter map for getActionTypeList.
-     */
-    export interface PartialParamMap {
-      /**
-       * sort order ASC or DESC
-       */
-      sort?: 'ASC' | 'DESC';
-      /**
-       * query limit
-       */
-      limit?: number;
-      /**
-       * query offset
-       */
-      offset?: number;
-    }
-
-    /**
-     * Enumeration of all parameters for getActionTypeList.
-     */
-    export enum Parameters {
-      /**
-       * sort order ASC or DESC
-       */
-      sort = 'sort',
-      /**
-       * query limit
-       */
-      limit = 'limit',
-      /**
-       * query offset
-       */
-      offset = 'offset'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getActionTypeList
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetActionTypeList.PartialParamMap]?: [string, ValidatorFn][]} = {
-      sort: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
     };
 }
 
@@ -731,32 +619,6 @@ export namespace GetTranslationTemplates {
 }
 
 /**
- * Namespace for postActionType.
- */
-export namespace PostActionType {
-    /**
-     * Parameter map for postActionType.
-     */
-    export interface PartialParamMap {
-      ChainActionType: ChainActionType;
-    }
-
-    /**
-     * Enumeration of all parameters for postActionType.
-     */
-    export enum Parameters {
-      ChainActionType = 'ChainActionType'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of postActionType
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof PostActionType.PartialParamMap]?: [string, ValidatorFn][]} = {
-    };
-}
-
-/**
  * Namespace for postFacilityType.
  */
 export namespace PostFacilityType {
@@ -921,94 +783,6 @@ export class CodebookService {
         return false;
     }
 
-
-
-  /**
-   *  by map.
-   * Deletes action type.
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public deleteActionTypeByMap(
-    map: DeleteActionType.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseAny>;
-  public deleteActionTypeByMap(
-    map: DeleteActionType.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
-  public deleteActionTypeByMap(
-    map: DeleteActionType.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
-  public deleteActionTypeByMap(
-    map: DeleteActionType.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.deleteActionType(
-      map.ChainActionType,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * Deletes action type.
-     * @param ChainActionType 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteActionType(ChainActionType: ChainActionType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
-    public deleteActionType(ChainActionType: ChainActionType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
-    public deleteActionType(ChainActionType: ChainActionType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
-    public deleteActionType(ChainActionType: ChainActionType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (ChainActionType === null || ChainActionType === undefined) {
-            throw new Error('Required parameter ChainActionType was null or undefined when calling deleteActionType.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.post<ApiResponseAny>(`${this.configuration.basePath}/chain-api/codebook/action-type/delete`,
-            ChainActionType,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'DeleteActionType')));
-        }
-        return handle;
-    }
 
 
   /**
@@ -1453,183 +1227,6 @@ export class CodebookService {
 
   /**
    *  by map.
-   * Fetches an action type by its _id.
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getActionTypeByMap(
-    map: GetActionType.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseChainActionType>;
-  public getActionTypeByMap(
-    map: GetActionType.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseChainActionType>>;
-  public getActionTypeByMap(
-    map: GetActionType.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseChainActionType>>;
-  public getActionTypeByMap(
-    map: GetActionType.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getActionType(
-      map.dbId,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * Fetches an action type by its _id.
-     * @param dbId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getActionType(dbId: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseChainActionType>;
-    public getActionType(dbId: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseChainActionType>>;
-    public getActionType(dbId: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseChainActionType>>;
-    public getActionType(dbId: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (dbId === null || dbId === undefined) {
-            throw new Error('Required parameter dbId was null or undefined when calling getActionType.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseChainActionType>(`${this.configuration.basePath}/chain-api/codebook/action-type/${encodeURIComponent(String(dbId))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'GetActionType')));
-        }
-        return handle;
-    }
-
-
-  /**
-   *  by map.
-   * Returns paginated list of action types.
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getActionTypeListByMap(
-    map: GetActionTypeList.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponsePaginatedListChainActionType>;
-  public getActionTypeListByMap(
-    map: GetActionTypeList.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponsePaginatedListChainActionType>>;
-  public getActionTypeListByMap(
-    map: GetActionTypeList.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponsePaginatedListChainActionType>>;
-  public getActionTypeListByMap(
-    map: GetActionTypeList.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getActionTypeList(
-      map.sort,
-      map.limit,
-      map.offset,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * Returns paginated list of action types.
-     * @param sort sort order ASC or DESC
-     * @param limit query limit
-     * @param offset query offset
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getActionTypeList(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponsePaginatedListChainActionType>;
-    public getActionTypeList(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponsePaginatedListChainActionType>>;
-    public getActionTypeList(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponsePaginatedListChainActionType>>;
-    public getActionTypeList(sort?: 'ASC' | 'DESC', limit?: number, offset?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponsePaginatedListChainActionType>(`${this.configuration.basePath}/chain-api/codebook/action-type/list`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'GetActionTypeList')));
-        }
-        return handle;
-    }
-
-
-  /**
-   *  by map.
    * Fetches a facility type by its _id.
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1712,7 +1309,7 @@ export class CodebookService {
 
   /**
    *  by map.
-   * Returns paginated list of facility types.
+   * Returns paginated list of action types.
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -1745,7 +1342,7 @@ export class CodebookService {
 
     /**
      * 
-     * Returns paginated list of facility types.
+     * Returns paginated list of action types.
      * @param sort sort order ASC or DESC
      * @param limit query limit
      * @param offset query offset
@@ -2585,94 +2182,6 @@ export class CodebookService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'GetTranslationTemplates')));
-        }
-        return handle;
-    }
-
-
-  /**
-   *  by map.
-   * Inserts or updates an action type. When inserting fields _id, _rev and docType should not be present.
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public postActionTypeByMap(
-    map: PostActionType.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseAny>;
-  public postActionTypeByMap(
-    map: PostActionType.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseAny>>;
-  public postActionTypeByMap(
-    map: PostActionType.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseAny>>;
-  public postActionTypeByMap(
-    map: PostActionType.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.postActionType(
-      map.ChainActionType,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * 
-     * Inserts or updates an action type. When inserting fields _id, _rev and docType should not be present.
-     * @param ChainActionType 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public postActionType(ChainActionType: ChainActionType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseAny>;
-    public postActionType(ChainActionType: ChainActionType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseAny>>;
-    public postActionType(ChainActionType: ChainActionType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseAny>>;
-    public postActionType(ChainActionType: ChainActionType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (ChainActionType === null || ChainActionType === undefined) {
-            throw new Error('Required parameter ChainActionType was null or undefined when calling postActionType.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.post<ApiResponseAny>(`${this.configuration.basePath}/chain-api/codebook/action-type`,
-            ChainActionType,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'PostActionType')));
         }
         return handle;
     }

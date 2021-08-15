@@ -6,6 +6,100 @@
     "requestBodies": {},
     "responses": {},
     "schemas": {
+      "ChainMeasureUnitType": {
+        "description": "Codebook for type of chain facility",
+        "properties": {
+          "docType": {
+            "type": "string",
+            "nullable": true
+          },
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "_rev": {
+            "type": "string",
+            "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "underlyingMeasurementUnitTypeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "underlyingMeasurementUnitType": {
+            "$ref": "#/components/schemas/ChainMeasureUnitType"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ChainFacilityType": {
+        "description": "Codebook for type of chain facility",
+        "properties": {
+          "docType": {
+            "type": "string",
+            "nullable": true
+          },
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "_rev": {
+            "type": "string",
+            "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
       "ChainCountry": {
         "properties": {
           "code": {
@@ -96,149 +190,51 @@
         "type": "object",
         "additionalProperties": false
       },
-      "ApiDocument": {
+      "ApiCountry": {
         "properties": {
-          "contentType": {
+          "code": {
             "type": "string",
-            "description": "content type"
+            "description": "Two letter country code of country (ISO 3166-1 alpha-2 code)."
           },
           "id": {
             "type": "number",
             "format": "double",
-            "description": "Entity id"
+            "description": "Db id."
           },
           "name": {
             "type": "string",
-            "description": "document (file) name"
-          },
-          "size": {
-            "type": "number",
-            "format": "double",
-            "description": "size"
-          },
-          "storageKey": {
-            "type": "string",
-            "description": "storage key (file on system, s3, ...)."
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainCertification": {
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "created": {
-            "type": "string",
-            "nullable": true,
-            "description": "Timestamp of creation"
-          },
-          "lastChange": {
-            "type": "string",
-            "nullable": true,
-            "description": "Timestamp of last change"
-          },
-          "userCreatedId": {
-            "type": "string",
-            "nullable": true,
-            "description": "Id of user that created the document."
-          },
-          "userChangedId": {
-            "type": "string",
-            "nullable": true,
-            "description": "Id of user that changed the document."
-          },
-          "certificate": {
-            "$ref": "#/components/schemas/ApiDocument"
-          },
-          "description": {
-            "type": "string",
-            "description": "description of this standard and certification"
-          },
-          "type": {
-            "type": "string",
-            "description": "certification type"
-          },
-          "validity": {
-            "type": "string",
-            "description": "validity"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainMeasureUnitType": {
-        "description": "Codebook for type of chain facility",
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "weight": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "underlyingMeasurementUnitTypeId": {
-            "type": "string",
-            "nullable": true
-          },
-          "underlyingMeasurementUnitType": {
-            "$ref": "#/components/schemas/ChainMeasureUnitType"
+            "description": "Country name."
           }
         },
         "required": [
-          "id",
-          "label"
+          "code",
+          "name"
         ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiAddress": {
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "address"
+          },
+          "city": {
+            "type": "string",
+            "description": "city"
+          },
+          "country": {
+            "$ref": "#/components/schemas/ApiCountry"
+          },
+          "state": {
+            "type": "string",
+            "description": "state / province / region"
+          },
+          "zip": {
+            "type": "string",
+            "description": "ZIP / postal code / p.p. box"
+          }
+        },
         "type": "object",
         "additionalProperties": false
       },
@@ -293,370 +289,6 @@
           "contentType",
           "size"
         ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "FieldDefinition": {
-        "description": "Definition of an entry field",
-        "properties": {
-          "label": {
-            "type": "string",
-            "description": "Label of an entry field"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "string",
-              "text",
-              "number",
-              "integer",
-              "date",
-              "object",
-              "array",
-              "price",
-              "exchange_rate",
-              "timestamp",
-              "file"
-            ],
-            "description": "Field type (data taype)"
-          },
-          "required": {
-            "type": "boolean",
-            "description": "Field is required or not"
-          },
-          "mandatory": {
-            "type": "boolean",
-            "description": "Field is mandatory for creation."
-          },
-          "requiredOnQuote": {
-            "type": "boolean",
-            "description": "Field is required if related to quote order."
-          },
-          "stringValue": {
-            "type": "string",
-            "description": "String value of the field, if the type is 'text', 'date' or 'timestamp'"
-          },
-          "numericValue": {
-            "type": "number",
-            "format": "double",
-            "description": "Numeric value if the type is 'number'"
-          },
-          "objectValue": {
-            "description": "Object value for type 'object'"
-          },
-          "fileMultiplicity": {
-            "anyOf": [
-              {
-                "type": "number",
-                "format": "double"
-              },
-              {
-                "type": "string",
-                "enum": [
-                  "any"
-                ]
-              }
-            ],
-            "description": "Number of files if the type is 'file'. For unlimited number use 'any'."
-          },
-          "files": {
-            "items": {
-              "$ref": "#/components/schemas/ChainFileInfo"
-            },
-            "type": "array",
-            "description": "List of files (ChainFileInfo)"
-          }
-        },
-        "required": [
-          "label",
-          "type"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ScoreImpact": {
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "PROVENANCE",
-              "FAIRNESS",
-              "QUALITY",
-              "ORDER",
-              "PAYMENT"
-            ],
-            "description": "Type of score"
-          },
-          "score": {
-            "type": "number",
-            "format": "double",
-            "description": "Score weight"
-          }
-        },
-        "required": [
-          "type",
-          "score"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainDocumentRequirement": {
-        "description": "Description of the document requirements for an order.",
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "name": {
-            "type": "string",
-            "description": "Document name (label)"
-          },
-          "description": {
-            "type": "string",
-            "description": "Description of the document requirement."
-          },
-          "documentIdentifier": {
-            "type": "string",
-            "description": "Document identifier (type). Used to identify particular type of document and for matching."
-          },
-          "fields": {
-            "items": {
-              "$ref": "#/components/schemas/FieldDefinition"
-            },
-            "type": "array",
-            "description": "List of field definition. Order is important."
-          },
-          "score": {
-            "items": {
-              "$ref": "#/components/schemas/ScoreImpact"
-            },
-            "type": "array",
-            "description": "score"
-          },
-          "required": {
-            "type": "boolean",
-            "description": "Whether the document is required (critical)"
-          }
-        },
-        "required": [
-          "name",
-          "description",
-          "documentIdentifier",
-          "fields",
-          "score"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ScoreTargets": {
-        "description": "Defines score targets for an order. Typically an integer counting amount of documents.",
-        "properties": {
-          "fairness": {
-            "type": "number",
-            "format": "double",
-            "description": "Fairness target score"
-          },
-          "provenance": {
-            "type": "number",
-            "format": "double",
-            "description": "Provenance target score"
-          },
-          "quality": {
-            "type": "number",
-            "format": "double",
-            "description": "Quality target score"
-          },
-          "qualityLevel": {
-            "type": "string",
-            "description": "Quality level (e.g. A+) - TBD enum"
-          },
-          "womenShare": {
-            "type": "number",
-            "format": "double",
-            "description": "Required share of women's coffee (0 - 1)."
-          },
-          "order": {
-            "type": "number",
-            "format": "double",
-            "description": "Order target score"
-          },
-          "payment": {
-            "type": "number",
-            "format": "double",
-            "description": "Payment target score"
-          }
-        },
-        "required": [
-          "fairness",
-          "provenance",
-          "quality",
-          "qualityLevel",
-          "womenShare",
-          "order",
-          "payment"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainDocumentRequirementList": {
-        "properties": {
-          "identifier": {
-            "type": "string",
-            "description": "Identifier for document requirement (defining type)"
-          },
-          "semiProductId": {
-            "type": "string",
-            "description": "Semi product for which document requirement list is relevant."
-          },
-          "requirements": {
-            "items": {
-              "$ref": "#/components/schemas/ChainDocumentRequirement"
-            },
-            "type": "array",
-            "description": "List of document requirements"
-          },
-          "targets": {
-            "$ref": "#/components/schemas/ScoreTargets",
-            "description": "Document requrement targets"
-          }
-        },
-        "required": [
-          "identifier",
-          "requirements",
-          "targets"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainActionType": {
-        "description": "Codebook for action type",
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "facilityId": {
-            "type": "string"
-          },
-          "facilityType": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "label"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainCompanyProductRole": {
-        "properties": {
-          "companyId": {
-            "type": "number",
-            "format": "double"
-          },
-          "role": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "companyId",
-          "role"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiCountry": {
-        "properties": {
-          "code": {
-            "type": "string",
-            "description": "Two letter country code of country (ISO 3166-1 alpha-2 code)."
-          },
-          "id": {
-            "type": "number",
-            "format": "double",
-            "description": "Db id."
-          },
-          "name": {
-            "type": "string",
-            "description": "Country name."
-          }
-        },
-        "required": [
-          "code",
-          "name"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiAddress": {
-        "properties": {
-          "address": {
-            "type": "string",
-            "description": "address"
-          },
-          "city": {
-            "type": "string",
-            "description": "city"
-          },
-          "country": {
-            "$ref": "#/components/schemas/ApiCountry"
-          },
-          "state": {
-            "type": "string",
-            "description": "state / province / region"
-          },
-          "zip": {
-            "type": "string",
-            "description": "ZIP / postal code / p.p. box"
-          }
-        },
         "type": "object",
         "additionalProperties": false
       },
@@ -780,6 +412,23 @@
         "type": "object",
         "additionalProperties": false
       },
+      "ChainCompanyProductRole": {
+        "properties": {
+          "companyId": {
+            "type": "number",
+            "format": "double"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "companyId",
+          "role"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
       "ApiProductLabelFieldValue": {
         "properties": {
           "name": {
@@ -880,6 +529,34 @@
           "text": {
             "type": "string",
             "description": "origin - text and quantity input - Briefly describe where the product or its ingredients are produced"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiDocument": {
+        "properties": {
+          "contentType": {
+            "type": "string",
+            "description": "content type"
+          },
+          "id": {
+            "type": "number",
+            "format": "double",
+            "description": "Entity id"
+          },
+          "name": {
+            "type": "string",
+            "description": "document (file) name"
+          },
+          "size": {
+            "type": "number",
+            "format": "double",
+            "description": "size"
+          },
+          "storageKey": {
+            "type": "string",
+            "description": "storage key (file on system, s3, ...)."
           }
         },
         "type": "object",
@@ -1248,47 +925,6 @@
         "type": "object",
         "additionalProperties": false
       },
-      "ChainFacilityType": {
-        "description": "Codebook for type of chain facility",
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "label"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
       "ChainSemiProductPrice": {
         "properties": {
           "semiProductId": {
@@ -1417,6 +1053,370 @@
         "required": [
           "name",
           "organizationId"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ChainCertification": {
+        "properties": {
+          "docType": {
+            "type": "string",
+            "nullable": true
+          },
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "_rev": {
+            "type": "string",
+            "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
+            ]
+          },
+          "created": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of creation"
+          },
+          "lastChange": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timestamp of last change"
+          },
+          "userCreatedId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of user that created the document."
+          },
+          "userChangedId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Id of user that changed the document."
+          },
+          "certificate": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of this standard and certification"
+          },
+          "type": {
+            "type": "string",
+            "description": "certification type"
+          },
+          "validity": {
+            "type": "string",
+            "description": "validity"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "FieldDefinition": {
+        "description": "Definition of an entry field",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Label of an entry field"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "text",
+              "number",
+              "integer",
+              "date",
+              "object",
+              "array",
+              "price",
+              "exchange_rate",
+              "timestamp",
+              "file"
+            ],
+            "description": "Field type (data taype)"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Field is required or not"
+          },
+          "mandatory": {
+            "type": "boolean",
+            "description": "Field is mandatory for creation."
+          },
+          "requiredOnQuote": {
+            "type": "boolean",
+            "description": "Field is required if related to quote order."
+          },
+          "stringValue": {
+            "type": "string",
+            "description": "String value of the field, if the type is 'text', 'date' or 'timestamp'"
+          },
+          "numericValue": {
+            "type": "number",
+            "format": "double",
+            "description": "Numeric value if the type is 'number'"
+          },
+          "objectValue": {
+            "description": "Object value for type 'object'"
+          },
+          "fileMultiplicity": {
+            "anyOf": [
+              {
+                "type": "number",
+                "format": "double"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "any"
+                ]
+              }
+            ],
+            "description": "Number of files if the type is 'file'. For unlimited number use 'any'."
+          },
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/ChainFileInfo"
+            },
+            "type": "array",
+            "description": "List of files (ChainFileInfo)"
+          }
+        },
+        "required": [
+          "label",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ScoreImpact": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "PROVENANCE",
+              "FAIRNESS",
+              "QUALITY",
+              "ORDER",
+              "PAYMENT"
+            ],
+            "description": "Type of score"
+          },
+          "score": {
+            "type": "number",
+            "format": "double",
+            "description": "Score weight"
+          }
+        },
+        "required": [
+          "type",
+          "score"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ChainDocumentRequirement": {
+        "description": "Description of the document requirements for an order.",
+        "properties": {
+          "docType": {
+            "type": "string",
+            "nullable": true
+          },
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "_rev": {
+            "type": "string",
+            "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Document name (label)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the document requirement."
+          },
+          "documentIdentifier": {
+            "type": "string",
+            "description": "Document identifier (type). Used to identify particular type of document and for matching."
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/FieldDefinition"
+            },
+            "type": "array",
+            "description": "List of field definition. Order is important."
+          },
+          "score": {
+            "items": {
+              "$ref": "#/components/schemas/ScoreImpact"
+            },
+            "type": "array",
+            "description": "score"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether the document is required (critical)"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "documentIdentifier",
+          "fields",
+          "score"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ScoreTargets": {
+        "description": "Defines score targets for an order. Typically an integer counting amount of documents.",
+        "properties": {
+          "fairness": {
+            "type": "number",
+            "format": "double",
+            "description": "Fairness target score"
+          },
+          "provenance": {
+            "type": "number",
+            "format": "double",
+            "description": "Provenance target score"
+          },
+          "quality": {
+            "type": "number",
+            "format": "double",
+            "description": "Quality target score"
+          },
+          "qualityLevel": {
+            "type": "string",
+            "description": "Quality level (e.g. A+) - TBD enum"
+          },
+          "womenShare": {
+            "type": "number",
+            "format": "double",
+            "description": "Required share of women's coffee (0 - 1)."
+          },
+          "order": {
+            "type": "number",
+            "format": "double",
+            "description": "Order target score"
+          },
+          "payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Payment target score"
+          }
+        },
+        "required": [
+          "fairness",
+          "provenance",
+          "quality",
+          "qualityLevel",
+          "womenShare",
+          "order",
+          "payment"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ChainDocumentRequirementList": {
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "Identifier for document requirement (defining type)"
+          },
+          "semiProductId": {
+            "type": "string",
+            "description": "Semi product for which document requirement list is relevant."
+          },
+          "requirements": {
+            "items": {
+              "$ref": "#/components/schemas/ChainDocumentRequirement"
+            },
+            "type": "array",
+            "description": "List of document requirements"
+          },
+          "targets": {
+            "$ref": "#/components/schemas/ScoreTargets",
+            "description": "Document requrement targets"
+          }
+        },
+        "required": [
+          "identifier",
+          "requirements",
+          "targets"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ChainActionType": {
+        "description": "Codebook for action type",
+        "properties": {
+          "docType": {
+            "type": "string",
+            "nullable": true
+          },
+          "_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "_rev": {
+            "type": "string",
+            "nullable": true
+          },
+          "dbKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode__": {
+            "type": "string",
+            "enum": [
+              "insert",
+              "insert_as_is",
+              "update"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "facilityId": {
+            "type": "string"
+          },
+          "facilityType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label"
         ],
         "type": "object",
         "additionalProperties": false
@@ -1695,7 +1695,7 @@
         "additionalProperties": false
       },
       "ChainStockOrder": {
-        "description": "Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct.\nProduct unit is located on one facility only. It is measured by some quantity units (unitType) and\nby the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate)\nA product unit may be represented by a label in INATrace.\n\nProduct unit can be created from nothing (e.g. picking the coffee).\nIn general product unit is created by some transactions (ChainTransaction). Product unit does not\nchange its facility. Instead a product unit is transformed by a list of transactions (Chain)\nto different product unit either in the same facility or in some other facility.",
+        "description": "Represents a product instance (package, bag, container, drying bed, etc.) of a product defined by ChainProduct.\nProduct unit is located on one facility only. It is measured by some quantity units (unitType) and\nby the number totalQuantity. Ti has official production date (productionDate) and expiry date (expiryDate)\nA product unit may be represented by a label in FE.\n\nProduct unit can be created from nothing (e.g. picking the coffee).\nIn general product unit is created by some transactions (ChainTransaction). Product unit does not\nchange its facility. Instead a product unit is transformed by a list of transactions (Chain)\nto different product unit either in the same facility or in some other facility.",
         "properties": {
           "docType": {
             "type": "string",
@@ -3030,7 +3030,7 @@
         "type": "object",
         "additionalProperties": false
       },
-      "PaginatedList_ChainProductOrder_": {
+      "PaginatedList_ChainProcessingOrder_": {
         "properties": {
           "count": {
             "type": "number",
@@ -3039,7 +3039,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/ChainProductOrder"
+              "$ref": "#/components/schemas/ChainProcessingOrder"
             },
             "type": "array",
             "description": "Response items."
@@ -3085,327 +3085,6 @@
               "type": "string"
             },
             "type": "object"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainProductOrder__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainProductOrder_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "WeightedAggregate_any_": {
-        "properties": {
-          "fieldID": {
-            "type": "string"
-          },
-          "value": {},
-          "quantity": {
-            "type": "number",
-            "format": "double"
-          },
-          "measurementUnit": {
-            "$ref": "#/components/schemas/ChainMeasureUnitType"
-          },
-          "stockOrderId": {
-            "type": "string"
-          },
-          "identifier": {
-            "type": "string"
-          },
-          "isDocument": {
-            "type": "boolean"
-          },
-          "processingAction": {
-            "$ref": "#/components/schemas/ChainProcessingAction"
-          },
-          "required": {
-            "type": "boolean"
-          },
-          "mandatory": {
-            "type": "boolean"
-          },
-          "requiredOnQuote": {
-            "type": "boolean"
-          },
-          "requiredOnQuoteOneOk": {
-            "type": "boolean"
-          },
-          "requiredOneOfGroupIdForQuote": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "fieldID",
-          "value",
-          "quantity",
-          "measurementUnit"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "StockOrderAgg": {
-        "properties": {
-          "stockOrder": {
-            "$ref": "#/components/schemas/ChainStockOrder"
-          },
-          "fields": {
-            "items": {
-              "$ref": "#/components/schemas/WeightedAggregate_any_"
-            },
-            "type": "array"
-          },
-          "documents": {
-            "items": {
-              "$ref": "#/components/schemas/WeightedAggregate_any_"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "stockOrder",
-          "fields",
-          "documents"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ProcessingOrderHistory": {
-        "properties": {
-          "depth": {
-            "type": "number",
-            "format": "double"
-          },
-          "processingOrder": {
-            "$ref": "#/components/schemas/ChainProcessingOrder"
-          },
-          "stockOrderAggs": {
-            "items": {
-              "$ref": "#/components/schemas/StockOrderAgg"
-            },
-            "type": "array"
-          },
-          "stockOrderIds": {}
-        },
-        "required": [
-          "depth",
-          "processingOrder",
-          "stockOrderAggs"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ProcessingOrderHistory-Array_": {
-        "properties": {
-          "data": {
-            "items": {
-              "$ref": "#/components/schemas/ProcessingOrderHistory"
-            },
-            "type": "array"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "QuoteRequirementConfirmation": {
-        "properties": {
-          "fieldId": {
-            "type": "string"
-          },
-          "fieldIds": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "fairness": {
-            "type": "boolean"
-          },
-          "provenance": {
-            "type": "boolean"
-          },
-          "quality": {
-            "type": "boolean"
-          },
-          "targetValue": {},
-          "aggregates": {
-            "items": {
-              "$ref": "#/components/schemas/WeightedAggregate_any_"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "aggregates"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "QuoteRequirementConfirmationsWithMetaData": {
-        "properties": {
-          "requirements": {
-            "items": {
-              "$ref": "#/components/schemas/QuoteRequirementConfirmation"
-            },
-            "type": "array"
-          },
-          "producers": {
-            "items": {
-              "$ref": "#/components/schemas/ChainOrganization"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "requirements",
-          "producers"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_QuoteRequirementConfirmationsWithMetaData_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/QuoteRequirementConfirmationsWithMetaData"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainProductOrder_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainProductOrder"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_any_": {
-        "properties": {
-          "data": {},
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainProcessingOrder_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainProcessingOrder"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
           }
         },
         "type": "object",
@@ -3465,529 +3144,9 @@
         "type": "object",
         "additionalProperties": false
       },
-      "PaginatedList_ChainActionType_": {
+      "ApiResponse_any_": {
         "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainActionType"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainActionType__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainActionType_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainActionType_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainActionType"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainFacilityType_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainFacilityType"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainFacilityType__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainFacilityType_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainFacilityType_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainFacilityType"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainMeasureUnitType_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainMeasureUnitType"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainMeasureUnitType__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainMeasureUnitType_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainMeasureUnitType_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainMeasureUnitType"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainGradeAbbreviation_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainGradeAbbreviation"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainGradeAbbreviation__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainGradeAbbreviation_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainGradeAbbreviation_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainGradeAbbreviation"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainProcessingEvidenceType_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainProcessingEvidenceType"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainProcessingEvidenceType__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainProcessingEvidenceType_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainProcessingEvidenceType_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainProcessingEvidenceType"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ChainOrderEvidenceType": {
-        "description": "Codebook for order evidence type",
-        "properties": {
-          "docType": {
-            "type": "string",
-            "nullable": true
-          },
-          "_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_rev": {
-            "type": "string",
-            "nullable": true
-          },
-          "dbKey": {
-            "type": "string",
-            "nullable": true
-          },
-          "mode__": {
-            "type": "string",
-            "enum": [
-              "insert",
-              "insert_as_is",
-              "update"
-            ]
-          },
-          "id": {
-            "type": "string"
-          },
-          "label": {
-            "type": "string"
-          },
-          "fairness": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "provenance": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "quality": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "required": [
-          "id",
-          "label"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PaginatedList_ChainOrderEvidenceType_": {
-        "properties": {
-          "count": {
-            "type": "number",
-            "format": "double",
-            "description": "Count of all items satisfying 'paginatable' request."
-          },
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/ChainOrderEvidenceType"
-            },
-            "type": "array",
-            "description": "Response items."
-          },
-          "limit": {
-            "type": "number",
-            "format": "double",
-            "description": "Limit got from request"
-          },
-          "offset": {
-            "type": "number",
-            "format": "double",
-            "description": "Offset got from request"
-          }
-        },
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_PaginatedList_ChainOrderEvidenceType__": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/PaginatedList_ChainOrderEvidenceType_"
-          },
-          "errorDetails": {
-            "type": "string",
-            "description": "Optional details for unexpected error responses."
-          },
-          "errorMessage": {
-            "type": "string",
-            "description": "Simple message to explain client developers the reason for error."
-          },
-          "status": {
-            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
-            "description": "Response status. OK for successful reponses."
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails"
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "ApiResponse_ChainOrderEvidenceType_": {
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ChainOrderEvidenceType"
-          },
+          "data": {},
           "errorDetails": {
             "type": "string",
             "description": "Optional details for unexpected error responses."
@@ -4345,6 +3504,302 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ChainFacility"
+          },
+          "errorDetails": {
+            "type": "string",
+            "description": "Optional details for unexpected error responses."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Simple message to explain client developers the reason for error."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
+            "description": "Response status. OK for successful reponses."
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PaginatedList_ChainProductOrder_": {
+        "properties": {
+          "count": {
+            "type": "number",
+            "format": "double",
+            "description": "Count of all items satisfying 'paginatable' request."
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ChainProductOrder"
+            },
+            "type": "array",
+            "description": "Response items."
+          },
+          "limit": {
+            "type": "number",
+            "format": "double",
+            "description": "Limit got from request"
+          },
+          "offset": {
+            "type": "number",
+            "format": "double",
+            "description": "Offset got from request"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiResponse_PaginatedList_ChainProductOrder__": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PaginatedList_ChainProductOrder_"
+          },
+          "errorDetails": {
+            "type": "string",
+            "description": "Optional details for unexpected error responses."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Simple message to explain client developers the reason for error."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
+            "description": "Response status. OK for successful reponses."
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "WeightedAggregate_any_": {
+        "properties": {
+          "fieldID": {
+            "type": "string"
+          },
+          "value": {},
+          "quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "measurementUnit": {
+            "$ref": "#/components/schemas/ChainMeasureUnitType"
+          },
+          "stockOrderId": {
+            "type": "string"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "isDocument": {
+            "type": "boolean"
+          },
+          "processingAction": {
+            "$ref": "#/components/schemas/ChainProcessingAction"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "mandatory": {
+            "type": "boolean"
+          },
+          "requiredOnQuote": {
+            "type": "boolean"
+          },
+          "requiredOnQuoteOneOk": {
+            "type": "boolean"
+          },
+          "requiredOneOfGroupIdForQuote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fieldID",
+          "value",
+          "quantity",
+          "measurementUnit"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "StockOrderAgg": {
+        "properties": {
+          "stockOrder": {
+            "$ref": "#/components/schemas/ChainStockOrder"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/WeightedAggregate_any_"
+            },
+            "type": "array"
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/WeightedAggregate_any_"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "stockOrder",
+          "fields",
+          "documents"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ProcessingOrderHistory": {
+        "properties": {
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "processingOrder": {
+            "$ref": "#/components/schemas/ChainProcessingOrder"
+          },
+          "stockOrderAggs": {
+            "items": {
+              "$ref": "#/components/schemas/StockOrderAgg"
+            },
+            "type": "array"
+          },
+          "stockOrderIds": {}
+        },
+        "required": [
+          "depth",
+          "processingOrder",
+          "stockOrderAggs"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiResponse_ProcessingOrderHistory-Array_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ProcessingOrderHistory"
+            },
+            "type": "array"
+          },
+          "errorDetails": {
+            "type": "string",
+            "description": "Optional details for unexpected error responses."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Simple message to explain client developers the reason for error."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
+            "description": "Response status. OK for successful reponses."
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "QuoteRequirementConfirmation": {
+        "properties": {
+          "fieldId": {
+            "type": "string"
+          },
+          "fieldIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "fairness": {
+            "type": "boolean"
+          },
+          "provenance": {
+            "type": "boolean"
+          },
+          "quality": {
+            "type": "boolean"
+          },
+          "targetValue": {},
+          "aggregates": {
+            "items": {
+              "$ref": "#/components/schemas/WeightedAggregate_any_"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "aggregates"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "QuoteRequirementConfirmationsWithMetaData": {
+        "properties": {
+          "requirements": {
+            "items": {
+              "$ref": "#/components/schemas/QuoteRequirementConfirmation"
+            },
+            "type": "array"
+          },
+          "producers": {
+            "items": {
+              "$ref": "#/components/schemas/ChainOrganization"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "requirements",
+          "producers"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiResponse_QuoteRequirementConfirmationsWithMetaData_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/QuoteRequirementConfirmationsWithMetaData"
+          },
+          "errorDetails": {
+            "type": "string",
+            "description": "Optional details for unexpected error responses."
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Simple message to explain client developers the reason for error."
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApiDefaultResponseStatusEnum",
+            "description": "Response status. OK for successful reponses."
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApiResponse_ChainProductOrder_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ChainProductOrder"
           },
           "errorDetails": {
             "type": "string",
@@ -5968,348 +5423,6 @@
   },
   "openapi": "3.0.0",
   "paths": {
-    "/chain-api/data/order/facility/{facilityId}/list-open": {
-      "get": {
-        "operationId": "ListOpenOrdersForFacility",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "facilityId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "openOnly",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/data/order/organization/{organizationId}/list-open": {
-      "get": {
-        "operationId": "ListOpenOrdersForOrganization",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "organizationId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "openOnly",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/data/order/aggregates-for-order/{orderId}": {
-      "get": {
-        "operationId": "GetAggregatesForOrder",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ProcessingOrderHistory-Array_"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orderId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/data/order/quote-requrements-verify-for-order/{orderId}": {
-      "get": {
-        "operationId": "GetQuoteRequirementsVerification",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_QuoteRequirementConfirmationsWithMetaData_"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orderId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/data/order/{dbId}": {
-      "get": {
-        "operationId": "GetOrder",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainProductOrder_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches an order by its _id.",
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/data/order": {
-      "post": {
-        "operationId": "PostOrder",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates an order. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainProductOrder"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/data/order/delete": {
-      "post": {
-        "operationId": "DeleteOrder",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes order.",
-        "tags": [
-          "Order"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainProductOrder"
-              }
-            }
-          }
-        }
-      }
-    },
     "/chain-api/data/processing-order/list": {
       "get": {
         "operationId": "ListProcessingOrders",
@@ -6559,1058 +5672,6 @@
             }
           }
         }
-      }
-    },
-    "/chain-api/codebook/action-type/list": {
-      "get": {
-        "operationId": "GetActionTypeList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainActionType__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of action types.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/action-type/{dbId}": {
-      "get": {
-        "operationId": "GetActionType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainActionType_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches an action type by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/action-type": {
-      "post": {
-        "operationId": "PostActionType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates an action type. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainActionType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/action-type/delete": {
-      "post": {
-        "operationId": "DeleteActionType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes action type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainActionType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/facility-type/list": {
-      "get": {
-        "operationId": "GetFacilityTypeList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainFacilityType__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of facility types.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/facility-type/{dbId}": {
-      "get": {
-        "operationId": "GetFacilityType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainFacilityType_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches a facility type by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/facility-type": {
-      "post": {
-        "operationId": "PostFacilityType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates a facility type. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainFacilityType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/facility-type/delete": {
-      "post": {
-        "operationId": "DeleteFacilityType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes facility type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainFacilityType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/measure-unit-type/list": {
-      "get": {
-        "operationId": "GetMeasureUnitTypeList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainMeasureUnitType__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of measure unit types.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/measure-unit-type/{dbId}": {
-      "get": {
-        "operationId": "GetMeasureUnitType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainMeasureUnitType_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches a measure unit type by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/measure-unit-type": {
-      "post": {
-        "operationId": "PostMeasureUnitType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates a measure unit type. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainMeasureUnitType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/measure-unit-type/delete": {
-      "post": {
-        "operationId": "DeleteMeasureUnitType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes measure unit type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainMeasureUnitType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/grade-abbreviation/list": {
-      "get": {
-        "operationId": "GetGradeAbbreviationList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainGradeAbbreviation__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of grade abbreviations.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/grade-abbreviation/{dbId}": {
-      "get": {
-        "operationId": "GetGradeAbbreviation",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainGradeAbbreviation_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches a grade abbreviation by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/grade-abbreviation": {
-      "post": {
-        "operationId": "PostGradeAbbreviation",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates a grade abbreviation. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainGradeAbbreviation"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/grade-abbreviation/delete": {
-      "post": {
-        "operationId": "DeleteGradeAbbreviation",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes grade abbreviation.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainGradeAbbreviation"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/processing-evidence-type/list": {
-      "get": {
-        "operationId": "GetProcessingEvidenceTypeList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProcessingEvidenceType__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of processing evidence type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/processing-evidence-type/{dbId}": {
-      "get": {
-        "operationId": "GetProcessingEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainProcessingEvidenceType_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches a processing evidence type by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/processing-evidence-type": {
-      "post": {
-        "operationId": "PostProcessingEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates a rocessing evidence type. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainProcessingEvidenceType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/processing-evidence-type/delete": {
-      "post": {
-        "operationId": "DeleteProcessingEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes rocessing evidence type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainProcessingEvidenceType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/order-evidence-type/list": {
-      "get": {
-        "operationId": "GetOrderEvidenceTypeList",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainOrderEvidenceType__"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns paginated list of order evidence type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "description": "sort order ASC or DESC",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          },
-          {
-            "description": "query limit",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          },
-          {
-            "description": "query offset",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "format": "double",
-              "type": "number"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/order-evidence-type/{dbId}": {
-      "get": {
-        "operationId": "GetOrderEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ChainOrderEvidenceType_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Fetches a order evidence type by its _id.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "dbId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/chain-api/codebook/order-evidence-type": {
-      "post": {
-        "operationId": "PostOrderEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Inserts or updates a order evidence type. When inserting fields _id, _rev and docType should not be present.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainOrderEvidenceType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/order-evidence-type/delete": {
-      "post": {
-        "operationId": "DeleteOrderEvidenceType",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_any_"
-                }
-              }
-            }
-          }
-        },
-        "description": "Deletes order evidence type.",
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChainOrderEvidenceType"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/chain-api/codebook/translation-templates": {
-      "get": {
-        "operationId": "GetTranslationTemplates",
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Codebook"
-        ],
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "parameters": []
       }
     },
     "/chain-api/data/company-customer/list": {
@@ -9010,6 +7071,348 @@
           }
         ],
         "parameters": []
+      }
+    },
+    "/chain-api/data/order/facility/{facilityId}/list-open": {
+      "get": {
+        "operationId": "ListOpenOrdersForFacility",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "facilityId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "openOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/order/organization/{organizationId}/list-open": {
+      "get": {
+        "operationId": "ListOpenOrdersForOrganization",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_PaginatedList_ChainProductOrder__"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organizationId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "openOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ASC",
+                "DESC"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/order/aggregates-for-order/{orderId}": {
+      "get": {
+        "operationId": "GetAggregatesForOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ProcessingOrderHistory-Array_"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/order/quote-requrements-verify-for-order/{orderId}": {
+      "get": {
+        "operationId": "GetQuoteRequirementsVerification",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_QuoteRequirementConfirmationsWithMetaData_"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/order/{dbId}": {
+      "get": {
+        "operationId": "GetOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ChainProductOrder_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Fetches an order by its _id.",
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dbId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/chain-api/data/order": {
+      "post": {
+        "operationId": "PostOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Inserts or updates an order. When inserting fields _id, _rev and docType should not be present.",
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChainProductOrder"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chain-api/data/order/delete": {
+      "post": {
+        "operationId": "DeleteOrder",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_any_"
+                }
+              }
+            }
+          }
+        },
+        "description": "Deletes order.",
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChainProductOrder"
+              }
+            }
+          }
+        }
       }
     },
     "/chain-api/data/organization/list": {

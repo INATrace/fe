@@ -4,7 +4,7 @@ const https = require('https');
 // const got = require('got');
 var child_process = require('child_process');
 
-var swagger_docs_url = ''
+var swagger_docs_url = 'http://localhost:5000/static/swagger.json'
 var apiFolder = 'src/api-chain'
 var protocol = swagger_docs_url.startsWith('https') ? https : http;
 
