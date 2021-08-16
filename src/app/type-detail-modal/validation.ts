@@ -6,7 +6,6 @@ import { ChainMeasureUnitType } from 'src/api-chain/model/chainMeasureUnitType';
 import { ChainActionType } from 'src/api-chain/model/chainActionType';
 import { ChainGradeAbbreviation } from 'src/api-chain/model/chainGradeAbbreviation';
 import { ChainProcessingEvidenceType } from 'src/api-chain/model/chainProcessingEvidenceType';
-import { ChainOrderEvidenceType } from 'src/api-chain/model/chainOrderEvidenceType';
 
 export const ChainFacilityTypeValidationScheme = {
   validators: [],
@@ -141,33 +140,3 @@ export const ChainProcessingEvidenceTypeValidationScheme = {
     // },
   }
 } as SimpleValidationScheme<ChainProcessingEvidenceType>;
-
-export const ChainOrderEvidenceTypeValidationScheme = {
-  validators: [],
-  fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
-    id: {
-      validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
-    },
-    label: {
-      validators: [Validators.required]
-    },
-    fairness: {
-      validators: []
-    },
-    provenance: {
-      validators: []
-    },
-    quality: {
-      validators: []
-    },
-  }
-} as SimpleValidationScheme<ChainOrderEvidenceType>;

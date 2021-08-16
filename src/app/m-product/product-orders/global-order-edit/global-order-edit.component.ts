@@ -4,7 +4,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import _ from 'lodash-es';
 import { take } from 'rxjs/operators';
-import { CodebookService } from 'src/api-chain/api/codebook.service';
 import { CompanyCustomerService } from 'src/api-chain/api/companyCustomer.service';
 import { FacilityService } from 'src/api-chain/api/facility.service';
 import { OrderService } from 'src/api-chain/api/order.service';
@@ -39,6 +38,7 @@ import { environment } from 'src/environments/environment';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainStockOrderValidationScheme } from './stock-order-item/validation';
 import { ChainProductOrderValidationScheme } from './validation';
+import { GradeAbbreviationControllerService } from '../../../../api/api/gradeAbbreviationController.service';
 
 @Component({
   selector: 'app-global-order-edit',
@@ -46,30 +46,6 @@ import { ChainProductOrderValidationScheme } from './validation';
   styleUrls: ['./global-order-edit.component.scss']
 })
 export class GlobalOrderEditComponent implements OnInit {
-
-  update: Boolean = true;
-
-  title: String = null;
-
-  sku = null;
-  payments: ChainPayment[];
-
-  @Input()
-  organizationId: string = null;
-
-  form: FormGroup;
-  submitted: Boolean = false;
-
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
-
-  activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
-  farmersCodebook: ActiveUserCustomersByOrganizationAndRoleService;
-  collectorsCodebook: ActiveUserCustomersByOrganizationAndRoleService;
-
-  alreadyPayed: number = 0;
-
-  // inputFacilityForm = new FormControl(null, Validators.required);
-  outputFacilityForm = new FormControl(null, Validators.required);
 
   constructor(
     public sifrantProduct: ActiveProductsService,
@@ -93,20 +69,48 @@ export class GlobalOrderEditComponent implements OnInit {
     private companyService: CompanyControllerService,
     private chainUserService: UserService,
     public authService: AuthService,
-    private chainCodebookService: CodebookService,
+    private chainCodebookService: GradeAbbreviationControllerService,
     private codebookTranslations: CodebookTranslations
-  ) {
+  ) { }
+
+  get outputFacilityId() {
+    if (this.outputFacilityForm.value) { return dbKey(this.outputFacilityForm.value); }
+    return null;
   }
 
+  update = true;
+
+  title: string = null;
+
+  sku = null;
+  payments: ChainPayment[];
+
+  @Input()
+  organizationId: string = null;
+
+  form: FormGroup;
+  submitted = false;
+
+  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+
+  activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
+  farmersCodebook: ActiveUserCustomersByOrganizationAndRoleService;
+  collectorsCodebook: ActiveUserCustomersByOrganizationAndRoleService;
+
+  alreadyPayed = 0;
+
+  // inputFacilityForm = new FormControl(null, Validators.required);
+  outputFacilityForm = new FormControl(null, Validators.required);
+
   order: ChainProductOrder;
-  orderId = this.route.snapshot.params.orderId
+  orderId = this.route.snapshot.params.orderId;
   stockOrder: ChainStockOrder;
   productId;
   chainProductId;
   chainProductOrganizationId;
   facility: ChainFacility;
   modelChoice = null;
-  options: ChainSemiProduct[] = []
+  options: ChainSemiProduct[] = [];
   // purchaseOrderId = this.route.snapshot.params.purchaseOrderId;
   stockOrderId = this.route.snapshot.params.stockOrderId;
 
@@ -115,51 +119,72 @@ export class GlobalOrderEditComponent implements OnInit {
   userLastChanged = null;
 
   creatorId: string;
+
+  outputFacilitiesCodebook: ActiveFacilitiesForOrganizationCodebookStandaloneService;
+
+  codebookUsers;
+  additionalProofsForm;
+  paymentsForm;
+
+  companyCustomerCodebook: ActiveCompanyCustomersByOrganizationService;
+  gradeAbbreviationCodebook: GradeAbbreviationCodebook;
+
+  stockOrdersListManager = null;
+
+  static StockOrderItemCreateEmptyObject(): ChainStockOrder {
+    const obj = ChainStockOrder.formMetadata();
+    return defaultEmptyObject(obj) as ChainStockOrder;
+  }
+
+  static StockOrderItemEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(GlobalOrderEditComponent.StockOrderItemCreateEmptyObject(), ChainStockOrderValidationScheme.validators);
+    };
+  }
+
   updateTitle() {
-    return $localize`:@@globalOrderEdit.updateTitle:Update order`
+    return $localize`:@@globalOrderEdit.updateTitle:Update order`;
   }
 
   newTitle() {
-    return $localize`:@@globalOrderEdit.newTitle:New order`
+    return $localize`:@@globalOrderEdit.newTitle:New order`;
   }
 
-  outputFacilitiesCodebook: ActiveFacilitiesForOrganizationCodebookStandaloneService
-
   async initInitialData() {
-    let action = this.route.snapshot.data.action
+    const action = this.route.snapshot.data.action;
     // if (!action) return;
 
 
     // standalone on route
-    this.productId = this.route.snapshot.params.id
+    this.productId = this.route.snapshot.params.id;
     if (action === 'new') {
       this.update = false;
-      this.title = this.newTitle()
-    } else if (action == 'update') {
-      this.title = this.updateTitle()
+      this.title = this.newTitle();
+    } else if (action === 'update') {
+      this.title = this.updateTitle();
       this.update = true;
       if (this.stockOrderId) {
-        let resp = await this.chainStockOrderService.getStockOrderById(this.stockOrderId).pipe(take(1)).toPromise()
+        const resp = await this.chainStockOrderService.getStockOrderById(this.stockOrderId).pipe(take(1)).toPromise();
         if (resp && resp.status === 'OK' && resp.data) {
           this.stockOrder = resp.data;
-          let resp2 = await this.chainOrderService.getOrder(this.stockOrder.orderId).pipe(take(1)).toPromise()
+          const resp2 = await this.chainOrderService.getOrder(this.stockOrder.orderId).pipe(take(1)).toPromise();
           if (resp2 && resp2.status === 'OK') {
-            this.order = resp2.data
+            this.order = resp2.data;
           }
         }
       }
     } else {
-      throw Error("Wrong action.")
+      throw Error('Wrong action.');
     }
 
 
-    let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-    if (res && res.status === "OK" && res.data && dbKey(res.data)) {
+    const res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK' && res.data && dbKey(res.data)) {
       this.chainProductId = dbKey(res.data);
       this.chainProductOrganizationId = dbKey(res.data.organization);
     }
-    if (!this.organizationId) this.organizationId = localStorage.getItem("selectedUserCompany");
-    console.log("ORG_ID", this.chainProductId, this.organizationId)
+    if (!this.organizationId) { this.organizationId = localStorage.getItem('selectedUserCompany'); }
+    console.log('ORG_ID', this.chainProductId, this.organizationId);
     this.outputFacilitiesCodebook = new ActiveFacilitiesForOrganizationCodebookStandaloneService(this.chainFacilityService, this.organizationId, this.codebookTranslations);
     //
     // let resOrg = await this.chainOrganizationService.getOrganization(this.organizationId).pipe(take(1)).toPromise();
@@ -173,11 +198,8 @@ export class GlobalOrderEditComponent implements OnInit {
     //     this.codebookUsers = EnumSifrant.fromObject(obj);
     //   }
     // }
-    this.creatorId = await this.getCreatorId()
+    this.creatorId = await this.getCreatorId();
   }
-  codebookUsers;
-  additionalProofsForm;
-  paymentsForm;
 
   ngOnInit(): void {
     this.reloadPO();
@@ -189,50 +211,47 @@ export class GlobalOrderEditComponent implements OnInit {
   //   this.form.updateValueAndValidity()
   // }
 
-  companyCustomerCodebook: ActiveCompanyCustomersByOrganizationService
-  gradeAbbreviationCodebook: GradeAbbreviationCodebook;
-
   reloadPO() {
     this.globalEventsManager.showLoading(true);
     this.submitted = false;
     this.initInitialData().then(
       (resp: any) => {
-        this.companyCustomerCodebook = new ActiveCompanyCustomersByOrganizationService(this.chainCompanyCustomerService, this.organizationId)
-        this.gradeAbbreviationCodebook = new GradeAbbreviationCodebook(this.chainCodebookService, this.codebookTranslations)
+        this.companyCustomerCodebook = new ActiveCompanyCustomersByOrganizationService(this.chainCompanyCustomerService, this.organizationId);
+        this.gradeAbbreviationCodebook = new GradeAbbreviationCodebook(this.chainCodebookService, this.codebookTranslations);
         if (this.update) {
           this.editStockOrder();
         } else {
           this.newOrder();
         }
       }
-    )
+    );
 
   }
 
   dismiss() {
-    this.location.back()
+    this.location.back();
   }
 
   newOrder() {
-    this.form = generateFormFromMetadata(ChainProductOrder.formMetadata(), {}, ChainProductOrderValidationScheme)
-    let userProfile = this.authService.currentUserProfile;
+    this.form = generateFormFromMetadata(ChainProductOrder.formMetadata(), {}, ChainProductOrderValidationScheme);
+    const userProfile = this.authService.currentUserProfile;
     this.initializeListManager();
     this.globalEventsManager.showLoading(false);
     // this.prepareData()
   }
 
   async editStockOrder() {
-    this.form = generateFormFromMetadata(ChainProductOrder.formMetadata(), this.order, ChainProductOrderValidationScheme)
-    let AFuserIdRes = await this.chainUserService.getUser(this.form.get('creatorId').value).pipe(take(1)).toPromise();
+    this.form = generateFormFromMetadata(ChainProductOrder.formMetadata(), this.order, ChainProductOrderValidationScheme);
+    const AFuserIdRes = await this.chainUserService.getUser(this.form.get('creatorId').value).pipe(take(1)).toPromise();
     this.initializeListManager();
     this.globalEventsManager.showLoading(false);
   }
 
   async getCreatorId() {
-    let profile = await this.authService.userProfile$.pipe(take(1)).toPromise()
-    let AFuserIdRes = await this.chainUserService.getUserByAFId(profile.id).pipe(take(1)).toPromise();
-    if (AFuserIdRes && AFuserIdRes.status === "OK" && AFuserIdRes.data) {
-      return dbKey(AFuserIdRes.data)
+    const profile = await this.authService.userProfile$.pipe(take(1)).toPromise();
+    const AFuserIdRes = await this.chainUserService.getUserByAFId(profile.id).pipe(take(1)).toPromise();
+    if (AFuserIdRes && AFuserIdRes.status === 'OK' && AFuserIdRes.data) {
+      return dbKey(AFuserIdRes.data);
     }
   }
 
@@ -243,37 +262,37 @@ export class GlobalOrderEditComponent implements OnInit {
 
   async updatePO(close: boolean = true) {
     this.submitted = true;
-    if(this.form.invalid || this.outputFacilityForm.invalid) {
-      console.log("FORM:", this.form, this.outputFacilityForm)
+    if (this.form.invalid || this.outputFacilityForm.invalid) {
+      console.log('FORM:', this.form, this.outputFacilityForm);
       return;
     }
 
-    let data = _.cloneDeep(this.form.value) as ChainProductOrder
-    console.log("DATA1:", data)
-    let stockOrders = data.items
-    let processingOrders: ChainProcessingOrder[] = stockOrders.map((order: ChainStockOrder, index: number) => {
-      let orderData = {...order} as ChainStockOrder
-      orderData.deliveryTime = data.deliveryDeadline
-      orderData.consumerCompanyCustomerId = dbKey(data.customer)
-      orderData.requiredWomensCoffee = data.requiredwomensOnly
-      orderData.requiredQualityId = data.requiredGrade._id
-      delete orderData.facility  // abused to get input facility
+    let data = _.cloneDeep(this.form.value) as ChainProductOrder;
+    console.log('DATA1:', data);
+    const stockOrders = data.items;
+    const processingOrders: ChainProcessingOrder[] = stockOrders.map((order: ChainStockOrder, index: number) => {
+      let orderData = {...order} as ChainStockOrder;
+      orderData.deliveryTime = data.deliveryDeadline;
+      orderData.consumerCompanyCustomerId = dbKey(data.customer);
+      orderData.requiredWomensCoffee = data.requiredwomensOnly;
+      orderData.requiredQualityId = data.requiredGrade._id;
+      delete orderData.facility;  // abused to get input facility
       // delete orderData.processingAction
 
-      let commonDocumentRequirements = {
-        identifier: "PROCESSING_EVIDENCE_TYPE",
+      const commonDocumentRequirements = {
+        identifier: 'PROCESSING_EVIDENCE_TYPE',
         semiProductId: dbKey(order.processingAction.inputSemiProduct),
         requirements: [],
         targets: {
           fairness: 0,
           provenance: 0,
           quality: 0,
-          qualityLevel: "",
+          qualityLevel: '',
           womenShare: 1,
           order: 0,
           payment: 0
         }
-      }
+      };
 
       orderData = {
         ...orderData,
@@ -292,74 +311,55 @@ export class GlobalOrderEditComponent implements OnInit {
         documentRequirements: commonDocumentRequirements,
         // Overriding
         internalLotNumber: `${data.id} (${orderData.processingAction.inputSemiProduct.name}, ${orderData.totalQuantity} ${orderData.processingAction.inputSemiProduct.measurementUnitType.label})`
-      }
+      };
 
-      delete (orderData as any).inputFacilityForm
+      delete (orderData as any).inputFacilityForm;
       // delete (orderData as any).outputFacilityForm
 
       Object.keys(orderData).forEach((key) => (orderData[key] == null) && delete orderData[key]);
-      let processingOrder = {
+      const processingOrder = {
         // _id: this.editableProcessingOrder ? dbKey(this.editableProcessingOrder) : undefined,
         initiatorUserId: this.creatorId,
         processingActionId: dbKey(order.processingAction),
         targetStockOrders: [orderData],
         // inputTransactions: this.actionType === 'SHIPMENT' ? [] : this.inputTransactions,
         inputTransactions: [],
-      } as ChainProcessingOrder
-      return processingOrder
-    })
+      } as ChainProcessingOrder;
+      return processingOrder;
+    });
     data = {
       ...data,
       facilityId: dbKey(this.outputFacilityForm.value),
-      processingOrders: processingOrders
-    } as ChainProductOrder
-    delete data.items
+      processingOrders
+    } as ChainProductOrder;
+    delete data.items;
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
 
     try {
       this.globalEventsManager.showLoading(true);
-      let res = await this.chainOrderService.postOrder(data).pipe(take(1)).toPromise()
-      if (res && res.status == 'OK') {
+      const res = await this.chainOrderService.postOrder(data).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK') {
         // this.globalEventsManager.showLoading(false);
-        if (close) this.dismiss();
+        if (close) { this.dismiss(); }
         else {
           setTimeout(() => this.reloadPO(), environment.reloadDelay);
         }
       }
       // this.dismiss();
-    } catch(e) {
-      this.globalEventsManager.showLoading(false)
-      throw e
+    } catch (e) {
+      this.globalEventsManager.showLoading(false);
+      throw e;
     } finally {
       this.globalEventsManager.showLoading(false); // reloadPO with timeout takes care of it.
     }
   }
-
-  get outputFacilityId() {
-    if(this.outputFacilityForm.value) return dbKey(this.outputFacilityForm.value)
-    return null
-  }
-
-  stockOrdersListManager = null;
 
   initializeListManager() {
     this.stockOrdersListManager = new ListEditorManager<ChainStockOrder>(
       this.form.get('items') as FormArray,
       GlobalOrderEditComponent.StockOrderItemEmptyObjectFormFactory(),
       ChainStockOrderValidationScheme
-    )
-  }
-
-  static StockOrderItemCreateEmptyObject(): ChainStockOrder {
-    let obj = ChainStockOrder.formMetadata();
-    return defaultEmptyObject(obj) as ChainStockOrder
-  }
-
-  static StockOrderItemEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      let f = new FormControl(GlobalOrderEditComponent.StockOrderItemCreateEmptyObject(), ChainStockOrderValidationScheme.validators)
-      return f
-    }
+    );
   }
 
 

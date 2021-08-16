@@ -1,5 +1,3 @@
-
-
 <div class="modal-container" style="max-width: 500px;">
   <div class="modal-header">
     <h4 class="modal-title">{{title}}</h4>
@@ -12,17 +10,17 @@
     <div class="modal-body">
       <textinput
         hideAsterisk="true"
-        [form]="form.get('id')"
+        [form]="form.get('code')"
         label="Id"
         [disabled]="update"
         style="width: 100%"
         placeholder="Enter id"
         i18n-label="@@facilityTypeDetail.textinput.id.label"
         i18n-placeholder="@@facilityTypeDetail.textinput.id.placeholder"
-        [isInvalid]="submitted && form.get('id').invalid"
+        [isInvalid]="submitted && form.get('code').invalid"
         [readOnly]="this.update">
         <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('id').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="form.get('code').errors as errors" class="sc-invalid-feedback">
             <div *ngIf="errors.wrongInput" i18n="@@facilityTypeDetail.textinput.id.error">
               Id should contain only capital letters, numbers and / or underscores
             </div>
@@ -70,7 +68,6 @@
           </div>
         </ng-container>-->
         </textinput>
-
 
         <single-choice
           label="Underlying measure unit"
@@ -193,3 +190,4 @@
     <button class="btn btn-outlined" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
     <button class="btn" type="button" (click)="save(); saveCallback && saveCallback();"><span>Save</span></button>
   </div>
+</div>

@@ -3,60 +3,57 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { ChainMeasureUnitType } from 'src/api-chain/model/chainMeasureUnitType';
-import { ApiResponsePaginatedListChainMeasureUnitType } from 'src/api-chain/model/apiResponsePaginatedListChainMeasureUnitType';
-import { GetMeasureUnitTypeList, CodebookService } from 'src/api-chain/api/codebook.service';
 import { CodebookTranslations } from './codebook-translations';
+import { GetMeasureUnitTypeListUsingGET, MeasureUnitTypeControllerService } from '../../api/api/measureUnitTypeController.service';
+import { ApiPaginatedResponseApiMeasureUnitType } from '../../api/model/apiPaginatedResponseApiMeasureUnitType';
+import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ChainMeasureUnitType> {
+export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ApiMeasureUnitType> {
 
   constructor(
-    private chainCodebookService: CodebookService,
+    private chainCodebookService: MeasureUnitTypeControllerService,
     protected codebookTranslations: CodebookTranslations
   ) {
     super();
   }
 
-  public identifier(el: ChainMeasureUnitType) {
-    return el.id;
-  }
-
-  public textRepresentation(el: ChainMeasureUnitType) {
-    return this.codebookTranslations.translate(el, 'label')
-    // return `${el.label}`
-  }
-
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetMeasureUnitTypeList.PartialParamMap
+  } as GetMeasureUnitTypeListUsingGET.PartialParamMap;
 
-  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ChainMeasureUnitType>> {
-    let limit = params && params.limit ? params.limit : this.limit()
+  public identifier(el: ApiMeasureUnitType) {
+    return el.id;
+  }
 
-    let reqPars = {
+  public textRepresentation(el: ApiMeasureUnitType) {
+    return this.codebookTranslations.translate(el, 'label');
+  }
+
+  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiMeasureUnitType>> {
+    const limit = params && params.limit ? params.limit : this.limit();
+
+    const reqPars = {
       ...this.requestParams
-    }
-    let tmp = this.chainCodebookService.getMeasureUnitTypeListByMap(reqPars).pipe(
-      map((res: ApiResponsePaginatedListChainMeasureUnitType) => {
-        return {
-          results: res.data.items,
-          offset: 0,
-          limit: limit,
-          totalCount: res.data.count
-        }
-      })
-    )
-    return tmp;
+    };
+
+    return this.chainCodebookService.getMeasureUnitTypeListUsingGETByMap(reqPars).pipe(
+        map((res: ApiPaginatedResponseApiMeasureUnitType) => {
+          return {
+            results: res.data.items,
+            offset: 0,
+            limit,
+            totalCount: res.data.count
+          };
+        })
+    );
   }
 
   public placeholder(): string {
-    let placeholder = $localize`:@@activeMeasureUnitTypes.input.placehoder:Select measure unit type`;
-    return placeholder;
+    return $localize`:@@activeMeasureUnitTypes.input.placehoder:Select measure unit type`;
   }
 
 }
-

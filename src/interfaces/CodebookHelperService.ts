@@ -1,20 +1,20 @@
-import { SimpleValidationScheme } from "./Validation";
-import { ValidatorFn, FormArray, FormGroup } from "@angular/forms";
-import { Observable, BehaviorSubject } from "rxjs";
+import { ValidatorFn, FormArray, FormGroup } from '@angular/forms';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface PagedSearchResults<T> {
-    results: Array<T>,
-    offset: number,
-    limit: number,
-    totalCount: number
+    results: Array<T>;
+    offset: number;
+    limit: number;
+    totalCount: number;
 }
 
 export interface CodebookHelperService<T> {
-    hasAutocomplete(): boolean;
-    autocompleteCandidates(key: Observable<string>, selectedObjects: Observable<Array<T>>, params?: Observable<any>, organizationId?: string): Observable<PagedSearchResults<T>>;
-    makeQuery(key: string, params?: any, organizationId?: string): Observable<PagedSearchResults<T>>,
     autocompleteMinPrefix: number;
     maxAllCandidates: number;
+    insertNullPrefixResultIfNonEmpty: boolean;
+    hasAutocomplete(): boolean;
+    autocompleteCandidates(key: Observable<string>, selectedObjects: Observable<Array<T>>, params?: Observable<any>, organizationId?: string): Observable<PagedSearchResults<T>>;
+    makeQuery(key: string, params?: any, organizationId?: string): Observable<PagedSearchResults<T>>;
     getAllCandidates(): Observable<Array<T>>;
     initializeCodebook(): void;
     formatter(): (x:T) => string;
@@ -35,13 +35,8 @@ export interface CodebookHelperService<T> {
     canAddNew(): boolean;
     makeNewForInput(input: string): T;
     placeholder(): string;
-    insertNullPrefixResultIfNonEmpty: boolean;
     isEnumFormControl(): boolean;
     enumValueToObject(val: any, enumOptions: T[]): T;
     enumOptions(): BehaviorSubject<T[]>;
     objectToEnumValue(el: T): any;
 }
-
-
-// defaultEmptyObject<T>(): T;
-// formGenerator<T>(el: T): FormGroupTyped<T>;

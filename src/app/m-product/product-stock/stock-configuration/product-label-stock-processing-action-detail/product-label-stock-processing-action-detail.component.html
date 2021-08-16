@@ -349,7 +349,7 @@
                     [form]="docTypeForm"
                     placeholder="Select document type ..."
                     i18n-placeholder="@@productLabelProcessingAction.textinput.search-field.placeholder"
-                    [codebookService]="processingEvidenceTypeaService"
+                    [codebookService]="processingEvidenceTypeService"
                     [resultFormatter]="typeResultFormatter"
                     [inputFormatter]="typeInputFormatter"
                     (itemMatching)="addSelectedType($event)">

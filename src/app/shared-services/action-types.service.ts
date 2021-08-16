@@ -3,58 +3,55 @@ import { GeneralSifrantService } from './general-sifrant.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
-import { CodebookService, GetActionTypeList } from 'src/api-chain/api/codebook.service';
-import { ChainActionType } from 'src/api-chain/model/chainActionType';
+import { ActionTypeControllerService, GetActionTypeListUsingGET } from '../../api/api/actionTypeController.service';
+import { ApiActionType } from '../../api/model/apiActionType';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ActionTypesService extends GeneralSifrantService<ChainActionType> {
+export class ActionTypesService extends GeneralSifrantService<ApiActionType> {
 
   constructor(
-    private chainCodebookService: CodebookService,
+    private chainCodebookService: ActionTypeControllerService,
   ) {
     super();
     this.initializeCodebook();
   }
 
-  public identifier(el: ChainActionType) {
-    return el._id;
-  }
-
-  public textRepresentation(el: ChainActionType) {
-    return `${el.label}`
-  }
-
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetActionTypeList.PartialParamMap
+  } as GetActionTypeListUsingGET.PartialParamMap;
 
-  public placeholder(): string {
-    let placeholder = $localize`:@@actionTypesService.input.placehoder:Select transaction type`;
-    return placeholder;
+  public identifier(el: ApiActionType) {
+    return el.id;
   }
 
-  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ChainActionType>> {
+  public textRepresentation(el: ApiActionType) {
+    return `${el.label}`;
+  }
+
+  public placeholder(): string {
+    return $localize`:@@actionTypesService.input.placehoder:Select transaction type`;
+  }
+
+  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiActionType>> {
     return this.sifrant$.pipe(
-      map((allChoices: PagedSearchResults<ChainActionType>) => {
+      map((allChoices: PagedSearchResults<ApiActionType>) => {
         return {
           results: allChoices.results,
           offset: allChoices.offset,
           limit: allChoices.limit,
           totalCount: allChoices.totalCount
-        }
+        };
       })
-    )
-
+    );
   }
 
-
   public initializeCodebook() {
-    this.sifrant$ = this.sifrant$ || this.chainCodebookService.getActionTypeListByMap({ ...this.requestParams }).pipe(
+    this.sifrant$ = this.sifrant$ || this.chainCodebookService.getActionTypeListUsingGETByMap({ ...this.requestParams }).pipe(
       map(x => this.pack(x.data.items))
-    )
+    );
   }
 
 }

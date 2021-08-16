@@ -2,59 +2,54 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { ChainProcessingAction } from 'src/api-chain/model/chainProcessingAction';
-import { ProcessingActionService, ListProcessingActionsForProductAndOrganization } from 'src/api-chain/api/processingAction.service';
-import { ApiResponsePaginatedListChainProcessingAction } from 'src/api-chain/model/apiResponsePaginatedListChainProcessingAction';
-import { ChainGradeAbbreviation } from 'src/api-chain/model/chainGradeAbbreviation';
-import { ApiResponsePaginatedListChainGradeAbbreviation } from 'src/api-chain/model/apiResponsePaginatedListChainGradeAbbreviation';
-import { CodebookService } from 'src/api-chain/api/codebook.service';
-import { dbKey } from 'src/shared/utils';
 import { CodebookTranslations } from './codebook-translations';
+import { GetGradeAbbreviationListUsingGET, GradeAbbreviationControllerService } from '../../api/api/gradeAbbreviationController.service';
+import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
+import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
 
-export class GradeAbbreviationCodebook extends GeneralSifrantService<ChainGradeAbbreviation> {
+export class GradeAbbreviationCodebook extends GeneralSifrantService<ApiGradeAbbreviation> {
 
   constructor(
-    private chainCodebookService: CodebookService,
+    private chainCodebookService: GradeAbbreviationControllerService,
     protected codebookTranslations: CodebookTranslations
   ) {
     super();
   }
 
-  public identifier(el: ChainGradeAbbreviation) {
-    return dbKey(el);
-  }
-
-  public textRepresentation(el: ChainGradeAbbreviation) {
-    return this.codebookTranslations.translate(el, 'label')
-    // return `${el.label}`
-  }
-
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as ListProcessingActionsForProductAndOrganization.PartialParamMap
+  } as GetGradeAbbreviationListUsingGET.PartialParamMap;
 
-  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ChainGradeAbbreviation>> {
-    let limit = params && params.limit ? params.limit : this.limit()
-    let reqPars = {
+  public identifier(el: ApiGradeAbbreviation) {
+    return el.id;
+  }
+
+  public textRepresentation(el: ApiGradeAbbreviation) {
+    return this.codebookTranslations.translate(el, 'label');
+  }
+
+  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiGradeAbbreviation>> {
+    const limit = params && params.limit ? params.limit : this.limit();
+
+    const reqPars = {
       ...this.requestParams
-    }
-    let tmp = this.chainCodebookService.getGradeAbbreviationListByMap(reqPars).pipe(
-      map((res: ApiResponsePaginatedListChainGradeAbbreviation) => {
-        return {
-          results: res.data.items,
-          offset: 0,
-          limit: limit,
-          totalCount: res.data.count,
-        }
-      })
-    )
-    return tmp;
+    };
+
+    return this.chainCodebookService.getGradeAbbreviationListUsingGETByMap(reqPars).pipe(
+        map((res: ApiPaginatedResponseApiGradeAbbreviation) => {
+          return {
+            results: res.data.items,
+            offset: 0,
+            limit,
+            totalCount: res.data.count,
+          };
+        })
+    );
   }
 
   public placeholder(): string {
-    let placeholder = $localize`:@@gradeAbbreviation codebook.input.placehoder:Select grade`;
-    return placeholder;
+    return $localize`:@@gradeAbbreviation codebook.input.placehoder:Select grade`;
   }
 
 }
