@@ -6,7 +6,7 @@
       </thead>
       <tbody>
 
-        <ng-container *ngIf="(this.type === 'processing-evidence-types' || this.type === 'order-evidence-types')">
+        <ng-container *ngIf="(this.type === 'processing-evidence-types')">
           <tr *ngFor="let type of types.items">
             <td [attr.data-label]="sortOptionsFPQ[0].name" scope="row"><span>{{type.id}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[1].name" scope="row"><span>{{type | translateCodebook: 'label'}}</span></td>
@@ -32,7 +32,7 @@
             </td>
           </tr>
         </ng-container>
-        <ng-container *ngIf="(this.type != 'processing-evidence-types' && this.type != 'order-evidence-types')">
+        <ng-container *ngIf="(this.type != 'processing-evidence-types')">
           <tr *ngFor="let type of types.items">
             <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{type.id}}</span></td>
             <td [attr.data-label]="sortOptions[1].name"><span>{{type | translateCodebook: 'label'}}</span></td>

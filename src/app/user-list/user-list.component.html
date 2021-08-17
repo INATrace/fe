@@ -7,7 +7,6 @@
 
   <div class="main">
 
-
     <div class="row">
       <div class="col">
 
@@ -57,7 +56,6 @@
                     </div>
                     <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
                   </button>
-
 
                   <div class="dropdown-menu" ngbDropdownMenu>
                     <button ngbDropdownItem (click)="showStatus('ACTIVE')" i18n="@@userList.filter.showActive">Show active</button>
@@ -135,7 +133,6 @@
               </tbody>
             </table>
 
-
             <div *ngIf="users && users.items && users.items.length == 0" class="no-list-results" i18n="@@userList.noUsers">
               No users
             </div>
@@ -155,8 +152,6 @@
 
       </div>
     </div>
-
-
 
     <div *ngIf="_listErrorStatus$.value === 'UNAUTHORIZED'" i18n="@@userList.unauthorized">
       Not authorised to see the list of users.

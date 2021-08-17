@@ -3,7 +3,6 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 
-
 .settings-container {
   max-width:1140px;
   background-color: white;
@@ -20,7 +19,6 @@
     width: 320px;
   }
 }
-
 
 .button-disabled {
   border-color: $gray-semi !important;
