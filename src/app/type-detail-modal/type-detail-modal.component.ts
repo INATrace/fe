@@ -4,11 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { generateFormFromMetadata, defaultEmptyObject, dbKey } from 'src/shared/utils';
 import { take } from 'rxjs/operators';
 import {
-  ChainFacilityTypeValidationScheme,
-  ChainMeasureUnitTypeValidationScheme,
-  ChainActionTypeValidationScheme,
-  ChainGradeAbbreviationValidationScheme,
-  ChainProcessingEvidenceTypeValidationScheme } from './validation';
+  ApiFacilityTypeValidationScheme,
+  ApiMeasureUnitTypeValidationScheme,
+  ApiActionTypeValidationScheme,
+  ApiGradeAbbreviationValidationScheme,
+  ApiProcessingEvidenceTypeValidationScheme } from './validation';
 import _ from 'lodash-es';
 import { ActiveSemiProductsForProductServiceStandalone } from '../shared-services/active-semi-products-for-product-standalone.service';
 import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
@@ -81,25 +81,25 @@ export class TypeDetailModalComponent implements OnInit {
 
   async init() {
     if (this.type === 'facility-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), defaultEmptyObject(ApiFacilityType.formMetadata()) as ApiFacilityType, ChainFacilityTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), this.typeElement, ChainFacilityTypeValidationScheme);
+      if (!this.update) this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), defaultEmptyObject(ApiFacilityType.formMetadata()) as ApiFacilityType, ApiFacilityTypeValidationScheme);
+      else this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), this.typeElement, ApiFacilityTypeValidationScheme);
     }
     if (this.type === 'measurement-unit-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), defaultEmptyObject(ApiMeasureUnitType.formMetadata()) as ApiMeasureUnitType, ChainMeasureUnitTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), this.typeElement, ChainMeasureUnitTypeValidationScheme);
+      if (!this.update) this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), defaultEmptyObject(ApiMeasureUnitType.formMetadata()) as ApiMeasureUnitType, ApiMeasureUnitTypeValidationScheme);
+      else this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), this.typeElement, ApiMeasureUnitTypeValidationScheme);
     }
     if (this.type === 'action-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiActionType.formMetadata(), defaultEmptyObject(ApiActionType.formMetadata()) as ApiActionType, ChainActionTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiActionType.formMetadata(), this.typeElement, ChainActionTypeValidationScheme);
+      if (!this.update) this.form = generateFormFromMetadata(ApiActionType.formMetadata(), defaultEmptyObject(ApiActionType.formMetadata()) as ApiActionType, ApiActionTypeValidationScheme);
+      else this.form = generateFormFromMetadata(ApiActionType.formMetadata(), this.typeElement, ApiActionTypeValidationScheme);
     }
     if (this.type === 'grade-abbreviation') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), defaultEmptyObject(ApiGradeAbbreviation.formMetadata()) as ApiGradeAbbreviation, ChainGradeAbbreviationValidationScheme);
-      else this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), this.typeElement, ChainGradeAbbreviationValidationScheme);
+      if (!this.update) this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), defaultEmptyObject(ApiGradeAbbreviation.formMetadata()) as ApiGradeAbbreviation, ApiGradeAbbreviationValidationScheme);
+      else this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), this.typeElement, ApiGradeAbbreviationValidationScheme);
     }
     if (this.type === 'processing-evidence-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), defaultEmptyObject(ApiProcessingEvidenceType.formMetadata()) as ApiProcessingEvidenceType, ChainProcessingEvidenceTypeValidationScheme);
+      if (!this.update) this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), defaultEmptyObject(ApiProcessingEvidenceType.formMetadata()) as ApiProcessingEvidenceType, ApiProcessingEvidenceTypeValidationScheme);
       else {
-        this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), this.typeElement, ChainProcessingEvidenceTypeValidationScheme);
+        this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), this.typeElement, ApiProcessingEvidenceTypeValidationScheme);
       }
     }
   }

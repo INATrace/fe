@@ -60,13 +60,6 @@
           i18n-placeholder="@@facilityTypeDetail.textinput.weight.placeholder"
           [isInvalid]="submitted && form.get('weight').invalid"
           type="number">
-          <!--<ng-container *ngIf="submitted">
-          <div *ngIf="form.get('weight').errors as errors" class="sc-invalid-feedback">
-            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.weight.error">
-              Weight is required
-            </div>
-          </div>
-        </ng-container>-->
         </textinput>
 
         <single-choice
@@ -75,41 +68,9 @@
           [formControlInput]="form.get('underlyingMeasurementUnitType')"
           [codebookService]="activeMeasureUnitTypeService">
         </single-choice>
-
       </ng-container>
 
       <ng-container *ngIf="this.type === 'processing-evidence-types'">
-
-        <!-- <single-choice
-          label="Select product"
-          i18n-label="@@typeDetailModal.selectProduct.label"
-          [formControlInput]="productForm"
-          [codebookService]="productCodebook"
-          (onChange)="onProductSelected($event)"
-          [isInvalidChoice]="submitted && productForm.invalid">
-        </single-choice>
-        <ng-container *ngIf="submitted">
-          <div *ngIf="productForm.errors as errors" class="sc-invalid-feedback" i18n="@@typeDetailModal.selectProduct.error.required">
-            Product is required
-          </div>
-        </ng-container>
-
-        <single-choice
-          *ngIf="activeSemiProductsForProduct"
-          label="Select semi-product"
-          i18n-label="@@typeDetailModal.semiProduct.label"
-          [formControlInput]="form.get('semiProduct')"
-          [codebookService]="activeSemiProductsForProduct"
-          [isInvalidChoice]="submitted && form.get('semiProduct').invalid">
-          <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('semiProduct').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n="@@typeDetailModal.semiProduct.error.required">
-                Semi-product is required
-              </div>
-            </div>
-          </ng-container>
-        </single-choice>
--->
         <single-choice
           label="Type"
           i18n-label="@@productLabelProcessingAction.transactionType.label"
@@ -124,20 +85,6 @@
             </div>
           </ng-container>
         </single-choice>
-
-        <!-- <checkbox-input
-          [form]="form.get('mandatoryOnQuote')">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.mandatoryOnQuote.label">
-            Mandatory on quote
-          </checkbox-input-rich-label>
-        </checkbox-input>
-
-        <checkbox-input
-          [form]="form.get('requiredOnQuote')">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.requiredOnQuote.label">
-            Required on quote
-          </checkbox-input-rich-label>
-        </checkbox-input> -->
 
         <label class="mb-0 mt-3">
           Indicators
@@ -159,29 +106,6 @@
             Quality
           </checkbox-input-rich-label>
         </checkbox-input>
-
-      </ng-container>
-
-      <ng-container *ngIf="this.type === 'order-evidence-types'">
-
-        <checkbox-input [form]="form.get('fairness')">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.fairness">
-            Fairness
-          </checkbox-input-rich-label>
-        </checkbox-input>
-
-        <checkbox-input [form]="form.get('provenance')">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.provenance">
-            Provenance
-          </checkbox-input-rich-label>
-        </checkbox-input>
-
-        <checkbox-input [form]="form.get('quality')">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@facilityTypeDetail.checkbox-input.quality">
-            Quality
-          </checkbox-input-rich-label>
-        </checkbox-input>
-
       </ng-container>
 
     </div>

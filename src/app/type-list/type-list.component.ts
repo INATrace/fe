@@ -17,6 +17,7 @@ import { ApiPaginatedResponseApiMeasureUnitType } from '../../api/model/apiPagin
 import { ApiPaginatedResponseApiActionType } from '../../api/model/apiPaginatedResponseApiActionType';
 import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
+import { SortOption } from '../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-type-list',
@@ -101,7 +102,7 @@ export class TypeListComponent implements OnInit, OnChanges {
       shareReplay(1)
   );
 
-  sortOptions = [
+  sortOptions: SortOption[] = [
     {
       key: 'id',
       name: $localize`:@@settingsTypes.sortOptions.id.name:Id`,
@@ -119,7 +120,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     },
   ];
 
-  sortOptionsFPQ = [
+  sortOptionsFPQ: SortOption[] = [
     {
       key: 'id',
       name: $localize`:@@settingsTypes.sortOptions.id.name:Id`,
@@ -165,7 +166,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') this.title = $localize`:@@settingsTypes.typeList.title.actions:Action types`;
     if (this.type === 'grade-abbreviation') this.title = $localize`:@@settingsTypes.typeList.title.grades:Grade abbreviations`;
     if (this.type === 'processing-evidence-types') this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`;
-    if (this.type === 'order-evidence-types') this.title = $localize`:@@settingsTypes.typeList.title.orderEvidenceTypes:Order evidence types`;
   }
 
   ngOnChanges() {
@@ -199,7 +199,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'grade-abbreviation') return this.gradeAbbreviationService.getGradeAbbreviationListUsingGETByMap({ ...params });
     if (this.type === 'processing-evidence-types') return this.processingEvidenceTypeService
         .getProcessingEvidenceTypeListUsingGETByMap({ ...params });
-    // if (this.type === 'order-evidence-types') return this.chainCodebookService.getOrderEvidenceTypeListByMap({ ...params });
   }
 
   paginatedType() {
@@ -208,7 +207,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') return ApiPaginatedResponseApiActionType;
     if (this.type === 'grade-abbreviation') return ApiPaginatedResponseApiGradeAbbreviation;
     if (this.type === 'processing-evidence-types') return ApiPaginatedResponseApiProcessingEvidenceType;
-    // if (this.type === 'order-evidence-types') return ApiResponsePaginatedListChainOrderEvidenceType;
   }
 
   edit(type) {
@@ -218,7 +216,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') editTitle = $localize`:@@settingsTypes.editActionType.editTitle:Edit action type`;
     if (this.type === 'grade-abbreviation') editTitle = $localize`:@@settingsTypes.editGradeAbbreviation.editTitle:Edit grade abbreviation`;
     if (this.type === 'processing-evidence-types') editTitle = $localize`:@@settingsTypes.editProcessingEvidenceType.editTitle:Edit processing evidence type`;
-    if (this.type === 'order-evidence-types') editTitle = $localize`:@@settingsTypes.editOrderEvidenceType.editTitle:Edit order evidence type`;
 
     this.modalService.open(TypeDetailModalComponent, {
       centered: true
@@ -281,8 +278,7 @@ export class TypeListComponent implements OnInit, OnChanges {
   }
 
   showPagination() {
-    if (((this.showed - this.pageSize) === 0 && this.all >= this.pageSize) || this.page > 1) return true;
-    else return false;
+    return ((this.showed - this.pageSize) === 0 && this.all >= this.pageSize) || this.page > 1;
   }
 
   async setAll() {

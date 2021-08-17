@@ -1,68 +1,49 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { ChainFacilityType } from 'src/api-chain/model/chainFacilityType';
 import { UndesrcoreAndCapitalsValidator } from 'src/shared/validation';
 import { Validators } from '@angular/forms';
-import { ChainMeasureUnitType } from 'src/api-chain/model/chainMeasureUnitType';
-import { ChainActionType } from 'src/api-chain/model/chainActionType';
-import { ChainGradeAbbreviation } from 'src/api-chain/model/chainGradeAbbreviation';
-import { ChainProcessingEvidenceType } from 'src/api-chain/model/chainProcessingEvidenceType';
+import { ApiFacilityType } from '../../api/model/apiFacilityType';
+import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
+import { ApiActionType } from '../../api/model/apiActionType';
+import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
+import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 
-export const ChainFacilityTypeValidationScheme = {
+export const ApiFacilityTypeValidationScheme = {
   validators: [],
   fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
     id: {
+      validators: []
+    },
+    code: {
       validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
       validators: [Validators.required]
     },
   }
-} as SimpleValidationScheme<ChainFacilityType>;
+} as SimpleValidationScheme<ApiFacilityType>;
 
-export const ChainMeasureUnitTypeValidationScheme = {
+export const ApiMeasureUnitTypeValidationScheme = {
   validators: [],
   fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
     id: {
+      validators: []
+    },
+    code: {
       validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
       validators: [Validators.required]
     },
   }
-} as SimpleValidationScheme<ChainMeasureUnitType>;
+} as SimpleValidationScheme<ApiMeasureUnitType>;
 
-
-export const ChainActionTypeValidationScheme = {
+export const ApiActionTypeValidationScheme = {
   validators: [],
   fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
     id: {
+      validators: []
+    },
+    code: {
       validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
@@ -75,51 +56,35 @@ export const ChainActionTypeValidationScheme = {
       validators: []
     },
   }
-} as SimpleValidationScheme<ChainActionType>;
+} as SimpleValidationScheme<ApiActionType>;
 
-export const ChainGradeAbbreviationValidationScheme = {
+export const ApiGradeAbbreviationValidationScheme = {
   validators: [],
   fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
     id: {
+      validators: []
+    },
+    code: {
       validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
       validators: [Validators.required]
     },
   }
-} as SimpleValidationScheme<ChainGradeAbbreviation>;
+} as SimpleValidationScheme<ApiGradeAbbreviation>;
 
-
-export const ChainProcessingEvidenceTypeValidationScheme = {
+export const ApiProcessingEvidenceTypeValidationScheme = {
   validators: [],
   fields: {
-    docType: {
-      validators: []
-    },
-    _id: {
-      validators: []
-    },
-    _rev: {
-      validators: []
-    },
     id: {
+      validators: []
+    },
+    code: {
       validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
       validators: [Validators.required]
     },
-    // semiProductId: {
-    //   validators: []
-    // },
     type: {
       validators: [Validators.required]
     },
@@ -134,9 +99,6 @@ export const ChainProcessingEvidenceTypeValidationScheme = {
     },
     quality: {
       validators: []
-    },
-    // semiProduct: {
-    //   validators: [Validators.required]
-    // },
+    }
   }
-} as SimpleValidationScheme<ChainProcessingEvidenceType>;
+} as SimpleValidationScheme<ApiProcessingEvidenceType>;
