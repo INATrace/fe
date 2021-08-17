@@ -35,6 +35,10 @@ export interface ApiMeasureUnitType {
      */
     label?: string;
     underlyingMeasurementUnitType?: ApiMeasureUnitType;
+    /**
+     * the weight of the measurement unit type
+     */
+    weight?: number;
 }
 
 /**
@@ -57,7 +61,11 @@ export namespace ApiMeasureUnitType {
          * label
          */
         label = 'label',
-        underlyingMeasurementUnitType = 'underlyingMeasurementUnitType'
+        underlyingMeasurementUnitType = 'underlyingMeasurementUnitType',
+        /**
+         * the weight of the measurement unit type
+         */
+        weight = 'weight'
     }
 
 
@@ -111,6 +119,17 @@ export namespace ApiMeasureUnitType {
                     isListContainer: false,
                     complexType: 'ApiMeasureUnitType'
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'weight',
+                    classname: 'ApiMeasureUnitType',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 code: [
@@ -120,6 +139,8 @@ export namespace ApiMeasureUnitType {
                 label: [
                 ],
                 underlyingMeasurementUnitType: [
+                ],
+                weight: [
                 ],
             }
         }
@@ -138,6 +159,9 @@ export namespace ApiMeasureUnitType {
   //                   validators: []
   //               },
   //               underlyingMeasurementUnitType: {
+  //                   validators: []
+  //               },
+  //               weight: {
   //                   validators: []
   //               },
   //     }
