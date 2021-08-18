@@ -8,10 +8,10 @@
 
         <ng-container *ngIf="(this.type === 'processing-evidence-types')">
           <tr *ngFor="let type of types.items">
-            <td [attr.data-label]="sortOptionsFPQ[0].name" scope="row"><span>{{type.id}}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[0].name" scope="row"><span>{{type.code}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[1].name" scope="row"><span>{{type | translateCodebook: 'label'}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[2].name" scope="row"><span>{{type.type | formatProcessingEvidenceTypeType}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[3].name" scope="row"class="align-center"><span>{{setFPQ(type.fairness)}}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[3].name" scope="row" class="align-center"><span>{{setFPQ(type.fairness)}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[4].name" scope="row" class="align-center"><span>{{setFPQ(type.provenance)}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[5].name" scope="row" class="align-center"><span>{{setFPQ(type.quality)}}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[6].name" scope="row">
@@ -34,7 +34,7 @@
         </ng-container>
         <ng-container *ngIf="(this.type != 'processing-evidence-types')">
           <tr *ngFor="let type of types.items">
-            <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{type.id}}</span></td>
+            <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{type.code}}</span></td>
             <td [attr.data-label]="sortOptions[1].name"><span>{{type | translateCodebook: 'label'}}</span></td>
             <td [attr.data-label]="sortOptions[2].name">
               <span>
