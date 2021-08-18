@@ -2,7 +2,6 @@ FROM node:14-alpine as build-stage
 RUN apk add --update git
 WORKDIR /app
 COPY package.json ./
-RUN npm i @types/node
 RUN npm install
 COPY ./ .
 RUN npm run build:prod
