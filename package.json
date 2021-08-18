@@ -1,10 +1,11 @@
 {
   "name": "inatrace-fe",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod=true --aot=true --buildOptimizer=true --optimization=true",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
