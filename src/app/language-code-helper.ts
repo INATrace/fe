@@ -1,12 +1,12 @@
-//source https://afana.me/archive/2018/10/28/angular-internationalization/, https://github.com/NadeemAfana/angular-internationalization/tree/store-locale-in-url/src
+// source https://afana.me/archive/2018/10/28/angular-internationalization/, https://github.com/NadeemAfana/angular-internationalization/tree/store-locale-in-url/src
 export abstract class LanguageCodeHelper {
   public static defaultLocaleId = 'en';
-  public static implementedLocales = ['de', 'rw', LanguageCodeHelper.defaultLocaleId];
+  public static implementedLocales = ['de', 'rw', 'es', LanguageCodeHelper.defaultLocaleId];
 
 
   public static setCurrentLocale(localeId: string) {
     const urlLocaleId = LanguageCodeHelper.getCultureFromCurrentUrl();
-    if (urlLocaleId === localeId) return
+    if (urlLocaleId === localeId) { return; }
     if (urlLocaleId) {
         window.location.href = window.location.href.replace(`/${urlLocaleId}/`, `/${localeId.toLowerCase()}/`);
     } else {
@@ -53,7 +53,7 @@ export abstract class LanguageCodeHelper {
       }
       if (partialLocaleMatch != null) { return partialLocaleMatch; }
     }
-    //if not implemented return default
+    // if not implemented return default
     if (LanguageCodeHelper.implementedLocales.indexOf(storedLocaleId) < 0) {
       this.setCurrentLocale(this.defaultLocaleId);
       return this.defaultLocaleId;

@@ -11,19 +11,15 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <!-- <h4 class="modal-title">{{title}}</h4> -->
           <div class="title-page content-element--title">{{title}}</div>
         </div>
       </div>
-
-
 
       <div class="af-form-row">
 
         <div class="af-form-block--c6">
           <h2 i18n="@@userDetail.section.basicInfo">Basic information</h2>
           <div class="af-form-element">
-
 
             <textinput [form]="userProfileForm.get('name')" label="First name"
               i18n-label="@@userDetail.textinput.firstname.label"
@@ -61,37 +57,16 @@
               [readOnly]=true>
             </textinput>
 
-            <!-- <single-choice
-              label="Role"
-              i18n-label="@@userDetail.label.role"
-              [formControlInput]="userProfileForm.get('role')"
-              [codebookService]="roleCodebook"
-              [isInvalidChoice]="submitted && userProfileForm.get('role').invalid"
-              [readonly]="this.mode === 'userProfileView'">
-              <ng-container *ngIf="submitted">
-                <div *ngIf="userProfileForm.get('role').errors as errors" class="sc-invalid-feedback">
-                  <div *ngIf="errors.required" i18n="@@userDetail.textinput.name.error">
-                    Role is required
-                  </div>
-                </div>
-              </ng-container>
-            </single-choice> -->
-
             <div class="d-flex flex-column">
               <button class="btn btn-outlined" (click)="showPassReqSentModal()" style="margin-bottom: 0.25rem; width: 220px;">
                 <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem; font-weight: 300;" i18n="@@userDetail.button.reset">Reset password</span>
               </button>
-              <!-- <button *ngIf="showPassReqText" class="btn btn-link btn-link-pass" (click)="showPassReqSentModal()">
-            <p style="font-weight: 300;">Send reset password request for username {{userProfileForm.get('email').value}}</p>
-          </button> -->
               <button class="btn btn-outlined" (click)="confirmEmail()" *ngIf="unconfirmedUser" style="width: 220px;">
                 <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem; font-weight: 300;" i18n="@@userDetail.button.confirmUserEmail">Confirm user email</span>
               </button>
             </div>
 
           </div>
-
-
         </div>
 
         <div class="af-form-block--c6">
@@ -107,9 +82,10 @@
 
                     <!-- <img> -->
                     <div class="af-user-language--selected">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="assets/icons/icon-flag--united-kingdom.svg">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="assets/icons/icon-flag--germany.svg">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="assets/icons/icon-flag--rwanda.svg">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'ES'" src="assets/icons/icon-flag--spain.svg" alt="Select ES lang">
                       <span>{{this.userProfileForm.get('language').value}}</span>
                     </div>
                   </div>
@@ -134,6 +110,10 @@
                       <img src="assets/icons/icon-flag--rwanda.svg">
                       <span>RW</span>
                     </div>
+                    <div (click)="selectLanguage('ES')" *ngIf="this.userProfileForm.get('language').value != 'ES'">
+                      <img src="assets/icons/icon-flag--spain.svg">
+                      <span>ES</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,13 +128,6 @@
           <h2 i18n="@@userDetail.myCompanies.label">My companies</h2>
           <div class="af-form-element">
 
-            <!-- <form class="form-group">
-            <label for="myCompanies" class="mb-0 mt-3">
-              <div class="text-input-label" i18n="@@userDetail.myCompanies.label">
-                My companies
-              </div>
-            </label>
-          </form> -->
             <div *ngFor="let c of myCompanies index as i">
               <div class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;">
                 <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.company_name}}</div>
@@ -167,7 +140,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="af-form-row">
         <div class="af-form-block--c12">

@@ -1,8 +1,9 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { APP_BASE_HREF, registerLocaleData } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeRw from '@angular/common/locales/rw';
+import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -88,22 +89,21 @@ import { CompanyUserRoleComponent } from './company-user-role/company-user-role.
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
-    let mc = new Hammer(element, {
-      touchAction: "pan-y"
+    return new Hammer(element, {
+      touchAction: 'pan-y'
     });
-    return mc;
   }
 }
 
 registerLocaleData(localeDe);
 registerLocaleData(localeRw);
+registerLocaleData(localeEs);
 
 export function getConfiguration(): Configuration {
   return new Configuration({
     basePath: environment.basePath
   });
 }
-
 
 @NgModule({
   declarations: [
@@ -212,7 +212,7 @@ export function getConfiguration(): Configuration {
       multi: true
     },
     {
-      //see LanguageCodeHelper for source
+      // see LanguageCodeHelper for source
       provide: APP_BASE_HREF, useFactory: () => {
         return `/${LanguageCodeHelper.getCurrentLocale()}/`;
       }
