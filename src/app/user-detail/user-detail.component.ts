@@ -40,11 +40,10 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     protected globalEventsManager: GlobalEventManagerService,
     private route: ActivatedRoute,
     private chainUserService: UserService,
-    private companyContoller: CompanyControllerService,
-    private chainOrganizationService: OrganizationService,
+    private companyController: CompanyControllerService,
     private router: Router
   ) {
-    super()
+    super();
   }
 
   ngOnInit(): void {
@@ -113,7 +112,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     let tmp = [];
     if (!data) return
     for (let id of data.companyIds) {
-      let res = await this.companyContoller.getCompanyUsingGET(id).pipe(take(1)).toPromise();
+      let res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         tmp.push({
           company_id: id,
@@ -126,16 +125,16 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   async setSelectedUserCompany(company) {
     if (this.mode === 'userProfileView') {
-      let result = await this.globalEventsManager.openMessageModal({
+      const result = await this.globalEventsManager.openMessageModal({
         type: 'warning',
         message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.company_name}?`,
         options: { centered: true },
         dismissable: false
       });
-      if (result != "ok") return
-      let res = await this.chainOrganizationService.getOrganizationByCompanyId(company.company_id).pipe(take(1)).toPromise();
-      if (res && res.status === "OK" && res.data) {
-        localStorage.setItem("selectedUserCompany", dbKey(res.data));
+      if (result !== 'ok') { return; }
+      const res = await this.companyController.getCompanyUsingGET(company.company_id).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data) {
+        localStorage.setItem('selectedUserCompany', String(res.data.id));
         this.globalEventsManager.selectedUserCompany(res.data.name);
         localStorage.setItem('token', 'user-company-changed');
       }

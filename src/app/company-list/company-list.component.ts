@@ -177,8 +177,8 @@ export class CompanyListComponent implements OnInit {
     try {
       this.globalEventsManager.showLoading(true)
       let res = await this.companyController.executeActionUsingPOST('ACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
-      if (res.status == 'OK') this.mapToChain(id)
-      else throw Error()
+      // if (res.status == 'OK') this.mapToChain(id)
+      // else throw Error()
       this.reloadPage()
       this.globalEventsManager.push({
         action: 'success',
@@ -202,8 +202,8 @@ export class CompanyListComponent implements OnInit {
     try {
       this.globalEventsManager.showLoading(true)
       let res = await this.companyController.executeActionUsingPOST('DEACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
-      if (res.status == 'OK') this.mapToChain(id)
-      else throw Error()
+      // if (res.status == 'OK') this.mapToChain(id)
+      // else throw Error()
       this.reloadPage()
       this.globalEventsManager.push({
         action: 'success',
@@ -240,8 +240,8 @@ export class CompanyListComponent implements OnInit {
         otherCompanyId: otherCompany.id
       }).pipe(take(1)).toPromise()
       if (res && res.status == 'OK') {
-        this.mapToChain(company.id);
-        this.mapToChain(otherCompany.id);
+        // this.mapToChain(company.id);
+        // this.mapToChain(otherCompany.id);
         this.reloadPage();
         this.globalEventsManager.push({
           action: 'success',

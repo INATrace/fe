@@ -46,7 +46,7 @@ export class AuthService {
     private _currentUserProfile: ApiUserGet = null;
 
     get currentUserProfile() {
-      return this._currentUserProfile
+      return this._currentUserProfile;
     }
 
     userProfile$ = this.updateUserProfile$.pipe(
@@ -54,28 +54,27 @@ export class AuthService {
             catchError(val => of(null))
         )),
         map((resp: ApiResponseApiUserGet) => {
-            if(resp) {
-              this.postNewUserToCouchDB(resp.data);
-              if (resp.data.language) LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase())
-              return resp.data
+            if (resp) {
+              if (resp.data.language) { LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase()); }
+              return resp.data;
             }
-            return null
+            return null;
         }),
-        tap(val => {this._currentUserProfile = val}),
+        tap(val => { this._currentUserProfile = val; }),
         shareReplay(1)
-    )
+    );
 
     refreshUserProfile() {
-        this.updateUserProfile$.next(true)
+        this.updateUserProfile$.next(true);
     }
 
     async postNewUserToCouchDB(user) {
-      let postUser = user;
-      let res = await this.chainUserService.getUserByAFId(user.id).pipe(take(1)).toPromise();
+      const postUser = user;
+      const res = await this.chainUserService.getUserByAFId(user.id).pipe(take(1)).toPromise();
       // console.log(res);
-      if(res && res.status == 'OK') {
+      if (res && res.status === 'OK') {
         // console.log(Object.keys(res.data).length)
-        if (Object.keys(res.data).length == 0) {
+        if (Object.keys(res.data).length === 0) {
       // if (res && res.status == 'OK' && res.data) {
       //   if(res.data.count < user.id) {
           delete postUser['actions']

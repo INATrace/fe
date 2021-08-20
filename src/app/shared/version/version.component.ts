@@ -11,7 +11,7 @@ export class VersionComponent implements OnInit {
   constructor() { }
 
   get version() {
-      return environment.version
+      return environment.version;
   }
   ngOnInit() {
   }

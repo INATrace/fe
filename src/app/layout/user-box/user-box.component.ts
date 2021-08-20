@@ -8,6 +8,7 @@ import { AboutAppInfoService } from 'src/app/about-app-info.service';
 import { AuthService } from 'src/app/system/auth.service';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-user-box',
@@ -43,11 +44,11 @@ export class UserBoxComponent implements OnInit {
     private router: Router,
     private aboutAppInfoService: AboutAppInfoService,
     private globalEventManager: GlobalEventManagerService,
-    private chainOrganizationService: OrganizationService,
+    private companyControllerService: CompanyControllerService,
     private productController: ProductControllerService
   ) { }
 
-  unsubsribeList = new UnsubscribeList()
+  unsubsribeList = new UnsubscribeList();
 
   ngOnInit(): void {
     this.showProductNav = this.router.url.startsWith('/product-labels/');
@@ -102,16 +103,16 @@ export class UserBoxComponent implements OnInit {
   }
 
   async setDisplayCompany() {
-    let id = localStorage.getItem("selectedUserCompany");
-    if (!id) return;
-    let res = await this.chainOrganizationService.getOrganization(id).pipe(take(1)).toPromise();
-    if (res && res.status === "OK" && res.data) {
+    const id = localStorage.getItem('selectedUserCompany');
+    if (!id) { return; }
+    const res = await this.companyControllerService.getCompanyUsingGET(Number(id)).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK' && res.data) {
       this.globalEventManager.selectedUserCompany(res.data.name);
     }
   }
 
   goToProduct() {
-    this.router.navigate(['/', 'product-labels'])
+    this.router.navigate(['/', 'product-labels']).then();
   }
 
   goTo(type) {

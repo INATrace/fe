@@ -32,15 +32,14 @@ import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 export function loginMathcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
     return {
       consumed: url
-    }
+    };
   }
-  return null
+  return null;
 }
 
 const routes: Routes = [
@@ -383,7 +382,7 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       drobtinice: null,
-      action: "privacy_only"
+      action: 'privacy_only'
     }
   },
   {
