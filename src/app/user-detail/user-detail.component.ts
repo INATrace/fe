@@ -166,7 +166,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
         this.globalEventsManager.showLoading(true);
         let res = await this.userController.updateProfileUsingPUT({ "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
-          this.mapToChain();
           this.userProfileForm.markAsPristine()
           if (goBack) this.goBack();
         }
@@ -189,7 +188,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
         }
         let res = await this.userController.adminUpdateProfileUsingPUT({ "id": this.userId, "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
         if (res && res.status == 'OK') {
-          this.mapToChain();
           this.userProfileForm.markAsPristine()
           if (goBack) this.goBack();
         }
