@@ -2591,6 +2591,7 @@
     "codebookTranslations.process_action.description.CBT_d82b4ff3-0743-4a8a-b1e1-4e46640e418c.description": "Gutonora kawa yumye",
     "codebookTranslations.process_action.description.CBT_db8d7e3c-d00a-422d-9ace-c8803787fbd8.description": "Gupakira ikawa yumye ijya mu bubiko bwa kawa y'uruganda rutonora kawa yumye",
     "codebookTranslations.process_action.description.CBT_fd196e46-9f77-491f-ad30-0b290377fc55.description": "Gutora ikawa itose no kumutsa",
-    "orderHistoryView.processingOrderName.missingHistory": "Inkuru ni ndende cyane. Igice kimwe nicyo cyagiyeho. Kurikira indi mirongo kugirango ubone igice cyasigaye. "
+    "orderHistoryView.processingOrderName.missingHistory": "Inkuru ni ndende cyane. Igice kimwe nicyo cyagiyeho. Kurikira indi mirongo kugirango ubone igice cyasigaye. ",
+    "systemLeftPanel.sideTitle.valueChains": "Value chains"
   }
 }

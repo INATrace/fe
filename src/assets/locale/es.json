@@ -2494,6 +2494,7 @@
     "codebookTranslations.process_action.description.CBT_d82b4ff3-0743-4a8a-b1e1-4e46640e418c.description": "Trillado",
     "codebookTranslations.process_action.description.CBT_db8d7e3c-d00a-422d-9ace-c8803787fbd8.description": "Envasado de café seco para el almacenamiento de la estación de lavado de café",
     "codebookTranslations.process_action.description.CBT_fd196e46-9f77-491f-ad30-0b290377fc55.description": "Clasificación en húmedo y secado al aire",
-    "orderHistoryView.processingOrderName.missingHistory": "Histórico demasiado largo. Sólo se ha cargado una parte. Siga los enlaces de otros pedidos para ver el resto."
+    "orderHistoryView.processingOrderName.missingHistory": "Histórico demasiado largo. Sólo se ha cargado una parte. Siga los enlaces de otros pedidos para ver el resto.",
+    "systemLeftPanel.sideTitle.valueChains": "Value chains"
   }
 }

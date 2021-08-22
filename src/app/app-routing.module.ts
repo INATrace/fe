@@ -32,8 +32,9 @@ import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
+import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
 
-export function loginMathcher(url) {
+export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
     return {
       consumed: url
@@ -44,13 +45,16 @@ export function loginMathcher(url) {
 
 const routes: Routes = [
   {
-    matcher: loginMathcher,
+    matcher: loginMatcher,
     component: GuestLayoutComponent,
     children: [
       { path: '', component: LoginComponent, pathMatch: 'full' },
     ]
   },
-  { path: 'app-version', component: VersionComponent },
+  {
+    path: 'app-version',
+    component: VersionComponent
+  },
   {
     path: '',
     redirectTo: '/',
@@ -70,13 +74,6 @@ const routes: Routes = [
       { path: '', component: GetStartedPageComponent, pathMatch: 'full' },
     ]
   },
-  // {
-  //   path: 'login',
-  //   component: GuestLayoutComponent,
-  //   children: [
-  //     { path: '', component: LoginComponent, pathMatch: 'full' },
-  //   ]
-  // },
   {
     path: 'register',
     component: GuestLayoutComponent,
@@ -91,89 +88,6 @@ const routes: Routes = [
       { path: '', component: ConfirmEmailComponent, pathMatch: 'full' },
     ]
   },
-  // {
-  //   path: 'home',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: UserHomeComponent, pathMatch: 'full' },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'user-profile',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: UserDetailComponent, pathMatch: 'full', canDeactivate: [DeactivateGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'settings',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: SettingsComponent, pathMatch: 'full', canActivate: [AuthGuardService], canDeactivate: [DeactivateGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'users',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: UserListComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'users/:id',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: UserDetailComponent, pathMatch: 'full', canDeactivate: [DeactivateGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'companies',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     { path: '', component: CompanyListComponent, pathMatch: 'full', canActivate: [AuthGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'companies/new',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     // { path: '', component: CompanyCreateComponent, pathMatch: 'full' },
-  //     { path: '', component: CompanyDetailComponent, pathMatch: 'full', canDeactivate: [DeactivateGuardService] },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
-  // {
-  //   path: 'companies/:id',
-  //   component: AuthorisedLayoutComponent,
-  //   children: [
-  //     {
-  //       path: '', component: CompanyDetailComponent, pathMatch: 'full', canDeactivate: [DeactivateGuardService],
-  //     },
-  //   ],
-  //   data: {
-  //     drobtinice: null
-  //   }
-  // },
   {
     path: 'home',
     component: UserHomeComponent,
@@ -191,7 +105,10 @@ const routes: Routes = [
       drobtinice: null
     }
   },
-  {path: 'settings', redirectTo: 'settings/additional'},
+  {
+    path: 'settings',
+    redirectTo: 'settings/additional'
+  },
   {
     path: 'settings/additional',
     component: SettingsAdditionalComponent,
@@ -212,7 +129,15 @@ const routes: Routes = [
       drobtinice: null
     }
   },
-
+  {
+    path: 'value-chains',
+    component: ValueChainListComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
   {
     path: 'users',
     component: UserListComponent,
@@ -249,7 +174,10 @@ const routes: Routes = [
       drobtinice: null
     }
   },
-  { path: 'companies/:id', redirectTo: 'companies/:id/company' },
+  {
+    path: 'companies/:id',
+    redirectTo: 'companies/:id/company'
+  },
   {
     path: 'companies/:id/company',
     component: CompanyDetailComponent,
@@ -273,7 +201,10 @@ const routes: Routes = [
   ///////////////////////
   ///////////////////////
   ///////////////////////
-  { path: 'product-labels', loadChildren: () => import('./m-product/m-product.module').then(m => m.MProductModule) },
+  {
+    path: 'product-labels',
+    loadChildren: () => import('./m-product/m-product.module').then(m => m.MProductModule)
+  },
   {
     path: 'account-activation',
     component: GuestLayoutComponent,
@@ -366,8 +297,10 @@ const routes: Routes = [
       { path: '', component: ProductLabelFrontPageComponent, pathMatch: 'full' },
     ]
   },
-  { path: 'p-cd/:uuid/:soid', loadChildren: () => import('./front-page/front-page-routing.module').then(m => m.FrontPageRoutingModule) },
-
+  {
+    path: 'p-cd/:uuid/:soid',
+    loadChildren: () => import('./front-page/front-page-routing.module').then(m => m.FrontPageRoutingModule)
+  },
   {
     path: 's/:uuid/:soid/privacy-policy',
     component: FrontPagePrivacyComponent,
@@ -393,7 +326,6 @@ const routes: Routes = [
       drobtinice: null
     }
   },
-
   {
     path: 'p-cd',
     component: FrontPageComponent,
