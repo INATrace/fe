@@ -301,8 +301,7 @@
                   <div cdkDropList
                     (cdkDropListDropped)="videosListManager.onDrop($event)">
                     <div *ngFor="let item of
-                      companyDetailForm.get('documents')?.controls; let i=
-                      index;">
+                      companyDetailForm.get('documents')?.controls; let i=index;">
                       <app-company-document-item
                         title="Video"
                         i18n-title="@@companyDetail.list-editor.videos.title"
@@ -402,8 +401,7 @@
                   <div cdkDropList
                     (cdkDropListDropped)="productionRecordListManager.onDrop($event)">
                     <div *ngFor="let item of
-                      companyDetailForm.get('documents')?.controls; let i=
-                      index;">
+                      companyDetailForm.get('documents')?.controls; let i=index;">
                       <app-company-document-item
                         title="Production record"
                         i18n-title="@@companyDetail.list-editor.productionRecord.title"
@@ -453,8 +451,7 @@
                   <div cdkDropList
                     (cdkDropListDropped)="meetTheFarmerListManager.onDrop($event)">
                     <div *ngFor="let item of
-                      companyDetailForm.get('documents')?.controls; let i=
-                      index;">
+                      companyDetailForm.get('documents')?.controls; let i=index;">
                       <app-company-document-item
                         title="Meet the Farmer"
                         i18n-title="@@companyDetail.list-editor.meetTheFarmer.title"
@@ -642,7 +639,7 @@
             <ng-container *ngIf="mode === 'update'">
               <bottom-buttons
                 [changed]="changed"
-                [invalid]="submitted && invalid"
+                [invalid]="submitted && companyDetailForm.invalid"
                 (onSave)="saveCompany()"
                 (onValidate)="validate()"
                 [floatingValidate]="true"
@@ -653,7 +650,7 @@
             <ng-container *ngIf="mode === 'create'">
               <bottom-buttons
                 [changed]="changed"
-                [invalid]="submitted && invalid"
+                [invalid]="submitted && companyDetailForm.invalid"
                 (onSave)="create()"
                 (onValidate)="validate()"
                 saveButtonLabel="Create"

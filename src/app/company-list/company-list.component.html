@@ -7,7 +7,6 @@
 
   <div class="main">
 
-
     <div class="row">
       <div class="col">
 
@@ -77,7 +76,7 @@
                   <td [attr.data-label]="sortOptions[1].name"><span>{{company.status}}</span></td>
                   <td [attr.data-label]="sortOptions[2].name"><span>
                     <a i18n="@@companyList.tableCol.edit"
-                      (click)="router.navigate(['/companies', company.id])"
+                      (click)="edit(company.id)"
                       class="company-action"
                       [class.enabled-action]="true">
                       Edit

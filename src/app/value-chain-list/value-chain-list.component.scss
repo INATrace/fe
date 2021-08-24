@@ -1,0 +1,27 @@
+@import "src/_variables";
+
+.value-chain-action {
+  margin: 0.25rem;
+  cursor: pointer;
+}
+
+.enabled-action {
+  color: $primary;
+}
+
+.disabled-action {
+  color: $gray;
+  cursor: default;
+  pointer-events: none;
+}
+
+.enabled-action:hover {
+  text-decoration: underline;
+}
+
+.limit-chars {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40ch;
+}
