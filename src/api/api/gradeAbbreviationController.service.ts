@@ -32,6 +32,7 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiGradeAbbreviation } from '../model/apiGradeAbbreviation';
 import { ApiPaginatedResponseApiGradeAbbreviation } from '../model/apiPaginatedResponseApiGradeAbbreviation';
+import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiGradeAbbreviation } from '../model/apiResponseApiGradeAbbreviation';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -260,15 +261,15 @@ export class GradeAbbreviationControllerService {
   public createOrUpdateGradeAbbreviationUsingPUTByMap(
     map: CreateOrUpdateGradeAbbreviationUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiGradeAbbreviation>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public createOrUpdateGradeAbbreviationUsingPUTByMap(
     map: CreateOrUpdateGradeAbbreviationUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiGradeAbbreviation>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public createOrUpdateGradeAbbreviationUsingPUTByMap(
     map: CreateOrUpdateGradeAbbreviationUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiGradeAbbreviation>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public createOrUpdateGradeAbbreviationUsingPUTByMap(
     map: CreateOrUpdateGradeAbbreviationUsingPUT.PartialParamMap,
     observe: any = 'body',
@@ -288,9 +289,9 @@ export class GradeAbbreviationControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiGradeAbbreviation>;
-    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiGradeAbbreviation>>;
-    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiGradeAbbreviation>>;
+    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public createOrUpdateGradeAbbreviationUsingPUT(ApiGradeAbbreviation: ApiGradeAbbreviation, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiGradeAbbreviation === null || ApiGradeAbbreviation === undefined) {
             throw new Error('Required parameter ApiGradeAbbreviation was null or undefined when calling createOrUpdateGradeAbbreviationUsingPUT.');
@@ -322,7 +323,7 @@ export class GradeAbbreviationControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiGradeAbbreviation>(`${this.configuration.basePath}/api/chain/grade-abbreviation`,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/grade-abbreviation`,
             ApiGradeAbbreviation,
             {
                 withCredentials: this.configuration.withCredentials,

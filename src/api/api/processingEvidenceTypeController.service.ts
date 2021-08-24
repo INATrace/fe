@@ -32,6 +32,7 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../model/apiPaginatedResponseApiProcessingEvidenceType';
 import { ApiProcessingEvidenceType } from '../model/apiProcessingEvidenceType';
+import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiProcessingEvidenceType } from '../model/apiResponseApiProcessingEvidenceType';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -260,15 +261,15 @@ export class ProcessingEvidenceTypeControllerService {
   public createOrUpdateProcessingEvidenceTypeUsingPUTByMap(
     map: CreateOrUpdateProcessingEvidenceTypeUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProcessingEvidenceType>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public createOrUpdateProcessingEvidenceTypeUsingPUTByMap(
     map: CreateOrUpdateProcessingEvidenceTypeUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingEvidenceType>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public createOrUpdateProcessingEvidenceTypeUsingPUTByMap(
     map: CreateOrUpdateProcessingEvidenceTypeUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingEvidenceType>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public createOrUpdateProcessingEvidenceTypeUsingPUTByMap(
     map: CreateOrUpdateProcessingEvidenceTypeUsingPUT.PartialParamMap,
     observe: any = 'body',
@@ -288,9 +289,9 @@ export class ProcessingEvidenceTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingEvidenceType>;
-    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingEvidenceType>>;
-    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingEvidenceType>>;
+    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public createOrUpdateProcessingEvidenceTypeUsingPUT(ApiProcessingEvidenceType: ApiProcessingEvidenceType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingEvidenceType === null || ApiProcessingEvidenceType === undefined) {
             throw new Error('Required parameter ApiProcessingEvidenceType was null or undefined when calling createOrUpdateProcessingEvidenceTypeUsingPUT.');
@@ -322,7 +323,7 @@ export class ProcessingEvidenceTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiProcessingEvidenceType>(`${this.configuration.basePath}/api/chain/processing-evidence-type`,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/processing-evidence-type`,
             ApiProcessingEvidenceType,
             {
                 withCredentials: this.configuration.withCredentials,

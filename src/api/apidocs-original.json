@@ -195,7 +195,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiFacilityType_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -372,7 +372,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiGradeAbbreviation_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -549,7 +549,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiMeasureUnitType_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -726,7 +726,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingEvidenceType_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -894,6 +894,448 @@
         ],
         "operationId": "getProcessingEvidenceTypeUsingGET",
         "summary": "Get a single processing evidence type with the provided ID."
+      }
+    },
+    "/api/chain/semi-product": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "createOrUpdateSemiProductUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiSemiProduct"
+              }
+            }
+          },
+          "description": "apiSemiProduct",
+          "required": true
+        },
+        "summary": "Create or update semi product. If ID is provided, the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/semi-product/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiSemiProduct_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "getSemiProductListUsingGET",
+        "summary": "Get a paginated list of semi products."
+      }
+    },
+    "/api/chain/semi-product/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Semi product ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "deleteSemiProductUsingDELETE",
+        "summary": "Deletes a semi product with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Semi product ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiSemiProduct_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "getSemiProductUsingGET",
+        "summary": "Get a single semi product with the provided ID."
+      }
+    },
+    "/api/chain/value-chain": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "createOrUpdateValueChainUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiValueChain"
+              }
+            }
+          },
+          "description": "apiValueChain",
+          "required": true
+        },
+        "summary": "Create or update value chain. If ID is provided, the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/value-chain/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Value chain name",
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Value chain status",
+            "in": "query",
+            "name": "valueChainStatus",
+            "required": false,
+            "schema": {
+              "enum": [
+                "ENABLED",
+                "DISABLED"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiValueChain_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "getValueChainListUsingGET",
+        "summary": "Get a list of value chains defined in the system."
+      }
+    },
+    "/api/chain/value-chain/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "deleteValueChainUsingDELETE",
+        "summary": "Deletes a value chain with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiValueChain_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "getValueChainUsingGET",
+        "summary": "Get a single value chain with the provided ID."
+      }
+    },
+    "/api/chain/value-chain/{id}/disable": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "disableValueChainUsingPOST",
+        "summary": "Set the status of the value chain with the provided ID as 'DISABLED'."
+      }
+    },
+    "/api/chain/value-chain/{id}/enable": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "value-chain-controller"
+        ],
+        "operationId": "enableValueChainUsingPOST",
+        "summary": "Set the status of the value chain with the provided ID as 'ENABLED'."
       }
     },
     "/api/common/countries": {
@@ -1313,7 +1755,8 @@
               "enum": [
                 "EN",
                 "DE",
-                "RW"
+                "RW",
+                "ES"
               ],
               "type": "string"
             }
@@ -1516,7 +1959,8 @@
               "enum": [
                 "EN",
                 "DE",
-                "RW"
+                "RW",
+                "ES"
               ],
               "type": "string"
             }
@@ -4756,7 +5200,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -5195,7 +5640,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -5262,7 +5708,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -5347,7 +5794,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -6044,6 +6492,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiSemiProduct_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProduct"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiUserBase_": {
         "properties": {
           "count": {
@@ -6082,6 +6557,33 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiUserCustomer"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiValueChain_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
             },
             "type": "array"
           },
@@ -6614,6 +7116,49 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiSemiProduct_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiSemiProduct_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiUserBase_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -6662,6 +7207,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiUserCustomer_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiValueChain_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiValueChain_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -7493,7 +8081,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -8312,6 +8901,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiSemiProduct_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiUserGet_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -8360,6 +8992,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiUser",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiValueChain_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiValueChain",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -8575,6 +9250,34 @@
         },
         "type": "object"
       },
+      "ApiSemiProduct": {
+        "properties": {
+          "apiMeasureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
+          },
+          "buyable": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "boolean"
+          },
+          "skuendCustomer": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "ApiSustainability": {
         "properties": {
           "co2Footprint": {
@@ -8617,7 +9320,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -8668,7 +9372,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -8796,7 +9501,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -8858,7 +9564,8 @@
             "enum": [
               "EN",
               "DE",
-              "RW"
+              "RW",
+              "ES"
             ],
             "type": "string"
           },
@@ -8883,6 +9590,67 @@
               "type": "string"
             },
             "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "ApiValueChain": {
+        "properties": {
+          "description": {
+            "description": "description of the value chain",
+            "type": "string"
+          },
+          "facilityTypes": {
+            "description": "list of supported facility types",
+            "items": {
+              "$ref": "#/components/schemas/ApiFacilityType"
+            },
+            "type": "array"
+          },
+          "gradeAbbreviations": {
+            "description": "list of supported grade abbreviations",
+            "items": {
+              "$ref": "#/components/schemas/ApiGradeAbbreviation"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "measureUnitTypes": {
+            "description": "list of supported measuring unit types",
+            "items": {
+              "$ref": "#/components/schemas/ApiMeasureUnitType"
+            },
+            "type": "array"
+          },
+          "name": {
+            "description": "name of the value chain",
+            "type": "string"
+          },
+          "processingEvidenceTypes": {
+            "description": "list of supported processing evidence types",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceType"
+            },
+            "type": "array"
+          },
+          "semiProducts": {
+            "description": "list of supported semi-products",
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProduct"
+            },
+            "type": "array"
+          },
+          "valueChainStatus": {
+            "description": "value chain status",
+            "enum": [
+              "ENABLED",
+              "DISABLED"
+            ],
+            "type": "string"
           }
         },
         "type": "object"
@@ -9005,10 +9773,6 @@
   },
   "tags": [
     {
-      "description": "Facility Type Controller",
-      "name": "facility-type-controller"
-    },
-    {
       "description": "Product Controller",
       "name": "product-controller"
     },
@@ -9021,20 +9785,12 @@
       "name": "common-controller"
     },
     {
-      "description": "User Controller",
-      "name": "user-controller"
-    },
-    {
-      "description": "Public Controller",
-      "name": "public-controller"
-    },
-    {
-      "description": "Action Type Controller",
-      "name": "action-type-controller"
-    },
-    {
       "description": "Measure Unit Type Controller",
       "name": "measure-unit-type-controller"
+    },
+    {
+      "description": "Value Chain Controller",
+      "name": "value-chain-controller"
     },
     {
       "description": "Basic Error Controller",
@@ -9047,6 +9803,26 @@
     {
       "description": "Processing Evidence Type Controller",
       "name": "processing-evidence-type-controller"
+    },
+    {
+      "description": "Facility Type Controller",
+      "name": "facility-type-controller"
+    },
+    {
+      "description": "User Controller",
+      "name": "user-controller"
+    },
+    {
+      "description": "Semi Product Controller",
+      "name": "semi-product-controller"
+    },
+    {
+      "description": "Public Controller",
+      "name": "public-controller"
+    },
+    {
+      "description": "Action Type Controller",
+      "name": "action-type-controller"
     }
   ]
 }

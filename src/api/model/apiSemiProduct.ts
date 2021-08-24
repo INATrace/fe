@@ -18,120 +18,78 @@
  */
 
 
+import { ApiMeasureUnitType } from './apiMeasureUnitType';
 
 
 
-export interface ApiUserBase { 
-    /**
-     * Email/username
-     */
-    email?: string;
+export interface ApiSemiProduct { 
+    apiMeasureUnitType?: ApiMeasureUnitType;
+    buyable?: boolean;
+    description?: string;
     /**
      * Entity id
      */
     id?: number;
-    /**
-     * language
-     */
-    language?: ApiUserBase.LanguageEnum;
-    /**
-     * Name
-     */
     name?: string;
-    /**
-     * User role
-     */
-    role?: ApiUserBase.RoleEnum;
-    /**
-     * Status
-     */
-    status?: ApiUserBase.StatusEnum;
-    /**
-     * Surname
-     */
-    surname?: string;
+    sku?: boolean;
+    skuendCustomer?: boolean;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiUserBase.
+ * Namespace for property- and property-value-enumerations of ApiSemiProduct.
  */
-export namespace ApiUserBase {
+export namespace ApiSemiProduct {
     /**
-     * All properties of ApiUserBase.
+     * All properties of ApiSemiProduct.
      */
     export enum Properties {
-        /**
-         * Email/username
-         */
-        email = 'email',
+        apiMeasureUnitType = 'apiMeasureUnitType',
+        buyable = 'buyable',
+        description = 'description',
         /**
          * Entity id
          */
         id = 'id',
-        /**
-         * language
-         */
-        language = 'language',
-        /**
-         * Name
-         */
         name = 'name',
-        /**
-         * User role
-         */
-        role = 'role',
-        /**
-         * Status
-         */
-        status = 'status',
-        /**
-         * Surname
-         */
-        surname = 'surname'
-    }
-
-    /**
-     * All possible values of language.
-     */
-    export enum LanguageEnum {
-        EN = 'EN',
-        DE = 'DE',
-        RW = 'RW',
-        ES = 'ES'
-    }
-
-    /**
-     * All possible values of role.
-     */
-    export enum RoleEnum {
-        USER = 'USER',
-        ADMIN = 'ADMIN',
-        MANAGER = 'MANAGER',
-        ACCOUNTANT = 'ACCOUNTANT'
-    }
-
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNCONFIRMED = 'UNCONFIRMED',
-        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
-        ACTIVE = 'ACTIVE',
-        DEACTIVATED = 'DEACTIVATED'
+        sku = 'sku',
+        skuendCustomer = 'skuendCustomer'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiUserBase',
+            classname: 'ApiSemiProduct',
             vars: [
+                {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'apiMeasureUnitType',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'email',
-                    classname: 'ApiUserBase',
+                    name: 'buyable',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
+                    classname: 'ApiSemiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -142,20 +100,8 @@ export namespace ApiUserBase {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiUserBase',
+                    classname: 'ApiSemiProduct',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserBase.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiUserBase',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -165,31 +111,7 @@ export namespace ApiUserBase {
                     isEnum: false,
                     required: false,
                     name: 'name',
-                    classname: 'ApiUserBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserBase.RoleEnum',
-                    required: false,
-                    name: 'role',
-                    classname: 'ApiUserBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserBase.StatusEnum',
-                    required: false,
-                    name: 'status',
-                    classname: 'ApiUserBase',
+                    classname: 'ApiSemiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -199,59 +121,70 @@ export namespace ApiUserBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'surname',
-                    classname: 'ApiUserBase',
-                    dataType: 'string',
+                    name: 'sku',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'skuendCustomer',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                email: [
+                apiMeasureUnitType: [
+                ],
+                buyable: [
+                ],
+                description: [
                 ],
                 id: [
                 ],
-                language: [
-                ],
                 name: [
                 ],
-                role: [
+                sku: [
                 ],
-                status: [
-                ],
-                surname: [
+                skuendCustomer: [
                 ],
             }
         }
     }
 
-  // export const ApiUserBaseValidationScheme = {
+  // export const ApiSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               email: {
+  //               apiMeasureUnitType: {
+  //                   validators: []
+  //               },
+  //               buyable: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               id: {
   //                   validators: []
   //               },
-  //               language: {
-  //                   validators: []
-  //               },
   //               name: {
   //                   validators: []
   //               },
-  //               role: {
+  //               sku: {
   //                   validators: []
   //               },
-  //               status: {
-  //                   validators: []
-  //               },
-  //               surname: {
+  //               skuendCustomer: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiUserBase>;
+  // } as SimpleValidationScheme<ApiSemiProduct>;
 
 
 }

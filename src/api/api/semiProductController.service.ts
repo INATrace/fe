@@ -30,75 +30,75 @@ import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
-import { ApiFacilityType } from '../model/apiFacilityType';
-import { ApiPaginatedResponseApiFacilityType } from '../model/apiPaginatedResponseApiFacilityType';
+import { ApiPaginatedResponseApiSemiProduct } from '../model/apiPaginatedResponseApiSemiProduct';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
-import { ApiResponseApiFacilityType } from '../model/apiResponseApiFacilityType';
+import { ApiResponseApiSemiProduct } from '../model/apiResponseApiSemiProduct';
+import { ApiSemiProduct } from '../model/apiSemiProduct';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateFacilityTypeUsingPUT.
+ * Namespace for createOrUpdateSemiProductUsingPUT.
  */
-export namespace CreateOrUpdateFacilityTypeUsingPUT {
+export namespace CreateOrUpdateSemiProductUsingPUT {
     /**
-     * Parameter map for createOrUpdateFacilityTypeUsingPUT.
+     * Parameter map for createOrUpdateSemiProductUsingPUT.
      */
     export interface PartialParamMap {
       /**
-       * apiFacilityType
+       * apiSemiProduct
        */
-      ApiFacilityType: ApiFacilityType;
+      ApiSemiProduct: ApiSemiProduct;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateFacilityTypeUsingPUT.
+     * Enumeration of all parameters for createOrUpdateSemiProductUsingPUT.
      */
     export enum Parameters {
       /**
-       * apiFacilityType
+       * apiSemiProduct
        */
-      ApiFacilityType = 'ApiFacilityType'
+      ApiSemiProduct = 'ApiSemiProduct'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateFacilityTypeUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateSemiProductUsingPUT
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateSemiProductUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteFacilityTypeUsingDELETE.
+ * Namespace for deleteSemiProductUsingDELETE.
  */
-export namespace DeleteFacilityTypeUsingDELETE {
+export namespace DeleteSemiProductUsingDELETE {
     /**
-     * Parameter map for deleteFacilityTypeUsingDELETE.
+     * Parameter map for deleteSemiProductUsingDELETE.
      */
     export interface PartialParamMap {
       /**
-       * Facility type ID
+       * Semi product ID
        */
       id: number;
     }
 
     /**
-     * Enumeration of all parameters for deleteFacilityTypeUsingDELETE.
+     * Enumeration of all parameters for deleteSemiProductUsingDELETE.
      */
     export enum Parameters {
       /**
-       * Facility type ID
+       * Semi product ID
        */
       id = 'id'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteFacilityTypeUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteSemiProductUsingDELETE
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteFacilityTypeUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteSemiProductUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,11 +106,11 @@ export namespace DeleteFacilityTypeUsingDELETE {
 }
 
 /**
- * Namespace for getFacilityTypeListUsingGET.
+ * Namespace for getSemiProductListUsingGET.
  */
-export namespace GetFacilityTypeListUsingGET {
+export namespace GetSemiProductListUsingGET {
     /**
-     * Parameter map for getFacilityTypeListUsingGET.
+     * Parameter map for getSemiProductListUsingGET.
      */
     export interface PartialParamMap {
       /**
@@ -136,7 +136,7 @@ export namespace GetFacilityTypeListUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getFacilityTypeListUsingGET.
+     * Enumeration of all parameters for getSemiProductListUsingGET.
      */
     export enum Parameters {
       /**
@@ -162,10 +162,10 @@ export namespace GetFacilityTypeListUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityTypeListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getSemiProductListUsingGET
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetFacilityTypeListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetSemiProductListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       requestType: [
       ],
       limit: [
@@ -180,34 +180,34 @@ export namespace GetFacilityTypeListUsingGET {
 }
 
 /**
- * Namespace for getFacilityTypeUsingGET.
+ * Namespace for getSemiProductUsingGET.
  */
-export namespace GetFacilityTypeUsingGET {
+export namespace GetSemiProductUsingGET {
     /**
-     * Parameter map for getFacilityTypeUsingGET.
+     * Parameter map for getSemiProductUsingGET.
      */
     export interface PartialParamMap {
       /**
-       * Facility type ID
+       * Semi product ID
        */
       id: number;
     }
 
     /**
-     * Enumeration of all parameters for getFacilityTypeUsingGET.
+     * Enumeration of all parameters for getSemiProductUsingGET.
      */
     export enum Parameters {
       /**
-       * Facility type ID
+       * Semi product ID
        */
       id = 'id'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityTypeUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getSemiProductUsingGET
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetFacilityTypeUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetSemiProductUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -219,7 +219,7 @@ export namespace GetFacilityTypeUsingGET {
 @Injectable({
   providedIn: 'root'
 })
-export class FacilityTypeControllerService {
+export class SemiProductControllerService {
 
     protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
@@ -252,30 +252,30 @@ export class FacilityTypeControllerService {
 
 
   /**
-   * Create or update facility type. If ID is provided, the entity entity with the provided ID is updated. by map.
+   * Create or update semi product. If ID is provided, the entity with the provided ID is updated. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateSemiProductUsingPUTByMap(
+    map: CreateOrUpdateSemiProductUsingPUT.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateSemiProductUsingPUTByMap(
+    map: CreateOrUpdateSemiProductUsingPUT.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateSemiProductUsingPUTByMap(
+    map: CreateOrUpdateSemiProductUsingPUT.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateSemiProductUsingPUTByMap(
+    map: CreateOrUpdateSemiProductUsingPUT.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateFacilityTypeUsingPUT(
-      map.ApiFacilityType,
+    return this.createOrUpdateSemiProductUsingPUT(
+      map.ApiSemiProduct,
       observe,
       reportProgress
     );
@@ -283,18 +283,18 @@ export class FacilityTypeControllerService {
 
 
     /**
-     * Create or update facility type. If ID is provided, the entity entity with the provided ID is updated.
+     * Create or update semi product. If ID is provided, the entity with the provided ID is updated.
      * 
-     * @param ApiFacilityType apiFacilityType
+     * @param ApiSemiProduct apiSemiProduct
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (ApiFacilityType === null || ApiFacilityType === undefined) {
-            throw new Error('Required parameter ApiFacilityType was null or undefined when calling createOrUpdateFacilityTypeUsingPUT.');
+    public createOrUpdateSemiProductUsingPUT(ApiSemiProduct: ApiSemiProduct, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateSemiProductUsingPUT(ApiSemiProduct: ApiSemiProduct, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateSemiProductUsingPUT(ApiSemiProduct: ApiSemiProduct, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateSemiProductUsingPUT(ApiSemiProduct: ApiSemiProduct, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiSemiProduct === null || ApiSemiProduct === undefined) {
+            throw new Error('Required parameter ApiSemiProduct was null or undefined when calling createOrUpdateSemiProductUsingPUT.');
         }
 
         let headers = this.defaultHeaders;
@@ -323,8 +323,8 @@ export class FacilityTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/facility-type`,
-            ApiFacilityType,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/semi-product`,
+            ApiSemiProduct,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -333,36 +333,36 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateFacilityTypeUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateSemiProductUsingPUT')));
         }
         return handle;
     }
 
 
   /**
-   * Deletes a facility type with the provided ID. by map.
+   * Deletes a semi product with the provided ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteSemiProductUsingDELETEByMap(
+    map: DeleteSemiProductUsingDELETE.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteSemiProductUsingDELETEByMap(
+    map: DeleteSemiProductUsingDELETE.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteSemiProductUsingDELETEByMap(
+    map: DeleteSemiProductUsingDELETE.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteSemiProductUsingDELETEByMap(
+    map: DeleteSemiProductUsingDELETE.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteFacilityTypeUsingDELETE(
+    return this.deleteSemiProductUsingDELETE(
       map.id,
       observe,
       reportProgress
@@ -371,18 +371,18 @@ export class FacilityTypeControllerService {
 
 
     /**
-     * Deletes a facility type with the provided ID.
+     * Deletes a semi product with the provided ID.
      * 
-     * @param id Facility type ID
+     * @param id Semi product ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteSemiProductUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteSemiProductUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteSemiProductUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteSemiProductUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteFacilityTypeUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteSemiProductUsingDELETE.');
         }
 
         let headers = this.defaultHeaders;
@@ -406,7 +406,7 @@ export class FacilityTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.delete<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/facility-type/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.delete<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/semi-product/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -415,36 +415,36 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteFacilityTypeUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteSemiProductUsingDELETE')));
         }
         return handle;
     }
 
 
   /**
-   * Get a paginated list of facility types. by map.
+   * Get a paginated list of semi products. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+  public getSemiProductListUsingGETByMap(
+    map: GetSemiProductListUsingGET.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiPaginatedResponseApiFacilityType>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiSemiProduct>;
+  public getSemiProductListUsingGETByMap(
+    map: GetSemiProductListUsingGET.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiFacilityType>>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiSemiProduct>>;
+  public getSemiProductListUsingGETByMap(
+    map: GetSemiProductListUsingGET.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiFacilityType>>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiSemiProduct>>;
+  public getSemiProductListUsingGETByMap(
+    map: GetSemiProductListUsingGET.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getFacilityTypeListUsingGET(
+    return this.getSemiProductListUsingGET(
       map.requestType,
       map.limit,
       map.offset,
@@ -457,7 +457,7 @@ export class FacilityTypeControllerService {
 
 
     /**
-     * Get a paginated list of facility types.
+     * Get a paginated list of semi products.
      * 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
@@ -467,10 +467,10 @@ export class FacilityTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacilityType>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacilityType>>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacilityType>>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiSemiProduct>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiSemiProduct>>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiSemiProduct>>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -510,7 +510,7 @@ export class FacilityTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiPaginatedResponseApiFacilityType>(`${this.configuration.basePath}/api/chain/facility-type/list`,
+        const handle = this.httpClient.get<ApiPaginatedResponseApiSemiProduct>(`${this.configuration.basePath}/api/chain/semi-product/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -520,36 +520,36 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityTypeListUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getSemiProductListUsingGET')));
         }
         return handle;
     }
 
 
   /**
-   * Get a single facility type with the provided ID. by map.
+   * Get a single semi product with the provided ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
+  public getSemiProductUsingGETByMap(
+    map: GetSemiProductUsingGET.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiFacilityType>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<ApiResponseApiSemiProduct>;
+  public getSemiProductUsingGETByMap(
+    map: GetSemiProductUsingGET.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiFacilityType>>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
+  public getSemiProductUsingGETByMap(
+    map: GetSemiProductUsingGET.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiFacilityType>>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
+  public getSemiProductUsingGETByMap(
+    map: GetSemiProductUsingGET.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getFacilityTypeUsingGET(
+    return this.getSemiProductUsingGET(
       map.id,
       observe,
       reportProgress
@@ -558,18 +558,18 @@ export class FacilityTypeControllerService {
 
 
     /**
-     * Get a single facility type with the provided ID.
+     * Get a single semi product with the provided ID.
      * 
-     * @param id Facility type ID
+     * @param id Semi product ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFacilityTypeUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiFacilityType>;
-    public getFacilityTypeUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiFacilityType>>;
-    public getFacilityTypeUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiFacilityType>>;
-    public getFacilityTypeUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getSemiProductUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiSemiProduct>;
+    public getSemiProductUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
+    public getSemiProductUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
+    public getSemiProductUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getFacilityTypeUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getSemiProductUsingGET.');
         }
 
         let headers = this.defaultHeaders;
@@ -593,7 +593,7 @@ export class FacilityTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiResponseApiFacilityType>(`${this.configuration.basePath}/api/chain/facility-type/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.get<ApiResponseApiSemiProduct>(`${this.configuration.basePath}/api/chain/semi-product/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -602,7 +602,7 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityTypeUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getSemiProductUsingGET')));
         }
         return handle;
     }

@@ -18,76 +18,90 @@
  */
 
 
+import { ApiSemiProduct } from './apiSemiProduct';
 
 
 
-export interface ApiAdminUserUpdate { 
+export interface ApiPaginatedListApiSemiProduct { 
     /**
-     * Name
+     * Count of all items satisfying 'paginatable' request.
      */
-    id?: number;
+    count?: number;
     /**
-     * language
+     * Response items.
      */
-    language?: ApiAdminUserUpdate.LanguageEnum;
+    items?: Array<ApiSemiProduct>;
     /**
-     * Name
+     * Limit got from request
      */
-    name?: string;
+    limit?: number;
     /**
-     * Surname
+     * Offset got from request
      */
-    surname?: string;
+    offset?: number;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiAdminUserUpdate.
+ * Namespace for property- and property-value-enumerations of ApiPaginatedListApiSemiProduct.
  */
-export namespace ApiAdminUserUpdate {
+export namespace ApiPaginatedListApiSemiProduct {
     /**
-     * All properties of ApiAdminUserUpdate.
+     * All properties of ApiPaginatedListApiSemiProduct.
      */
     export enum Properties {
         /**
-         * Name
+         * Count of all items satisfying 'paginatable' request.
          */
-        id = 'id',
+        count = 'count',
         /**
-         * language
+         * Response items.
          */
-        language = 'language',
+        items = 'items',
         /**
-         * Name
+         * Limit got from request
          */
-        name = 'name',
+        limit = 'limit',
         /**
-         * Surname
+         * Offset got from request
          */
-        surname = 'surname'
-    }
-
-    /**
-     * All possible values of language.
-     */
-    export enum LanguageEnum {
-        EN = 'EN',
-        DE = 'DE',
-        RW = 'RW',
-        ES = 'ES'
+        offset = 'offset'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiAdminUserUpdate',
+            classname: 'ApiPaginatedListApiSemiProduct',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiAdminUserUpdate',
+                    name: 'count',
+                    classname: 'ApiPaginatedListApiSemiProduct',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'items',
+                    classname: 'ApiPaginatedListApiSemiProduct',
+                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProduct'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'limit',
+                    classname: 'ApiPaginatedListApiSemiProduct',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -95,69 +109,46 @@ export namespace ApiAdminUserUpdate {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiAdminUserUpdate.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiAdminUserUpdate',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
-                    classname: 'ApiAdminUserUpdate',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'surname',
-                    classname: 'ApiAdminUserUpdate',
-                    dataType: 'string',
+                    name: 'offset',
+                    classname: 'ApiPaginatedListApiSemiProduct',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                id: [
+                count: [
                 ],
-                language: [
+                items: [
                 ],
-                name: [
+                limit: [
                 ],
-                surname: [
+                offset: [
                 ],
             }
         }
     }
 
-  // export const ApiAdminUserUpdateValidationScheme = {
+  // export const ApiPaginatedListApiSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               id: {
+  //               count: {
   //                   validators: []
   //               },
-  //               language: {
+  //               items: {
   //                   validators: []
   //               },
-  //               name: {
+  //               limit: {
   //                   validators: []
   //               },
-  //               surname: {
+  //               offset: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiAdminUserUpdate>;
+  // } as SimpleValidationScheme<ApiPaginatedListApiSemiProduct>;
 
 
 }
