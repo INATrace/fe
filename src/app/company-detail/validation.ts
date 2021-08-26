@@ -6,36 +6,35 @@ import { Validators } from '@angular/forms';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { ApiCompanyUser } from 'src/api/model/apiCompanyUser';
 
-
-  export const ApiCompanyUserValidationScheme = {
-      validators: [],
-      fields: {
-                companyRole: {
-                    validators: [Validators.required]
-                },
-                email: {
-                    validators: []
-                },
-                id: {
-                    validators: []
-                },
-                language: {
-                    validators: []
-                },
-                name: {
-                    validators: []
-                },
-                role: {
-                    validators: []
-                },
-                status: {
-                    validators: []
-                },
-                surname: {
-                    validators: []
-                },
-      }
-  } as SimpleValidationScheme<ApiCompanyUser>;
+export const ApiCompanyUserValidationScheme = {
+  validators: [],
+  fields: {
+    companyRole: {
+      validators: [Validators.required]
+    },
+    email: {
+      validators: []
+    },
+    id: {
+      validators: []
+    },
+    language: {
+      validators: []
+    },
+    name: {
+      validators: []
+    },
+    role: {
+      validators: []
+    },
+    status: {
+      validators: []
+    },
+    surname: {
+      validators: []
+    },
+  }
+} as SimpleValidationScheme<ApiCompanyUser>;
 
 export const ApiCompanyDocumentValidationScheme = {
   validators: [Validators.required],

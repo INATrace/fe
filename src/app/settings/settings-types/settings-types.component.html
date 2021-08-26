@@ -7,6 +7,28 @@
 
   <div class="main">
 
+    <!-- SEMI-PRODUCTS -->
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.semiProducts">Semi-products</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('semi-products')">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfSemiProducts">List of semi-products</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingSemiProducts">Showing {{ allSemiProducts }}/{{ showedSemiProducts }}</div>
+        </div>
+      </div>
+    </div>
+    <app-type-list
+            [parentReload]="parentReloadSemiProducts"
+            type='semi-products'
+            (countAll)="onCountAll($event, 'semi-products')"
+            (showing)="onShow($event, 'semi-products')">
+    </app-type-list>
+
     <!-- FACILITY TYPES CODEBOOK -->
     <div class="main-inside-top content-element">
       <div class="d-flex justify-content-between main-inside-top--row1">

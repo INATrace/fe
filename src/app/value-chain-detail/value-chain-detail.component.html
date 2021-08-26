@@ -1,0 +1,138 @@
+<app-authorised-layout>
+  <app-system-left-panel title="System"></app-system-left-panel>
+
+  <div class="main"
+       *ngIf="valueChainDetailForm"
+       contents
+       [initialValue]=""
+       [submitted]="submitted">
+
+    <div class="af-form-wrapper">
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="title-page content-element--title">{{ title }}</div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.basicInfo.title">Basic information</h2>
+          <div class="af-form-element">
+            <app-closable [nonClosable]="true">
+              <textinput label="Value chain name"
+                         hideAsterisk="true"
+                         placeholder="Enter value chain name"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.valueChainName.label"
+                         i18n-placeholder="@@valueChainDetail.section.basicInfo.field.valueChainName.placeholder"
+                         [form]="valueChainDetailForm.get('name')"
+                         [isInvalid]="submitted && valueChainDetailForm.get('name').invalid">
+                <div *ngIf="submitted && valueChainDetailForm.get('name').invalid" class="sc-invalid-feedback">
+                  <div *ngIf="valueChainDetailForm.get('name').errors.required"
+                       i18n="@@valueChainDetail.section.basicInfo.field.valueChainName.error">
+                    <span>Value chain name is required</span>
+                  </div>
+                </div>
+              </textinput>
+            </app-closable>
+
+            <app-closable [nonClosable]="true">
+              <textinput label="Description"
+                         hideAsterisk="true"
+                         placeholder="Enter value chain description"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.description.label"
+                         i18n-placeholder="@@valueChainDetail.section.basicInfo.field.description.placeholder"
+                         [textarea]="true"
+                         [form]="valueChainDetailForm.get('description')"
+                         [isInvalid]="submitted && valueChainDetailForm.get('description').invalid">
+                <div *ngIf="submitted && valueChainDetailForm.get('description').invalid" class="sc-invalid-feedback">
+                  <div *ngIf="valueChainDetailForm.get('description').errors.required"
+                       i18n="@@valueChainDetail.section.basicInfo.field.description.error">
+                    <span>Description is required</span>
+                  </div>
+                </div>
+              </textinput>
+            </app-closable>
+
+            <app-closable [nonClosable]="true" *ngIf="mode === 'update'">
+              <textinput label="Status"
+                         hideAsterisk="true"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.status.label"
+                         [form]="valueChainDetailForm.get('valueChainStatus')"
+                         [readOnly]="true">
+              </textinput>
+            </app-closable>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.facilityTypes.title">Facility types</h2>
+
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.measureUnitTypes.title">Measuring unit types</h2>
+
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.gradeAbbreviations.title">Grade abbreviations</h2>
+
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.processingEvidenceTypes.title">Processing evidence types</h2>
+
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.semiProducts.title">Semi-products</h2>
+
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons">
+            <bottom-buttons *ngIf="mode === 'update'; else createButton"
+                    [changed]="changed"
+                    [invalid]="submitted && valueChainDetailForm.invalid"
+                    (onSave)="save()"
+                    (onValidate)="validate()"
+                    [floatingValidate]="true"
+                    [error]="submitted && valueChainDetailForm.invalid"
+                    [success]="submitted && !valueChainDetailForm.invalid">
+            </bottom-buttons>
+            <ng-template #createButton>
+              <bottom-buttons
+                      [changed]="changed"
+                      [invalid]="submitted && valueChainDetailForm.invalid"
+                      (onSave)="create()"
+                      (onValidate)="validate()"
+                      saveButtonLabel="Create"
+                      i18n-saveButtonLabel="@@valueChainDetail.bottomButtons.createButtonLabel"
+                      [floatingValidate]="true"
+                      [error]="submitted && valueChainDetailForm.invalid"
+                      [success]="submitted && !valueChainDetailForm.invalid">
+              </bottom-buttons>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</app-authorised-layout>

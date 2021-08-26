@@ -33,6 +33,7 @@ import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
+import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -134,6 +135,30 @@ const routes: Routes = [
     component: ValueChainListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'value-chains/new',
+    component: ValueChainDetailComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuardService],
+    canDeactivate: [DeactivateGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'value-chains/:id',
+    redirectTo: 'value-chains/:id/value-chain'
+  },
+  {
+    path: 'value-chains/:id/value-chain',
+    component: ValueChainDetailComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuardService],
+    canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
     }

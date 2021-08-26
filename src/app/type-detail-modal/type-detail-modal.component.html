@@ -8,46 +8,123 @@
   </div>
   <div>
     <div class="modal-body">
-      <textinput
-        hideAsterisk="true"
-        [form]="form.get('code')"
-        label="Id"
-        [disabled]="update"
-        style="width: 100%"
-        placeholder="Enter id"
-        i18n-label="@@facilityTypeDetail.textinput.id.label"
-        i18n-placeholder="@@facilityTypeDetail.textinput.id.placeholder"
-        [isInvalid]="submitted && form.get('code').invalid"
-        [readOnly]="this.update">
-        <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('code').errors as errors" class="sc-invalid-feedback">
-            <div *ngIf="errors.wrongInput" i18n="@@facilityTypeDetail.textinput.id.error">
-              Id should contain only capital letters, numbers and / or underscores
-            </div>
-            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.id.errorRequired">
-              Id is required
-            </div>
-          </div>
-        </ng-container>
-      </textinput>
 
-      <textinput
-        hideAsterisk="true"
-        [form]="form.get('label')"
-        label="Label"
-        style="width: 100%"
-        placeholder="Enter label"
-        i18n-label="@@facilityTypeDetail.textinput.label.label"
-        i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
-        [isInvalid]="submitted && form.get('label').invalid">
-        <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('label').errors as errors" class="sc-invalid-feedback">
-            <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.label.error">
-              Label is required
+      <ng-container *ngIf="type === 'semi-products'">
+        <textinput
+                label="Name"
+                [form]="form.get('name')"
+                style="width: 100%"
+                placeholder="Enter name"
+                i18n-label="@@semiProductDetail.textinput.name.label"
+                i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
+                [isInvalid]="submitted && form.get('name').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.name.error">
+                <span>
+                  Name is required
+                </span>
+              </div>
             </div>
-          </div>
-        </ng-container>
-      </textinput>
+          </ng-container>
+        </textinput>
+
+        <textinput
+                label="Description"
+                [form]="form.get('description')"
+                style="width: 100%"
+                [textarea]="true"
+                helpText="Enter short semi-product description."
+                i18n-label="@@semiProductDetail.textinput.description.label"
+                i18n-helpText="@@semiProductDetail.textinput.description.helpText"
+                [isInvalid]="submitted && form.get('description').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.description.error">
+                <span>
+                  Description is required
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+
+        <single-choice
+                label="Measurement unit type"
+                i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
+                [formControlInput]="form.get('apiMeasureUnitType')"
+                [codebookService]="activeMeasureUnitTypeService"
+                [isInvalidChoice]="submitted && form.get('apiMeasureUnitType').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('apiMeasureUnitType').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@semiProductDetail.singleChoice.measurementUnit.error.requred">
+                Measure unit is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+
+        <checkbox-input [form]="form.get('buyable')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductBuyable">
+            Is buyable at producer
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('sku')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductSKU">
+            Is stock keeping unit at producer
+          </checkbox-input-rich-label>
+        </checkbox-input>
+
+        <checkbox-input [form]="form.get('skuendCustomer')">
+          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductSKUEndCustomer">
+            Is stock keeping unit at end customer
+          </checkbox-input-rich-label>
+        </checkbox-input>
+      </ng-container>
+
+      <ng-container *ngIf="this.type !== 'semi-products'">
+        <textinput
+                hideAsterisk="true"
+                [form]="form.get('code')"
+                label="Id"
+                [disabled]="update"
+                style="width: 100%"
+                placeholder="Enter id"
+                i18n-label="@@facilityTypeDetail.textinput.id.label"
+                i18n-placeholder="@@facilityTypeDetail.textinput.id.placeholder"
+                [isInvalid]="submitted && form.get('code').invalid"
+                [readOnly]="this.update">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('code').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.wrongInput" i18n="@@facilityTypeDetail.textinput.id.error">
+                Id should contain only capital letters, numbers and / or underscores
+              </div>
+              <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.id.errorRequired">
+                Id is required
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+
+        <textinput
+                hideAsterisk="true"
+                [form]="form.get('label')"
+                label="Label"
+                style="width: 100%"
+                placeholder="Enter label"
+                i18n-label="@@facilityTypeDetail.textinput.label.label"
+                i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
+                [isInvalid]="submitted && form.get('label').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('label').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@facilityTypeDetail.textinput.label.error">
+                Label is required
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+      </ng-container>
 
       <ng-container *ngIf="this.type === 'measurement-unit-types'">
         <textinput

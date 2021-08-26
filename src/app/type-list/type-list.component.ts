@@ -18,6 +18,8 @@ import { ApiPaginatedResponseApiActionType } from '../../api/model/apiPaginatedR
 import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
 import { SortOption } from '../shared/result-sorter/result-sorter-types';
+import { SemiProductControllerService } from '../../api/api/semiProductController.service';
+import { ApiPaginatedResponseApiSemiProduct } from '../../api/model/apiPaginatedResponseApiSemiProduct';
 
 @Component({
   selector: 'app-type-list',
@@ -32,6 +34,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     private actionTypeService: ActionTypeControllerService,
     private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
+    private semiProductsService: SemiProductControllerService,
     private route: ActivatedRoute,
     private modalService: NgbModalImproved,
     protected globalEventsManager: GlobalEventManagerService
@@ -134,7 +137,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     {
       key: 'type',
       name: $localize`:@@settingsTypes.sortOptions.label.type:Type`,
-      // defaultSortOrder: 'ASC'
       inactive: true
     },
     {
@@ -159,13 +161,45 @@ export class TypeListComponent implements OnInit, OnChanges {
     },
   ];
 
+  sortOptionsSemiProducts: SortOption[] = [
+    {
+      key: 'name',
+      name: $localize`:@@settingsTypes.sortOptions.semiProducts.name:Name`
+    },
+    {
+      key: 'description',
+      name: $localize`:@@settingsTypes.sortOptions.semiProducts.description:Description`
+    },
+    {
+      key: 'buyable',
+      name: $localize`:@@settingsTypes.sortOptions.semiProducts.buyable:Buyable`,
+      inactive: true
+    },
+    {
+      key: 'sku',
+      name: $localize`:@@settingsTypes.sortOptions.semiProducts.sku:SKU`,
+      inactive: true
+    },
+    {
+      key: 'skuendCustomer',
+      name: $localize`:@@settingsTypes.sortOptions.semiProducts.skuendCustomer:SKU end customer`,
+      inactive: true
+    },
+    {
+      key: 'actions',
+      name: $localize`:@@settingsTypes.sortOptions.actions.name:Actions`,
+      inactive: true
+    }
+  ];
+
   ngOnInit(): void {
     this.setAll().then();
-    if (this.type === 'facility-types') this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`;
-    if (this.type === 'measurement-unit-types') this.title = $localize`:@@settingsTypes.typeList.title.measurement:Measurement unit types`;
-    if (this.type === 'action-types') this.title = $localize`:@@settingsTypes.typeList.title.actions:Action types`;
-    if (this.type === 'grade-abbreviation') this.title = $localize`:@@settingsTypes.typeList.title.grades:Grade abbreviations`;
-    if (this.type === 'processing-evidence-types') this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`;
+    if (this.type === 'facility-types') { this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`; }
+    if (this.type === 'measurement-unit-types') { this.title = $localize`:@@settingsTypes.typeList.title.measurement:Measurement unit types`; }
+    if (this.type === 'action-types') { this.title = $localize`:@@settingsTypes.typeList.title.actions:Action types`; }
+    if (this.type === 'grade-abbreviation') { this.title = $localize`:@@settingsTypes.typeList.title.grades:Grade abbreviations`; }
+    if (this.type === 'processing-evidence-types') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`; }
+    if (this.type === 'semi-products') { this.title = $localize`:@@settingsTypes.typeList.title.semiProducts:Semi-products`; }
   }
 
   ngOnChanges() {
@@ -193,29 +227,55 @@ export class TypeListComponent implements OnInit, OnChanges {
   }
 
   apiLink(params) {
-    if (this.type === 'facility-types') return this.facilityTypeService.getFacilityTypeListUsingGETByMap({ ...params });
-    if (this.type === 'measurement-unit-types') return this.measureUnitTypeService.getMeasureUnitTypeListUsingGETByMap({ ...params });
-    if (this.type === 'action-types') return this.actionTypeService.getActionTypeListUsingGETByMap({ ...params });
-    if (this.type === 'grade-abbreviation') return this.gradeAbbreviationService.getGradeAbbreviationListUsingGETByMap({ ...params });
-    if (this.type === 'processing-evidence-types') return this.processingEvidenceTypeService
-        .getProcessingEvidenceTypeListUsingGETByMap({ ...params });
+    if (this.type === 'facility-types') {
+      return this.facilityTypeService.getFacilityTypeListUsingGETByMap({ ...params });
+    }
+    if (this.type === 'measurement-unit-types') {
+      return this.measureUnitTypeService.getMeasureUnitTypeListUsingGETByMap({ ...params });
+    }
+    if (this.type === 'action-types') {
+      return this.actionTypeService.getActionTypeListUsingGETByMap({ ...params });
+    }
+    if (this.type === 'grade-abbreviation') {
+      return this.gradeAbbreviationService.getGradeAbbreviationListUsingGETByMap({ ...params });
+    }
+    if (this.type === 'processing-evidence-types') {
+      return this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGETByMap({ ...params });
+    }
+    if (this.type === 'semi-products') {
+      return this.semiProductsService.getSemiProductListUsingGETByMap({ ...params });
+    }
   }
 
   paginatedType() {
-    if (this.type === 'facility-types') return ApiPaginatedResponseApiFacilityType;
-    if (this.type === 'measurement-unit-types') return ApiPaginatedResponseApiMeasureUnitType;
-    if (this.type === 'action-types') return ApiPaginatedResponseApiActionType;
-    if (this.type === 'grade-abbreviation') return ApiPaginatedResponseApiGradeAbbreviation;
-    if (this.type === 'processing-evidence-types') return ApiPaginatedResponseApiProcessingEvidenceType;
+    if (this.type === 'facility-types') { return ApiPaginatedResponseApiFacilityType; }
+    if (this.type === 'measurement-unit-types') { return ApiPaginatedResponseApiMeasureUnitType; }
+    if (this.type === 'action-types') { return ApiPaginatedResponseApiActionType; }
+    if (this.type === 'grade-abbreviation') { return ApiPaginatedResponseApiGradeAbbreviation; }
+    if (this.type === 'processing-evidence-types') { return ApiPaginatedResponseApiProcessingEvidenceType; }
+    if (this.type === 'semi-products') { return ApiPaginatedResponseApiSemiProduct; }
   }
 
   edit(type) {
     let editTitle = '';
-    if (this.type === 'facility-types') editTitle = $localize`:@@settingsTypes.editFacilityType.editTitle:Edit facility type`;
-    if (this.type === 'measurement-unit-types') editTitle = $localize`:@@settingsTypes.editMeasurementUnitType.editTitle:Edit measurement unit type`;
-    if (this.type === 'action-types') editTitle = $localize`:@@settingsTypes.editActionType.editTitle:Edit action type`;
-    if (this.type === 'grade-abbreviation') editTitle = $localize`:@@settingsTypes.editGradeAbbreviation.editTitle:Edit grade abbreviation`;
-    if (this.type === 'processing-evidence-types') editTitle = $localize`:@@settingsTypes.editProcessingEvidenceType.editTitle:Edit processing evidence type`;
+    if (this.type === 'facility-types') {
+      editTitle = $localize`:@@settingsTypes.editFacilityType.editTitle:Edit facility type`;
+    }
+    if (this.type === 'measurement-unit-types') {
+      editTitle = $localize`:@@settingsTypes.editMeasurementUnitType.editTitle:Edit measurement unit type`;
+    }
+    if (this.type === 'action-types') {
+      editTitle = $localize`:@@settingsTypes.editActionType.editTitle:Edit action type`;
+    }
+    if (this.type === 'grade-abbreviation') {
+      editTitle = $localize`:@@settingsTypes.editGradeAbbreviation.editTitle:Edit grade abbreviation`;
+    }
+    if (this.type === 'processing-evidence-types') {
+      editTitle = $localize`:@@settingsTypes.editProcessingEvidenceType.editTitle:Edit processing evidence type`;
+    }
+    if (this.type === 'semi-products') {
+      editTitle = $localize`:@@settingsTypes.editSemiProduct.editTitle:Edit semi-product`;
+    }
 
     this.modalService.open(TypeDetailModalComponent, {
       centered: true
@@ -271,6 +331,12 @@ export class TypeListComponent implements OnInit, OnChanges {
           this.reloadPage();
         }
       }
+      if (this.type === 'semi-products') {
+        const res = await this.semiProductsService.deleteSemiProductUsingDELETE(type.id).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK') {
+          this.reloadPage();
+        }
+      }
     } catch (e) {
     } finally {
       this.globalEventsManager.showLoading(false);
@@ -318,10 +384,17 @@ export class TypeListComponent implements OnInit, OnChanges {
         this.countAll.emit(res.data.count);
       }
     }
+    if (this.type === 'semi-products') {
+      const res = await this.semiProductsService.getSemiProductListUsingGET().pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
+        this.all = res.data.count;
+        this.countAll.emit(res.data.count);
+      }
+    }
   }
 
-  setFPQ(fpq: boolean) {
-    if (fpq) { return '✓'; }
+  getBooleanSign(value: boolean) {
+    if (value) { return '✓'; }
     return null;
   }
 

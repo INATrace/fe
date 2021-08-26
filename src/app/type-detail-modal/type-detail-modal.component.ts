@@ -1,20 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { generateFormFromMetadata, defaultEmptyObject, dbKey } from 'src/shared/utils';
+import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { take } from 'rxjs/operators';
 import {
   ApiFacilityTypeValidationScheme,
   ApiMeasureUnitTypeValidationScheme,
   ApiActionTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme } from './validation';
+  ApiProcessingEvidenceTypeValidationScheme,
+  ApiSemiProductValidationScheme
+} from './validation';
 import _ from 'lodash-es';
 import { ActiveSemiProductsForProductServiceStandalone } from '../shared-services/active-semi-products-for-product-standalone.service';
-import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
 import { EnumSifrant } from '../shared-services/enum-sifrant';
-import { ProductService } from 'src/api-chain/api/product.service';
-import { CodebookTranslations } from '../shared-services/codebook-translations';
 import { ActiveMeasureUnitTypeService } from '../shared-services/active-measure-unit-types.service';
 import { FacilityTypeControllerService } from '../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../api/api/measureUnitTypeController.service';
@@ -26,6 +25,8 @@ import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 import { ApiActionType } from '../../api/model/apiActionType';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
+import { SemiProductControllerService } from '../../api/api/semiProductController.service';
+import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -65,10 +66,8 @@ export class TypeDetailModalComponent implements OnInit {
     private actionTypeService: ActionTypeControllerService,
     private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
-    private chainSemiproductService: SemiProductService,
-    private chainProductService: ProductService,
-    public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
-    private codebookTranslations: CodebookTranslations
+    private semiProductService: SemiProductControllerService,
+    public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService
   ) { }
 
   ngOnInit(): void {
@@ -81,35 +80,62 @@ export class TypeDetailModalComponent implements OnInit {
 
   async init() {
     if (this.type === 'facility-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), defaultEmptyObject(ApiFacilityType.formMetadata()) as ApiFacilityType, ApiFacilityTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), this.typeElement, ApiFacilityTypeValidationScheme);
-    }
-    if (this.type === 'measurement-unit-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), defaultEmptyObject(ApiMeasureUnitType.formMetadata()) as ApiMeasureUnitType, ApiMeasureUnitTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), this.typeElement, ApiMeasureUnitTypeValidationScheme);
-    }
-    if (this.type === 'action-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiActionType.formMetadata(), defaultEmptyObject(ApiActionType.formMetadata()) as ApiActionType, ApiActionTypeValidationScheme);
-      else this.form = generateFormFromMetadata(ApiActionType.formMetadata(), this.typeElement, ApiActionTypeValidationScheme);
-    }
-    if (this.type === 'grade-abbreviation') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), defaultEmptyObject(ApiGradeAbbreviation.formMetadata()) as ApiGradeAbbreviation, ApiGradeAbbreviationValidationScheme);
-      else this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), this.typeElement, ApiGradeAbbreviationValidationScheme);
-    }
-    if (this.type === 'processing-evidence-types') {
-      if (!this.update) this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), defaultEmptyObject(ApiProcessingEvidenceType.formMetadata()) as ApiProcessingEvidenceType, ApiProcessingEvidenceTypeValidationScheme);
-      else {
-        this.form = generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), this.typeElement, ApiProcessingEvidenceTypeValidationScheme);
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(),
+          defaultEmptyObject(ApiFacilityType.formMetadata()) as ApiFacilityType, ApiFacilityTypeValidationScheme);
+      } else {
+        this.form = generateFormFromMetadata(ApiFacilityType.formMetadata(), this.typeElement, ApiFacilityTypeValidationScheme);
       }
     }
-  }
 
-  async onProductSelected(product: any) {
-    const prodDB = await this.chainProductService.getProductByAFId(product.id).pipe(take(1)).toPromise();
-    console.log('PDB', prodDB);
-    if (prodDB && prodDB.status === 'OK' && prodDB.data) {
-      this.activeSemiProductsForProduct =
-          new ActiveSemiProductsForProductServiceStandalone(this.chainSemiproductService, dbKey(prodDB.data), this.codebookTranslations);
+    if (this.type === 'measurement-unit-types') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(),
+          defaultEmptyObject(ApiMeasureUnitType.formMetadata()) as ApiMeasureUnitType, ApiMeasureUnitTypeValidationScheme);
+      } else {
+        this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), this.typeElement, ApiMeasureUnitTypeValidationScheme);
+      }
+    }
+
+    if (this.type === 'action-types') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiActionType.formMetadata(),
+          defaultEmptyObject(ApiActionType.formMetadata()) as ApiActionType, ApiActionTypeValidationScheme);
+      }
+      else {
+        this.form = generateFormFromMetadata(ApiActionType.formMetadata(), this.typeElement, ApiActionTypeValidationScheme);
+      }
+    }
+
+    if (this.type === 'grade-abbreviation') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(),
+          defaultEmptyObject(ApiGradeAbbreviation.formMetadata()) as ApiGradeAbbreviation, ApiGradeAbbreviationValidationScheme);
+      }
+      else {
+        this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), this.typeElement, ApiGradeAbbreviationValidationScheme);
+      }
+    }
+
+    if (this.type === 'processing-evidence-types') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(
+          ApiProcessingEvidenceType.formMetadata(),
+          defaultEmptyObject(ApiProcessingEvidenceType.formMetadata()) as ApiProcessingEvidenceType,
+          ApiProcessingEvidenceTypeValidationScheme);
+      } else {
+        this.form = generateFormFromMetadata(
+          ApiProcessingEvidenceType.formMetadata(), this.typeElement, ApiProcessingEvidenceTypeValidationScheme);
+      }
+    }
+
+    if (this.type === 'semi-products') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiSemiProduct.formMetadata(),
+          defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct, ApiSemiProductValidationScheme);
+      } else {
+        this.form = generateFormFromMetadata(ApiSemiProduct.formMetadata(), this.typeElement, ApiSemiProductValidationScheme);
+      }
     }
   }
 
@@ -124,11 +150,29 @@ export class TypeDetailModalComponent implements OnInit {
 
     let res = null;
 
-    if (this.type === 'facility-types') res = await this.facilityTypeService.createOrUpdateFacilityTypeUsingPUT(data).pipe(take(1)).toPromise();
-    if (this.type === 'measurement-unit-types') res = await this.measureUnitTypeService.createOrUpdateMeasurementUnitTypeUsingPUT(data).pipe(take(1)).toPromise();
-    if (this.type === 'action-types') res = await this.actionTypeService.createOrUpdateActionTypeUsingPUT(data).pipe(take(1)).toPromise();
-    if (this.type === 'grade-abbreviation') res = await this.gradeAbbreviationService.createOrUpdateGradeAbbreviationUsingPUT(data).pipe(take(1)).toPromise();
-    if (this.type === 'processing-evidence-types') res = await this.processingEvidenceTypeService.createOrUpdateProcessingEvidenceTypeUsingPUT(data).pipe(take(1)).toPromise();
+    if (this.type === 'facility-types') {
+      res = await this.facilityTypeService.createOrUpdateFacilityTypeUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'measurement-unit-types') {
+      res = await this.measureUnitTypeService.createOrUpdateMeasurementUnitTypeUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'action-types') {
+      res = await this.actionTypeService.createOrUpdateActionTypeUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'grade-abbreviation') {
+      res = await this.gradeAbbreviationService.createOrUpdateGradeAbbreviationUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'processing-evidence-types') {
+      res = await this.processingEvidenceTypeService.createOrUpdateProcessingEvidenceTypeUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'semi-products') {
+      res = await this.semiProductService.createOrUpdateSemiProductUsingPUT(data).pipe(take(1)).toPromise();
+    }
 
     if (res && res.status === 'OK') {
       if (this.saveCallback) { this.saveCallback(); }

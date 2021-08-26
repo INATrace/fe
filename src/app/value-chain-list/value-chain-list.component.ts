@@ -133,7 +133,7 @@ export class ValueChainListComponent implements OnInit {
   }
 
   editValueChain(id): void {
-    this.router.navigate(['/value-chain', id]).then();
+    this.router.navigate(['/value-chains', id]).then();
   }
 
   enableValueChain(id): void {

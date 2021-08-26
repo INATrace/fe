@@ -2,19 +2,52 @@
   <div class="main-inside-main">
     <table *ngIf="types && types.items && types.items.length > 0" class="af-table">
       <thead>
-        <tr scope="col" result-sorter [sortOptions]="this.type === 'processing-evidence-types' ? sortOptionsFPQ : sortOptions" (sortByKey)="changeSort($event)"></tr>
+        <tr *ngIf="type === 'semi-products'"
+            result-sorter [sortOptions]="sortOptionsSemiProducts" (sortByKey)="changeSort($event)"></tr>
+
+        <tr *ngIf="type === 'processing-evidence-types'"
+            result-sorter [sortOptions]="sortOptionsFPQ" (sortByKey)="changeSort($event)"></tr>
+
+        <tr *ngIf="type !== 'semi-products' && type !== 'processing-evidence-types'"
+            result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
       </thead>
       <tbody>
 
-        <ng-container *ngIf="(this.type === 'processing-evidence-types')">
+        <ng-container *ngIf="type === 'semi-products'">
           <tr *ngFor="let type of types.items">
-            <td [attr.data-label]="sortOptionsFPQ[0].name" scope="row"><span>{{type.code}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[1].name" scope="row"><span>{{type | translateCodebook: 'label'}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[2].name" scope="row"><span>{{type.type | formatProcessingEvidenceTypeType}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[3].name" scope="row" class="align-center"><span>{{setFPQ(type.fairness)}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[4].name" scope="row" class="align-center"><span>{{setFPQ(type.provenance)}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[5].name" scope="row" class="align-center"><span>{{setFPQ(type.quality)}}</span></td>
-            <td [attr.data-label]="sortOptionsFPQ[6].name" scope="row">
+            <td [attr.data-label]="sortOptionsSemiProducts[0].name"><span>{{ type.name }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[1].name"><span>{{ type.description }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[2].name"><span>{{ getBooleanSign(type.buyable) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[3].name"><span>{{ getBooleanSign(type.sku) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[4].name"><span>{{ getBooleanSign(type.skuendCustomer) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[5].name">
+              <span>
+                <a i18n="@@settingsTypes.tableCol.edit"
+                   (click)="edit(type)"
+                   class="company-action"
+                   [class.enabled-action]="true">
+                  Edit
+                </a>
+                <a i18n="@@settingsTypes.tableCol.delete"
+                   (click)="delete(type)"
+                   class="company-action"
+                   [class.enabled-action]="true">
+                  Delete
+                </a>
+              </span>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="(type === 'processing-evidence-types')">
+          <tr *ngFor="let type of types.items">
+            <td [attr.data-label]="sortOptionsFPQ[0].name"><span>{{ type.code }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[2].name"><span>{{ type.type | formatProcessingEvidenceTypeType }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[3].name" class="align-center"><span>{{ getBooleanSign(type.fairness) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[4].name" class="align-center"><span>{{ getBooleanSign(type.provenance) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[5].name" class="align-center"><span>{{ getBooleanSign(type.quality) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[6].name">
               <span>
               <a i18n="@@settingsTypes.tableCol.edit"
                 (click)="edit(type)"
@@ -32,10 +65,11 @@
             </td>
           </tr>
         </ng-container>
-        <ng-container *ngIf="(this.type != 'processing-evidence-types')">
+
+        <ng-container *ngIf="(type !== 'semi-products' &&  type !== 'processing-evidence-types')">
           <tr *ngFor="let type of types.items">
-            <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{type.code}}</span></td>
-            <td [attr.data-label]="sortOptions[1].name"><span>{{type | translateCodebook: 'label'}}</span></td>
+            <td [attr.data-label]="sortOptions[0].name"><span>{{ type.code }}</span></td>
+            <td [attr.data-label]="sortOptions[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
             <td [attr.data-label]="sortOptions[2].name">
               <span>
               <a i18n="@@settingsTypes.tableCol.edit"

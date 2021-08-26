@@ -31,21 +31,31 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
 
   allFacilities = 0;
   showedFacilities = 0;
+
   allMeasurements = 0;
   showedMeasurements = 0;
+
   allActions = 0;
   showedActions = 0;
+
   allGrades = 0;
   showedGrades = 0;
+
   allProcEvidTypes = 0;
   showedProcEvidTypes = 0;
+
   allOrderEvidTypes = 0;
   showedOrderEvidTypes = 0;
+
   parentReloadProcEvidTypes = false;
   parentReloadGrade = false;
   parentReloadFacility = false;
   parentReloadMeasure = false;
   parentReloadAction = false;
+  parentReloadSemiProducts = false;
+
+  allSemiProducts = 0;
+  showedSemiProducts = 0;
 
   // TABS ////////////////
   @ViewChild(AuthorisedLayoutComponent) authorizedLayout;
@@ -105,6 +115,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.showedActions = event; }
     if (type === 'grade-abbreviation') { this.showedGrades = event; }
     if (type === 'processing-evidence-types') { this.showedProcEvidTypes = event; }
+    if (type === 'semi-products') { this.showedSemiProducts = event; }
   }
 
   onCountAll(event, type) {
@@ -113,6 +124,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.allActions = event; }
     if (type === 'grade-abbreviation') { this.allGrades = event; }
     if (type === 'processing-evidence-types') { this.allProcEvidTypes = event; }
+    if (type === 'semi-products') { this.allSemiProducts = event; }
   }
 
   ngOnDestroy() {
@@ -172,6 +184,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { addTitle = $localize`:@@settingsPage.newActionType.addTitle:Add action type`; }
     if (type === 'grade-abbreviation') { addTitle = $localize`:@@settingsPage.newGradeAbbreviation.addTitle:Add grade abbreviation`; }
     if (type === 'processing-evidence-types') { addTitle = $localize`:@@settingsPage.newProcessingEvidenceType.addTitle:Add processing evidence type`; }
+    if (type === 'semi-products') { addTitle = $localize`:@@settingsPage.newSemiProducts.addTitle:Add new semi-product`; }
 
     this.modalService.open(TypeDetailModalComponent, {
       centered: true
@@ -184,6 +197,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
         if (type === 'action-types') { this.parentReloadAction = !this.parentReloadAction; }
         if (type === 'grade-abbreviation') { this.parentReloadGrade = !this.parentReloadGrade; }
         if (type === 'processing-evidence-types') { this.parentReloadProcEvidTypes = !this.parentReloadProcEvidTypes; }
+        if (type === 'semi-products') { this.parentReloadSemiProducts = !this.parentReloadSemiProducts; }
       }
     });
   }

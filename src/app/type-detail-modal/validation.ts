@@ -6,6 +6,35 @@ import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 import { ApiActionType } from '../../api/model/apiActionType';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
+import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
+
+export const ApiSemiProductValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: []
+    },
+    name: {
+      validators: [Validators.required]
+    },
+    description: {
+      validators: [Validators.required]
+    },
+    apiMeasureUnitType: {
+      forceFormControl: true,
+      validators: [Validators.required]
+    },
+    sku: {
+      validators: []
+    },
+    skuendCustomer: {
+      validators: []
+    },
+    buyable: {
+      validators: []
+    }
+  }
+} as SimpleValidationScheme<ApiSemiProduct>;
 
 export const ApiFacilityTypeValidationScheme = {
   validators: [],
