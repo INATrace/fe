@@ -6,7 +6,11 @@ import { CodebookTranslations } from './codebook-translations';
 import { GetGradeAbbreviationListUsingGET, GradeAbbreviationControllerService } from '../../api/api/gradeAbbreviationController.service';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class GradeAbbreviationCodebook extends GeneralSifrantService<ApiGradeAbbreviation> {
 
   constructor(

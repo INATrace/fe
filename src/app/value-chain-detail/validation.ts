@@ -1,6 +1,7 @@
 import { SimpleValidationScheme } from '../../interfaces/Validation';
 import { ApiValueChain } from '../../api/model/apiValueChain';
 import { Validators } from '@angular/forms';
+import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 
 export const ApiValueChainValidationScheme = {
   validators: [],
@@ -34,3 +35,18 @@ export const ApiValueChainValidationScheme = {
     }
   }
 } as SimpleValidationScheme<ApiValueChain>;
+
+export const ApiVCMeasureUnitTypeValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: []
+    },
+    code: {
+      validators: []
+    },
+    label: {
+      validators: []
+    }
+  }
+} as SimpleValidationScheme<ApiMeasureUnitType>;

@@ -88,6 +88,7 @@ import { CompanyDetailTabManagerComponent } from './company-detail/company-detai
 import { CompanyUserRoleComponent } from './company-user-role/company-user-role.component';
 import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
+import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -164,7 +165,8 @@ export function getConfiguration(): Configuration {
     CompanyDetailTabManagerComponent,
     CompanyUserRoleComponent,
     ValueChainListComponent,
-    ValueChainDetailComponent
+    ValueChainDetailComponent,
+    ValueChainConfigItemComponent
   ],
   entryComponents: [
     CompanySelectModalComponent

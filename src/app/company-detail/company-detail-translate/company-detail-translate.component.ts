@@ -94,7 +94,6 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
     this.subDE = this.companyController.getCompanyUsingGET(id, 'DE')
       .subscribe(company => {
         this.companyDE = company.data;
-        console.log("DATA:", this.companyDE)
         this.companyDetailDEForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.companyDE, TranslateApiCompanyGetValidationScheme)
         this.socialMediaDEForm = CompanyDetailComponent.generateSocialMediaForm();
         (this.companyDetailDEForm as FormGroup).setControl('mediaLinks', this.socialMediaForm)
@@ -113,7 +112,6 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
 
 
   initializeListManagers(lang = 'EN') {
-    console.log("HE", lang)
     if(lang === 'DE') {
       this.certificationListManagerDE = new ListEditorManager<ApiCertification>(
         (this.companyDetailDEForm.get('certifications')) as FormArray,
