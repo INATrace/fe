@@ -192,4 +192,32 @@ export class ValueChainListComponent implements OnInit {
       );
   }
 
+  deleteValueChain(id): void {
+
+    this.globalEventsManager.showLoading(true);
+    this.valueChainService.deleteValueChainUsingDELETE(id)
+      .pipe(
+        finalize(() => this.globalEventsManager.showLoading(false))
+      )
+      .subscribe(
+        () => {
+          this.reloadData();
+          this.globalEventsManager.push({
+            action: 'success',
+            notificationType: 'success',
+            title: $localize`:@@valueChainList.action.delete.success.title:Deleted!`,
+            message: $localize`:@@valueChainList.action.delete.success.message:Value chain has been successfully deleted`
+          });
+        },
+        () => {
+          this.globalEventsManager.push({
+            action: 'error',
+            notificationType: 'error',
+            title: $localize`:@@valueChainList.action.delete.error.title:Error`,
+            message: $localize`:@@valueChainList.action.delete.error.message:Cannot delete value chain`
+          });
+        }
+      );
+  }
+
 }

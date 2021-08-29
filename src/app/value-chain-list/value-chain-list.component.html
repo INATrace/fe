@@ -92,6 +92,11 @@
                          [class.disabled-action]="valueChain.valueChainStatus === 'DISABLED'">
                         Disable
                       </a>
+                      <a i18n="@@valueChainList.tableCol.action.delete"
+                         (click)="deleteValueChain(valueChain.id)"
+                         class="value-chain-action enabled-action">
+                        Delete
+                      </a>
                     </span>
                   </td>
                 </tr>
