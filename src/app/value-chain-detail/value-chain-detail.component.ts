@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ValueChainControllerService } from '../../api/api/valueChainController.service';
 import { finalize } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../system/global-event-manager.service';
@@ -13,11 +13,14 @@ import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
+  ApiProcessingEvidenceTypeValidationScheme,
+  ApiSemiProductValidationScheme
 } from '../type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
+import { ApiResponseApiBaseEntity } from '../../api/model/apiResponseApiBaseEntity';
+import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -40,6 +43,7 @@ export class ValueChainDetailComponent implements OnInit {
 
   constructor(
     protected route: ActivatedRoute,
+    private router: Router,
     private valueChainService: ValueChainControllerService,
     private globalEventsManager: GlobalEventManagerService
   ) { }
@@ -164,9 +168,6 @@ export class ValueChainDetailComponent implements OnInit {
           this.valueChainDetailForm =
             generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain.data, ApiValueChainValidationScheme);
           this.initializeListManagers();
-        },
-        error => {
-          console.log('ERR: ', error);
         }
       );
   }
@@ -183,13 +184,56 @@ export class ValueChainDetailComponent implements OnInit {
 
   save() {
 
+    this.submitted = true;
+
+    if (this.valueChainDetailForm.invalid) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'error',
+        title: $localize`:@@valueChainDetail.saveValueChain.error.title:Error`,
+        message: $localize`:@@valueChainDetail.saveValueChain.error.message:Validation errors on page. Please check!`
+      });
+      return;
+    }
+
+    this.createOrUpdateValueChain();
   }
 
   create() {
 
+    this.submitted = true;
+
+    if (this.valueChainDetailForm.invalid) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'error',
+        title: $localize`:@@valueChainDetail.createValueChain.error.title:Error`,
+        message: $localize`:@@valueChainDetail.createValueChain.error.message:Validation errors on page. Please check!`
+      });
+      return;
+    }
+
+    this.createOrUpdateValueChain();
   }
 
-  initializeListManagers() {
+  private createOrUpdateValueChain(): void {
+
+    this.globalEventsManager.showLoading(true);
+    this.valueChainService.createOrUpdateValueChainUsingPUT(this.valueChainDetailForm.value)
+      .pipe(
+        finalize(() => this.globalEventsManager.showLoading(false))
+      )
+      .subscribe(
+        response => {
+          if (response && response.status === StatusEnum.OK) {
+            this.valueChainDetailForm.markAsPristine();
+            this.router.navigate(['value-chains']).then();
+          }
+        }
+      );
+  }
+
+  private initializeListManagers() {
 
     this.facilityTypeListManager = new ListEditorManager<ApiFacilityType>(
       this.valueChainDetailForm.get('facilityTypes') as FormArray,
