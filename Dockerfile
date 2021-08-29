@@ -3,7 +3,7 @@ RUN apk add --update git
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY ./ .
+COPY . .
 RUN npm run build:prod
 
 FROM nginx:stable-alpine as production-stage

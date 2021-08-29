@@ -55,7 +55,7 @@ export class ActiveSemiProductsForProductService extends GeneralSifrantService<C
   }
 
   public placeholder(): string {
-    let placeholder = $localize`:@@activeSemiProduct.input.placehoder:Select SemiProduct`;
+    let placeholder = $localize`:@@activeSemiProduct.input.placehoder:Select Semi-product`;
     return placeholder;
   }
 

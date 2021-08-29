@@ -11,13 +11,10 @@ import {
 } from '../../api/api/processingEvidenceTypeController.service';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProcessingEvidenceType> {
 
   constructor(
-    private chainCodebookService: ProcessingEvidenceTypeControllerService,
+    private codebookService: ProcessingEvidenceTypeControllerService,
     protected codebookTranslations: CodebookTranslations,
     private type: string
   ) {
@@ -45,7 +42,7 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
     };
 
     const lkey = key ? key.toLocaleLowerCase() : null;
-    return this.chainCodebookService.getProcessingEvidenceTypeListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getProcessingEvidenceTypeListUsingGETByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiProcessingEvidenceType) => {
           let results = res.data.items;
           if (this.type) {

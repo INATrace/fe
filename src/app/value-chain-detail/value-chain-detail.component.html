@@ -148,14 +148,52 @@
       <div class="af-form-row">
         <div class="af-form-block--c12">
           <h2 i18n="@@valueChainDetail.section.processingEvidenceTypes.title">Processing evidence types</h2>
-
+          <div class="af-form-element">
+            <list-editor label="Value chain processing evidence types"
+                         i18n-label="@@valueChainDetail.section.processingEvidenceTypes.add.title"
+                         addText="Add new"
+                         [listEditorManager]="processingEvidenceTypeListManger"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcProcEvidenceTypes; let i=index;">
+                  <app-value-chain-config-item configItemType="processing-evidence-types"
+                                               title="Value chain processing evidence types"
+                                               i18n-title="@@valueChainDetail.section.processingEvidenceTypes.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="processingEvidenceTypeListManger"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="processingEvidenceTypeListManger.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
         </div>
       </div>
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
           <h2 i18n="@@valueChainDetail.section.semiProducts.title">Semi-products</h2>
-
+          <div class="af-form-element">
+            <list-editor label="Value chain semi-products"
+                         i18n-label="@@valueChainDetail.section.semiProducts.add.title"
+                         addText="Add new"
+                         [listEditorManager]="semiProductsListManager"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcSemiProducts; let i=index;">
+                  <app-value-chain-config-item configItemType="semi-products"
+                                               title="Value chain semi-products"
+                                               i18n-title="@@valueChainDetail.section.semiProducts.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="semiProductsListManager"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="semiProductsListManager.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
         </div>
       </div>
 

@@ -19,7 +19,7 @@ import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-se
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { codeToFieldInfo, codeToFieldInfoList } from 'src/app/shared-services/document-translations.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { ProcessingEvidenceTypeService } from 'src/app/shared-services/processing_evidence_types.service';
+import { ProcessingEvidenceTypeService } from 'src/app/shared-services/processing-evidence-types.service';
 import { AuthService } from 'src/app/system/auth.service';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { ProcessingActionType } from 'src/shared/types';

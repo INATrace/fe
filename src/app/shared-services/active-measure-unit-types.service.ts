@@ -14,7 +14,7 @@ import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ApiMeasureUnitType> {
 
   constructor(
-    private chainCodebookService: MeasureUnitTypeControllerService,
+    private codebookService: MeasureUnitTypeControllerService,
     protected codebookTranslations: CodebookTranslations
   ) {
     super();
@@ -40,7 +40,7 @@ export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ApiMeasu
       ...this.requestParams
     };
 
-    return this.chainCodebookService.getMeasureUnitTypeListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getMeasureUnitTypeListUsingGETByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiMeasureUnitType) => {
           return {
             results: res.data.items,

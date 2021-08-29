@@ -6,7 +6,8 @@
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
-        <span>{{ contentObject.code }} - {{ contentObject.label }}</span>
+        <span *ngIf="configItemType !== 'semi-products'">{{ contentObject.code }} - {{ contentObject.label }}</span>
+        <span *ngIf="configItemType === 'semi-products'">{{ contentObject.name }}</span>
       </div>
     </div>
   </tag-closed>
@@ -68,6 +69,46 @@
               <div *ngIf="configItemForm.errors as errors" class="sc-invalid-feedback">
                 <div *ngIf="errors.required" i18n="@@valueChainDetail.section.gradeAbbreviations.add.error">
                   Grade abbreviation type is required
+                </div>
+              </div>
+            </ng-container>
+
+          </single-choice>
+        </ng-container>
+
+        <ng-container *ngIf="configItemType === 'processing-evidence-types'">
+          <single-choice
+                  label="Processing evidence type"
+                  i18n-label="@@valueChainDetail.section.processingEvidenceTypes.add.label"
+                  [formControlInput]="configItemForm"
+                  [codebookService]="procEvidenceTypesCodebook"
+                  [isInvalidChoice]="submitted && configItemForm.invalid"
+                  [readonly]="readOnly"
+                  (onChange)="setSelectedValue($event)">
+            <ng-container *ngIf="submitted">
+              <div *ngIf="configItemForm.errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@valueChainDetail.section.processingEvidenceTypes.add.error">
+                  Processing evidence type is required
+                </div>
+              </div>
+            </ng-container>
+
+          </single-choice>
+        </ng-container>
+
+        <ng-container *ngIf="configItemType === 'semi-products'">
+          <single-choice
+                  label="Semi-product"
+                  i18n-label="@@valueChainDetail.section.semiProducts.add.label"
+                  [formControlInput]="configItemForm"
+                  [codebookService]="semiProductsCodebook"
+                  [isInvalidChoice]="submitted && configItemForm.invalid"
+                  [readonly]="readOnly"
+                  (onChange)="setSelectedValue($event)">
+            <ng-container *ngIf="submitted">
+              <div *ngIf="configItemForm.errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@valueChainDetail.section.semiProducts.add.error">
+                  Semi-product is required
                 </div>
               </div>
             </ng-container>

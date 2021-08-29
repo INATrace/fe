@@ -12,7 +12,7 @@ import { ApiActionType } from '../../api/model/apiActionType';
 export class ActionTypesService extends GeneralSifrantService<ApiActionType> {
 
   constructor(
-    private chainCodebookService: ActionTypeControllerService,
+    private codebookService: ActionTypeControllerService,
   ) {
     super();
     this.initializeCodebook();
@@ -49,7 +49,7 @@ export class ActionTypesService extends GeneralSifrantService<ApiActionType> {
   }
 
   public initializeCodebook() {
-    this.sifrant$ = this.sifrant$ || this.chainCodebookService.getActionTypeListUsingGETByMap({ ...this.requestParams }).pipe(
+    this.sifrant$ = this.sifrant$ || this.codebookService.getActionTypeListUsingGETByMap({ ...this.requestParams }).pipe(
       map(x => this.pack(x.data.items))
     );
   }

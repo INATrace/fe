@@ -10,8 +10,14 @@ import { ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } f
 import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
 import { ApiFacilityType } from '../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
-import { ApiFacilityTypeValidationScheme, ApiGradeAbbreviationValidationScheme } from '../type-detail-modal/validation';
+import {
+  ApiFacilityTypeValidationScheme,
+  ApiGradeAbbreviationValidationScheme,
+  ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
+} from '../type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
+import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
+import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -29,6 +35,8 @@ export class ValueChainDetailComponent implements OnInit {
   facilityTypeListManager: ListEditorManager<ApiFacilityType>;
   measureUnitTypeListManager: ListEditorManager<ApiMeasureUnitType>;
   gradeAbbreviationTypeListManager: ListEditorManager<ApiGradeAbbreviation>;
+  processingEvidenceTypeListManger: ListEditorManager<ApiProcessingEvidenceType>;
+  semiProductsListManager: ListEditorManager<ApiSemiProduct>;
 
   constructor(
     protected route: ActivatedRoute,
@@ -36,6 +44,7 @@ export class ValueChainDetailComponent implements OnInit {
     private globalEventsManager: GlobalEventManagerService
   ) { }
 
+  // Facility type form factory methods (used when creating ListEditorManager)
   static ApiVCFacilityTypeCreateEmptyObject(): ApiFacilityType {
     const obj = ApiFacilityType.formMetadata();
     return defaultEmptyObject(obj) as ApiFacilityType;
@@ -48,6 +57,7 @@ export class ValueChainDetailComponent implements OnInit {
     };
   }
 
+  // Measuring unit type form factory methods (used when creating ListEditorManager)
   static ApiVCMeasureUnitTypeCreateEmptyObject(): ApiMeasureUnitType {
     const obj = ApiMeasureUnitType.formMetadata();
     return defaultEmptyObject(obj) as ApiMeasureUnitType;
@@ -60,6 +70,7 @@ export class ValueChainDetailComponent implements OnInit {
     };
   }
 
+  // Grade abbreviation type form factory methods (used when creating ListEditorManager)
   static ApiVCGradeAbbreviationTypeCreateEmptyObject(): ApiGradeAbbreviation {
     const obj = ApiGradeAbbreviation.formMetadata();
     return defaultEmptyObject(obj) as ApiGradeAbbreviation;
@@ -69,6 +80,32 @@ export class ValueChainDetailComponent implements OnInit {
     return () => {
       return new FormControl(ValueChainDetailComponent.ApiVCGradeAbbreviationTypeCreateEmptyObject(),
         ApiGradeAbbreviationValidationScheme.validators);
+    };
+  }
+
+  // Processing evidence type form factory methods (used when creating ListEditorManager)
+  static ApiVCProcEvidenceTypeCreateEmptyObject(): ApiProcessingEvidenceType {
+    const obj = ApiProcessingEvidenceType.formMetadata();
+    return defaultEmptyObject(obj) as ApiProcessingEvidenceType;
+  }
+
+  static ApiVCProcEvidenceTypeEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceTypeCreateEmptyObject(),
+        ApiProcessingEvidenceTypeValidationScheme.validators);
+    };
+  }
+
+  // Semi-products form factory methods (used when creating ListEditorManager)
+  static ApiVCSemiProductsCreateEmptyObject(): ApiSemiProduct {
+    const obj = ApiSemiProduct.formMetadata();
+    return defaultEmptyObject(obj) as ApiSemiProduct;
+  }
+
+  static ApiVCSemiProductsEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ValueChainDetailComponent.ApiVCSemiProductsCreateEmptyObject(),
+        ApiSemiProductValidationScheme.validators);
     };
   }
 
@@ -91,6 +128,14 @@ export class ValueChainDetailComponent implements OnInit {
 
   get vcGradeAbbreviationTypes(): FormControl[] {
     return (this.valueChainDetailForm.get('gradeAbbreviations') as FormArray).controls as FormControl[];
+  }
+
+  get vcProcEvidenceTypes(): FormControl[] {
+    return (this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray).controls as FormControl[];
+  }
+
+  get vcSemiProducts(): FormControl[] {
+    return (this.valueChainDetailForm.get('semiProducts') as FormArray).controls as FormControl[];
   }
 
   ngOnInit(): void {
@@ -160,6 +205,16 @@ export class ValueChainDetailComponent implements OnInit {
       this.valueChainDetailForm.get('gradeAbbreviations') as FormArray,
       ValueChainDetailComponent.ApiVCGradeAbbreviationTypeEmptyObjectFormFactory(),
       ApiGradeAbbreviationValidationScheme);
+
+    this.processingEvidenceTypeListManger = new ListEditorManager<ApiProcessingEvidenceType>(
+      this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray,
+      ValueChainDetailComponent.ApiVCProcEvidenceTypeEmptyObjectFormFactory(),
+      ApiProcessingEvidenceTypeValidationScheme);
+
+    this.semiProductsListManager = new ListEditorManager<ApiSemiProduct>(
+      this.valueChainDetailForm.get('semiProducts') as FormArray,
+      ValueChainDetailComponent.ApiVCSemiProductsEmptyObjectFormFactory(),
+      ApiSemiProductValidationScheme);
   }
 
 }
