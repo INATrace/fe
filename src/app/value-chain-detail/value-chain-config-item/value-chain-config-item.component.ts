@@ -21,6 +21,7 @@ import { ProcessingEvidenceTypeControllerService } from '../../../api/api/proces
 import { CodebookTranslations } from '../../shared-services/codebook-translations';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../shared-services/active-semi-products.service';
+import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
 
 @Component({
   selector: 'app-value-chain-config-item',
@@ -38,6 +39,8 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
   configItemForm = new FormControl(null, Validators.required);
 
   procEvidenceTypesCodebook: ProcessingEvidenceTypeService;
+
+  private selectedExistingValue = false;
 
   constructor(
     private codebookTranslations: CodebookTranslations,
@@ -82,6 +85,12 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
   setSelectedValue($event) {
     if ($event) {
 
+      this.selectedExistingValue = this.existingValue($event);
+      if (this.selectedExistingValue) {
+        this.form.reset();
+        return;
+      }
+
       if (this.configItemType === 'facility-types' || this.configItemType === 'grade-abbreviation-types') {
         this.form.setValue({...$event});
       }
@@ -106,6 +115,33 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
 
       this.form.markAsDirty();
     }
+  }
+
+  save() {
+
+    if (!this.selectedExistingValue) {
+      super.save();
+    } else {
+      super.cancel().then();
+    }
+  }
+
+  private existingValue(selectedValue: any): boolean {
+
+    const listEditorManager: ListEditorManager<any> = this.listEditorManager;
+    let existing = false;
+
+    const formControls: FormControl[] = listEditorManager.formArray?.controls as FormControl[];
+    if (formControls) {
+      for (const formControl of formControls) {
+        existing = selectedValue.id === formControl.value.id;
+        if (existing) {
+          break;
+        }
+      }
+    }
+
+    return existing;
   }
 
 }
