@@ -188,6 +188,38 @@
         "summary": "Get a single action type with the provided ID."
       }
     },
+    "/api/chain/facility": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "createOrUpdateFacilityUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiFacility"
+              }
+            }
+          },
+          "description": "apiFacility",
+          "required": true
+        },
+        "summary": "Create or update facility. If ID is provided, then the entity with the provided ID is updated."
+      }
+    },
     "/api/chain/facility-type": {
       "put": {
         "responses": {
@@ -363,6 +395,333 @@
         ],
         "operationId": "getFacilityTypeUsingGET",
         "summary": "Get a single facility type with the provided ID."
+      }
+    },
+    "/api/chain/facility/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacility_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "getFacilityListUsingGET",
+        "summary": "Get a paginated list of facilities."
+      }
+    },
+    "/api/chain/facility/list/collecting/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacility_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "listCollectingFacilitiesByCompanyUsingGET",
+        "summary": "Get a list of collecting facilities by company ID."
+      }
+    },
+    "/api/chain/facility/list/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacility_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "listFacilitiesByCompanyUsingGET",
+        "summary": "Get a list of facilities by company ID."
+      }
+    },
+    "/api/chain/facility/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "Facility ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "deleteFacilityUsingDELETE",
+        "summary": "Deletes a facility with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "Facility ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiFacility_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "getFacilityUsingGET",
+        "summary": "Get a single facility with the provided ID."
       }
     },
     "/api/chain/grade-abbreviation": {
@@ -4923,12 +5282,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -4938,19 +5294,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -4960,19 +5313,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -4982,19 +5332,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -5004,19 +5351,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -5026,19 +5370,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -5048,19 +5389,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -5070,8 +5408,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -5345,6 +5683,55 @@
             "description": "User id",
             "format": "int64",
             "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiCompanyBase": {
+        "properties": {
+          "abbreviation": {
+            "description": "company abbreviation",
+            "type": "string"
+          },
+          "about": {
+            "description": "about the company",
+            "type": "string"
+          },
+          "email": {
+            "description": "email",
+            "type": "string"
+          },
+          "headquarters": {
+            "$ref": "#/components/schemas/ApiAddress",
+            "description": "headquarters"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "manager": {
+            "description": "name of manager / CEO",
+            "type": "string"
+          },
+          "mediaLinks": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "social media URL links (Facebook, Instagram, Twitter, YouTube, ...)",
+            "type": "object"
+          },
+          "name": {
+            "description": "company name",
+            "type": "string"
+          },
+          "phone": {
+            "description": "webpage",
+            "type": "string"
+          },
+          "webPage": {
+            "description": "webpage",
+            "type": "string"
           }
         },
         "type": "object"
@@ -5895,6 +6282,70 @@
         },
         "type": "object"
       },
+      "ApiFacility": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/ApiCompanyBase",
+            "description": "Facility company"
+          },
+          "facilityLocation": {
+            "$ref": "#/components/schemas/ApiFacilityLocation",
+            "description": "Facility location"
+          },
+          "facilityType": {
+            "$ref": "#/components/schemas/ApiFacilityType",
+            "description": "Facility type"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "isCollectionFacility": {
+            "description": "Is collection facility",
+            "example": false,
+            "type": "boolean"
+          },
+          "isPublic": {
+            "description": "Is public facility",
+            "example": false,
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Facility name",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiFacilityLocation": {
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/ApiAddress",
+            "description": "location address"
+          },
+          "latitude": {
+            "description": "location latitude",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "location longitude",
+            "format": "double",
+            "type": "number"
+          },
+          "numberOfFarmers": {
+            "description": "number of farmers at this location",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pinName": {
+            "description": "pin (location) name",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiFacilityType": {
         "properties": {
           "code": {
@@ -6287,6 +6738,33 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiFacilityType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiFacility_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiFacility"
             },
             "type": "array"
           },
@@ -6777,6 +7255,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiFacilityType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiFacility_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiFacility_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -8385,6 +8906,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiFacility_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiGlobalSettingsValue_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -9807,6 +10371,10 @@
     {
       "description": "Facility Type Controller",
       "name": "facility-type-controller"
+    },
+    {
+      "description": "Facility Controller",
+      "name": "facility-controller"
     },
     {
       "description": "User Controller",
