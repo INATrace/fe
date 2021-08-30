@@ -21,6 +21,7 @@ import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidence
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 import { ApiResponseApiBaseEntity } from '../../api/model/apiResponseApiBaseEntity';
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
+import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -167,6 +168,9 @@ export class ValueChainDetailComponent implements OnInit {
         valueChain => {
           this.valueChainDetailForm =
             generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain.data, ApiValueChainValidationScheme);
+          if (this.mode === 'update' && valueChain.data.valueChainStatus === ValueChainStatusEnum.DISABLED) {
+            this.valueChainDetailForm.disable();
+          }
           this.initializeListManagers();
         }
       );

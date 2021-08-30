@@ -199,13 +199,14 @@
         <div class="af-form-block--c12">
           <div class="af-bottom-buttons">
             <bottom-buttons *ngIf="mode === 'update'; else createButton"
-                    [changed]="changed"
-                    [invalid]="submitted && valueChainDetailForm.invalid"
-                    (onSave)="save()"
-                    (onValidate)="validate()"
-                    [floatingValidate]="true"
-                    [error]="submitted && valueChainDetailForm.invalid"
-                    [success]="submitted && !valueChainDetailForm.invalid">
+                            [changed]="changed"
+                            [invalid]="submitted && valueChainDetailForm.invalid"
+                            (onSave)="save()"
+                            (onValidate)="validate()"
+                            [floatingValidate]="true"
+                            [error]="submitted && valueChainDetailForm.invalid"
+                            [success]="submitted && !valueChainDetailForm.invalid"
+                            [form]="valueChainDetailForm">
             </bottom-buttons>
             <ng-template #createButton>
               <bottom-buttons
