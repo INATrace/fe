@@ -24,7 +24,6 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CacheRouteReuseStrategy } from './cache-route-reuse.strategy';
-import { CompanyCreateComponent } from './company-create/company-create.component';
 import { CompanyDetailComponent } from './company-detail/company-detail.component';
 import { CompanyListComponent } from './company-list/company-list.component';
 import { CompanySelectModalComponent } from './company-list/company-select-modal/company-select-modal.component';
@@ -89,6 +88,8 @@ import { CompanyUserRoleComponent } from './company-user-role/company-user-role.
 import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
 import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
+import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
+import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -119,7 +120,6 @@ export function getConfiguration(): Configuration {
     UserDetailComponent,
     CompanyListComponent,
     CompanyDetailComponent,
-    CompanyCreateComponent,
     RegisterActivationComponent,
     ResetPasswordComponent,
     ResetPasswordRequestComponent,
@@ -166,7 +166,9 @@ export function getConfiguration(): Configuration {
     CompanyUserRoleComponent,
     ValueChainListComponent,
     ValueChainDetailComponent,
-    ValueChainConfigItemComponent
+    ValueChainConfigItemComponent,
+    CompanyDetailUsersComponent,
+    CompanyDetailFacilitiesComponent
   ],
   entryComponents: [
     CompanySelectModalComponent

@@ -8,12 +8,10 @@ import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import { ApiUserBase } from 'src/api/model/apiUserBase';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { CountryService } from '../shared-services/countries.service';
-import { UsersService } from '../shared-services/users.service';
 import { GlobalEventManagerService } from '../system/global-event-manager.service';
-import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme, ApiCompanyUserValidationScheme } from './validation';
+import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ApiCertification } from 'src/api/model/apiCertification';
@@ -21,7 +19,6 @@ import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
 import { ApiCertificationValidationScheme } from '../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
-import { ApiCompanyUser } from 'src/api/model/apiCompanyUser';
 
 @Component({
   selector: 'app-company-detail',
@@ -57,7 +54,31 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
 
   sub: Subscription;
 
-  userForm = new FormControl(null);
+  certificationListManager = null;
+  videosListManager = null;
+  productionRecordListManager = null;
+  meetTheFarmerListManager = null;
+
+  companySection = {
+    anchor: 'COMPANY_GENERAL',
+    title: $localize`:@@companyDetail.companySection.general:Company`
+  };
+
+  companyHeadquartersSection = {
+    anchor: 'COMPANY_HEADQUARTERS',
+    title: $localize`:@@companyDetail.companySection.headquarters:Company headquarters`
+  };
+
+  socialMediaSection = {
+    anchor: 'COMPANY_SOCIAL_MEDIA',
+    title: $localize`:@@companyDetail.companySection.socialMedia:Social media`,
+  };
+
+  toc = [
+    this.companySection,
+    this.companyHeadquartersSection,
+    this.socialMediaSection
+  ];
 
   constructor(
     protected route: ActivatedRoute,
@@ -65,10 +86,41 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     private companyController: CompanyControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
-    public userSifrant: UsersService,
     protected router: Router
   ) {
     super(router, route);
+  }
+
+  static generateSocialMediaForm() {
+    return new FormGroup({
+      facebook: new FormControl(null),
+      instagram: new FormControl(null),
+      twitter: new FormControl(null),
+      youtube: new FormControl(null),
+      other: new FormControl(null),
+    });
+  }
+
+  static ApiCertificationCreateEmptyObject(): ApiCertification {
+    const obj = ApiCertification.formMetadata();
+    return defaultEmptyObject(obj) as ApiCertification;
+  }
+
+  static ApiCertificationEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CompanyDetailComponent.ApiCertificationCreateEmptyObject(), ApiCertificationValidationScheme.validators);
+    };
+  }
+
+  static ApiCompanyDocumentCreateEmptyObject(): ApiCompanyDocument {
+    const obj = ApiCompanyDocument.formMetadata();
+    return defaultEmptyObject(obj) as ApiCompanyDocument;
+  }
+
+  static ApiCompanyDocumentEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CompanyDetailComponent.ApiCompanyDocumentCreateEmptyObject(), ApiCompanyDocumentValidationScheme.validators);
+    };
   }
 
   ngOnInit(): void {
@@ -144,16 +196,6 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this.initializeListManagers();
   }
 
-  static generateSocialMediaForm() {
-    return new FormGroup({
-      facebook: new FormControl(null),
-      instagram: new FormControl(null),
-      twitter: new FormControl(null),
-      youtube: new FormControl(null),
-      other: new FormControl(null),
-    });
-  }
-
   fillWebPageAndSocialMediaForm(): void {
     if (!!this.company.webPage) { this._hideWebPageField$.next(false); }
     for (const [key, value] of Object.entries(this.company.mediaLinks)) {
@@ -179,38 +221,6 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       }
     }
     this.companyDetailForm.updateValueAndValidity();
-  }
-
-  userResultFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value);
-  }
-
-  userInputFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value);
-  }
-
-  //// temp
-
-  async addSelectedUser(user: ApiUserBase) {
-    if (!user) { return; }
-    const formArray = this.companyDetailForm.get('users') as FormArray
-    if (formArray.value.some(x => x.id === user.id)) {
-      this.userForm.setValue(null);
-      return;
-    }
-    formArray.push(new FormControl(user));
-    formArray.markAsDirty();
-    setTimeout(() => this.userForm.setValue(null));
-  }
-
-  async deleteUser(user: ApiUserBase) {
-    if (!user) { return; }
-    const formArray = this.companyDetailForm.get('users') as FormArray;
-    const index = (formArray.value as ApiUserBase[]).findIndex(x => x.id === user.id);
-    if (index >= 0) {
-      formArray.removeAt(index);
-      formArray.markAsDirty();
-    }
   }
 
   get changed() {
@@ -285,83 +295,12 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     _field.next(!_field.value);
   }
 
-  companySection = {
-    anchor: 'COMPANY_GENERAL',
-    title: $localize`:@@companyDetail.companySection.general:Company`
-  };
-
-  companyHeadquartersSection = {
-    anchor: 'COMPANY_HEADQUARTERS',
-    title: $localize`:@@companyDetail.companySection.headquarters:Company headquarters`
-  };
-
-  socialMediaSection = {
-    anchor: 'COMPANY_SOCIAL_MEDIA',
-    title: $localize`:@@companyDetail.companySection.socialMedia:Social media`,
-  };
-
-  usersSection = {
-    anchor: 'COMPANY_USERS',
-    title: $localize`:@@companyDetail.companySection.users:Users`,
-  };
-
-  toc = [
-    this.companySection,
-    this.companyHeadquartersSection,
-    this.socialMediaSection,
-    this.usersSection
-  ];
-
   validate() {
     this.submitted = true;
   }
 
-  static ApiCertificationCreateEmptyObject(): ApiCertification {
-    const obj = ApiCertification.formMetadata();
-    return defaultEmptyObject(obj) as ApiCertification;
-  }
-
-  static ApiCertificationEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(CompanyDetailComponent.ApiCertificationCreateEmptyObject(), ApiCertificationValidationScheme.validators);
-    };
-  }
-
-  static ApiCompanyUserCreateEmptyObject(): () => FormControl {
-    return () => {
-      return new FormControl(CompanyDetailComponent.ApiCompanyUserCreateEmptyObject(), ApiCompanyUserValidationScheme.validators);
-    };
-  }
-
-  static ApiCompanyDocumentCreateEmptyObject(): ApiCompanyDocument {
-    const obj = ApiCompanyDocument.formMetadata();
-    return defaultEmptyObject(obj) as ApiCompanyDocument;
-  }
-
-  static ApiCompanyDocumentEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(CompanyDetailComponent.ApiCompanyDocumentCreateEmptyObject(), ApiCompanyDocumentValidationScheme.validators);
-    };
-  }
-
-  static ApiCompanyUserEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(CompanyDetailComponent.ApiCompanyUserCreateEmptyObject(), ApiCompanyUserValidationScheme.validators);
-    };
-  }
-
-  certificationListManager = null;
-  videosListManager = null;
-  productionRecordListManager = null;
-  meetTheFarmerListManager = null;
-  companyUserListManager = null;
-
   initializeListManagers() {
-    this.companyUserListManager = new ListEditorManager<ApiCompanyUser>(
-      this.companyDetailForm.get('users') as FormArray,
-      CompanyDetailComponent.ApiCompanyUserEmptyObjectFormFactory(),
-      ApiCompanyUserValidationScheme
-    );
+
     this.certificationListManager = new ListEditorManager<ApiCertification>(
       (this.companyDetailForm.get('certifications')) as FormArray,
       CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),

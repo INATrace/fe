@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -21,21 +21,9 @@ import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
   templateUrl: './company-detail-translate.component.html',
   styleUrls: ['./company-detail-translate.component.scss']
 })
-export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComponent {
+export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
 
-  public canDeactivate(): boolean {
-    return !this.companyDetailDEForm || !this.companyDetailDEForm.dirty;
-  }
-
-  rootTab = 1
-  constructor(
-    protected route: ActivatedRoute,
-    protected router: Router,
-    private companyController: CompanyControllerService,
-    protected globalEventsManager: GlobalEventManagerService,
-  ) {
-    super(router, route);
-  }
+  rootTab = 3;
 
   title = $localize`:@@companyDetailTranslateTranslate.title.edit:Company translations`;
   company;
@@ -46,7 +34,7 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
   socialMediaDEForm: FormGroup;
   sub: Subscription;
   subDE: Subscription;
-  submitted: boolean = false;
+  submitted = false;
   certificationListManager = null;
   videosListManager = null;
   productionRecordListManager = null;
@@ -57,16 +45,29 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
   productionRecordListManagerDE = null;
   meetTheFarmerListManagerDE = null;
 
-  prepared: boolean = false;
+  prepared = false;
+
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    private companyController: CompanyControllerService,
+    protected globalEventsManager: GlobalEventManagerService,
+  ) {
+    super(router, route);
+  }
 
   ngOnInit(): void {
     this.getCompany();
   }
+
   ngOnDestroy() {
-    if (this.sub) this.sub.unsubscribe();
-    if (this.subDE) this.subDE.unsubscribe();
+    if (this.sub) { this.sub.unsubscribe(); }
+    if (this.subDE) { this.subDE.unsubscribe(); }
   }
 
+  public canDeactivate(): boolean {
+    return !this.companyDetailDEForm || !this.companyDetailDEForm.dirty;
+  }
 
   getCompany(): void {
     this.globalEventsManager.showLoading(true);
@@ -75,12 +76,12 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
       .subscribe(company => {
         this.company = company.data;
         // console.log("DATA:", this.company)
-        this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme)
+        this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);
         this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
-        (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm)
-        this.companyDetailForm.updateValueAndValidity()
+        (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+        this.companyDetailForm.updateValueAndValidity();
 
-        //TODO 105-108 for DE
+        // TODO 105-108 for DE
 
         this.fillWebPageAndSocialMediaForm('EN');
         // console.log("FORM:", this.companyDetailForm)
@@ -94,74 +95,73 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
     this.subDE = this.companyController.getCompanyUsingGET(id, 'DE')
       .subscribe(company => {
         this.companyDE = company.data;
-        this.companyDetailDEForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.companyDE, TranslateApiCompanyGetValidationScheme)
+        this.companyDetailDEForm =
+          generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.companyDE, TranslateApiCompanyGetValidationScheme);
         this.socialMediaDEForm = CompanyDetailComponent.generateSocialMediaForm();
-        (this.companyDetailDEForm as FormGroup).setControl('mediaLinks', this.socialMediaForm)
-        this.companyDetailDEForm.updateValueAndValidity()
+        (this.companyDetailDEForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+        this.companyDetailDEForm.updateValueAndValidity();
 
-        // //TODO 105-108 for DE
+        // TODO 105-108 for DE
 
         this.fillWebPageAndSocialMediaForm('DE');
         this.initializeListManagers('DE');
         this.globalEventsManager.showLoading(false);
       },
-        error => {
+        () => {
           this.globalEventsManager.showLoading(false);
         });
   }
 
-
   initializeListManagers(lang = 'EN') {
-    if(lang === 'DE') {
+    if (lang === 'DE') {
       this.certificationListManagerDE = new ListEditorManager<ApiCertification>(
         (this.companyDetailDEForm.get('certifications')) as FormArray,
         CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),
         ApiCertificationValidationScheme
-      )
+      );
       this.videosListManagerDE = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailDEForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
       this.productionRecordListManagerDE = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailDEForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
       this.meetTheFarmerListManagerDE = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailDEForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
       this.prepared = true;
     } else {
       this.certificationListManager = new ListEditorManager<ApiCertification>(
         (this.companyDetailForm.get('certifications')) as FormArray,
         CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),
         ApiCertificationValidationScheme
-      )
+      );
       this.videosListManager = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
       this.productionRecordListManager = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
       this.meetTheFarmerListManager = new ListEditorManager<ApiCompanyDocument>(
         (this.companyDetailForm.get('documents')) as FormArray,
         CompanyDetailComponent.ApiCompanyDocumentEmptyObjectFormFactory(),
         ApiCompanyDocumentValidationScheme
-      )
+      );
     }
-
   }
 
   fillWebPageAndSocialMediaForm(lang): void {
     if (lang === 'DE' && this.companyDE.mediaLinks) {
-      for (let [key, value] of Object.entries(this.companyDE.mediaLinks)) {
+      for (const [key, value] of Object.entries(this.companyDE.mediaLinks)) {
         if (key === 'facebook' && !!value) {
           this.socialMediaDEForm.get('facebook').setValue(value);
         }
@@ -178,9 +178,9 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
           this.socialMediaDEForm.get('other').setValue(value);
         }
       }
-      this.companyDetailDEForm.updateValueAndValidity()
+      this.companyDetailDEForm.updateValueAndValidity();
     } else {
-      for (let [key, value] of Object.entries(this.company.mediaLinks)) {
+      for (const [key, value] of Object.entries(this.company.mediaLinks)) {
         if (key === 'facebook' && !!value) {
           this.socialMediaForm.get('facebook').setValue(value);
         }
@@ -197,11 +197,9 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
           this.socialMediaForm.get('other').setValue(value);
         }
       }
-      this.companyDetailForm.updateValueAndValidity()
+      this.companyDetailForm.updateValueAndValidity();
     }
-
   }
-
 
   async saveCompany(goBack = true) {
     this.submitted = true;
@@ -212,19 +210,20 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
         notificationType: 'error',
         title: $localize`:@@companyDetailTranslate.saveCompany.error.title:Error`,
         message: $localize`:@@companyDetailTranslate.saveCompany.error.message:Errors on page. Please check!`
-      })
-      return
+      });
+      return;
     }
-    let data = this.companyDetailDEForm.value;
-    data['language'] = 'DE'
+    const data = this.companyDetailDEForm.value;
+    data['language'] = 'DE';
     // console.log(data)
     try {
       this.globalEventsManager.showLoading(true);
-      let params = this.route.snapshot.params;
-      let res: ApiResponseApiBaseEntity = await this.companyController.updateCompanyUsingPUT({ ...params, ...data }).pipe(take(1)).toPromise()
-      if (res && res.status == 'OK' && goBack) {
-        this.companyDetailDEForm.markAsPristine()
-        this.goBack()
+      const params = this.route.snapshot.params;
+      const res: ApiResponseApiBaseEntity = await this.companyController
+        .updateCompanyUsingPUT({ ...params, ...data }).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && goBack) {
+        this.companyDetailDEForm.markAsPristine();
+        this.goBack();
       }
     } catch (e) {
 
@@ -234,17 +233,18 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
   }
 
   goBack() {
-    this.router.navigate(['companies'])
+    this.router.navigate(['companies']).then();
   }
-//company ima pri get in put requestu možnost
-//specificiranja jezika. Nisem ravno dal možnosti
+
+// company ima pri get in put requestu možnost
+// specificiranja jezika. Nisem ravno dal možnosti
 // prevajanja vseh polj, ampak se bodo v zahtevanem jeziku updatala samo
 
-//name, abbreviation, about, interview, webPage in mediaLinks.
+// name, abbreviation, about, interview, webPage in mediaLinks.
 
-//Ostala polja se bodo updatala v splošni(angleški verziji).
-//Če rabiš še katera polja za prevest, povej.
-//(Ali pa če bi morda raje, da če specificiraš neangleški jezik,
-//da se updatajo samo prevedljiva polja, da ti ni treba poslat
-//recimo emaila tudi takrat-- ker ga bo spremenil na globalnem nivoju)
+// Ostala polja se bodo updatala v splošni(angleški verziji).
+// Če rabiš še katera polja za prevest, povej.
+// (Ali pa če bi morda raje, da če specificiraš neangleški jezik,
+// da se updatajo samo prevedljiva polja, da ti ni treba poslat
+// recimo emaila tudi takrat-- ker ga bo spremenil na globalnem nivoju)
 }

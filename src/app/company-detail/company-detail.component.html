@@ -14,8 +14,7 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <!-- <h4 class="modal-title">{{title}}</h4> -->
-          <div class="title-page content-element--title">{{title}}</div>
+          <div class="title-page content-element--title">{{ title }}</div>
         </div>
       </div>
 
@@ -332,7 +331,6 @@
         </div>
       </div>
 
-
       <div class="af-form-row">
         <div class="af-form-block--c12">
           <h2 i18n="@@companyDetail.section.certification">Certification</h2>
@@ -380,7 +378,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
@@ -430,7 +427,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
@@ -544,93 +540,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="af-form-row">
-
-        <div class="af-form-block--c12">
-          <h2 i18n="@@semiProductDetail.section.users">Users</h2>
-          <div class="af-form-element">
-
-            <app-closable
-              [nonClosable]="true">
-              <div class="search-field">
-                <textinput
-                  label=""
-                  [form]="userForm"
-                  placeholder="Type surname to add user ..."
-                  i18n-placeholder="@@companyDetail.textinput.search-field.placeholder"
-                  [codebookService]="userSifrant"
-                  [resultFormatter]="userResultFormatter"
-                  [inputFormatter]="userInputFormatter"
-                  (itemMatching)="addSelectedUser($event)">
-                </textinput>
-              </div>
-              <div *ngFor="let user of
-                companyDetailForm.get('users').controls; index as i">
-                <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                  <div>{{user?.value?.name}} {{user?.value.surname}}
-                    ({{user?.value?.email}})</div>
-                  <div (click)="deleteUser(user.value)">
-                    <fa-icon
-                      class="del-icon"
-                      [icon]="faTimes"></fa-icon>
-                  </div>
-                </div>
-              </div>
-            </app-closable>
-          </div>
-        </div>
-      </div> -->
-
-
-
-      <div class="af-form-row">
-
-        <div class="af-form-block--c12">
-          <h2 i18n="@@companyDetail.section.cooperatives">Users</h2>
-          <div class="af-form-element">
-
-
-            <list-editor *ngIf="companyUserListManager"
-              label="Users with company roles"
-              [listEditorManager]="companyUserListManager"
-              addText="Add new"
-              [canAdd]="true"
-              i18n-label="@@companyDetail.list-editor.cooperatives.label"
-              i18n-addText="@@companyDetail.list-editor.cooperatives.addText"
-              [invalid]="submitted && companyDetailForm.get('users')?.invalid">
-              <list-editor-items>
-                <div cdkDropList
-                  (cdkDropListDropped)="companyUserListManager.onDrop($event)">
-                  <div *ngFor="let item of companyDetailForm.get('users').controls; let i=index;">
-                    <app-company-user-role
-                      title=null
-                      [formControlInput]="item"
-                      [isOpen]="companyUserListManager.isOpen(i)"
-                      [listEditorManager]="this.companyUserListManager"
-                      [listEditorManagerPosition]="i">
-                    </app-company-user-role>
-                  </div>
-                </div>
-              </list-editor-items>
-              <!-- <list-editor-errors>
-                <ng-container *ngIf="submitted">
-                  <div *ngIf="companyDetailForm.get('users').errors as errors" class="sc-invalid-feedback">
-                    <div *ngIf="errors.required" i18n-title="@@companyDetail.list-editor.cooperatives.error">
-                      <span>
-                        Cooperative is required
-                      </span>
-                    </div>
-                  </div>
-                </ng-container>
-              </list-editor-errors> -->
-            </list-editor>
-
-          </div>
-        </div>
-
-      </div>
-
 
       <div class="af-form-row">
         <div class="af-form-block--c12">

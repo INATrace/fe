@@ -34,6 +34,8 @@ import { FrontPageTermsComponent } from './front-page/front-page-terms/front-pag
 import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
+import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
+import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -217,6 +219,22 @@ const routes: Routes = [
     component: CompanyDetailTranslateComponent,
     pathMatch: 'full',
     canDeactivate: [DeactivateGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'companies/:id/users',
+    component: CompanyDetailUsersComponent,
+    pathMatch: 'full',
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'companies/:id/facilities',
+    component: CompanyDetailFacilitiesComponent,
+    pathMatch: 'full',
     data: {
       drobtinice: null
     }
