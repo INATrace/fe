@@ -36,6 +36,7 @@ import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiCompanyListResponse } from '../model/apiPaginatedResponseApiCompanyListResponse';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
+import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -110,6 +111,41 @@ export namespace ExecuteActionUsingPOST {
      */
     export const ParamValidators: {[K in keyof ExecuteActionUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
       action: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getCompanyUsersUsingGET.
+ */
+export namespace GetCompanyUsersUsingGET {
+    /**
+     * Parameter map for getCompanyUsersUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getCompanyUsersUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCompanyUsersUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetCompanyUsersUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
               ['required', Validators.required],
       ],
     };
@@ -613,6 +649,88 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'executeActionUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get all user for the company with the provided ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCompanyUsersUsingGETByMap(
+    map: GetCompanyUsersUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseListApiCompanyUser>;
+  public getCompanyUsersUsingGETByMap(
+    map: GetCompanyUsersUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiCompanyUser>>;
+  public getCompanyUsersUsingGETByMap(
+    map: GetCompanyUsersUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiCompanyUser>>;
+  public getCompanyUsersUsingGETByMap(
+    map: GetCompanyUsersUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getCompanyUsersUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get all user for the company with the provided ID
+     * 
+     * @param id Company ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyUsersUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiCompanyUser>;
+    public getCompanyUsersUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiCompanyUser>>;
+    public getCompanyUsersUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiCompanyUser>>;
+    public getCompanyUsersUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getCompanyUsersUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseListApiCompanyUser>(`${this.configuration.basePath}/api/company/profile/${encodeURIComponent(String(id))}/users`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyUsersUsingGET')));
         }
         return handle;
     }
