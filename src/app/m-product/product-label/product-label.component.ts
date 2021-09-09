@@ -1,51 +1,76 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Location } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
-import { ActivatedRoute, Router } from '@angular/router';
-import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject, combineLatest, of } from 'rxjs';
-import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
-import { ProductService } from 'src/api-chain/api/product.service';
-import { CommonControllerService } from 'src/api/api/commonController.service';
-import { CompanyControllerService } from 'src/api/api/companyController.service';
-import { ProductControllerService } from 'src/api/api/productController.service';
-import { ApiAddress } from 'src/api/model/apiAddress';
-import { ApiCompany } from 'src/api/model/apiCompany';
-import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import { ApiProcess } from 'src/api/model/apiProcess';
-import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
-import { ApiCertification } from 'src/api/model/apiCertification';
-import { ApiProduct } from 'src/api/model/apiProduct';
-import { ApiProductLabel } from 'src/api/model/apiProductLabel';
-import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
-import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
-import { ApiResponsibility } from 'src/api/model/apiResponsibility';
-import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
-import { ApiSustainability } from 'src/api/model/apiSustainability';
-import { CompanyDetailComponent } from 'src/app/company-detail/company-detail.component';
-import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
-import { CountryService } from 'src/app/shared-services/countries.service';
-import { UsersService } from 'src/app/shared-services/users.service';
-import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { TextinputComponent } from 'src/app/shared/textinput/textinput.component';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
-import { environment } from 'src/environments/environment';
-import { UnsubscribeList } from 'src/shared/rxutils';
-import { dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { PrefillProductSelectionModalComponent } from './prefill-product-selection-modal/prefill-product-selection-modal.component';
-import { ApiProcessDocumentValidationScheme, ApiCertificationValidationScheme, ApiProductOriginValidationScheme, ApiProductValidationScheme, ApiResponsibilityFarmerPictureValidationScheme, marketShareFormMetadata, MarketShareValidationScheme, pricingTransparencyFormMetadata, pricingTransparencyValidationScheme, pricesFormMetadata, pricesValidationScheme, ApiComparisonOfPriceValidationScheme, ApiCompanyValidationScheme } from './validation';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {moveItemInArray} from '@angular/cdk/drag-drop';
+import {Location} from '@angular/common';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {GoogleMap, MapInfoWindow} from '@angular/google-maps';
+import {ActivatedRoute, Router} from '@angular/router';
+import {faArrowAltCircleDown, faCompass, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
+import {
+  faArrowsAlt,
+  faCodeBranch,
+  faCog,
+  faEye,
+  faListOl,
+  faPen,
+  faQrcode,
+  faSlidersH,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import {BehaviorSubject, combineLatest, of} from 'rxjs';
+import {catchError, filter, map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
+import {ProductService} from 'src/api-chain/api/product.service';
+import {CommonControllerService} from 'src/api/api/commonController.service';
+import {CompanyControllerService} from 'src/api/api/companyController.service';
+import {ProductControllerService} from 'src/api/api/productController.service';
+import {ApiAddress} from 'src/api/model/apiAddress';
+import {ApiCompany} from 'src/api/model/apiCompany';
+import {ApiProcess} from 'src/api/model/apiProcess';
+import {ApiProcessDocument} from 'src/api/model/apiProcessDocument';
+import {ApiCertification} from 'src/api/model/apiCertification';
+import {ApiProduct} from 'src/api/model/apiProduct';
+import {ApiProductLabel} from 'src/api/model/apiProductLabel';
+import {ApiProductOrigin} from 'src/api/model/apiProductOrigin';
+import {ApiResponseApiBaseEntity} from 'src/api/model/apiResponseApiBaseEntity';
+import {ApiResponsibility} from 'src/api/model/apiResponsibility';
+import {ApiResponsibilityFarmerPicture} from 'src/api/model/apiResponsibilityFarmerPicture';
+import {ApiSustainability} from 'src/api/model/apiSustainability';
+import {CompanyDetailComponent} from 'src/app/company-detail/company-detail.component';
+import {ComponentCanDeactivate} from 'src/app/shared-services/component-can-deactivate';
+import {CountryService} from 'src/app/shared-services/countries.service';
+import {UsersService} from 'src/app/shared-services/users.service';
+import {ListEditorManager} from 'src/app/shared/list-editor/list-editor-manager';
+import {TextinputComponent} from 'src/app/shared/textinput/textinput.component';
+import {AuthService} from 'src/app/system/auth.service';
+import {GlobalEventManagerService} from 'src/app/system/global-event-manager.service';
+import {NgbModalImproved} from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import {environment} from 'src/environments/environment';
+import {UnsubscribeList} from 'src/shared/rxutils';
+import {dbKey, defaultEmptyObject, generateFormFromMetadata} from 'src/shared/utils';
+import {PrefillProductSelectionModalComponent} from './prefill-product-selection-modal/prefill-product-selection-modal.component';
+import {
+  ApiCertificationValidationScheme,
+  ApiCompanyValidationScheme,
+  ApiComparisonOfPriceValidationScheme,
+  ApiProcessDocumentValidationScheme,
+  ApiProductOriginValidationScheme,
+  ApiProductValidationScheme,
+  ApiResponsibilityFarmerPictureValidationScheme,
+  marketShareFormMetadata,
+  MarketShareValidationScheme,
+  pricesFormMetadata,
+  pricesValidationScheme,
+  pricingTransparencyFormMetadata,
+  pricingTransparencyValidationScheme
+} from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
 import { ApiComparisonOfPrice } from 'src/api/model/apiComparisonOfPrice';
 import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
-import { ApiCompanyGetValidationScheme } from 'src/app/company-detail/validation';
+import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
+import { ApiValueChain } from '../../../api/model/apiValueChain';
+import { ApiValueChainValidationScheme } from '../../value-chain-detail/validation';
 
 @Component({
   selector: 'app-product-label',
@@ -128,6 +153,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   editInfoLabelLink: string = "";
 
+  valueChainName: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -137,10 +164,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     public countryCodes: CountryService,
     public userSifrant: UsersService,
     public companyController: CompanyControllerService,
+    public valueChainController: ValueChainControllerService,
     private modalService: NgbModalImproved,
     private authService: AuthService,
     private commonController: CommonControllerService,
-    private chainProductService: ProductService
+    private chainProductService: ProductService,
+    private activatedRoute: ActivatedRoute
   ) {
     super()
     this.generateLabelMaps()
@@ -237,28 +266,30 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }),
     tap(val => { this.globalEventsManager.showLoading(false); }),
     tap(data => {
-      let product = data
+      let product = data;
       // console.log("PRODUCT", data);
-      this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme)
-      let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme)
-      this.productForm.setControl('keyMarketsShare', marketShareForm)
+      this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
+      let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
+      this.productForm.setControl('keyMarketsShare', marketShareForm);
       let pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
       let comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-      this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm)
+      this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
       let priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
       (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
-      this.initializeListManagers()
+      this.initializeListManagers();
       let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
       let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-      this.productForm.updateValueAndValidity()
+      let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
+      this.productForm.setControl('valueChain', valueChainForm);
+      this.productForm.updateValueAndValidity();
       this.initializeOriginLocations();
-      this.initializeMarkers()
+      this.initializeMarkers();
     }),
     shareReplay(1)
-  )
+  );
 
   reloadLabels() {
     this.labelsReload$.next(true)
@@ -344,26 +375,28 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
 
   async prepareForm(data) {
-    let product = data
+    let product = data;
     // console.log("CURRENT LABEL DATA:", data)
-    this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme)
-    let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme)
-    this.productForm.setControl('keyMarketsShare', marketShareForm)
+    this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
+    let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
+    this.productForm.setControl('keyMarketsShare', marketShareForm);
     let pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
     let comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm)
+    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
     let priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
     (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
-    this.initializeListManagers()
+    this.initializeListManagers();
     let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-    this.productForm.updateValueAndValidity()
+    let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
+    this.productForm.setControl('valueChain', valueChainForm);
+    this.productForm.updateValueAndValidity();
     this.initializeOriginLocations();
-    this.initializeMarkers()
-    //console.log("FORM:", this.productForm)
+    this.initializeMarkers();
+    //console.log('FORM:', this.productForm);
   }
 
   static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
@@ -443,19 +476,24 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     let originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
 
-    this.initializeListManagers()
+    this.initializeListManagers();
     let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-    this.productForm.updateValueAndValidity()
+    this.productForm.updateValueAndValidity();
     let companyId = this.route.snapshot.params.companyId;
+    let valueChainId = this.route.snapshot.params.valueChainId;
     try {
-      this.globalEventsManager.showLoading(true)
-      let resp = await this.companyController.getCompanyUsingGET(Number(companyId)).pipe(take(1)).toPromise()
-      let company = resp.data
-      let companyForm = generateFormFromMetadata(ApiCompany.formMetadata(), company, ApiCompanyValidationScheme)
+      this.globalEventsManager.showLoading(true);
+      let resp = await this.companyController.getCompanyUsingGET(Number(companyId)).pipe(take(1)).toPromise();
+      let company = resp.data;
+      let companyForm = generateFormFromMetadata(ApiCompany.formMetadata(), company, ApiCompanyValidationScheme);
       this.productForm.setControl('company', companyForm);
-      this.productForm.updateValueAndValidity()
-      this.productForm.get('settings.language').setValue("EN");
+      resp = await this.valueChainController.getValueChainUsingGET(Number(valueChainId)).toPromise();
+      let valueChain = resp.data;
+      let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain, ApiValueChainValidationScheme);
+      this.productForm.setControl('valueChain', valueChainForm);
+      this.productForm.updateValueAndValidity();
+      this.productForm.get('settings.language').setValue('EN');
     } catch (e) {
       // console.log(e)
       this.globalEventsManager.push({
@@ -463,34 +501,34 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         notificationType: 'error',
         title: $localize`:@@productLabel.newProduct.error.title:Error`,
         message: $localize`:@@productLabel.newProduct.error.message:Wrong company data. Cannot create a product.`
-      })
-      this.router.navigate(['product-labels'])
+      });
+      this.router.navigate(['product-labels']);
     } finally {
-      this.globalEventsManager.showLoading(false)
+      this.globalEventsManager.showLoading(false);
     }
   }
 
-  userForm = new FormControl(null)
+  userForm = new FormControl(null);
 
   userResultFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value)
+    return this.userSifrant.textRepresentation(value);
   }
 
   userInputFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value)
+    return this.userSifrant.textRepresentation(value);
   }
 
 
   goBack(): void {
     // console.log("GOBACK")
-    this.router.navigate(['product-labels'])
+    this.router.navigate(['product-labels']);
   }
 
   async save() {
     this.submitted = true;
-    if (!this.changed) return // nothing to save
+    if (!this.changed) return; // nothing to save
     if (!this.currentLabel) {   // No labels
-      let res = await this.saveProduct(true)   // save and reload product
+      let res = await this.saveProduct(true);   // save and reload product
       if (res) {
         this.submitted = false;
       }
