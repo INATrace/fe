@@ -2,17 +2,35 @@
   <app-system-left-panel title="System"></app-system-left-panel>
 
   <div class="main">
-    <div class="af-form-wrapper">
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <div class="title-page content-element--title">{{ title }}</div>
+          <div class="d-flex justify-content-between content-element--row1"></div>
+            <div class="title-page content-element--title">{{ title }}</div>
         </div>
       </div>
 
-      <!-- TODO: move facilities code from product to here -->
+    <div class="af-form-row">
+      <div class="d-flex align-items-start content-element--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfFacilities">List of facilities</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingFacilities" style="margin-top: 0px;">Showing {{displayedFacilities}}/{{allFacilities}}</div>
+        </div>
+      </div>
+    </div>
 
+    <div class="af-form-row">
+      <div>
+        <div *ngFor="let f of facilities" class="content-element--row2">
+          <h5 style="margin-bottom: 0">{{ f.name }}</h5>
+          <div *ngIf="f.facilityLocation.address.address && f.facilityLocation.address.zip && f.facilityLocation.address.city && f.facilityLocation.address.country">
+            <p>{{ f.facilityLocation.address.address }}, {{ f.facilityLocation.address.zip }} {{ f.facilityLocation.address.city }}, {{ f.facilityLocation.address.country.name }}</p>
+          </div>
+          <div *ngIf="f.facilityLocation.address.village && f.facilityLocation.address.sector && f.facilityLocation.address.cell">
+            <p>{{ f.facilityLocation.address.village }}, {{ f.facilityLocation.address.cell }}, {{ f.facilityLocation.address.sector }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
 </app-authorised-layout>

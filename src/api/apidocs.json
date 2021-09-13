@@ -5561,6 +5561,10 @@
             "description": "address",
             "type": "string"
           },
+          "cell": {
+            "description": "Village cell",
+            "type": "string"
+          },
           "city": {
             "description": "city",
             "type": "string"
@@ -5569,8 +5573,16 @@
             "$ref": "#/components/schemas/ApiCountry",
             "description": "country"
           },
+          "sector": {
+            "description": "Village sector",
+            "type": "string"
+          },
           "state": {
             "description": "state / province / region",
+            "type": "string"
+          },
+          "village": {
+            "description": "Village name",
             "type": "string"
           },
           "zip": {
@@ -6424,6 +6436,10 @@
             "description": "address",
             "type": "string"
           },
+          "cell": {
+            "description": "Village cell",
+            "type": "string"
+          },
           "city": {
             "description": "city",
             "type": "string"
@@ -6442,8 +6458,16 @@
             "format": "double",
             "type": "number"
           },
+          "sector": {
+            "description": "Village sector",
+            "type": "string"
+          },
           "state": {
             "description": "state / province / region",
+            "type": "string"
+          },
+          "village": {
+            "description": "Village name",
             "type": "string"
           },
           "zip": {
