@@ -7,6 +7,9 @@
         <div class="af-form-block--c12">
           <div class="d-flex justify-content-between content-element--row1"></div>
             <div class="title-page content-element--title">{{ title }}</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" style="margin-bottom: 1rem;" i18n="@@productLabelStock.button.newFacility">
+              <span>+ Add facility</span>
+            </button>
         </div>
       </div>
 
@@ -22,7 +25,7 @@
     <div class="af-form-row">
       <div>
         <div *ngFor="let f of facilities" class="content-element--row2">
-          <h5 style="margin-bottom: 0">{{ f.name }}</h5>
+          <a [routerLink]="['/', 'companies', companyId, 'facilities', f.id, 'edit']"><h5 style="margin-bottom: 0">{{ f.name }}</h5></a>
           <div *ngIf="f.facilityLocation.address.address && f.facilityLocation.address.zip && f.facilityLocation.address.city && f.facilityLocation.address.country">
             <p>{{ f.facilityLocation.address.address }}, {{ f.facilityLocation.address.zip }} {{ f.facilityLocation.address.city }}, {{ f.facilityLocation.address.country.name }}</p>
           </div>

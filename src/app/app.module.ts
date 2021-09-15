@@ -90,6 +90,7 @@ import { ValueChainDetailComponent } from './value-chain-detail/value-chain-deta
 import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
 import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
+import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -168,7 +169,8 @@ export function getConfiguration(): Configuration {
     ValueChainDetailComponent,
     ValueChainConfigItemComponent,
     CompanyDetailUsersComponent,
-    CompanyDetailFacilitiesComponent
+    CompanyDetailFacilitiesComponent,
+    CompanyDetailFacilityAddComponent
   ],
   entryComponents: [
     CompanySelectModalComponent

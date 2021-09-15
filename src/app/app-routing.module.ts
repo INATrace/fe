@@ -36,6 +36,7 @@ import { ValueChainListComponent } from './value-chain-list/value-chain-list.com
 import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
 import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
+import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -237,6 +238,28 @@ const routes: Routes = [
     pathMatch: 'full',
     data: {
       drobtinice: null
+    }
+  },
+  {
+    path: 'companies/:id/facilities/add',
+    component: CompanyDetailFacilityAddComponent,
+    pathMatch: 'full',
+    data: {
+      drobtinice: {
+        title: '',
+        goBack: true
+      }
+    }
+  },
+  {
+    path: 'companies/:id/facilities/:facilityId/edit',
+    component: CompanyDetailFacilityAddComponent,
+    pathMatch: 'full',
+    data: {
+      drobtinice: {
+        title: '',
+        goBack: true
+      }
     }
   },
   ///////////////////////

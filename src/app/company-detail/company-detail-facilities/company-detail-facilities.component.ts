@@ -18,7 +18,8 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
 
   allFacilities = 0;
   displayedFacilities = 0;
-  
+
+  public companyId;
   public facilities: ApiFacility[];
 
   constructor(
@@ -30,6 +31,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   ngOnInit(): void {
+    this.companyId = this.route.snapshot.params.id;
     this.facilityControllerService.getFacilityListUsingGET('FETCH').pipe(first()).subscribe(res => {
       this.facilities = res.data.items;
       this.allFacilities = this.facilities.length;

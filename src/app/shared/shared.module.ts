@@ -67,6 +67,7 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { CompanyDocumentItemComponent } from './company-document-item/company-document-item.component';
 import { CompanyDocumentCategoryFilterPipe } from './pipes/company-document-category-filter.pipe';
 import { CertificationAndStandardItemComponent } from './certification-and-standard-item/certification-and-standard-item.component';
+import { LocationFormNewComponent } from './location-form-new/location-form-new.component';
 
 @NgModule({
     declarations: [
@@ -121,7 +122,8 @@ import { CertificationAndStandardItemComponent } from './certification-and-stand
         ContactFormComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
-        CompanyDocumentCategoryFilterPipe
+        CompanyDocumentCategoryFilterPipe,
+        LocationFormNewComponent
     ],
     entryComponents: [
         TextinputModalComponent,
@@ -189,7 +191,8 @@ import { CertificationAndStandardItemComponent } from './certification-and-stand
         LocationFormComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
-        CompanyDocumentCategoryFilterPipe
+        CompanyDocumentCategoryFilterPipe,
+        LocationFormNewComponent
     ]
 })
 export class SharedModule {

@@ -20,6 +20,7 @@
 
 import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacilityLocation } from './apiFacilityLocation';
+import { ApiFacilitySemiProduct } from './apiFacilitySemiProduct';
 import { ApiFacilityType } from './apiFacilityType';
 
 
@@ -27,6 +28,10 @@ import { ApiFacilityType } from './apiFacilityType';
 export interface ApiFacility { 
     company?: ApiCompanyBase;
     facilityLocation?: ApiFacilityLocation;
+    /**
+     * List of semi products for this facility
+     */
+    facilitySemiProductList?: Array<ApiFacilitySemiProduct>;
     facilityType?: ApiFacilityType;
     /**
      * Entity id
@@ -56,6 +61,10 @@ export namespace ApiFacility {
     export enum Properties {
         company = 'company',
         facilityLocation = 'facilityLocation',
+        /**
+         * List of semi products for this facility
+         */
+        facilitySemiProductList = 'facilitySemiProductList',
         facilityType = 'facilityType',
         /**
          * Entity id
@@ -104,6 +113,18 @@ export namespace ApiFacility {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiFacilityLocation'
+                },
+                {
+                    metadata: ApiFacilitySemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilitySemiProductList',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiFacilitySemiProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiFacilitySemiProduct'
                 },
                 {
                     metadata: ApiFacilityType.formMetadata,
@@ -167,6 +188,8 @@ export namespace ApiFacility {
                 ],
                 facilityLocation: [
                 ],
+                facilitySemiProductList: [
+                ],
                 facilityType: [
                 ],
                 id: [
@@ -188,6 +211,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               facilityLocation: {
+  //                   validators: []
+  //               },
+  //               facilitySemiProductList: {
   //                   validators: []
   //               },
   //               facilityType: {
