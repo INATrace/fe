@@ -15,7 +15,6 @@ import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../shared-services/active-semi-products.service';
-import { ApiFacilitySemiProduct } from '../../../api/model/apiFacilitySemiProduct';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -30,8 +29,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
   public form: FormGroup;
   public submitted = false;
   public companyId: string;
-  public semiProducts: Array<number> = [];
-  public allSemiProducts: ApiSemiProduct[];
+  public semiProducts: Array<ApiSemiProduct> = [];
 
   public codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
   public semiProductsForm = new FormControl(null);
@@ -49,9 +47,6 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.edit = this.route.snapshot.params.facilityId;
-    this.semiProductControllerService.getSemiProductListUsingGET().pipe(first()).subscribe(res => {
-      this.allSemiProducts = res.data.items;
-    });
 
     if (!this.edit) {
       this.initializeNew();
@@ -133,16 +128,12 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
       setTimeout(() => this.semiProductsForm.setValue(null));
       return;
     }
-    this.semiProducts.push(sp.id);
+    this.semiProducts.push(sp);
     setTimeout(() => this.semiProductsForm.setValue(null));
   }
 
-  deleteSP(sp: number, idx: number) {
+  deleteSP(sp: ApiSemiProduct, idx: number) {
     this.semiProducts.splice(idx, 1);
-  }
-
-  getSemiProductName(id: number) {
-    return this.allSemiProducts.find(value => value.id === id).name;
   }
 
 }

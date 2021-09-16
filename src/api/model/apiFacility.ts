@@ -21,6 +21,7 @@
 import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacilityLocation } from './apiFacilityLocation';
 import { ApiFacilityType } from './apiFacilityType';
+import { ApiSemiProduct } from './apiSemiProduct';
 
 
 
@@ -30,7 +31,7 @@ export interface ApiFacility {
     /**
      * List of semi product ID's for this facility
      */
-    facilitySemiProductList?: Array<number>;
+    facilitySemiProductList?: Array<ApiSemiProduct>;
     facilityType?: ApiFacilityType;
     /**
      * Entity id
@@ -114,15 +115,16 @@ export namespace ApiFacility {
                     complexType: 'ApiFacilityLocation'
                 },
                 {
+                    metadata: ApiSemiProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'facilitySemiProductList',
                     classname: 'ApiFacility',
-                    dataType: 'Array&lt;number&gt;',
-                    isPrimitiveType: true,
+                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    isPrimitiveType: false,
                     isListContainer: true,
-                    complexType: ''
+                    complexType: 'ApiSemiProduct'
                 },
                 {
                     metadata: ApiFacilityType.formMetadata,
