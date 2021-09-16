@@ -25,19 +25,19 @@ export const ApiAddressValidationScheme = {
     validators: [],
     fields: {
         address: {
-            validators: [Validators.required]
+            validators: []
         },
         city: {
-            validators: [Validators.required]
+            validators: []
         },
         country: {
             validators: [Validators.required]
         },
         state: {
-            validators: [Validators.required]
+            validators: []
         },
         zip: {
-            validators: [Validators.required]
+            validators: []
         }
     }
 } as SimpleValidationScheme<ApiAddress>;
