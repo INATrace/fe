@@ -30,7 +30,8 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
   public form: FormGroup;
   public submitted = false;
   public companyId: string;
-  public semiProducts: Array<ApiFacilitySemiProduct> = [];
+  public semiProducts: Array<number> = [];
+  public allSemiProducts: ApiSemiProduct[];
 
   public codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
   public semiProductsForm = new FormControl(null);
@@ -48,6 +49,9 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.edit = this.route.snapshot.params.facilityId;
+    this.semiProductControllerService.getSemiProductListUsingGET().pipe(first()).subscribe(res => {
+      this.allSemiProducts = res.data.items;
+    });
 
     if (!this.edit) {
       this.initializeNew();
@@ -125,19 +129,20 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
   }
 
   async addSelectedSP(sp: ApiSemiProduct) {
-    if (!sp || this.semiProducts.some(s => s.apiSemiProduct.id === sp.id)) {
+    if (!sp || this.semiProducts.some(s => s === sp.id)) {
       setTimeout(() => this.semiProductsForm.setValue(null));
       return;
     }
-    const apiFacilitySemiProduct: ApiFacilitySemiProduct = {
-      apiSemiProduct: sp
-    };
-    this.semiProducts.push(apiFacilitySemiProduct);
+    this.semiProducts.push(sp.id);
     setTimeout(() => this.semiProductsForm.setValue(null));
   }
 
-  deleteSP(sp: ApiSemiProduct, idx: number) {
+  deleteSP(sp: number, idx: number) {
     this.semiProducts.splice(idx, 1);
+  }
+
+  getSemiProductName(id: number) {
+    return this.allSemiProducts.find(value => value.id === id).name;
   }
 
 }

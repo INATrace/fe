@@ -105,7 +105,7 @@
                         </div>
                         <div *ngFor="let sp of this.semiProducts; index as idx">
                             <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                                <div>{{sp?.apiSemiProduct.name}}</div>
+                                <div>{{getSemiProductName(sp)}}</div>
                                 <div (click)="deleteSP(sp, idx)">
                                     <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                 </div>
