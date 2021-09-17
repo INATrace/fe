@@ -18,109 +18,75 @@
  */
 
 
-import { ApiCountry } from './apiCountry';
+import { MeasureUnitType } from './measureUnitType';
 
 
 
-export interface ApiGeoAddress { 
-    /**
-     * address
-     */
-    address?: string;
-    /**
-     * Village cell
-     */
-    cell?: string;
-    /**
-     * city
-     */
-    city?: string;
-    country?: ApiCountry;
-    /**
-     * location latitude
-     */
-    latitude?: number;
-    /**
-     * location longitude
-     */
-    longitude?: number;
-    /**
-     * Village sector
-     */
-    sector?: string;
-    /**
-     * state / province / region
-     */
-    state?: string;
-    /**
-     * Village name
-     */
-    village?: string;
-    /**
-     * ZIP / postal code / p.p. box
-     */
-    zip?: string;
+export interface SemiProduct { 
+    buyable?: boolean;
+    creationTimestamp?: Date;
+    description?: string;
+    id?: number;
+    measurementUnitType?: MeasureUnitType;
+    name?: string;
+    sku?: boolean;
+    skuendCustomer?: boolean;
+    updateTimestamp?: Date;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiGeoAddress.
+ * Namespace for property- and property-value-enumerations of SemiProduct.
  */
-export namespace ApiGeoAddress {
+export namespace SemiProduct {
     /**
-     * All properties of ApiGeoAddress.
+     * All properties of SemiProduct.
      */
     export enum Properties {
-        /**
-         * address
-         */
-        address = 'address',
-        /**
-         * Village cell
-         */
-        cell = 'cell',
-        /**
-         * city
-         */
-        city = 'city',
-        country = 'country',
-        /**
-         * location latitude
-         */
-        latitude = 'latitude',
-        /**
-         * location longitude
-         */
-        longitude = 'longitude',
-        /**
-         * Village sector
-         */
-        sector = 'sector',
-        /**
-         * state / province / region
-         */
-        state = 'state',
-        /**
-         * Village name
-         */
-        village = 'village',
-        /**
-         * ZIP / postal code / p.p. box
-         */
-        zip = 'zip'
+        buyable = 'buyable',
+        creationTimestamp = 'creationTimestamp',
+        description = 'description',
+        id = 'id',
+        measurementUnitType = 'measurementUnitType',
+        name = 'name',
+        sku = 'sku',
+        skuendCustomer = 'skuendCustomer',
+        updateTimestamp = 'updateTimestamp'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiGeoAddress',
+            classname: 'SemiProduct',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'address',
-                    classname: 'ApiGeoAddress',
+                    name: 'buyable',
+                    classname: 'SemiProduct',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'SemiProduct',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
+                    classname: 'SemiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -130,64 +96,31 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'cell',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
+                    name: 'id',
+                    classname: 'SemiProduct',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
+                    metadata: MeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'city',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCountry.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'country',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'ApiCountry',
+                    name: 'measurementUnitType',
+                    classname: 'SemiProduct',
+                    dataType: 'MeasureUnitType',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiCountry'
+                    complexType: 'MeasureUnitType'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'latitude',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'longitude',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sector',
-                    classname: 'ApiGeoAddress',
+                    name: 'name',
+                    classname: 'SemiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -197,9 +130,9 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'state',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
+                    name: 'sku',
+                    classname: 'SemiProduct',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -208,9 +141,9 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'village',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
+                    name: 'skuendCustomer',
+                    classname: 'SemiProduct',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -219,74 +152,69 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'zip',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
+                    name: 'updateTimestamp',
+                    classname: 'SemiProduct',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                address: [
+                buyable: [
                 ],
-                cell: [
+                creationTimestamp: [
                 ],
-                city: [
+                description: [
                 ],
-                country: [
+                id: [
                 ],
-                latitude: [
+                measurementUnitType: [
                 ],
-                longitude: [
+                name: [
                 ],
-                sector: [
+                sku: [
                 ],
-                state: [
+                skuendCustomer: [
                 ],
-                village: [
-                ],
-                zip: [
+                updateTimestamp: [
                 ],
             }
         }
     }
 
-  // export const ApiGeoAddressValidationScheme = {
+  // export const SemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               address: {
+  //               buyable: {
   //                   validators: []
   //               },
-  //               cell: {
+  //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               city: {
+  //               description: {
   //                   validators: []
   //               },
-  //               country: {
+  //               id: {
   //                   validators: []
   //               },
-  //               latitude: {
+  //               measurementUnitType: {
   //                   validators: []
   //               },
-  //               longitude: {
+  //               name: {
   //                   validators: []
   //               },
-  //               sector: {
+  //               sku: {
   //                   validators: []
   //               },
-  //               state: {
+  //               skuendCustomer: {
   //                   validators: []
   //               },
-  //               village: {
-  //                   validators: []
-  //               },
-  //               zip: {
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiGeoAddress>;
+  // } as SimpleValidationScheme<SemiProduct>;
 
 
 }

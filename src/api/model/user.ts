@@ -18,154 +18,121 @@
  */
 
 
-import { ApiCountry } from './apiCountry';
+import { GrantedAuthority } from './grantedAuthority';
 
 
 
-export interface ApiGeoAddress { 
-    /**
-     * address
-     */
-    address?: string;
-    /**
-     * Village cell
-     */
-    cell?: string;
-    /**
-     * city
-     */
-    city?: string;
-    country?: ApiCountry;
-    /**
-     * location latitude
-     */
-    latitude?: number;
-    /**
-     * location longitude
-     */
-    longitude?: number;
-    /**
-     * Village sector
-     */
-    sector?: string;
-    /**
-     * state / province / region
-     */
-    state?: string;
-    /**
-     * Village name
-     */
-    village?: string;
-    /**
-     * ZIP / postal code / p.p. box
-     */
-    zip?: string;
+export interface User { 
+    authorities?: Array<GrantedAuthority>;
+    creationTimestamp?: Date;
+    email?: string;
+    id?: number;
+    language?: User.LanguageEnum;
+    name?: string;
+    password?: string;
+    role?: User.RoleEnum;
+    status?: User.StatusEnum;
+    surname?: string;
+    updateTimestamp?: Date;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiGeoAddress.
+ * Namespace for property- and property-value-enumerations of User.
  */
-export namespace ApiGeoAddress {
+export namespace User {
     /**
-     * All properties of ApiGeoAddress.
+     * All properties of User.
      */
     export enum Properties {
-        /**
-         * address
-         */
-        address = 'address',
-        /**
-         * Village cell
-         */
-        cell = 'cell',
-        /**
-         * city
-         */
-        city = 'city',
-        country = 'country',
-        /**
-         * location latitude
-         */
-        latitude = 'latitude',
-        /**
-         * location longitude
-         */
-        longitude = 'longitude',
-        /**
-         * Village sector
-         */
-        sector = 'sector',
-        /**
-         * state / province / region
-         */
-        state = 'state',
-        /**
-         * Village name
-         */
-        village = 'village',
-        /**
-         * ZIP / postal code / p.p. box
-         */
-        zip = 'zip'
+        authorities = 'authorities',
+        creationTimestamp = 'creationTimestamp',
+        email = 'email',
+        id = 'id',
+        language = 'language',
+        name = 'name',
+        password = 'password',
+        role = 'role',
+        status = 'status',
+        surname = 'surname',
+        updateTimestamp = 'updateTimestamp'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
+    }
+
+    /**
+     * All possible values of role.
+     */
+    export enum RoleEnum {
+        USER = 'USER',
+        ADMIN = 'ADMIN',
+        MANAGER = 'MANAGER',
+        ACCOUNTANT = 'ACCOUNTANT'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNCONFIRMED = 'UNCONFIRMED',
+        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
+        ACTIVE = 'ACTIVE',
+        DEACTIVATED = 'DEACTIVATED'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiGeoAddress',
+            classname: 'User',
             vars: [
                 {
+                    metadata: GrantedAuthority.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'address',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cell',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'city',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCountry.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'country',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'ApiCountry',
+                    name: 'authorities',
+                    classname: 'User',
+                    dataType: 'Array&lt;GrantedAuthority&gt;',
                     isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCountry'
+                    isListContainer: true,
+                    complexType: 'GrantedAuthority'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'latitude',
-                    classname: 'ApiGeoAddress',
+                    name: 'creationTimestamp',
+                    classname: 'User',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'email',
+                    classname: 'User',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'User',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -173,21 +140,11 @@ export namespace ApiGeoAddress {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'User.LanguageEnum',
                     required: false,
-                    name: 'longitude',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sector',
-                    classname: 'ApiGeoAddress',
+                    name: 'language',
+                    classname: 'User',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -197,8 +154,8 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'state',
-                    classname: 'ApiGeoAddress',
+                    name: 'name',
+                    classname: 'User',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -208,8 +165,32 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'village',
-                    classname: 'ApiGeoAddress',
+                    name: 'password',
+                    classname: 'User',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'User.RoleEnum',
+                    required: false,
+                    name: 'role',
+                    classname: 'User',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'User.StatusEnum',
+                    required: false,
+                    name: 'status',
+                    classname: 'User',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -219,74 +200,90 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'zip',
-                    classname: 'ApiGeoAddress',
+                    name: 'surname',
+                    classname: 'User',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'User',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                address: [
+                authorities: [
                 ],
-                cell: [
+                creationTimestamp: [
                 ],
-                city: [
+                email: [
                 ],
-                country: [
+                id: [
                 ],
-                latitude: [
+                language: [
                 ],
-                longitude: [
+                name: [
                 ],
-                sector: [
+                password: [
                 ],
-                state: [
+                role: [
                 ],
-                village: [
+                status: [
                 ],
-                zip: [
+                surname: [
+                ],
+                updateTimestamp: [
                 ],
             }
         }
     }
 
-  // export const ApiGeoAddressValidationScheme = {
+  // export const UserValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               address: {
+  //               authorities: {
   //                   validators: []
   //               },
-  //               cell: {
+  //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               city: {
+  //               email: {
   //                   validators: []
   //               },
-  //               country: {
+  //               id: {
   //                   validators: []
   //               },
-  //               latitude: {
+  //               language: {
   //                   validators: []
   //               },
-  //               longitude: {
+  //               name: {
   //                   validators: []
   //               },
-  //               sector: {
+  //               password: {
   //                   validators: []
   //               },
-  //               state: {
+  //               role: {
   //                   validators: []
   //               },
-  //               village: {
+  //               status: {
   //                   validators: []
   //               },
-  //               zip: {
+  //               surname: {
+  //                   validators: []
+  //               },
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiGeoAddress>;
+  // } as SimpleValidationScheme<User>;
 
 
 }

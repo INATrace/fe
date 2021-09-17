@@ -282,7 +282,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-      let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
+      console.log(product);
+      const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
       this.productForm.updateValueAndValidity();
       this.initializeOriginLocations();
@@ -1270,7 +1271,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   generateJointVisibilityForm() {
     let allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
     ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
-console.log(allList)
     let formObj = {}
     allList.forEach(element => {
       let fixedKey = element.name.replace(/\./g, "_")

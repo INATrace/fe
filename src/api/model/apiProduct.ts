@@ -28,6 +28,7 @@ import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
 import { ApiResponsibility } from './apiResponsibility';
 import { ApiSustainability } from './apiSustainability';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -85,6 +86,7 @@ export interface ApiProduct {
     specialityDescription?: string;
     specialityDocument?: ApiDocument;
     sustainability?: ApiSustainability;
+    valueChain?: ApiValueChain;
 }
 
 /**
@@ -147,7 +149,8 @@ export namespace ApiProduct {
          */
         specialityDescription = 'specialityDescription',
         specialityDocument = 'specialityDocument',
-        sustainability = 'sustainability'
+        sustainability = 'sustainability',
+        valueChain = 'valueChain'
     }
 
 
@@ -387,6 +390,18 @@ export namespace ApiProduct {
                     isListContainer: false,
                     complexType: 'ApiSustainability'
                 },
+                {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChain',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiValueChain',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiValueChain'
+                },
             ],
             validators: {
                 associatedCompanies: [
@@ -428,6 +443,8 @@ export namespace ApiProduct {
                 specialityDocument: [
                 ],
                 sustainability: [
+                ],
+                valueChain: [
                 ],
             }
         }
@@ -494,6 +511,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               sustainability: {
+  //                   validators: []
+  //               },
+  //               valueChain: {
   //                   validators: []
   //               },
   //     }

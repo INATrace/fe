@@ -28,14 +28,26 @@ export interface ApiAddress {
      */
     address?: string;
     /**
+     * Village cell
+     */
+    cell?: string;
+    /**
      * city
      */
     city?: string;
     country?: ApiCountry;
     /**
+     * Village sector
+     */
+    sector?: string;
+    /**
      * state / province / region
      */
     state?: string;
+    /**
+     * Village name
+     */
+    village?: string;
     /**
      * ZIP / postal code / p.p. box
      */
@@ -55,14 +67,26 @@ export namespace ApiAddress {
          */
         address = 'address',
         /**
+         * Village cell
+         */
+        cell = 'cell',
+        /**
          * city
          */
         city = 'city',
         country = 'country',
         /**
+         * Village sector
+         */
+        sector = 'sector',
+        /**
          * state / province / region
          */
         state = 'state',
+        /**
+         * Village name
+         */
+        village = 'village',
         /**
          * ZIP / postal code / p.p. box
          */
@@ -80,6 +104,17 @@ export namespace ApiAddress {
                     isEnum: false,
                     required: false,
                     name: 'address',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cell',
                     classname: 'ApiAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -113,7 +148,29 @@ export namespace ApiAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'sector',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'state',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'village',
                     classname: 'ApiAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -135,11 +192,17 @@ export namespace ApiAddress {
             validators: {
                 address: [
                 ],
+                cell: [
+                ],
                 city: [
                 ],
                 country: [
                 ],
+                sector: [
+                ],
                 state: [
+                ],
+                village: [
                 ],
                 zip: [
                 ],
@@ -153,13 +216,22 @@ export namespace ApiAddress {
   //               address: {
   //                   validators: []
   //               },
+  //               cell: {
+  //                   validators: []
+  //               },
   //               city: {
   //                   validators: []
   //               },
   //               country: {
   //                   validators: []
   //               },
+  //               sector: {
+  //                   validators: []
+  //               },
   //               state: {
+  //                   validators: []
+  //               },
+  //               village: {
   //                   validators: []
   //               },
   //               zip: {
