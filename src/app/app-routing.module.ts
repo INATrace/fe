@@ -37,6 +37,8 @@ import { ValueChainDetailComponent } from './value-chain-detail/value-chain-deta
 import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
 import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
+import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
+import { CompanyDetailProcessingActionsDetailComponent } from "./company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component";
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -221,6 +223,35 @@ const routes: Routes = [
     pathMatch: 'full',
     canDeactivate: [DeactivateGuardService],
     data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'companies/:id/processingActions',
+    component: CompanyProcessingActionsComponent,
+    pathMatch: 'full',
+    canDeactivate: [DeactivateGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'companies/:id/processingActions/new',
+    component: CompanyDetailProcessingActionsDetailComponent,
+    pathMatch: 'full',
+    // canDeactivate: [DeactivateGuardService],
+    data: {
+      action: 'new',
+      drobtinice: null
+    }
+  },
+  {
+  path: 'companies/:id/processingActions/:paId/edit',
+    component: CompanyDetailProcessingActionsDetailComponent,
+    pathMatch: 'full',
+    // canDeactivate: [DeactivateGuardService],
+    data: {
+      action: 'edit',
       drobtinice: null
     }
   },

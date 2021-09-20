@@ -118,5 +118,27 @@
       (showing)="onShow($event, 'processing-evidence-types')">
     </app-type-list>
 
+    <!-- PROCESSING EVIDENCE FIELDS CODEBOOK -->
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.processingEvidenceFields">Processing evidence fields</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('processing-evidence-fields')" i18n="@@settingsPage.button.newProcessingEvidenceField">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfProcessingEvidenceField">List of processing evidence fields</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingProcessingEvidenceField">Showing {{showedProcEvidFields}}/{{allProcEvidFields}}</div>
+        </div>
+      </div>
+    </div>
+    <app-type-list
+            [parentReload]="parentReloadProcEvidFields"
+            type='processing-evidence-fields'
+            (countAll)="onCountAll($event, 'processing-evidence-fields')"
+            (showing)="onShow($event, 'processing-evidence-fields')">
+    </app-type-list>
+
   </div>
 </app-authorised-layout>

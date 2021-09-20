@@ -11,6 +11,7 @@ import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { AuthService } from 'src/app/system/auth.service';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import {CompanyAndValueChainSelectModalComponent} from "../../company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component";
 
 @Component({
   selector: 'app-product-list',
@@ -152,14 +153,20 @@ export class ProductListComponent implements OnInit {
   }
 
   async createProductForCompany() {
-    const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
+    const modalRef = this.modalService.open(CompanyAndValueChainSelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@productList.createProductForCompany.title:Product Company`,
-      instructionsHtml: $localize`:@@productList.createProductForCompany.instructionsHtml:Select a company for your product:`
-    })
-    let company = await modalRef.result;
+      title: $localize`:@@productList.createProductForCompanyAndValueChain.title:Product Company and Value Chain`,
+      companyInstructionsHtml: $localize`:@@productList.createProductForCompanyAndValueChain.companyInstructionsHtml:Select a company for your product:`,
+      valueChainInstructionsHtml: $localize`:@@productList.createProductForCompanyAndValueChain.valueChainInstructionsHtml:Select a value chain for your product:`
+    });
+    const modalResult = await modalRef.result;
+    const company = modalResult.company;
+    const valueChain =  modalResult.valueChain;
+
+    console.log(company, valueChain);
+
     if (company) {
-      this.router.navigate(['product-labels', 'new', company.id])
+      this.router.navigate(['product-labels', 'new', company.id, valueChain.id]);
     }
   }
 

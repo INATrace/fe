@@ -20,14 +20,16 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
     $localize`:@@companyDetailTab.tab0.title:Company`,
     $localize`:@@companyDetailTab.tab2.title:Users`,
     $localize`:@@companyDetailTab.tab3.title:Facilities`,
-    $localize`:@@companyDetailTab.tab1.title:Translations`
+    $localize`:@@companyDetailTab.tab1.title:Translations`,
+    $localize`:@@companyDetailTab.tab4.title:Processing actions`
   ];
 
   tabNames = [
     'company',
     'users',
     'facilities',
-    'translate'
+    'translate',
+    'processingActions'
   ];
 
   cId = this.route.snapshot.params.id;

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthorisedLayoutComponent } from '../layout/authorised/authorised-layout/authorised-layout.component';
 import { DeactivateGuardService } from '../shared-services/deactivate-guard.service';
 import { BatchDetailPageComponent } from './batch-detail-page/batch-detail-page.component';
 import { BatchesListComponent } from './batches-list/batches-list.component';
@@ -22,6 +21,15 @@ const routes: Routes = [
   },
   {
     path: 'new/:companyId',
+    component: ProductLabelComponent,
+    pathMatch: 'full',
+    canDeactivate: [DeactivateGuardService],
+    data: {
+      drobtinice: null
+    }
+  },
+  {
+    path: 'new/:companyId/:valueChainId',
     component: ProductLabelComponent,
     pathMatch: 'full',
     canDeactivate: [DeactivateGuardService],

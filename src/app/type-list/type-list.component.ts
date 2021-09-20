@@ -20,6 +20,8 @@ import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/a
 import { SortOption } from '../shared/result-sorter/result-sorter-types';
 import { SemiProductControllerService } from '../../api/api/semiProductController.service';
 import { ApiPaginatedResponseApiSemiProduct } from '../../api/model/apiPaginatedResponseApiSemiProduct';
+import {ProcessingEvidenceFieldControllerService} from "../../api/api/processingEvidenceFieldController.service";
+import {ApiPaginatedResponseApiProcessingEvidenceField} from "../../api/model/apiPaginatedResponseApiProcessingEvidenceField";
 
 @Component({
   selector: 'app-type-list',
@@ -34,6 +36,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     private actionTypeService: ActionTypeControllerService,
     private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
+    private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductsService: SemiProductControllerService,
     private route: ActivatedRoute,
     private modalService: NgbModalImproved,
@@ -161,6 +164,29 @@ export class TypeListComponent implements OnInit, OnChanges {
     },
   ];
 
+  sortOptionsEvidenceFields: SortOption[] = [
+    {
+      key: 'id',
+      name: $localize`:@@settingsTypes.sortOptions.id.name:Id`,
+      inactive: true
+    },
+    {
+      key: 'label',
+      name: $localize`:@@settingsTypes.sortOptions.label.name:Label`,
+      defaultSortOrder: 'ASC'
+    },
+    {
+      key: 'type',
+      name: $localize`:@@settingsTypes.sortOptions.label.type:Type`,
+      inactive: true
+    },
+    {
+      key: 'actions',
+      name: $localize`:@@settingsTypes.sortOptions.actions.name:Actions`,
+      inactive: true
+    },
+  ];
+
   sortOptionsSemiProducts: SortOption[] = [
     {
       key: 'name',
@@ -199,6 +225,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') { this.title = $localize`:@@settingsTypes.typeList.title.actions:Action types`; }
     if (this.type === 'grade-abbreviation') { this.title = $localize`:@@settingsTypes.typeList.title.grades:Grade abbreviations`; }
     if (this.type === 'processing-evidence-types') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`; }
+    if (this.type === 'processing-evidence-fields') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceFields:Processing evidence fields`; }
     if (this.type === 'semi-products') { this.title = $localize`:@@settingsTypes.typeList.title.semiProducts:Semi-products`; }
   }
 
@@ -242,6 +269,9 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'processing-evidence-types') {
       return this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGETByMap({ ...params });
     }
+    if (this.type === 'processing-evidence-fields') {
+      return this.processingEvidenceFieldService.getProcessingEvidenceFieldListUsingGETByMap({ ...params });
+    }
     if (this.type === 'semi-products') {
       return this.semiProductsService.getSemiProductListUsingGETByMap({ ...params });
     }
@@ -253,6 +283,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') { return ApiPaginatedResponseApiActionType; }
     if (this.type === 'grade-abbreviation') { return ApiPaginatedResponseApiGradeAbbreviation; }
     if (this.type === 'processing-evidence-types') { return ApiPaginatedResponseApiProcessingEvidenceType; }
+    if (this.type === 'processing-evidence-fields') { return ApiPaginatedResponseApiProcessingEvidenceField; }
     if (this.type === 'semi-products') { return ApiPaginatedResponseApiSemiProduct; }
   }
 
@@ -272,6 +303,9 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'processing-evidence-types') {
       editTitle = $localize`:@@settingsTypes.editProcessingEvidenceType.editTitle:Edit processing evidence type`;
+    }
+    if (this.type === 'processing-evidence-fields') {
+      editTitle = $localize`:@@settingsTypes.editProcessingEvidenceField.editTitle:Edit processing evidence field`;
     }
     if (this.type === 'semi-products') {
       editTitle = $localize`:@@settingsTypes.editSemiProduct.editTitle:Edit semi-product`;
@@ -331,6 +365,12 @@ export class TypeListComponent implements OnInit, OnChanges {
           this.reloadPage();
         }
       }
+      if (this.type === 'processing-evidence-fields') {
+        const res = await this.processingEvidenceFieldService.deleteProcessingEvidenceFieldUsingDELETE(type.id).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK') {
+          this.reloadPage();
+        }
+      }
       if (this.type === 'semi-products') {
         const res = await this.semiProductsService.deleteSemiProductUsingDELETE(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
@@ -379,6 +419,13 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'processing-evidence-types') {
       const res = await this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGET().pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
+        this.all = res.data.count;
+        this.countAll.emit(res.data.count);
+      }
+    }
+    if (this.type === 'processing-evidence-fields') {
+      const res = await this.processingEvidenceFieldService.getProcessingEvidenceFieldListUsingGET().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);

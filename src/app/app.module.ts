@@ -91,6 +91,10 @@ import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-
 import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
 import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
+import { CompanyAndValueChainSelectModalComponent } from './company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
+import { CompanyDetailProcessingActionsDetailComponent } from './company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
+import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
+import { CompanyDetailProcessingActionsListComponent } from './company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -170,7 +174,11 @@ export function getConfiguration(): Configuration {
     ValueChainConfigItemComponent,
     CompanyDetailUsersComponent,
     CompanyDetailFacilitiesComponent,
-    CompanyDetailFacilityAddComponent
+    CompanyDetailFacilityAddComponent,
+    CompanyAndValueChainSelectModalComponent,
+    CompanyDetailProcessingActionsDetailComponent,
+    CompanyProcessingActionsComponent,
+    CompanyDetailProcessingActionsListComponent
   ],
   entryComponents: [
     CompanySelectModalComponent

@@ -1078,6 +1078,542 @@
         "summary": "Get a single measurement unit type with the provided ID."
       }
     },
+    "/api/chain/processing-action": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "createOrUpdateProcessingActionUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProcessingAction"
+              }
+            }
+          },
+          "description": "apiProcessingAction",
+          "required": true
+        },
+        "summary": "Create or update processing action. If ID is provided, then the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/processing-action/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingAction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "getProcessingActionListUsingGET",
+        "summary": "Get a paginated list of processing actions."
+      }
+    },
+    "/api/chain/processing-action/list/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingAction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "listProcessingActionsByCompanyUsingGET",
+        "summary": "Get a list of processing actions by company ID."
+      }
+    },
+    "/api/chain/processing-action/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "ProcessingAction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "deleteProcessingActionUsingDELETE",
+        "summary": "Deletes a processing action with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "ProcessingAction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingAction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "getProcessingActionUsingGET",
+        "summary": "Get a single processing action with the provided ID."
+      }
+    },
+    "/api/chain/processing-evidence-field": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "createOrUpdateProcessingEvidenceFieldUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+              }
+            }
+          },
+          "description": "apiProcessingEvidenceField",
+          "required": true
+        },
+        "summary": "Create or update processing evidence field. If ID is provided, then the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/processing-evidence-field/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceField_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "getProcessingEvidenceFieldListUsingGET",
+        "summary": "Get a paginated list of processing evidence fields."
+      }
+    },
+    "/api/chain/processing-evidence-field/list/value-chain/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceField_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "listProcessingEvidenceFieldsByValueChainUsingGET",
+        "summary": "Get a list of processing evidence fields by value chain ID."
+      }
+    },
+    "/api/chain/processing-evidence-field/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "ProcessingEvidenceField ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "deleteProcessingEvidenceFieldUsingDELETE",
+        "summary": "Deletes a processing evidence field with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "ProcessingEvidenceField ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingEvidenceField_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "getProcessingEvidenceFieldUsingGET",
+        "summary": "Get a single processing evidence field with the provided ID."
+      }
+    },
     "/api/chain/processing-evidence-type": {
       "put": {
         "responses": {
@@ -6419,6 +6955,33 @@
         },
         "type": "object"
       },
+      "ApiFileInfo": {
+        "properties": {
+          "contentType": {
+            "description": "File info content type",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "description": "File info name",
+            "type": "string"
+          },
+          "size": {
+            "description": "File info size",
+            "format": "int32",
+            "type": "integer"
+          },
+          "storageKey": {
+            "description": "File info storage key",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiGeoAddress": {
         "properties": {
           "address": {
@@ -6913,6 +7476,60 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiMeasureUnitType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiProcessingAction_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingAction"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPaginatedList_ApiProcessingEvidenceField_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
             },
             "type": "array"
           },
@@ -7532,6 +8149,92 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiProcessingAction_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingAction_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiProcessingEvidenceField_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingEvidenceField_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiProcessingEvidenceType_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -7920,6 +8623,158 @@
         },
         "type": "object"
       },
+      "ApiProcessingAction": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/ApiCompanyBase",
+            "description": "Processing action company"
+          },
+          "description": {
+            "description": "Processing action description",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "inputSemiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Processing action input semi product"
+          },
+          "maxOutputWeight": {
+            "description": "Processing action maximum output weight",
+            "type": "number"
+          },
+          "name": {
+            "description": "Processing action name",
+            "type": "string"
+          },
+          "outputSemiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Processing action input semi product"
+          },
+          "prefix": {
+            "description": "Processing action prefix",
+            "type": "string"
+          },
+          "publicTimelineIconType": {
+            "description": "Processing action public timeline icon type",
+            "enum": [
+              "SHIP",
+              "LEAF",
+              "WAREHOUSE",
+              "QRCODE",
+              "OTHER"
+            ],
+            "type": "string"
+          },
+          "publicTimelineLabel": {
+            "description": "Processing action public timeline label",
+            "type": "string"
+          },
+          "publicTimelineLocation": {
+            "description": "Processing action public timeline location",
+            "type": "string"
+          },
+          "repackedOutputs": {
+            "description": "Processing action repacked outputs",
+            "example": false,
+            "type": "boolean"
+          },
+          "requiredDocumentTypes": {
+            "description": "Processing action required document types",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceType"
+            },
+            "type": "array"
+          },
+          "requiredEvidenceFields": {
+            "description": "Processing action required evidence fields",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+            },
+            "type": "array"
+          },
+          "type": {
+            "description": "Processing action type",
+            "enum": [
+              "PROCESSING",
+              "SHIPMENT",
+              "TRANSFER"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingEvidenceField": {
+        "properties": {
+          "fileMultiplicity": {
+            "description": "Processing evidence field file multiplicity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "files": {
+            "description": "Processing evidence field files info",
+            "items": {
+              "$ref": "#/components/schemas/ApiFileInfo"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "Processing evidence field label",
+            "type": "string"
+          },
+          "mandatory": {
+            "description": "Processing evidence field mandatory",
+            "example": false,
+            "type": "boolean"
+          },
+          "numericValue": {
+            "description": "Processing evidence field numeric value",
+            "format": "int32",
+            "type": "integer"
+          },
+          "required": {
+            "description": "Processing evidence field required",
+            "example": false,
+            "type": "boolean"
+          },
+          "requiredOnQuote": {
+            "description": "Processing evidence field required on quote",
+            "example": false,
+            "type": "boolean"
+          },
+          "stringValue": {
+            "description": "Processing evidence field string value",
+            "type": "string"
+          },
+          "type": {
+            "description": "Processing evidence field type",
+            "enum": [
+              "STRING",
+              "TEXT",
+              "NUMBER",
+              "INTEGER",
+              "DATE",
+              "OBJECT",
+              "ARRAY",
+              "PRICE",
+              "EXCHANGE_RATE",
+              "TIMESTAMP",
+              "FILE"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiProcessingEvidenceType": {
         "properties": {
           "code": {
@@ -7939,6 +8794,11 @@
           "label": {
             "description": "label",
             "type": "string"
+          },
+          "mandatory": {
+            "description": "whether the evidence is mandatory",
+            "example": false,
+            "type": "boolean"
           },
           "provenance": {
             "description": "if evidence is of provenance type",
@@ -8069,6 +8929,10 @@
           "sustainability": {
             "$ref": "#/components/schemas/ApiSustainability",
             "description": "environmental sustainability"
+          },
+          "valueChain": {
+            "$ref": "#/components/schemas/ApiValueChain",
+            "description": "valueChain"
           }
         },
         "type": "object"
@@ -9150,6 +10014,92 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProcessingAction_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProcessingAction",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProcessingEvidenceField_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProcessingEvidenceField",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -10462,8 +11412,16 @@
       "name": "common-controller"
     },
     {
+      "description": "Processing Evidence Field Controller",
+      "name": "processing-evidence-field-controller"
+    },
+    {
       "description": "Measure Unit Type Controller",
       "name": "measure-unit-type-controller"
+    },
+    {
+      "description": "Processing Action Controller",
+      "name": "processing-action-controller"
     },
     {
       "description": "Value Chain Controller",

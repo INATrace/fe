@@ -125,19 +125,36 @@
         </div>
       </div>
 
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabel.section.valueChain">Value chain</h2>
+          <div class="af-form-element" style="margin-top: 20px;">
+            <section [class.sp-page-fade-in]="fadeInProduct"
+                     cdkDropList (cdkDropListDropped)="onDropProductSection($event)"
+                     class="droppable-list">
+              <div cdkDrag class="row" [class.draggable-box]="reorderMode" [cdkDragDisabled]="!reorderMode">
+                <div cdkDragHandle class="col-1 px-0 d-flex justify-content-start">
+                  <fa-icon *ngIf="reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                </div>
+                <div class="col-11">
+                  <ng-template *ngTemplateOutlet="this.valueChainName"></ng-template>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
 
       <div class="af-form-row">
-
         <div class="af-form-block--c12">
           <!-- <h2 i18n="@@productLabel.section.product">Product</h2> -->
           <h2 *ngIf="!this.currentLabel" i18n="@@productLabel.section.productData">Product data</h2>
           <h2 *ngIf="this.currentLabel" i18n="@@productLabel.section.labelData">Label data</h2>
           <div class="af-form-element" style="margin-top: 20px;">
-
             <section [class.sp-page-fade-in]="fadeInProduct"
               cdkDropList (cdkDropListDropped)="onDropProductSection($event)"
               class="droppable-list">
-
               <ng-container *ngFor="let element of productElements">
                 <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
                   <div cdkDragHandle class="col-1 px-0 d-flex justify-content-start">
@@ -377,6 +394,20 @@
 </app-authorised-layout>
 
 <!-- PRODUCT TEMPLATES -->
+
+<ng-template #valueChainName>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('valueChain')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart">
+    <textinput [form]="productForm.get('valueChain').get('name')"
+               [readOnly]="true"
+               style="width: 100%;"
+               hideAsterisk="true">
+    </textinput>
+  </app-closable>
+</ng-template>
 
 <ng-template #productName>
   <app-closable
