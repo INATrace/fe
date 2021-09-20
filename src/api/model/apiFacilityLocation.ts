@@ -40,6 +40,7 @@ export interface ApiFacilityLocation {
      * pin (location) name
      */
     pinName?: string;
+    publiclyVisible?: boolean;
 }
 
 /**
@@ -66,7 +67,8 @@ export namespace ApiFacilityLocation {
         /**
          * pin (location) name
          */
-        pinName = 'pinName'
+        pinName = 'pinName',
+        publiclyVisible = 'publiclyVisible'
     }
 
 
@@ -131,6 +133,17 @@ export namespace ApiFacilityLocation {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'publiclyVisible',
+                    classname: 'ApiFacilityLocation',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 address: [
@@ -142,6 +155,8 @@ export namespace ApiFacilityLocation {
                 numberOfFarmers: [
                 ],
                 pinName: [
+                ],
+                publiclyVisible: [
                 ],
             }
         }
@@ -163,6 +178,9 @@ export namespace ApiFacilityLocation {
   //                   validators: []
   //               },
   //               pinName: {
+  //                   validators: []
+  //               },
+  //               publiclyVisible: {
   //                   validators: []
   //               },
   //     }
