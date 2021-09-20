@@ -1746,6 +1746,8 @@
     "companyDetailProcessingActions.hint.processingEvidenceDocuments": "Add processing evidence documents that have to be specified after this processing action has been performed.",
     "companyDetailProcessingActions.hint.processingEvidenceDocuments.checkBox": "mandatory / required on quote / required in a group on quote",
     "companyDetailProcessingActions.textInput.search-field.placeholder": "Select evidence document...",
+    "companyDetailProcessingActions.button.cancel": "Cancel",
+    "companyDetailProcessingActions.button.save": "Save",
     "processingEvidenceField.input.placeholder": "Select evidence field",
     "productLabelPurchaseOrder.sortOptions.wayOfPayment.name": "Uburyo bwo kwishyura",
     "productLabelPayments.sortOptions.wayOfPayment.name": "Uburyo bwo kwishyura",

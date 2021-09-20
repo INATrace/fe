@@ -417,9 +417,15 @@
             <div class="af-form-row">
                 <div class="af-form-block--c12">
                     <div class="af-bottom-buttons">
+                        <button class="btn btn-outlined mr-2"
+                                type="button"
+                                i18n="@@companyDetailProcessingActions.button.cancel"
+                                (click)="goBack()">
+                            <span>Cancel</span>
+                        </button>
                         <button class="btn mr-2"
                                 type="button"
-                                i18n="@@companyDetailTranslate.bottom-buttons.save"
+                                i18n="@@companyDetailProcessingActions.button.save"
                                 (click)="saveProcessingAction()"
                                 [disabled]="!this.form.valid">
                             <span>Save</span>

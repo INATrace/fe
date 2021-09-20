@@ -1073,6 +1073,8 @@
     "companyDetailProcessingActions.hint.processingEvidenceDocuments": "Add processing evidence documents that have to be specified after this processing action has been performed.",
     "companyDetailProcessingActions.hint.processingEvidenceDocuments.checkBox": "mandatory / required on quote / required in a group on quote",
     "companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder": "Select evidence document...",
+    "companyDetailProcessingActions.button.cancel": "Cancel",
+    "companyDetailProcessingActions.button.save": "Save",
     "processingEvidenceField.input.placeholder": "Select evidence field",
     "breadCrumb.cookiesPage.home": "Home",
     "breadCrumb.cookiesPage.cookiePolicy": "Cookie policy",
