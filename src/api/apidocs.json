@@ -6873,6 +6873,13 @@
             "$ref": "#/components/schemas/ApiFacilityLocation",
             "description": "Facility location"
           },
+          "facilitySemiProductList": {
+            "description": "List of semi product ID's for this facility",
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProduct"
+            },
+            "type": "array"
+          },
           "facilityType": {
             "$ref": "#/components/schemas/ApiFacilityType",
             "description": "Facility type"
@@ -6923,6 +6930,9 @@
           "pinName": {
             "description": "pin (location) name",
             "type": "string"
+          },
+          "publiclyVisible": {
+            "type": "boolean"
           }
         },
         "type": "object"

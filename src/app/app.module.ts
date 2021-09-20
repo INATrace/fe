@@ -90,6 +90,7 @@ import { ValueChainDetailComponent } from './value-chain-detail/value-chain-deta
 import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
 import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
+import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
 import { CompanyAndValueChainSelectModalComponent } from './company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
 import { CompanyDetailProcessingActionsDetailComponent } from './company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
 import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
@@ -173,6 +174,7 @@ export function getConfiguration(): Configuration {
     ValueChainConfigItemComponent,
     CompanyDetailUsersComponent,
     CompanyDetailFacilitiesComponent,
+    CompanyDetailFacilityAddComponent,
     CompanyAndValueChainSelectModalComponent,
     CompanyDetailProcessingActionsDetailComponent,
     CompanyProcessingActionsComponent,

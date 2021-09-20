@@ -21,12 +21,17 @@
 import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacilityLocation } from './apiFacilityLocation';
 import { ApiFacilityType } from './apiFacilityType';
+import { ApiSemiProduct } from './apiSemiProduct';
 
 
 
 export interface ApiFacility { 
     company?: ApiCompanyBase;
     facilityLocation?: ApiFacilityLocation;
+    /**
+     * List of semi product ID's for this facility
+     */
+    facilitySemiProductList?: Array<ApiSemiProduct>;
     facilityType?: ApiFacilityType;
     /**
      * Entity id
@@ -56,6 +61,10 @@ export namespace ApiFacility {
     export enum Properties {
         company = 'company',
         facilityLocation = 'facilityLocation',
+        /**
+         * List of semi product ID's for this facility
+         */
+        facilitySemiProductList = 'facilitySemiProductList',
         facilityType = 'facilityType',
         /**
          * Entity id
@@ -104,6 +113,18 @@ export namespace ApiFacility {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiFacilityLocation'
+                },
+                {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilitySemiProductList',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProduct'
                 },
                 {
                     metadata: ApiFacilityType.formMetadata,
@@ -167,6 +188,8 @@ export namespace ApiFacility {
                 ],
                 facilityLocation: [
                 ],
+                facilitySemiProductList: [
+                ],
                 facilityType: [
                 ],
                 id: [
@@ -188,6 +211,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               facilityLocation: {
+  //                   validators: []
+  //               },
+  //               facilitySemiProductList: {
   //                   validators: []
   //               },
   //               facilityType: {
