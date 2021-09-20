@@ -84,7 +84,7 @@
       </ng-container>
 
       <ng-container *ngIf="this.type !== 'semi-products'">
-        <textinput
+        <textinput *ngIf="this.type !== 'processing-evidence-fields'"
                 hideAsterisk="true"
                 [form]="form.get('code')"
                 label="Id"
@@ -183,6 +183,26 @@
             Quality
           </checkbox-input-rich-label>
         </checkbox-input>
+      </ng-container>
+
+      <ng-container *ngIf="this.type === 'processing-evidence-fields'">
+        <single-choice
+                label="Type"
+                i18n-label="@@productLabelProcessingAction.evidenceFieldType.label"
+                [formControlInput]="form.get('type')"
+                [codebookService]="codebookProcessingEvidenceFieldType"
+                [isInvalidChoice]="submitted && form.get('type').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelProcessingAction.singleChoice.type.error.requred">
+                Type is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+
+        <!-- TODO: Add stringValue, objectValue, numericValue based on selected type -->
+
       </ng-container>
 
     </div>

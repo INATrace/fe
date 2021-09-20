@@ -28,14 +28,12 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <!-- Action type-->
                         <single-choice
                                 label="Action type"
                                 i18n-label="@@companyDetailProcessingActions.singleChoice.type.label"
                                 [formControlInput]="form.get('type')"
                                 [codebookService]="codebookProcessingTransaction"
                                 [isInvalidChoice]="submitted && form.get('type').invalid">
-<!--                                [organizationId]="organizationId"-->
                             <ng-container *ngIf="submitted">
                                 <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
                                     <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.type.error.required">
@@ -52,7 +50,6 @@
                                     [formControlInput]="form.get('inputSemiProduct')"
                                     [codebookService]="activeSemiProductService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
-<!--                                    [organizationId]="organizationId"-->
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.semiProduct.error.required">
@@ -70,7 +67,6 @@
                                     [formControlInput]="form.get('inputSemiProduct')"
                                     [codebookService]="activeSemiProductService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
-<!--                                    [organizationId]="organizationId"-->
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.inputSemiProduct.error.required">
@@ -86,7 +82,6 @@
                                     [formControlInput]="form.get('outputSemiProduct')"
                                     [codebookService]="activeSemiProductService"
                                     [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
-<!--                                    [organizationId]="organizationId"-->
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
@@ -253,6 +248,7 @@
                         </textinput>
 
                     </div>
+                    <!-- END: Translations -->
                 </div>
 
                 <div class="af-form-block--c6">
@@ -410,7 +406,6 @@
 
                     <!-- END: Processing evidence documents -->
                 </div>
-
             </div>
 
             <!-- Bottom row -->

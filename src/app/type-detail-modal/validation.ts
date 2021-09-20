@@ -7,6 +7,7 @@ import { ApiActionType } from '../../api/model/apiActionType';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
+import { ApiProcessingEvidenceField } from '../../api/model/apiProcessingEvidenceField';
 
 export const ApiSemiProductValidationScheme = {
   validators: [],
@@ -131,3 +132,39 @@ export const ApiProcessingEvidenceTypeValidationScheme = {
     }
   }
 } as SimpleValidationScheme<ApiProcessingEvidenceType>;
+
+export const ApiProcessingEvidenceFieldValidationScheme = {
+    validators: [],
+    fields: {
+              fileMultiplicity: {
+                  validators: []
+              },
+              files: {
+                  validators: []
+              },
+              id: {
+                  validators: []
+              },
+              label: {
+                  validators: [Validators.required]
+              },
+              mandatory: {
+                  validators: []
+              },
+              numericValue: {
+                  validators: []
+              },
+              required: {
+                  validators: []
+              },
+              requiredOnQuote: {
+                  validators: []
+              },
+              stringValue: {
+                  validators: []
+              },
+              type: {
+                  validators: [Validators.required]
+              },
+    }
+} as SimpleValidationScheme<ApiProcessingEvidenceField>;

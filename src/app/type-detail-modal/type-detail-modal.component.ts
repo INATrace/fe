@@ -9,7 +9,8 @@ import {
   ApiActionTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
-  ApiSemiProductValidationScheme
+  ApiSemiProductValidationScheme,
+  ApiProcessingEvidenceFieldValidationScheme
 } from './validation';
 import _ from 'lodash-es';
 import { ActiveSemiProductsForProductServiceStandalone } from '../shared-services/active-semi-products-for-product-standalone.service';
@@ -27,6 +28,8 @@ import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 import { SemiProductControllerService } from '../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
+import { ProcessingEvidenceFieldControllerService } from '../../api/api/processingEvidenceFieldController.service';
+import { ApiProcessingEvidenceField } from '../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -58,6 +61,7 @@ export class TypeDetailModalComponent implements OnInit {
   activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
 
   codebookProcessingEvidenceTypeType = EnumSifrant.fromObject(this.processingEvidenceTypeType);
+  codebookProcessingEvidenceFieldType = EnumSifrant.fromObject(this.processingEvidenceFieldType);
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -66,6 +70,7 @@ export class TypeDetailModalComponent implements OnInit {
     private actionTypeService: ActionTypeControllerService,
     private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
+    private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductService: SemiProductControllerService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService
   ) { }
@@ -129,6 +134,18 @@ export class TypeDetailModalComponent implements OnInit {
       }
     }
 
+    if (this.type === 'processing-evidence-fields') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(
+            ApiProcessingEvidenceField.formMetadata(),
+            defaultEmptyObject(ApiProcessingEvidenceField.formMetadata()) as ApiProcessingEvidenceField,
+            ApiProcessingEvidenceFieldValidationScheme);
+      } else {
+        this.form = generateFormFromMetadata(
+            ApiProcessingEvidenceField.formMetadata(), this.typeElement, ApiProcessingEvidenceFieldValidationScheme);
+      }
+    }
+
     if (this.type === 'semi-products') {
       if (!this.update) {
         this.form = generateFormFromMetadata(ApiSemiProduct.formMetadata(),
@@ -170,6 +187,10 @@ export class TypeDetailModalComponent implements OnInit {
       res = await this.processingEvidenceTypeService.createOrUpdateProcessingEvidenceTypeUsingPUT(data).pipe(take(1)).toPromise();
     }
 
+    if (this.type === 'processing-evidence-fields') {
+      res = await this.processingEvidenceFieldService.createOrUpdateProcessingEvidenceFieldUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
     if (this.type === 'semi-products') {
       res = await this.semiProductService.createOrUpdateSemiProductUsingPUT(data).pipe(take(1)).toPromise();
     }
@@ -185,6 +206,22 @@ export class TypeDetailModalComponent implements OnInit {
     obj['DOCUMENT'] = $localize`:@@processingEvidenceTypeType.document:Document`;
     obj['FIELD'] = $localize`:@@processingEvidenceTypeType.field:Field`;
     obj['CALCULATED'] = $localize`:@@processingEvidenceTypeType.calculated:Calculated`;
+    return obj;
+  }
+
+  get processingEvidenceFieldType() {
+    const obj = {};
+    obj['STRING'] = $localize`:@@processingEvidenceFieldType.string:String`;
+    obj['TEXT'] = $localize`:@@processingEvidenceFieldType.text:Text`;
+    obj['NUMBER'] = $localize`:@@processingEvidenceFieldType.number:Number`;
+    obj['INTEGER'] = $localize`:@@processingEvidenceFieldType.integer:Integer`;
+    obj['DATE'] = $localize`:@@processingEvidenceFieldType.date:Date`;
+    obj['OBJECT'] = $localize`:@@processingEvidenceFieldType.object:Object`;
+    obj['ARRAY'] = $localize`:@@processingEvidenceFieldType.array:Array`;
+    obj['PRICE'] = $localize`:@@processingEvidenceFieldType.price:Price`;
+    obj['EXCHANGE_RATE'] = $localize`:@@processingEvidenceFieldType.exchange_rate:Exchange rate`;
+    obj['TIMESTAMP'] = $localize`:@@processingEvidenceFieldType.timestamp:Timestamp`;
+    obj['FILE'] = $localize`:@@processingEvidenceFieldType.file:File`;
     return obj;
   }
 

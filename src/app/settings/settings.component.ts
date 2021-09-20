@@ -47,7 +47,11 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
   allOrderEvidTypes = 0;
   showedOrderEvidTypes = 0;
 
+  allProcEvidFields = 0;
+  showedProcEvidFields = 0;
+
   parentReloadProcEvidTypes = false;
+  parentReloadProcEvidFields = false;
   parentReloadGrade = false;
   parentReloadFacility = false;
   parentReloadMeasure = false;
@@ -115,6 +119,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.showedActions = event; }
     if (type === 'grade-abbreviation') { this.showedGrades = event; }
     if (type === 'processing-evidence-types') { this.showedProcEvidTypes = event; }
+    if (type === 'processing-evidence-fields') { this.showedProcEvidFields = event; }
     if (type === 'semi-products') { this.showedSemiProducts = event; }
   }
 
@@ -124,6 +129,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.allActions = event; }
     if (type === 'grade-abbreviation') { this.allGrades = event; }
     if (type === 'processing-evidence-types') { this.allProcEvidTypes = event; }
+    if (type === 'processing-evidence-fields') { this.allProcEvidFields = event; }
     if (type === 'semi-products') { this.allSemiProducts = event; }
   }
 
@@ -184,6 +190,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { addTitle = $localize`:@@settingsPage.newActionType.addTitle:Add action type`; }
     if (type === 'grade-abbreviation') { addTitle = $localize`:@@settingsPage.newGradeAbbreviation.addTitle:Add grade abbreviation`; }
     if (type === 'processing-evidence-types') { addTitle = $localize`:@@settingsPage.newProcessingEvidenceType.addTitle:Add processing evidence type`; }
+    if (type === 'processing-evidence-fields') { addTitle = $localize`:@@settingsPage.newProcessingEvidenceField.addTitle:Add processing evidence field`; }
     if (type === 'semi-products') { addTitle = $localize`:@@settingsPage.newSemiProducts.addTitle:Add new semi-product`; }
 
     this.modalService.open(TypeDetailModalComponent, {
@@ -197,6 +204,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
         if (type === 'action-types') { this.parentReloadAction = !this.parentReloadAction; }
         if (type === 'grade-abbreviation') { this.parentReloadGrade = !this.parentReloadGrade; }
         if (type === 'processing-evidence-types') { this.parentReloadProcEvidTypes = !this.parentReloadProcEvidTypes; }
+        if (type === 'processing-evidence-fields') { this.parentReloadProcEvidFields = !this.parentReloadProcEvidFields; }
         if (type === 'semi-products') { this.parentReloadSemiProducts = !this.parentReloadSemiProducts; }
       }
     });
