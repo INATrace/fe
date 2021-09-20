@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../system/global-event-manager.service';
-import { BehaviorSubject } from 'rxjs';
 import { ProcessingActionService } from '../../../api-chain/api/processingAction.service';
 import { ProcessingActionControllerService } from '../../../api/api/processingActionController.service';
 import { take } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-company-processing-actions',
@@ -20,7 +18,6 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
 
   organizationId: number;
 
-  reloadProcessingActionsListPing$ = new BehaviorSubject<boolean>(false);
   showedProcessingActions = 0;
   allProcessingActions = 0;
 
@@ -62,10 +59,6 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
   onCountAll(event){
     this.allProcessingActions = event;
   }
-
-  // reloadPage() {
-  //   setTimeout(() => this.reloadProcessingActionsListPing$.next(true), environment.reloadDelay);
-  // }
 
   canDeactivate() {
     return true;

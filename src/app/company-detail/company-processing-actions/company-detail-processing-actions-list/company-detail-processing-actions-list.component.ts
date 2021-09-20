@@ -18,8 +18,6 @@ import { ApiPaginatedResponseApiProcessingAction } from '../../../../api/model/a
 export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
   @Input()
-  reloadPingList$ = new BehaviorSubject<boolean>(false);
-  @Input()
   organizationId: string;
 
   @Output()
@@ -30,6 +28,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
   processingActionToShow: ChainProcessingAction;
 
   searchName = new FormControl(null);
+  reloadPingList$ = new BehaviorSubject<boolean>(false);
   pagingParams$ = new BehaviorSubject({});
   sortingParams$ = new BehaviorSubject({ sortBy: 'name', sort: 'ASC' });
   paging$ = new BehaviorSubject<number>(1);
@@ -106,6 +105,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
           this.all = resp.data.count;
           this.showing.emit(this.showed);
+          this.countAll.emit(this.all);
 
           return resp.data;
         }

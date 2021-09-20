@@ -21,14 +21,14 @@
                     <td [attr.data-label]="sortOptions[4].name">
                         <span>
                             <a i18n="@@processingActionList.tableCol.edit"
+                               class="pa-action"
                                (click)="editProcessingAction(pa)"
-                               class="company-action"
                                [class.enabled-action]="true">
                               Edit
                             </a>
                             <a i18n="@@processingActionList.tableCol.delete"
+                               class="pa-action"
                                (click)="deleteProcessingAction(pa)"
-                               class="company-action ml-2"
                                [class.enabled-action]="true">
                                 Delete
                             </a>

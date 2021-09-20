@@ -21,10 +21,9 @@
                 </div>
             </div>
             <app-company-list-processing-actions
-                    [reloadPingList$]="reloadProcessingActionsListPing$"
                     [organizationId]="organizationId"
                     (showing)="onShowSP($event)"
-                    (countAll)="onShowSP($event)">
+                    (countAll)="onCountAll($event)">
             </app-company-list-processing-actions>
         </div>
     </div>
