@@ -23,7 +23,7 @@ import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 })
 export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
 
-  rootTab = 3;
+  rootTab = 4;
 
   title = $localize`:@@companyDetailTranslateTranslate.title.edit:Company translations`;
   company;

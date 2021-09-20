@@ -30,7 +30,7 @@ import { ApiProcessingEvidenceField } from '../../../../api/model/apiProcessingE
 })
 export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
 
-  rootTab = 4;
+  rootTab = 3;
   prepared = false;
   submitted = false;
 

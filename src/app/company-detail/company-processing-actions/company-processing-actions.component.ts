@@ -13,7 +13,7 @@ import { take } from 'rxjs/operators';
 })
 export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerComponent implements OnInit {
 
-  rootTab = 4;
+  rootTab = 3;
   prepared = false;
 
   organizationId: number;
