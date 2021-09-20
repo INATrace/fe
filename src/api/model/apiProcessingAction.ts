@@ -19,6 +19,7 @@
 
 
 import { ApiCompanyBase } from './apiCompanyBase';
+import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
 import { ApiSemiProduct } from './apiSemiProduct';
 
@@ -68,6 +69,10 @@ export interface ApiProcessingAction {
      * Processing action required document types
      */
     requiredDocumentTypes?: Array<ApiProcessingEvidenceType>;
+    /**
+     * Processing action required evidence fields
+     */
+    requiredEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
      * Processing action type
      */
@@ -125,6 +130,10 @@ export namespace ApiProcessingAction {
          * Processing action required document types
          */
         requiredDocumentTypes = 'requiredDocumentTypes',
+        /**
+         * Processing action required evidence fields
+         */
+        requiredEvidenceFields = 'requiredEvidenceFields',
         /**
          * Processing action type
          */
@@ -306,6 +315,18 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiProcessingEvidenceType'
                 },
                 {
+                    metadata: ApiProcessingEvidenceField.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'requiredEvidenceFields',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'Array&lt;ApiProcessingEvidenceField&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceField'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingAction.TypeEnum',
@@ -344,6 +365,8 @@ export namespace ApiProcessingAction {
                 repackedOutputs: [
                 ],
                 requiredDocumentTypes: [
+                ],
+                requiredEvidenceFields: [
                 ],
                 type: [
                 ],
@@ -391,6 +414,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               requiredDocumentTypes: {
+  //                   validators: []
+  //               },
+  //               requiredEvidenceFields: {
   //                   validators: []
   //               },
   //               type: {

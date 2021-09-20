@@ -8679,6 +8679,13 @@
             },
             "type": "array"
           },
+          "requiredEvidenceFields": {
+            "description": "Processing action required evidence fields",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+            },
+            "type": "array"
+          },
           "type": {
             "description": "Processing action type",
             "enum": [
@@ -8777,6 +8784,11 @@
           "label": {
             "description": "label",
             "type": "string"
+          },
+          "mandatory": {
+            "description": "whether the evidence is mandatory",
+            "example": false,
+            "type": "boolean"
           },
           "provenance": {
             "description": "if evidence is of provenance type",

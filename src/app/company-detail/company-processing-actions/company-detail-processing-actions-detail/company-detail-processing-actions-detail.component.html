@@ -273,9 +273,9 @@
                                     [form]="evidenceFieldInputForm"
                                     placeholder="Select evidence field..."
                                     i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceFields.placeholder"
-                                    [codebookService]="processingEvidenceFieldsService"
-                                    [resultFormatter]="fieldResultFormatter"
-                                    [inputFormatter]="fieldInputFormatter"
+                                    [codebookService]="processingEvidenceFieldService"
+                                    [resultFormatter]="fieldFormatter"
+                                    [inputFormatter]="fieldFormatter"
                                     (itemMatching)="addSelectedEvidenceField($event)">
                             </textinput>
                         </div>
@@ -344,8 +344,8 @@
                                     placeholder="Select document type..."
                                     i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder"
                                     [codebookService]="processingEvidenceTypeService"
-                                    [resultFormatter]="docResultFormatter"
-                                    [inputFormatter]="docInputFormatter"
+                                    [resultFormatter]="documentFormatter"
+                                    [inputFormatter]="documentFormatter"
                                     (itemMatching)="addSelectedEvidenceDoc($event)">
                             </textinput>
                         </div>

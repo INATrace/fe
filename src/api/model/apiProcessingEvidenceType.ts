@@ -39,6 +39,10 @@ export interface ApiProcessingEvidenceType {
      */
     label?: string;
     /**
+     * whether the evidence is mandatory
+     */
+    mandatory?: boolean;
+    /**
      * if evidence is of provenance type
      */
     provenance?: boolean;
@@ -88,6 +92,10 @@ export namespace ApiProcessingEvidenceType {
          * label
          */
         label = 'label',
+        /**
+         * whether the evidence is mandatory
+         */
+        mandatory = 'mandatory',
         /**
          * if evidence is of provenance type
          */
@@ -177,6 +185,17 @@ export namespace ApiProcessingEvidenceType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'mandatory',
+                    classname: 'ApiProcessingEvidenceType',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'provenance',
                     classname: 'ApiProcessingEvidenceType',
                     dataType: 'boolean',
@@ -250,6 +269,8 @@ export namespace ApiProcessingEvidenceType {
                 ],
                 label: [
                 ],
+                mandatory: [
+                ],
                 provenance: [
                 ],
                 quality: [
@@ -279,6 +300,9 @@ export namespace ApiProcessingEvidenceType {
   //                   validators: []
   //               },
   //               label: {
+  //                   validators: []
+  //               },
+  //               mandatory: {
   //                   validators: []
   //               },
   //               provenance: {

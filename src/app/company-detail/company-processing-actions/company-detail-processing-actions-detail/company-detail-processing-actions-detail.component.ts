@@ -23,13 +23,6 @@ import { SemiProductControllerService } from '../../../../api/api/semiProductCon
 import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
 import { ApiProcessingEvidenceField } from '../../../../api/model/apiProcessingEvidenceField';
 
-interface FieldSelector {
-  id: string;
-  selected: boolean;
-  mandatory: boolean;
-  requiredOnQuote: boolean;
-}
-
 @Component({
   selector: 'app-company-detail-processing-actions',
   templateUrl: './company-detail-processing-actions-detail.component.html',
@@ -52,11 +45,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   activeSemiProductService: ActiveSemiProductsService;
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
-  processingEvidenceFieldsService: ProcessingEvidenceFieldsService;
+  processingEvidenceFieldService: ProcessingEvidenceFieldsService;
   evidenceDocInputForm: FormControl;
   evidenceFieldInputForm: FormControl;
-  requiredDocumentTypes: FieldSelector[] = [];
-  requiredFieldTypes: FieldSelector[] = [];
 
   selectedLanguage = 'EN';
   faTimes = faTimes;
@@ -93,7 +84,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     this.processingEvidenceTypeService =
         new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT');
-    this.processingEvidenceFieldsService =
+    this.processingEvidenceFieldService =
         new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, null);
     this.activeSemiProductService =
         new ActiveSemiProductsService(this.semiProductControllerService, this.codebookTranslations);
@@ -149,7 +140,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   editAction() {
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
-    console.log(this.form.get('requiredDocumentTypes').value);
 
     if (!this.form.get('repackedOutputs').value) {
       this.form.get('maxOutputWeight').setValue(null);
@@ -199,8 +189,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     // Add selected element to array
     formArray.push(new FormControl({
       ...doc,
-      required: false,
+      mandatory: false,
       requiredOnQuote: false,
+      requiredOneOfGroupIdForQuote: null
     }));
     formArray.markAsDirty();
 
@@ -231,8 +222,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     // Add selected element to array
     formArray.push(new FormControl({
       ...field,
-      required: false,
-      requiredOnQuote: false,
+      mandatory: false,
+      requiredOnQuote: false
     }));
     formArray.markAsDirty();
 
@@ -258,7 +249,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     doc.requiredOnQuote = null;
     let group = 1;
     const lst: ApiProcessingEvidenceType[] = this.form.get('requiredDocumentTypes').value || [];
-    // console.log("LST:",lst.map(x => x.requiredOneOfGroupIdForQuote).filter(x => x && /^\+?(0|[1-9]\d*)$/.test(x)))
     const res = lst.map(x => x.requiredOneOfGroupIdForQuote)
         .filter(x => x && /^\+?(0|[1-9]\d*)$/.test(x))
         .map(x => parseInt(x));
@@ -287,20 +277,12 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     sp.requiredOneOfGroupIdForQuote = event;
   }
 
-  docResultFormatter = (value: any) => {
+  documentFormatter = (value: any) => {
     return this.processingEvidenceTypeService.textRepresentation(value);
   }
 
-  docInputFormatter = (value: any) => {
-    return this.processingEvidenceTypeService.textRepresentation(value);
-  }
-
-  fieldResultFormatter = (value: any) => {
-    return this.processingEvidenceFieldsService.textRepresentation(value);
-  }
-
-  fieldInputFormatter = (value: any) => {
-    return this.processingEvidenceFieldsService.textRepresentation(value);
+  fieldFormatter = (value: any) => {
+    return this.processingEvidenceFieldService.textRepresentation(value);
   }
 
   selectLanguage(lang: string) {
@@ -309,8 +291,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   repackedFormatter(x: any) {
     return x.value
-        ? $localize`:@@productLabelProcessingAction.repackedOutputs.yes:Yes`
-        : $localize`:@@productLabelProcessingAction.repackedOutputs.no:No`;
+        ? $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.yes:Yes`
+        : $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.no:No`;
   }
 
   repackedOutputsSet(x: any) {
@@ -324,16 +306,16 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   get repackedOutputs() {
     const obj = {};
-    obj['YES'] = $localize`:@@productLabelProcessingAction.repackedOutputs.yes:Yes`;
-    obj['NO'] = $localize`:@@productLabelProcessingAction.repackedOutputs.no:No`;
+    obj['YES'] = $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.yes:Yes`;
+    obj['NO'] = $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.no:No`;
     return obj;
   }
 
   get processingTransactionType() {
     const obj = {};
-    obj['SHIPMENT'] = $localize`:@@productLabelProcessingAction.procesingTransactionType.quote:Quote`;
-    obj['PROCESSING'] = $localize`:@@productLabelProcessingAction.procesingTransactionType.processing:Processing`;
-    obj['TRANSFER'] = $localize`:@@productLabelProcessingAction.procesingTransactionType.transfer:Transfer`;
+    obj['SHIPMENT'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.quote:Quote`;
+    obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
+    obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
     return obj;
   }
 
