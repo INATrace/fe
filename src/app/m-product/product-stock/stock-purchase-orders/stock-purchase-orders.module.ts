@@ -15,13 +15,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SystemModule } from 'src/app/system/system.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockPurchaseOrdersRoutingModule } from './stock-purchase-orders-routing.module';
-import { StockPurchaseOrderTab } from './stock-purchase-orders-tab/stock-purchase-orders-tab.component';
+import { StockPurchaseOrderTabComponent } from './stock-purchase-orders-tab/stock-purchase-orders-tab.component';
 
 
 
 @NgModule({
   declarations: [
-    StockPurchaseOrderTab,
+    StockPurchaseOrderTabComponent,
   ],
   imports: [
     CommonModule,

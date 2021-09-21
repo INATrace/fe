@@ -20,15 +20,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'new/:companyId',
-    component: ProductLabelComponent,
-    pathMatch: 'full',
-    canDeactivate: [DeactivateGuardService],
-    data: {
-      drobtinice: null
-    }
-  },
-  {
     path: 'new/:companyId/:valueChainId',
     component: ProductLabelComponent,
     pathMatch: 'full',

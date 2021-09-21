@@ -38,13 +38,12 @@ export interface DeliveryDates {
   to: string;
 }
 
-export type StockOrderListingPageMode = "PURCHASE_ORDERS" | "COMPANY_ADMIN" | "ADMIN"
+export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
 @Component({
   template: ''
 })
-
-export class StockTabCore implements OnInit {
+export class StockTabCoreComponent implements OnInit {
 
   faTimes = faTimes;
   productId = this.route.snapshot.params.id;
@@ -176,9 +175,7 @@ export class StockTabCore implements OnInit {
     $localize`:@@productLabelStock.tab0.title:Purchases`,
     $localize`:@@productLabelStock.tab1.title:Processing`,
     $localize`:@@productLabelStock.tab2.title:Payments`,
-    $localize`:@@productLabelStock.tab3.title:Configuration`,
     $localize`:@@productLabelStock.tab4.title:My stock`,
-    // $localize`:@@productLabelStock.tab5.title:Transactions`
   ];
   activeTab = 1;
 
@@ -186,10 +183,8 @@ export class StockTabCore implements OnInit {
     'purchases',
     'processing',
     'payments',
-    'configuration',
-    'stock-orders',
-    // 'transactions'
-  ]
+    'stock-orders'
+  ];
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null
