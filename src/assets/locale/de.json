@@ -2730,6 +2730,11 @@
     "settingsTypes.sortOptions.semiProducts.description": "Description",
     "settingsTypes.sortOptions.semiProducts.buyable": "Buyable",
     "settingsTypes.sortOptions.semiProducts.sku": "SKU",
-    "settingsTypes.sortOptions.semiProducts.skuendCustomer": "SKU end customer"
+    "settingsTypes.sortOptions.semiProducts.skuendCustomer": "SKU end customer",
+    "companyDetail.currency": "Currency",
+    "systemLeftPanel.sideTitle.currencies": "Currencies",
+    "currencyList.tableCol.action.enable": "Enable",
+    "currencyList.tableCol.action.disable": "Disable",
+    "companyDetail.base.currency": "Base currency"
   }
 }
