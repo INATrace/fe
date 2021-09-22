@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {AbstractControl, Form, FormArray, FormControl, FormGroup} from '@angular/forms';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 import { ProcessingEvidenceTypeService } from '../../../shared-services/processing-evidence-types.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../../api/api/processingEvidenceTypeController.service';
@@ -49,6 +49,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   evidenceDocInputForm: FormControl;
   evidenceFieldInputForm: FormControl;
 
+  languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
   faTimes = faTimes;
 
@@ -126,9 +127,27 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.form.addControl('requiredDocumentTypes', new FormArray([]));
     }
 
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    // Create form controls
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        language: new FormControl(lang),
+        name: new FormControl(translation ? translation.name : ''),
+        description: new FormControl(translation ? translation.description : '')
+      }));
+    }
+
     this.prepared = true;
     this.globalEventsManager.showLoading(false);
   }
+
 
   newAction() {
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
@@ -163,7 +182,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.editMode = true;
       const paId = this.route.snapshot.params.paId;
       const resp = await this.processingActionControllerService
-          .getProcessingActionUsingGET(paId)
+          .getProcessingActionDetailUsingGET(paId)
           .pipe(take(1))
           .toPromise();
 
@@ -342,7 +361,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       return;
     }
 
-    const  data = this.form.value;
+    const data = this.form.value;
     if (!data.company || !data.company.id) {
       data.company = { id: this.organizationId };
     }

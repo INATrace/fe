@@ -19,6 +19,7 @@
 
 
 import { ApiCompanyBase } from './apiCompanyBase';
+import { ApiProcessingActionTranslation } from './apiProcessingActionTranslation';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
 import { ApiSemiProduct } from './apiSemiProduct';
@@ -36,6 +37,10 @@ export interface ApiProcessingAction {
      */
     id?: number;
     inputSemiProduct?: ApiSemiProduct;
+    /**
+     * Processing action language
+     */
+    language?: ApiProcessingAction.LanguageEnum;
     /**
      * Processing action maximum output weight
      */
@@ -74,6 +79,10 @@ export interface ApiProcessingAction {
      */
     requiredEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
+     * Processing action translations
+     */
+    translations?: Array<ApiProcessingActionTranslation>;
+    /**
      * Processing action type
      */
     type?: ApiProcessingAction.TypeEnum;
@@ -97,6 +106,10 @@ export namespace ApiProcessingAction {
          */
         id = 'id',
         inputSemiProduct = 'inputSemiProduct',
+        /**
+         * Processing action language
+         */
+        language = 'language',
         /**
          * Processing action maximum output weight
          */
@@ -135,9 +148,23 @@ export namespace ApiProcessingAction {
          */
         requiredEvidenceFields = 'requiredEvidenceFields',
         /**
+         * Processing action translations
+         */
+        translations = 'translations',
+        /**
          * Processing action type
          */
         type = 'type'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
     /**
@@ -211,6 +238,18 @@ export namespace ApiProcessingAction {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiSemiProduct'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingAction.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -327,6 +366,18 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiProcessingEvidenceField'
                 },
                 {
+                    metadata: ApiProcessingActionTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'Array&lt;ApiProcessingActionTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingActionTranslation'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingAction.TypeEnum',
@@ -348,6 +399,8 @@ export namespace ApiProcessingAction {
                 ],
                 inputSemiProduct: [
                 ],
+                language: [
+                ],
                 maxOutputWeight: [
                 ],
                 name: [
@@ -368,6 +421,8 @@ export namespace ApiProcessingAction {
                 ],
                 requiredEvidenceFields: [
                 ],
+                translations: [
+                ],
                 type: [
                 ],
             }
@@ -387,6 +442,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               inputSemiProduct: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //               maxOutputWeight: {
@@ -417,6 +475,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               requiredEvidenceFields: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //               type: {

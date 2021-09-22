@@ -106,6 +106,51 @@ export namespace DeleteProcessingActionUsingDELETE {
 }
 
 /**
+ * Namespace for getProcessingActionDetailUsingGET.
+ */
+export namespace GetProcessingActionDetailUsingGET {
+    /**
+     * Parameter map for getProcessingActionDetailUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * ProcessingAction ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: string;
+    }
+
+    /**
+     * Enumeration of all parameters for getProcessingActionDetailUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * ProcessingAction ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingActionDetailUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetProcessingActionDetailUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for getProcessingActionListUsingGET.
  */
 export namespace GetProcessingActionListUsingGET {
@@ -133,6 +178,10 @@ export namespace GetProcessingActionListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * language
+       */
+      language?: string;
     }
 
     /**
@@ -158,7 +207,11 @@ export namespace GetProcessingActionListUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -176,6 +229,8 @@ export namespace GetProcessingActionListUsingGET {
       ],
       sort: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -191,6 +246,10 @@ export namespace GetProcessingActionUsingGET {
        * ProcessingAction ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: string;
     }
 
     /**
@@ -200,7 +259,11 @@ export namespace GetProcessingActionUsingGET {
       /**
        * ProcessingAction ID
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -210,6 +273,8 @@ export namespace GetProcessingActionUsingGET {
     export const ParamValidators: {[K in keyof GetProcessingActionUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -223,9 +288,13 @@ export namespace ListProcessingActionsByCompanyUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * Company ID
+       * ProcessingAction ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: string;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -253,9 +322,13 @@ export namespace ListProcessingActionsByCompanyUsingGET {
      */
     export enum Parameters {
       /**
-       * Company ID
+       * ProcessingAction ID
        */
       id = 'id',
+      /**
+       * language
+       */
+      language = 'language',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -285,6 +358,8 @@ export namespace ListProcessingActionsByCompanyUsingGET {
     export const ParamValidators: {[K in keyof ListProcessingActionsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
       requestType: [
       ],
@@ -507,6 +582,96 @@ export class ProcessingActionControllerService {
 
 
   /**
+   * Get a single processing action by the provided ID with all translations. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getProcessingActionDetailUsingGETByMap(
+    map: GetProcessingActionDetailUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingAction>;
+  public getProcessingActionDetailUsingGETByMap(
+    map: GetProcessingActionDetailUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+  public getProcessingActionDetailUsingGETByMap(
+    map: GetProcessingActionDetailUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+  public getProcessingActionDetailUsingGETByMap(
+    map: GetProcessingActionDetailUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getProcessingActionDetailUsingGET(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single processing action by the provided ID with all translations.
+     * 
+     * @param id ProcessingAction ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProcessingActionDetailUsingGET(id: number, language?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
+    public getProcessingActionDetailUsingGET(id: number, language?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetailUsingGET(id: number, language?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetailUsingGET(id: number, language?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getProcessingActionDetailUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (language !== undefined && language !== null) {
+            queryParameters = queryParameters.set('language', <any>language);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiProcessingAction>(`${this.configuration.basePath}/api/chain/processing-action/${encodeURIComponent(String(id))}/detail`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingActionDetailUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Get a paginated list of processing actions. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -535,6 +700,7 @@ export class ProcessingActionControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.language,
       observe,
       reportProgress
     );
@@ -549,13 +715,14 @@ export class ProcessingActionControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
-    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
+    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
+    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
+    public getProcessingActionListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -572,6 +739,9 @@ export class ProcessingActionControllerService {
         }
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (language !== undefined && language !== null) {
+            queryParameters = queryParameters.set('language', <any>language);
         }
 
         let headers = this.defaultHeaders;
@@ -636,6 +806,7 @@ export class ProcessingActionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getProcessingActionUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -646,15 +817,21 @@ export class ProcessingActionControllerService {
      * Get a single processing action with the provided ID.
      * 
      * @param id ProcessingAction ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingActionUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
-    public getProcessingActionUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-    public getProcessingActionUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-    public getProcessingActionUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingActionUsingGET(id: number, language?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
+    public getProcessingActionUsingGET(id: number, language?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+    public getProcessingActionUsingGET(id: number, language?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+    public getProcessingActionUsingGET(id: number, language?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getProcessingActionUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (language !== undefined && language !== null) {
+            queryParameters = queryParameters.set('language', <any>language);
         }
 
         let headers = this.defaultHeaders;
@@ -680,6 +857,7 @@ export class ProcessingActionControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiProcessingAction>(`${this.configuration.basePath}/api/chain/processing-action/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -718,6 +896,7 @@ export class ProcessingActionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.listProcessingActionsByCompanyUsingGET(
       map.id,
+      map.language,
       map.requestType,
       map.limit,
       map.offset,
@@ -732,7 +911,8 @@ export class ProcessingActionControllerService {
     /**
      * Get a list of processing actions by company ID.
      * 
-     * @param id Company ID
+     * @param id ProcessingAction ID
+     * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -741,15 +921,18 @@ export class ProcessingActionControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingActionsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
-    public listProcessingActionsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingActionsByCompanyUsingGET(id: number, language?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
+    public listProcessingActionsByCompanyUsingGET(id: number, language?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, language?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, language?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listProcessingActionsByCompanyUsingGET.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (language !== undefined && language !== null) {
+            queryParameters = queryParameters.set('language', <any>language);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }

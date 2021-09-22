@@ -40,4 +40,15 @@
     }
 
   }
+  .af-translation-language--error {
+    color: white;
+    border-color: $red;
+    background-color: $red-light;
+
+    &:hover {
+      color: white;
+      background-color: $red;
+    }
+
+  }
 }
