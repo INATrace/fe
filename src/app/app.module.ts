@@ -36,7 +36,6 @@ import { CookieManagementModalComponent } from './cookies/cookie-management-moda
 import { CookiesPageComponent } from './cookies/cookies-page/cookies-page.component';
 import { PrivacyPageComponent } from './cookies/privacy-page/privacy-page.component';
 import { TermsAndConditionsPageComponent } from './cookies/terms-and-conditions-page/terms-and-conditions-page.component';
-import { GetStartedPageComponent } from './get-started-page/get-started-page.component';
 import { KnowledgeBlogFrontComponent } from './knowledge-blog-front/knowledge-blog-front.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LanguageCodeHelper } from './language-code-helper';
@@ -129,7 +128,6 @@ export function getConfiguration(): Configuration {
     ResetPasswordComponent,
     ResetPasswordRequestComponent,
     LandingPageComponent,
-    GetStartedPageComponent,
     WelcomeScreenUnconfirmedComponent,
     CompanySelectModalComponent,
     CookieBannerComponent,

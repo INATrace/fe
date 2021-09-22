@@ -7,7 +7,6 @@ import { ClearCookieConsentComponent } from './cookies/clear-cookie-consent/clea
 import { CookiesPageComponent } from './cookies/cookies-page/cookies-page.component';
 import { PrivacyPageComponent } from './cookies/privacy-page/privacy-page.component';
 import { TermsAndConditionsPageComponent } from './cookies/terms-and-conditions-page/terms-and-conditions-page.component';
-import { GetStartedPageComponent } from './get-started-page/get-started-page.component';
 import { KnowledgeBlogFrontComponent } from './knowledge-blog-front/knowledge-blog-front.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { GuestLayoutComponent } from './layout/guest/guest-layout/guest-layout.component';
@@ -73,13 +72,6 @@ const routes: Routes = [
     component: LandingPageLayoutComponent,
     children: [
       { path: '', component: LandingPageComponent, pathMatch: 'full' },
-    ]
-  },
-  {
-    path: 'products/new',
-    component: LandingPageLayoutComponent,
-    children: [
-      { path: '', component: GetStartedPageComponent, pathMatch: 'full' },
     ]
   },
   {
