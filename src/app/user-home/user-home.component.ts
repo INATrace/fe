@@ -4,7 +4,6 @@ import { AuthService } from '../system/auth.service';
 import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
 import { WelcomeScreenUnconfirmedComponent } from '../welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
 import { Subscription } from 'rxjs';
-import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { take } from 'rxjs/operators';
 import { EnumSifrant } from '../shared-services/enum-sifrant';
 import { SelectedUserCompanyModalComponent } from '../selected-user-company-modal/selected-user-company-modal.component';
@@ -23,7 +22,6 @@ export class UserHomeComponent implements OnInit {
     private authService: AuthService,
     public router: Router,
     private modalService: NgbModalImproved,
-    private chainOrganizationService: OrganizationService,
     private globalEventManager: GlobalEventManagerService,
     private companyControllerService: CompanyControllerService
   ) { }
@@ -33,7 +31,6 @@ export class UserHomeComponent implements OnInit {
   confirmedOnlyUser = false;
 
   codebookMyCompanies;
-
 
   ngOnInit(): void {
     this.authService.refreshUserProfile();
