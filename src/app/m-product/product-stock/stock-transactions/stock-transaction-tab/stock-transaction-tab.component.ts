@@ -19,14 +19,14 @@ import { GlobalEventManagerService } from 'src/app/system/global-event-manager.s
 import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnight, dbKey } from 'src/shared/utils';
-import { StockTabCore } from '../../stock-core/stock-tab-core/stock-tab-core.component';
+import { StockTabCoreComponent } from '../../stock-core/stock-tab-core/stock-tab-core.component';
 
 @Component({
   selector: 'app-stock-transaction-tab',
   templateUrl: './stock-transaction-tab.component.html',
   styleUrls: ['./stock-transaction-tab.component.scss']
 })
-export class StockTransactionTabComponent extends StockTabCore {
+export class StockTransactionTabComponent extends StockTabCoreComponent {
 
   rootTab = 5;
 

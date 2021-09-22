@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ApiProductListResponse } from '../../../../api/model/apiProductListResponse';
 
 @Component({
   selector: 'app-product-card',
@@ -8,11 +9,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProductCardComponent implements OnInit {
 
   @Input()
-  product;
+  product: ApiProductListResponse;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

@@ -20,7 +20,7 @@ import { ProcessingEvidenceItemComponent } from './processing-evidence-item/proc
 import { FacilityCardComponent } from './facility-card/facility-card.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { PaymentItemComponent } from './payment-item/payment-item.component';
-import { StockTabCore } from './stock-tab-core/stock-tab-core.component';
+import { StockTabCoreComponent } from './stock-tab-core/stock-tab-core.component';
 import { ProductLabelStockOrderListComponent } from './product-label-stock-order-list/product-label-stock-order-list.component';
 import { StockPurchaseOrderEditComponent } from './stock-purchase-order-edit/stock-purchase-order-edit.component';
 import { ProductLabelStockProcessingOrderListComponent } from './product-label-stock-processing-order-list/product-label-stock-processing-order-list.component';
@@ -36,7 +36,7 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
     FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
-    StockTabCore,
+    StockTabCoreComponent,
     ProductLabelStockOrderListComponent,
     StockPurchaseOrderEditComponent,
     ProductLabelStockProcessingOrderListComponent,
@@ -73,7 +73,7 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
     FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
-    StockTabCore,
+    StockTabCoreComponent,
     ProductLabelStockOrderListComponent,
     StockPurchaseOrderEditComponent,
     ProductLabelStockProcessingOrderListComponent,

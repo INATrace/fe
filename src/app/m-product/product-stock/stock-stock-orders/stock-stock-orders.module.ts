@@ -14,14 +14,14 @@ import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SystemModule } from 'src/app/system/system.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
-import { StockStockOrdersTab } from './stock-orders-tab/stock-orders-tab.component';
+import { StockStockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.component';
 import { StockStockOrdersRoutingModule } from './stock-stock-orders-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    StockStockOrdersTab
+    StockStockOrdersTabComponent
   ],
   imports: [
     CommonModule,

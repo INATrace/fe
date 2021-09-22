@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderHistoryViewComponent } from '../stock-core/order-history-view/order-history-view.component';
 import { StockPurchaseOrderEditComponent } from '../stock-core/stock-purchase-order-edit/stock-purchase-order-edit.component';
-import { StockStockOrdersTab } from './stock-orders-tab/stock-orders-tab.component';
+import { StockStockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'tab'},
   {
     path: 'tab',
-    component: StockStockOrdersTab,
+    component: StockStockOrdersTabComponent,
     pathMatch: 'full',
     //canDeactivate: [DeactivateGuardService],
     data: {
