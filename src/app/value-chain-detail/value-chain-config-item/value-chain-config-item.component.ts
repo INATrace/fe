@@ -8,7 +8,7 @@ import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
-} from '../../type-detail-modal/validation';
+} from '../../settings/type-detail-modal/validation';
 import { ActiveFacilityTypeService } from '../../shared-services/active-facility-types.service';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measure-unit-types.service';

@@ -15,7 +15,7 @@ import {
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme
-} from '../type-detail-modal/validation';
+} from '../settings/type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';

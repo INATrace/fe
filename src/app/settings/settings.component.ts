@@ -5,7 +5,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { take } from 'rxjs/operators';
 import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
 import { Router } from '@angular/router';
-import { TypeDetailModalComponent } from '../type-detail-modal/type-detail-modal.component';
+import { TypeDetailModalComponent } from './type-detail-modal/type-detail-modal.component';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { UserControllerService } from 'src/api/api/userController.service';
@@ -146,26 +146,22 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
   }
 
   async save() {
-    let result = false;
     try {
       this.globalEventsManager.showLoading(true);
       const res = await this.commonController.updateGlobalSettingsUsingPOST(this.globalEventsManager.globalSettingsKeys('UNPUBLISHED_PRODUCT_LABEL_TEXT'), { value: this.unpublishedProductLabelText.value, isPublic: true }).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.unpublishedProductLabelText.markAsPristine();
-        result = true;
       }
     } catch (e) {
 
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-    let result1 = false;
     try {
       this.globalEventsManager.showLoading(true);
       const res = await this.commonController.updateGlobalSettingsUsingPOST(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK'), { value: this.labelsHelperLink.value, isPublic: false }).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.labelsHelperLink.markAsPristine();
-        result1 = true;
       }
     } catch (e) {
 

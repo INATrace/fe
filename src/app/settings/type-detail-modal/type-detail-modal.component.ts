@@ -13,23 +13,23 @@ import {
   ApiProcessingEvidenceFieldValidationScheme
 } from './validation';
 import _ from 'lodash-es';
-import { ActiveSemiProductsForProductServiceStandalone } from '../shared-services/active-semi-products-for-product-standalone.service';
-import { EnumSifrant } from '../shared-services/enum-sifrant';
-import { ActiveMeasureUnitTypeService } from '../shared-services/active-measure-unit-types.service';
-import { FacilityTypeControllerService } from '../../api/api/facilityTypeController.service';
-import { MeasureUnitTypeControllerService } from '../../api/api/measureUnitTypeController.service';
-import { ActionTypeControllerService } from '../../api/api/actionTypeController.service';
-import { GradeAbbreviationControllerService } from '../../api/api/gradeAbbreviationController.service';
-import { ProcessingEvidenceTypeControllerService } from '../../api/api/processingEvidenceTypeController.service';
-import { ApiFacilityType } from '../../api/model/apiFacilityType';
-import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
-import { ApiActionType } from '../../api/model/apiActionType';
-import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
-import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
-import { SemiProductControllerService } from '../../api/api/semiProductController.service';
-import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
-import { ProcessingEvidenceFieldControllerService } from '../../api/api/processingEvidenceFieldController.service';
-import { ApiProcessingEvidenceField } from '../../api/model/apiProcessingEvidenceField';
+import { ActiveSemiProductsForProductServiceStandalone } from '../../shared-services/active-semi-products-for-product-standalone.service';
+import { EnumSifrant } from '../../shared-services/enum-sifrant';
+import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measure-unit-types.service';
+import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
+import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
+import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
+import { GradeAbbreviationControllerService } from '../../../api/api/gradeAbbreviationController.service';
+import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
+import { ApiFacilityType } from '../../../api/model/apiFacilityType';
+import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
+import { ApiActionType } from '../../../api/model/apiActionType';
+import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
+import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
+import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
+import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
+import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-type-detail-modal',

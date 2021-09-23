@@ -1,13 +1,13 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { UndesrcoreAndCapitalsValidator } from 'src/shared/validation';
 import { Validators } from '@angular/forms';
-import { ApiFacilityType } from '../../api/model/apiFacilityType';
-import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
-import { ApiActionType } from '../../api/model/apiActionType';
-import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
-import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
-import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
-import { ApiProcessingEvidenceField } from '../../api/model/apiProcessingEvidenceField';
+import { ApiFacilityType } from '../../../api/model/apiFacilityType';
+import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
+import { ApiActionType } from '../../../api/model/apiActionType';
+import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
+import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
+import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 
 export const ApiSemiProductValidationScheme = {
   validators: [],

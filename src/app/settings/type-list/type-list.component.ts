@@ -1,27 +1,27 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { TypeDetailModalComponent } from '../type-detail-modal/type-detail-modal.component';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../../system/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
-import { FacilityTypeControllerService } from '../../api/api/facilityTypeController.service';
-import { MeasureUnitTypeControllerService } from '../../api/api/measureUnitTypeController.service';
-import { ActionTypeControllerService } from '../../api/api/actionTypeController.service';
-import { GradeAbbreviationControllerService } from '../../api/api/gradeAbbreviationController.service';
-import { ProcessingEvidenceTypeControllerService } from '../../api/api/processingEvidenceTypeController.service';
-import { ApiPaginatedResponseApiFacilityType } from '../../api/model/apiPaginatedResponseApiFacilityType';
-import { ApiPaginatedResponseApiMeasureUnitType } from '../../api/model/apiPaginatedResponseApiMeasureUnitType';
-import { ApiPaginatedResponseApiActionType } from '../../api/model/apiPaginatedResponseApiActionType';
-import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
-import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
-import { SortOption } from '../shared/result-sorter/result-sorter-types';
-import { SemiProductControllerService } from '../../api/api/semiProductController.service';
-import { ApiPaginatedResponseApiSemiProduct } from '../../api/model/apiPaginatedResponseApiSemiProduct';
-import {ProcessingEvidenceFieldControllerService} from "../../api/api/processingEvidenceFieldController.service";
-import {ApiPaginatedResponseApiProcessingEvidenceField} from "../../api/model/apiPaginatedResponseApiProcessingEvidenceField";
+import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
+import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
+import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
+import { GradeAbbreviationControllerService } from '../../../api/api/gradeAbbreviationController.service';
+import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
+import { ApiPaginatedResponseApiFacilityType } from '../../../api/model/apiPaginatedResponseApiFacilityType';
+import { ApiPaginatedResponseApiMeasureUnitType } from '../../../api/model/apiPaginatedResponseApiMeasureUnitType';
+import { ApiPaginatedResponseApiActionType } from '../../../api/model/apiPaginatedResponseApiActionType';
+import { ApiPaginatedResponseApiGradeAbbreviation } from '../../../api/model/apiPaginatedResponseApiGradeAbbreviation';
+import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
+import { SortOption } from '../../shared/result-sorter/result-sorter-types';
+import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
+import { ApiPaginatedResponseApiSemiProduct } from '../../../api/model/apiPaginatedResponseApiSemiProduct';
+import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
+import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
 
 @Component({
   selector: 'app-type-list',
