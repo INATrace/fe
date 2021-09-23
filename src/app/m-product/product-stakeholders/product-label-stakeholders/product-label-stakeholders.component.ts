@@ -8,7 +8,7 @@ import { UnsubscribeList } from 'src/shared/rxutils';
 import { FormControl } from '@angular/forms';
 import { getPath, dbKey } from 'src/shared/utils';
 import { ProductService } from 'src/api-chain/api/product.service';
-import { CompanySelectModalComponent } from 'src/app/company-list/company-select-modal/company-select-modal.component';
+import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';

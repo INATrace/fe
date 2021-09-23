@@ -1,9 +1,9 @@
-import { SimpleValidationScheme } from '../../../interfaces/Validation';
-import { ApiFacility } from '../../../api/model/apiFacility';
+import { SimpleValidationScheme } from '../../../../interfaces/Validation';
+import { ApiFacility } from '../../../../api/model/apiFacility';
 import { Validators } from '@angular/forms';
-import { ApiFacilityType } from '../../../api/model/apiFacilityType';
-import { ApiFacilityLocation } from '../../../api/model/apiFacilityLocation';
-import { ApiAddress } from '../../../api/model/apiAddress';
+import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
+import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
+import { ApiAddress } from '../../../../api/model/apiAddress';
 
 export const ApiFacilityTypeValidationScheme = {
     validators: [],

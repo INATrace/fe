@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FacilityControllerService } from '../../../api/api/facilityController.service';
+import { FacilityControllerService } from '../../../../api/api/facilityController.service';
 import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { ApiFacilityLocation } from '../../../api/model/apiFacilityLocation';
+import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
-import { ApiPaginatedResponseApiFacility } from '../../../api/model/apiPaginatedResponseApiFacility';
-import { ApiPaginatedListApiFacility } from '../../../api/model/apiPaginatedListApiFacility';
+import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
+import { ApiPaginatedResponseApiFacility } from '../../../../api/model/apiPaginatedResponseApiFacility';
+import { ApiPaginatedListApiFacility } from '../../../../api/model/apiPaginatedListApiFacility';
 
 @Component({
   selector: 'app-company-detail-facilities',

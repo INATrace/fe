@@ -1,15 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faStamp, faUser, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faStamp, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FileSaverService } from 'ngx-filesaver';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { ApiDocument } from 'src/api/model/apiDocument';
-import { ApiCompanyDocumentValidationScheme } from 'src/app/company-detail/validation';
+import { ApiCompanyDocumentValidationScheme } from 'src/app/company/company-detail/validation';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
+import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { GenericEditableItemComponent } from '../generic-editable-item/generic-editable-item.component';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,7 @@ enum DocumentCategory {
   templateUrl: './company-document-item.component.html',
   styleUrls: ['./company-document-item.component.scss']
 })
-export class CompanyDocumentItemComponent extends GenericEditableItemComponent<ApiCompanyDocument> {
+export class CompanyDocumentItemComponent extends GenericEditableItemComponent<ApiCompanyDocument> implements OnInit {
 
   constructor(
       protected globalEventsManager: GlobalEventManagerService,
@@ -33,50 +33,49 @@ export class CompanyDocumentItemComponent extends GenericEditableItemComponent<A
       private commonController: CommonControllerService
 
   ) {
-      super(globalEventsManager)
+      super(globalEventsManager);
   }
 
   rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
 
-  documentCategory = DocumentCategory
+  documentCategory = DocumentCategory;
 
   @Input()
-  disableDelete = false
+  disableDelete = false;
 
   @Input()
-  formTitle = null
+  formTitle = null;
 
   @Input()
-  category = null
+  category = null;
 
   @Input()
-  readOnly = false
+  readOnly = false;
 
   faStamp = faStamp;
   faUser = faUser;
   faYoutube = faYoutube;
   faImage = faImage;
 
-  public generateForm(value: any): FormGroup {
-      return generateFormFromMetadata(ApiCompanyDocument.formMetadata(), value, ApiCompanyDocumentValidationScheme)
-  }
-
   static createEmptyObject(): ApiCompanyDocument {
-      let document = ApiCompanyDocument.formMetadata();
-      return defaultEmptyObject(document) as ApiCompanyDocument
+    const document = ApiCompanyDocument.formMetadata();
+    return defaultEmptyObject(document) as ApiCompanyDocument;
   }
 
   static emptyObjectFormFactory(): () => FormControl {
-      return () => {
-          let f = new FormControl(CompanyDocumentItemComponent.createEmptyObject(), ApiCompanyDocumentValidationScheme.validators)
-          return f
-      }
+    return () => {
+      return new FormControl(CompanyDocumentItemComponent.createEmptyObject(), ApiCompanyDocumentValidationScheme.validators);
+    };
+  }
+
+  public generateForm(value: any): FormGroup {
+      return generateFormFromMetadata(ApiCompanyDocument.formMetadata(), value, ApiCompanyDocumentValidationScheme);
   }
 
   ngOnInit() {
-    if (this.category == 'MEET_THE_FARMER') {
-      this.form.get('category').setValue('MEET_THE_FARMER')
-      this.form.get('type').setValue('FILE')
+    if (this.category === 'MEET_THE_FARMER') {
+      this.form.get('category').setValue('MEET_THE_FARMER');
+      this.form.get('type').setValue('FILE');
 
       this.form.controls['document'].setValidators([Validators.required]);
       this.form.controls['document'].updateValueAndValidity();
@@ -86,16 +85,16 @@ export class CompanyDocumentItemComponent extends GenericEditableItemComponent<A
 
       this.form.controls['quote'].setValidators([Validators.required]);
       this.form.controls['quote'].updateValueAndValidity();
-    } else if (this.category == 'PRODUCTION_RECORD') {
-      this.form.get('category').setValue('PRODUCTION_RECORD')
-      this.form.get('type').setValue('FILE')
+    } else if (this.category === 'PRODUCTION_RECORD') {
+      this.form.get('category').setValue('PRODUCTION_RECORD');
+      this.form.get('type').setValue('FILE');
 
       this.form.controls['document'].setValidators([Validators.required]);
       this.form.controls['document'].updateValueAndValidity();
 
-    } else if (this.category == 'VIDEO') {
-      this.form.get('category').setValue('VIDEO')
-      this.form.get('type').setValue('LINK')
+    } else if (this.category === 'VIDEO') {
+      this.form.get('category').setValue('VIDEO');
+      this.form.get('type').setValue('LINK');
 
       this.form.controls['link'].setValidators([Validators.required]);
       this.form.controls['link'].updateValueAndValidity();
@@ -103,12 +102,12 @@ export class CompanyDocumentItemComponent extends GenericEditableItemComponent<A
   }
 
   onDownload() {
-    let apiDoc = this.form.get('document').value as ApiDocument
+    const apiDoc = this.form.get('document').value as ApiDocument;
     if (apiDoc && apiDoc.storageKey) {
-      let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+      const sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
         this.fileSaverService.save(res, apiDoc.name);
-        sub.unsubscribe()
-      })
+        sub.unsubscribe();
+      });
     }
   }
 }

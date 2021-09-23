@@ -7,8 +7,8 @@ import { ProductService } from 'src/api-chain/api/product.service';
 import { ChainProcessingAction } from 'src/api-chain/model/chainProcessingAction';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
-import { ProcessingActionControllerService } from '../../../../api/api/processingActionController.service';
-import { ApiPaginatedResponseApiProcessingAction } from '../../../../api/model/apiPaginatedResponseApiProcessingAction';
+import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
+import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/model/apiPaginatedResponseApiProcessingAction';
 
 @Component({
   selector: 'app-company-list-processing-actions',

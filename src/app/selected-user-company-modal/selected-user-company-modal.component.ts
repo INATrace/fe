@@ -16,26 +16,25 @@ export class SelectedUserCompanyModalComponent implements OnInit {
   instructionsHtml = $localize`:@@selectUserCompany.instructionsHtml:Select a company you would like to continue with:`;
 
   @Input()
-  onSelectedCompany: (company: any) => {}
+  onSelectedCompany: (company: any) => {};
 
-  companyForm = new FormControl("");
+  companyForm = new FormControl('');
 
   constructor(
-    public activeModal: NgbActiveModal,
+    public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
   }
 
   cancel() {
-    this.activeModal.close()
+    this.activeModal.close();
   }
 
   onConfirm() {
     if (this.companyForm.value) {
-      this.activeModal.close(this.companyForm.value)
+      this.activeModal.close(this.companyForm.value);
     }
   }
-
 
 }

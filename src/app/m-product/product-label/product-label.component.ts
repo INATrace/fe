@@ -35,7 +35,7 @@ import {ApiResponseApiBaseEntity} from 'src/api/model/apiResponseApiBaseEntity';
 import {ApiResponsibility} from 'src/api/model/apiResponsibility';
 import {ApiResponsibilityFarmerPicture} from 'src/api/model/apiResponsibilityFarmerPicture';
 import {ApiSustainability} from 'src/api/model/apiSustainability';
-import {CompanyDetailComponent} from 'src/app/company-detail/company-detail.component';
+import {CompanyDetailComponent} from 'src/app/company/company-detail/company-detail.component';
 import {ComponentCanDeactivate} from 'src/app/shared-services/component-can-deactivate';
 import {CountryService} from 'src/app/shared-services/countries.service';
 import {UsersService} from 'src/app/shared-services/users.service';

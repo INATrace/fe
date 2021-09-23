@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActiveCompaniesService} from '../../shared-services/active-companies.service';
-import {ActiveValueChainService} from '../../shared-services/active-value-chain.service';
+import {ActiveCompaniesService} from '../../../shared-services/active-companies.service';
+import {ActiveValueChainService} from '../../../shared-services/active-value-chain.service';
 
 @Component({
   selector: 'app-company-and-value-chain-select-modal',

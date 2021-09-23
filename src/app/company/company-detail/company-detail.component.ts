@@ -9,17 +9,17 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { CountryService } from '../shared-services/countries.service';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { CountryService } from '../../shared-services/countries.service';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ApiCertification } from 'src/api/model/apiCertification';
-import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
-import { ApiCertificationValidationScheme } from '../m-product/product-label/validation';
+import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
+import { ApiCertificationValidationScheme } from '../../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
-import { CurrenciesService } from '../shared-services/currencies.service';
+import { CurrenciesService } from '../../shared-services/currencies.service';
 
 @Component({
   selector: 'app-company-detail',

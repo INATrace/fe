@@ -1,27 +1,27 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../../company-detail-tab-manager/company-detail-tab-manager.component';
-import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
-import {AbstractControl, Form, FormArray, FormControl, FormGroup} from '@angular/forms';
-import { EnumSifrant } from '../../../shared-services/enum-sifrant';
-import { ProcessingEvidenceTypeService } from '../../../shared-services/processing-evidence-types.service';
-import { ProcessingEvidenceTypeControllerService } from '../../../../api/api/processingEvidenceTypeController.service';
-import { ProcessingEvidenceFieldsService } from '../../../shared-services/processing-evidence-fields.service';
-import { ProcessingEvidenceFieldControllerService } from '../../../../api/api/processingEvidenceFieldController.service';
-import { ProcessingActionControllerService } from '../../../../api/api/processingActionController.service';
-import { CodebookTranslations } from '../../../shared-services/codebook-translations';
+import { GlobalEventManagerService } from '../../../../system/global-event-manager.service';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
+import { ProcessingEvidenceTypeService } from '../../../../shared-services/processing-evidence-types.service';
+import { ProcessingEvidenceTypeControllerService } from '../../../../../api/api/processingEvidenceTypeController.service';
+import { ProcessingEvidenceFieldsService } from '../../../../shared-services/processing-evidence-fields.service';
+import { ProcessingEvidenceFieldControllerService } from '../../../../../api/api/processingEvidenceFieldController.service';
+import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
+import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ApiProcessingAction } from '../../../../api/model/apiProcessingAction';
+import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { take } from 'rxjs/operators';
-import { ProcessingActionService } from '../../../../api-chain/api/processingAction.service';
-import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
+import { ProcessingActionService } from '../../../../../api-chain/api/processingAction.service';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ApiProcessingActionValidationScheme } from './validation';
-import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
-import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
-import { SemiProductService } from '../../../../api-chain/api/semiProduct.service';
-import { SemiProductControllerService } from '../../../../api/api/semiProductController.service';
-import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
-import { ApiProcessingEvidenceField } from '../../../../api/model/apiProcessingEvidenceField';
+import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
+import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
+import { SemiProductService } from '../../../../../api-chain/api/semiProduct.service';
+import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
+import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
+import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-company-detail-processing-actions',

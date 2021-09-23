@@ -12,7 +12,7 @@ import { GlobalEventManagerService } from 'src/app/system/global-event-manager.s
 import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
 import {
   CompanyAndValueChainSelectModalComponent
-} from '../../company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
+} from '../../company/company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
 
 @Component({
   selector: 'app-product-list',

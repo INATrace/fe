@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CompanyDetailComponent } from './company-detail/company-detail.component';
-import { CompanyListComponent } from './company-list/company-list.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { CompanyListComponent } from './company/company-list/company-list.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ClearCookieConsentComponent } from './cookies/clear-cookie-consent/clear-cookie-consent.component';
 import { CookiesPageComponent } from './cookies/cookies-page/cookies-page.component';
@@ -30,17 +30,17 @@ import { UserListComponent } from './user-list/user-list.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
-import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
+import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
-import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
-import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
-import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
-import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
+import { CompanyDetailUsersComponent } from './company/company-detail/company-detail-users/company-detail-users.component';
+import { CompanyDetailFacilitiesComponent } from './company/company-detail/company-detail-facilities/company-detail-facilities.component';
+import { CompanyDetailFacilityAddComponent } from './company/company-detail/company-detail-facility-add/company-detail-facility-add.component';
+import { CompanyProcessingActionsComponent } from './company/company-detail/company-processing-actions/company-processing-actions.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
-} from './company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
+} from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {

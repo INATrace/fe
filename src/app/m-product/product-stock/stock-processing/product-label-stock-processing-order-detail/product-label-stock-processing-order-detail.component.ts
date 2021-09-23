@@ -34,8 +34,8 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import { CompanyDetailComponent } from 'src/app/company-detail/company-detail.component';
-import { ApiCompanyGetValidationScheme } from 'src/app/company-detail/validation';
+import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
+import { ApiCompanyGetValidationScheme } from 'src/app/company/company-detail/validation';
 import { ApiCertificationValidationScheme } from 'src/app/m-product/product-label/validation';
 import { ActionTypesService } from 'src/app/shared-services/action-types.service';
 import { ActiveCompanyCustomersByOrganizationService } from 'src/app/shared-services/active-company-customers-by-organization.service';

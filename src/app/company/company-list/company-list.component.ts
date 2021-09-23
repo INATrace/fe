@@ -5,13 +5,13 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { debounceTime, map, shareReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiPaginatedResponseApiCompanyListResponse } from 'src/api/model/apiPaginatedResponseApiCompanyListResponse';
-import { EnumSifrant } from '../shared-services/enum-sifrant';
-import { AuthService } from '../system/auth.service';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { EnumSifrant } from '../../shared-services/enum-sifrant';
+import { AuthService } from '../../system/auth.service';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { NgbModalImproved } from '../../system/ngb-modal-improved/ngb-modal-improved.service';
 import { CompanySelectModalComponent } from './company-select-modal/company-select-modal.component';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { SortOption } from '../shared/result-sorter/result-sorter-types';
+import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-company-list',

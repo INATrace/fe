@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
-import { ApiCompanyUser } from '../../../api/model/apiCompanyUser';
+import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
+import { ApiCompanyUser } from '../../../../api/model/apiCompanyUser';
 import { FormArray, FormControl } from '@angular/forms';
 import { ApiCompanyUserValidationScheme } from '../validation';
-import { CompanyControllerService } from '../../../api/api/companyController.service';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
+import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { defaultEmptyObject } from '../../../shared/utils';
-import { ApiResponseListApiCompanyUser } from '../../../api/model/apiResponseListApiCompanyUser';
+import { defaultEmptyObject } from '../../../../shared/utils';
+import { ApiResponseListApiCompanyUser } from '../../../../api/model/apiResponseListApiCompanyUser';
 import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 

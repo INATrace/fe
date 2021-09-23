@@ -6,7 +6,7 @@ import _ from 'lodash-es';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { generateFormFromMetadata } from '../../../shared/utils';
 import { ApiFacility } from '../../../api/model/apiFacility';
-import { ApiFacilityValidationScheme } from '../../company-detail/company-detail-facility-add/validation';
+import { ApiFacilityValidationScheme } from '../../company/company-detail/company-detail-facility-add/validation';
 import { GoogleMap } from '@angular/google-maps';
 
 @Component({
