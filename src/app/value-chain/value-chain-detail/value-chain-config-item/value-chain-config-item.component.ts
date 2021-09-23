@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GenericEditableItemComponent } from '../../../shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacilityType } from '../../../../api/model/apiFacilityType';

@@ -58,8 +58,8 @@ import { SettingsTypesComponent } from './settings/settings-types/settings-types
 import { SettingsComponent } from './settings/settings.component';
 import { SharedModule } from './shared/shared.module';
 import { SystemLeftPanelComponent } from './system-left-panel/system-left-panel.component';
-import { CoreModule } from './system/core.module';
-import { TokenInterceptor } from './system/token.interceptor';
+import { CoreModule } from './core/core.module';
+import { TokenInterceptor } from './core/token.interceptor';
 import { TypeDetailModalComponent } from './settings/type-detail-modal/type-detail-modal.component';
 import { TypeListComponent } from './settings/type-list/type-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';

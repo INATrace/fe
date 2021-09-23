@@ -8,8 +8,8 @@ import { ChainActivityProofValidationScheme } from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
 import { ImageViewerComponent } from 'src/app/shared/image-viewer/image-viewer.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-additional-proof-item',

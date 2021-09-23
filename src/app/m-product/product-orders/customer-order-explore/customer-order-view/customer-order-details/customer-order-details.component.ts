@@ -13,7 +13,7 @@ import { WeightedAggregateAny } from 'src/api-chain/model/weightedAggregateAny';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { GenerateQRCodeModalComponent } from 'src/app/components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { dbKey, getPath } from 'src/shared/utils';

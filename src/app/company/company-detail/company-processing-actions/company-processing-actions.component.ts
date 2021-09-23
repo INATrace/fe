@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
-import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ProcessingActionService } from '../../../../api-chain/api/processingAction.service';
 import { ProcessingActionControllerService } from '../../../../api/api/processingActionController.service';
 import { take } from 'rxjs/operators';

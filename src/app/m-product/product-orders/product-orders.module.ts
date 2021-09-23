@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { GlobalOrderEditComponent } from './global-order-edit/global-order-edit.component';
 import { StockOrderItemComponent } from './global-order-edit/stock-order-item/stock-order-item.component';
 import { ProductLabelOrdersAllOrdersComponent } from './product-label-orders/orders-all-orders/orders-all-orders.component';

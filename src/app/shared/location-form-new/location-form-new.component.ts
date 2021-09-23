@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CountryService } from '../../shared-services/countries.service';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { FormGroup } from '@angular/forms';
 import _ from 'lodash-es';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { faStamp } from '@fortawesome/free-solid-svg-icons';

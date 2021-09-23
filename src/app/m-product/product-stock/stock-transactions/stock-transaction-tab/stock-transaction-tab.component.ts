@@ -14,9 +14,9 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { UserControllerService } from 'src/api/api/userController.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnight, dbKey } from 'src/shared/utils';
 import { StockTabCoreComponent } from '../../stock-core/stock-tab-core/stock-tab-core.component';

@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { ApiProductLabelFeedback } from 'src/api/model/apiProductLabelFeedback';
 import { ApiProductLabelFeedbackValidationScheme, questionnaireAnswersFormMetadata, questionnaireAnswersValidationScheme } from 'src/app/product-label-front-feedback/validation';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { take } from 'rxjs/operators';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';

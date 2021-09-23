@@ -4,7 +4,7 @@ import { GoogleMap } from '@angular/google-maps';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CountryService } from 'src/app/shared-services/countries.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import _ from 'lodash-es';
 

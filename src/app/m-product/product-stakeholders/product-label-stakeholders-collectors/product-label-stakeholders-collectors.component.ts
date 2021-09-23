@@ -6,8 +6,8 @@ import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
 import { ApiResponsePaginatedListChainUserCustomer } from 'src/api-chain/model/apiResponsePaginatedListChainUserCustomer';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
 
 @Component({

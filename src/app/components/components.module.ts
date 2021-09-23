@@ -11,7 +11,7 @@ import { EllipsisModule } from 'ngx-ellipsis';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ContentsModule } from '../contents/contents.module';
 import { SharedModule } from '../shared/shared.module';
-import { CoreModule } from '../system/core.module';
+import { CoreModule } from '../core/core.module';
 import { BottomButtonsComponent } from './bottom-buttons/bottom-buttons.component';
 import { CardComponent } from './card/card.component';
 import { DocumentCardComponent } from './document-card/document-card.component';

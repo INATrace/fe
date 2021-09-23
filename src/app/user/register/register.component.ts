@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { EmailValidator } from 'src/shared/validation';
 import { UserControllerService } from 'src/api/api/userController.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { Router } from "@angular/router";
 import { BehaviorSubject } from 'rxjs';
 

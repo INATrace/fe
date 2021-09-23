@@ -8,8 +8,8 @@ import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ApiResponsePaginatedListChainStockOrder } from 'src/api-chain/model/apiResponsePaginatedListChainStockOrder';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
 import { ProductLabelStockSkuModalComponent } from '../product-label-stock-sku-modal/product-label-stock-sku-modal.component';
 

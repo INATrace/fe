@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ComponentCanDeactivate } from '../../shared-services/component-can-deactivate';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';

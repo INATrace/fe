@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { faTimesCircle, faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { CheckBatchNumberModalComponent } from '../check-batch-number-modal/check-batch-number-modal.component';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-check-batch-number-response-modal',

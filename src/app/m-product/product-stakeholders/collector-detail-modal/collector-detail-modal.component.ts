@@ -25,8 +25,8 @@ import { CountryService } from 'src/app/shared-services/countries.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { ThemeService } from 'src/app/shared-services/theme.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-collector-detail-modal',

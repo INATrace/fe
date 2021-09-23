@@ -10,7 +10,7 @@ import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { CountryService } from '../../shared-services/countries.service';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';

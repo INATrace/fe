@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalImproved } from '../../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { CookieManagementModalComponent } from '../cookie-management-modal/cookie-management-modal.component';
 import { Router } from '@angular/router';
 

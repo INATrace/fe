@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorisedSideNavService } from '../services/authorised-side-nav.service';
-import { AuthService } from 'src/app/system/auth.service';
+import { AuthService } from 'src/app/core/auth.service';
 import { Subscription } from 'rxjs';
 import { AboutAppInfoService } from 'src/app/about-app-info.service';
 

@@ -9,7 +9,7 @@ import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ApiResponsePaginatedListChainStockOrder } from 'src/api-chain/model/apiResponsePaginatedListChainStockOrder';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { StockOrderType } from 'src/shared/types';
 import { dbKey, formatDateWithDots } from 'src/shared/utils';
 import { DeliveryDates, StockOrderListingPageMode } from '../stock-tab-core/stock-tab-core.component';

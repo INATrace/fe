@@ -32,8 +32,8 @@ import { CodebookTranslations } from 'src/app/shared-services/codebook-translati
 import { GradeAbbreviationCodebook } from 'src/app/shared-services/grade-abbreviation-codebook';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainStockOrderValidationScheme } from './stock-order-item/validation';

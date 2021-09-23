@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { finalize } from 'rxjs/operators';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';

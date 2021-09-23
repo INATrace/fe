@@ -7,9 +7,9 @@ import { ProductControllerService } from 'src/api/api/productController.service'
 import { ApiPaginatedResponseApiProductListResponse } from 'src/api/model/apiPaginatedResponseApiProductListResponse';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import {
   CompanyAndValueChainSelectModalComponent
 } from '../../company/company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';

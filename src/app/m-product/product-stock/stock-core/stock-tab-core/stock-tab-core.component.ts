@@ -26,9 +26,9 @@ import { GeneralSifrantService } from 'src/app/shared-services/general-sifrant.s
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { QuoteOrdersOnOrganizationStandaloneService } from 'src/app/shared-services/quote-orders-on-organization-standalone.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { dateAtMidnightISOString, dbKey, getPath, setNavigationParameter } from 'src/shared/utils';

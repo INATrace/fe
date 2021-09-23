@@ -11,8 +11,8 @@ import { ProductService } from 'src/api-chain/api/product.service';
 import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
 

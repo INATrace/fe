@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-knowledge-blog-front',

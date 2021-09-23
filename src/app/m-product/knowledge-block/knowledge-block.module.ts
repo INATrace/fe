@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { KnowledgeBlockRoutingModule } from './knowledge-block-routing.module';
 import { KnowledgeBlogDocumentsItemComponent } from './knowledge-blog-documents-item/knowledge-blog-documents-item.component';
 import { KnowledgeBlogPartComponent } from './knowledge-blog-part/knowledge-blog-part.component';

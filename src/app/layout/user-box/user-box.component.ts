@@ -5,8 +5,8 @@ import { UnsubscribeList } from 'src/shared/rxutils';
 import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { take } from 'rxjs/operators';
 import { AboutAppInfoService } from 'src/app/about-app-info.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
 

@@ -9,7 +9,7 @@ import { ApiResponsePaginatedListChainProcessingOrder } from 'src/api-chain/mode
 import { ChainProcessingOrder } from 'src/api-chain/model/chainProcessingOrder';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { dbKey, formatDateWithDots } from 'src/shared/utils';
 

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GoogleMap } from '@angular/google-maps';
 import { FormGroup, FormControl } from '@angular/forms';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { take } from 'rxjs/operators';
 
 @Component({

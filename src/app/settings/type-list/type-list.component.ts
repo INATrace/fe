@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { TypeDetailModalComponent } from '../type-detail-modal/type-detail-modal.component';
-import { NgbModalImproved } from '../../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';

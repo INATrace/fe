@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { take } from 'rxjs/operators';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../core/ngb-modal-improved/ngb-modal-improved.service';
 import { Router } from '@angular/router';
 import { TypeDetailModalComponent } from './type-detail-modal/type-detail-modal.component';
 import { ProductControllerService } from 'src/api/api/productController.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { FormControl, FormGroup } from '@angular/forms';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
     template: ''

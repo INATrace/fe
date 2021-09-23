@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EmailValidator } from 'src/shared/validation';
 import { UserControllerService } from 'src/api/api/userController.service';
-import { Router, ActivatedRoute } from "@angular/router";
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { BehaviorSubject } from 'rxjs';
 import { ApiResponseApiUser } from 'src/api/model/apiResponseApiUser';
-import { AuthService } from '../../system/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-login',

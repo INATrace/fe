@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { AuthService } from '../../system/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';

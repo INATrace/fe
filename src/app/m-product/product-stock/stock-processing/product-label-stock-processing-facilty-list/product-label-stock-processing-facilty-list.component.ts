@@ -5,7 +5,7 @@ import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FacilityService } from 'src/api-chain/api/facility.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { ApiResponsePaginatedListChainFacility } from 'src/api-chain/model/apiResponsePaginatedListChainFacility';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { dbKey } from 'src/shared/utils';
 
 @Component({

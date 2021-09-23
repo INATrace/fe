@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiCompanyGetValidationScheme, TranslateApiCompanyGetValidationScheme, ApiCompanyDocumentValidationScheme } from '../validation';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';

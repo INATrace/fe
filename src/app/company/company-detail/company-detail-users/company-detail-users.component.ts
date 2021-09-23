@@ -4,7 +4,7 @@ import { ApiCompanyUser } from '../../../../api/model/apiCompanyUser';
 import { FormArray, FormControl } from '@angular/forms';
 import { ApiCompanyUserValidationScheme } from '../validation';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
-import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { defaultEmptyObject } from '../../../../shared/utils';

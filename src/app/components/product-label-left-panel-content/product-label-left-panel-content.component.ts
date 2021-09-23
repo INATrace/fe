@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { take } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-product-label-left-panel-content',

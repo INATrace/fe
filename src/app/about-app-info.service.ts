@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GlobalEventManagerService } from './system/global-event-manager.service';
+import { GlobalEventManagerService } from './core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

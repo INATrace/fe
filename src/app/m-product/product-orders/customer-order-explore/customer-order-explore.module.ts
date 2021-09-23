@@ -13,7 +13,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { OrderLeftPanelContentComponent } from './customer-order-view/order-left-panel-content/order-left-panel-content.component';
 import { CustomerOrderHistoryComponent } from './customer-order-view/customer-order-history/customer-order-history.component';
 import { StockCoreModule } from '../../product-stock/stock-core/stock-core.module';

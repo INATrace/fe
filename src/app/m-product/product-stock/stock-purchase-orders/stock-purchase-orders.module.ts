@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockPurchaseOrdersRoutingModule } from './stock-purchase-orders-routing.module';
 import { StockPurchaseOrderTabComponent } from './stock-purchase-orders-tab/stock-purchase-orders-tab.component';

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { Subscription } from 'rxjs';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-front-page-first',

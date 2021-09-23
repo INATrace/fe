@@ -13,7 +13,7 @@ import { ApiProductListResponse } from 'src/api/model/apiProductListResponse';
 import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
 import { ActiveProductsService } from 'src/app/shared-services/active-products.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainStockOrderValidationScheme } from './validation';
 

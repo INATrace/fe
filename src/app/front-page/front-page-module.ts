@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { FrontPageFirstComponent } from './front-page-first/front-page-first.component';
 import { FrontPageJourneyComponent } from './front-page-journey/front-page-journey.component';
 import { FrontPageFairPricesComponent } from './front-page-fair-prices/front-page-fair-prices.component';

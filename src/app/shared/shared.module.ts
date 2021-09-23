@@ -13,7 +13,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { FileSaverModule } from 'ngx-filesaver';
 // import { ComponentsModule } from '../components/components.module';
-import { NgbModalImprovedModule } from '../system/ngb-modal-improved/ngb-modal-improved.module';
+import { NgbModalImprovedModule } from '../core/ngb-modal-improved/ngb-modal-improved.module';
 import { AccordionPanelComponent } from './accordion/accordion-panel.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { CheckboxGroupMultiChoiceComponent } from './checkbox-group-multi-choice/checkbox-group-multi-choice.component';

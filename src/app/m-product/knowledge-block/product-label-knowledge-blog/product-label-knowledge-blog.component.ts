@@ -8,8 +8,8 @@ import { map, shareReplay, startWith, switchMap, take, tap } from 'rxjs/operator
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ApiPaginatedResponseApiKnowledgeBlogBase } from 'src/api/model/apiPaginatedResponseApiKnowledgeBlogBase';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { KnowledgeBlogSelectSectionModalComponent } from '../knowledge-blog-select-section-modal/knowledge-blog-select-section-modal.component';
 
 @Component({

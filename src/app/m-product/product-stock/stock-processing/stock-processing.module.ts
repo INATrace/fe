@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { ProductLabelStockProcessingFaciltyListComponent } from './product-label-stock-processing-facilty-list/product-label-stock-processing-facilty-list.component';
 import { ProductLabelStockProcessingOrderDetailComponent } from './product-label-stock-processing-order-detail/product-label-stock-processing-order-detail.component';

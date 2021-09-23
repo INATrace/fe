@@ -7,7 +7,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 // import { ApiResponsibilityFarmerPictureValidationScheme } from '../product-label/validation';
 import { environment } from 'src/environments/environment';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';

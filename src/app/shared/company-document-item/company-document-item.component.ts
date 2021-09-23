@@ -8,7 +8,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { ApiCompanyDocumentValidationScheme } from 'src/app/company/company-detail/validation';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { GenericEditableItemComponent } from '../generic-editable-item/generic-editable-item.component';
 import { environment } from 'src/environments/environment';

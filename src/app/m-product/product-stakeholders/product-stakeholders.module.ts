@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { CollectorDetailModalComponent } from './collector-detail-modal/collector-detail-modal.component';
 import { CompanyCardComponent } from './company-card/company-card.component';
 import { CustomerDetailModalComponent } from './customer-detail-modal/customer-detail-modal.component';

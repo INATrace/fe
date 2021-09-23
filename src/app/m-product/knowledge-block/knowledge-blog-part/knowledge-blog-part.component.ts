@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-knowledge-blog-part',

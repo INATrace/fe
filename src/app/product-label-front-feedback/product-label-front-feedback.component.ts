@@ -3,12 +3,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { ApiProductLabelFeedback } from 'src/api/model/apiProductLabelFeedback';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { take } from 'rxjs/operators';
 import { ApiProductLabelFeedbackValidationScheme, questionnaireAnswersValidationScheme, questionnaireAnswersFormMetadata } from './validation';
 import { EnumSifrant } from '../shared-services/enum-sifrant';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-product-label-front-feedback',

@@ -7,7 +7,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ApiProcessDocumentValidationScheme } from '../validation';
 

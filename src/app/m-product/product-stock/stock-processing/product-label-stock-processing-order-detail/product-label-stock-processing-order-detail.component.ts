@@ -49,8 +49,8 @@ import { GradeAbbreviationCodebook } from 'src/app/shared-services/grade-abbrevi
 import { SemiProductInFacilityCodebookServiceStandalone } from 'src/app/shared-services/semi-products-in-facility-standalone-codebook.service';
 import { ThemeService } from 'src/app/shared-services/theme.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { ProcessingActionType } from 'src/shared/types';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';

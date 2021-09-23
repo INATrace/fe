@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalEventManagerService } from './system/global-event-manager.service';
+import { GlobalEventManagerService } from './core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { CookieManagementService } from './shared/directives/cookie-management.service';
 

@@ -9,7 +9,7 @@ import { ApiCompanyUserValidationScheme } from '../company-detail/validation';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { UsersService } from '../../shared-services/users.service';
 import { GenericEditableItemComponent } from '../../shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 
 @Component({
   selector: 'app-company-user-role',

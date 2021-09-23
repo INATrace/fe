@@ -8,8 +8,8 @@ import { PaymentsService } from 'src/api-chain/api/payments.service';
 import { UserService } from 'src/api-chain/api/user.service';
 import { ApiResponsePaginatedListChainPayment } from 'src/api-chain/model/apiResponsePaginatedListChainPayment';
 import { ChainPayment } from 'src/api-chain/model/chainPayment';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { dbKey, formatDateWithDots } from 'src/shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-tab-core/stock-tab-core.component';
 

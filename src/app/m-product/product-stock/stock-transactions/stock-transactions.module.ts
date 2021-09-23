@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CoreModule } from 'src/app/system/core.module';
+import { CoreModule } from 'src/app/core/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { ProductLabelTransactionListComponent } from './product-label-stock-transaction-list/product-label-stock-transaction-list.component';
 import { StockTransactionTabComponent } from './stock-transaction-tab/stock-transaction-tab.component';

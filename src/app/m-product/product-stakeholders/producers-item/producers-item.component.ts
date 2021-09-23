@@ -7,7 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ChainUserCustomerRoleValidationScheme } from '../collector-detail-modal/validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-producers-item',

@@ -7,7 +7,7 @@ import { OrderService } from 'src/api-chain/api/order.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { ApiResponsePaginatedListChainFacility } from 'src/api-chain/model/apiResponsePaginatedListChainFacility';
 import { ApiResponsePaginatedListChainProductOrder } from 'src/api-chain/model/apiResponsePaginatedListChainProductOrder';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { dbKey } from 'src/shared/utils';
 
 @Component({
