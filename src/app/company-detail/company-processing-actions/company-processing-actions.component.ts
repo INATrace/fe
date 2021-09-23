@@ -39,7 +39,7 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
 
   async setAllProcessingActions() {
     const res = await this.processingActionControllerService
-        .listProcessingActionsByCompanyUsingGET(this.organizationId, 'COUNT')
+        .listProcessingActionsByCompanyUsingGET(this.organizationId, 'EN', 'COUNT')
         .pipe(take(1))
         .toPromise();
 
