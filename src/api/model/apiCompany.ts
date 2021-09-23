@@ -21,6 +21,7 @@
 import { ApiAddress } from './apiAddress';
 import { ApiCertification } from './apiCertification';
 import { ApiCompanyDocument } from './apiCompanyDocument';
+import { ApiCurrencyType } from './apiCurrencyType';
 import { ApiDocument } from './apiDocument';
 
 
@@ -38,6 +39,7 @@ export interface ApiCompany {
      * company certifications
      */
     certifications?: Array<ApiCertification>;
+    currency?: ApiCurrencyType;
     /**
      * company documents
      */
@@ -98,6 +100,7 @@ export namespace ApiCompany {
          * company certifications
          */
         certifications = 'certifications',
+        currency = 'currency',
         /**
          * company documents
          */
@@ -177,6 +180,18 @@ export namespace ApiCompany {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiCertification'
+                },
+                {
+                    metadata: ApiCurrencyType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiCompany',
+                    dataType: 'ApiCurrencyType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCurrencyType'
                 },
                 {
                     metadata: ApiCompanyDocument.formMetadata,
@@ -310,6 +325,8 @@ export namespace ApiCompany {
                 ],
                 certifications: [
                 ],
+                currency: [
+                ],
                 documents: [
                 ],
                 email: [
@@ -346,6 +363,9 @@ export namespace ApiCompany {
   //                   validators: []
   //               },
   //               certifications: {
+  //                   validators: []
+  //               },
+  //               currency: {
   //                   validators: []
   //               },
   //               documents: {

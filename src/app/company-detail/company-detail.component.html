@@ -333,6 +333,19 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2 i18n="@@companyDetail.base.currency">Base currency</h2>
+          <div class="af-form-element">
+            <single-choice label="Currency"
+                           i18n-label="@@companyDetail.currency"
+                           [formControlInput]="companyDetailForm.get('currency')"
+                           [codebookService]="currencyCodes">
+            </single-choice>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@companyDetail.section.certification">Certification</h2>
           <div class="af-form-element">
 

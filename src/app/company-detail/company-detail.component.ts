@@ -19,6 +19,7 @@ import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
 import { ApiCertificationValidationScheme } from '../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
+import { CurrenciesService } from '../shared-services/currencies.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -86,6 +87,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     private companyController: CompanyControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
+    public currencyCodes: CurrenciesService,
     protected router: Router
   ) {
     super(router, route);

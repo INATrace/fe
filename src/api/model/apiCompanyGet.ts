@@ -22,6 +22,7 @@ import { ApiAddress } from './apiAddress';
 import { ApiCertification } from './apiCertification';
 import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiCompanyUser } from './apiCompanyUser';
+import { ApiCurrencyType } from './apiCurrencyType';
 import { ApiDocument } from './apiDocument';
 
 
@@ -43,6 +44,7 @@ export interface ApiCompanyGet {
      * company certifications
      */
     certifications?: Array<ApiCertification>;
+    currency?: ApiCurrencyType;
     /**
      * company documents
      */
@@ -111,6 +113,7 @@ export namespace ApiCompanyGet {
          * company certifications
          */
         certifications = 'certifications',
+        currency = 'currency',
         /**
          * company documents
          */
@@ -220,6 +223,18 @@ export namespace ApiCompanyGet {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiCertification'
+                },
+                {
+                    metadata: ApiCurrencyType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'ApiCurrencyType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCurrencyType'
                 },
                 {
                     metadata: ApiCompanyDocument.formMetadata,
@@ -367,6 +382,8 @@ export namespace ApiCompanyGet {
                 ],
                 certifications: [
                 ],
+                currency: [
+                ],
                 documents: [
                 ],
                 email: [
@@ -408,6 +425,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               certifications: {
+  //                   validators: []
+  //               },
+  //               currency: {
   //                   validators: []
   //               },
   //               documents: {

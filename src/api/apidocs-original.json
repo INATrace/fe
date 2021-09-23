@@ -188,6 +188,282 @@
         "summary": "Get a single action type with the provided ID."
       }
     },
+    "/api/chain/currency-type/list": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiCurrencyType"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-type-controller"
+        ],
+        "operationId": "getCurrencyTypesUsingGET",
+        "summary": "Get list of supported currencies"
+      }
+    },
+    "/api/chain/currency-type/list/disabled": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiCurrencyType"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-type-controller"
+        ],
+        "operationId": "getDisabledCurrencyTypesUsingGET",
+        "summary": "Get list of disabled supported currencies"
+      }
+    },
+    "/api/chain/currency-type/list/enabled": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiCurrencyType"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-type-controller"
+        ],
+        "operationId": "getEnabledCurrencyTypesUsingGET",
+        "summary": "Get list of enabled supported currencies"
+      }
+    },
+    "/api/chain/currency-type/{id}/disable": {
+      "put": {
+        "parameters": [
+          {
+            "description": "id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-type-controller"
+        ],
+        "operationId": "disableCurrencyUsingPUT",
+        "summary": "Disable currency with the specified ID"
+      }
+    },
+    "/api/chain/currency-type/{id}/enable": {
+      "put": {
+        "parameters": [
+          {
+            "description": "id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-type-controller"
+        ],
+        "operationId": "enableCurrencyUsingPUT",
+        "summary": "Enable currency with the specified ID"
+      }
+    },
+    "/api/chain/currency/convert/{value}/{from}/to/{to}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "from",
+            "in": "path",
+            "name": "from",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EUR",
+                "USD",
+                "GBP",
+                "RWF",
+                "HNL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "to",
+            "in": "path",
+            "name": "to",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EUR",
+                "USD",
+                "GBP",
+                "RWF",
+                "HNL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "value",
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-controller"
+        ],
+        "operationId": "convertUsingGET",
+        "summary": "Convert a value between supported currencies"
+      }
+    },
+    "/api/chain/currency/convert/{value}/{from}/to/{to}/on/{date}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "value",
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "description": "from",
+            "in": "path",
+            "name": "from",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EUR",
+                "USD",
+                "GBP",
+                "RWF",
+                "HNL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "to",
+            "in": "path",
+            "name": "to",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EUR",
+                "USD",
+                "GBP",
+                "RWF",
+                "HNL"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "date",
+            "in": "path",
+            "name": "date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "currency-controller"
+        ],
+        "operationId": "convertAtDateUsingGET",
+        "summary": "Convert a value between supported currencies at the specified date"
+      }
+    },
     "/api/chain/facility": {
       "put": {
         "responses": {
@@ -6278,6 +6554,10 @@
             },
             "type": "array"
           },
+          "currency": {
+            "$ref": "#/components/schemas/ApiCurrencyType",
+            "description": "Preffered currency of the company"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -6530,6 +6810,10 @@
             },
             "type": "array"
           },
+          "currency": {
+            "$ref": "#/components/schemas/ApiCurrencyType",
+            "description": "Preffered currency of the company"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -6672,6 +6956,10 @@
               "$ref": "#/components/schemas/ApiCertification"
             },
             "type": "array"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/ApiCurrencyType",
+            "description": "Preffered currency of the company"
           },
           "documents": {
             "description": "company documents",
@@ -6880,6 +7168,27 @@
           "password",
           "surname"
         ],
+        "type": "object"
+      },
+      "ApiCurrencyType": {
+        "properties": {
+          "code": {
+            "description": "code",
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "label",
+            "type": "string"
+          }
+        },
         "type": "object"
       },
       "ApiDefaultResponse": {
@@ -11566,6 +11875,10 @@
       "name": "basic-error-controller"
     },
     {
+      "description": "Currency Type Controller",
+      "name": "currency-type-controller"
+    },
+    {
       "description": "Grade Abbreviation Controller",
       "name": "grade-abbreviation-controller"
     },
@@ -11580,6 +11893,10 @@
     {
       "description": "Facility Controller",
       "name": "facility-controller"
+    },
+    {
+      "description": "Currency Controller",
+      "name": "currency-controller"
     },
     {
       "description": "User Controller",
