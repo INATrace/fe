@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { BehaviorSubject } from 'rxjs';
 import { ApiResponseApiUser } from 'src/api/model/apiResponseApiUser';
-import { AuthService } from '../system/auth.service';
+import { AuthService } from '../../system/auth.service';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 

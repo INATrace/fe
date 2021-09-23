@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EmailValidator } from 'src/shared/validation';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { Location } from '@angular/common';
 
@@ -12,8 +12,8 @@ import { Location } from '@angular/common';
 })
 export class ResetPasswordRequestComponent implements OnInit {
 
-  submitted: boolean = false;
-  sent: boolean = false;
+  submitted = false;
+  sent = false;
 
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
@@ -23,7 +23,7 @@ export class ResetPasswordRequestComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl(null, [Validators.required, EmailValidator()]),
-  })
+  });
 
   ngOnInit(): void {
   }
@@ -33,17 +33,17 @@ export class ResetPasswordRequestComponent implements OnInit {
     this.sent = false;
     if (!this.form.invalid) {
       this.globalEventsManager.showLoading(true);
-      let sub = this.userController.requestResetPasswordUsingPOST({
+      const sub = this.userController.requestResetPasswordUsingPOST({
         email: this.form.get('email').value
       }).subscribe(val => {
-        sub.unsubscribe()
+        sub.unsubscribe();
         this.globalEventsManager.showLoading(false);
         this.sent = true;
       },
         error => {
           this.globalEventsManager.showLoading(false);
         }
-      )
+      );
     }
   }
 

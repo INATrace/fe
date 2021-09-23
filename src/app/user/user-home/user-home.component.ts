@@ -6,7 +6,7 @@ import { WelcomeScreenUnconfirmedComponent } from '../../welcome-screen-unconfir
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { SelectedUserCompanyModalComponent } from '../../selected-user-company-modal/selected-user-company-modal.component';
+import { SelectedUserCompanyModalComponent } from '../selected-user-company-modal/selected-user-company-modal.component';
 import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 import { dbKey } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../api/api/companyController.service';

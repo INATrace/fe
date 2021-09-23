@@ -28,7 +28,7 @@ import { CompanyDetailComponent } from './company/company-detail/company-detail.
 import { CompanyListComponent } from './company/company-list/company-list.component';
 import { CompanySelectModalComponent } from './company/company-list/company-select-modal/company-select-modal.component';
 import { ComponentsModule } from './components/components.module';
-import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ConfirmEmailComponent } from './user/confirm-email/confirm-email.component';
 import { ContentsModule } from './contents/contents.module';
 import { ClearCookieConsentComponent } from './cookies/clear-cookie-consent/clear-cookie-consent.component';
 import { CookieBannerComponent } from './cookies/cookie-banner/cookie-banner.component';
@@ -40,7 +40,7 @@ import { KnowledgeBlogFrontComponent } from './knowledge-blog-front/knowledge-bl
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LanguageCodeHelper } from './language-code-helper';
 import { LayoutModule } from './layout/layout.module';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './user/login/login.component';
 import { ProductLabelFrontFeedbackComponent } from './product-label-front-feedback/product-label-front-feedback.component';
 import { CheckBatchNumberModalComponent } from './product-label-front-page/check-batch-number-modal/check-batch-number-modal.component';
 import { CheckBatchNumberResponseModalComponent } from './product-label-front-page/check-batch-number-response-modal/check-batch-number-response-modal.component';
@@ -48,11 +48,11 @@ import { ProductLabelFrontPageComponent } from './product-label-front-page/produ
 import { QrCodeRedirectComponent } from './product-label-front-page/qr-code-redirect/qr-code-redirect.component';
 import { SectionContentPieceComponent } from './product-label-front-page/section-content-piece/section-content-piece.component';
 import { SectionTitleComponent } from './product-label-front-page/section-title/section-title.component';
-import { RegisterActivationComponent } from './register-activation/register-activation.component';
-import { RegisterComponent } from './register/register.component';
-import { ResetPasswordRequestComponent } from './reset-password-request/reset-password-request.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SelectedUserCompanyModalComponent } from './selected-user-company-modal/selected-user-company-modal.component';
+import { RegisterActivationComponent } from './user/register-activation/register-activation.component';
+import { RegisterComponent } from './user/register/register.component';
+import { ResetPasswordRequestComponent } from './user/reset-password-request/reset-password-request.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { SelectedUserCompanyModalComponent } from './user/selected-user-company-modal/selected-user-company-modal.component';
 import { SettingsAdditionalComponent } from './settings/settings-additional/settings-additional.component';
 import { SettingsTypesComponent } from './settings/settings-types/settings-types.component';
 import { SettingsComponent } from './settings/settings.component';

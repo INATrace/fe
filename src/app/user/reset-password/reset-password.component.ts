@@ -4,7 +4,7 @@ import { multiFieldValidator } from 'src/shared/validation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { BehaviorSubject } from 'rxjs';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 
 @Component({
   selector: 'app-reset-password',
