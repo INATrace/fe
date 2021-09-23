@@ -58,7 +58,7 @@ import { SettingsTypesComponent } from './settings/settings-types/settings-types
 import { SettingsComponent } from './settings/settings.component';
 import { SharedModule } from './shared/shared.module';
 import { SystemLeftPanelComponent } from './system-left-panel/system-left-panel.component';
-import { SystemModule } from './system/system.module';
+import { CoreModule } from './system/core.module';
 import { TokenInterceptor } from './system/token.interceptor';
 import { TypeDetailModalComponent } from './settings/type-detail-modal/type-detail-modal.component';
 import { TypeListComponent } from './settings/type-list/type-list.component';
@@ -199,7 +199,7 @@ export function getConfiguration(): Configuration {
       }
     }),
     //////////
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

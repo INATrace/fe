@@ -14,7 +14,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
 import { ProcessingEvidenceItemComponent } from './processing-evidence-item/processing-evidence-item.component';
 import { FacilityCardComponent } from './facility-card/facility-card.component';
@@ -47,7 +47,7 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
   imports: [
     CommonModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

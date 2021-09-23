@@ -12,11 +12,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { FPQExplorerRoutingModule } from './f-p-q-explorer-routing.module';
 import { ProductLabelFPQExplorerComponent } from './product-label-f-p-q-explorer/product-label-f-p-q-explorer.component';
-
-
 
 @NgModule({
   declarations: [
@@ -26,7 +24,7 @@ import { ProductLabelFPQExplorerComponent } from './product-label-f-p-q-explorer
     CommonModule,
     FPQExplorerRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

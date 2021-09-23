@@ -25,4 +25,4 @@ import { PageNotFoundComponent } from './page-not-found.component';
         MessageModalComponent,
     ]
 })
-export class SystemModule { }
+export class CoreModule { }

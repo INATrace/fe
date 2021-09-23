@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { FrontPageFirstComponent } from './front-page-first/front-page-first.component';
 import { FrontPageJourneyComponent } from './front-page-journey/front-page-journey.component';
 import { FrontPageFairPricesComponent } from './front-page-fair-prices/front-page-fair-prices.component';
@@ -22,8 +22,6 @@ import { FrontPageFeedbackComponent } from './front-page-feedback/front-page-fee
 import { FrontPageRoutingModule } from './front-page-routing.module';
 import { FrontPageFooterComponent } from './front-page-footer/front-page-footer.component';
 import { FrontPageHeaderComponent } from './front-page-header/front-page-header.component';
-
-
 
 @NgModule({
   declarations: [
@@ -40,7 +38,7 @@ import { FrontPageHeaderComponent } from './front-page-header/front-page-header.
     CommonModule,
     FrontPageRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

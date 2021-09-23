@@ -12,7 +12,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ContentsModule } from '../contents/contents.module';
 import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
-import { SystemModule } from '../system/system.module';
+import { CoreModule } from '../system/core.module';
 import { BatchDetailPageComponent } from './batch-detail-page/batch-detail-page.component';
 import { PrefillLocationsFromProductModalComponent } from './batch-detail-page/prefill-locations-from-product-modal/prefill-locations-from-product-modal.component';
 import { BatchEditModalComponent } from './batches-list/batch-edit-modal/batch-edit-modal.component';
@@ -59,7 +59,7 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     CommonModule,
     MProductRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

@@ -12,12 +12,10 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockStockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.component';
 import { StockStockOrdersRoutingModule } from './stock-stock-orders-routing.module';
-
-
 
 @NgModule({
   declarations: [
@@ -27,7 +25,7 @@ import { StockStockOrdersRoutingModule } from './stock-stock-orders-routing.modu
     CommonModule,
     StockStockOrdersRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

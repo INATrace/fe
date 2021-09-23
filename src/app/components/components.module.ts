@@ -11,7 +11,7 @@ import { EllipsisModule } from 'ngx-ellipsis';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ContentsModule } from '../contents/contents.module';
 import { SharedModule } from '../shared/shared.module';
-import { SystemModule } from '../system/system.module';
+import { CoreModule } from '../system/core.module';
 import { BottomButtonsComponent } from './bottom-buttons/bottom-buttons.component';
 import { CardComponent } from './card/card.component';
 import { DocumentCardComponent } from './document-card/document-card.component';
@@ -34,8 +34,6 @@ import { FormatCompanyCertsPipe } from './pipes/format-company-certs.pipe';
 import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-qr-code-modal.component';
 import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-type';
 import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing-evidence-field-type.pipe';
-
-
 
 @NgModule({
   declarations: [
@@ -66,7 +64,7 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
     CommonModule,
     // Clean up unnecessary
     RouterModule,
-    SystemModule,
+    CoreModule,
     FontAwesomeModule,
     SharedModule,
     FormsModule,

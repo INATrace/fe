@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { GlobalOrderEditComponent } from './global-order-edit/global-order-edit.component';
 import { StockOrderItemComponent } from './global-order-edit/stock-order-item/stock-order-item.component';
 import { ProductLabelOrdersAllOrdersComponent } from './product-label-orders/orders-all-orders/orders-all-orders.component';
@@ -23,8 +23,6 @@ import { ProductLabelOrdersDashboardComponent } from './product-label-orders/ord
 import { ProductLabelOrdersComponent } from './product-label-orders/product-label-orders.component';
 import { ProductOrdersRoutingModule } from './product-orders-routing.module';
 import { QuoteOrderListComponent } from './quote-stock-order-list/quote-stock-order-list.component';
-
-
 
 @NgModule({
   declarations: [
@@ -42,7 +40,7 @@ import { QuoteOrderListComponent } from './quote-stock-order-list/quote-stock-or
     CommonModule,
     ProductOrdersRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

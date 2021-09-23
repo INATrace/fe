@@ -12,15 +12,13 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { ProductLabelStockProcessingFaciltyListComponent } from './product-label-stock-processing-facilty-list/product-label-stock-processing-facilty-list.component';
 import { ProductLabelStockProcessingOrderDetailComponent } from './product-label-stock-processing-order-detail/product-label-stock-processing-order-detail.component';
 import { StockProcessingRoutingModule } from './stock-processing-routing.module';
 import { StockProcessingTabComponent } from './stock-processing-tab/stock-processing-tab.component';
 import { OrderFieldsComponent } from './product-label-stock-processing-order-detail/order-fields/order-fields.component';
-
-
 
 @NgModule({
   declarations: [
@@ -33,7 +31,7 @@ import { OrderFieldsComponent } from './product-label-stock-processing-order-det
     CommonModule,
     StockProcessingRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,
@@ -50,7 +48,6 @@ import { OrderFieldsComponent } from './product-label-stock-processing-order-det
     GoogleMapsModule,
     DragDropModule,
     StockCoreModule
-
   ]
 })
 export class StockProcessingModule { }

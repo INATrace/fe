@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
+import { CoreModule } from 'src/app/system/core.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { ProductLabelStockBulkPaymentDetailComponent } from './product-label-stock-bulk-payment-detail/product-label-stock-bulk-payment-detail.component';
 import { ProductLabelStockBulkPaymentListComponent } from './product-label-stock-bulk-payment-list/product-label-stock-bulk-payment-list.component';
@@ -20,8 +20,6 @@ import { ProductLabelStockPaymentDetailComponent } from './product-label-stock-p
 import { ProductLabelStockPaymentListComponent } from './product-label-stock-payment-list/product-label-stock-payment-list.component';
 import { StockPaymentsRoutingModule } from './stock-payments-routing.module';
 import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-tab.component';
-
-
 
 @NgModule({
   declarations: [
@@ -35,7 +33,7 @@ import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-t
     CommonModule,
     StockPaymentsRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,
