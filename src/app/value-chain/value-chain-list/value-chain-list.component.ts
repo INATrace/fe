@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { GetValueChainListUsingGET, ValueChainControllerService } from '../../api/api/valueChainController.service';
+import { GetValueChainListUsingGET, ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
-import { SortKeyAndOrder, SortOption, SortOrder } from '../shared/result-sorter/result-sorter-types';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
-import { ApiPaginatedResponseApiValueChain } from '../../api/model/apiPaginatedResponseApiValueChain';
+import { SortKeyAndOrder, SortOption, SortOrder } from '../../shared/result-sorter/result-sorter-types';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { ApiPaginatedResponseApiValueChain } from '../../../api/model/apiPaginatedResponseApiValueChain';
 import { Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 

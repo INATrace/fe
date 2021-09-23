@@ -70,7 +70,7 @@ import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiValueChainValidationScheme } from '../../value-chain-detail/validation';
+import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 
 @Component({
   selector: 'app-product-label',

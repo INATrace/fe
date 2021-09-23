@@ -1,27 +1,27 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GenericEditableItemComponent } from '../../shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { GenericEditableItemComponent } from '../../../shared/generic-editable-item/generic-editable-item.component';
+import { GlobalEventManagerService } from '../../../system/global-event-manager.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { generateFormFromMetadata } from '../../../shared/utils';
-import { ApiFacilityType } from '../../../api/model/apiFacilityType';
+import { generateFormFromMetadata } from '../../../../shared/utils';
+import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
-} from '../../settings/type-detail-modal/validation';
-import { ActiveFacilityTypeService } from '../../shared-services/active-facility-types.service';
-import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
-import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measure-unit-types.service';
+} from '../../../settings/type-detail-modal/validation';
+import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
+import { ApiMeasureUnitType } from '../../../../api/model/apiMeasureUnitType';
+import { ActiveMeasureUnitTypeService } from '../../../shared-services/active-measure-unit-types.service';
 import { ApiVCMeasureUnitTypeValidationScheme } from '../validation';
-import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
-import { GradeAbbreviationCodebook } from '../../shared-services/grade-abbreviation-codebook';
-import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
-import { ProcessingEvidenceTypeService } from '../../shared-services/processing-evidence-types.service';
-import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
-import { CodebookTranslations } from '../../shared-services/codebook-translations';
-import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
-import { ActiveSemiProductsService } from '../../shared-services/active-semi-products.service';
-import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
+import { ApiGradeAbbreviation } from '../../../../api/model/apiGradeAbbreviation';
+import { GradeAbbreviationCodebook } from '../../../shared-services/grade-abbreviation-codebook';
+import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
+import { ProcessingEvidenceTypeService } from '../../../shared-services/processing-evidence-types.service';
+import { ProcessingEvidenceTypeControllerService } from '../../../../api/api/processingEvidenceTypeController.service';
+import { CodebookTranslations } from '../../../shared-services/codebook-translations';
+import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
+import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
+import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 
 @Component({
   selector: 'app-value-chain-config-item',

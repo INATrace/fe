@@ -1,7 +1,7 @@
-import { SimpleValidationScheme } from '../../interfaces/Validation';
-import { ApiValueChain } from '../../api/model/apiValueChain';
+import { SimpleValidationScheme } from '../../../interfaces/Validation';
+import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { Validators } from '@angular/forms';
-import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
+import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 
 export const ApiValueChainValidationScheme = {
   validators: [],

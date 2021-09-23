@@ -12,10 +12,10 @@ export class AboutAppInfoService {
   ) { }
 
   get version() {
-    return environment.version
+    return environment.version;
   }
     openAboutApp() {
-      let buttonOkText = $localize`:@@aboutApp.info.button.ok:OK`
+      const buttonOkText = $localize`:@@aboutApp.info.button.ok:OK`;
       this.globalEventsManager.openMessageModal({
         type: 'general',
         title: $localize`:@@aboutApp.info.title:About app`,

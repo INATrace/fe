@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ValueChainControllerService } from '../../api/api/valueChainController.service';
+import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { finalize } from 'rxjs/operators';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
-import { defaultEmptyObject, generateFormFromMetadata } from '../../shared/utils';
-import { ApiValueChain } from '../../api/model/apiValueChain';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
+import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';
-import { ListEditorManager } from '../shared/list-editor/list-editor-manager';
-import { ApiFacilityType } from '../../api/model/apiFacilityType';
-import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
+import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
+import { ApiFacilityType } from '../../../api/model/apiFacilityType';
+import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme
-} from '../settings/type-detail-modal/validation';
-import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
-import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
-import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
-import { ApiResponseApiBaseEntity } from '../../api/model/apiResponseApiBaseEntity';
+} from '../../settings/type-detail-modal/validation';
+import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
+import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
+import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseEntity';
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
 

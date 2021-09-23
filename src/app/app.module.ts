@@ -84,9 +84,9 @@ import { FrontPageSlidingComponent } from './front-page/front-page-sliding/front
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
 import { CompanyUserRoleComponent } from './company/company-user-role/company-user-role.component';
-import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
-import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
-import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
+import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
+import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
+import { ValueChainConfigItemComponent } from './value-chain/value-chain-detail/value-chain-config-item/value-chain-config-item.component';
 import { CompanyDetailUsersComponent } from './company/company-detail/company-detail-users/company-detail-users.component';
 import { CompanyDetailFacilitiesComponent } from './company/company-detail/company-detail-facilities/company-detail-facilities.component';
 import { CompanyDetailFacilityAddComponent } from './company/company-detail/company-detail-facility-add/company-detail-facility-add.component';
