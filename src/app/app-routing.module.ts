@@ -7,7 +7,6 @@ import { ClearCookieConsentComponent } from './cookies/clear-cookie-consent/clea
 import { CookiesPageComponent } from './cookies/cookies-page/cookies-page.component';
 import { PrivacyPageComponent } from './cookies/privacy-page/privacy-page.component';
 import { TermsAndConditionsPageComponent } from './cookies/terms-and-conditions-page/terms-and-conditions-page.component';
-import { GetStartedPageComponent } from './get-started-page/get-started-page.component';
 import { KnowledgeBlogFrontComponent } from './knowledge-blog-front/knowledge-blog-front.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { GuestLayoutComponent } from './layout/guest/guest-layout/guest-layout.component';
@@ -38,8 +37,10 @@ import { CompanyDetailUsersComponent } from './company-detail/company-detail-use
 import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
 import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
 import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
-import { CompanyDetailProcessingActionsDetailComponent } from "./company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component";
 import { CurrencyListComponent } from './currency-list/currency-list.component';
+import {
+  CompanyDetailProcessingActionsDetailComponent
+} from './company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -72,13 +73,6 @@ const routes: Routes = [
     component: LandingPageLayoutComponent,
     children: [
       { path: '', component: LandingPageComponent, pathMatch: 'full' },
-    ]
-  },
-  {
-    path: 'products/new',
-    component: LandingPageLayoutComponent,
-    children: [
-      { path: '', component: GetStartedPageComponent, pathMatch: 'full' },
     ]
   },
   {

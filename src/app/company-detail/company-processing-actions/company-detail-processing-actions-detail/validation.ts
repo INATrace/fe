@@ -1,4 +1,4 @@
-import { FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {FormArray, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { ApiProcessingAction } from 'src/api/model/apiProcessingAction';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { multiFieldValidator, requiredFieldIfOtherFieldHasValue } from 'src/shared/validation';
@@ -31,10 +31,27 @@ export function requireInputSemiProduct(control: FormGroup): ValidationErrors | 
     return {required: true};
 }
 
+export function requiredTranslations(control: FormGroup): ValidationErrors | null {
+    if (!control || !control.value || !control.contains('translations')) {
+        return null;
+    }
+    const translations = control.value['translations'];
+    if (translations.length === 0) {
+        return {required: true};
+    }
+    // English translation is required, other are optional
+    const englishTranslation = translations.find(t => t.language === 'EN');
+    if (!englishTranslation || !englishTranslation.name || !englishTranslation.description) {
+        return {required: true};
+    }
+    return null;
+}
+
 export const ApiProcessingActionValidationScheme = {
     validators: [
         multiFieldValidator(['outputSemiProduct'], (group: FormGroup) => requiredFieldIfOtherFieldHasValue(group, 'outputSemiProduct', 'type', 'PROCESSING'), ['required']),
         multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
+        multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required']),
         // multiFieldValidator(['inputSemiProduct'], (group: FormGroup) => requireInputSemiProduct(group), ['required']),
     ],
     fields: {
@@ -77,8 +94,11 @@ export const ApiProcessingActionValidationScheme = {
               requiredDocumentTypes: {
                   validators: []
               },
-              type: {
+              translations: {
                   validators: [Validators.required]
               },
+              type: {
+                  validators: [Validators.required]
+              }
     }
 } as SimpleValidationScheme<ApiProcessingAction>;

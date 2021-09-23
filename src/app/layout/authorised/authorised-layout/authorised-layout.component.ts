@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 
 @Component({
@@ -15,12 +14,10 @@ export class AuthorisedLayoutComponent implements OnInit {
   tabCommunicationService: TabCommunicationService;
 
   constructor() {
-    this.tabCommunicationService = new TabCommunicationService()
+    this.tabCommunicationService = new TabCommunicationService();
   }
 
   ngOnInit(): void {
   }
-
-
 
 }

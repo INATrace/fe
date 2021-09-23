@@ -164,7 +164,11 @@
                             <div class="af-c12">
                                 <div class="d-flex af-translation-language">
                                     <div (click)="selectLanguage('EN')"
-                                         [ngClass]="selectedLanguage === 'EN' ? 'af-translation-language--selected' : ''">
+                                         [ngClass]="selectedLanguage === 'EN'
+                                            ? 'af-translation-language--selected'
+                                            : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
+                                                ? 'af-translation-language--error'
+                                                : '')">
                                         <img src="../../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
                                         <span>EN</span>
                                     </div>
@@ -189,55 +193,63 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <textinput
-                                label="Name of process"
-                                placeholder="Enter name"
-                                i18n-label="@@companyDetailProcessingActions.textInput.name.label"
-                                i18n-placeholder="@@companyDetailProcessingActions.textInput.name.helpText"
-                                [form]="form.get('name')"
-                                [isInvalid]="submitted && form.get('name').invalid"
-                                style="width: 100%">
-                            <ng-container *ngIf="submitted">
-                                <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.name.error">
-                                        <span>
-                                          Name of process is required
-                                        </span>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </textinput>
+                        <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
+                            <ng-container *ngIf="translation.value.language === selectedLanguage">
 
-                        <textinput
-                                label="Description"
-                                helpText="Enter short processing action description."
-                                i18n-label="@@companyDetailProcessingActions.textInput.description.label"
-                                i18n-helpText="@@companyDetailProcessingActions.textInput.description.helpText"
-                                [form]="form.get('description')"
-                                [textarea]="true"
-                                [isInvalid]="submitted && form.get('description').invalid"
-                                style="width: 100%">
-                            <ng-container *ngIf="submitted">
-                                <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.description.error">
-                                        <span>
-                                          Description is required
-                                        </span>
-                                    </div>
-                                </div>
+                                <textinput
+                                        label="Name of process"
+                                        placeholder="Enter name"
+                                        i18n-label="@@companyDetailProcessingActions.textInput.name.label"
+                                        i18n-placeholder="@@companyDetailProcessingActions.textInput.name.helpText"
+                                        [form]="this.form.get('translations.' + i + '.name')"
+                                        [isInvalid]="translation.value.language === 'EN' && submitted && !this.form.get('translations.' + i + '.name').value"
+                                        style="width: 100%">
+                                    <ng-container *ngIf="submitted && translation.value.language === 'EN' && !this.form.get('translations.' + i + '.name').value">
+                                        <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required"
+                                                 i18n-label="@@companyDetailProcessingActions.textInput.name.error">
+                                                <span>
+                                                  Name of process is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </textinput>
+
+                                <textinput
+                                        label="Description"
+                                        placeholder="..."
+                                        helpText="Enter short processing action description."
+                                        i18n-label="@@companyDetailProcessingActions.textInput.description.label"
+                                        i18n-helpText="@@companyDetailProcessingActions.textInput.description.helpText"
+                                        [form]="this.form.get('translations.' + i + '.description')"
+                                        [textarea]="true"
+                                        [isInvalid]="translation.value.language === 'EN' && submitted && !this.form.get('translations.' + i + '.description').value"
+                                        style="width: 100%">
+                                    <ng-container *ngIf="submitted && translation.value.language === 'EN' && !this.form.get('translations.' + i + '.description').value">
+                                        <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required"
+                                                 i18n-label="@@companyDetailProcessingActions.textInput.description.error">
+                                                <span>
+                                                  Description is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </textinput>
                             </ng-container>
-                        </textinput>
+                        </ng-container>
 
                         <textinput
                                 label="Public timeline label"
                                 placeholder="Enter timeline label"
                                 i18n-label="@@companyDetailProcessingActions.textInput.publicTimelineLabel.label"
                                 i18n-placeholder="@@companyDetailProcessingActions.textInput.publicTimelineLabel.helpText"
-                                [form]="form.get('publicTimelineLabel')"
-                                [isInvalid]="submitted && form.get('publicTimelineLabel').invalid"
+                                [form]="this.form.get('publicTimelineLabel')"
+                                [isInvalid]="submitted && this.form.get('publicTimelineLabel').invalid"
                                 style="width: 100%">
                             <ng-container *ngIf="submitted">
-                                <div *ngIf="form.get('publicTimelineLabel').errors as errors" class="sc-invalid-feedback">
+                                <div *ngIf="this.form.get('publicTimelineLabel').errors as errors" class="sc-invalid-feedback">
                                     <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.publicTimelineLabel.error">
                                         <span>
                                           Public timeline label
@@ -288,11 +300,11 @@
                                 </div>
                             </div>
                         </ng-container>
+
                         <ng-container *ngIf="this.form.get('requiredEvidenceFields')">
                             <div *ngFor="let field of this.form.get('requiredEvidenceFields').value; index as i">
                                 <div class="af-row user-line pl-3 pr-3 mb-1">
                                     <div class="af-c6 d-flex align-items-center">{{field?.label}}</div>
-
                                     <div class="af-c5 d-flex align-items-center">
                                         <checkbox-input
                                                 [noBottomMargin]="true"
@@ -300,7 +312,6 @@
                                                 (onClick)="cbSelectedSP(field, i, 'mandatory')"
                                                 [checked]="field.mandatory">
                                         </checkbox-input>
-                                        <!--                                        <ng-container class="af-row" *ngIf="this.transactionType === 'SHIPMENT'">-->
                                         <checkbox-input
                                                 [noBottomMargin]="true"
                                                 class="ml-1"
@@ -308,9 +319,6 @@
                                                 (onClick)="cbSelectedSP(field, i, 'quote')"
                                                 [checked]="field.requiredOnQuote">
                                         </checkbox-input>
-
-                                        <!--                                        </ng-container>-->
-                                        <!-- <div class="ml-1" i18n="@@productLabelProcessingAction.checkbox.mandatory">Mandatory</div> -->
                                     </div>
                                     <div class="af-c1 d-flex align-items-center" (click)="removeEvidenceField(field)">
                                         <fa-icon
@@ -358,11 +366,11 @@
                                 </div>
                             </div>
                         </ng-container>
+
                         <ng-container *ngIf="this.form.get('requiredDocumentTypes')">
                             <div *ngFor="let doc of this.form.get('requiredDocumentTypes').value; index as i">
                                 <div class="af-row user-line pl-3 pr-3 mb-1">
                                     <div class="af-c6 d-flex align-items-center">{{doc?.label}}</div>
-
                                     <div class="af-c5 d-flex align-items-center">
                                         <checkbox-input
                                                 [noBottomMargin]="true"
@@ -370,7 +378,6 @@
                                                 (onClick)="cbSelectedSP(doc, i, 'mandatory')"
                                                 [checked]="doc.mandatory">
                                         </checkbox-input>
-                                        <!--                                        <ng-container class="af-row" *ngIf="this.transactionType === 'SHIPMENT'">-->
                                         <checkbox-input
                                                 [noBottomMargin]="true"
                                                 class="ml-1"
@@ -391,8 +398,6 @@
                                                style="max-width: 5rem;"
                                                [ngModel]="doc.requiredOneOfGroupIdForQuote"
                                                (ngModelChange)="changeRequiredOneOf($event, doc)">
-                                        <!--                                        </ng-container>-->
-                                        <!-- <div class="ml-1" i18n="@@productLabelProcessingAction.checkbox.mandatory">Mandatory</div> -->
                                     </div>
                                     <div class="af-c1 d-flex align-items-center" (click)="removeEvidenceDoc(doc)">
                                         <fa-icon
@@ -421,8 +426,8 @@
                         <button class="btn mr-2"
                                 type="button"
                                 i18n="@@companyDetailProcessingActions.button.save"
-                                (click)="saveProcessingAction()"
-                                [disabled]="!this.form.valid">
+                                (click)="saveProcessingAction()">
+                                <!--[disabled]="!this.form.valid"-->
                             <span>Save</span>
                         </button>
                     </div>

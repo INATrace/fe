@@ -63,7 +63,7 @@ export class StockPurchaseOrderTabComponent extends StockTabCoreComponent implem
   ngOnInit() {
     super.ngOnInit();
     setSelectedIdFieldFromQueryParams(this, this.route, 'facilityId', this.facilityForStockOrderForm,
-      this.facilityCodebook, (val) => this.facilityForStockOrderChanged(val));
+      this.facilityCodebook, (val) => this.facilityForStockOrderChanged(val)).then();
   }
 
 

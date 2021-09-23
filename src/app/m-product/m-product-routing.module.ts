@@ -9,7 +9,6 @@ import { LabelRedirectToProductPageComponent } from './product-label/label-redir
 import { ProductLabelComponent } from './product-label/product-label.component';
 import { ProductListComponent } from './product-list/product-list.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -51,8 +50,8 @@ const routes: Routes = [
   { path: ':id/f-p-q-explorer', loadChildren: () => import('./f-p-q-explorer/f-p-q-explorer.module').then(m => m.FPQExplorerModule) },
   { path: ':id/knowledge-blog', loadChildren: () => import('./knowledge-block/knowledge-block.module').then(m => m.KnowledgeBlockModule) },
   { path: ':id/orders', loadChildren: () => import('./product-orders/product-orders.module').then(m => m.ProductOrdersModule) },
-  { path: ':id/stakeholders', loadChildren: () => import('./product-stakeholders/product-stakeholders.module').then(m => m.ProductStakeholdersModule) },
-  { path: ':id/supply', loadChildren: () => import('./product-supply/product-supply.module').then(m => m.ProductSupplyModule) },
+  { path: ':id/stakeholders', loadChildren: () => import('./product-stakeholders/product-stakeholders.module')
+      .then(m => m.ProductStakeholdersModule) },
   { path: ':id/stock', loadChildren: () => import('./product-stock/product-stock.module').then(m => m.ProductStockModule) },
   {
     path: ':id/labels/:labelId',
@@ -100,7 +99,6 @@ const routes: Routes = [
       drobtinice: null
     }
   },
-
 ];
 
 @NgModule({

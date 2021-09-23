@@ -4,7 +4,6 @@
       <div class="col">
         <ng-container *ngIf="products$ | async as products">
 
-
           <div class="main-inside-top content-element">
             <div class="d-flex justify-content-between content-element--row1">
               <div class="title-page content-element--title" i18n="@@productList.title.companies">Products</div>
@@ -63,12 +62,8 @@
                 </app-search-textinput>
               </div>
             </div>
-
           </div>
 
-
-
-          <!-- <div class="main-inside-main"> -->
           <div class="row" style="margin-top: 30px;">
             <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products.items">
               <app-product-card
@@ -76,10 +71,11 @@
               </app-product-card>
             </div>
           </div>
+
           <div *ngIf="products && products.items && products.items.length == 0" class="no-list-results" i18n="@@productList.noProducts">
             No products
           </div>
-          <!-- </div> -->
+
           <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
             <ngb-pagination
               [(page)]="page"

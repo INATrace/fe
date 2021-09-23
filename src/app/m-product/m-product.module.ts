@@ -33,8 +33,6 @@ import { ProductCardComponent } from './product-list/product-card/product-card.c
 import { ProductListComponent } from './product-list/product-list.component';
 import { LanguageForLabelModalComponent } from './product-label/language-for-label-modal/language-for-label-modal.component';
 
-
-
 @NgModule({
   declarations: [
     ProductListComponent,
