@@ -66,7 +66,6 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { WelcomeScreenUnconfirmedComponent } from './welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
-import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPageFirstComponent } from './front-page/front-page-first/front-page-first.component';
 import { FrontPageJourneyComponent } from './front-page/front-page-journey/front-page-journey.component';
 import { FrontPageFairPricesComponent } from './front-page/front-page-fair-prices/front-page-fair-prices.component';
@@ -152,7 +151,6 @@ export function getConfiguration(): Configuration {
     SelectedUserCompanyModalComponent,
     SettingsAdditionalComponent,
     SettingsTypesComponent,
-    FrontPageComponent,
     FrontPageFirstComponent,
     FrontPageJourneyComponent,
     FrontPageFairPricesComponent,

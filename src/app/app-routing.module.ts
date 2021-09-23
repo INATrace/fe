@@ -27,7 +27,6 @@ import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
@@ -411,15 +410,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 's/privacy-policy',
-    component: FrontPagePrivacyComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null,
-      action: 'privacy_only'
-    }
-  },
-  {
     path: 's/:uuid/:soid/terms-of-use',
     component: FrontPageTermsComponent,
     pathMatch: 'full',
@@ -428,9 +418,13 @@ const routes: Routes = [
     }
   },
   {
-    path: 'p-cd',
-    component: FrontPageComponent,
-    pathMatch: 'full'
+    path: 's/privacy-policy',
+    component: FrontPagePrivacyComponent,
+    pathMatch: 'full',
+    data: {
+      drobtinice: null,
+      action: 'privacy_only'
+    }
   },
   {
     path: 'blog/:productId/:type/:knowledgeBlogId',
