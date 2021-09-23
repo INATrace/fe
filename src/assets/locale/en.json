@@ -2736,6 +2736,7 @@
     "systemLeftPanel.sideTitle.currencies": "Currencies",
     "currencyList.tableCol.action.enable": "Enable",
     "currencyList.tableCol.action.disable": "Disable",
+    "currencyList.noCurrencies": "No currencies",
     "companyDetail.base.currency": "Base currency"
   }
 }
