@@ -82,10 +82,10 @@
 
                     <!-- <img> -->
                     <div class="af-user-language--selected">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="assets/icons/icon-flag--germany.svg" alt="Select DE lang">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
-                      <img *ngIf="this.userProfileForm.get('language').value === 'ES'" src="assets/icons/icon-flag--spain.svg" alt="Select ES lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+                      <img *ngIf="this.userProfileForm.get('language').value === 'ES'" src="../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
                       <span>{{this.userProfileForm.get('language').value}}</span>
                     </div>
                   </div>
@@ -99,19 +99,19 @@
                   <div class="d-flex af-user-language">
 
                     <div (click)="selectLanguage('EN')" *ngIf="this.userProfileForm.get('language').value != 'EN'">
-                      <img src="assets/icons/icon-flag--united-kingdom.svg">
+                      <img src="../../../assets/icons/icon-flag--united-kingdom.svg">
                       <span>EN</span>
                     </div>
                     <div (click)="selectLanguage('DE')" *ngIf="this.userProfileForm.get('language').value != 'DE'">
-                      <img src="assets/icons/icon-flag--germany.svg">
+                      <img src="../../../assets/icons/icon-flag--germany.svg">
                       <span>DE</span>
                     </div>
                     <div (click)="selectLanguage('RW')" *ngIf="this.userProfileForm.get('language').value != 'RW'">
-                      <img src="assets/icons/icon-flag--rwanda.svg">
+                      <img src="../../../assets/icons/icon-flag--rwanda.svg">
                       <span>RW</span>
                     </div>
                     <div (click)="selectLanguage('ES')" *ngIf="this.userProfileForm.get('language').value != 'ES'">
-                      <img src="assets/icons/icon-flag--spain.svg">
+                      <img src="../../../assets/icons/icon-flag--spain.svg">
                       <span>ES</span>
                     </div>
                   </div>

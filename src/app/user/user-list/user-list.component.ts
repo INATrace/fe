@@ -4,16 +4,13 @@ import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { AuthService } from '../system/auth.service';
+import { AuthService } from '../../system/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
-import { EnumSifrant } from '../shared-services/enum-sifrant';
+import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ApiPaginatedResponseApiUserBase } from 'src/api/model/apiPaginatedResponseApiUserBase';
-import { faTimes, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { UserService } from 'src/api-chain/api/user.service';
-import { ChainUser } from 'src/api-chain/model/chainUser';
-import { dbKey } from 'src/shared/utils';
-import { SortOption } from '../shared/result-sorter/result-sorter-types';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-user-list',
@@ -23,7 +20,6 @@ import { SortOption } from '../shared/result-sorter/result-sorter-types';
 export class UserListComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
-  faFilter = faFilter;
 
   users = [];
   @ViewChild(UserDetailComponent) userDetails;
@@ -73,7 +69,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           limit: this.pageSize
         };
       }).pipe(
-      tap(val => this.globalEventsManager.showLoading(true)),
+      tap(() => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
         const myUsers = params.myUsers;
         const newParams = { ...params };
@@ -94,7 +90,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           return resp.data;
         }
       }),
-      tap(val => this.globalEventsManager.showLoading(false)),
+      tap(() => this.globalEventsManager.showLoading(false)),
       shareReplay(1)
   );
 
@@ -127,7 +123,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     {
       key: 'actions',
       name: $localize`:@@userList.sortOptions.actions.name:Actions`,
-      // defaultSortOrder?: SortOrder;
       inactive: true
     }
   ];
@@ -138,8 +133,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     private userController: UserControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     private authService: AuthService,
-    private router: Router,
-    private chainUserService: UserService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -195,9 +189,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   async activate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.userController.activateUserUsingPOST('ACTIVATE_USER', { id }).pipe(take(1)).toPromise();
-      if (res.status === 'OK') { this.mapToChain(id); }
-      else { throw Error(); }
+      await this.userController.activateUserUsingPOST('ACTIVATE_USER', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({
@@ -214,9 +206,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   async deactivate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.userController.activateUserUsingPOST('DEACTIVATE_USER', { id }).pipe(take(1)).toPromise();
-      if (res.status === 'OK') { this.mapToChain(id); }
-      else { throw Error(); }
+      await this.userController.activateUserUsingPOST('DEACTIVATE_USER', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({
@@ -258,10 +248,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   async setAdmin(id, role) {
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.userController
-          .activateUserUsingPOST(role === 'ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
-      if (res.status === 'OK') { this.mapToChain(id); }
-      else { throw Error(); }
+      await this.userController
+        .activateUserUsingPOST(role === 'ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({
@@ -291,24 +279,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   showPagination() {
     return ((this.showedUsers - this.pageSize) === 0 && this.allUsers >= this.pageSize) || this.page > 1;
-  }
-
-  async mapToChain(id) {
-    if (!this.isAdmin) { return; }
-    const res = await this.userController.getProfileForAdminUsingGET(id).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) {
-      const postUser = res.data;
-      delete postUser['actions'];
-      delete postUser['companyIds'];
-      delete postUser['language'];
-      const resChain = await this.chainUserService.getUserByAFId(id).pipe(take(1)).toPromise();
-      if (resChain && 'OK' === resChain.status && resChain.data) {
-        postUser['_id'] = dbKey(resChain.data);
-        postUser['_rev'] = resChain.data._rev;
-      }
-      console.log(postUser);
-      await this.chainUserService.postUser(postUser as ChainUser).pipe(take(1)).toPromise();
-    }
   }
 
 }

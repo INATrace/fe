@@ -24,9 +24,9 @@ import { SettingsTypesComponent } from './settings/settings-types/settings-types
 import { AuthGuardService } from './shared-services/auth-guard.service';
 import { DeactivateGuardService } from './shared-services/deactivate-guard.service';
 import { VersionComponent } from './shared/version/version.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserHomeComponent } from './user-home/user-home.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserHomeComponent } from './user/user-home/user-home.component';
+import { UserListComponent } from './user/user-list/user-list.component';
 import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';

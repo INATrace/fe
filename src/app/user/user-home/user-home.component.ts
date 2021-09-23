@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../system/auth.service';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
-import { WelcomeScreenUnconfirmedComponent } from '../welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
+import { AuthService } from '../../system/auth.service';
+import { NgbModalImproved } from '../../system/ngb-modal-improved/ngb-modal-improved.service';
+import { WelcomeScreenUnconfirmedComponent } from '../../welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { EnumSifrant } from '../shared-services/enum-sifrant';
-import { SelectedUserCompanyModalComponent } from '../selected-user-company-modal/selected-user-company-modal.component';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { EnumSifrant } from '../../shared-services/enum-sifrant';
+import { SelectedUserCompanyModalComponent } from '../../selected-user-company-modal/selected-user-company-modal.component';
+import { GlobalEventManagerService } from '../../system/global-event-manager.service';
 import { dbKey } from 'src/shared/utils';
-import { CompanyControllerService } from '../../api/api/companyController.service';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-user-home',
