@@ -579,6 +579,7 @@
     "ui.attachmentUploader.uploader.onWhenAddingFileFailed.mimeType.error.title": "Wrong file format!",
     "transactionType.processing": "Processing",
     "transactionType.genera": "General",
+    "authorisedSideNav.link.company": "Company",
     "authorisedSideNav.link.products": "Products",
     "authorisedSideNav.link.system": "System",
     "breadCrumb.collectors.farmer": "Farmer",

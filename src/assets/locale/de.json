@@ -257,6 +257,7 @@
     "aboutApp.info.button.ok": "OK",
     "aboutApp.info.title": "Über diese App",
     "aboutApp.info.message": "App Version: {$PH}",
+    "authorisedSideNav.link.company": "Company",
     "authorisedSideNav.link.products": "Produkte",
     "authorisedSideNav.link.system": "System",
     "userBox.dropdown.home": "Startseite",

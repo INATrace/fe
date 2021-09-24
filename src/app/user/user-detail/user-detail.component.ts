@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserControllerService } from 'src/api/api/userController.service';
@@ -9,30 +9,31 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { UserService } from 'src/api-chain/api/user.service';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
-import { OrganizationService } from 'src/api-chain/api/organization.service';
-import { dbKey } from 'src/shared/utils';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ApiUserRole } from 'src/api/model/apiUserRole';
-import { ApiUserBaseRoleEnum } from 'src/api-chain/model/apiUserBaseRoleEnum';
 
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
-export class UserDetailComponent extends ComponentCanDeactivate implements OnInit {
+export class UserDetailComponent extends ComponentCanDeactivate implements OnInit, OnDestroy {
 
-  subscriptions: Subscription[] = []
+  subscriptions: Subscription[] = [];
   userProfileForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
   userId: number;
-  showPassReqText: boolean = false;
+  showPassReqText = false;
   userData = null;
-  title: string = "";
-  unconfirmedUser: boolean = false;
+  title = '';
+  unconfirmedUser = false;
   returnUrl: string;
+
+  myCompanies = null;
+
+  roleCodebook = EnumSifrant.fromObject(this.role);
 
   constructor(
     private location: Location,
@@ -58,7 +59,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe())
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   public canDeactivate(): boolean {
@@ -66,58 +67,52 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   }
 
   get mode() {
-    let id = this.route.snapshot.params.id
-    return id == null ? 'userProfileView' : 'adminUserProfileView'
+    const id = this.route.snapshot.params.id;
+    return id == null ? 'userProfileView' : 'adminUserProfileView';
   }
 
   getUserProfile(): void {
     this.globalEventsManager.showLoading(true);
-    let sub = this.userController.getProfileForUserUsingGET().subscribe(user => {
+    const sub = this.userController.getProfileForUserUsingGET().subscribe(user => {
       this.createUserProfileForm(user.data);
-      if (user.data) this.prepareMyCompanies(user.data);
+      if (user.data) { this.prepareMyCompanies(user.data).then(); }
       this.userData = user.data;
       this.globalEventsManager.showLoading(false);
-    }, error => this.globalEventsManager.showLoading(false))
+    }, () => this.globalEventsManager.showLoading(false));
     this.subscriptions.push(sub);
   }
 
   getUserProfileAsAdmin(): void {
     this.globalEventsManager.showLoading(true);
 
-    let sub = this.userController.getProfileForAdminUsingGET(this.userId)
+    const sub = this.userController.getProfileForAdminUsingGET(this.userId)
       .subscribe(user => {
         this.createUserProfileForm(user.data);
-        if (user.data) this.prepareMyCompanies(user.data);
+        if (user.data) { this.prepareMyCompanies(user.data).then(); }
         this.userData = user.data;
-        this.unconfirmedUser = user.data.status === "UNCONFIRMED";
+        this.unconfirmedUser = user.data.status === 'UNCONFIRMED';
         this.globalEventsManager.showLoading(false);
-      }, error => {
+      }, () => {
         this.globalEventsManager.showLoading(false);
       });
     this.subscriptions.push(sub);
   }
 
   goBack(): void {
-    // if (this.mode === 'userProfileView') {
-    //   this.router.navigate(['home']);
-    // } else {
-    // this.location.back();
-    // }
-    if (this.returnUrl) this.router.navigateByUrl(this.returnUrl);
-    else this.router.navigate(['home']);
+    if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl).then(); }
+    else { this.router.navigate(['home']).then(); }
   }
 
-  myCompanies = null;
   async prepareMyCompanies(data) {
-    let tmp = [];
-    if (!data) return
-    for (let id of data.companyIds) {
-      let res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
+    const tmp = [];
+    if (!data) { return; }
+    for (const id of data.companyIds) {
+      const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         tmp.push({
           company_id: id,
           company_name: res.data.name
-        })
+        });
       }
     }
     this.myCompanies = tmp;
@@ -148,14 +143,14 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       email: new FormControl(user.email),
       language: new FormControl(user.language),
       role: new FormControl(user.role, [Validators.required])
-    })
+    });
   }
 
   save() {
     if (this.mode === 'userProfileView') {
-      this.saveUserProfile();
+      this.saveUserProfile().then();
     } else {
-      this.saveAsAdmin();
+      this.saveAsAdmin().then();
     }
   }
 
@@ -164,10 +159,14 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     if (!this.userProfileForm.invalid) {
       try {
         this.globalEventsManager.showLoading(true);
-        let res = await this.userController.updateProfileUsingPUT({ "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
+        const res = await this.userController.updateProfileUsingPUT({
+          name: this.userProfileForm.get('name').value,
+          surname: this.userProfileForm.get('surname').value,
+          language: this.userProfileForm.get('language').value
+        }).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
-          this.userProfileForm.markAsPristine()
-          if (goBack) this.goBack();
+          this.userProfileForm.markAsPristine();
+          if (goBack) { this.goBack(); }
         }
       } catch (e) {
 
@@ -183,80 +182,70 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
       try {
         this.globalEventsManager.showLoading(true);
-        let resRole = await this.userController.activateUserUsingPOST('SET_USER_ROLE', { id: this.userId, role: this.userProfileForm.get('role').value as ApiUserRole.RoleEnum  } as ApiUserRole).pipe(take(1)).toPromise();
-        if (resRole && resRole.status === 'OK') {
-        }
-        let res = await this.userController.adminUpdateProfileUsingPUT({ "id": this.userId, "name": this.userProfileForm.get('name').value, "surname": this.userProfileForm.get('surname').value, "language": this.userProfileForm.get('language').value }).pipe(take(1)).toPromise();
-        if (res && res.status == 'OK') {
-          this.userProfileForm.markAsPristine()
-          if (goBack) this.goBack();
+
+        await this.userController.activateUserUsingPOST('SET_USER_ROLE', {
+          id: this.userId,
+          role: this.userProfileForm.get('role').value as ApiUserRole.RoleEnum
+        } as ApiUserRole).pipe(take(1)).toPromise();
+
+        const res = await this.userController.adminUpdateProfileUsingPUT({
+          id: this.userId,
+          name: this.userProfileForm.get('name').value,
+          surname: this.userProfileForm.get('surname').value,
+          language: this.userProfileForm.get('language').value
+        }).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK') {
+          this.userProfileForm.markAsPristine();
+          if (goBack) { this.goBack(); }
         }
       } catch (e) {
 
       } finally {
         this.globalEventsManager.showLoading(false);
       }
-
     }
-  }
-
-  async mapToChain() {
-    this.userData['name'] = this.userProfileForm.get('name').value;
-    this.userData['surname'] = this.userProfileForm.get('surname').value
-
-    let res = await this.chainUserService.getUserByAFId(this.userData.id).pipe(take(1)).toPromise();
-    if (res && 'OK' === res.status && res.data) {
-      this.userData['_id'] = dbKey(res.data);
-      this.userData['_rev'] = res.data._rev;
-    }
-    delete this.userData['actions']
-    delete this.userData['companyIds']
-    delete this.userData['language']
-    let resP = await this.chainUserService.postUser(this.userData).pipe(take(1)).toPromise();
-
   }
 
   resetPasswordRequest() {
 
     this.globalEventsManager.showLoading(true);
-    let sub = this.userController.requestResetPasswordUsingPOST({
+    const sub = this.userController.requestResetPasswordUsingPOST({
       email: this.userProfileForm.get('email').value
-    }).subscribe(val => {
-      sub.unsubscribe()
+    }).subscribe(() => {
+      sub.unsubscribe();
       this.globalEventsManager.showLoading(false);
-      // this.showPassReqSentModal();
     },
-      error => {
+      () => {
         this.globalEventsManager.showLoading(false);
       }
-    )
+    );
   }
 
   async showPassReqSentModal() {
-    let result = await this.globalEventsManager.openMessageModal({
+    const result = await this.globalEventsManager.openMessageModal({
       type: 'info',
       message: $localize`:@@userDetail.showPassReqSentModal.message:Are you sure you want to send password request to ${this.userProfileForm.get('email').value}`,
       options: { centered: true },
       dismissable: false
     });
-    if (result !== "ok") return;
+    if (result !== 'ok') { return; }
     this.resetPasswordRequest();
   }
 
   async confirmEmail() {
     try {
-      this.globalEventsManager.showLoading(true)
-      let res = await this.userController.activateUserUsingPOST('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
-      if (res.status != 'OK') throw Error()
+      this.globalEventsManager.showLoading(true);
+      const res = await this.userController.activateUserUsingPOST('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
+      if (res.status !== 'OK') { throw Error(); }
     } catch (e) {
       this.globalEventsManager.push({
         action: 'error',
         notificationType: 'error',
         title: $localize`:@@userDetail.confirmEmail.error.title:Error!`,
         message: $localize`:@@userDetail.confirmEmail.error.message:Cannot confirm user email.`
-      })
+      });
     } finally {
-      this.globalEventsManager.showLoading(false)
+      this.globalEventsManager.showLoading(false);
     }
   }
 
@@ -264,26 +253,23 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     this.showPassReqText = !this.showPassReqText;
   }
 
-
   selectLanguage(lang: string) {
     this.userProfileForm.get('language').setValue(lang as ApiUser.LanguageEnum);
     if (this.mode === 'userProfileView') {
-      this.saveUserProfile(false).then(() => this.getUserProfile()).then(() => LanguageCodeHelper.setCurrentLocale(lang.toLowerCase()));;
+      this.saveUserProfile(false).then(() => this.getUserProfile()).then(() => LanguageCodeHelper.setCurrentLocale(lang.toLowerCase()));
     } else {
       this.saveAsAdmin(false).then(() => this.getUserProfileAsAdmin());
     }
   }
 
-
   get role() {
-    let obj = {}
+    const obj = {};
     obj['USER'] = $localize`:@@userDetail.role.user:User`;
     obj['MANAGER'] = $localize`:@@userDetail.role.manager:Manager`;
     obj['ACCOUNTANT'] = $localize`:@@userDetail.role.accountant:Accountant`;
     obj['ADMIN'] = $localize`:@@userDetail.role.admin:Admin`;
     return obj;
   }
-  roleCodebook = EnumSifrant.fromObject(this.role)
 
 }
 

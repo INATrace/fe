@@ -260,6 +260,7 @@
     "aboutApp.info.button.ok": "OK",
     "aboutApp.info.title": "Ibyerekeye porogaramu",
     "aboutApp.info.message": "verisiyo ya porogaramu: {$PH}",
+    "authorisedSideNav.link.company": "Company",
     "authorisedSideNav.link.products": "Ibicuruzwa",
     "authorisedSideNav.link.system": "Sisiteme",
     "userBox.dropdown.home": "Ahabanza",

@@ -1295,6 +1295,7 @@
     "ui.attachmentUploader.uploader.onWhenAddingFileFailed.mimeType.error.title": "Formato de archivo incorrecto!",
     "transactionType.processing": "Procesando",
     "transactionType.genera": "General",
+    "authorisedSideNav.link.company": "Company",
     "authorisedSideNav.link.products": "Productos",
     "authorisedSideNav.link.system": "Sistema",
     "breadCrumb.collectors.farmer": "Agricultor",
