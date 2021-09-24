@@ -23,6 +23,7 @@ import { ProductLabelOrdersDashboardComponent } from './product-label-orders/ord
 import { ProductLabelOrdersComponent } from './product-label-orders/product-label-orders.component';
 import { ProductOrdersRoutingModule } from './product-orders-routing.module';
 import { QuoteOrderListComponent } from './quote-stock-order-list/quote-stock-order-list.component';
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { QuoteOrderListComponent } from './quote-stock-order-list/quote-stock-or
   imports: [
     CommonModule,
     ProductOrdersRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
     CoreModule,
     ComponentsModule,

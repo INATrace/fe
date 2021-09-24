@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { FPQExplorerRoutingModule } from './f-p-q-explorer-routing.module';
 import { ProductLabelFPQExplorerComponent } from './product-label-f-p-q-explorer/product-label-f-p-q-explorer.component';
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProductLabelFPQExplorerComponent } from './product-label-f-p-q-explorer
   imports: [
     CommonModule,
     FPQExplorerRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
     CoreModule,
     ComponentsModule,
@@ -35,12 +37,11 @@ import { ProductLabelFPQExplorerComponent } from './product-label-f-p-q-explorer
     ContentsModule,
     EllipsisModule,
     QRCodeModule,
-    // BrowserAnimationsModule,
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbPaginationModule,
     GoogleMapsModule,
-    DragDropModule,
+    DragDropModule
   ]
 })
 export class FPQExplorerModule { }

@@ -12,7 +12,6 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { FileUploadModule } from 'ng2-file-upload';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { FileSaverModule } from 'ngx-filesaver';
-// import { ComponentsModule } from '../components/components.module';
 import { NgbModalImprovedModule } from '../core/ngb-modal-improved/ngb-modal-improved.module';
 import { AccordionPanelComponent } from './accordion/accordion-panel.component';
 import { AccordionComponent } from './accordion/accordion.component';

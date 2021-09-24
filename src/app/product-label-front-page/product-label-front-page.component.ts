@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiLogRequest } from 'src/api/model/apiLogRequest';
 import { take } from 'rxjs/operators';
-import { ProductLabelFrontFeedbackComponent } from '../product-label-front-feedback/product-label-front-feedback.component';
+import { ProductLabelFrontFeedbackComponent } from './product-label-front-feedback/product-label-front-feedback.component';
 import _ from 'lodash-es';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 

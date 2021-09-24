@@ -25,6 +25,7 @@ import { StakeholdersCustomersComponent } from './product-label-stakeholders/sta
 import { StakeholdersFarmersComponent } from './product-label-stakeholders/stakeholders-farmers/stakeholders-farmers.component';
 import { StakeholdersValueChainComponent } from './product-label-stakeholders/stakeholders-value-chain/stakeholders-value-chain.component';
 import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing.module';
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing
   imports: [
     CommonModule,
     ProductStakeholdersRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
     CoreModule,
     ComponentsModule,

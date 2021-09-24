@@ -17,21 +17,21 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
   title: string = $localize`:@@productLabelLeftPanelContent.title:Product`;
 
   @Input()
-  showIcon: boolean = true;
+  showIcon = true;
 
   @Input()
-  create: boolean = false;
+  create = false;
 
   faTrashAlt = faTrashAlt;
 
-  imgStorageKey: String = null;
+  imgStorageKey: string = null;
 
   productId = this.route.snapshot.params.id;
 
   @Input()
-  changed: Boolean = false;
+  changed = false;
 
-  showKnowledgeBlog: boolean = false;
+  showKnowledgeBlog = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,44 +42,43 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.create) return;
-    this.preparePhoto();
-    this.knowledgeBlogSection();
+    if (this.create) { return; }
+    this.preparePhoto().then();
+    this.knowledgeBlogSection().then();
   }
 
   async preparePhoto() {
-    let resp = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
-    if (resp.status == "OK" && resp.data && resp.data.photo) {
+    const resp = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
+    if (resp.status === 'OK' && resp.data && resp.data.photo) {
       this.imgStorageKey = resp.data.photo.storageKey;
     }
   }
 
   async knowledgeBlogSection() {
-    let res = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
-    if (res.status == "OK" && res.data && res.data.knowledgeBlog) {
+    const res = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
+    if (res.status === 'OK' && res.data && res.data.knowledgeBlog) {
       this.showKnowledgeBlog = res.data.knowledgeBlog;
     }
   }
 
   async deleteCurrentProduct() {
-    // if (this.changed) return;
-    let productId = this.productId;
-    let result = await this.globalEventsManager.openMessageModal({
+    const productId = this.productId;
+    const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabel.deleteCurrentProduct.warning.message:Are you sure you want to delete the product? This will delete all labels and batches attached to the product as well!`,
       options: { centered: true },
       dismissable: false
     });
-    if (result != "ok") return
-    let res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise()
-    if (res && res.status == 'OK') {
+    if (result !== 'ok') { return; }
+    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.globalEventsManager.push({
         action: 'success',
         notificationType: 'success',
         title: $localize`:@@productLabel.deleteCurrentProduct.success.title:Deleted`,
         message: $localize`:@@productLabel.deleteCurrentProduct.success.message:Product was successfuly deleted`
-      })
-      this.router.navigate(['/product-labels'])
+      });
+      this.router.navigate(['/product-labels']).then();
       return;
     }
     this.globalEventsManager.push({
@@ -87,20 +86,19 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
       notificationType: 'error',
       title: $localize`:@@productLabel.deleteCurrentProduct.error.title:Error`,
       message: $localize`:@@productLabel.deleteCurrentProduct.error.message:Product cannot be deleted. Please try again.`
-    })
+    });
   }
 
   goToProduct() {
-    this.router.navigate(['/', 'product-labels'])
+    this.router.navigate(['/', 'product-labels']).then();
   }
 
   goTo(type) {
     return ['/product-labels', this.productId, type];
   }
 
-
   get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN'
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN';
   }
 
 }

@@ -10,7 +10,7 @@ import { faTimes, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
-import { ProductLabelFrontFeedbackComponent } from 'src/app/product-label-front-feedback/product-label-front-feedback.component';
+import { ProductLabelFrontFeedbackComponent } from 'src/app/product-label-front-page/product-label-front-feedback/product-label-front-feedback.component';
 
 @Component({
   selector: 'app-product-label-feedback-page',

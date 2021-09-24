@@ -18,6 +18,7 @@ import { KnowledgeBlogDocumentsItemComponent } from './knowledge-blog-documents-
 import { KnowledgeBlogPartComponent } from './knowledge-blog-part/knowledge-blog-part.component';
 import { KnowledgeBlogSelectSectionModalComponent } from './knowledge-blog-select-section-modal/knowledge-blog-select-section-modal.component';
 import { ProductLabelKnowledgeBlogComponent } from './product-label-knowledge-blog/product-label-knowledge-blog.component';
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ProductLabelKnowledgeBlogComponent } from './product-label-knowledge-bl
   imports: [
     CommonModule,
     KnowledgeBlockRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
     CoreModule,
     ComponentsModule,

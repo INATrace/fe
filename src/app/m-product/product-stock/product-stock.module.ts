@@ -17,6 +17,7 @@ import { ProductLabelStockSkuListComponent } from './product-label-stock-sku-lis
 import { ProductLabelStockSkuModalComponent } from './product-label-stock-sku-modal/product-label-stock-sku-modal.component';
 import { ProductStockRoutingModule } from './product-stock-routing.module';
 import { StockCoreModule } from './stock-core/stock-core.module';
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { StockCoreModule } from './stock-core/stock-core.module';
   imports: [
     CommonModule,
     ProductStockRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
     CoreModule,
     ComponentsModule,

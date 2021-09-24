@@ -26,7 +26,6 @@ import { FormatProcessingEvidenceTypeTypePipe } from './pipes/format-processing-
 import { FormatStockOrderTypePipe } from './pipes/format-stock-order-type.pipe';
 import { FormatTransactionStatusPipe } from './pipes/format-transaction-status.pipe';
 import { FormatTransactionTypePipe } from './pipes/format-transaction-type.pipe';
-import { ProductLabelLeftPanelContentComponent } from './product-label-left-panel-content/product-label-left-panel-content.component';
 import { RedirectClearCacheComponent } from './redirect-clear-cache/redirect-clear-cache.component';
 import { FormatWayOfPaymentPipe } from './pipes/format-way-of-payment.pipe';
 import { TranslateCodebookPipe } from './pipes/translate-codebook';
@@ -45,7 +44,6 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
     OrderCardComponent,
     FormatAvailabilityPipe,
     FormatStockOrderTypePipe,
-    ProductLabelLeftPanelContentComponent,
     RedirectClearCacheComponent,
     CardComponent,
     DocumentCardComponent,
@@ -73,13 +71,11 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
     ContentsModule,
     EllipsisModule,
     QRCodeModule,
-    // BrowserAnimationsModule,
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbPaginationModule,
     GoogleMapsModule,
-    DragDropModule,
-
+    DragDropModule
   ],
     exports: [
         BottomButtonsComponent,
@@ -90,9 +86,7 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
         OrderCardComponent,
         FormatAvailabilityPipe,
         FormatStockOrderTypePipe,
-        ProductLabelLeftPanelContentComponent,
         RedirectClearCacheComponent,
-        ProductLabelLeftPanelContentComponent,
         RedirectClearCacheComponent,
         FormatTransactionTypePipe,
         FormatTransactionStatusPipe,

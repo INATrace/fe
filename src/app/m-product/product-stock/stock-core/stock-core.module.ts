@@ -27,6 +27,7 @@ import { ProductLabelStockProcessingOrderListComponent } from './product-label-s
 import { OrderHistoryViewComponent } from './order-history-view/order-history-view.component';
 import { FieldOrDocInfoComponent } from './field-or-doc-info/field-or-doc-info.component';
 import { RejectTransactionModalComponent } from './reject-transaction-modal/reject-transaction-modal.component';
+import { ProductCommonModule } from '../../product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
     NgSelectModule,
     GoogleMapsModule,
     DragDropModule,
+    ProductCommonModule
   ],
   exports: [
     FacilityStockOrderSelectorForNewPaymentModalComponent,
@@ -78,7 +80,8 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
     StockPurchaseOrderEditComponent,
     ProductLabelStockProcessingOrderListComponent,
     OrderHistoryViewComponent,
-    FieldOrDocInfoComponent
+    FieldOrDocInfoComponent,
+    ProductCommonModule
   ]
 })
 export class StockCoreModule { }

@@ -32,6 +32,7 @@ import { ProductionRecordItemComponent } from './product-label/production-record
 import { ProductCardComponent } from './product-list/product-card/product-card.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { LanguageForLabelModalComponent } from './product-label/language-for-label-modal/language-for-label-modal.component';
+import { ProductCommonModule } from './product-common/product-common.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,6 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     LabelSelectorComponent,
     NumberRowComponent,
     PrefillProductSelectionModalComponent,
-    ProductionRecordItemComponent,
     LabelSelectorCardComponent,
     LanguageForLabelModalComponent
   ],
@@ -70,12 +70,12 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     ContentsModule,
     EllipsisModule,
     QRCodeModule,
-    // BrowserAnimationsModule,
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbPaginationModule,
     GoogleMapsModule,
     DragDropModule,
+    ProductCommonModule
   ]
 })
 export class MProductModule { }
