@@ -48,7 +48,7 @@ const routes: Routes = [
     }
   },
   { path: ':id/f-p-q-explorer', loadChildren: () => import('./f-p-q-explorer/f-p-q-explorer.module').then(m => m.FPQExplorerModule) },
-  { path: ':id/knowledge-blog', loadChildren: () => import('./knowledge-block/knowledge-block.module').then(m => m.KnowledgeBlockModule) },
+  { path: ':id/knowledge-blog', loadChildren: () => import('./knowledge-blog/knowledge-block.module').then(m => m.KnowledgeBlockModule) },
   { path: ':id/orders', loadChildren: () => import('./product-orders/product-orders.module').then(m => m.ProductOrdersModule) },
   { path: ':id/stakeholders', loadChildren: () => import('./product-stakeholders/product-stakeholders.module')
       .then(m => m.ProductStakeholdersModule) },
