@@ -26,7 +26,7 @@ export class QuoteOrderListComponent implements OnInit {
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   @Input()
-  facilityId$ = new BehaviorSubject<string>("");;
+  facilityId$ = new BehaviorSubject<string>("");
   @Input()
   semiProductId$ = new BehaviorSubject<string>(null)
   @Input()

@@ -24,7 +24,7 @@ export class ProductLabelStockOrderListComponent implements OnInit {
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   @Input()
-  facilityId$ = new BehaviorSubject<string>("");;
+  facilityId$ = new BehaviorSubject<string>("");
   @Input()
   openBalanceOnly$ = new BehaviorSubject<boolean>(false);
   @Input()
