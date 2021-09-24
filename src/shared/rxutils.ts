@@ -20,7 +20,7 @@ export function autoSwitchMap<T, R>(func: (value: T) => Observable<R> | Promise<
  * Manage a list of subscriptions. May be used by Angular component to delete all subscriptions in ngOnDestroy.
  */
 export class UnsubscribeList {
-    private static totalSubscriptions: number = 0;
+    private static totalSubscriptions = 0;
 
     private list: Array<Subscription> = [];
 
@@ -41,7 +41,7 @@ export class UnsubscribeList {
     public cleanup(): void {
         // console.log('Unsubscribing ' + this.list.length + ' subscriptions');
         while (this.list.length > 0) {
-            let subscription = this.list.pop();
+            const subscription = this.list.pop();
             subscription.unsubscribe();
             --UnsubscribeList.totalSubscriptions;
         }

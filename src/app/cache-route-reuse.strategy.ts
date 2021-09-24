@@ -2,21 +2,16 @@
 
 import { RouteReuseStrategy } from '@angular/router/';
 import { ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 // https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular
 // glej lazy modules
 
 @Injectable()
 export class CacheRouteReuseStrategy implements RouteReuseStrategy {
+
     storedRouteHandles = new Map<string, DetachedRouteHandle>();
     private lastToken = null;
-    // allowRetriveCache = {
-    //     '/': true,
-    //     '/companies': true,
-    //     '/users': true,
-    //     '/product-labels': true,
-    // };
 
     cachedPathsRegExList = [
       /^\/$/,
@@ -38,94 +33,68 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
       /^\/product-labels\/\d+\/orders\/customer-orders$/,
     ] as RegExp[];
 
+    private static getPath(route: ActivatedRouteSnapshot): string {
+
+      return route.pathFromRoot.map(x => {
+          if (x.url.length > 0) {
+            return x.url.map(y => y.path || '').join('/');
+          }
+          return '';
+        }).join('/');
+    }
+
     isCached(path) {
       // console.log("PATH:", path)
-      if(!path) return false;
-      for(let regEx of this.cachedPathsRegExList) {
-          if(regEx.test(path)) return true;
+      if (!path) { return false; }
+      for (const regEx of this.cachedPathsRegExList) {
+          if (regEx.test(path)) { return true; }
       }
       return false;
     }
 
     clearStore() {
-        this.storedRouteHandles.clear()
+        this.storedRouteHandles.clear();
         // console.log("STORE:", this.storedRouteHandles)
     }
 
     tokenChanged() {
-        let newToken = localStorage.token;
-        let res = newToken != this.lastToken;
+        const newToken = localStorage.token;
+        const res = newToken !== this.lastToken;
         // console.log("RR:", this.lastToken, newToken, res)
         this.lastToken = newToken;
         return res;
     }
 
     shouldReuseRoute(before: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        // if (this.getPath(before) === 'detail' && this.getPath(curr) === 'search-result') {
-        //     this.allowRetriveCache['search-results'] = true;
-        // } else {
-        //     this.allowRetriveCache['search-results'] = false;
-        // }
         return before.routeConfig === curr.routeConfig;
     }
 
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-        // console.log("RETR:", this.getPath(route), this.storedRouteHandles, route)
-        if (route.routeConfig.loadChildren) return null;
-        return this.storedRouteHandles.get(this.getPath(route)) as DetachedRouteHandle;
+        if (route.routeConfig.loadChildren) { return null; }
+        return this.storedRouteHandles.get(CacheRouteReuseStrategy.getPath(route)) as DetachedRouteHandle;
     }
 
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
-        const path = this.getPath(route);
-        // console.log("shouldAttach   ", path, path)
-        if(this.tokenChanged()) {
+        const path = CacheRouteReuseStrategy.getPath(route);
+        if (this.tokenChanged()) {
             this.clearStore();
             localStorage.setItem('token', null);
             this.lastToken = localStorage.getItem('token');
-            // console.log("NOT ATTACHING:", path)
             return false;
         }
-        // if (path != null && this.allowRetriveCache[path]) {
-        if(this.isCached(path)) {
-          // console.log("cache attach", this.getPath(route), this.storedRouteHandles.has(this.getPath(route)))
-            return this.storedRouteHandles.has(this.getPath(route));
+
+        if (this.isCached(path)) {
+            return this.storedRouteHandles.has(CacheRouteReuseStrategy.getPath(route));
         }
         return false;
     }
 
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
-        const path = this.getPath(route);
-        // console.log("shouldDetach :'" + path + "'", route)
-        // if (path != null && this.allowRetriveCache.hasOwnProperty(path)) {
-        if(this.isCached(path)) {
-            return true;
-        }
-        return false;
+        const path = CacheRouteReuseStrategy.getPath(route);
+        return this.isCached(path);
     }
 
     store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
-        // console.log("STORING:", this.getPath(route), route)
-        this.storedRouteHandles.set(this.getPath(route), detachedTree);
-    }
-
-    private getPath(route: ActivatedRouteSnapshot): string {
-        // let pathFromParent = route.pathFromRoot.map(x => {
-        //     if (x.routeConfig !== null && x.routeConfig.path !== null) {
-        //         return x.routeConfig.path;
-        //     }
-        //     return ''
-        // }).join('/')
-        // console.log("RR:", route.pathFromRoot)
-        let pathFromParent = route.pathFromRoot.map(x => {
-            if(x.url.length > 0) {
-                return x.url.map(y => y.path || '').join('/')
-            }
-            return ''
-        }).join('/')
-        return pathFromParent
-        // if (route.routeConfig !== null && route.routeConfig.path !== null) {
-        //     return route.routeConfig.path;
-        // }
-        // return null;
+        this.storedRouteHandles.set(CacheRouteReuseStrategy.getPath(route), detachedTree);
     }
 }

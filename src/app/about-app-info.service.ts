@@ -19,11 +19,11 @@ export class AboutAppInfoService {
       this.globalEventsManager.openMessageModal({
         type: 'general',
         title: $localize`:@@aboutApp.info.title:About app`,
-        message: $localize`:@@aboutApp.info.message:App version: ${this.version}`,
-        options: { centered: true },
+        message: $localize`:@@aboutApp.info.message:App version: ${ this.version }`,
+        options: {centered: true},
         dismissable: false,
         buttons: ['ok'],
-        buttonTitles: { ok: buttonOkText }
-      });
+        buttonTitles: {ok: buttonOkText}
+      }).then();
     }
 }

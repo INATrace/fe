@@ -1,8 +1,8 @@
 // source https://afana.me/archive/2018/10/28/angular-internationalization/, https://github.com/NadeemAfana/angular-internationalization/tree/store-locale-in-url/src
 export abstract class LanguageCodeHelper {
+
   public static defaultLocaleId = 'en';
   public static implementedLocales = ['de', 'rw', 'es', LanguageCodeHelper.defaultLocaleId];
-
 
   public static setCurrentLocale(localeId: string) {
     const urlLocaleId = LanguageCodeHelper.getCultureFromCurrentUrl();

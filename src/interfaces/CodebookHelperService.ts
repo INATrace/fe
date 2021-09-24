@@ -24,7 +24,7 @@ export interface CodebookHelperService<T> {
     // isEmpty(grp: FormGroupTyped<T>): boolean;
     // clearArray(arr: FormArrayTyped<T>): void;
     // setArray(arr: FormArrayTyped<T>, arrt: T[]): void;
-    formGenerator(): (x: T, validators?: Array<ValidatorFn>) => FormGroup; //(x: T, validators: Array<ValidatorFn>) => FormGroupTyped<T> | FormControl;
+    formGenerator(): (x: T, validators?: Array<ValidatorFn>) => FormGroup; // (x: T, validators: Array<ValidatorFn>) => FormGroupTyped<T> | FormControl;
     // isMultipleChoice(): boolean;
     allowDuplicateSelection(): boolean;
     valid(model: T, input: string): boolean;
