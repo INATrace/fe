@@ -23,7 +23,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
 import { FieldDefinition } from 'src/api-chain/model/fieldDefinition';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
-import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
 import { ActiveProductsService } from 'src/app/shared-services/active-products.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
@@ -74,7 +73,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
   constructor(
     public sifrantProduct: ActiveProductsService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
-    public activeFacilitiesForOrganizationService: ActiveFacilitiesForOrganizationService,
     private chainProductService: ProductService,
     private chainStockOrderService: StockOrderService,
     private globalEventsManager: GlobalEventManagerService,

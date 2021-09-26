@@ -17,7 +17,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
-import { ActiveCollectingFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-collecting-facilities-for-organization-codebook.service';
 import { ActiveFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-facilities-for-organization-codebook.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
@@ -236,8 +235,8 @@ export class StockTabCoreComponent implements OnInit {
         break;
       case 'PURCHASE_ORDERS':
       default:
-        this.facilityCodebook =
-          new ActiveCollectingFacilitiesForOrganizationCodebookService(this.chainFacilityService, this.organizationId);
+        // this.facilityCodebook =
+        //   new ActiveCollectingFacilitiesForOrganizationCodebookService(this.chainFacilityService, this.organizationId);
         break;
     }
   }

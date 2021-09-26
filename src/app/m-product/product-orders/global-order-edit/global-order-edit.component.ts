@@ -23,7 +23,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ActiveCompanyCustomersByOrganizationService } from 'src/app/shared-services/active-company-customers-by-organization.service';
 import { ActiveFacilitiesForOrganizationCodebookStandaloneService } from 'src/app/shared-services/active-facilities-for-organization-codebook-standalone.service';
-import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
 import { ActiveProductsService } from 'src/app/shared-services/active-products.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
@@ -52,7 +51,6 @@ export class GlobalOrderEditComponent implements OnInit {
     // private productController: ProductControllerService,
     protected chainCompanyCustomerService: CompanyCustomerService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
-    public activeFacilitiesForOrganizationService: ActiveFacilitiesForOrganizationService,
     private chainProductService: ProductService,
     private chainStockOrderService: StockOrderService,
     private chainOrderService: OrderService,
