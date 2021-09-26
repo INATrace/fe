@@ -40,8 +40,6 @@ import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
-import { CompanyStockComponent } from './company/company-stock/company-stock.component';
-import { CompanyOrdersComponent } from './company/company-orders/company-orders.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -300,19 +298,11 @@ const routes: Routes = [
   },
   {
     path: 'my-stock',
-    component: CompanyStockComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
+    loadChildren: () => import('./company/company-stock/company-stock.module').then(m => m.CompanyStockModule)
   },
   {
     path: 'my-orders',
-    component: CompanyOrdersComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
+    loadChildren: () => import('./company/company-orders/company-orders.module').then(m => m.CompanyOrdersModule)
   },
   ///////////////////////
   ///////////////////////

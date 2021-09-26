@@ -1,0 +1,32 @@
+<ng-container *ngIf="orders$ | async as orders">
+  <div class="main-inside-main">
+    <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
+      <thead>
+      <tr result-sorter
+          [sortOptions]="sortOptions"
+          [cbChecked]="cbCheckedAll"
+          [defaultSortingIndex]="10"
+          (sortByKey)="changeSort($event)"></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders.items; index as i">
+          <!-- TODO: table columns for order -->
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="orders && orders.items && orders.items.length === 0" class="no-list-results" i18n="@@productLabelPurchaseOrder.noOrders">
+      No orders found
+    </div>
+  </div>
+
+  <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+    <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="orders.count"
+            (pageChange)="onPageChange($event)"
+            [maxSize]="7"
+            [rotate]="true">
+    </ngb-pagination>
+  </div>
+</ng-container>

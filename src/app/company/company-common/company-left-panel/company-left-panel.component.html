@@ -1,0 +1,39 @@
+<div class="af-sidenav--block">
+
+  <div class="above-sidenav">
+    <div class="above-sidenav-title">
+      {{ companyTitle }}
+    </div>
+  </div>
+
+  <ul class="sidenav">
+
+    <div class="img-container">
+      <span class="img-container--overlay"></span>
+      <img *ngIf="this.imgStorageKey"
+           src="/api/common/image/{{this.imgStorageKey}}/SMALL"
+           default="/api/common/image/{{this.imgStorageKey}}"
+           class="img-style">
+    </div>
+
+    <li style="max-width:100%; margin-top: 2.375rem;">
+      <a class="link-normal"
+         routerLinkActive="active"
+         routerLink="/my-stock"
+         i18n="@@productLabel.sideTitle.stock">
+        My stock
+      </a>
+    </li>
+
+    <li>
+      <a class="link-normal"
+         routerLinkActive="active"
+         routerLink="/my-orders"
+         i18n="@@productLabel.sideTitle.orders">
+        Orders
+      </a>
+    </li>
+
+  </ul>
+
+</div>
