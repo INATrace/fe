@@ -3,6 +3,8 @@
   <app-company-left-panel></app-company-left-panel>
 
   <div class="main">
+
+    <!-- PURCHASE ORDERS -->
     <div class="main-inside-top content-element">
 
       <div class="d-flex justify-content-between content-element--row1">
@@ -148,8 +150,134 @@
 
     </div>
 
-    <!-- TODO: Season overview -->
+    <!-- SEASON OVERVIEW -->
+    <div class="main-inside-top content-element" style="margin-bottom: 20vh;">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.seasonOverview">Season overview</div>
+        <button [disabled]="!isDataAvailable"
+                class="btn btn-solid round btn-table-new content-element--btn"
+                (click)="newSeasonalPayment()" i18n="@@productLabelStock.button.newSeasonalPayment">
+          <span>+ Add seasonal payment</span>
+        </button>
+      </div>
 
+      <div class="d-flex">
+
+        <app-datepicker
+                label="From"
+                i18n-label="@@productLabelStock.datepicker.date.from"
+                [form]="fromSeasonalFilterDate"
+                [invalid]="this.submitSeasonalData && fromSeasonalFilterDate.invalid"
+                (onChange)="setQuoteOrdersForSeasonal()"
+                style="width: 130px; margin-right: 1rem;">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="fromSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.fromSeasonalFilterDate.error">
+                From date is required
+              </div>
+            </div>
+          </ng-container>
+        </app-datepicker>
+
+        <app-datepicker
+                label="To"
+                i18n-label="@@productLabelStock.datepicker.date.to"
+                [form]="toSeasonalFilterDate"
+                [invalid]="this.submitSeasonalData && toSeasonalFilterDate.invalid"
+                (onChange)="setQuoteOrdersForSeasonal()"
+                style="width: 130px; margin-right: 1rem;">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="toSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.toSeasonalFilterDate.error">
+                To date is required
+              </div>
+            </div>
+          </ng-container>
+        </app-datepicker>
+
+        <single-choice
+                label="Producer"
+                i18n-label="@@productLabelStock.label.producer"
+                [formControlInput]="producerListForm"
+                [codebookService]="codebookCoop"
+                [isInvalidChoice]="this.submitSeasonalData && producerListForm.invalid"
+                (onChange)="setQuoteOrdersForSeasonal()"
+                [readonly]="producerListFormReadOnly">
+          <ng-container *ngIf="this.submitSeasonalData">
+            <div *ngIf="producerListForm.errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.producer.error">
+                Producer is required
+              </div>
+            </div>
+          </ng-container>
+        </single-choice>
+
+      </div>
+
+      <div class="d-flex main-inside-top--row2 justify-content-between">
+        <div class="d-flex">
+
+          <single-choice
+                  label="Orders"
+                  i18n-label="@@productLabelStock.label.order"
+                  [formControlInput]="orderListForm"
+                  [codebookService]="quoteOrdersOnOrganizationCodebook"
+                  [readonly]="orderListFormReadOnly"
+                  [isInvalidChoice]="orderListError">
+            <ng-container *ngIf="orderListError">
+              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">
+                Order is required
+              </div>
+            </ng-container>
+          </single-choice>
+
+          <checkbox-input
+                  style="margin-left: 1rem; margin-top: 0.4rem"
+                  [form]="orderListCheckbox"
+                  class="af-b2c-form-element af-b2c-form-element--checkbox af-b2c-spacer--top-one af-b2c-form-element--nolabel"
+                  (onClick)="clickOrderListCheckbox()"
+                  [disabled]="!showSeasonalButtonShowEnable">
+            <checkbox-input-rich-label
+                    style="font-weight: 300;"
+                    i18n="@@productLabelStock.checkbox-input.orderListCheckbox">
+              Include all orders
+            </checkbox-input-rich-label>
+          </checkbox-input>
+
+        </div>
+        <div>
+          <button [disabled]="!showSeasonalButtonShowEnable"
+                  class="btn btn-solid round btn-table-new content-element--btn"
+                  style="margin-top:22px" (click)="showSeasonalPayments()" i18n="@@productLabelStock.button.showSeasonalPayments">
+            <span>Show</span>
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="isDataAvailable">
+        <div class="main-inside-main">
+          <table class="af-table af-checkbox--small">
+            <thead>
+            <tr result-sorter [sortOptions]="sortOptionsSeasonalData" [defaultSortingIndex]="10"></tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td [attr.data-label]="sortOptionsSeasonalData[0].name">{{ seasonalData.totalSeason }}</td>
+              <td [attr.data-label]="sortOptionsSeasonalData[1].name">{{ seasonalData.totalOrder }}</td>
+              <td [attr.data-label]="sortOptionsSeasonalData[2].name">{{ seasonalData.paymentAdvanced }}</td>
+              <td [attr.data-label]="sortOptionsSeasonalData[3].name">{{ seasonalData.paymentCherry }}</td>
+              <td [attr.data-label]="sortOptionsSeasonalData[4].name">{{ seasonalData.paymentBonus }}</td>
+              <td [attr.data-label]="sortOptionsSeasonalData[5].name">{{ seasonalData.paymentPremium }}</td>
+            </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!isDataAvailable" class="no-list-results" i18n="@@productLabelStock.noData">
+            No data found
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
   </div>
 
 </app-authorised-layout>
