@@ -9,11 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockCoreTabComponent } from './stock-core-tab/stock-core-tab.component';
 import { StockOrderListComponent } from './stock-order-list/stock-order-list.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { StockPurchaseOrderDetailsComponent } from './stock-purchase-order-details/stock-purchase-order-details.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
     StockCoreTabComponent,
-    StockOrderListComponent
+    StockOrderListComponent,
+    StockPurchaseOrderDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -24,10 +27,12 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgSelectModule
   ],
   exports: [
-    StockOrderListComponent
+    StockOrderListComponent,
+    StockPurchaseOrderDetailsComponent
   ]
 })
 export class StockCoreModule { }

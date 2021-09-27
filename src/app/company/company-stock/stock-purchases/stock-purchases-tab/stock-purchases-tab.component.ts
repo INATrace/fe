@@ -135,7 +135,8 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       this.showWarning(title, message);
       return;
     }
-    // this.router.navigate(['product-labels', this.productId, 'stock', 'purchases', 'facility', this.facilityId, 'purchases', 'new']);
+
+    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
   }
 
   onShowPO(event) {
