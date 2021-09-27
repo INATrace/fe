@@ -2285,6 +2285,365 @@
         "summary": "Get a single semi product with the provided ID."
       }
     },
+    "/api/chain/stock-order": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "createOrUpdateStockOrderUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiStockOrder"
+              }
+            }
+          },
+          "description": "apiStockOrder",
+          "required": true
+        },
+        "summary": "Create or update stock order. If the ID is provided, then the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/stock-order/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderListUsingGET",
+        "summary": "Get a paginated list of stock orders."
+      }
+    },
+    "/api/chain/stock-order/list/company/{companyId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderListByCompanyIdUsingGET",
+        "summary": "Get a paginated list of stock orders by company ID."
+      }
+    },
+    "/api/chain/stock-order/list/facility/{facilityId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "facilityId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderListByFacilityIdUsingGET",
+        "summary": "Get a paginated list of stock orders by Facility ID."
+      }
+    },
+    "/api/chain/stock-order/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "deleteStockOrderUsingDELETE",
+        "summary": "Deletes a stock order with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderUsingGET",
+        "summary": "Get a single stock order with the provided ID."
+      }
+    },
     "/api/chain/value-chain": {
       "put": {
         "responses": {
@@ -6268,12 +6627,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6283,19 +6639,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6305,19 +6658,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6327,19 +6677,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6349,19 +6696,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6371,19 +6715,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6393,19 +6734,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6415,8 +6753,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -7325,6 +7663,50 @@
         },
         "type": "object"
       },
+      "ApiDocumentRequirement": {
+        "properties": {
+          "description": {
+            "description": "Document description",
+            "type": "string"
+          },
+          "fields": {
+            "description": "Processing evidence fields",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "isRequired": {
+            "description": "Is document required",
+            "example": false,
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Document name",
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "scoreImpacts": {
+            "description": "Score impact",
+            "items": {
+              "$ref": "#/components/schemas/ApiScoreImpact"
+            },
+            "type": "array"
+          },
+          "scoreTarget": {
+            "$ref": "#/components/schemas/ApiScoreTarget",
+            "description": "Score target"
+          }
+        },
+        "type": "object"
+      },
       "ApiEmail": {
         "properties": {
           "email": {
@@ -8152,6 +8534,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiStockOrder_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrder"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiUserBase_": {
         "properties": {
           "count": {
@@ -8883,6 +9292,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiSemiProduct_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiStockOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiStockOrder_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -11036,6 +11488,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiStockOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiUserGet_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -11388,6 +11883,76 @@
         },
         "type": "object"
       },
+      "ApiScoreImpact": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "score": {
+            "description": "Score",
+            "format": "float",
+            "type": "number"
+          },
+          "type": {
+            "description": "Score impact type",
+            "enum": [
+              "PROVENANCE",
+              "FAIRNESS",
+              "QUALITY",
+              "ORDER",
+              "PAYMENT"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiScoreTarget": {
+        "properties": {
+          "fairness": {
+            "description": "Fairness goal",
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "order": {
+            "description": "Order",
+            "format": "int32",
+            "type": "integer"
+          },
+          "payment": {
+            "description": "Payment",
+            "format": "int32",
+            "type": "integer"
+          },
+          "provenance": {
+            "description": "Provenance goal",
+            "format": "int32",
+            "type": "integer"
+          },
+          "quality": {
+            "description": "Quality goal",
+            "format": "int32",
+            "type": "integer"
+          },
+          "qualityLevel": {
+            "description": "Quality level",
+            "type": "string"
+          },
+          "womenShare": {
+            "description": "Is women's share",
+            "example": false,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "ApiSemiProduct": {
         "properties": {
           "apiMeasureUnitType": {
@@ -11412,6 +11977,174 @@
           },
           "skuendCustomer": {
             "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrder": {
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "availableQuantity": {
+            "description": "Available quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "balance": {
+            "description": "Balance",
+            "format": "float",
+            "type": "number"
+          },
+          "company": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Company"
+          },
+          "cost": {
+            "description": "Cost",
+            "format": "float",
+            "type": "number"
+          },
+          "creatorId": {
+            "description": "ID of the user who has created the stock order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Currency",
+            "type": "string"
+          },
+          "documentRequirements": {
+            "description": "Document requirements",
+            "items": {
+              "$ref": "#/components/schemas/ApiDocumentRequirement"
+            },
+            "type": "array"
+          },
+          "facility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Facility"
+          },
+          "fulfilledQuantity": {
+            "description": "Fulfilled quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "isAvailable": {
+            "description": "Is stock available",
+            "example": false,
+            "type": "boolean"
+          },
+          "isPurchaseOrder": {
+            "description": "Is order of type PURCHASE_ORDER",
+            "example": false,
+            "type": "boolean"
+          },
+          "isWomenShare": {
+            "description": "Is women share",
+            "example": false,
+            "type": "boolean"
+          },
+          "orderType": {
+            "description": "Order type",
+            "enum": [
+              "PURCHASE_ORDER",
+              "PROCESSING_ORDER",
+              "SALES_ORDER",
+              "GENERAL_ORDER",
+              "TRANSFER_ORDER"
+            ],
+            "type": "string"
+          },
+          "preferredWayOfPayment": {
+            "description": "Preferred way of payment",
+            "enum": [
+              "CASH_VIA_COOPERATIVE",
+              "CASH_VIA_COLLECTOR",
+              "BANK_TRANSFER",
+              "UNKNOWN"
+            ],
+            "type": "string"
+          },
+          "pricePerUnit": {
+            "description": "Price per unit",
+            "format": "float",
+            "type": "number"
+          },
+          "producerUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Id of the person who has produced the entry."
+          },
+          "productionDate": {
+            "description": "Production date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "productionLocation": {
+            "$ref": "#/components/schemas/ApiStockOrderLocation",
+            "description": "Production location"
+          },
+          "purchaseOrder": {
+            "type": "boolean"
+          },
+          "representativeOfProducerCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Representative of producer user customer. E.g. collector."
+          },
+          "semiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Semi product"
+          },
+          "totalQuantity": {
+            "description": "Total quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "updateTimestamp": {
+            "description": "Timestamp indicates when stock order have been updated",
+            "format": "date-time",
+            "type": "string"
+          },
+          "womenShare": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderLocation": {
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/ApiAddress",
+            "description": "Location address"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "latitude": {
+            "description": "Location latitude",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "Location longitude",
+            "format": "double",
+            "type": "number"
+          },
+          "numberOfFarmers": {
+            "description": "Number of frames",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pinName": {
+            "description": "Pin name",
+            "type": "string"
           }
         },
         "type": "object"
@@ -11957,6 +12690,10 @@
     {
       "description": "Facility Type Controller",
       "name": "facility-type-controller"
+    },
+    {
+      "description": "Stock Order Controller",
+      "name": "stock-order-controller"
     },
     {
       "description": "Facility Controller",
