@@ -335,13 +335,6 @@
             "name": "from",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -351,13 +344,6 @@
             "name": "to",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -408,13 +394,6 @@
             "name": "from",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -424,13 +403,6 @@
             "name": "to",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -1446,6 +1418,16 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1471,13 +1453,23 @@
       "get": {
         "parameters": [
           {
-            "description": "Company ID",
+            "description": "ProcessingAction ID",
             "in": "path",
             "name": "id",
             "required": true,
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "type": "string"
             }
           },
           {
@@ -1601,6 +1593,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1620,6 +1628,39 @@
         ],
         "operationId": "getProcessingActionUsingGET",
         "summary": "Get a single processing action with the provided ID."
+      }
+    },
+    "/api/chain/processing-action/{id}/detail": {
+      "get": {
+        "parameters": [
+          {
+            "description": "ProcessingAction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingAction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "getProcessingActionDetailUsingGET",
+        "summary": "Get a single processing action by the provided ID with all translations."
       }
     },
     "/api/chain/processing-evidence-field": {
@@ -4668,6 +4709,106 @@
         "summary": "Add a user customer"
       }
     },
+    "/api/product/userCustomers/list/{companyId}/{type}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Type (collector, farmer)",
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiUserCustomer_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getUserCustomerListForCompanyAndTypeUsingGET",
+        "summary": "List user customers for a company and role"
+      }
+    },
     "/api/product/userCustomers/list/{productId}": {
       "get": {
         "parameters": [
@@ -6127,9 +6268,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6139,16 +6283,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6158,16 +6305,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6177,16 +6327,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6196,16 +6349,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6215,16 +6371,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6234,16 +6393,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6253,8 +6415,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -8951,6 +9113,16 @@
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Processing action input semi product"
           },
+          "language": {
+            "description": "Processing action language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
           "maxOutputWeight": {
             "description": "Processing action maximum output weight",
             "type": "number"
@@ -9005,6 +9177,13 @@
             },
             "type": "array"
           },
+          "translations": {
+            "description": "Processing action translations",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingActionTranslation"
+            },
+            "type": "array"
+          },
           "type": {
             "description": "Processing action type",
             "enum": [
@@ -9012,6 +9191,29 @@
               "SHIPMENT",
               "TRANSFER"
             ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingActionTranslation": {
+        "properties": {
+          "description": {
+            "description": "Processing action description",
+            "type": "string"
+          },
+          "language": {
+            "description": "Processing action language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Processing action name",
             "type": "string"
           }
         },

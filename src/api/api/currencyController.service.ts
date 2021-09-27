@@ -48,11 +48,11 @@ export namespace ConvertAtDateUsingGET {
       /**
        * from
        */
-      from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL';
+      from: string;
       /**
        * to
        */
-      to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL';
+      to: string;
       /**
        * date
        */
@@ -112,11 +112,11 @@ export namespace ConvertUsingGET {
       /**
        * from
        */
-      from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL';
+      from: string;
       /**
        * to
        */
-      to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL';
+      to: string;
       /**
        * value
        */
@@ -239,10 +239,10 @@ export class CurrencyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public convertAtDateUsingGET(value: number, from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', date: Date, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
-    public convertAtDateUsingGET(value: number, from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', date: Date, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
-    public convertAtDateUsingGET(value: number, from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', date: Date, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
-    public convertAtDateUsingGET(value: number, from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', date: Date, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
+    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
+    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
+    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (value === null || value === undefined) {
             throw new Error('Required parameter value was null or undefined when calling convertAtDateUsingGET.');
         }
@@ -334,10 +334,10 @@ export class CurrencyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public convertUsingGET(from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', value: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
-    public convertUsingGET(from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', value: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
-    public convertUsingGET(from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', value: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
-    public convertUsingGET(from: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', to: 'EUR' | 'USD' | 'GBP' | 'RWF' | 'HNL', value: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public convertUsingGET(from: string, to: string, value: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
+    public convertUsingGET(from: string, to: string, value: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
+    public convertUsingGET(from: string, to: string, value: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
+    public convertUsingGET(from: string, to: string, value: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (from === null || from === undefined) {
             throw new Error('Required parameter from was null or undefined when calling convertUsingGET.');
         }
