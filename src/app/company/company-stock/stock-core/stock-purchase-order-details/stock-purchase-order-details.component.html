@@ -143,7 +143,7 @@
                   <label class="d-flex mb-0 text-input-label"
                          i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct">Semi-product<span>*</span></label>
                   <ng-select bindLabel="name"
-                             bindValue="_id"
+                             bindValue="id"
                              placeholder="Select semi-product"
                              (ngModelChange)="semiProductSelected($event)"
                              i18n-placeholder="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.placeholder"
@@ -276,6 +276,18 @@
       </div>
 
       <!-- TODO: -->
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+
+          <div class="af-bottom-buttons" i18n="@@productLabelStockPurchaseOrdersModal.modal.footer.buttons">
+            <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+            <button class="btn mr-2" type="button" (click)="!this.updatePOInProgress && updatePurchaseOrder(!this.update)"><span>Save</span></button>
+            <button *ngIf="this.update" class="btn" type="button" (click)="!this.updatePOInProgress && updatePurchaseOrder()"><span>Save & Close</span></button>
+          </div>
+
+        </div>
+      </div>
 
     </div>
 

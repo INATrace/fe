@@ -64,6 +64,10 @@ export interface ApiStockOrder {
      */
     id?: number;
     /**
+     * Stock order identifier
+     */
+    identifier?: string;
+    /**
      * Is stock available
      */
     isAvailable?: boolean;
@@ -94,7 +98,7 @@ export interface ApiStockOrder {
     productionDate?: Date;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
-    representativeOfProducerCustomer?: ApiUserCustomer;
+    representativeOfProducerUserCustomer?: ApiUserCustomer;
     semiProduct?: ApiSemiProduct;
     /**
      * Total quantity
@@ -151,6 +155,10 @@ export namespace ApiStockOrder {
          */
         id = 'id',
         /**
+         * Stock order identifier
+         */
+        identifier = 'identifier',
+        /**
          * Is stock available
          */
         isAvailable = 'isAvailable',
@@ -181,7 +189,7 @@ export namespace ApiStockOrder {
         productionDate = 'productionDate',
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
-        representativeOfProducerCustomer = 'representativeOfProducerCustomer',
+        representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         semiProduct = 'semiProduct',
         /**
          * Total quantity
@@ -349,6 +357,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'identifier',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'isAvailable',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
@@ -464,7 +483,7 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'representativeOfProducerCustomer',
+                    name: 'representativeOfProducerUserCustomer',
                     classname: 'ApiStockOrder',
                     dataType: 'ApiUserCustomer',
                     isPrimitiveType: false,
@@ -540,6 +559,8 @@ export namespace ApiStockOrder {
                 ],
                 id: [
                 ],
+                identifier: [
+                ],
                 isAvailable: [
                 ],
                 isPurchaseOrder: [
@@ -560,7 +581,7 @@ export namespace ApiStockOrder {
                 ],
                 purchaseOrder: [
                 ],
-                representativeOfProducerCustomer: [
+                representativeOfProducerUserCustomer: [
                 ],
                 semiProduct: [
                 ],
@@ -610,6 +631,9 @@ export namespace ApiStockOrder {
   //               id: {
   //                   validators: []
   //               },
+  //               identifier: {
+  //                   validators: []
+  //               },
   //               isAvailable: {
   //                   validators: []
   //               },
@@ -640,7 +664,7 @@ export namespace ApiStockOrder {
   //               purchaseOrder: {
   //                   validators: []
   //               },
-  //               representativeOfProducerCustomer: {
+  //               representativeOfProducerUserCustomer: {
   //                   validators: []
   //               },
   //               semiProduct: {
