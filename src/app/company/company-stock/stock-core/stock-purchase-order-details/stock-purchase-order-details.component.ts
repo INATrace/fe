@@ -4,10 +4,18 @@ import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute } from '@angular/router';
 import { ChainStockOrder } from '../../../../../api-chain/model/chainStockOrder';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
-import { ActiveUserCustomersByOrganizationAndRoleService } from '../../../../shared-services/active-user-customers-by-organization-and-role.service';
-import { ChainUserCustomer } from '../../../../../api-chain/model/chainUserCustomer';
-import { dbKey } from '../../../../../shared/utils';
-import { ChainSemiProduct } from '../../../../../api-chain/model/chainSemiProduct';
+import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
+import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
+import { ProductControllerService } from '../../../../../api/api/productController.service';
+import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { take } from 'rxjs/operators';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
+import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
+import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
+import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -33,22 +41,31 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   searchFarmers = new FormControl(null, Validators.required);
   searchCollectors = new FormControl(null);
-  farmersCodebook: ActiveUserCustomersByOrganizationAndRoleService;
-  collectorsCodebook: ActiveUserCustomersByOrganizationAndRoleService;
+  farmersCodebook: CompanyUserCustomersByRoleService;
+  collectorsCodebook: CompanyUserCustomersByRoleService;
 
   employeeForm = new FormControl(null, Validators.required);
   codebookUsers: EnumSifrant;
 
   facilityNameForm = new FormControl(null);
 
-  options: ChainSemiProduct[] = [];
+  options: ApiSemiProduct[] = [];
   modelChoice = null;
 
   searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
 
+  private companyId: number = null;
+
+  private facility: ApiFacility;
+
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private globalEventsManager: GlobalEventManagerService,
+    private productControllerService: ProductControllerService,
+    private facilityControllerService: FacilityControllerService,
+    private companyControllerService: CompanyControllerService,
+    private codebookTranslations: CodebookTranslations
   ) { }
 
   get orderType(): StockOrderType {
@@ -122,6 +139,96 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.reloadOrder();
+  }
+
+  private newTitle(pageMode: StockOrderType) {
+    switch (pageMode) {
+      case 'GENERAL_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.newGeneralOrderTitle:New transfer order`;
+      case 'PROCESSING_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.newProcessingOrderTitle:New processing order`;
+      case 'PURCHASE_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.newPurchaseOrderTitle:New purchase order`;
+      case 'SALES_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.newSalesOrderTitle:New sales order`;
+      default:
+        return null;
+    }
+  }
+
+  private reloadOrder() {
+
+    this.globalEventsManager.showLoading(true);
+    this.submitted = false;
+
+    this.initializeData().then(() => {
+      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'FARMER');
+      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'COLLECTOR');
+
+      if (this.update) {
+        this.editStockOrder().then();
+      } else {
+        this.newStockOrder();
+      }
+      this.globalEventsManager.showLoading(false);
+    });
+  }
+
+  private async initializeData() {
+
+    const action = this.route.snapshot.data.action;
+    if (!action) {
+      return;
+    }
+
+    if (action === 'new') {
+
+      this.update = false;
+      this.title = this.newTitle(this.orderType);
+      const facilityId = this.route.snapshot.params.facilityId;
+
+      const response = await this.facilityControllerService.getFacilityUsingGET(facilityId).pipe(take(1)).toPromise();
+      if (response && response.status === StatusEnum.OK && response.data) {
+        this.facility = response.data;
+        for (const item of this.facility.facilitySemiProductList) {
+          if (item.buyable) {
+            item.name = this.translateName(item);
+            this.options.push(item);
+          }
+        }
+        this.facilityNameForm.setValue(this.translateName(this.facility));
+      }
+
+    } else if (action === 'update') {
+      // TODO
+    } else {
+      throw Error('Wrong action.');
+    }
+
+    const companyRes = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
+    if (companyRes && companyRes.status === StatusEnum.OK && companyRes.data) {
+      const obj = {};
+      for (const user of companyRes.data.users) {
+        obj[user.id.toString()] = user.name + ' ' + user.surname;
+      }
+      this.codebookUsers = EnumSifrant.fromObject(obj);
+    }
+
+    this.initializeListManager();
+  }
+
+  private initializeListManager() {
+    // TODO
+  }
+
+  private newStockOrder() {
+    // TODO
+  }
+
+  private async editStockOrder() {
+    // TODO
   }
 
   onSelectedType(type: StockOrderType) {
@@ -143,10 +250,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
   }
 
-  setFarmer(event: ChainUserCustomer) {
+  setFarmer(event: ApiUserCustomer) {
 
     if (event) {
-      this.stockOrderForm.get('producerUserCustomerId').setValue(dbKey(event));
+      this.stockOrderForm.get('producerUserCustomerId').setValue(event.id);
     } else {
       this.stockOrderForm.get('producerUserCustomerId').setValue(null);
     }
@@ -156,10 +263,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
   }
 
-  setCollector(event: ChainUserCustomer) {
+  setCollector(event: ApiUserCustomer) {
 
     if (event) {
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId').setValue(dbKey(event));
+      this.stockOrderForm.get('representativeOfProducerUserCustomerId').setValue(event.id);
       if (this.stockOrderForm.get('preferredWayOfPayment') && this.stockOrderForm.get('preferredWayOfPayment').value === 'UNKNOWN') {
         this.stockOrderForm.get('preferredWayOfPayment').setValue(null);
       }
@@ -209,6 +316,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
       this.stockOrderForm.get('balance').setValue(null);
     }
+  }
+
+  private translateName(obj) {
+    return this.codebookTranslations.translate(obj, 'name');
   }
 
 }
