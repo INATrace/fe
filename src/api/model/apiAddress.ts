@@ -37,6 +37,22 @@ export interface ApiAddress {
     city?: string;
     country?: ApiCountry;
     /**
+     * Honduras department name
+     */
+    hondurasDepartment?: string;
+    /**
+     * Honduras farm name
+     */
+    hondurasFarm?: string;
+    /**
+     * Honduras municipality name
+     */
+    hondurasMunicipality?: string;
+    /**
+     * Honduras village name
+     */
+    hondurasVillage?: string;
+    /**
      * Village sector
      */
     sector?: string;
@@ -75,6 +91,22 @@ export namespace ApiAddress {
          */
         city = 'city',
         country = 'country',
+        /**
+         * Honduras department name
+         */
+        hondurasDepartment = 'hondurasDepartment',
+        /**
+         * Honduras farm name
+         */
+        hondurasFarm = 'hondurasFarm',
+        /**
+         * Honduras municipality name
+         */
+        hondurasMunicipality = 'hondurasMunicipality',
+        /**
+         * Honduras village name
+         */
+        hondurasVillage = 'hondurasVillage',
         /**
          * Village sector
          */
@@ -148,6 +180,50 @@ export namespace ApiAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'hondurasDepartment',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasFarm',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasMunicipality',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasVillage',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'sector',
                     classname: 'ApiAddress',
                     dataType: 'string',
@@ -198,6 +274,14 @@ export namespace ApiAddress {
                 ],
                 country: [
                 ],
+                hondurasDepartment: [
+                ],
+                hondurasFarm: [
+                ],
+                hondurasMunicipality: [
+                ],
+                hondurasVillage: [
+                ],
                 sector: [
                 ],
                 state: [
@@ -223,6 +307,18 @@ export namespace ApiAddress {
   //                   validators: []
   //               },
   //               country: {
+  //                   validators: []
+  //               },
+  //               hondurasDepartment: {
+  //                   validators: []
+  //               },
+  //               hondurasFarm: {
+  //                   validators: []
+  //               },
+  //               hondurasMunicipality: {
+  //                   validators: []
+  //               },
+  //               hondurasVillage: {
   //                   validators: []
   //               },
   //               sector: {

@@ -47,39 +47,61 @@ export class LocationFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log("location form", this.form);
+    console.log("location form value", this.form.value);
     setTimeout(() => {
-      this.form.get('village').setValidators([Validators.required])
-      this.form.get('cell').setValidators([Validators.required])
-      this.form.get('sector').setValidators([Validators.required])
+      this.form.get('address.village').setValidators([Validators.required])
+      this.form.get('address.cell').setValidators([Validators.required])
+      this.form.get('address.sector').setValidators([Validators.required])
     })
 
     let sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
       loaded => {
+        console.log("form", this.form);
         // console.log("EMM:", loaded)
         if (loaded) this.isGoogleMapsLoaded = true;
         this.initializeMarker();
-        let tmpVis = this.form.get("isPubliclyVisible").value;
-        if (tmpVis != null) this.form.get("isPubliclyVisible").setValue(tmpVis.toString());
+        let tmpVis = this.form.get("publiclyVisible").value;
+        if (tmpVis != null) this.form.get("publiclyVisible").setValue(tmpVis.toString());
       },
       error => { }
     )
     this.subs.push(sub2);
 
-
-    let sub3 = this.form.get('country').valueChanges
+    console.log('this form country', this.form.get('country'));
+    console.log('this form country', this.form.get('address.country'));
+    let sub3 = this.form.get('address.country').valueChanges
       .subscribe(value => {
-        if (this.showVillageCellSector()) {
-          this.form.get('village').setValidators([Validators.required])
-          this.form.get('cell').setValidators([Validators.required])
-          this.form.get('sector').setValidators([Validators.required])
+        // Honduras specifics
+        if (this.showHondurasFields()) {
+          this.form.get('address.hondurasDepartment').setValidators([Validators.required]);
+          this.form.get('address.hondurasFarm').setValidators([Validators.required]);
+          this.form.get('address.hondurasMunicipality').setValidators([Validators.required]);
+          this.form.get('address.hondurasVillage').setValidators([Validators.required]);
         } else {
-          this.form.get('village').setValidators(null)
-          this.form.get('cell').setValidators(null)
-          this.form.get('sector').setValidators(null)
+          this.form.get('address.hondurasDepartment').setValidators(null);
+          this.form.get('address.hondurasFarm').setValidators(null);
+          this.form.get('address.hondurasMunicipality').setValidators(null);
+          this.form.get('address.hondurasVillage').setValidators(null);
         }
-        this.form.get('village').updateValueAndValidity();
-        this.form.get('cell').updateValueAndValidity();
-        this.form.get('sector').updateValueAndValidity();
+        this.form.get('address.hondurasDepartment').updateValueAndValidity();
+        this.form.get('address.hondurasFarm').updateValueAndValidity();
+        this.form.get('address.hondurasMunicipality').updateValueAndValidity();
+        this.form.get('address.hondurasVillage').updateValueAndValidity();
+
+        // Rwanda specifics
+        if (this.showVillageCellSector()) {
+          this.form.get('address.village').setValidators([Validators.required])
+          this.form.get('address.cell').setValidators([Validators.required])
+          this.form.get('address.sector').setValidators([Validators.required])
+        } else {
+          this.form.get('address.village').setValidators(null)
+          this.form.get('address.cell').setValidators(null)
+          this.form.get('address.sector').setValidators(null)
+        }
+        this.form.get('address.village').updateValueAndValidity();
+        this.form.get('address.cell').updateValueAndValidity();
+        this.form.get('address.sector').updateValueAndValidity();
       });
     this.subs.push(sub3);
   }
@@ -89,8 +111,12 @@ export class LocationFormComponent implements OnInit {
   }
 
   showVillageCellSector() {
-    return this.form.get('country').invalid ||
-      _.isEqual(this.form.get('country').value, { id: 184, code: "RW", name: "Rwanda" })
+    return this.form.get('address.country').invalid ||
+      _.isEqual(this.form.get('address.country').value, { id: 184, code: "RW", name: "Rwanda" })
+  }
+
+  showHondurasFields() {
+    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras'});
   }
 
   initializeMarker() {

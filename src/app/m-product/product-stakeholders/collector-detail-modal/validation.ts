@@ -8,6 +8,7 @@ import { BankAccountInfo } from 'src/api-chain/model/bankAccountInfo';
 import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
+import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
 
 export const ChainLocationValidationScheme = {
   forceExpand: true,
@@ -183,8 +184,94 @@ export const ChainUserCustomerValidationScheme = {
   }
 } as SimpleValidationScheme<ChainUserCustomer>;
 
+export const ApiAddressValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    address: {
+      validators: [Validators.required]
+    },
+    city: {
+      validators: []
+    },
+    country: {
+      validators: []
+    },
+    state: {
+      validators: []
+    },
+    zip: {
+      validators: [Validators.maxLength(50)]
+    },
+    hondurasDepartment: {
+      validators: []
+    },
+    hondurasFarm: {
+      validators: []
+    },
+    hondurasMunicipality: {
+      validators: []
+    },
+    hondurasVillage: {
+      validators: []
+    }
+  }
+};
 
+export const ApiLocationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    address: ApiAddressValidationScheme
+  }
+};
 
+export const ApiBankInformationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    accountHolderName: {
+      validators: []
+    },
+    accountNumber: {
+      validators: []
+    },
+    additionalInformation: {
+      validators: []
+    },
+    bankName: {
+      validators: []
+    },
+    country: {
+      validators: []
+    }
+  }
+};
+
+export const ApiFarmInformationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    totalCultivatedArea: {
+      validators: []
+    },
+    coffeeCultivatedArea: {
+      validators: []
+    },
+    numberOfTrees: {
+      validators: []
+    },
+    organic: {
+      validators: []
+    },
+    areaOrganicCertified: {
+      validators: []
+    },
+    startTransitionToOrganic: {
+      validators: []
+    }
+  }
+};
 
 export const ApiUserCustomerValidationScheme = {
   validators: [],
@@ -201,9 +288,7 @@ export const ApiUserCustomerValidationScheme = {
     id: {
       validators: []
     },
-    location: {
-      validators: []
-    },
+    location: ApiLocationValidationScheme,
     name: {
       validators: []
     },
@@ -216,6 +301,8 @@ export const ApiUserCustomerValidationScheme = {
     type: {
       validators: []
     },
+    bank: ApiBankInformationValidationScheme,
+    farm: ApiFarmInformationValidationScheme
   }
 } as SimpleValidationScheme<ApiUserCustomer>;
 
@@ -230,3 +317,15 @@ export const ChainUserCustomerRoleValidationScheme = {
     },
   }
 } as SimpleValidationScheme<ChainUserCustomerRole>;
+
+export const ApiUserCustomerCooperativeValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: [Validators.required]
+    },
+    type: {
+      validators: [Validators.required]
+    }
+  }
+};

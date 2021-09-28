@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, FormArrayName, FormControlName } fro
 import { ActivatedRoute } from '@angular/router';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { take } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
@@ -14,7 +14,13 @@ import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
 import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { defaultEmptyObject, generateFormFromMetadata, isEmptyDictionary, formatDateWithDots, dbKey } from 'src/shared/utils';
-import { ChainUserCustomerValidationScheme, FarmInfoValidationScheme, ContactInfoValidationScheme, ChainUserCustomerRoleValidationScheme, BankAccountInfoValidationScheme } from './validation';
+import {
+  ChainUserCustomerValidationScheme,
+  FarmInfoValidationScheme,
+  ContactInfoValidationScheme,
+  ChainUserCustomerRoleValidationScheme,
+  BankAccountInfoValidationScheme, ApiUserCustomerValidationScheme, ApiUserCustomerCooperativeValidationScheme
+} from './validation';
 import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
@@ -27,6 +33,15 @@ import { ThemeService } from 'src/app/shared-services/theme.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
 import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { ProductControllerService } from '../../../../api/api/productController.service';
+import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
+import { ApiLocation } from '../../../../api/model/apiLocation';
+import { ApiFarmInformation } from '../../../../api/model/apiFarmInformation';
+import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
+import { ApiAddress } from '../../../../api/model/apiAddress';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
+import { ApiUserCustomerAssociation } from '../../../../api/model/apiUserCustomerAssociation';
+import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 
 @Component({
   selector: 'app-collector-detail-modal',
@@ -68,6 +83,9 @@ export class CollectorDetailModalComponent implements OnInit {
 
   type = this.route.snapshot.params.type;
 
+  associations: Array<ApiUserCustomerAssociation> = [];
+  cooperatives: Array<ApiUserCustomerCooperative> = [];
+
   constructor(
     private globalEventsManager: GlobalEventManagerService,
     private authService: AuthService,
@@ -80,6 +98,9 @@ export class CollectorDetailModalComponent implements OnInit {
     private chainStockOrderService: StockOrderService,
     private chainPaymentsService: PaymentsService,
     public countryCodes: CountryService,
+    private productService: ProductControllerService,
+    private companyService: CompanyControllerService,
+    // private userCustomerService: UserCustomerService
   ) { }
 
 
@@ -123,9 +144,10 @@ export class CollectorDetailModalComponent implements OnInit {
     } else {
       throw Error("Wrong action.")
     }
-    let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-    if (res && res.status === "OK" && res.data && dbKey(res.data)) {
-      this.chainProductId = dbKey(res.data);
+    // let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
+    let res = await this.productService.getProductUsingGET(this.productId).pipe(first()).toPromise();
+    if (res && res.status === "OK" && res.data && res.data.id) {
+      this.chainProductId = res.data.id;
       this.chainProduct = res.data;
     }
 
@@ -142,13 +164,16 @@ export class CollectorDetailModalComponent implements OnInit {
   owner: boolean = true;
 
   ngOnInit(): void {
+    console.log("new on init");
     this.openBalanceOnly = false;
     this.sortPay = this.sortPO = null;
     this.initInitialData().then(
       (resp: any) => {
         if (this.update) {
+          console.log("edit");
           this.editCollector();
         } else {
+          console.log("new");
           this.newCollector();
         }
         this.userProfile = this.authService.currentUserProfile;
@@ -162,47 +187,55 @@ export class CollectorDetailModalComponent implements OnInit {
   }
 
   emptyObject() {
-    let obj = defaultEmptyObject(ChainUserCustomer.formMetadata()) as ChainUserCustomer;
-    obj.location = {
-      address: null,
-      city: null,
-      country: null,
-      state: null,
-      zip: null,
-      latitude: null,
-      longitude: null,
-      site: null,
-      sector: null,
-      cell: null,
-      village: null,
-      isPubliclyVisible: null
-    } as ChainLocation;
-    obj.contact = {
-      phone: null,
-      email: null,
-      hasSmartPhone: null
-    } as ContactInfo;
-    obj.farmInfo = {
-      ownsFarm: null,
-      farmSize: null,
-      numberOfTrees: null,
-      organicFarm: null,
-      fertilizerDescription: null,
-      additionalInfo: null
-    } as FarmInfo;
-    obj.bankAccountInfo = {
-      accountHoldersName: null,
-      accountNumber: null,
-      bankName: null,
-      branchAddress: null,
-      country: null
-    } as BankAccountInfo;
+    let obj = defaultEmptyObject(ApiUserCustomer.formMetadata()) as ApiUserCustomer;
+    obj.location = defaultEmptyObject(ApiLocation.formMetadata()) as ApiLocation;
+    obj.location.address = defaultEmptyObject(ApiAddress.formMetadata()) as ApiAddress;
+    obj.bank = defaultEmptyObject(ApiBankInformation.formMetadata()) as ApiBankInformation;
+    obj.farm = defaultEmptyObject(ApiFarmInformation.formMetadata()) as ApiFarmInformation;
+
+    // let obj = defaultEmptyObject(ChainUserCustomer.formMetadata()) as ChainUserCustomer;
+    // obj.location = {
+    //   address: null,
+    //   city: null,
+    //   country: null,
+    //   state: null,
+    //   zip: null,
+    //   latitude: null,
+    //   longitude: null,
+    //   site: null,
+    //   sector: null,
+    //   cell: null,
+    //   village: null,
+    //   isPubliclyVisible: null
+    // } as ChainLocation;
+    // obj.contact = {
+    //   phone: null,
+    //   email: null,
+    //   hasSmartPhone: null
+    // } as ContactInfo;
+    // obj.farmInfo = {
+    //   ownsFarm: null,
+    //   farmSize: null,
+    //   numberOfTrees: null,
+    //   organicFarm: null,
+    //   fertilizerDescription: null,
+    //   additionalInfo: null
+    // } as FarmInfo;
+    // obj.bankAccountInfo = {
+    //   accountHoldersName: null,
+    //   accountNumber: null,
+    //   bankName: null,
+    //   branchAddress: null,
+    //   country: null
+    // } as BankAccountInfo;
     return obj
   }
 
 
   newCollector() {
-    this.collectorForm = generateFormFromMetadata(ChainUserCustomer.formMetadata(), this.emptyObject(), ChainUserCustomerValidationScheme);
+    // this.collectorForm = generateFormFromMetadata(ChainUserCustomer.formMetadata(), this.emptyObject(), ChainUserCustomerValidationScheme);
+    this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyObject(), ApiUserCustomerValidationScheme);
+    console.log("init form new", this.collectorForm);
     this.initializeListManager();
 
   }
@@ -214,17 +247,26 @@ export class CollectorDetailModalComponent implements OnInit {
   }
 
   prepareEditData() {
-    if (this.collectorForm.value.associationIds) {
-      this.collectorForm.value.associationIds.forEach(elt => {
-        this.getOrgName(elt).then(value => {
-          (this.assocForForm as FormArray).push(new FormControl({
-            id: elt,
-            name: value
-          })
-          )
-        });
+    if (this.collectorForm.value.associations) {
+      this.collectorForm.value.associations.forEach(item => {
+        (this.assocForForm as FormArray).push(new FormControl({
+          id: item.id,
+          name: item.name
+        }));
       });
     }
+
+    // if (this.collectorForm.value.associationIds) {
+    //   this.collectorForm.value.associationIds.forEach(elt => {
+    //     this.getOrgName(elt).then(value => {
+    //       (this.assocForForm as FormArray).push(new FormControl({
+    //         id: elt,
+    //         name: value
+    //       })
+    //       )
+    //     });
+    //   });
+    // }
 
     if (this.collectorForm.get('farmInfo').value == null || isEmptyDictionary(this.collectorForm.get('farmInfo').value)) {
       let farmInfoForm = generateFormFromMetadata(FarmInfo.formMetadata(), {
@@ -271,36 +313,53 @@ export class CollectorDetailModalComponent implements OnInit {
 
 
   async updateCollector() {
+    console.log("saving");
     this.submitted = true;
+    console.log("collector form", this.collectorForm);
     if (this.collectorForm.invalid) return;
     let data = this.prepareData();
+    console.log("data", data);
     try {
       this.globalEventsManager.showLoading(true);
-      let res = await this.chainUserCustomerService.postUserCustomer(data).pipe(take(1)).toPromise()
+      const res = await this.productService.addUserCustomerUsingPOST(this.route.snapshot.params.id, this.route.snapshot.params.organizationId, data).toPromise();
       if (res && res.status == 'OK') {
         this.dismiss();
       }
+      // let res = await this.chainUserCustomerService.postUserCustomer(data).pipe(take(1)).toPromise()
+      // if (res && res.status == 'OK') {
+      //   this.dismiss();
+      // }
     } finally {
       this.globalEventsManager.showLoading(false);
     }
   }
 
   prepareData() {
-    (this.collectorForm.get('associationIds') as FormArray).clear();
+    (this.collectorForm.get('associations') as FormArray).clear();
     for (let item of this.assocForForm.value) {
-      (this.collectorForm.get('associationIds') as FormArray).push(new FormControl(item.id));
+      (this.collectorForm.get('associations') as FormArray).push(new FormControl(item));
+    }
+
+    if (this.route.snapshot.params.type === 'farmers') {
+      this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.FARMER);
+    }
+    if (this.route.snapshot.params.type === 'collectors') {
+      this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.COLLECTOR);
     }
 
     if (!this.update) {
       //TODO - FIX ... should be from AFdb
-      this.collectorForm.get("id").setValue(this.route.snapshot.params.collectorId);
-      this.collectorForm.get("productId").setValue(this.productId);
+      // this.collectorForm.get("id").setValue(this.route.snapshot.params.collectorId);
+      console.log("route params", this.route.snapshot.params);
+      // this.collectorForm.get("productId").setValue(this.route.snapshot.params.id);
       this.collectorForm.get("companyId").setValue(this.chainProduct.companyId);
     }
 
 
     // let custRoles = this.collectorForm.get("customerRoles").value
     // this.collectorForm.get("customerRoles").setValue(custRoles.map(item => item.id))
+
+    console.log("col form val", this.collectorForm.value);
 
     let data = _.cloneDeep(this.collectorForm.value);
     Object.keys(data.location).forEach((key) => (data.location[key] == null) && delete data.location[key]);
@@ -374,14 +433,22 @@ export class CollectorDetailModalComponent implements OnInit {
   coopForForm = new FormArray([])
   async addAssocCoop(item, form, fArray) {
     if (!item) return;
-    let formArray = fArray as FormArray
-    if (formArray.value.some(x => x.id === item.id)) {
+    if (fArray.value.some(x => x.id === item.id)) {
       form.setValue(null);
       return;
     }
-    formArray.push(new FormControl(item))
-    formArray.markAsDirty()
-    setTimeout(() => form.setValue(null))
+    fArray.push(new FormControl(item));
+    fArray.markAsDirty();
+    setTimeout(() => form.setValue(null));
+    // if (!item) return;
+    // let formArray = fArray as FormArray
+    // if (formArray.value.some(x => x.id === item.id)) {
+    //   form.setValue(null);
+    //   return;
+    // }
+    // formArray.push(new FormControl(item))
+    // formArray.markAsDirty()
+    // setTimeout(() => form.setValue(null))
   }
 
   async deleteAssocCoop(item, fArray) {
@@ -399,56 +466,89 @@ export class CollectorDetailModalComponent implements OnInit {
   codebookCoop;
   assocCoop;
   async listOfOrgProducer() {
-    let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "PRODUCER");
-    let assocObj = {};
-    for (let item of assoc) {
-      let res = await this.chainOrganizationService.getOrganizationByCompanyId(item.companyId).pipe(take(1)).toPromise();
-      if (res && res.status === "OK" && res.data) {
+    console.log('chain product', this.chainProduct);
+    const producers = this.chainProduct.associatedCompanies.filter(item => item.type === 'PRODUCER');
+    const producersObj = {};
+    for (const producer of producers) {
+      const res = await this.companyService.getCompanyUsingGET(producer.company.id).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data) {
         if (this.owner) {
-          assocObj[dbKey(res.data)] = res.data.name;
+          producersObj[res.data.id] = res.data.name;
         } else {
-          if (this.userOrgId == dbKey(res.data)) {
-            assocObj[dbKey(res.data)] = res.data.name;
+          if (this.userOrgId == res.data.id) {
+            producersObj[res.data.id] = res.data.name;
           }
         }
       }
     }
-    this.codebookCoop = EnumSifrant.fromObject(assocObj);
-    this.assocCoop = assocObj;
+    this.codebookCoop = EnumSifrant.fromObject(producersObj);
+    console.log("codebook coop", this.codebookCoop);
+    this.assocCoop = producersObj;
+    // let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "PRODUCER");
+    // let assocObj = {};
+    // for (let item of assoc) {
+    //   let res = await this.chainOrganizationService.getOrganizationByCompanyId(item.companyId).pipe(take(1)).toPromise();
+    //   if (res && res.status === "OK" && res.data) {
+    //     if (this.owner) {
+    //       assocObj[dbKey(res.data)] = res.data.name;
+    //     } else {
+    //       if (this.userOrgId == dbKey(res.data)) {
+    //         assocObj[dbKey(res.data)] = res.data.name;
+    //       }
+    //     }
+    //   }
+    // }
+    // this.codebookCoop = EnumSifrant.fromObject(assocObj);
+    // this.assocCoop = assocObj;
+    // console.log("assocCoop", this.assocCoop);
   }
 
   async listOfOrgAssociation() {
-    let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "ASSOCIATION");
-    let assocObj = {};
-    for (let item of assoc) {
-      let res = await this.chainOrganizationService.getOrganizationByCompanyId(item.companyId).pipe(take(1)).toPromise();
-      if (res && res.status === "OK" && res.data) {
+    const associations = this.chainProduct.associatedCompanies.filter(item => item.type === 'ASSOCIATION');
+    const associationsObj = {};
+    for (const association of associations) {
+      const res = await this.companyService.getCompanyUsingGET(association.company.id).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data) {
         if (this.owner) {
-          assocObj[dbKey(res.data)] = res.data.name;
+          associationsObj[res.data.id] = res.data.name;
         } else {
-          //   associationIds: ['8b7afab6-c9ce-4739-b4b7-2cff8e473304'],//Icyerekezo
-          //   cooperativeIdsAndRoles: [{ organizationId: 'ade24b49-8548-45b6-ab12-65ce801803db', role: "FARMER" }],//Koakaka
-          //       associationIds: ['21777c51-8263-4e5c-8b3b-2f03a953dd2a'],//ramba
-          //       cooperativeIdsAndRoles: [{ organizationId: '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4', role: "FARMER" }],//musasa
-          //TODO link together appropriate assoc and producer, check also B2C page
-          if (dbKey(res.data) === '8b7afab6-c9ce-4739-b4b7-2cff8e473304' && this.userOrgId === 'ade24b49-8548-45b6-ab12-65ce801803db') {//koakaka in icye
-            assocObj[dbKey(res.data)] = res.data.name;
-          }
-          if (dbKey(res.data) === '21777c51-8263-4e5c-8b3b-2f03a953dd2a' && this.userOrgId === '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4') {//musasa and ramba
-            assocObj[dbKey(res.data)] = res.data.name;
-          }
+          associationsObj[res.data.id] = res.data.name;
         }
-
       }
     }
-    this.codebookAssoc = EnumSifrant.fromObject(assocObj);
+    this.codebookAssoc = EnumSifrant.fromObject(associationsObj);
+    // let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "ASSOCIATION");
+    // let assocObj = {};
+    // for (let item of assoc) {
+    //   let res = await this.chainOrganizationService.getOrganizationByCompanyId(item.companyId).pipe(take(1)).toPromise();
+    //   if (res && res.status === "OK" && res.data) {
+    //     if (this.owner) {
+    //       assocObj[dbKey(res.data)] = res.data.name;
+    //     } else {
+    //       //   associationIds: ['8b7afab6-c9ce-4739-b4b7-2cff8e473304'],//Icyerekezo
+    //       //   cooperativeIdsAndRoles: [{ organizationId: 'ade24b49-8548-45b6-ab12-65ce801803db', role: "FARMER" }],//Koakaka
+    //       //       associationIds: ['21777c51-8263-4e5c-8b3b-2f03a953dd2a'],//ramba
+    //       //       cooperativeIdsAndRoles: [{ organizationId: '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4', role: "FARMER" }],//musasa
+    //       //TODO link together appropriate assoc and producer, check also B2C page
+    //       if (dbKey(res.data) === '8b7afab6-c9ce-4739-b4b7-2cff8e473304' && this.userOrgId === 'ade24b49-8548-45b6-ab12-65ce801803db') {//koakaka in icye
+    //         assocObj[dbKey(res.data)] = res.data.name;
+    //       }
+    //       if (dbKey(res.data) === '21777c51-8263-4e5c-8b3b-2f03a953dd2a' && this.userOrgId === '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4') {//musasa and ramba
+    //         assocObj[dbKey(res.data)] = res.data.name;
+    //       }
+    //     }
+    //
+    //   }
+    // }
+    // this.codebookAssoc = EnumSifrant.fromObject(assocObj);
   }
 
   producersListManager = null;
 
   initializeListManager() {
     this.producersListManager = new ListEditorManager<ChainUserCustomerRole>(
-      this.collectorForm.get('cooperativeIdsAndRoles') as FormArray,
+      this.collectorForm.get('cooperatives') as FormArray,
+
       CollectorDetailModalComponent.ChainUserCustomerRoleEmptyObjectFormFactory(),
       ChainUserCustomerRoleValidationScheme
     )
@@ -464,6 +564,12 @@ export class CollectorDetailModalComponent implements OnInit {
     return () => {
       let f = new FormControl(CollectorDetailModalComponent.ChainUserCustomerRoleCreateEmptyObject(), ChainUserCustomerRoleValidationScheme.validators)
       return f
+    }
+  }
+
+  static ApiUserCustomerCooperativeEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CollectorDetailModalComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(), ApiUserCustomerCooperativeValidationScheme.validators);
     }
   }
 

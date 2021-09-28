@@ -198,7 +198,7 @@
 
 
             <textinput
-              [form]="collectorForm.get('contact.phone')"
+              [form]="collectorForm.get('phone')"
               label="Phone number"
               style="width: 100%"
               placeholder="Enter phone number"
@@ -207,7 +207,7 @@
             </textinput>
 
             <textinput
-              [form]="collectorForm.get('contact.email')"
+              [form]="collectorForm.get('email')"
               label="E-mail"
               style="width: 100%"
               placeholder="Enter e-mail address"
@@ -215,8 +215,8 @@
               i18n-placeholder="@@collectorDetail.textinput.email.placeholder">
             </textinput>
 
-            <checkbox-input [form]="collectorForm.get('contact.hasSmartPhone')"
-              [invalid]="submitted && collectorForm.get('contact.hasSmartPhone')">
+            <checkbox-input [form]="collectorForm.get('hasSmartphone')"
+              [invalid]="submitted && collectorForm.get('hasSmartphone')">
               <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
                 Smart phone
               </checkbox-input-rich-label>
@@ -231,7 +231,7 @@
           <div class="af-form-element">
 
             <textinput
-              [form]="collectorForm.get('bankAccountInfo.accountHoldersName')"
+              [form]="collectorForm.get('bank.accountHolderName')"
               label="Account holder's name"
               style="width: 100%"
               placeholder="Enter account holder's name"
@@ -241,7 +241,7 @@
 
 
             <textinput
-              [form]="collectorForm.get('bankAccountInfo.accountNumber')"
+              [form]="collectorForm.get('bank.accountNumber')"
               label="Account number"
               style="width: 100%"
               placeholder="Enter account number"
@@ -250,7 +250,7 @@
             </textinput>
 
             <textinput
-              [form]="collectorForm.get('bankAccountInfo.bankName')"
+              [form]="collectorForm.get('bank.bankName')"
               label="Bank name"
               style="width: 100%"
               placeholder="Enter bank name"
@@ -259,21 +259,30 @@
             </textinput>
 
 
+<!--            <textinput-->
+<!--              [form]="collectorForm.get('bank.branchAddress')"-->
+<!--              label="Additional information"-->
+<!--              style="width: 100%"-->
+<!--              placeholder="Enter additional information"-->
+<!--              i18n-label="@@collectorDetail.textinput.additionalInfo.label"-->
+<!--              i18n-placeholder="@@collectorDetail.textinput.additionalInfo.placeholder">-->
+<!--            </textinput>-->
+
+<!--            <single-choice-->
+<!--              label="Country"-->
+<!--              i18n-label="@@collectorDetail.bankAccountInfo.country.label"-->
+<!--              [formControlInput]="collectorForm.get('bank.country')"-->
+<!--              [codebookService]="countryCodes">-->
+<!--            </single-choice>-->
+
             <textinput
-              [form]="collectorForm.get('bankAccountInfo.branchAddress')"
+              [form]="collectorForm.get('bank.additionalInformation')"
               label="Additional information"
               style="width: 100%"
               placeholder="Enter additional information"
               i18n-label="@@collectorDetail.textinput.additionalInfo.label"
               i18n-placeholder="@@collectorDetail.textinput.additionalInfo.placeholder">
             </textinput>
-
-            <single-choice
-              label="Country"
-              i18n-label="@@collectorDetail.bankAccountInfo.country.label"
-              [formControlInput]="collectorForm.get('bankAccountInfo.country')"
-              [codebookService]="countryCodes">
-            </single-choice>
 
           </div>
         </div>
@@ -286,7 +295,7 @@
           <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
           <div class="af-form-element">
 
-
+<!---->
             <list-editor *ngIf="producersListManager"
               label="Customer of"
               [listEditorManager]="producersListManager"
@@ -294,11 +303,11 @@
               [canAdd]="true"
               i18n-label="@@collectorDetail.list-editor.cooperatives.label"
               i18n-addText="@@collectorDetail.list-editor.cooperatives.addText"
-              [invalid]="submitted && collectorForm.get('cooperativeIdsAndRoles')?.invalid">
+              [invalid]="submitted && collectorForm.get('cooperatives')?.invalid">
               <list-editor-items>
                 <div cdkDropList
                   (cdkDropListDropped)="producersListManager.onDrop($event)">
-                  <div *ngFor="let item of collectorForm.get('cooperativeIdsAndRoles').controls; let i=index;">
+                  <div *ngFor="let item of collectorForm.get('cooperatives').controls; let i=index;">
                     <app-producers-item
                       [codebookCoop]="codebookCoop"
                       [assocCoop]="assocCoop"
@@ -313,7 +322,7 @@
               </list-editor-items>
               <list-editor-errors>
                 <ng-container *ngIf="submitted">
-                  <div *ngIf="collectorForm.get('cooperativeIdsAndRoles').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="collectorForm.get('cooperatives').errors as errors" class="sc-invalid-feedback">
                     <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.cooperatives.error">
                       <span>
                         Cooperative is required
@@ -323,7 +332,7 @@
                 </ng-container>
               </list-editor-errors>
             </list-editor>
-
+<!---->
           </div>
         </div>
 
@@ -369,50 +378,55 @@
           <div class="af-form-element">
 
             <textinput
-              [form]="collectorForm.get('farmInfo.farmSize')"
-              label="Farm size"
+              [form]="collectorForm.get('farm.totalCultivatedArea')"
+              label="Total cultivated area (ha)"
               style="width: 100%"
-              [textarea]="true"
-              helpText="Enter farm size."
-              i18n-label="@@collectorDetail.textinput.farmSize.label"
-              i18n-helpText="@@collectorDetail.textinput.farmSize.helpText">
+              placeholder="Enter total cultivated area"
+              i18n-label="@@collectorDetail.textinput.totalCultivatedArea.label"
+              i18n-placeholder="@@collectorDetail.textinput.totalCultivatedArea.placeholder">
+            </textinput>
+
+            <textinput
+              [form]="collectorForm.get('farm.coffeeCultivatedArea')"
+              label="Area cultivated with coffee (ha)"
+              style="width: 100%"
+              placeholder="Enter area cultivated with coffee"
+              i18n-label="@@collectorDetail.textinput.coffeeCultivatedArea.label"
+              i18n-helpText="@@collectorDetail.textinput.coffeeCultivatedArea.placeholder">
             </textinput>
 
 
             <textinput
-              [form]="collectorForm.get('farmInfo.numberOfTrees')"
+              [form]="collectorForm.get('farm.numberOfTrees')"
               label="Number of trees"
               style="width: 100%"
-              placeholder="Enter Number of trees"
+              placeholder="Enter number of trees"
               i18n-label="@@collectorDetail.textinput.numberOfTrees.label"
               i18n-placeholder="@@collectorDetail.textinput.numberOfTrees.placeholder">
             </textinput>
 
-            <checkbox-input [form]="collectorForm.get('farmInfo.organicFarm')">
+            <checkbox-input [form]="collectorForm.get('farm.organic')">
               <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">
                 Organic farm
               </checkbox-input-rich-label>
             </checkbox-input>
 
             <textinput
-              [form]="collectorForm.get('farmInfo.fertilizerDescription')"
-              label="Fertilizer description"
-              style="width: 100%"
-              [textarea]="true"
-              helpText="Enter fertilizer description."
-              i18n-label="@@collectorDetail.textinput.fertilizerDescription.label"
-              i18n-helpText="@@collectorDetail.textinput.fertilizerDescription.helpText">
+              [form]="collectorForm.get('farm.areaOrganicCertified')"
+              label="Organic certified area (ha)"
+              style=""
+              placeholder="Enter organic certified area (ha)"
+              i18n-label="@@collectorDetail.textinput.areaOrganicCertified.label"
+              i18n-placeholder="@@collectorDetail.textinput.areaOrganicCertified.placeholder">
             </textinput>
 
-
             <textinput
-              [form]="collectorForm.get('farmInfo.additionalInfo')"
-              label="Additional information"
+              [form]="collectorForm.get('farm.startTransitionToOrganic')"
+              label="Start transition to organic"
               style="width: 100%"
-              [textarea]="true"
-              helpText="Enter additional information."
-              i18n-label="@@collectorDetail.textinput.additionalInfo.label"
-              i18n-helpText="@@collectorDetail.textinput.additionalInfo.helpText">
+              placeholder="Enter start date of transition to organic"
+              i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label"
+              i18n-placeholder="@@collectorDetail.textinput.startTransitionToOrganic.placeholder">
             </textinput>
 
 

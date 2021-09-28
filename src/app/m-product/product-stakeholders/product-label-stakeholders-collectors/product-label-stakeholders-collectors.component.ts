@@ -9,6 +9,8 @@ import { ApiResponsePaginatedListChainUserCustomer } from 'src/api-chain/model/a
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
+import { ProductControllerService } from '../../../../api/api/productController.service';
+import { ApiPaginatedResponseApiUserCustomer } from '../../../../api/model/apiPaginatedResponseApiUserCustomer';
 
 @Component({
   selector: 'app-product-label-stakeholders-collectors',
@@ -24,7 +26,8 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private chainUserCustomerService: UserCustomerService,
-    private chainProductService: ProductService
+    private chainProductService: ProductService,
+    private productController: ProductControllerService
   ) { }
 
   ngOnInit(): void {
@@ -152,7 +155,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
         switchMap(params => {
           return this.getAPI(params);
         }),
-        map((resp: ApiResponsePaginatedListChainUserCustomer) => {
+        map((resp: ApiPaginatedResponseApiUserCustomer) => {
           if (resp) {
             this.showed = 0;
             if (resp.data && resp.data.count && (this.pageSize - resp.data.count > 0)) this.showed = resp.data.count;
@@ -171,15 +174,23 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
       )
   }
 
+  // getAPI(params) {
+  //   let org = this.organizationId;
+  //   if (this.role === 'FARMER') { //TODO link together appropriate assoc and producer, check also B2C page
+  //     if (this.organizationId === '8b7afab6-c9ce-4739-b4b7-2cff8e473304') org = 'ade24b49-8548-45b6-ab12-65ce801803db';
+  //     if (this.organizationId === '21777c51-8263-4e5c-8b3b-2f03a953dd2a') org = '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4';
+  //   }
+  //   if (org == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
+  //   else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: org, role: this.role })
+  //
+  // }
+  
   getAPI(params) {
-    let org = this.organizationId;
-    if (this.role === 'FARMER') { //TODO link together appropriate assoc and producer, check also B2C page
-      if (this.organizationId === '8b7afab6-c9ce-4739-b4b7-2cff8e473304') org = 'ade24b49-8548-45b6-ab12-65ce801803db';
-      if (this.organizationId === '21777c51-8263-4e5c-8b3b-2f03a953dd2a') org = '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4';
+    const org = this.organizationId;
+    if (this.role === 'FARMER') {
+      
     }
-    if (org == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
-    else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: org, role: this.role })
-
+    return this.productController.getUserCustomersListUsingGET(this.productId);
   }
 
   async deleteCollector(collector) {

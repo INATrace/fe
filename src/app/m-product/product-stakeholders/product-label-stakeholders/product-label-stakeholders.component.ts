@@ -403,11 +403,14 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
 
   async collectorDetail(type) {
-    let resp = await this.chainUserCustomer.listUserCustomers().pipe(take(1)).toPromise();
-    if(resp && resp.status === 'OK' && resp.data) {
-      let collectorId = resp.data.count +1;
-      this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
-    }
+    // let resp = await this.chainUserCustomer.listUserCustomers().pipe(take(1)).toPromise();
+    // if(resp && resp.status === 'OK' && resp.data) {
+    //   let collectorId = resp.data.count +1;
+    //   this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
+    // }
+
+    this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new']);
+
     // console.log(resp);
     // let collectorId = 0;
     // if (type === 'farmers') collectorId = this.allFarmers+1;

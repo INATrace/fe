@@ -335,13 +335,6 @@
             "name": "from",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -351,13 +344,6 @@
             "name": "to",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -408,13 +394,6 @@
             "name": "from",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -424,13 +403,6 @@
             "name": "to",
             "required": true,
             "schema": {
-              "enum": [
-                "EUR",
-                "USD",
-                "GBP",
-                "RWF",
-                "HNL"
-              ],
               "type": "string"
             }
           },
@@ -1446,6 +1418,16 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1471,13 +1453,23 @@
       "get": {
         "parameters": [
           {
-            "description": "Company ID",
+            "description": "ProcessingAction ID",
             "in": "path",
             "name": "id",
             "required": true,
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "type": "string"
             }
           },
           {
@@ -1601,6 +1593,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1620,6 +1628,39 @@
         ],
         "operationId": "getProcessingActionUsingGET",
         "summary": "Get a single processing action with the provided ID."
+      }
+    },
+    "/api/chain/processing-action/{id}/detail": {
+      "get": {
+        "parameters": [
+          {
+            "description": "ProcessingAction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingAction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-action-controller"
+        ],
+        "operationId": "getProcessingActionDetailUsingGET",
+        "summary": "Get a single processing action by the provided ID with all translations."
       }
     },
     "/api/chain/processing-evidence-field": {
@@ -6127,9 +6168,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6139,16 +6183,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6158,16 +6205,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6177,16 +6227,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6196,16 +6249,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6215,16 +6271,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6234,16 +6293,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -6253,8 +6315,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -6364,6 +6426,22 @@
             "$ref": "#/components/schemas/ApiCountry",
             "description": "country"
           },
+          "hondurasDepartment": {
+            "description": "Honduras department name",
+            "type": "string"
+          },
+          "hondurasFarm": {
+            "description": "Honduras farm name",
+            "type": "string"
+          },
+          "hondurasMunicipality": {
+            "description": "Honduras municipality name",
+            "type": "string"
+          },
+          "hondurasVillage": {
+            "description": "Honduras village name",
+            "type": "string"
+          },
           "sector": {
             "description": "Village sector",
             "type": "string"
@@ -6406,6 +6484,27 @@
           },
           "surname": {
             "description": "Surname",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBankInformation": {
+        "properties": {
+          "accountHolderName": {
+            "description": "Account holder name",
+            "type": "string"
+          },
+          "accountNumber": {
+            "description": "Account number",
+            "type": "string"
+          },
+          "additionalInformation": {
+            "description": "Additional information",
+            "type": "string"
+          },
+          "bankName": {
+            "description": "Bank name",
             "type": "string"
           }
         },
@@ -7264,6 +7363,38 @@
         },
         "type": "object"
       },
+      "ApiFarmInformation": {
+        "properties": {
+          "areaOrganicCertified": {
+            "description": "Area is organic certified",
+            "type": "number"
+          },
+          "coffeeCultivatedArea": {
+            "description": "Area cultivated with coffee (ha)",
+            "type": "number"
+          },
+          "numberOfTrees": {
+            "description": "Number of trees",
+            "format": "int32",
+            "type": "integer"
+          },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
+          "startTransitionToOrganic": {
+            "description": "Start date of transition to organic",
+            "format": "date-time",
+            "type": "string"
+          },
+          "totalCultivatedArea": {
+            "description": "Total cultivated area (ha)",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiFileInfo": {
         "properties": {
           "contentType": {
@@ -7308,6 +7439,22 @@
           "country": {
             "$ref": "#/components/schemas/ApiCountry",
             "description": "country"
+          },
+          "hondurasDepartment": {
+            "description": "Honduras department name",
+            "type": "string"
+          },
+          "hondurasFarm": {
+            "description": "Honduras farm name",
+            "type": "string"
+          },
+          "hondurasMunicipality": {
+            "description": "Honduras municipality name",
+            "type": "string"
+          },
+          "hondurasVillage": {
+            "description": "Honduras village name",
+            "type": "string"
           },
           "latitude": {
             "description": "location latitude",
@@ -8951,6 +9098,16 @@
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Processing action input semi product"
           },
+          "language": {
+            "description": "Processing action language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
           "maxOutputWeight": {
             "description": "Processing action maximum output weight",
             "type": "number"
@@ -9005,6 +9162,13 @@
             },
             "type": "array"
           },
+          "translations": {
+            "description": "Processing action translations",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingActionTranslation"
+            },
+            "type": "array"
+          },
           "type": {
             "description": "Processing action type",
             "enum": [
@@ -9012,6 +9176,29 @@
               "SHIPMENT",
               "TRANSFER"
             ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingActionTranslation": {
+        "properties": {
+          "description": {
+            "description": "Processing action description",
+            "type": "string"
+          },
+          "language": {
+            "description": "Processing action language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Processing action name",
             "type": "string"
           }
         },
@@ -11346,14 +11533,36 @@
       },
       "ApiUserCustomer": {
         "properties": {
+          "associations": {
+            "description": "List of associations",
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomerAssociation"
+            },
+            "type": "array"
+          },
+          "bank": {
+            "$ref": "#/components/schemas/ApiBankInformation",
+            "description": "Bank information"
+          },
           "companyId": {
             "description": "Company id",
             "format": "int64",
             "type": "integer"
           },
+          "cooperatives": {
+            "description": "List of cooperatives",
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomerCooperative"
+            },
+            "type": "array"
+          },
           "email": {
             "description": "Email",
             "type": "string"
+          },
+          "farm": {
+            "$ref": "#/components/schemas/ApiFarmInformation",
+            "description": "Farm information"
           },
           "gender": {
             "description": "Gender",
@@ -11363,14 +11572,19 @@
             ],
             "type": "string"
           },
+          "hasSmartphone": {
+            "description": "Has smartphone",
+            "example": false,
+            "type": "boolean"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
           },
           "location": {
-            "description": "Location",
-            "type": "string"
+            "$ref": "#/components/schemas/ApiUserCustomerLocation",
+            "description": "Location"
           },
           "name": {
             "description": "Name",
@@ -11379,6 +11593,11 @@
           "phone": {
             "description": "Phone",
             "type": "string"
+          },
+          "productId": {
+            "description": "Product id",
+            "format": "int64",
+            "type": "integer"
           },
           "surname": {
             "description": "Surname",
@@ -11391,6 +11610,81 @@
               "FARMER"
             ],
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserCustomerAssociation": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Company"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "userCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "User customer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserCustomerCooperative": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Company"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "userCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "User customer"
+          },
+          "userCustomerType": {
+            "description": "User customer type (collector, farmer)",
+            "enum": [
+              "COLLECTOR",
+              "FARMER"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserCustomerLocation": {
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/ApiAddress",
+            "description": "location address"
+          },
+          "latitude": {
+            "description": "location latitude",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "location longitude",
+            "format": "double",
+            "type": "number"
+          },
+          "numberOfFarmers": {
+            "description": "number of farmers at this location",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pinName": {
+            "description": "pin (location) name",
+            "type": "string"
+          },
+          "publiclyVisible": {
+            "type": "boolean"
           }
         },
         "type": "object"
