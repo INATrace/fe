@@ -51,6 +51,7 @@ import { ApiResponseApiProductLabelAnalytics } from '../model/apiResponseApiProd
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
 import { ApiResponseApiProductLabelContent } from '../model/apiResponseApiProductLabelContent';
 import { ApiResponseApiProductLabelValues } from '../model/apiResponseApiProductLabelValues';
+import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiProductLabelBase } from '../model/apiResponseListApiProductLabelBase';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
 
@@ -1301,6 +1302,41 @@ export namespace GetUserCustomerListForCompanyAndTypeUsingGET {
       sortBy: [
       ],
       sort: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getUserCustomerUsingGET.
+ */
+export namespace GetUserCustomerUsingGET {
+    /**
+     * Parameter map for getUserCustomerUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getUserCustomerUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getUserCustomerUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetUserCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
       ],
     };
 }
@@ -4272,6 +4308,88 @@ export class ProductControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomerListForCompanyAndTypeUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get user customer by id by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiUserCustomer>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getUserCustomerUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get user customer by id
+     * 
+     * @param id User customer ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserCustomerUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
+    public getUserCustomerUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getUserCustomerUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiUserCustomer>(`${this.configuration.basePath}/api/product/userCustomers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomerUsingGET')));
         }
         return handle;
     }
