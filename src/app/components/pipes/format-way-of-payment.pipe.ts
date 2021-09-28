@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatWayOfPaymentPipe implements PipeTransform {
 
-  transform(value: string): any {
+  transform(value: string): string {
     switch (value) {
       case 'CASH':
         return $localize`:@@wayOfPaymentPipe.cash: Cash`;
