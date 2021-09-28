@@ -312,10 +312,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         }
       }
     } catch (e) {
-      this.globalEventsManager.showLoading(false);
       throw e;
     } finally {
       this.updatePOInProgress = false;
+      this.globalEventsManager.showLoading(false);
     }
   }
 
