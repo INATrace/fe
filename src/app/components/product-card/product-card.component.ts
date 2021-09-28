@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiProductListResponse } from '../../../../api/model/apiProductListResponse';
+import { ApiProductListResponse } from '../../../api/model/apiProductListResponse';
 
 @Component({
   selector: 'app-product-card',
