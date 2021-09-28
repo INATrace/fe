@@ -1,5 +1,5 @@
 <div *ngIf="product" class="card-elevation card-box">
-  <a routerLink="/product-labels/{{product.id}}/orders">
+  <a routerLink="/product-labels/{{product.id}}/product">
     <img *ngIf="product.photoStorageId; else showImagePlaceholder"
     src="/api/common/image/{{product.photoStorageId}}/SMALL"
     default="/api/common/image/{{product.photoStorageId}}"
