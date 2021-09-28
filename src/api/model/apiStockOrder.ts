@@ -76,10 +76,6 @@ export interface ApiStockOrder {
      */
     isPurchaseOrder?: boolean;
     /**
-     * Is women share
-     */
-    isWomenShare?: boolean;
-    /**
      * Order type
      */
     orderType?: ApiStockOrder.OrderTypeEnum;
@@ -108,6 +104,9 @@ export interface ApiStockOrder {
      * Timestamp indicates when stock order have been updated
      */
     updateTimestamp?: Date;
+    /**
+     * Is women share
+     */
     womenShare?: boolean;
 }
 
@@ -167,10 +166,6 @@ export namespace ApiStockOrder {
          */
         isPurchaseOrder = 'isPurchaseOrder',
         /**
-         * Is women share
-         */
-        isWomenShare = 'isWomenShare',
-        /**
          * Order type
          */
         orderType = 'orderType',
@@ -199,6 +194,9 @@ export namespace ApiStockOrder {
          * Timestamp indicates when stock order have been updated
          */
         updateTimestamp = 'updateTimestamp',
+        /**
+         * Is women share
+         */
         womenShare = 'womenShare'
     }
 
@@ -388,17 +386,6 @@ export namespace ApiStockOrder {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isWomenShare',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
                     required: false,
@@ -565,8 +552,6 @@ export namespace ApiStockOrder {
                 ],
                 isPurchaseOrder: [
                 ],
-                isWomenShare: [
-                ],
                 orderType: [
                 ],
                 preferredWayOfPayment: [
@@ -638,9 +623,6 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               isPurchaseOrder: {
-  //                   validators: []
-  //               },
-  //               isWomenShare: {
   //                   validators: []
   //               },
   //               orderType: {

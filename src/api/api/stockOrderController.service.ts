@@ -137,6 +137,26 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * Is women share
+       */
+      isWomenShare?: boolean;
+      /**
+       * Way of payment
+       */
+      wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN';
+      /**
+       * Production date range start
+       */
+      productionDateStart?: Date;
+      /**
+       * Production date range end
+       */
+      productionDateEnd?: Date;
+      /**
+       * Search by ProducerUserCustomer name
+       */
+      query?: string;
     }
 
     /**
@@ -166,7 +186,27 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * Is women share
+       */
+      isWomenShare = 'isWomenShare',
+      /**
+       * Way of payment
+       */
+      wayOfPayment = 'wayOfPayment',
+      /**
+       * Production date range start
+       */
+      productionDateStart = 'productionDateStart',
+      /**
+       * Production date range end
+       */
+      productionDateEnd = 'productionDateEnd',
+      /**
+       * Search by ProducerUserCustomer name
+       */
+      query = 'query'
     }
 
     /**
@@ -187,6 +227,16 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
       ],
       sort: [
       ],
+      isWomenShare: [
+      ],
+      wayOfPayment: [
+      ],
+      productionDateStart: [
+      ],
+      productionDateEnd: [
+      ],
+      query: [
+      ],
     };
 }
 
@@ -199,7 +249,7 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * Company ID
+       * Facility ID
        */
       facilityId: number;
       /**
@@ -222,6 +272,26 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * Is women share
+       */
+      isWomenShare?: boolean;
+      /**
+       * Way of payment
+       */
+      wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN';
+      /**
+       * Production date range start
+       */
+      productionDateStart?: Date;
+      /**
+       * Production date range end
+       */
+      productionDateEnd?: Date;
+      /**
+       * Search by ProducerUserCustomer name
+       */
+      query?: string;
     }
 
     /**
@@ -229,7 +299,7 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
      */
     export enum Parameters {
       /**
-       * Company ID
+       * Facility ID
        */
       facilityId = 'facilityId',
       /**
@@ -251,7 +321,27 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * Is women share
+       */
+      isWomenShare = 'isWomenShare',
+      /**
+       * Way of payment
+       */
+      wayOfPayment = 'wayOfPayment',
+      /**
+       * Production date range start
+       */
+      productionDateStart = 'productionDateStart',
+      /**
+       * Production date range end
+       */
+      productionDateEnd = 'productionDateEnd',
+      /**
+       * Search by ProducerUserCustomer name
+       */
+      query = 'query'
     }
 
     /**
@@ -271,6 +361,16 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
       sortBy: [
       ],
       sort: [
+      ],
+      isWomenShare: [
+      ],
+      wayOfPayment: [
+      ],
+      productionDateStart: [
+      ],
+      productionDateEnd: [
+      ],
+      query: [
       ],
     };
 }
@@ -621,6 +721,11 @@ export class StockOrderControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.isWomenShare,
+      map.wayOfPayment,
+      map.productionDateStart,
+      map.productionDateEnd,
+      map.query,
       observe,
       reportProgress
     );
@@ -636,13 +741,18 @@ export class StockOrderControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param isWomenShare Is women share
+     * @param wayOfPayment Way of payment
+     * @param productionDateStart Production date range start
+     * @param productionDateEnd Production date range end
+     * @param query Search by ProducerUserCustomer name
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling getStockOrderListByCompanyIdUsingGET.');
         }
@@ -662,6 +772,21 @@ export class StockOrderControllerService {
         }
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (isWomenShare !== undefined && isWomenShare !== null) {
+            queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
+        }
+        if (wayOfPayment !== undefined && wayOfPayment !== null) {
+            queryParameters = queryParameters.set('wayOfPayment', <any>wayOfPayment);
+        }
+        if (productionDateStart !== undefined && productionDateStart !== null) {
+            queryParameters = queryParameters.set('productionDateStart', <any>productionDateStart.toISOString());
+        }
+        if (productionDateEnd !== undefined && productionDateEnd !== null) {
+            queryParameters = queryParameters.set('productionDateEnd', <any>productionDateEnd.toISOString());
+        }
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
         }
 
         let headers = this.defaultHeaders;
@@ -702,7 +827,7 @@ export class StockOrderControllerService {
 
 
   /**
-   * Get a paginated list of stock orders by Facility ID. by map.
+   * Get a paginated list of stock orders by facility ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -731,6 +856,11 @@ export class StockOrderControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.isWomenShare,
+      map.wayOfPayment,
+      map.productionDateStart,
+      map.productionDateEnd,
+      map.query,
       observe,
       reportProgress
     );
@@ -738,21 +868,26 @@ export class StockOrderControllerService {
 
 
     /**
-     * Get a paginated list of stock orders by Facility ID.
+     * Get a paginated list of stock orders by facility ID.
      * 
-     * @param facilityId Company ID
+     * @param facilityId Facility ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param isWomenShare Is women share
+     * @param wayOfPayment Way of payment
+     * @param productionDateStart Production date range start
+     * @param productionDateEnd Production date range end
+     * @param query Search by ProducerUserCustomer name
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, wayOfPayment?: 'CASH_VIA_COOPERATIVE' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getStockOrderListByFacilityIdUsingGET.');
         }
@@ -772,6 +907,21 @@ export class StockOrderControllerService {
         }
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (isWomenShare !== undefined && isWomenShare !== null) {
+            queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
+        }
+        if (wayOfPayment !== undefined && wayOfPayment !== null) {
+            queryParameters = queryParameters.set('wayOfPayment', <any>wayOfPayment);
+        }
+        if (productionDateStart !== undefined && productionDateStart !== null) {
+            queryParameters = queryParameters.set('productionDateStart', <any>productionDateStart.toISOString());
+        }
+        if (productionDateEnd !== undefined && productionDateEnd !== null) {
+            queryParameters = queryParameters.set('productionDateEnd', <any>productionDateEnd.toISOString());
+        }
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
         }
 
         let headers = this.defaultHeaders;

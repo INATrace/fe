@@ -2468,6 +2468,59 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Way of payment",
+            "in": "query",
+            "name": "wayOfPayment",
+            "required": false,
+            "schema": {
+              "enum": [
+                "CASH_VIA_COOPERATIVE",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by ProducerUserCustomer name",
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2551,13 +2604,66 @@
             }
           },
           {
-            "description": "Company ID",
+            "description": "Facility ID",
             "in": "path",
             "name": "facilityId",
             "required": true,
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Way of payment",
+            "in": "query",
+            "name": "wayOfPayment",
+            "required": false,
+            "schema": {
+              "enum": [
+                "CASH_VIA_COOPERATIVE",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by ProducerUserCustomer name",
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -2577,7 +2683,7 @@
           "stock-order-controller"
         ],
         "operationId": "getStockOrderListByFacilityIdUsingGET",
-        "summary": "Get a paginated list of stock orders by Facility ID."
+        "summary": "Get a paginated list of stock orders by facility ID."
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -12123,11 +12229,6 @@
             "example": false,
             "type": "boolean"
           },
-          "isWomenShare": {
-            "description": "Is women share",
-            "example": false,
-            "type": "boolean"
-          },
           "orderType": {
             "description": "Order type",
             "enum": [
@@ -12189,6 +12290,8 @@
             "type": "string"
           },
           "womenShare": {
+            "description": "Is women share",
+            "example": false,
             "type": "boolean"
           }
         },
