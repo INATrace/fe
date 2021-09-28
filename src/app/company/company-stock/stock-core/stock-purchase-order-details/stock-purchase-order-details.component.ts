@@ -12,8 +12,6 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
-import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
-import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
@@ -22,6 +20,8 @@ import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
+import { ApiResponseApiUserCustomer } from '../../../../../api/model/apiResponseApiUserCustomer';
+import StatusEnum = ApiResponseApiUserCustomer.StatusEnum;
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -446,12 +446,14 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   private async setIdentifier() {
-    // TODO: get farmer from API
-    // let farmer = await this.chainUserCustomerService.getUserCustomer(this.stockOrderForm.get("producerUserCustomerId").value).pipe(take(1)).toPromise();
-    // if (farmer && farmer.status === "OK" && farmer.data) {
-    //   let identifier = "PT-" + farmer.data.surname + "-" + this.stockOrderForm.get("productionDate").value;
-    //   this.stockOrderForm.get('identifier').setValue(identifier);
-    // }
+
+    const farmerResponse = await this.productControllerService
+      .getUserCustomerUsingGET(this.stockOrderForm.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
+
+    if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
+      const identifier = 'PT-' + farmerResponse.data.surname + '-' + this.stockOrderForm.get('productionDate').value;
+      this.stockOrderForm.get('identifier').setValue(identifier);
+    }
   }
 
   private translateName(obj) {
