@@ -421,9 +421,7 @@ export class StockOrderListComponent implements OnInit {
   }
 
   orderIdentifier(order: ApiStockOrder) {
-    // TODO: fix this when available on the API
-    // return order && (order.identifier || order.internalLotNumber);
-    return order && order.identifier;
+    return order && (order.identifier || order.internalLotNumber);
   }
 
   farmerName(farmer: ApiUserCustomer) {
