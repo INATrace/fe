@@ -12240,6 +12240,10 @@
             "description": "Stock order identifier",
             "type": "string"
           },
+          "internalLotNumber": {
+            "description": "Internal LOT number",
+            "type": "string"
+          },
           "isAvailable": {
             "description": "Is stock available",
             "example": false,

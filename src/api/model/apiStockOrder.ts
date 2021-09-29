@@ -73,6 +73,10 @@ export interface ApiStockOrder {
      */
     identifier?: string;
     /**
+     * Internal LOT number
+     */
+    internalLotNumber?: string;
+    /**
      * Is stock available
      */
     isAvailable?: boolean;
@@ -171,6 +175,10 @@ export namespace ApiStockOrder {
          * Stock order identifier
          */
         identifier = 'identifier',
+        /**
+         * Internal LOT number
+         */
+        internalLotNumber = 'internalLotNumber',
         /**
          * Is stock available
          */
@@ -396,6 +404,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'internalLotNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'isAvailable',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
@@ -603,6 +622,8 @@ export namespace ApiStockOrder {
                 ],
                 identifier: [
                 ],
+                internalLotNumber: [
+                ],
                 isAvailable: [
                 ],
                 isPurchaseOrder: [
@@ -679,6 +700,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               identifier: {
+  //                   validators: []
+  //               },
+  //               internalLotNumber: {
   //                   validators: []
   //               },
   //               isAvailable: {
