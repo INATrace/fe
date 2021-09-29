@@ -96,7 +96,7 @@ export class StockOrderListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.initSortOrders();
+    this.initSortOptions();
 
     this.orders$ = combineLatest([
       this.reloadPingList$,
@@ -141,7 +141,7 @@ export class StockOrderListComponent implements OnInit {
     );
   }
 
-  private initSortOrders() {
+  private initSortOptions() {
 
     this.sortOptions = [
       {
@@ -156,6 +156,7 @@ export class StockOrderListComponent implements OnInit {
         name: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0
           ? $localize`:@@productLabelPurchaseOrder.sortOptions.deliveryDate.name:Delivery date`
           : $localize`:@@productLabelPurchaseOrder.sortOptions.production.name:Production date`,
+        defaultSortOrder: 'DESC'
       },
       {
         key: 'identifier',
@@ -234,6 +235,14 @@ export class StockOrderListComponent implements OnInit {
         inactive: true
       }
     ];
+
+    if (this.mode === 'PURCHASE') {
+      this.sortingParams$.next({ sortBy: 'date', sort: 'DESC' });
+    }
+
+    if (this.mode === 'GENERAL') {
+      this.sortingParams$.next({ sortBy: 'lastChange', sort: 'DESC' });
+    }
   }
 
   private loadStockOrders(params): Observable<ApiPaginatedResponseApiStockOrder> {
