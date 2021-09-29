@@ -2470,6 +2470,15 @@
             }
           },
           {
+            "description": "Is open balance only",
+            "in": "query",
+            "name": "isOpenBalanceOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Is women share",
             "in": "query",
             "name": "isWomenShare",
@@ -2611,6 +2620,15 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "Is open balance only",
+            "in": "query",
+            "name": "isOpenBalanceOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -12173,7 +12191,6 @@
           },
           "balance": {
             "description": "Balance",
-            "format": "float",
             "type": "number"
           },
           "company": {
@@ -12182,7 +12199,6 @@
           },
           "cost": {
             "description": "Cost",
-            "format": "float",
             "type": "number"
           },
           "creatorId": {
@@ -12192,6 +12208,11 @@
           },
           "currency": {
             "description": "Currency",
+            "type": "string"
+          },
+          "deliveryTime": {
+            "description": "Delivery time",
+            "format": "date-time",
             "type": "string"
           },
           "documentRequirements": {
@@ -12229,6 +12250,10 @@
             "example": false,
             "type": "boolean"
           },
+          "measureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "Measurement unit"
+          },
           "orderType": {
             "description": "Order type",
             "enum": [
@@ -12239,6 +12264,10 @@
               "TRANSFER_ORDER"
             ],
             "type": "string"
+          },
+          "paid": {
+            "description": "Paid",
+            "type": "number"
           },
           "preferredWayOfPayment": {
             "description": "Preferred way of payment",
@@ -12252,7 +12281,6 @@
           },
           "pricePerUnit": {
             "description": "Price per unit",
-            "format": "float",
             "type": "number"
           },
           "producerUserCustomer": {

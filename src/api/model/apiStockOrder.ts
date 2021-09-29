@@ -21,6 +21,7 @@
 import { ApiCompany } from './apiCompany';
 import { ApiDocumentRequirement } from './apiDocumentRequirement';
 import { ApiFacility } from './apiFacility';
+import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
 import { ApiUserCustomer } from './apiUserCustomer';
@@ -51,6 +52,10 @@ export interface ApiStockOrder {
      */
     currency?: string;
     /**
+     * Delivery time
+     */
+    deliveryTime?: Date;
+    /**
      * Document requirements
      */
     documentRequirements?: Array<ApiDocumentRequirement>;
@@ -75,10 +80,15 @@ export interface ApiStockOrder {
      * Is order of type PURCHASE_ORDER
      */
     isPurchaseOrder?: boolean;
+    measureUnitType?: ApiMeasureUnitType;
     /**
      * Order type
      */
     orderType?: ApiStockOrder.OrderTypeEnum;
+    /**
+     * Paid
+     */
+    paid?: number;
     /**
      * Preferred way of payment
      */
@@ -141,6 +151,10 @@ export namespace ApiStockOrder {
          */
         currency = 'currency',
         /**
+         * Delivery time
+         */
+        deliveryTime = 'deliveryTime',
+        /**
          * Document requirements
          */
         documentRequirements = 'documentRequirements',
@@ -165,10 +179,15 @@ export namespace ApiStockOrder {
          * Is order of type PURCHASE_ORDER
          */
         isPurchaseOrder = 'isPurchaseOrder',
+        measureUnitType = 'measureUnitType',
         /**
          * Order type
          */
         orderType = 'orderType',
+        /**
+         * Paid
+         */
+        paid = 'paid',
         /**
          * Preferred way of payment
          */
@@ -306,6 +325,17 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'deliveryTime',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiDocumentRequirement.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -385,6 +415,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measureUnitType',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
@@ -392,6 +434,17 @@ export namespace ApiStockOrder {
                     name: 'orderType',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'paid',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -538,6 +591,8 @@ export namespace ApiStockOrder {
                 ],
                 currency: [
                 ],
+                deliveryTime: [
+                ],
                 documentRequirements: [
                 ],
                 facility: [
@@ -552,7 +607,11 @@ export namespace ApiStockOrder {
                 ],
                 isPurchaseOrder: [
                 ],
+                measureUnitType: [
+                ],
                 orderType: [
+                ],
+                paid: [
                 ],
                 preferredWayOfPayment: [
                 ],
@@ -604,6 +663,9 @@ export namespace ApiStockOrder {
   //               currency: {
   //                   validators: []
   //               },
+  //               deliveryTime: {
+  //                   validators: []
+  //               },
   //               documentRequirements: {
   //                   validators: []
   //               },
@@ -625,7 +687,13 @@ export namespace ApiStockOrder {
   //               isPurchaseOrder: {
   //                   validators: []
   //               },
+  //               measureUnitType: {
+  //                   validators: []
+  //               },
   //               orderType: {
+  //                   validators: []
+  //               },
+  //               paid: {
   //                   validators: []
   //               },
   //               preferredWayOfPayment: {
