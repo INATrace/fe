@@ -2,12 +2,12 @@
   <div class="main-inside-main">
     <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
       <thead>
-      <tr result-sorter
-          [sortOptions]="sortOptions"
-          [cbChecked]="cbCheckedAll"
-          [defaultSortingIndex]="1"
-          (sortByKey)="changeSort($event)"></tr>
-      </thead>
+        <tr result-sorter
+            [sortOptions]="sortOptions"
+            [cbChecked]="cbCheckedAll"
+            [defaultSortingIndex]="1"
+            (sortByKey)="changeSort($event)"></tr>
+        </thead>
       <tbody>
         <tr *ngFor="let order of orders.items; index as i">
           <td *ngIf="!sortOptions[0].hide" [attr.data-label]="sortOptions[0].name">
@@ -15,7 +15,7 @@
           </td>
           <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name">{{ formatDate(order.productionDate) }}</td>
           <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name">{{ orderIdentifier(order) }}</td>
-          <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{order.orderType | formatStockOrderType}}</td>
+          <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{ order.orderType | formatStockOrderType }}</td>
           <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
           <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
           <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }}</td>

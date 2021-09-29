@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
 import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
@@ -22,7 +22,7 @@ import StatusEnum = ApiDefaultResponse.StatusEnum;
   templateUrl: './stock-order-list.component.html',
   styleUrls: ['./stock-order-list.component.scss']
 })
-export class StockOrderListComponent implements OnInit {
+export class StockOrderListComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -84,8 +84,11 @@ export class StockOrderListComponent implements OnInit {
   cbCheckedAll = new FormControl(false);
   private allSelected = false;
   currentData: ApiStockOrder[];
+  clearCheckboxesSubscription: Subscription;
 
   orders$: Observable<ApiPaginatedListApiStockOrder>;
+
+  addPaymentsSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -95,6 +98,18 @@ export class StockOrderListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.clearCheckboxesSubscription = this.clickClearCheckboxesPing$.subscribe(val => {
+      if (val) {
+        this.clearCBs();
+      }
+    });
+
+    this.addPaymentsSubscription = this.clickAddPaymentsPing$.subscribe(val => {
+      if (val) {
+        this.addPayments();
+      }
+    });
 
     this.initSortOptions();
 
@@ -139,6 +154,11 @@ export class StockOrderListComponent implements OnInit {
       }),
       tap(() => this.globalEventsManager.showLoading(false))
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.addPaymentsSubscription) { this.addPaymentsSubscription.unsubscribe(); }
+    if (this.clearCheckboxesSubscription) { this.clearCheckboxesSubscription.unsubscribe(); }
   }
 
   private initSortOptions() {
@@ -364,6 +384,7 @@ export class StockOrderListComponent implements OnInit {
       const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.id).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK) {
         this.reloadPingList$.next(true);
+        this.clearCBs();
       }
 
     } finally {
@@ -420,6 +441,24 @@ export class StockOrderListComponent implements OnInit {
       this.selectedOrders.push(order);
     }
     this.selectedIdsChanged.emit(this.selectedOrders);
+  }
+
+  private clearCBs() {
+    this.selectedOrders = [];
+    this.allSelected = false;
+    this.cbCheckedAll.setValue(false);
+    this.selectedIdsChanged.emit(this.selectedOrders);
+    for (const item of this.currentData) {
+      if ((item as any).selected) { (item as any).selected = false; }
+    }
+  }
+
+  private addPayments() {
+    const poIds = [];
+    for (const item of this.selectedOrders) {
+      poIds.push(item.id);
+    }
+    this.router.navigate(['my-stock', 'payments', 'purchases', 'bulk-payment', poIds.toString(), 'new', 'PO']).then();
   }
 
   formatDate(productionDate) {

@@ -10,10 +10,10 @@ import { dateAtMidnightISOString, setNavigationParameter } from '../../../../../
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ChainStockOrder } from '../../../../../api-chain/model/chainStockOrder';
 import { ChainPayment } from '../../../../../api-chain/model/chainPayment';
 import { AuthorisedLayoutComponent } from '../../../../layout/authorised/authorised-layout/authorised-layout.component';
 import { TabCommunicationService } from '../../../../shared/tab-communication.service';
+import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
@@ -42,7 +42,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   filterWayOfPayment = new FormControl('');
   wayOfPaymentPing$ = new BehaviorSubject<string>(this.filterWayOfPayment.value);
 
-  selectedOrders: ChainStockOrder[];
+  selectedOrders: ApiStockOrder[];
   selectedIds: ChainPayment[];
 
   clickAddPaymentsPing$ = new BehaviorSubject<boolean>(false);
