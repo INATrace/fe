@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormArrayName, FormControlName } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -65,7 +65,7 @@ export class CollectorDetailModalComponent implements OnInit {
 
   returnUrl = this.route.snapshot.queryParams['returnUrl'];
 
-  collector: ChainUserCustomer;
+  collector: ApiUserCustomer;
 
   collectorForm: FormGroup;
   qrCodeSize = 110;
@@ -99,8 +99,7 @@ export class CollectorDetailModalComponent implements OnInit {
     private chainPaymentsService: PaymentsService,
     public countryCodes: CountryService,
     private productService: ProductControllerService,
-    private companyService: CompanyControllerService,
-    // private userCustomerService: UserCustomerService
+    private companyService: CompanyControllerService
   ) { }
 
 
@@ -127,10 +126,10 @@ export class CollectorDetailModalComponent implements OnInit {
       if (this.type === 'farmers') this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
       else this.title = $localize`:@@collectorDetail.editCollector.title:Edit collector`;
       this.update = true;
-      let resp = await this.chainUserCustomerService.getUserCustomer(this.route.snapshot.params.userCustomerId).pipe(take(1)).toPromise()
+      const resp = await this.productService.getUserCustomerUsingGET(this.route.snapshot.params.userCustomerId).pipe(first()).toPromise();
       if (resp && resp.status === 'OK') {
         this.collector = resp.data;
-        this.organizationId = resp.data.organizationId;
+        this.organizationId = resp.data.companyId.toString();
       }
       let resp1 = await this.chainOrganizationService.getOrganization(this.organizationId).pipe(take(1)).toPromise()
       if (resp1 && resp1.status === 'OK') {
@@ -164,16 +163,13 @@ export class CollectorDetailModalComponent implements OnInit {
   owner: boolean = true;
 
   ngOnInit(): void {
-    console.log("new on init");
     this.openBalanceOnly = false;
     this.sortPay = this.sortPO = null;
     this.initInitialData().then(
       (resp: any) => {
         if (this.update) {
-          console.log("edit");
           this.editCollector();
         } else {
-          console.log("new");
           this.newCollector();
         }
         this.userProfile = this.authService.currentUserProfile;
@@ -193,41 +189,6 @@ export class CollectorDetailModalComponent implements OnInit {
     obj.bank = defaultEmptyObject(ApiBankInformation.formMetadata()) as ApiBankInformation;
     obj.farm = defaultEmptyObject(ApiFarmInformation.formMetadata()) as ApiFarmInformation;
 
-    // let obj = defaultEmptyObject(ChainUserCustomer.formMetadata()) as ChainUserCustomer;
-    // obj.location = {
-    //   address: null,
-    //   city: null,
-    //   country: null,
-    //   state: null,
-    //   zip: null,
-    //   latitude: null,
-    //   longitude: null,
-    //   site: null,
-    //   sector: null,
-    //   cell: null,
-    //   village: null,
-    //   isPubliclyVisible: null
-    // } as ChainLocation;
-    // obj.contact = {
-    //   phone: null,
-    //   email: null,
-    //   hasSmartPhone: null
-    // } as ContactInfo;
-    // obj.farmInfo = {
-    //   ownsFarm: null,
-    //   farmSize: null,
-    //   numberOfTrees: null,
-    //   organicFarm: null,
-    //   fertilizerDescription: null,
-    //   additionalInfo: null
-    // } as FarmInfo;
-    // obj.bankAccountInfo = {
-    //   accountHoldersName: null,
-    //   accountNumber: null,
-    //   bankName: null,
-    //   branchAddress: null,
-    //   country: null
-    // } as BankAccountInfo;
     return obj
   }
 
@@ -235,13 +196,14 @@ export class CollectorDetailModalComponent implements OnInit {
   newCollector() {
     // this.collectorForm = generateFormFromMetadata(ChainUserCustomer.formMetadata(), this.emptyObject(), ChainUserCustomerValidationScheme);
     this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyObject(), ApiUserCustomerValidationScheme);
-    console.log("init form new", this.collectorForm);
     this.initializeListManager();
 
   }
 
   editCollector() {
-    this.collectorForm = generateFormFromMetadata(ChainUserCustomer.formMetadata(), this.collector, ChainUserCustomerValidationScheme);
+    this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.collector, ApiUserCustomerValidationScheme);
+    console.log("collector", this.collector);
+    console.log("collector form", this.collectorForm);
     this.prepareEditData();
     this.initializeListManager();
   }
@@ -252,6 +214,15 @@ export class CollectorDetailModalComponent implements OnInit {
         (this.assocForForm as FormArray).push(new FormControl({
           id: item.id,
           name: item.name
+        }));
+      });
+    }
+
+    if (this.collectorForm.value.cooperatives) {
+      this.collectorForm.value.cooperatives.forEach(item => {
+        (this.coopForForm as FormArray).push(new FormControl({
+          organizationId: item.company.id,
+          role: item.userCustomerType
         }));
       });
     }
@@ -268,7 +239,7 @@ export class CollectorDetailModalComponent implements OnInit {
     //   });
     // }
 
-    if (this.collectorForm.get('farmInfo').value == null || isEmptyDictionary(this.collectorForm.get('farmInfo').value)) {
+    if (this.collectorForm.get('farm').value == null || isEmptyDictionary(this.collectorForm.get('farm').value)) {
       let farmInfoForm = generateFormFromMetadata(FarmInfo.formMetadata(), {
         ownsFarm: null,
         farmSize: null,
@@ -277,29 +248,29 @@ export class CollectorDetailModalComponent implements OnInit {
         fertilizerDescription: null,
         additionalInfo: null
       } as FarmInfo, FarmInfoValidationScheme);
-      this.collectorForm.setControl('farmInfo', farmInfoForm);
+      this.collectorForm.setControl('farm', farmInfoForm);
       this.collectorForm.updateValueAndValidity();
     }
-    if (this.collectorForm.get('contact').value == null || isEmptyDictionary(this.collectorForm.get('contact').value)) {
-      let contactForm = generateFormFromMetadata(ContactInfo.formMetadata(), {
-        phone: null,
-        email: null,
-        hasSmartPhone: null
-      } as ContactInfo, ContactInfoValidationScheme);
-      this.collectorForm.setControl('contactForm', contactForm);
-      this.collectorForm.updateValueAndValidity();
-    }
-    if (this.collectorForm.get('bankAccountInfo').value == null || isEmptyDictionary(this.collectorForm.get('bankAccountInfo').value)) {
-      let bankAccountInfoForm = generateFormFromMetadata(BankAccountInfo.formMetadata(), {
-        accountHoldersName: null,
-        accountNumber: null,
-        bankName: null,
-        branchAddress: null,
-        country: null
-      } as BankAccountInfo, BankAccountInfoValidationScheme);
-      this.collectorForm.setControl('bankAccountInfo', bankAccountInfoForm);
-      this.collectorForm.updateValueAndValidity();
-    }
+    // if (this.collectorForm.get('contact').value == null || isEmptyDictionary(this.collectorForm.get('contact').value)) {
+    //   let contactForm = generateFormFromMetadata(ContactInfo.formMetadata(), {
+    //     phone: null,
+    //     email: null,
+    //     hasSmartPhone: null
+    //   } as ContactInfo, ContactInfoValidationScheme);
+    //   this.collectorForm.setControl('contactForm', contactForm);
+    //   this.collectorForm.updateValueAndValidity();
+    // }
+    // if (this.collectorForm.get('bankAccountInfo').value == null || isEmptyDictionary(this.collectorForm.get('bankAccountInfo').value)) {
+    //   let bankAccountInfoForm = generateFormFromMetadata(BankAccountInfo.formMetadata(), {
+    //     accountHoldersName: null,
+    //     accountNumber: null,
+    //     bankName: null,
+    //     branchAddress: null,
+    //     country: null
+    //   } as BankAccountInfo, BankAccountInfoValidationScheme);
+    //   this.collectorForm.setControl('bankAccountInfo', bankAccountInfoForm);
+    //   this.collectorForm.updateValueAndValidity();
+    // }
 
   }
 
@@ -313,15 +284,17 @@ export class CollectorDetailModalComponent implements OnInit {
 
 
   async updateCollector() {
-    console.log("saving");
     this.submitted = true;
-    console.log("collector form", this.collectorForm);
     if (this.collectorForm.invalid) return;
     let data = this.prepareData();
-    console.log("data", data);
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.productService.addUserCustomerUsingPOST(this.route.snapshot.params.id, this.route.snapshot.params.organizationId, data).toPromise();
+      let res;
+      if (!this.update) {
+        res = await this.productService.addUserCustomerUsingPOST(this.route.snapshot.params.id, this.route.snapshot.params.organizationId, data).toPromise();
+      } else {
+        res = await this.productService.updateUserCustomerUsingPUT(data).toPromise();
+      }
       if (res && res.status == 'OK') {
         this.dismiss();
       }
@@ -335,9 +308,25 @@ export class CollectorDetailModalComponent implements OnInit {
   }
 
   prepareData() {
-    (this.collectorForm.get('associations') as FormArray).clear();
-    for (let item of this.assocForForm.value) {
-      (this.collectorForm.get('associations') as FormArray).push(new FormControl(item));
+    // (this.collectorForm.get('associations') as FormArray).clear();
+    // for (let item of this.assocForForm.value) {
+    //   (this.collectorForm.get('associations') as FormArray).push(new FormControl(item));
+    // }
+    const assocs: Array<ApiUserCustomerAssociation> = [];
+    for (const as of this.collectorForm.value.associations) {
+      console.log("one assoc", as);
+      assocs.push(as);
+    }
+
+    const coops: Array<ApiUserCustomerCooperative> = [];
+    for (const co of this.coopForForm.value) {
+      console.log("one coop", co);
+      coops.push({
+        company: {
+          id: co.organizationId
+        },
+        userCustomerType: co.role,
+      });
     }
 
     if (this.route.snapshot.params.type === 'farmers') {
@@ -359,13 +348,14 @@ export class CollectorDetailModalComponent implements OnInit {
     // let custRoles = this.collectorForm.get("customerRoles").value
     // this.collectorForm.get("customerRoles").setValue(custRoles.map(item => item.id))
 
-    console.log("col form val", this.collectorForm.value);
-
     let data = _.cloneDeep(this.collectorForm.value);
     Object.keys(data.location).forEach((key) => (data.location[key] == null) && delete data.location[key]);
     if (data.farmInfo) Object.keys(data.farmInfo).forEach((key) => (data.farmInfo[key] == null) && delete data.farmInfo[key]);
     if (data.contact) Object.keys(data.contact).forEach((key) => (data.contact[key] == null) && delete data.contact[key]);
     if (data.bankAccountInfo) Object.keys(data.bankAccountInfo).forEach((key) => (data.bankAccountInfo[key] == null) && delete data.bankAccountInfo[key]);
+
+    data.associations = assocs;
+    data.cooperatives = coops;
 
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
 
@@ -433,7 +423,8 @@ export class CollectorDetailModalComponent implements OnInit {
   coopForForm = new FormArray([])
   async addAssocCoop(item, form, fArray) {
     if (!item) return;
-    if (fArray.value.some(x => x.id === item.id)) {
+    // do not use triple-equals(===)
+    if (fArray.value.some(x => x.id == item.id)) {
       form.setValue(null);
       return;
     }
@@ -461,12 +452,16 @@ export class CollectorDetailModalComponent implements OnInit {
     }
   }
 
+  async deleteAssoc(item, index) {
+    console.log("deleting", item);
+    this.collectorForm.value.associations.splice(index, 1);
+  }
+
 
   codebookAssoc;
   codebookCoop;
   assocCoop;
   async listOfOrgProducer() {
-    console.log('chain product', this.chainProduct);
     const producers = this.chainProduct.associatedCompanies.filter(item => item.type === 'PRODUCER');
     const producersObj = {};
     for (const producer of producers) {
@@ -482,7 +477,6 @@ export class CollectorDetailModalComponent implements OnInit {
       }
     }
     this.codebookCoop = EnumSifrant.fromObject(producersObj);
-    console.log("codebook coop", this.codebookCoop);
     this.assocCoop = producersObj;
     // let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "PRODUCER");
     // let assocObj = {};
@@ -653,7 +647,7 @@ export class CollectorDetailModalComponent implements OnInit {
   async listPurchaseOrders(openBalance, sort) {
     let openB = 0;
     let totalBrought = 0;
-    let res = await this.chainStockOrderService.listPurchaseOrderForUserCustomer(dbKey(this.collector), openBalance, sort).pipe(take(1)).toPromise();
+    let res = await this.chainStockOrderService.listPurchaseOrderForUserCustomer(this.collector.id.toString(), openBalance, sort).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) this.purchaseOrders = res.data.items;
     for (let item of this.purchaseOrders) {
       if (item.balance) openB += item.balance;
@@ -665,7 +659,7 @@ export class CollectorDetailModalComponent implements OnInit {
 
   async listPayments(sort) {
     let totalF = 0;
-    let res = await this.chainPaymentsService.listPaymentsForRecipientUserCustomer(dbKey(this.collector), sort).pipe(take(1)).toPromise();
+    let res = await this.chainPaymentsService.listPaymentsForRecipientUserCustomer(this.collector.id.toString(), sort).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) this.payments = res.data.items;
     for (let item of this.payments) {
       if (item.amount) totalF += item.amount;

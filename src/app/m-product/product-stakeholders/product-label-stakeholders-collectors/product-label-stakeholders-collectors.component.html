@@ -18,7 +18,7 @@
           <td [attr.data-label]="sortOptions[6].name">
             <span>
             <a i18n="@@productLabelStakeholdersCollectors.tableCol.edit"
-              (click)="collectorDetail(dbKey(collector))"
+              (click)="collectorDetail(collector.id)"
               class="company-action"
               [class.enabled-action]="true">
               Edit

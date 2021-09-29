@@ -76,7 +76,7 @@
             <textinput
               *ngIf="update"
               [readOnly]=true
-              [form]="collectorForm.get('userCustomerId')"
+              [form]="collectorForm.get('id')"
               label="User ID"
               style="width: 100%"
               placeholder=""
@@ -92,10 +92,10 @@
             <div class="label-card">
               <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image">
               <div class="name-sector">{{collectorForm.get('name').value}} {{collectorForm.get('surname').value}}</div>
-              <div class="location-sector">{{collectorForm.get('location.village').value}}, {{collectorForm.get('location.cell').value}}, {{collectorForm.get('location.sector').value}}</div>
+              <div class="location-sector">{{collectorForm.get('location.address.village').value}}, {{collectorForm.get('location.address.cell').value}}, {{collectorForm.get('location.address.sector').value}}</div>
               <div class="qr-code-container">
 
-                <qr-code [value]="collectorForm.get('userCustomerId').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
+                <qr-code [value]="collectorForm.get('id').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
 
               </div>
               <div style="flex: 1 1 0"></div>
@@ -294,8 +294,6 @@
         <div class="af-form-block--c6">
           <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
           <div class="af-form-element">
-
-<!---->
             <list-editor *ngIf="producersListManager"
               label="Customer of"
               [listEditorManager]="producersListManager"
@@ -332,7 +330,6 @@
                 </ng-container>
               </list-editor-errors>
             </list-editor>
-<!---->
           </div>
         </div>
 
@@ -353,10 +350,10 @@
                 (itemMatching)="addAssocCoop($event, assocForm, assocForForm)">
               </textinput>
             </div>
-            <div *ngFor="let item of assocForForm.value; index as i">
+            <div *ngFor="let item of collectorForm.value.associations; index as i">
               <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                <div>{{item.name}}</div>
-                <div (click)="deleteAssocCoop(item, assocForForm)">
+                <div>{{item.company.name}}</div>
+                <div (click)="deleteAssoc(item, i)">
                   <fa-icon
                     class="del-icon"
                     [icon]="faTimes"></fa-icon>
