@@ -108,13 +108,13 @@ export class StockOrderListComponent implements OnInit {
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-      map(([ping, page, sorting, facilityId, openBalanceOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
+      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
         return {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sorting,
           facilityId,
-          openBalanceOnly,
+          isOpenBalanceOnly,
           wayOfPayment,
           isWomenShare,
           productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
@@ -236,6 +236,10 @@ export class StockOrderListComponent implements OnInit {
   }
 
   private loadStockOrders(params): Observable<ApiPaginatedResponseApiStockOrder> {
+
+    if (!params.isOpenBalanceOnly) {
+      delete params.isOpenBalanceOnly;
+    }
 
     const facilityId = params.facilityId;
     delete params.facilityId;
