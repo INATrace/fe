@@ -299,7 +299,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
     if (this.pageListingMode === 'PURCHASE_ORDERS') {
 
-      console.log('ID: ', order.id);
       this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
 
     } else {
