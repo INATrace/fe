@@ -3,11 +3,10 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
-import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { StockOrderListingPageMode } from '../../../../m-product/product-stock/stock-core/stock-tab-core/stock-tab-core.component';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
 import { formatDateWithDots } from '../../../../../shared/utils';
@@ -15,6 +14,8 @@ import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
+import StatusEnum = ApiDefaultResponse.StatusEnum;
 
 @Component({
   selector: 'app-stock-order-list',
@@ -320,7 +321,45 @@ export class StockOrderListComponent implements OnInit {
   }
 
   async delete(order: ApiStockOrder) {
-    // TODO: implement delete
+
+    let confirmResult;
+    if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER') {
+      confirmResult = await this.globalEventsManager.openMessageModal({
+        type: 'warning',
+        message: $localize`:@@productLabelPurchaseOrder.deleteProcessingOrder.error.message:Are you sure you want to delete the order? This will delete processing transaction and possibly all orders generated from it.`,
+        options: { centered: true }
+      });
+    } else {
+      confirmResult = await this.globalEventsManager.openMessageModal({
+        type: 'warning',
+        message: $localize`:@@productLabelPurchaseOrder.delete.error.message:Are you sure you want to delete the order?`,
+        options: { centered: true }
+      });
+    }
+
+    // If user confirms, the modal result is 'ok'
+    if (confirmResult !== 'ok') {
+      return;
+    }
+
+    try {
+
+      this.globalEventsManager.showLoading(true);
+
+      if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER' || order.orderType === 'GENERAL_ORDER') {
+        // TODO: implement remove for other types of orders
+        return;
+      }
+
+      // Remove purchase order
+      const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.id).pipe(take(1)).toPromise();
+      if (response && response.status === StatusEnum.OK) {
+        this.reloadPingList$.next(true);
+      }
+
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   changeSort(event) {
