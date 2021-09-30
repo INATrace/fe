@@ -7,19 +7,14 @@ import { first, take } from 'rxjs/operators';
 import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
-// import { BankAccountInfo } from 'src/api-chain/model/bankAccountInfo';
-import { ChainLocation } from 'src/api-chain/model/chainLocation';
 import { ChainOrganization } from 'src/api-chain/model/chainOrganization';
-import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
-import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { defaultEmptyObject, generateFormFromMetadata, isEmptyDictionary, formatDateWithDots, dbKey } from 'src/shared/utils';
 import {
-  ChainUserCustomerValidationScheme,
   FarmInfoValidationScheme,
-  ContactInfoValidationScheme,
   ChainUserCustomerRoleValidationScheme,
-  BankAccountInfoValidationScheme, ApiUserCustomerValidationScheme, ApiUserCustomerCooperativeValidationScheme
+  ApiUserCustomerValidationScheme,
+  ApiUserCustomerCooperativeValidationScheme
 } from './validation';
 import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
@@ -226,26 +221,6 @@ export class CollectorDetailModalComponent implements OnInit {
       this.collectorForm.setControl('farm', farmInfoForm);
       this.collectorForm.updateValueAndValidity();
     }
-    // if (this.collectorForm.get('contact').value == null || isEmptyDictionary(this.collectorForm.get('contact').value)) {
-    //   let contactForm = generateFormFromMetadata(ContactInfo.formMetadata(), {
-    //     phone: null,
-    //     email: null,
-    //     hasSmartPhone: null
-    //   } as ContactInfo, ContactInfoValidationScheme);
-    //   this.collectorForm.setControl('contactForm', contactForm);
-    //   this.collectorForm.updateValueAndValidity();
-    // }
-    // if (this.collectorForm.get('bankAccountInfo').value == null || isEmptyDictionary(this.collectorForm.get('bankAccountInfo').value)) {
-    //   let bankAccountInfoForm = generateFormFromMetadata(BankAccountInfo.formMetadata(), {
-    //     accountHoldersName: null,
-    //     accountNumber: null,
-    //     bankName: null,
-    //     branchAddress: null,
-    //     country: null
-    //   } as BankAccountInfo, BankAccountInfoValidationScheme);
-    //   this.collectorForm.setControl('bankAccountInfo', bankAccountInfoForm);
-    //   this.collectorForm.updateValueAndValidity();
-    // }
 
   }
 
@@ -273,20 +248,12 @@ export class CollectorDetailModalComponent implements OnInit {
       if (res && res.status == 'OK') {
         this.dismiss();
       }
-      // let res = await this.chainUserCustomerService.postUserCustomer(data).pipe(take(1)).toPromise()
-      // if (res && res.status == 'OK') {
-      //   this.dismiss();
-      // }
     } finally {
       this.globalEventsManager.showLoading(false);
     }
   }
 
   prepareData() {
-    // (this.collectorForm.get('associations') as FormArray).clear();
-    // for (let item of this.assocForForm.value) {
-    //   (this.collectorForm.get('associations') as FormArray).push(new FormControl(item));
-    // }
     const assocs: Array<ApiUserCustomerAssociation> = [];
     for (const as of this.collectorForm.value.associations) {
       assocs.push(as);
@@ -311,10 +278,6 @@ export class CollectorDetailModalComponent implements OnInit {
       // this.collectorForm.get("productId").setValue(this.route.snapshot.params.id);
       this.collectorForm.get("companyId").setValue(this.chainProduct.companyId);
     }
-
-
-    // let custRoles = this.collectorForm.get("customerRoles").value
-    // this.collectorForm.get("customerRoles").setValue(custRoles.map(item => item.id))
 
     let data = _.cloneDeep(this.collectorForm.value);
     Object.keys(data.location).forEach((key) => (data.location[key] == null) && delete data.location[key]);
@@ -399,15 +362,6 @@ export class CollectorDetailModalComponent implements OnInit {
     fArray.push(new FormControl(item));
     fArray.markAsDirty();
     setTimeout(() => form.setValue(null));
-    // if (!item) return;
-    // let formArray = fArray as FormArray
-    // if (formArray.value.some(x => x.id === item.id)) {
-    //   form.setValue(null);
-    //   return;
-    // }
-    // formArray.push(new FormControl(item))
-    // formArray.markAsDirty()
-    // setTimeout(() => form.setValue(null))
   }
 
   async deleteAssocCoop(item, fArray) {
@@ -459,23 +413,6 @@ export class CollectorDetailModalComponent implements OnInit {
     }
     this.codebookCoop = EnumSifrant.fromObject(producersObj);
     this.assocCoop = producersObj;
-    // let assoc = this.chainProduct.organizationRoles.filter(item => item.role == "PRODUCER");
-    // let assocObj = {};
-    // for (let item of assoc) {
-    //   let res = await this.chainOrganizationService.getOrganizationByCompanyId(item.companyId).pipe(take(1)).toPromise();
-    //   if (res && res.status === "OK" && res.data) {
-    //     if (this.owner) {
-    //       assocObj[dbKey(res.data)] = res.data.name;
-    //     } else {
-    //       if (this.userOrgId == dbKey(res.data)) {
-    //         assocObj[dbKey(res.data)] = res.data.name;
-    //       }
-    //     }
-    //   }
-    // }
-    // this.codebookCoop = EnumSifrant.fromObject(assocObj);
-    // this.assocCoop = assocObj;
-    // console.log("assocCoop", this.assocCoop);
   }
 
   async listOfOrgAssociation() {

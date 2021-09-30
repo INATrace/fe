@@ -1,11 +1,9 @@
-import { LocationStrategy } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
-import { ApiResponsePaginatedListChainUserCustomer } from 'src/api-chain/model/apiResponsePaginatedListChainUserCustomer';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
@@ -20,7 +18,6 @@ import { ApiPaginatedResponseApiUserCustomer } from '../../../../api/model/apiPa
 export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   constructor(
-    // private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     private modalService: NgbModalImproved,
     private route: ActivatedRoute,
@@ -150,7 +147,6 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
           limit: this.pageSize
         }
       }).pipe(
-        // distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
         tap(val => this.globalEventsManager.showLoading(true)),
         switchMap(params => {
           return this.getAPI(params);
@@ -173,17 +169,6 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
         shareReplay(1)
       )
   }
-
-  // getAPI(params) {
-  //   let org = this.organizationId;
-  //   if (this.role === 'FARMER') { //TODO link together appropriate assoc and producer, check also B2C page
-  //     if (this.organizationId === '8b7afab6-c9ce-4739-b4b7-2cff8e473304') org = 'ade24b49-8548-45b6-ab12-65ce801803db';
-  //     if (this.organizationId === '21777c51-8263-4e5c-8b3b-2f03a953dd2a') org = '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4';
-  //   }
-  //   if (org == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
-  //   else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: org, role: this.role })
-  //
-  // }
   
   getAPI(params) {
     const org = this.organizationId;

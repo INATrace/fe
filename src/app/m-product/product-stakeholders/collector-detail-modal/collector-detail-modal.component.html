@@ -87,7 +87,6 @@
         </div>
 
         <div class="af-form-block--c6" *ngIf="update">
-          <!-- <div class="af-form-element"> -->
           <div class="d-flex justify-content-center align-items-center" style="margin-top: 32px;">
             <div class="label-card">
               <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image">
@@ -104,77 +103,8 @@
               </div>
             </div>
           </div>
-          <!-- </div> -->
         </div>
-        <!-- <div class="af-form-block--c6">
-        <h2 i18n="@@collectorDetail.section.bankAccount">Bank account</h2>
-        <div class="af-form-element">
-          <textinput
-            [form]="collectorForm.get('bankAccountInfo.accountHoldersName')"
-            label="Account holder’s name"
-            style="width: 100%"
-            placeholder="Enter account holder’s name"
-            i18n-label="@@collectorDetail.textinput.accountHoldersName.label"
-            i18n-placeholder="@@collectorDetail.textinput.accountHoldersName.placeholder">
-          </textinput>
-
-
-          <textinput
-            [form]="collectorForm.get('bankAccountInfo.accountNumber')"
-            label="Account number"
-            style="width: 100%"
-            placeholder="Enter account number"
-            i18n-label="@@collectorDetail.textinput.accountNumber.label"
-            i18n-placeholder="@@collectorDetail.textinput.accountNumber.placeholder">
-          </textinput>
-
-
-
-          <textinput
-            [form]="collectorForm.get('bankAccountInfo.bankName')"
-            label="Bank name"
-            style="width: 100%"
-            placeholder="Enter bank name"
-            i18n-label="@@collectorDetail.textinput.bankName.label"
-            i18n-placeholder="@@collectorDetail.textinput.bankName.placeholder">
-          </textinput>
-
-
-
-          <textinput
-            [form]="collectorForm.get('bankAccountInfo.branchAddress')"
-            label="Branch address"
-            style="width: 100%"
-            placeholder="Enter branch address"
-            i18n-label="@@collectorDetail.textinput.branchAddress.label"
-            i18n-placeholder="@@collectorDetail.textinput.branchAddress.placeholder">
-          </textinput>
-
-          <single-choice
-            label="Country"
-            i18n-label="@@collectorDetail.bankAccountInfo.country.label"
-            [formControlInput]="collectorForm.get('bankAccountInfo.country')"
-            [codebookService]="countryCodes">
-          </single-choice>
-
-        </div>
-
-      </div> -->
       </div>
-      <!-- <div i18n="@@collectorDetail.section.balance" class="modal-sub-title">Balance</div>
-
-
-      <textinput
-      [readOnly]=true
-        [form]="collectorForm.get('balance')"
-        label="Open balance"
-        style="width: 100%"
-        i18n-label="@@collectorDetail.textinput.balance.label">
-      </textinput> -->
-
-
-      <!-- <div i18n="@@collectorDetail.section.location" class="modal-sub-title">Location</div> -->
-
 
       <div class="af-form-row">
 
@@ -257,23 +187,6 @@
               i18n-label="@@collectorDetail.textinput.bankName.label"
               i18n-placeholder="@@collectorDetail.textinput.bankName.placeholder">
             </textinput>
-
-
-<!--            <textinput-->
-<!--              [form]="collectorForm.get('bank.branchAddress')"-->
-<!--              label="Additional information"-->
-<!--              style="width: 100%"-->
-<!--              placeholder="Enter additional information"-->
-<!--              i18n-label="@@collectorDetail.textinput.additionalInfo.label"-->
-<!--              i18n-placeholder="@@collectorDetail.textinput.additionalInfo.placeholder">-->
-<!--            </textinput>-->
-
-<!--            <single-choice-->
-<!--              label="Country"-->
-<!--              i18n-label="@@collectorDetail.bankAccountInfo.country.label"-->
-<!--              [formControlInput]="collectorForm.get('bank.country')"-->
-<!--              [codebookService]="countryCodes">-->
-<!--            </single-choice>-->
 
             <textinput
               [form]="collectorForm.get('bank.additionalInformation')"
@@ -464,61 +377,6 @@
 
       </div>
 
-      <!-- <ng-container *ngIf="this.update && this.type === 'farmers'"> -->
-
-        <!-- <div class="af-form-row">
-          <div class="af-form-block--c6">
-            <h2 i18n="@@collectorDetail.section.balance">Open balance</h2>
-            <div class="af-form-element">
-
-              <textinput
-                [form]="openBalanceForm"
-                label="Open balance (RWF)"
-                style="width: 100%"
-                i18n-label="@@collectorDetail.textinput.openBalance.label"
-                [readOnly]="true">
-              </textinput>
-
-            </div>
-          </div>
-
-          <div class="af-form-block--c6">
-            <h2 i18n="@@collectorDetail.section.totalPaidToFarmer">Total paid</h2>
-            <div class="af-form-element">
-
-              <textinput
-                [form]="totalPaidFarmerForm"
-                label="Total paid to farmer (RWF)"
-                style="width: 100%"
-                i18n-label="@@collectorDetail.textinput.totalPaidToFarmer.label"
-                [readOnly]="true">
-              </textinput>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="af-form-row">
-
-          <div class="af-form-block--c6">
-            <h2 i18n="@@collectorDetail.section.kgBrought">Total brought</h2>
-            <div class="af-form-element">
-
-              <textinput
-                [form]="totalBroughtFarmerForm"
-                label="Total brought from farmer (kg)"
-                style="width: 100%"
-                i18n-label="@@collectorDetail.textinput.kgBrought.label"
-                [readOnly]="true">
-              </textinput>
-
-            </div>
-          </div>
-
-        </div> -->
-      <!-- </ng-container> -->
-
-
       <div class="af-form-row" *ngIf="this.update && this.type === 'farmers'">
 
         <div class="af-form-block--c12">
@@ -614,29 +472,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <ng-container *ngIf="update">
-      <div class="af-form-row">
-
-        <div class="af-form-block--c12">
-          <h2 i18n="@@collectorDetail.section.purchases">Purchases</h2>
-          <div class="af-form-element">
-          </div>
-        </div>
-      </div>
-
-      <div class="af-form-row">
-        <div class="af-form-block--c12">
-          <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
-          <div class="af-form-element">
-          </div>
-        </div>
-      </div>
-    </ng-container> -->
-
-
-
-
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
