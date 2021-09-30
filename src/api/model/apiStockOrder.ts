@@ -24,6 +24,7 @@ import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
+import { ApiUser } from './apiUser';
 import { ApiUserCustomer } from './apiUserCustomer';
 
 
@@ -43,6 +44,7 @@ export interface ApiStockOrder {
      * Cost
      */
     cost?: number;
+    createdBy?: ApiUser;
     /**
      * ID of the user who has created the stock order
      */
@@ -118,6 +120,7 @@ export interface ApiStockOrder {
      * Timestamp indicates when stock order have been updated
      */
     updateTimestamp?: Date;
+    updatedBy?: ApiUser;
     /**
      * Is women share
      */
@@ -146,6 +149,7 @@ export namespace ApiStockOrder {
          * Cost
          */
         cost = 'cost',
+        createdBy = 'createdBy',
         /**
          * ID of the user who has created the stock order
          */
@@ -221,6 +225,7 @@ export namespace ApiStockOrder {
          * Timestamp indicates when stock order have been updated
          */
         updateTimestamp = 'updateTimestamp',
+        updatedBy = 'updatedBy',
         /**
          * Is women share
          */
@@ -309,6 +314,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'createdBy',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
                 },
                 {
                     isReadOnly: false,
@@ -584,6 +601,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updatedBy',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -605,6 +634,8 @@ export namespace ApiStockOrder {
                 company: [
                 ],
                 cost: [
+                ],
+                createdBy: [
                 ],
                 creatorId: [
                 ],
@@ -654,6 +685,8 @@ export namespace ApiStockOrder {
                 ],
                 updateTimestamp: [
                 ],
+                updatedBy: [
+                ],
                 womenShare: [
                 ],
             }
@@ -676,6 +709,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               cost: {
+  //                   validators: []
+  //               },
+  //               createdBy: {
   //                   validators: []
   //               },
   //               creatorId: {
@@ -748,6 +784,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               updateTimestamp: {
+  //                   validators: []
+  //               },
+  //               updatedBy: {
   //                   validators: []
   //               },
   //               womenShare: {

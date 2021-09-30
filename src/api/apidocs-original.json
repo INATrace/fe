@@ -12201,6 +12201,10 @@
             "description": "Cost",
             "type": "number"
           },
+          "createdBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has created StockOrder"
+          },
           "creatorId": {
             "description": "ID of the user who has created the stock order",
             "format": "int64",
@@ -12320,6 +12324,10 @@
             "description": "Timestamp indicates when stock order have been updated",
             "format": "date-time",
             "type": "string"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has last updated StockOrder"
           },
           "womenShare": {
             "description": "Is women share",
