@@ -9,6 +9,7 @@ import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
 import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
+import { ApiCompanyValidationScheme } from '../../product-label/validation';
 
 export const ChainLocationValidationScheme = {
   forceExpand: true,
@@ -273,6 +274,23 @@ export const ApiFarmInformationValidationScheme = {
   }
 };
 
+export const ApiUserCustomerCooperativeValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    company: ApiCompanyValidationScheme,
+    id: {
+      validators: []
+    },
+    type: {
+      validators: [Validators.required]
+    },
+    userCustomerType: {
+      validators: [Validators.required]
+    }
+  }
+};
+
 export const ApiUserCustomerValidationScheme = {
   validators: [],
   fields: {
@@ -302,7 +320,8 @@ export const ApiUserCustomerValidationScheme = {
       validators: []
     },
     bank: ApiBankInformationValidationScheme,
-    farm: ApiFarmInformationValidationScheme
+    farm: ApiFarmInformationValidationScheme,
+    cooperatives: ApiUserCustomerCooperativeValidationScheme
   }
 } as SimpleValidationScheme<ApiUserCustomer>;
 
@@ -318,14 +337,4 @@ export const ChainUserCustomerRoleValidationScheme = {
   }
 } as SimpleValidationScheme<ChainUserCustomerRole>;
 
-export const ApiUserCustomerCooperativeValidationScheme = {
-  validators: [],
-  fields: {
-    id: {
-      validators: [Validators.required]
-    },
-    type: {
-      validators: [Validators.required]
-    }
-  }
-};
+

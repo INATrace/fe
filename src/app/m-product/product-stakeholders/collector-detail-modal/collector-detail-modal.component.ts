@@ -42,6 +42,7 @@ import { ApiAddress } from '../../../../api/model/apiAddress';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
 import { ApiUserCustomerAssociation } from '../../../../api/model/apiUserCustomerAssociation';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
+import { ApiCompany } from '../../../../api/model/apiCompany';
 
 @Component({
   selector: 'app-collector-detail-modal',
@@ -209,35 +210,9 @@ export class CollectorDetailModalComponent implements OnInit {
   }
 
   prepareEditData() {
-    if (this.collectorForm.value.associations) {
-      this.collectorForm.value.associations.forEach(item => {
-        (this.assocForForm as FormArray).push(new FormControl({
-          id: item.id,
-          name: item.name
-        }));
-      });
+    for (let cop of this.collectorForm.value.cooperatives) {
+      cop.company.id = cop.company.id.toString();
     }
-
-    if (this.collectorForm.value.cooperatives) {
-      this.collectorForm.value.cooperatives.forEach(item => {
-        (this.coopForForm as FormArray).push(new FormControl({
-          organizationId: item.company.id,
-          role: item.userCustomerType
-        }));
-      });
-    }
-
-    // if (this.collectorForm.value.associationIds) {
-    //   this.collectorForm.value.associationIds.forEach(elt => {
-    //     this.getOrgName(elt).then(value => {
-    //       (this.assocForForm as FormArray).push(new FormControl({
-    //         id: elt,
-    //         name: value
-    //       })
-    //       )
-    //     });
-    //   });
-    // }
 
     if (this.collectorForm.get('farm').value == null || isEmptyDictionary(this.collectorForm.get('farm').value)) {
       let farmInfoForm = generateFormFromMetadata(FarmInfo.formMetadata(), {
@@ -314,19 +289,12 @@ export class CollectorDetailModalComponent implements OnInit {
     // }
     const assocs: Array<ApiUserCustomerAssociation> = [];
     for (const as of this.collectorForm.value.associations) {
-      console.log("one assoc", as);
       assocs.push(as);
     }
 
     const coops: Array<ApiUserCustomerCooperative> = [];
-    for (const co of this.coopForForm.value) {
-      console.log("one coop", co);
-      coops.push({
-        company: {
-          id: co.organizationId
-        },
-        userCustomerType: co.role,
-      });
+    for (const co of this.collectorForm.value.cooperatives) {
+      coops.push(co);
     }
 
     if (this.route.snapshot.params.type === 'farmers') {
@@ -452,8 +420,21 @@ export class CollectorDetailModalComponent implements OnInit {
     }
   }
 
+  async addAssoc(item, form) {
+    if (this.collectorForm.value.associations.some(a => a.company.id = item.id)) {
+      form.setValue(null);
+      return;
+    }
+    this.collectorForm.value.associations.push({
+      company: {
+        id: item.id,
+        name: item.name
+      }
+    });
+    setTimeout(() => form.setValue(null));
+  }
+
   async deleteAssoc(item, index) {
-    console.log("deleting", item);
     this.collectorForm.value.associations.splice(index, 1);
   }
 
@@ -540,11 +521,11 @@ export class CollectorDetailModalComponent implements OnInit {
   producersListManager = null;
 
   initializeListManager() {
-    this.producersListManager = new ListEditorManager<ChainUserCustomerRole>(
+    this.producersListManager = new ListEditorManager<ApiUserCustomerCooperative>(
       this.collectorForm.get('cooperatives') as FormArray,
 
-      CollectorDetailModalComponent.ChainUserCustomerRoleEmptyObjectFormFactory(),
-      ChainUserCustomerRoleValidationScheme
+      CollectorDetailModalComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(),
+        ApiUserCustomerCooperativeValidationScheme
     )
   }
 
@@ -561,9 +542,15 @@ export class CollectorDetailModalComponent implements OnInit {
     }
   }
 
+  static ApiUserCustomerCooperativeCreateEmptyObject(): ApiUserCustomerCooperative {
+    const obj: ApiUserCustomerCooperative = defaultEmptyObject(ApiUserCustomerCooperative.formMetadata());
+    obj.company = defaultEmptyObject(ApiCompany.formMetadata());
+    return obj;
+  }
+
   static ApiUserCustomerCooperativeEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(CollectorDetailModalComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(), ApiUserCustomerCooperativeValidationScheme.validators);
+      return new FormControl(CollectorDetailModalComponent.ApiUserCustomerCooperativeCreateEmptyObject(), ApiUserCustomerCooperativeValidationScheme.validators);
     }
   }
 

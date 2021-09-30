@@ -83,6 +83,10 @@ export class LocationFormComponent implements OnInit {
           this.form.get('address.hondurasFarm').setValidators(null);
           this.form.get('address.hondurasMunicipality').setValidators(null);
           this.form.get('address.hondurasVillage').setValidators(null);
+          this.form.get('address.hondurasDepartment').setValue(null);
+          this.form.get('address.hondurasFarm').setValue(null);
+          this.form.get('address.hondurasMunicipality').setValue(null);
+          this.form.get('address.hondurasVillage').setValue(null);
         }
         this.form.get('address.hondurasDepartment').updateValueAndValidity();
         this.form.get('address.hondurasFarm').updateValueAndValidity();
@@ -98,10 +102,20 @@ export class LocationFormComponent implements OnInit {
           this.form.get('address.village').setValidators(null)
           this.form.get('address.cell').setValidators(null)
           this.form.get('address.sector').setValidators(null)
+          this.form.get('address.village').setValue(null)
+          this.form.get('address.cell').setValue(null)
+          this.form.get('address.sector').setValue(null)
         }
         this.form.get('address.village').updateValueAndValidity();
         this.form.get('address.cell').updateValueAndValidity();
         this.form.get('address.sector').updateValueAndValidity();
+
+        if (this.showHondurasFields() || this.showVillageCellSector()) {
+          this.form.get('address.address').setValue(null);
+          this.form.get('address.city').setValue(null);
+          this.form.get('address.state').setValue(null);
+          this.form.get('address.zip').setValue(null);
+        }
       });
     this.subs.push(sub3);
   }

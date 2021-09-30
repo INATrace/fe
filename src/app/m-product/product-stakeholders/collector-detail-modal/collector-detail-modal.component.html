@@ -347,7 +347,7 @@
                 [codebookService]="codebookAssoc"
                 [resultFormatter]="roleResultFormatter"
                 [inputFormatter]="roleInputFormatter"
-                (itemMatching)="addAssocCoop($event, assocForm, assocForForm)">
+                (itemMatching)="addAssoc($event, assocForm)">
               </textinput>
             </div>
             <div *ngFor="let item of collectorForm.value.associations; index as i">
@@ -411,20 +411,18 @@
             <textinput
               [form]="collectorForm.get('farm.areaOrganicCertified')"
               label="Organic certified area (ha)"
-              style=""
+              style="width: 100%"
               placeholder="Enter organic certified area (ha)"
               i18n-label="@@collectorDetail.textinput.areaOrganicCertified.label"
               i18n-placeholder="@@collectorDetail.textinput.areaOrganicCertified.placeholder">
             </textinput>
 
-            <textinput
+            <app-datepicker
               [form]="collectorForm.get('farm.startTransitionToOrganic')"
               label="Start transition to organic"
               style="width: 100%"
-              placeholder="Enter start date of transition to organic"
-              i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label"
-              i18n-placeholder="@@collectorDetail.textinput.startTransitionToOrganic.placeholder">
-            </textinput>
+              i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label">
+            </app-datepicker>
 
 
           </div>
