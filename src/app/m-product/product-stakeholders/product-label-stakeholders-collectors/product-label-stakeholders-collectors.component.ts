@@ -201,10 +201,10 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   showLocation(type, location) {
     if (type === 'cell') {
-      if (location && location.cell) return location.cell;
+      if (location && location.address && location.address.cell) return location.address.cell;
       else return '-'
     } else {
-      if (location && location.village) return location.village;
+      if (location && location.address && location.address.village) return location.address.village;
       else return '-'
     }
 
