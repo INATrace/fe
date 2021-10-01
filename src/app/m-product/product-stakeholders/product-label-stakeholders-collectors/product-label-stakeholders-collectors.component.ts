@@ -181,8 +181,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
       options: { centered: true }
     });
     if (result != "ok") return
-    let res = await this.chainUserCustomerService.deleteUserCustomer(collector).pipe(take(1)).toPromise();
-    // let res = await this.productController.deleteUserCustomerUsingDELETEByMap(collector).pipe(take(1)).toPromise();
+    let res = await this.productController.deleteUserCustomerUsingDELETE(collector).pipe(take(1)).toPromise();
     if (res && res.status == 'OK') {
       this.reloadPage()
     }
