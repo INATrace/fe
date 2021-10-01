@@ -7,8 +7,9 @@ import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
-import { ProductControllerService } from '../../../../api/api/productController.service';
+import { GetUserCustomersListUsingGET, ProductControllerService } from '../../../../api/api/productController.service';
 import { ApiPaginatedResponseApiUserCustomer } from '../../../../api/model/apiPaginatedResponseApiUserCustomer';
+import { SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-product-label-stakeholders-collectors',
@@ -55,7 +56,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   pagingParams$ = new BehaviorSubject({})
   @Input()
-  sortingParams$ = new BehaviorSubject({ queryBy: this.byCategory, sort: 'ASC' })
+  sortingParams$ = new BehaviorSubject<{ queryBy: string, sort: SortOrder }>({ queryBy: this.byCategory, sort: 'ASC' })
   paging$ = new BehaviorSubject<number>(1);
   page: number = 0;
   pageSize = 10;
@@ -88,14 +89,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
   }
 
   changeSort(event) {
-    if (event.key === 'name') {
-      this.byCategory = 'BY_NAME';
-    } else if (event.key === 'surname') {
-      this.byCategory = 'BY_SURNAME';
-    } else if (event.key === 'id') {
-      this.byCategory = 'BY_USER_CUSTOMER_ID';
-    }
-    this.sortingParams$.next({ queryBy: this.byCategory, sort: event.sortOrder })
+    this.sortingParams$.next({ queryBy: event.key, sort: event.sortOrder })
     this.onSortChanged.emit(this.byCategory);
   }
 
@@ -138,19 +132,24 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   collectors$
   initializeObservables() {
-    this.collectors$ = combineLatest(this.reloadPingList$, this.paging$, this.sortingParams$,
-      (ping: boolean, page: number, sorting: any) => {
-        return {
-          query: this.query,
-          ...sorting,
-          offset: (page - 1) * this.pageSize,
-          limit: this.pageSize
-        }
-      }).pipe(
-        tap(val => this.globalEventsManager.showLoading(true)),
-        switchMap(params => {
-          return this.getAPI(params);
+    this.collectors$ = combineLatest([
+        this.reloadPingList$,
+        this.paging$,
+        this.sortingParams$
+    ]).pipe(
+        map(([ping, page, sort]) => {
+          console.log("sort on init", sort);
+          const params: GetUserCustomersListUsingGET.PartialParamMap = {
+            productId: this.productId,
+            query: this.query,
+            sort: sort.sort,
+            sortBy: sort.queryBy,
+            userCustomerType: this.role
+          };
+          return params;
         }),
+        tap(() => this.globalEventsManager.showLoading(true)),
+        switchMap(requestParams => this.productController.getUserCustomersListUsingGETByMap(requestParams)),
         map((resp: ApiPaginatedResponseApiUserCustomer) => {
           if (resp) {
             this.showed = 0;
@@ -167,7 +166,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
         }),
         tap(val => this.globalEventsManager.showLoading(false)),
         shareReplay(1)
-      )
+    );
   }
   
   getAPI(params) {
