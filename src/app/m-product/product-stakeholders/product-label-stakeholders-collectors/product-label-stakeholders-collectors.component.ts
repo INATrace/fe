@@ -171,11 +171,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
   }
   
   getAPI(params) {
-    const org = this.organizationId;
-    if (this.role === 'FARMER') {
-      
-    }
-    return this.productController.getUserCustomersListUsingGET(this.productId);
+    return this.productController.getUserCustomersListUsingGET(this.productId, null, null, null, null, null, null, null, this.role);
   }
 
   async deleteCollector(collector) {
