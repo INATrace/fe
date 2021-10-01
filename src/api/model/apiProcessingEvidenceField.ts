@@ -18,7 +18,6 @@
  */
 
 
-import { ApiFileInfo } from './apiFileInfo';
 
 
 
@@ -27,10 +26,6 @@ export interface ApiProcessingEvidenceField {
      * Processing evidence field file multiplicity
      */
     fileMultiplicity?: number;
-    /**
-     * Processing evidence field files info
-     */
-    files?: Array<ApiFileInfo>;
     /**
      * Entity id
      */
@@ -77,10 +72,6 @@ export namespace ApiProcessingEvidenceField {
          * Processing evidence field file multiplicity
          */
         fileMultiplicity = 'fileMultiplicity',
-        /**
-         * Processing evidence field files info
-         */
-        files = 'files',
         /**
          * Entity id
          */
@@ -148,18 +139,6 @@ export namespace ApiProcessingEvidenceField {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiFileInfo.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'files',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'Array&lt;ApiFileInfo&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiFileInfo'
                 },
                 {
                     isReadOnly: false,
@@ -254,8 +233,6 @@ export namespace ApiProcessingEvidenceField {
             validators: {
                 fileMultiplicity: [
                 ],
-                files: [
-                ],
                 id: [
                 ],
                 label: [
@@ -280,9 +257,6 @@ export namespace ApiProcessingEvidenceField {
   //     validators: [],
   //     fields: {
   //               fileMultiplicity: {
-  //                   validators: []
-  //               },
-  //               files: {
   //                   validators: []
   //               },
   //               id: {

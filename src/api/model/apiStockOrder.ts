@@ -19,7 +19,6 @@
 
 
 import { ApiCompany } from './apiCompany';
-import { ApiDocumentRequirement } from './apiDocumentRequirement';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
@@ -57,10 +56,6 @@ export interface ApiStockOrder {
      * Delivery time
      */
     deliveryTime?: Date;
-    /**
-     * Document requirements
-     */
-    documentRequirements?: Array<ApiDocumentRequirement>;
     facility?: ApiFacility;
     /**
      * Fulfilled quantity
@@ -162,10 +157,6 @@ export namespace ApiStockOrder {
          * Delivery time
          */
         deliveryTime = 'deliveryTime',
-        /**
-         * Document requirements
-         */
-        documentRequirements = 'documentRequirements',
         facility = 'facility',
         /**
          * Fulfilled quantity
@@ -359,18 +350,6 @@ export namespace ApiStockOrder {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiDocumentRequirement.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'documentRequirements',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Array&lt;ApiDocumentRequirement&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiDocumentRequirement'
                 },
                 {
                     metadata: ApiFacility.formMetadata,
@@ -643,8 +622,6 @@ export namespace ApiStockOrder {
                 ],
                 deliveryTime: [
                 ],
-                documentRequirements: [
-                ],
                 facility: [
                 ],
                 fulfilledQuantity: [
@@ -721,9 +698,6 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               deliveryTime: {
-  //                   validators: []
-  //               },
-  //               documentRequirements: {
   //                   validators: []
   //               },
   //               facility: {
