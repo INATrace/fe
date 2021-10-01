@@ -4897,6 +4897,19 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "Type (collector, farmer)",
+            "in": "query",
+            "name": "userCustomerType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COLLECTOR",
+                "FARMER"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
