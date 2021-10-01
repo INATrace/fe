@@ -17,9 +17,11 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12 d-flex justify-content-between">
-          <div class="title-page content-element--title">{{ title }} <span>{{ stockOrderForm.get('identifier').value }}</span></div>
+          <div class="title-page content-element--title">
+            {{ title }}<span style="margin-left: 1rem;">{{ stockOrderForm.get('identifier').value }}</span>
+          </div>
           <app-last-seen-tag *ngIf="this.update"
-                             [dateFormat]="stockOrderForm.get('lastChange').value"
+                             [dateFormat]="stockOrderForm.get('updateTimestamp').value"
                              [identifier]="userLastChanged">
           </app-last-seen-tag>
         </div>
@@ -282,8 +284,8 @@
 
           <div class="af-bottom-buttons" i18n="@@productLabelStockPurchaseOrdersModal.modal.footer.buttons">
             <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
-            <button class="btn mr-2" type="button" (click)="!this.updatePOInProgress && updatePurchaseOrder(!this.update)"><span>Save</span></button>
-            <button *ngIf="this.update" class="btn" type="button" (click)="!this.updatePOInProgress && updatePurchaseOrder()"><span>Save & Close</span></button>
+            <button class="btn mr-2" type="button" (click)="!this.updatePOInProgress && createOrUpdatePurchaseOrder(!this.update)"><span>Save</span></button>
+            <button *ngIf="this.update" class="btn" type="button" (click)="!this.updatePOInProgress && createOrUpdatePurchaseOrder()"><span>Save & Close</span></button>
           </div>
 
         </div>

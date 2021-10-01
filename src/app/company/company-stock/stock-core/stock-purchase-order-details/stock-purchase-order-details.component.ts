@@ -20,8 +20,8 @@ import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
-import { ApiResponseApiUserCustomer } from '../../../../../api/model/apiResponseApiUserCustomer';
-import StatusEnum = ApiResponseApiUserCustomer.StatusEnum;
+import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
+import StatusEnum = ApiResponseApiStockOrder.StatusEnum;
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -67,6 +67,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private facility: ApiFacility;
 
+  private purchaseOrderId = this.route.snapshot.params.purchaseOrderId;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -88,11 +90,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
 
     if (this.route.snapshot.data.action === 'update') {
-      if (this.order) {
-        if (this.order.orderType) { return this.order.orderType; }
+      if (this.order && this.order.orderType) {
+        return this.order.orderType;
       }
       return null;
     }
+
     if (!this.route.snapshot.data.mode) {
       throw Error('No stock order mode set');
     }
@@ -169,6 +172,21 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
   }
 
+  updateTitle(pageMode: StockOrderType) {
+    switch (pageMode) {
+      case 'GENERAL_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.updateGeneralOrderTitle:Update transfer order`;
+      case 'PROCESSING_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.updateProcessingOrderTitle:Update processing order`;
+      case 'PURCHASE_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.updatePurchaseOrderTitle:Update purchase order`;
+      case 'SALES_ORDER':
+        return $localize`:@@productLabelStockPurchaseOrdersModal.updateSalesOrderTitle:Update sales order`;
+      default:
+        return null;
+    }
+  }
+
   private reloadOrder() {
 
     this.globalEventsManager.showLoading(true);
@@ -213,7 +231,24 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       }
 
     } else if (action === 'update') {
-      // TODO
+
+      this.update = true;
+
+      const stockOrderResponse = await this.stockOrderControllerService.getStockOrderUsingGET(this.purchaseOrderId).pipe(take(1)).toPromise();
+      if (stockOrderResponse && stockOrderResponse.status === StatusEnum.OK && stockOrderResponse.data) {
+
+        this.order = stockOrderResponse.data;
+        this.title = this.updateTitle(this.orderType);
+        this.facility = stockOrderResponse.data.facility;
+
+        for (const item of this.facility.facilitySemiProductList) {
+          if (item.buyable) {
+            item.name = this.translateName(item);
+            this.options.push(item);
+          }
+        }
+        this.facilityNameForm.setValue(this.translateName(this.facility));
+      }
     } else {
       throw Error('Wrong action.');
     }
@@ -259,10 +294,33 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   private async editStockOrder() {
-    // TODO
+
+    // Generate the form
+    this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.order, ApiStockOrderValidationScheme(this.orderType));
+
+    if (this.orderType === 'PURCHASE_ORDER') {
+      this.searchFarmers.setValue(this.order.producerUserCustomer);
+      if (this.order.representativeOfProducerUserCustomer && this.order.representativeOfProducerUserCustomer.id) {
+        this.searchCollectors.setValue(this.order.representativeOfProducerUserCustomer);
+      }
+    }
+
+    this.modelChoice = this.order.semiProduct?.id;
+    this.employeeForm.setValue(this.order.creatorId.toString());
+    this.searchWomenCoffeeForm.setValue(this.order.womenShare ? 'YES' : 'NO');
+
+    // TODO: set documents and payments if purchase order
+
+    if (this.order.updatedBy && this.order.updatedBy.id) {
+      const userUpdatedBy = this.order.updatedBy;
+      this.userLastChanged = `${userUpdatedBy.name} ${userUpdatedBy.surname}`;
+    } else if (this.order.createdBy && this.order.createdBy.id) {
+      const userCreatedBy = this.order.createdBy;
+      this.userLastChanged = `${userCreatedBy.name} ${userCreatedBy.surname}`;
+    }
   }
 
-  async updatePurchaseOrder(close: boolean = true) {
+  async createOrUpdatePurchaseOrder(close: boolean = true) {
 
     if (this.updatePOInProgress) {
       return;
@@ -286,10 +344,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       await this.setIdentifier();
     }
 
-    let data = _.cloneDeep(this.stockOrderForm.value);
+    let data: ApiStockOrder = _.cloneDeep(this.stockOrderForm.value);
     data = {
       ...data,
-      womenShare: this.searchWomenCoffeeForm.value === 'YES' ? 1 : 0
+      womenShare: this.searchWomenCoffeeForm.value === 'YES'
     };
 
     // Remove keys that are not set
