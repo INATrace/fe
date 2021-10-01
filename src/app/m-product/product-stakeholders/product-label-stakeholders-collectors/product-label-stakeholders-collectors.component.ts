@@ -67,10 +67,6 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   chainProduct
   async init() {
-    let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-    if (res && res.status == "OK" && res.data) {
-      this.chainProduct = res.data;
-    }
     this.initializeObservables();
   }
 
@@ -138,7 +134,6 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
         this.sortingParams$
     ]).pipe(
         map(([ping, page, sort]) => {
-          console.log("sort on init", sort);
           const params: GetUserCustomersListUsingGET.PartialParamMap = {
             productId: this.productId,
             query: this.query,

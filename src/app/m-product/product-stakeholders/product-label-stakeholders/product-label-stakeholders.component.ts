@@ -136,12 +136,7 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
     this.organizationId = localStorage.getItem("selectedUserCompany");
 
-    if (!this.currentProduct) {
-      let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        this.productOrganizationId = dbKey(res.data.organization);
-      }
-    }
+
   }
 
   tabSub: Subscription;
