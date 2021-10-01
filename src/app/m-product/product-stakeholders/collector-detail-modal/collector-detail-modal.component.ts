@@ -197,6 +197,7 @@ export class CollectorDetailModalComponent implements OnInit {
   }
 
   editCollector() {
+    this.fillEmpty();
     this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.collector, ApiUserCustomerValidationScheme);
     console.log("collector", this.collector);
     console.log("collector form", this.collectorForm);
@@ -222,6 +223,12 @@ export class CollectorDetailModalComponent implements OnInit {
       this.collectorForm.updateValueAndValidity();
     }
 
+  }
+
+  fillEmpty() {
+    if (this.collector.bank == null) {
+      this.collector.bank = defaultEmptyObject(ApiBankInformation.formMetadata());
+    }
   }
 
   async getOrgName(id) {
@@ -264,11 +271,21 @@ export class CollectorDetailModalComponent implements OnInit {
       coops.push(co);
     }
 
-    if (this.route.snapshot.params.type === 'farmers') {
-      this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.FARMER);
+    switch (this.route.snapshot.params.type) {
+      case 'farmers':
+        this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.FARMER);
+        break;
+      case 'collectors':
+        this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.COLLECTOR);
+        break;
     }
-    if (this.route.snapshot.params.type === 'collectors') {
-      this.collectorForm.get('type').setValue(ApiUserCustomer.TypeEnum.COLLECTOR);
+
+    if (this.collectorForm.get('hasSmartphone').value === null) {
+      this.collectorForm.get('hasSmartphone').setValue(false);
+    }
+
+    if (this.collectorForm.get('farm.organic').value === null) {
+      this.collectorForm.get('farm.organic').setValue(false);
     }
 
     if (!this.update) {

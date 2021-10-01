@@ -24,6 +24,23 @@
 
     <ng-container *ngIf="showHondurasFields()">
       <textinput
+        [form]="form.get('address.hondurasFarm')"
+        label="Farm"
+        style=""
+        placeholder="Enter farm"
+        i18n-label="@@locationForm.textinput.farm.label"
+        i18n-placeholder="@@locationForm.textinput.farm.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasFarm').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasFarm').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.farm.error">
+              Farm is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
         [form]="form.get('address.hondurasVillage')"
         label="Village"
         style=""
@@ -35,6 +52,40 @@
           <div *ngIf="form.get('address.hondurasVillage').errors as errors" class="sc-invalid-feedback">
             <div *ngIf="errors.required" i18n="@@locationForm.textinput.village.error">
               Village is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        [form]="form.get('address.hondurasMunicipality')"
+        label="Municipality"
+        style=""
+        placeholder="Enter municipality"
+        i18n-label="@@locationForm.textinput.municipality.label"
+        i18n-placeholder="@@locationForm.textinput.municipality.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasMunicipality').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasMunicipality').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.municipality.error">
+              Municipality is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        [form]="form.get('address.hondurasDepartment')"
+        label="Department"
+        style=""
+        placeholder="Enter department"
+        i18n-label="@@locationForm.textinput.department.label"
+        i18n-placeholder="@@locationForm.textinput.department.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasDepartment').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasDepartment').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.department.error">
+              Department is required
             </div>
           </div>
         </ng-container>

@@ -1381,6 +1381,10 @@ export namespace GetUserCustomersListUsingGET {
        * Phone number
        */
       phone?: string;
+      /**
+       * Type (collector, farmer)
+       */
+      userCustomerType?: 'COLLECTOR' | 'FARMER';
     }
 
     /**
@@ -1418,7 +1422,11 @@ export namespace GetUserCustomersListUsingGET {
       /**
        * Phone number
        */
-      phone = 'phone'
+      phone = 'phone',
+      /**
+       * Type (collector, farmer)
+       */
+      userCustomerType = 'userCustomerType'
     }
 
     /**
@@ -1442,6 +1450,8 @@ export namespace GetUserCustomersListUsingGET {
       query: [
       ],
       phone: [
+      ],
+      userCustomerType: [
       ],
     };
 }
@@ -4427,6 +4437,7 @@ export class ProductControllerService {
       map.sort,
       map.query,
       map.phone,
+      map.userCustomerType,
       observe,
       reportProgress
     );
@@ -4444,13 +4455,14 @@ export class ProductControllerService {
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param query Name or surname
      * @param phone Phone number
+     * @param userCustomerType Type (collector, farmer)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling getUserCustomersListUsingGET.');
         }
@@ -4476,6 +4488,9 @@ export class ProductControllerService {
         }
         if (phone !== undefined && phone !== null) {
             queryParameters = queryParameters.set('phone', <any>phone);
+        }
+        if (userCustomerType !== undefined && userCustomerType !== null) {
+            queryParameters = queryParameters.set('userCustomerType', <any>userCustomerType);
         }
 
         let headers = this.defaultHeaders;

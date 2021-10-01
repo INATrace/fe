@@ -74,50 +74,35 @@ export class LocationFormComponent implements OnInit {
       .subscribe(value => {
         // Honduras specifics
         if (this.showHondurasFields()) {
-          this.form.get('address.hondurasDepartment').setValidators([Validators.required]);
-          this.form.get('address.hondurasFarm').setValidators([Validators.required]);
-          this.form.get('address.hondurasMunicipality').setValidators([Validators.required]);
-          this.form.get('address.hondurasVillage').setValidators([Validators.required]);
+          this.enableValidationHonduras();
         } else {
-          this.form.get('address.hondurasDepartment').setValidators(null);
-          this.form.get('address.hondurasFarm').setValidators(null);
-          this.form.get('address.hondurasMunicipality').setValidators(null);
-          this.form.get('address.hondurasVillage').setValidators(null);
-          this.form.get('address.hondurasDepartment').setValue(null);
-          this.form.get('address.hondurasFarm').setValue(null);
-          this.form.get('address.hondurasMunicipality').setValue(null);
-          this.form.get('address.hondurasVillage').setValue(null);
+          this.disableValidationHonduras();
+          this.clearValuesHonduras();
         }
-        this.form.get('address.hondurasDepartment').updateValueAndValidity();
-        this.form.get('address.hondurasFarm').updateValueAndValidity();
-        this.form.get('address.hondurasMunicipality').updateValueAndValidity();
-        this.form.get('address.hondurasVillage').updateValueAndValidity();
+        this.updateHonduras();
 
         // Rwanda specifics
         if (this.showVillageCellSector()) {
-          this.form.get('address.village').setValidators([Validators.required])
-          this.form.get('address.cell').setValidators([Validators.required])
-          this.form.get('address.sector').setValidators([Validators.required])
+          this.enableValidationRwanda();
         } else {
-          this.form.get('address.village').setValidators(null)
-          this.form.get('address.cell').setValidators(null)
-          this.form.get('address.sector').setValidators(null)
-          this.form.get('address.village').setValue(null)
-          this.form.get('address.cell').setValue(null)
-          this.form.get('address.sector').setValue(null)
+          this.disableValidationRwanda();
+          this.clearValuesRwanda();
         }
-        this.form.get('address.village').updateValueAndValidity();
-        this.form.get('address.cell').updateValueAndValidity();
-        this.form.get('address.sector').updateValueAndValidity();
+        this.updateRwanda();
 
         if (this.showHondurasFields() || this.showVillageCellSector()) {
-          this.form.get('address.address').setValue(null);
-          this.form.get('address.city').setValue(null);
-          this.form.get('address.state').setValue(null);
-          this.form.get('address.zip').setValue(null);
+          this.disableValidationOther();
+          this.clearValuesOther();
+        } else {
+          this.enableValidationOther();
         }
+        this.updateOther();
+
       });
     this.subs.push(sub3);
+
+    // Trigger valueChanges to set validators accordingly
+    this.form.get('address.country').updateValueAndValidity({emitEvent: true});
   }
 
   ngOnDestroy(): void {
@@ -131,6 +116,86 @@ export class LocationFormComponent implements OnInit {
 
   showHondurasFields() {
     return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras'});
+  }
+
+  enableValidationHonduras() {
+    this.form.get('address.hondurasDepartment').setValidators([Validators.required]);
+    this.form.get('address.hondurasFarm').setValidators([Validators.required]);
+    this.form.get('address.hondurasMunicipality').setValidators([Validators.required]);
+    this.form.get('address.hondurasVillage').setValidators([Validators.required]);
+  }
+
+  disableValidationHonduras() {
+    this.form.get('address.hondurasDepartment').setValidators(null);
+    this.form.get('address.hondurasFarm').setValidators(null);
+    this.form.get('address.hondurasMunicipality').setValidators(null);
+    this.form.get('address.hondurasVillage').setValidators(null);
+  }
+
+  clearValuesHonduras() {
+    this.form.get('address.hondurasDepartment').setValue(null);
+    this.form.get('address.hondurasFarm').setValue(null);
+    this.form.get('address.hondurasMunicipality').setValue(null);
+    this.form.get('address.hondurasVillage').setValue(null);
+  }
+
+  updateHonduras() {
+    this.form.get('address.hondurasDepartment').updateValueAndValidity();
+    this.form.get('address.hondurasFarm').updateValueAndValidity();
+    this.form.get('address.hondurasMunicipality').updateValueAndValidity();
+    this.form.get('address.hondurasVillage').updateValueAndValidity();
+  }
+
+  enableValidationRwanda() {
+    this.form.get('address.village').setValidators([Validators.required]);
+    this.form.get('address.cell').setValidators([Validators.required]);
+    this.form.get('address.sector').setValidators([Validators.required]);
+  }
+
+  disableValidationRwanda() {
+    this.form.get('address.village').setValidators(null);
+    this.form.get('address.cell').setValidators(null);
+    this.form.get('address.sector').setValidators(null);
+  }
+
+  clearValuesRwanda() {
+    this.form.get('address.village').setValue(null);
+    this.form.get('address.cell').setValue(null);
+    this.form.get('address.sector').setValue(null);
+  }
+
+  updateRwanda() {
+    this.form.get('address.village').updateValueAndValidity();
+    this.form.get('address.cell').updateValueAndValidity();
+    this.form.get('address.sector').updateValueAndValidity();
+  }
+
+  enableValidationOther() {
+    this.form.get('address.address').setValidators([Validators.required]);
+    this.form.get('address.city').setValidators([Validators.required]);
+    this.form.get('address.state').setValidators([Validators.required]);
+    this.form.get('address.zip').setValidators([Validators.required]);
+  }
+
+  disableValidationOther() {
+    this.form.get('address.address').setValidators(null);
+    this.form.get('address.city').setValidators(null);
+    this.form.get('address.state').setValidators(null);
+    this.form.get('address.zip').setValidators(null);
+  }
+
+  clearValuesOther() {
+    this.form.get('address.address').setValue(null);
+    this.form.get('address.city').setValue(null);
+    this.form.get('address.state').setValue(null);
+    this.form.get('address.zip').setValue(null);
+  }
+
+  updateOther() {
+    this.form.get('address.address').updateValueAndValidity();
+    this.form.get('address.city').updateValueAndValidity();
+    this.form.get('address.state').updateValueAndValidity();
+    this.form.get('address.zip').updateValueAndValidity();
   }
 
   initializeMarker() {

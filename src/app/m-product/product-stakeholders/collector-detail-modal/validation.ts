@@ -192,14 +192,17 @@ export const ApiAddressValidationScheme = {
     address: {
       validators: [Validators.required]
     },
+    cell: {
+      validators: [Validators.required]
+    },
     city: {
-      validators: []
+      validators: [Validators.required]
     },
     country: {
-      validators: []
+      validators: [Validators.required]
     },
     state: {
-      validators: []
+      validators: [Validators.required]
     },
     zip: {
       validators: [Validators.maxLength(50)]
@@ -241,9 +244,6 @@ export const ApiBankInformationValidationScheme = {
       validators: []
     },
     bankName: {
-      validators: []
-    },
-    country: {
       validators: []
     }
   }
@@ -301,7 +301,7 @@ export const ApiUserCustomerValidationScheme = {
       validators: [EmailValidator()]
     },
     gender: {
-      validators: []
+      validators: [Validators.required]
     },
     id: {
       validators: []
@@ -314,7 +314,7 @@ export const ApiUserCustomerValidationScheme = {
       validators: []
     },
     surname: {
-      validators: []
+      validators: [Validators.required]
     },
     type: {
       validators: []
