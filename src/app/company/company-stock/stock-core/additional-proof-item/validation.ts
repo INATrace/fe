@@ -1,8 +1,8 @@
 import { Validators } from '@angular/forms';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { ChainActivityProof } from 'src/api-chain/model/chainActivityProof';
+import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 
-export const ChainActivityProofValidationScheme = {
+export const ApiActivityProofValidationScheme = {
   validators: [],
   fields: {
     formalCreationDate: {
@@ -15,4 +15,4 @@ export const ChainActivityProofValidationScheme = {
       validators: [Validators.required]
     },
   }
-} as SimpleValidationScheme<ChainActivityProof>;
+} as SimpleValidationScheme<ApiActivityProof>;

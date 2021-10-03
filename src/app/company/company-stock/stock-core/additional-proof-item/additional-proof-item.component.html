@@ -9,10 +9,10 @@
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="af-tagitem-container">
-        <span class="af-tagitem-text">{{name}}</span>
+        <span class="af-tagitem-text">{{ name }}</span>
         <div (click)="viewImage()" class="af-tagitem-image">
           <img *ngIf="isImageToShow()"
-            src="/chain-api/data/document/download/{{this.contentObject.document.storageKey}}">
+            src="/api/common/document/{{ this.contentObject.document.storageKey }}" alt="The image of additional proof item">
         </div>
       </div>
     </div>
@@ -21,9 +21,7 @@
     <subform-layout *ngIf="this.form">
       <subform-form>
 
-
         <div class="af-form-row af-form-row--nomargin">
-          <!-- <div class="af-form-row" style="background-color: inherit;"> -->
           <div class="af-form-block--c6">
 
             <div class="af-row">
@@ -62,16 +60,12 @@
             </div>
           </div>
 
-
           <div class="af-form-block--c6" style="margin-left: 0;">
 
             <div class="af-row">
               <div class="af-c12">
                 <ng-container>
                   <attachment-uploader
-                    [chainFile]="true"
-                    url="{{chainRootUrl}}"
-                    downloadUrl="{{chainDownloadRootUrl}}"
                     allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
                     allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
                     mode="simpleAsTextField"
@@ -103,7 +97,6 @@
             </div>
           </div>
         </div>
-
 
       </subform-form>
 
