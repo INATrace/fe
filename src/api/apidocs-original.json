@@ -7997,6 +7997,38 @@
         },
         "type": "object"
       },
+      "ApiFarmInformation": {
+        "properties": {
+          "areaOrganicCertified": {
+            "description": "Area is organic certified",
+            "type": "number"
+          },
+          "coffeeCultivatedArea": {
+            "description": "Area cultivated with coffee (ha)",
+            "type": "number"
+          },
+          "numberOfTrees": {
+            "description": "Number of trees",
+            "format": "int32",
+            "type": "integer"
+          },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
+          "startTransitionToOrganic": {
+            "description": "Start date of transition to organic",
+            "format": "date-time",
+            "type": "string"
+          },
+          "totalCultivatedArea": {
+            "description": "Total cultivated area (ha)",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiGeoAddress": {
         "properties": {
           "address": {
@@ -12508,11 +12540,6 @@
           "phone": {
             "description": "Phone",
             "type": "string"
-          },
-          "productId": {
-            "description": "Product id",
-            "format": "int64",
-            "type": "integer"
           },
           "surname": {
             "description": "Surname",
