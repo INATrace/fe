@@ -27,6 +27,8 @@ export interface SeasonalData {
 })
 export class StockPurchasesTabComponent extends StockCoreTabComponent implements OnInit {
 
+  rootTab = 0;
+
   showedPurchaseOrders = 0;
   allPurchaseOrders = 0;
 

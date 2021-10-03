@@ -21,7 +21,7 @@ import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnightISOString, dateAtNoonISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { ChainActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiActivityProofValidationScheme } from '../../../../company/company-stock/stock-core/additional-proof-item/validation';
 import { StockPurchaseOrderEditComponent } from '../../stock-core/stock-purchase-order-edit/stock-purchase-order-edit.component';
 import { ChainPaymentValidationScheme } from '../product-label-stock-payment-detail/validation';
 import { ChainBulkPaymentValidationScheme } from './validation';
@@ -437,7 +437,7 @@ export class ProductLabelStockBulkPaymentDetailComponent implements OnInit {
     this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
       this.bulkPaymentForm.get('additionalProofs') as FormArray,
       ProductLabelStockBulkPaymentDetailComponent.AdditionalProofItemEmptyObjectFormFactory(),
-      ChainActivityProofValidationScheme
+      ApiActivityProofValidationScheme
     )
 
     this.paymentsListManager = new ListEditorManager<ChainPayment>(
@@ -455,7 +455,7 @@ export class ProductLabelStockBulkPaymentDetailComponent implements OnInit {
 
   static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      let f = new FormControl(ProductLabelStockBulkPaymentDetailComponent.AdditionalProofItemCreateEmptyObject(), ChainActivityProofValidationScheme.validators)
+      let f = new FormControl(ProductLabelStockBulkPaymentDetailComponent.AdditionalProofItemCreateEmptyObject(), ApiActivityProofValidationScheme.validators)
       return f
     }
   }

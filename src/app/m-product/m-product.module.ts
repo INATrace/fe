@@ -29,7 +29,6 @@ import { NumberRowComponent } from './product-label/number-row/number-row.compon
 import { PrefillProductSelectionModalComponent } from './product-label/prefill-product-selection-modal/prefill-product-selection-modal.component';
 import { ProductLabelComponent } from './product-label/product-label.component';
 import { ProductionRecordItemComponent } from './product-label/production-record-item/production-record-item.component';
-import { ProductCardComponent } from './product-list/product-card/product-card.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { LanguageForLabelModalComponent } from './product-label/language-for-label-modal/language-for-label-modal.component';
 import { ProductCommonModule } from './product-common/product-common.module';
@@ -37,7 +36,6 @@ import { ProductCommonModule } from './product-common/product-common.module';
 @NgModule({
   declarations: [
     ProductListComponent,
-    ProductCardComponent,
     ProductLabelComponent,
     LabelRedirectToProductPageComponent,
     BatchesListComponent,

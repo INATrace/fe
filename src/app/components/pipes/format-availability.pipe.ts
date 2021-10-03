@@ -5,11 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatAvailabilityPipe implements PipeTransform {
 
-  transform(value: string): any {
-    return value == "1"
+  transform(value: boolean): string {
+    return value
       ? $localize`:@@stockOrderAvailability.available:Available`
-      : $localize`:@@stockOrderAvailability.notAvailable:Not available`
+      : $localize`:@@stockOrderAvailability.notAvailable:Not available`;
   }
-
 
 }

@@ -2,15 +2,67 @@
   <div class="main-inside-main">
     <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
       <thead>
-      <tr result-sorter
-          [sortOptions]="sortOptions"
-          [cbChecked]="cbCheckedAll"
-          [defaultSortingIndex]="10"
-          (sortByKey)="changeSort($event)"></tr>
-      </thead>
+        <tr result-sorter
+            [sortOptions]="sortOptions"
+            [cbChecked]="cbCheckedAll"
+            [defaultSortingIndex]="1"
+            (sortByKey)="changeSort($event)"></tr>
+        </thead>
       <tbody>
         <tr *ngFor="let order of orders.items; index as i">
-          <!-- TODO: table columns for order -->
+          <td *ngIf="!sortOptions[0].hide" [attr.data-label]="sortOptions[0].name">
+            <checkbox-input inTable="true" (onClick)="cbSelected(order, i)" [checked]="this.currentData[i].selected"> </checkbox-input>
+          </td>
+          <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name">{{ formatDate(order.productionDate) }}</td>
+          <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name">{{ orderIdentifier(order) }}</td>
+          <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{ order.orderType | formatStockOrderType }}</td>
+          <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
+          <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
+          <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }}</td>
+          <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">{{ order.totalQuantity }} / {{ order.fulfilledQuantity }} / {{ order.availableQuantity }}</td>
+          <td *ngIf="!sortOptions[8].hide" [attr.data-label]="sortOptions[8].name">{{ order.measureUnitType?.label }}</td>
+          <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost }} / {{ order.balance }}</td>
+          <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name">{{ formatDate(order.deliveryTime) }}</td>
+          <td *ngIf="!sortOptions[11].hide" [attr.data-label]="sortOptions[11].name">{{ order.updateTimestamp | date: 'yyyy-MM-dd hh:mm' }}</td>
+          <td *ngIf="!sortOptions[12].hide" [attr.data-label]="sortOptions[12].name">{{ order.isAvailable | formatAvailability }}</td>
+          <td *ngIf="!sortOptions[13].hide" [attr.data-label]="sortOptions[13].name">{{ order.preferredWayOfPayment | formatWayOfPayment }}</td>
+          <td [attr.data-label]="sortOptions[14].name">
+            <span>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.edit"
+                 (click)="edit(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.view"
+                 (click)="history(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                View
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.payment"
+                 *ngIf="this.pageListingMode === 'PURCHASE_ORDERS'"
+                 (click)="payment(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Add payment
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.farmerProfile"
+                 *ngIf="this.pageListingMode === 'PURCHASE_ORDERS'"
+                 (click)="farmerProfile(order.producerUserCustomer?.id)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Farmer profile
+              </a>
+              <a *ngIf="canDelete(order)"
+                 i18n="@@productLabelPurchaseOrder.tableCol.delete"
+                 (click)="delete(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Delete
+              </a>
+            </span>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -11,12 +11,15 @@ import { StockOrderListComponent } from './stock-order-list/stock-order-list.com
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockPurchaseOrderDetailsComponent } from './stock-purchase-order-details/stock-purchase-order-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
 
 @NgModule({
   declarations: [
     StockCoreTabComponent,
     StockOrderListComponent,
-    StockPurchaseOrderDetailsComponent
+    StockPurchaseOrderDetailsComponent,
+    AdditionalProofItemComponent
   ],
   imports: [
     CommonModule,
@@ -28,11 +31,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     NgbPaginationModule,
-    NgSelectModule
+    NgSelectModule,
+    DragDropModule
   ],
   exports: [
     StockOrderListComponent,
-    StockPurchaseOrderDetailsComponent
+    StockPurchaseOrderDetailsComponent,
+    AdditionalProofItemComponent
   ]
 })
 export class StockCoreModule { }

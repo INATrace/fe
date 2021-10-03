@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -8,10 +8,12 @@ import { CompanyFacilitiesService } from '../../../../shared-services/company-fa
 import { CompanyCollectingFacilitiesService } from '../../../../shared-services/company-collecting-facilities.service';
 import { dateAtMidnightISOString, setNavigationParameter } from '../../../../../shared/utils';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ChainStockOrder } from '../../../../../api-chain/model/chainStockOrder';
 import { ChainPayment } from '../../../../../api-chain/model/chainPayment';
+import { AuthorisedLayoutComponent } from '../../../../layout/authorised/authorised-layout/authorised-layout.component';
+import { TabCommunicationService } from '../../../../shared/tab-communication.service';
+import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
@@ -23,7 +25,7 @@ export interface DeliveryDates {
 @Component({
   template: ''
 })
-export class StockCoreTabComponent implements OnInit {
+export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   faTimes = faTimes;
 
@@ -40,7 +42,7 @@ export class StockCoreTabComponent implements OnInit {
   filterWayOfPayment = new FormControl('');
   wayOfPaymentPing$ = new BehaviorSubject<string>(this.filterWayOfPayment.value);
 
-  selectedOrders: ChainStockOrder[];
+  selectedOrders: ApiStockOrder[];
   selectedIds: ChainPayment[];
 
   clickAddPaymentsPing$ = new BehaviorSubject<boolean>(false);
@@ -52,6 +54,27 @@ export class StockCoreTabComponent implements OnInit {
   fromFilterDatePayments = new FormControl(null);
   toFilterDatePayments = new FormControl(null);
   deliveryDatesPingPayments$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
+
+  // TABS
+  @ViewChild(AuthorisedLayoutComponent)
+  authorizedLayout;
+
+  rootTab = 0;
+  selectedTab: Subscription;
+
+  tabs = [
+    $localize`:@@productLabelStock.tab0.title:Purchases`,
+    $localize`:@@productLabelStock.tab1.title:Processing`,
+    $localize`:@@productLabelStock.tab2.title:Payments`,
+    $localize`:@@productLabelStock.tab4.title:My stock`,
+  ];
+
+  tabNames = [
+    'purchases',
+    'processing',
+    'payments',
+    'stock-orders'
+  ];
 
   constructor(
     protected router: Router,
@@ -65,12 +88,24 @@ export class StockCoreTabComponent implements OnInit {
     return this.route.snapshot.data.mode as StockOrderListingPageMode;
   }
 
+  get tabCommunicationService(): TabCommunicationService {
+    return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
+  }
+
+  targetNavigate(segment: string) {
+    this.router.navigate(['my-stock', segment, 'tab']).then();
+  }
+
   ngOnInit(): void {
 
     this.selectedOrders = [];
     this.selectedIds = [];
 
     this.initFacilityCodebook();
+  }
+
+  ngAfterViewInit() {
+    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
   }
 
   private initFacilityCodebook(): void {
