@@ -277,7 +277,39 @@
 
       </div>
 
-      <!-- TODO: -->
+      <ng-container>
+        <div class="af-form-row">
+          <div class="af-form-block--c12">
+            <h2 i18n="@@productLabelStockPurchaseOrdersModal.section.additionalProofs">Additional proofs</h2>
+
+            <div class="af-form-element">
+              <list-editor *ngIf="additionalProofsListManager"
+                           label="List of additional proofs"
+                           [listEditorManager]="additionalProofsListManager"
+                           addText="Add document"
+                           [canAdd]="true"
+                           i18n-label="@@productLabelStockPurchaseOrdersModal.list-editor.additionalProofs.label"
+                           i18n-addText="@@productLabelStockPurchaseOrdersModal.list-editor.additionalProofs.addText"
+                           [invalid]="submitted && additionalProofsForm?.invalid">
+                <list-editor-items>
+                  <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
+                    <app-additional-proof-item
+                            title=null
+                            [formControlInput]="item"
+                            [isOpen]="additionalProofsListManager.isOpen(i)"
+                            [listEditorManager]="this.additionalProofsListManager"
+                            [listEditorManagerPosition]="i">
+                    </app-additional-proof-item>
+                  </div>
+                </list-editor-items>
+              </list-editor>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- TODO: Payments -->
 
       <div class="af-form-row">
         <div class="af-form-block--c12">

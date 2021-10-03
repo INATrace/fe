@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute } from '@angular/router';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
@@ -14,13 +14,17 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
-import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, dateAtNoonISOString, defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ApiStockOrderValidationScheme } from './validation';
 import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ChainActivityProof } from '../../../../../api-chain/model/chainActivityProof';
+import { ApiActivityProofValidationScheme } from '../additional-proof-item/validation';
+import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import StatusEnum = ApiResponseApiStockOrder.StatusEnum;
 
 @Component({
@@ -69,6 +73,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private purchaseOrderId = this.route.snapshot.params.purchaseOrderId;
 
+  additionalProofsListManager = null;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -80,6 +86,19 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService,
   ) { }
+
+  // Additional proof item factory methods (used when creating ListEditorManger)
+  static AdditionalProofItemCreateEmptyObject(): ApiActivityProof {
+    const object = ApiActivityProof.formMetadata();
+    return defaultEmptyObject(object) as ApiActivityProof;
+  }
+
+  static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(StockPurchaseOrderDetailsComponent.AdditionalProofItemCreateEmptyObject(),
+        ApiActivityProofValidationScheme.validators);
+    };
+  }
 
   get orderType(): StockOrderType {
 
@@ -145,6 +164,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
   }
 
+  get additionalProofsForm(): FormArray {
+    return this.stockOrderForm.get('activityProofs') as FormArray;
+  }
+
   private get womenCoffeeList() {
     const obj = {};
     obj['YES'] = $localize`:@@productLabelStockPurchaseOrdersModal.womensCoffeeList.yes:Yes`;
@@ -201,6 +224,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       } else {
         this.newStockOrder();
       }
+      this.initializeListManager();
       this.globalEventsManager.showLoading(false);
     });
   }
@@ -262,11 +286,17 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       this.codebookUsers = EnumSifrant.fromObject(obj);
     }
 
-    this.initializeListManager();
   }
 
   private initializeListManager() {
-    // TODO
+
+    this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
+      this.additionalProofsForm as FormArray,
+      StockPurchaseOrderDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
+      ApiActivityProofValidationScheme
+    );
+
+    // TODO: initialize payments list manager
   }
 
   private newStockOrder() {
