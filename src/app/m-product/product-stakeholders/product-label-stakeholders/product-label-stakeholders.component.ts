@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, ViewChild } from '@angular/core';
+import { Component, Host, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs/operators';
@@ -54,6 +54,11 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.reloadPage();
   }
 
   targetNavigate(segment: string) {
