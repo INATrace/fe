@@ -18,6 +18,7 @@
  */
 
 
+import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
@@ -29,6 +30,10 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 
 export interface ApiStockOrder { 
+    /**
+     * Activity proofs
+     */
+    activityProofs?: Array<ApiActivityProof>;
     available?: boolean;
     /**
      * Available quantity
@@ -130,6 +135,10 @@ export namespace ApiStockOrder {
      * All properties of ApiStockOrder.
      */
     export enum Properties {
+        /**
+         * Activity proofs
+         */
+        activityProofs = 'activityProofs',
         available = 'available',
         /**
          * Available quantity
@@ -250,6 +259,18 @@ export namespace ApiStockOrder {
             metadata: formMetadata,
             classname: 'ApiStockOrder',
             vars: [
+                {
+                    metadata: ApiActivityProof.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'activityProofs',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiActivityProof&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiActivityProof'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -604,6 +625,8 @@ export namespace ApiStockOrder {
                 },
             ],
             validators: {
+                activityProofs: [
+                ],
                 available: [
                 ],
                 availableQuantity: [
@@ -673,6 +696,9 @@ export namespace ApiStockOrder {
   // export const ApiStockOrderValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               activityProofs: {
+  //                   validators: []
+  //               },
   //               available: {
   //                   validators: []
   //               },

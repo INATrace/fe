@@ -7022,6 +7022,34 @@
         },
         "type": "object"
       },
+      "ApiActivityProof": {
+        "properties": {
+          "document": {
+            "$ref": "#/components/schemas/ApiDocument",
+            "description": "The attached document reference of the activity proof"
+          },
+          "formalCreationDate": {
+            "description": "The formal creation date of the document",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "type": {
+            "description": "The type of the activity proof",
+            "type": "string"
+          },
+          "validUntil": {
+            "description": "Date until the document is valid",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiAddress": {
         "properties": {
           "address": {
@@ -12054,6 +12082,13 @@
       },
       "ApiStockOrder": {
         "properties": {
+          "activityProofs": {
+            "description": "Activity proofs",
+            "items": {
+              "$ref": "#/components/schemas/ApiActivityProof"
+            },
+            "type": "array"
+          },
           "available": {
             "type": "boolean"
           },
