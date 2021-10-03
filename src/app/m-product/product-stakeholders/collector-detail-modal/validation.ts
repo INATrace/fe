@@ -8,6 +8,8 @@ import { BankAccountInfo } from 'src/api-chain/model/bankAccountInfo';
 import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
+import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
+import { ApiCompanyValidationScheme } from '../../product-label/validation';
 
 export const ChainLocationValidationScheme = {
   forceExpand: true,
@@ -183,8 +185,111 @@ export const ChainUserCustomerValidationScheme = {
   }
 } as SimpleValidationScheme<ChainUserCustomer>;
 
+export const ApiAddressValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    address: {
+      validators: [Validators.required]
+    },
+    cell: {
+      validators: [Validators.required]
+    },
+    city: {
+      validators: [Validators.required]
+    },
+    country: {
+      validators: [Validators.required]
+    },
+    state: {
+      validators: [Validators.required]
+    },
+    zip: {
+      validators: [Validators.maxLength(50)]
+    },
+    hondurasDepartment: {
+      validators: []
+    },
+    hondurasFarm: {
+      validators: []
+    },
+    hondurasMunicipality: {
+      validators: []
+    },
+    hondurasVillage: {
+      validators: []
+    }
+  }
+};
 
+export const ApiLocationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    address: ApiAddressValidationScheme
+  }
+};
 
+export const ApiBankInformationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    accountHolderName: {
+      validators: []
+    },
+    accountNumber: {
+      validators: []
+    },
+    additionalInformation: {
+      validators: []
+    },
+    bankName: {
+      validators: []
+    }
+  }
+};
+
+export const ApiFarmInformationValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    totalCultivatedArea: {
+      validators: []
+    },
+    coffeeCultivatedArea: {
+      validators: []
+    },
+    numberOfTrees: {
+      validators: []
+    },
+    organic: {
+      validators: []
+    },
+    areaOrganicCertified: {
+      validators: []
+    },
+    startTransitionToOrganic: {
+      validators: []
+    }
+  }
+};
+
+export const ApiUserCustomerCooperativeValidationScheme = {
+  forceExpand: true,
+  validators: [],
+  fields: {
+    company: ApiCompanyValidationScheme,
+    id: {
+      validators: []
+    },
+    type: {
+      validators: [Validators.required]
+    },
+    userCustomerType: {
+      validators: [Validators.required]
+    }
+  }
+};
 
 export const ApiUserCustomerValidationScheme = {
   validators: [],
@@ -196,14 +301,12 @@ export const ApiUserCustomerValidationScheme = {
       validators: [EmailValidator()]
     },
     gender: {
-      validators: []
+      validators: [Validators.required]
     },
     id: {
       validators: []
     },
-    location: {
-      validators: []
-    },
+    location: ApiLocationValidationScheme,
     name: {
       validators: []
     },
@@ -211,11 +314,14 @@ export const ApiUserCustomerValidationScheme = {
       validators: []
     },
     surname: {
-      validators: []
+      validators: [Validators.required]
     },
     type: {
       validators: []
     },
+    bank: ApiBankInformationValidationScheme,
+    farm: ApiFarmInformationValidationScheme,
+    cooperatives: ApiUserCustomerCooperativeValidationScheme
   }
 } as SimpleValidationScheme<ApiUserCustomer>;
 
@@ -230,3 +336,5 @@ export const ChainUserCustomerRoleValidationScheme = {
     },
   }
 } as SimpleValidationScheme<ChainUserCustomerRole>;
+
+

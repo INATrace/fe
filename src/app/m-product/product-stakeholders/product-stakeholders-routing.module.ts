@@ -74,7 +74,7 @@ const routes: Routes = [
     }
   },
   {
-    path: ':type/organization/:organizationId/new/:collectorId',
+    path: ':type/organization/:organizationId/new',
     component: CollectorDetailModalComponent,
     pathMatch: 'full',
     data: {

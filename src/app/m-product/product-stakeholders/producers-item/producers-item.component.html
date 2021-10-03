@@ -8,7 +8,7 @@
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
-        <div *ngIf="contentObject.organizationId">
+        <div *ngIf="(contentObject.company && contentObject.company.name && contentObject.userCustomerType) || (contentObject.company && contentObject.company.id && contentObject.userCustomerType)">
           {{name}}
         </div>
       </div>
@@ -21,12 +21,12 @@
         <single-choice
           label="Customer of"
           i18n-label="@@producersItem.label.customer"
-          [formControlInput]="form.get('organizationId')"
+          [formControlInput]="form.get('company.id')"
           [codebookService]="codebookCoop"
-          [isInvalidChoice]="submitted && form.get('organizationId').invalid"
+          [isInvalidChoice]="submitted && form.get('company.id').invalid"
           [readonly]="readonly">
           <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('organizationId').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="form.get('company.id').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@producersItem.textinput.customer.error">
                 Cooperative is required
               </div>
@@ -38,11 +38,11 @@
         <single-choice
           label="Role"
           i18n-label="@@producersItem.label.role"
-          [formControlInput]="form.get('role')"
+          [formControlInput]="form.get('userCustomerType')"
           [codebookService]="codebookRoles"
-          [isInvalidChoice]="submitted && form.get('role').invalid">
+          [isInvalidChoice]="submitted && form.get('userCustomerType').invalid">
           <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('role').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="form.get('userCustomerType').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@producersItem.textinput.role.error">
                 Role is required
               </div>
