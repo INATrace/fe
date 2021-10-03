@@ -21,120 +21,95 @@
 
 
 
-export interface ApiProcessingEvidenceField { 
+export interface ApiScoreTarget { 
     /**
-     * Processing evidence field file multiplicity
+     * Fairness goal
      */
-    fileMultiplicity?: number;
+    fairness?: number;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * Processing evidence field label
+     * Order
      */
-    label?: string;
+    order?: number;
     /**
-     * Processing evidence field mandatory
+     * Payment
      */
-    mandatory?: boolean;
+    payment?: number;
     /**
-     * Processing evidence field numeric value
+     * Provenance goal
      */
-    numericValue?: number;
+    provenance?: number;
     /**
-     * Processing evidence field required
+     * Quality goal
      */
-    required?: boolean;
+    quality?: number;
     /**
-     * Processing evidence field required on quote
+     * Quality level
      */
-    requiredOnQuote?: boolean;
+    qualityLevel?: string;
     /**
-     * Processing evidence field string value
+     * Is women's share
      */
-    stringValue?: string;
-    /**
-     * Processing evidence field type
-     */
-    type?: ApiProcessingEvidenceField.TypeEnum;
+    womenShare?: boolean;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiProcessingEvidenceField.
+ * Namespace for property- and property-value-enumerations of ApiScoreTarget.
  */
-export namespace ApiProcessingEvidenceField {
+export namespace ApiScoreTarget {
     /**
-     * All properties of ApiProcessingEvidenceField.
+     * All properties of ApiScoreTarget.
      */
     export enum Properties {
         /**
-         * Processing evidence field file multiplicity
+         * Fairness goal
          */
-        fileMultiplicity = 'fileMultiplicity',
+        fairness = 'fairness',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * Processing evidence field label
+         * Order
          */
-        label = 'label',
+        order = 'order',
         /**
-         * Processing evidence field mandatory
+         * Payment
          */
-        mandatory = 'mandatory',
+        payment = 'payment',
         /**
-         * Processing evidence field numeric value
+         * Provenance goal
          */
-        numericValue = 'numericValue',
+        provenance = 'provenance',
         /**
-         * Processing evidence field required
+         * Quality goal
          */
-        required = 'required',
+        quality = 'quality',
         /**
-         * Processing evidence field required on quote
+         * Quality level
          */
-        requiredOnQuote = 'requiredOnQuote',
+        qualityLevel = 'qualityLevel',
         /**
-         * Processing evidence field string value
+         * Is women's share
          */
-        stringValue = 'stringValue',
-        /**
-         * Processing evidence field type
-         */
-        type = 'type'
-    }
-
-    /**
-     * All possible values of type.
-     */
-    export enum TypeEnum {
-        STRING = 'STRING',
-        TEXT = 'TEXT',
-        NUMBER = 'NUMBER',
-        INTEGER = 'INTEGER',
-        DATE = 'DATE',
-        OBJECT = 'OBJECT',
-        ARRAY = 'ARRAY',
-        PRICE = 'PRICE',
-        EXCHANGERATE = 'EXCHANGE_RATE',
-        TIMESTAMP = 'TIMESTAMP',
-        FILE = 'FILE'
+        womenShare = 'womenShare'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiProcessingEvidenceField',
+            classname: 'ApiScoreTarget',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'fileMultiplicity',
-                    classname: 'ApiProcessingEvidenceField',
+                    name: 'fairness',
+                    classname: 'ApiScoreTarget',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -145,7 +120,7 @@ export namespace ApiProcessingEvidenceField {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiProcessingEvidenceField',
+                    classname: 'ApiScoreTarget',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -155,30 +130,8 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'label',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'mandatory',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'numericValue',
-                    classname: 'ApiProcessingEvidenceField',
+                    name: 'order',
+                    classname: 'ApiScoreTarget',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -188,9 +141,9 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'required',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'boolean',
+                    name: 'payment',
+                    classname: 'ApiScoreTarget',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -199,9 +152,9 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'requiredOnQuote',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'boolean',
+                    name: 'provenance',
+                    classname: 'ApiScoreTarget',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -210,8 +163,19 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'stringValue',
-                    classname: 'ApiProcessingEvidenceField',
+                    name: 'quality',
+                    classname: 'ApiScoreTarget',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qualityLevel',
+                    classname: 'ApiScoreTarget',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -219,72 +183,66 @@ export namespace ApiProcessingEvidenceField {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingEvidenceField.TypeEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'type',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'string',
+                    name: 'womenShare',
+                    classname: 'ApiScoreTarget',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                fileMultiplicity: [
+                fairness: [
                 ],
                 id: [
                 ],
-                label: [
+                order: [
                 ],
-                mandatory: [
+                payment: [
                 ],
-                numericValue: [
+                provenance: [
                 ],
-                required: [
+                quality: [
                 ],
-                requiredOnQuote: [
+                qualityLevel: [
                 ],
-                stringValue: [
-                ],
-                type: [
+                womenShare: [
                 ],
             }
         }
     }
 
-  // export const ApiProcessingEvidenceFieldValidationScheme = {
+  // export const ApiScoreTargetValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               fileMultiplicity: {
+  //               fairness: {
   //                   validators: []
   //               },
   //               id: {
   //                   validators: []
   //               },
-  //               label: {
+  //               order: {
   //                   validators: []
   //               },
-  //               mandatory: {
+  //               payment: {
   //                   validators: []
   //               },
-  //               numericValue: {
+  //               provenance: {
   //                   validators: []
   //               },
-  //               required: {
+  //               quality: {
   //                   validators: []
   //               },
-  //               requiredOnQuote: {
+  //               qualityLevel: {
   //                   validators: []
   //               },
-  //               stringValue: {
-  //                   validators: []
-  //               },
-  //               type: {
+  //               womenShare: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiProcessingEvidenceField>;
+  // } as SimpleValidationScheme<ApiScoreTarget>;
 
 
 }

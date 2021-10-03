@@ -36,7 +36,7 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { environment } from 'src/environments/environment';
 import { StockOrderType } from 'src/shared/types';
 import { dateAtMidnightISOString, dateAtNoonISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { ChainActivityProofValidationScheme } from '../additional-proof-item/validation';
+import { ApiActivityProofValidationScheme } from '../../../../company/company-stock/stock-core/additional-proof-item/validation';
 import { ChainPaymentValidationScheme } from '../payment-item/validation';
 import { ChainStockOrderValidationScheme } from './validation';
 
@@ -671,7 +671,7 @@ export class StockPurchaseOrderEditComponent implements OnInit {
     this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
       this.additionalProofsForm as FormArray,
       StockPurchaseOrderEditComponent.AdditionalProofItemEmptyObjectFormFactory(),
-      ChainActivityProofValidationScheme
+      ApiActivityProofValidationScheme
     )
 
     this.paymentsListManager = new ListEditorManager<ChainPayment>(
@@ -696,7 +696,7 @@ export class StockPurchaseOrderEditComponent implements OnInit {
 
   static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      let f = new FormControl(StockPurchaseOrderEditComponent.AdditionalProofItemCreateEmptyObject(), ChainActivityProofValidationScheme.validators)
+      let f = new FormControl(StockPurchaseOrderEditComponent.AdditionalProofItemCreateEmptyObject(), ApiActivityProofValidationScheme.validators)
       return f
     }
   }

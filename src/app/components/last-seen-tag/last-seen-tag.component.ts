@@ -19,12 +19,12 @@ export class LastSeenTagComponent implements OnInit {
   date;
   time;
   ngOnInit(): void {
-    this.formatDateAndHour()
+    this.formatDateAndHour();
   }
 
   formatDateAndHour() {
-    let date = new Date(this.dateFormat);
+    const date = new Date(this.dateFormat);
     this.date = formatDateWithDots(this.dateFormat);
-    this.time = date.getHours() + ':' + date.getMinutes().toString().padStart(2, "0");
+    this.time = date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0');
   }
 }

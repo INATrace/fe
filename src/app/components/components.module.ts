@@ -33,6 +33,7 @@ import { FormatCompanyCertsPipe } from './pipes/format-company-certs.pipe';
 import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-qr-code-modal.component';
 import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-type';
 import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing-evidence-field-type.pipe';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
     FormatCompanyCertsPipe,
     GenerateQRCodeModalComponent,
     FormatPaymentPurposeTypePipe,
-    FormatProcessingEvidenceFieldTypePipe
+    FormatProcessingEvidenceFieldTypePipe,
+    ProductCardComponent
   ],
   imports: [
     CommonModule,
@@ -77,29 +79,30 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
     GoogleMapsModule,
     DragDropModule
   ],
-    exports: [
-        BottomButtonsComponent,
-        DropdownComponent,
-        FormDetailsLeftPanelComponent,
-        FormPositionBoxComponent,
-        LastSeenTagComponent,
-        OrderCardComponent,
-        FormatAvailabilityPipe,
-        FormatStockOrderTypePipe,
-        RedirectClearCacheComponent,
-        RedirectClearCacheComponent,
-        FormatTransactionTypePipe,
-        FormatTransactionStatusPipe,
-        FormatProcesingActionTypePipe,
-        FormatProcessingEvidenceTypeTypePipe,
-        FormatWayOfPaymentPipe,
-        TranslateCodebookPipe,
-        FormatCompanyCertsPipe,
-        GenerateQRCodeModalComponent,
-        DocumentCardComponent,
-        FormatPaymentPurposeTypePipe,
-        FormatProcessingEvidenceFieldTypePipe
-    ],
+  exports: [
+    BottomButtonsComponent,
+    DropdownComponent,
+    FormDetailsLeftPanelComponent,
+    FormPositionBoxComponent,
+    LastSeenTagComponent,
+    OrderCardComponent,
+    FormatAvailabilityPipe,
+    FormatStockOrderTypePipe,
+    RedirectClearCacheComponent,
+    RedirectClearCacheComponent,
+    FormatTransactionTypePipe,
+    FormatTransactionStatusPipe,
+    FormatProcesingActionTypePipe,
+    FormatProcessingEvidenceTypeTypePipe,
+    FormatWayOfPaymentPipe,
+    TranslateCodebookPipe,
+    FormatCompanyCertsPipe,
+    GenerateQRCodeModalComponent,
+    DocumentCardComponent,
+    FormatPaymentPurposeTypePipe,
+    FormatProcessingEvidenceFieldTypePipe,
+    ProductCardComponent
+  ],
   providers: [
     FormatPaymentPurposeTypePipe
   ]
