@@ -54,7 +54,7 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { environment } from 'src/environments/environment';
 import { ProcessingActionType } from 'src/shared/types';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { ChainActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiActivityProofValidationScheme } from '../../../../company/company-stock/stock-core/additional-proof-item/validation';
 import { ChainStockOrderValidationScheme, ChainTransactionValidationScheme } from './validation';
 import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { ActionTypeControllerService } from '../../../../../api/api/actionTypeController.service';
@@ -493,7 +493,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
 
   static ChainActivityProofEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofCreateEmptyObject(), ChainActivityProofValidationScheme.validators);
+      return new FormControl(ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofCreateEmptyObject(), ApiActivityProofValidationScheme.validators);
     };
   }
 
@@ -1541,7 +1541,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
     this.processingEvidenceListManager = new ListEditorManager<ChainActivityProof>(
       this.otherProcessingEvidenceArray as FormArray,
       ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
-      ChainActivityProofValidationScheme
+      ApiActivityProofValidationScheme
     );
 
   }
