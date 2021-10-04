@@ -129,13 +129,13 @@ export class CurrencyListComponent implements OnInit {
   }
 
   enableCurrency(id) {
-    this.currencyService.enableCurrencyUsingPUT(id).pipe(first()).subscribe(res => {
+    this.currencyService.enableCurrencyUsingPUT(id).pipe(first()).subscribe(() => {
       this.ping$.next(null);
     });
   }
 
   disableCurrency(id) {
-    this.currencyService.disableCurrencyUsingPUT(id).pipe(first()).subscribe(res => {
+    this.currencyService.disableCurrencyUsingPUT(id).pipe(first()).subscribe(() => {
       this.ping$.next(null);
     });
   }
