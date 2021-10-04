@@ -8,7 +8,6 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { SelectedUserCompanyModalComponent } from '../selected-user-company-modal/selected-user-company-modal.component';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
-import { dbKey } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ProductControllerService } from '../../../api/api/productController.service';
 import { ApiPaginatedResponseApiProductListResponse } from '../../../api/model/apiPaginatedResponseApiProductListResponse';
@@ -103,7 +102,7 @@ export class UserHomeComponent implements OnInit {
     for (const id of ids) {
       const res = await this.companyControllerService.getCompanyUsingGET(id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
-        objCompanies[dbKey(res.data)] = res.data.name;
+        objCompanies[res.data.id] = res.data.name;
       }
     }
     this.codebookMyCompanies = EnumSifrant.fromObject(objCompanies);
