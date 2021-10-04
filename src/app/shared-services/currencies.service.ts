@@ -38,7 +38,7 @@ export class CurrenciesService extends GeneralCodesService<ApiCurrencyType> {
     }
 
     public initializeCodebook() {
-        this.sifrant$ = this.sifrant$ || this.currencyService.getEnabledCurrencyTypesUsingGET().pipe(map(c => this.pack(c)));
+        this.sifrant$ = this.sifrant$ || this.currencyService.getEnabledCurrencyTypesUsingGET().pipe(map(c => this.pack(c.data.items)));
     }
 
 }
