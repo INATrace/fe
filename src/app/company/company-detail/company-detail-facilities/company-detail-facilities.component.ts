@@ -109,7 +109,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   loadEntityList(params: any) {
-    return this.facilityControllerService.getFacilityListUsingGET();
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
   }
 
   canDeactivate(): boolean {
