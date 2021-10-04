@@ -48,7 +48,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
 
+                    <div [style.display]="enabledPaginationActive ? 'flex' : 'none'" class="justify-content-end">
                         <ngb-pagination
                                 [(page)]="enabledPage"
                                 [pageSize]="pageSize"
@@ -78,7 +80,7 @@
 
                     <div class="main-inside-main">
 
-                        <table *ngIf="disabledCurrencyTypes && disabledCurrencyTypes.items && disabledCurrencyTypes.items.length > 0" class="af-table">
+                        <table *ngIf="disabledCurrencyTypes && disabledCurrencyTypes.items && disabledCurrencyTypes.items.length > 0; else noCurrencies" class="af-table">
                             <thead>
                                 <tr result-sorter [sortOptions]="sortOptions" (sortByKey)="onSortChangeDisabled($event)"></tr>
                             </thead>
@@ -98,14 +100,16 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
 
+                    <div [style.display]="disabledPaginationActive ? 'flex' : 'none'" class="justify-content-end">
                         <ngb-pagination
-                            [(page)]="disabledPage"
-                            [pageSize]="pageSize"
-                            [collectionSize]="disabledCurrencyTypes.count"
-                            (pageChange)="disabledPageChange($event)"
-                            [maxSize]="7"
-                            [rotate]="true"></ngb-pagination>
+                                [(page)]="disabledPage"
+                                [pageSize]="pageSize"
+                                [collectionSize]="disabledCurrencyTypes.count"
+                                (pageChange)="disabledPageChange($event)"
+                                [maxSize]="7"
+                                [rotate]="true"></ngb-pagination>
                     </div>
                 </ng-container>
             </div>

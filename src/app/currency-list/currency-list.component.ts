@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyTypeControllerService } from '../../api/api/currencyTypeController.service';
-import { ApiCurrencyType } from '../../api/model/apiCurrencyType';
 import { first, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SortKeyAndOrder, SortOption, SortOrder } from '../shared/result-sorter/result-sorter-types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -16,11 +15,8 @@ import { ApiPaginatedResponseApiCurrencyType } from '../../api/model/apiPaginate
 })
 export class CurrencyListComponent implements OnInit {
 
-  public enabledCurrencies: ApiCurrencyType[];
-  public disabledCurrencies: ApiCurrencyType[];
-
-  public displayedCurrencies = 0;
-  public allCurrencies = 0;
+  public enabledPaginationActive = false;
+  public disabledPaginationActive = false;
 
   public ping$ = new BehaviorSubject(null);
 
@@ -84,6 +80,7 @@ export class CurrencyListComponent implements OnInit {
       }),
       map((resp: ApiPaginatedResponseApiCurrencyType) => {
         if (resp) {
+          this.enabledPaginationActive = resp.data.count > 10;
           return resp.data;
         }
       }),
@@ -106,6 +103,7 @@ export class CurrencyListComponent implements OnInit {
         }),
         map((resp: ApiPaginatedResponseApiCurrencyType) => {
           if (resp) {
+            this.disabledPaginationActive = resp.data.count > 10;
             return resp.data;
           }
         }),
