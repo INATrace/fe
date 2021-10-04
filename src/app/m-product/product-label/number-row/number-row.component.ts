@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class NumberRowComponent implements OnInit {
 
   @Input()
-  label = null
+  label = null;
   constructor() { }
 
   ngOnInit(): void {

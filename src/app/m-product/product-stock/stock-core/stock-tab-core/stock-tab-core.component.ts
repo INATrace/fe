@@ -17,7 +17,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
-import { ActiveCollectingFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-collecting-facilities-for-organization-codebook.service';
 import { ActiveFacilitiesForOrganizationCodebookService } from 'src/app/shared-services/active-facilities-for-organization-codebook.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
@@ -26,9 +25,9 @@ import { GeneralSifrantService } from 'src/app/shared-services/general-sifrant.s
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { QuoteOrdersOnOrganizationStandaloneService } from 'src/app/shared-services/quote-orders-on-organization-standalone.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { dateAtMidnightISOString, dbKey, getPath, setNavigationParameter } from 'src/shared/utils';
@@ -236,8 +235,8 @@ export class StockTabCoreComponent implements OnInit {
         break;
       case 'PURCHASE_ORDERS':
       default:
-        this.facilityCodebook =
-          new ActiveCollectingFacilitiesForOrganizationCodebookService(this.chainFacilityService, this.organizationId);
+        // this.facilityCodebook =
+        //   new ActiveCollectingFacilitiesForOrganizationCodebookService(this.chainFacilityService, this.organizationId);
         break;
     }
   }

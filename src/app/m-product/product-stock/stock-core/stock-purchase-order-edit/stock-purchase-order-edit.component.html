@@ -370,7 +370,7 @@
 
       </div>
 
-
+      <!-- TODO: To here -->
 
       <ng-container>
         <div class="af-form-row">
@@ -390,13 +390,13 @@
                   <div cdkDropList
                     (cdkDropListDropped)="additionalProofsListManager.onDrop($event)">
                     <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
-                      <app-additional-proof-item
-                        title=null
-                        [formControlInput]="item"
-                        [isOpen]="additionalProofsListManager.isOpen(i)"
-                        [listEditorManager]="this.additionalProofsListManager"
-                        [listEditorManagerPosition]="i">
-                      </app-additional-proof-item>
+<!--                      <app-additional-proof-item-->
+<!--                        title=null-->
+<!--                        [formControlInput]="item"-->
+<!--                        [isOpen]="additionalProofsListManager.isOpen(i)"-->
+<!--                        [listEditorManager]="this.additionalProofsListManager"-->
+<!--                        [listEditorManagerPosition]="i">-->
+<!--                      </app-additional-proof-item>-->
                     </div>
                   </div>
                 </list-editor-items>

@@ -12,7 +12,7 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ComponentsModule } from '../components/components.module';
 import { ContentsModule } from '../contents/contents.module';
 import { SharedModule } from '../shared/shared.module';
-import { SystemModule } from '../system/system.module';
+import { CoreModule } from '../core/core.module';
 import { AuthorisedLayoutComponent } from './authorised/authorised-layout/authorised-layout.component';
 import { AuthorisedSideNavTogglerComponent } from './authorised/authorised-side-nav-toggler/authorised-side-nav-toggler.component';
 import { AuthorisedSideNavComponent } from './authorised/authorised-side-nav/authorised-side-nav.component';
@@ -49,7 +49,7 @@ import { UserBoxComponent } from './user-box/user-box.component';
     CommonModule,
     // Clean up unnecessary
     RouterModule,
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     FontAwesomeModule,
     SharedModule,

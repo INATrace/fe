@@ -11,9 +11,9 @@ import { environment } from 'src/environments/environment';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { PrefillLocationsFromProductModalComponent } from './prefill-locations-from-product-modal/prefill-locations-from-product-modal.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { Subscription } from 'rxjs';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 
 
 @Component({

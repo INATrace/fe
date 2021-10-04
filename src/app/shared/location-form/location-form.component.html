@@ -4,11 +4,11 @@
       <single-choice
       label="Country"
       i18n-label="@@locationForm.textinput.country.label"
-      [formControlInput]="form.get('country')"
+      [formControlInput]="form.get('address.country')"
       [codebookService]="countryCodes"
-      [isInvalidChoice]="submitted && form.get('country').invalid">
+      [isInvalidChoice]="submitted && form.get('address.country').invalid">
       <ng-container *ngIf="submitted">
-        <div *ngIf="form.get('country').errors as errors" class="sc-invalid-feedback">
+        <div *ngIf="form.get('address.country').errors as errors" class="sc-invalid-feedback">
           <div *ngIf="errors.required" i18n="@@locationForm.textinput.country.error">
             Country is required.
           </div>
@@ -22,17 +22,87 @@
 <div class="af-row">
   <div class="af-c6">
 
+    <ng-container *ngIf="showHondurasFields()">
+      <textinput
+        [form]="form.get('address.hondurasFarm')"
+        label="Farm"
+        style=""
+        placeholder="Enter farm"
+        i18n-label="@@locationForm.textinput.farm.label"
+        i18n-placeholder="@@locationForm.textinput.farm.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasFarm').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasFarm').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.farm.error">
+              Farm is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        [form]="form.get('address.hondurasVillage')"
+        label="Village"
+        style=""
+        placeholder="Enter village"
+        i18n-label="@@locationForm.textinput.village.label"
+        i18n-placeholder="@@locationForm.textinput.village.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasVillage').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasVillage').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.village.error">
+              Village is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        [form]="form.get('address.hondurasMunicipality')"
+        label="Municipality"
+        style=""
+        placeholder="Enter municipality"
+        i18n-label="@@locationForm.textinput.municipality.label"
+        i18n-placeholder="@@locationForm.textinput.municipality.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasMunicipality').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasMunicipality').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.municipality.error">
+              Municipality is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+
+      <textinput
+        [form]="form.get('address.hondurasDepartment')"
+        label="Department"
+        style=""
+        placeholder="Enter department"
+        i18n-label="@@locationForm.textinput.department.label"
+        i18n-placeholder="@@locationForm.textinput.department.placeholder"
+        [isInvalid]="submitted && form.get('address.hondurasDepartment').invalid">
+        <ng-container *ngIf="submitted">
+          <div *ngIf="form.get('address.hondurasDepartment').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="errors.required" i18n="@@locationForm.textinput.department.error">
+              Department is required
+            </div>
+          </div>
+        </ng-container>
+      </textinput>
+    </ng-container>
+
     <ng-container *ngIf="showVillageCellSector()">
       <textinput
-        [form]="form.get('village')"
+        [form]="form.get('address.village')"
         label="Village"
         style="width: 100%"
         placeholder="Enter village"
         i18n-label="@@locationForm.textinput.village.label"
         i18n-placeholder="@@locationForm.textinput.village.placeholder"
-        [isInvalid]="submitted && form.get('village').invalid">
+        [isInvalid]="submitted && form.get('address.village').invalid">
         <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('village').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="form.get('address.village').errors as errors" class="sc-invalid-feedback">
             <div *ngIf="errors.required" i18n="@@locationForm.textinput.village.error">
               Village is required.
             </div>
@@ -41,15 +111,15 @@
       </textinput>
 
       <textinput
-        [form]="form.get('cell')"
+        [form]="form.get('address.cell')"
         label="Cell"
         style="width: 100%"
         placeholder="Enter cell"
         i18n-label="@@locationForm.textinput.cell.label"
         i18n-placeholder="@@locationForm.textinput.cell.placeholder"
-        [isInvalid]="submitted && form.get('cell').invalid">
+        [isInvalid]="submitted && form.get('address.cell').invalid">
         <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('cell').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="form.get('address.cell').errors as errors" class="sc-invalid-feedback">
             <div *ngIf="errors.required" i18n="@@locationForm.textinput.cell.error">
               Cell is required.
             </div>
@@ -58,15 +128,15 @@
       </textinput>
 
       <textinput
-        [form]="form.get('sector')"
+        [form]="form.get('address.sector')"
         label="Sector"
         style="width: 100%"
         placeholder="Enter sector"
         i18n-label="@@locationForm.textinput.sector.label"
         i18n-placeholder="@@locationForm.textinput.sector.placeholder"
-        [isInvalid]="submitted && form.get('sector').invalid">
+        [isInvalid]="submitted && form.get('address.sector').invalid">
         <ng-container *ngIf="submitted">
-          <div *ngIf="form.get('sector').errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="form.get('address.sector').errors as errors" class="sc-invalid-feedback">
             <div *ngIf="errors.required" i18n="@@locationForm.sector.village.error">
               Sector is required.
             </div>
@@ -75,9 +145,9 @@
       </textinput>
     </ng-container>
 
-    <ng-container *ngIf="!showVillageCellSector()">
+    <ng-container *ngIf="!showVillageCellSector() && !showHondurasFields()">
     <textinput
-      [form]="form.get('address')"
+      [form]="form.get('address.address')"
       label="Street address"
       style="width: 100%"
       placeholder="Enter street address"
@@ -85,7 +155,7 @@
       i18n-placeholder="@@locationForm.textinput.address.placeholder">
     </textinput>
     <textinput
-      [form]="form.get('city')"
+      [form]="form.get('address.city')"
       label="City"
       style="width: 100%"
       placeholder="Enter city"
@@ -93,7 +163,7 @@
       i18n-placeholder="@@locationForm.textinput.city.placeholder">
     </textinput>
     <textinput
-      [form]="form.get('state')"
+      [form]="form.get('address.state')"
       label="State / Province / Region"
       style="width: 100%"
       placeholder="Enter State / Province / Region"
@@ -102,7 +172,7 @@
     </textinput>
 
     <textinput
-      [form]="form.get('zip')"
+      [form]="form.get('address.zip')"
       label="Zip / Postal Code / P.O. Box"
       style="width: 100%"
       placeholder="Enter Zip / Postal Code / P.O. Box"
@@ -114,7 +184,7 @@
     <single-choice
       label="Is location publicly visible on a map?"
       i18n-label="@@locationForm.textinput.visible.label"
-      [formControlInput]="form.get('isPubliclyVisible')"
+      [formControlInput]="form.get('publiclyVisible')"
       [codebookService]="codebookStatus">
     </single-choice>
 

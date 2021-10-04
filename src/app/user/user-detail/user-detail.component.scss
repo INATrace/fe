@@ -1,0 +1,75 @@
+@import "../../../variables";
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+
+.user-detail-container {
+  max-width:1140px;
+  background-color: white;
+  @include media-breakpoint-up(lg) {
+    width: 1140px;
+  }
+  @include media-breakpoint-down(lg) {
+    padding-left: 2rem;
+  }
+}
+
+.btn-link-pass {
+  border: none;
+  font-size: 1rem;
+  color: $secondary;
+  margin-top: 0.5rem;
+  margin-left: 0px;
+}
+
+.show-pointer{
+  cursor: pointer;
+}
+
+.user-profile-view {
+  margin-left: 8px;
+  margin-right: 8px;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 2rem;
+  }
+}
+
+.af-user-language {
+  div {
+    cursor: pointer;
+    margin-right: 20px;
+    border-radius: 0.25rem;
+    border: 1px solid $moderate-cyan;
+    padding: 0.375rem 0.75rem;
+    color: $moderate-cyan;
+
+    &:hover {
+      background-color: $very-pale-cyan;
+    }
+
+    img {
+      margin-right: 0.5rem;
+      border-radius: 2px;
+      height: 16px;
+      width: 16px;
+      margin-top: -4px;
+      opacity: 0.75;
+    }
+
+  }
+  div:last-child {
+    margin-right: 0;
+  }
+
+  .af-user-language--selected {
+    color: white;
+    background-color: $moderate-cyan;
+
+    &:hover {
+      color: white;
+      background-color: $moderate-cyan;
+    }
+
+  }
+}

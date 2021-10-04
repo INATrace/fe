@@ -8,7 +8,7 @@ import { PublicService } from 'src/api-chain/api/public.service';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { B2CHistoryItem } from 'src/api-chain/model/b2CHistoryItem';
 import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-front-page-journey',

@@ -1,0 +1,31 @@
+@import "../../../variables";
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+
+.label {
+  width: 4em;
+  float: left;
+  text-align: right;
+  margin-right: 0.5em;
+  display: block
+}
+
+.user-line {
+  border: 1px solid $primary-light;
+  border-radius: 4px;
+  padding: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-weight: 300;
+  color: $primary-light;
+}
+
+.search-field .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.company-detail-container{
+  background-color: white;
+  max-width: 1140px;
+}

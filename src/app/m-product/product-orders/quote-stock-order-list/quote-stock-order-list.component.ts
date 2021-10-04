@@ -8,8 +8,8 @@ import { ListQuoteOrders, StockOrderService } from 'src/api-chain/api/stockOrder
 import { ApiResponsePaginatedListChainStockOrder } from 'src/api-chain/model/apiResponsePaginatedListChainStockOrder';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { GenerateQRCodeModalComponent } from 'src/app/components/generate-qr-code-modal/generate-qr-code-modal.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey, formatDateWithDots } from 'src/shared/utils';
 import { RejectTransactionModalComponent } from '../../product-stock/stock-core/reject-transaction-modal/reject-transaction-modal.component';
 
@@ -26,7 +26,7 @@ export class QuoteOrderListComponent implements OnInit {
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   @Input()
-  facilityId$ = new BehaviorSubject<string>("");;
+  facilityId$ = new BehaviorSubject<string>("");
   @Input()
   semiProductId$ = new BehaviorSubject<string>(null)
   @Input()

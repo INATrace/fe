@@ -35,15 +35,15 @@ import {ApiResponseApiBaseEntity} from 'src/api/model/apiResponseApiBaseEntity';
 import {ApiResponsibility} from 'src/api/model/apiResponsibility';
 import {ApiResponsibilityFarmerPicture} from 'src/api/model/apiResponsibilityFarmerPicture';
 import {ApiSustainability} from 'src/api/model/apiSustainability';
-import {CompanyDetailComponent} from 'src/app/company-detail/company-detail.component';
+import {CompanyDetailComponent} from 'src/app/company/company-detail/company-detail.component';
 import {ComponentCanDeactivate} from 'src/app/shared-services/component-can-deactivate';
 import {CountryService} from 'src/app/shared-services/countries.service';
 import {UsersService} from 'src/app/shared-services/users.service';
 import {ListEditorManager} from 'src/app/shared/list-editor/list-editor-manager';
 import {TextinputComponent} from 'src/app/shared/textinput/textinput.component';
-import {AuthService} from 'src/app/system/auth.service';
-import {GlobalEventManagerService} from 'src/app/system/global-event-manager.service';
-import {NgbModalImproved} from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import {AuthService} from 'src/app/core/auth.service';
+import {GlobalEventManagerService} from 'src/app/core/global-event-manager.service';
+import {NgbModalImproved} from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import {environment} from 'src/environments/environment';
 import {UnsubscribeList} from 'src/shared/rxutils';
 import {dbKey, defaultEmptyObject, generateFormFromMetadata} from 'src/shared/utils';
@@ -70,7 +70,7 @@ import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiValueChainValidationScheme } from '../../value-chain-detail/validation';
+import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 
 @Component({
   selector: 'app-product-label',

@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ContentsSectionDirective } from '../contents-section.directive';
 import { ContentsDirective } from '../contents.directive';
 import { documentOffset, getAbsoluteHeight } from '../html-utils';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { FaqModalComponent } from '../faq-modal/faq-modal.component';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { constants } from 'buffer';

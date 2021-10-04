@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { AuthService } from '../system/auth.service';
+import { AuthService } from '../core/auth.service';
 import { ApiUserGet } from 'src/api/model/apiUserGet';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';

@@ -2,11 +2,11 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PublicControllerService } from 'src/api/api/publicController.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { CheckBatchNumberResponseModalComponent } from '../check-batch-number-response-modal/check-batch-number-response-modal.component';
 import { Subscription } from 'rxjs';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-check-batch-number-modal',

@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, ViewChild } from '@angular/core';
+import { Component, Host, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs/operators';
@@ -8,11 +8,11 @@ import { UnsubscribeList } from 'src/shared/rxutils';
 import { FormControl } from '@angular/forms';
 import { getPath, dbKey } from 'src/shared/utils';
 import { ProductService } from 'src/api-chain/api/product.service';
-import { CompanySelectModalComponent } from 'src/app/company-list/company-select-modal/company-select-modal.component';
+import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
 
@@ -54,6 +54,11 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.reloadPage();
   }
 
   targetNavigate(segment: string) {
@@ -99,8 +104,8 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   public reloadFarmersPing$ = new BehaviorSubject<boolean>(false)
 
 
-  byCategoryFarmer: string = 'BY_NAME';
-  byCategoryCollector: string = 'BY_NAME';
+  byCategoryFarmer: string = 'name';
+  byCategoryCollector: string = 'name';
   public sortingParamsFarmer$ = new BehaviorSubject({ queryBy: this.byCategoryFarmer, sort: 'ASC' })
   public sortingParamsCollector$ = new BehaviorSubject({ queryBy: this.byCategoryCollector, sort: 'ASC' })
   items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }, { name: $localize`:@@productLabelStakeholders.search.id:id`, category: 'BY_USER_CUSTOMER_ID' }]
@@ -136,12 +141,7 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
     this.organizationId = localStorage.getItem("selectedUserCompany");
 
-    if (!this.currentProduct) {
-      let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        this.productOrganizationId = dbKey(res.data.organization);
-      }
-    }
+
   }
 
   tabSub: Subscription;
@@ -403,11 +403,14 @@ export class ProductLabelStakeholdersComponent implements OnInit {
 
 
   async collectorDetail(type) {
-    let resp = await this.chainUserCustomer.listUserCustomers().pipe(take(1)).toPromise();
-    if(resp && resp.status === 'OK' && resp.data) {
-      let collectorId = resp.data.count +1;
-      this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
-    }
+    // let resp = await this.chainUserCustomer.listUserCustomers().pipe(take(1)).toPromise();
+    // if(resp && resp.status === 'OK' && resp.data) {
+    //   let collectorId = resp.data.count +1;
+    //   this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
+    // }
+
+    this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new']);
+
     // console.log(resp);
     // let collectorId = 0;
     // if (type === 'farmers') collectorId = this.allFarmers+1;

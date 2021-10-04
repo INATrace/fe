@@ -12,23 +12,19 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
-import { ProductLabelStockSkuListComponent } from './product-label-stock-sku-list/product-label-stock-sku-list.component';
-import { ProductLabelStockSkuModalComponent } from './product-label-stock-sku-modal/product-label-stock-sku-modal.component';
+import { CoreModule } from 'src/app/core/core.module';
 import { ProductStockRoutingModule } from './product-stock-routing.module';
 import { StockCoreModule } from './stock-core/stock-core.module';
-
+import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
-  declarations: [
-    ProductLabelStockSkuListComponent,
-    ProductLabelStockSkuModalComponent,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ProductStockRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

@@ -15,8 +15,8 @@ import { ProductService } from 'src/api-chain/api/product.service';
 import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 
 @Component({
   selector: 'app-customer-detail-modal',

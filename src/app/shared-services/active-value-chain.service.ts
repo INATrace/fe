@@ -1,18 +1,16 @@
-import {Injectable} from '@angular/core';
-import {GeneralSifrantService} from './general-sifrant.service';
-import {ValueChainControllerService} from '../../api/api/valueChainController.service';
-import {ListCompaniesUsingGET} from '../../api/api/companyController.service';
-import {ApiCompanyListResponse} from '../../api/model/apiCompanyListResponse';
-import {Observable} from 'rxjs';
-import {PagedSearchResults} from '../../interfaces/CodebookHelperService';
-import {map} from 'rxjs/operators';
-import {ApiPaginatedResponseApiValueChain} from '../../api/model/apiPaginatedResponseApiValueChain';
-
+import { Injectable } from '@angular/core';
+import { GeneralSifrantService } from './general-sifrant.service';
+import { ValueChainControllerService } from '../../api/api/valueChainController.service';
+import { ListCompaniesUsingGET } from '../../api/api/companyController.service';
+import { ApiCompanyListResponse } from '../../api/model/apiCompanyListResponse';
+import { Observable } from 'rxjs';
+import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+import { map } from 'rxjs/operators';
+import { ApiPaginatedResponseApiValueChain } from '../../api/model/apiPaginatedResponseApiValueChain';
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class ActiveValueChainService extends GeneralSifrantService<any> {
 
   requestParams = {
@@ -44,17 +42,16 @@ export class ActiveValueChainService extends GeneralSifrantService<any> {
       name: key
     };
 
-    const tmp = this.valueChainController.getValueChainListUsingGETByMap(reqPars).pipe(
-        map((res: ApiPaginatedResponseApiValueChain) => {
-          return {
-            results: res.data.items,
-            offset: 0,
-            limit: limit,
-            totalCount: res.data.count
-          };
-        })
+    return this.valueChainController.getValueChainListUsingGETByMap(reqPars).pipe(
+      map((res: ApiPaginatedResponseApiValueChain) => {
+        return {
+          results: res.data.items,
+          offset: 0,
+          limit,
+          totalCount: res.data.count
+        };
+      })
     );
-    return tmp;
   }
 
   public placeholder(): string {

@@ -51,6 +51,7 @@ import { ApiResponseApiProductLabelAnalytics } from '../model/apiResponseApiProd
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
 import { ApiResponseApiProductLabelContent } from '../model/apiResponseApiProductLabelContent';
 import { ApiResponseApiProductLabelValues } from '../model/apiResponseApiProductLabelValues';
+import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiProductLabelBase } from '../model/apiResponseListApiProductLabelBase';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
 
@@ -1210,6 +1211,137 @@ export namespace GetProductUsingGET {
 }
 
 /**
+ * Namespace for getUserCustomerListForCompanyAndTypeUsingGET.
+ */
+export namespace GetUserCustomerListForCompanyAndTypeUsingGET {
+    /**
+     * Parameter map for getUserCustomerListForCompanyAndTypeUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * Type (collector, farmer)
+       */
+      type: string;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for getUserCustomerListForCompanyAndTypeUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * Type (collector, farmer)
+       */
+      type = 'type',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getUserCustomerListForCompanyAndTypeUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      type: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getUserCustomerUsingGET.
+ */
+export namespace GetUserCustomerUsingGET {
+    /**
+     * Parameter map for getUserCustomerUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getUserCustomerUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getUserCustomerUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetUserCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
  * Namespace for getUserCustomersListUsingGET.
  */
 export namespace GetUserCustomersListUsingGET {
@@ -1249,6 +1381,10 @@ export namespace GetUserCustomersListUsingGET {
        * Phone number
        */
       phone?: string;
+      /**
+       * Type (collector, farmer)
+       */
+      userCustomerType?: 'COLLECTOR' | 'FARMER';
     }
 
     /**
@@ -1286,7 +1422,11 @@ export namespace GetUserCustomersListUsingGET {
       /**
        * Phone number
        */
-      phone = 'phone'
+      phone = 'phone',
+      /**
+       * Type (collector, farmer)
+       */
+      userCustomerType = 'userCustomerType'
     }
 
     /**
@@ -1310,6 +1450,8 @@ export namespace GetUserCustomersListUsingGET {
       query: [
       ],
       phone: [
+      ],
+      userCustomerType: [
       ],
     };
 }
@@ -4067,6 +4209,203 @@ export class ProductControllerService {
 
 
   /**
+   * List user customers for a company and role by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserCustomerListForCompanyAndTypeUsingGETByMap(
+    map: GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserCustomer>;
+  public getUserCustomerListForCompanyAndTypeUsingGETByMap(
+    map: GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
+  public getUserCustomerListForCompanyAndTypeUsingGETByMap(
+    map: GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
+  public getUserCustomerListForCompanyAndTypeUsingGETByMap(
+    map: GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getUserCustomerListForCompanyAndTypeUsingGET(
+      map.companyId,
+      map.type,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * List user customers for a company and role
+     * 
+     * @param companyId Company ID
+     * @param type Type (collector, farmer)
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserCustomerListForCompanyAndTypeUsingGET(companyId: number, type: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
+    public getUserCustomerListForCompanyAndTypeUsingGET(companyId: number, type: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomerListForCompanyAndTypeUsingGET(companyId: number, type: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomerListForCompanyAndTypeUsingGET(companyId: number, type: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getUserCustomerListForCompanyAndTypeUsingGET.');
+        }
+        if (type === null || type === undefined) {
+            throw new Error('Required parameter type was null or undefined when calling getUserCustomerListForCompanyAndTypeUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiUserCustomer>(`${this.configuration.basePath}/api/product/userCustomers/list/${encodeURIComponent(String(companyId))}/${encodeURIComponent(String(type))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomerListForCompanyAndTypeUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get user customer by id by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiUserCustomer>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+  public getUserCustomerUsingGETByMap(
+    map: GetUserCustomerUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getUserCustomerUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get user customer by id
+     * 
+     * @param id User customer ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserCustomerUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
+    public getUserCustomerUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getUserCustomerUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiUserCustomer>(`${this.configuration.basePath}/api/product/userCustomers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomerUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * List user customers for a product by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -4098,6 +4437,7 @@ export class ProductControllerService {
       map.sort,
       map.query,
       map.phone,
+      map.userCustomerType,
       observe,
       reportProgress
     );
@@ -4115,13 +4455,14 @@ export class ProductControllerService {
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param query Name or surname
      * @param phone Phone number
+     * @param userCustomerType Type (collector, farmer)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersListUsingGET(productId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, userCustomerType?: 'COLLECTOR' | 'FARMER', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling getUserCustomersListUsingGET.');
         }
@@ -4147,6 +4488,9 @@ export class ProductControllerService {
         }
         if (phone !== undefined && phone !== null) {
             queryParameters = queryParameters.set('phone', <any>phone);
+        }
+        if (userCustomerType !== undefined && userCustomerType !== null) {
+            queryParameters = queryParameters.set('userCustomerType', <any>userCustomerType);
         }
 
         let headers = this.defaultHeaders;

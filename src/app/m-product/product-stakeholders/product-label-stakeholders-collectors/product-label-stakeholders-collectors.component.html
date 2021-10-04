@@ -8,23 +8,23 @@
         <tr scope="col" result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
       </thead>
       <tbody>
-        <tr *ngFor="let collector of collectors.items">
+        <tr *ngFor="let collector of collectors.items | slice: (page - 1) * pageSize : page * pageSize">
           <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{collector.name}}</span></td>
           <td [attr.data-label]="sortOptions[1].name"><span>{{collector.surname}}</span></td>
           <td [attr.data-label]="sortOptions[2].name"><span>{{collector.gender}}</span></td>
-          <td [attr.data-label]="sortOptions[3].name"><span>{{collector.userCustomerId}}</span></td>
+          <td [attr.data-label]="sortOptions[3].name"><span>{{collector.id}}</span></td>
           <td [attr.data-label]="sortOptions[4].name"><span>{{showLocation('village', collector.location)}}</span></td>
           <td [attr.data-label]="sortOptions[5].name"><span>{{showLocation('cell', collector.location)}}</span></td>
           <td [attr.data-label]="sortOptions[6].name">
             <span>
             <a i18n="@@productLabelStakeholdersCollectors.tableCol.edit"
-              (click)="collectorDetail(dbKey(collector))"
+              (click)="collectorDetail(collector.id)"
               class="company-action"
               [class.enabled-action]="true">
               Edit
             </a>
             <a i18n="@@productLabelStakeholdersCollectors.tableCol.delete"
-              (click)="deleteCollector(collector)"
+              (click)="deleteCollector(collector.id)"
               class="company-action"
               [class.enabled-action]="true">
               Delete

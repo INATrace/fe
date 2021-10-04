@@ -37,6 +37,22 @@ export interface ApiGeoAddress {
     city?: string;
     country?: ApiCountry;
     /**
+     * Honduras department name
+     */
+    hondurasDepartment?: string;
+    /**
+     * Honduras farm name
+     */
+    hondurasFarm?: string;
+    /**
+     * Honduras municipality name
+     */
+    hondurasMunicipality?: string;
+    /**
+     * Honduras village name
+     */
+    hondurasVillage?: string;
+    /**
      * location latitude
      */
     latitude?: number;
@@ -83,6 +99,22 @@ export namespace ApiGeoAddress {
          */
         city = 'city',
         country = 'country',
+        /**
+         * Honduras department name
+         */
+        hondurasDepartment = 'hondurasDepartment',
+        /**
+         * Honduras farm name
+         */
+        hondurasFarm = 'hondurasFarm',
+        /**
+         * Honduras municipality name
+         */
+        hondurasMunicipality = 'hondurasMunicipality',
+        /**
+         * Honduras village name
+         */
+        hondurasVillage = 'hondurasVillage',
         /**
          * location latitude
          */
@@ -164,6 +196,50 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'hondurasDepartment',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasFarm',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasMunicipality',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasVillage',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'latitude',
                     classname: 'ApiGeoAddress',
                     dataType: 'number',
@@ -236,6 +312,14 @@ export namespace ApiGeoAddress {
                 ],
                 country: [
                 ],
+                hondurasDepartment: [
+                ],
+                hondurasFarm: [
+                ],
+                hondurasMunicipality: [
+                ],
+                hondurasVillage: [
+                ],
                 latitude: [
                 ],
                 longitude: [
@@ -265,6 +349,18 @@ export namespace ApiGeoAddress {
   //                   validators: []
   //               },
   //               country: {
+  //                   validators: []
+  //               },
+  //               hondurasDepartment: {
+  //                   validators: []
+  //               },
+  //               hondurasFarm: {
+  //                   validators: []
+  //               },
+  //               hondurasMunicipality: {
+  //                   validators: []
+  //               },
+  //               hondurasVillage: {
   //                   validators: []
   //               },
   //               latitude: {

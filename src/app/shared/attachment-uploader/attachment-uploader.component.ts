@@ -15,10 +15,10 @@ import { ImageViewerComponent } from 'src/app/shared/image-viewer/image-viewer.c
 // import { LoginService } from 'src/app/directives/login.service';
 // import { FileService } from 'src/api/api/file.service';
 // import { FileInfo as ApiDocument } from 'src/api/model/fileInfo';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { formatBytes } from 'src/shared/utils';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ClosableComponent } from '../closable/closable.component';
 import { ChainFileInfo } from 'src/api-chain/model/chainFileInfo';

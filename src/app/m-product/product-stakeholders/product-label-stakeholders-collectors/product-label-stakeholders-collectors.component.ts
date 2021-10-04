@@ -1,14 +1,15 @@
-import { LocationStrategy } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
-import { ApiResponsePaginatedListChainUserCustomer } from 'src/api-chain/model/apiResponsePaginatedListChainUserCustomer';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
+import { GetUserCustomersListUsingGET, ProductControllerService } from '../../../../api/api/productController.service';
+import { ApiPaginatedResponseApiUserCustomer } from '../../../../api/model/apiPaginatedResponseApiUserCustomer';
+import { SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-product-label-stakeholders-collectors',
@@ -18,13 +19,13 @@ import { dbKey } from 'src/shared/utils';
 export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   constructor(
-    // private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     private modalService: NgbModalImproved,
     private route: ActivatedRoute,
     private router: Router,
     private chainUserCustomerService: UserCustomerService,
-    private chainProductService: ProductService
+    private chainProductService: ProductService,
+    private productController: ProductControllerService
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   pagingParams$ = new BehaviorSubject({})
   @Input()
-  sortingParams$ = new BehaviorSubject({ queryBy: this.byCategory, sort: 'ASC' })
+  sortingParams$ = new BehaviorSubject<{ queryBy: string, sort: SortOrder }>({ queryBy: this.byCategory, sort: 'ASC' })
   paging$ = new BehaviorSubject<number>(1);
   page: number = 0;
   pageSize = 10;
@@ -66,10 +67,6 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   chainProduct
   async init() {
-    let res = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-    if (res && res.status == "OK" && res.data) {
-      this.chainProduct = res.data;
-    }
     this.initializeObservables();
   }
 
@@ -88,14 +85,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
   }
 
   changeSort(event) {
-    if (event.key === 'name') {
-      this.byCategory = 'BY_NAME';
-    } else if (event.key === 'surname') {
-      this.byCategory = 'BY_SURNAME';
-    } else if (event.key === 'id') {
-      this.byCategory = 'BY_USER_CUSTOMER_ID';
-    }
-    this.sortingParams$.next({ queryBy: this.byCategory, sort: event.sortOrder })
+    this.sortingParams$.next({ queryBy: event.key, sort: event.sortOrder })
     this.onSortChanged.emit(this.byCategory);
   }
 
@@ -138,21 +128,24 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   collectors$
   initializeObservables() {
-    this.collectors$ = combineLatest(this.reloadPingList$, this.paging$, this.sortingParams$,
-      (ping: boolean, page: number, sorting: any) => {
-        return {
-          query: this.query,
-          ...sorting,
-          offset: (page - 1) * this.pageSize,
-          limit: this.pageSize
-        }
-      }).pipe(
-        // distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
-        tap(val => this.globalEventsManager.showLoading(true)),
-        switchMap(params => {
-          return this.getAPI(params);
+    this.collectors$ = combineLatest([
+        this.reloadPingList$,
+        this.paging$,
+        this.sortingParams$
+    ]).pipe(
+        map(([ping, page, sort]) => {
+          const params: GetUserCustomersListUsingGET.PartialParamMap = {
+            productId: this.productId,
+            query: this.query,
+            sort: sort.sort,
+            sortBy: sort.queryBy,
+            userCustomerType: this.role
+          };
+          return params;
         }),
-        map((resp: ApiResponsePaginatedListChainUserCustomer) => {
+        tap(() => this.globalEventsManager.showLoading(true)),
+        switchMap(requestParams => this.productController.getUserCustomersListUsingGETByMap(requestParams)),
+        map((resp: ApiPaginatedResponseApiUserCustomer) => {
           if (resp) {
             this.showed = 0;
             if (resp.data && resp.data.count && (this.pageSize - resp.data.count > 0)) this.showed = resp.data.count;
@@ -168,18 +161,11 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
         }),
         tap(val => this.globalEventsManager.showLoading(false)),
         shareReplay(1)
-      )
+    );
   }
-
+  
   getAPI(params) {
-    let org = this.organizationId;
-    if (this.role === 'FARMER') { //TODO link together appropriate assoc and producer, check also B2C page
-      if (this.organizationId === '8b7afab6-c9ce-4739-b4b7-2cff8e473304') org = 'ade24b49-8548-45b6-ab12-65ce801803db';
-      if (this.organizationId === '21777c51-8263-4e5c-8b3b-2f03a953dd2a') org = '7dc83d0b-898c-4fc3-ae7f-1c2c527b5af4';
-    }
-    if (org == dbKey(this.chainProduct.organization)) return this.chainUserCustomerService.listUserCustomersByRoleByMap({ ...params, role: this.role })
-    else return this.chainUserCustomerService.listUserCustomersForOrganizationAndRoleByMap({ ...params, organizationId: org, role: this.role })
-
+    return this.productController.getUserCustomersListUsingGET(this.productId, null, null, null, null, null, null, null, this.role);
   }
 
   async deleteCollector(collector) {
@@ -189,8 +175,7 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
       options: { centered: true }
     });
     if (result != "ok") return
-    let res = await this.chainUserCustomerService.deleteUserCustomer(collector).pipe(take(1)).toPromise();
-    // let res = await this.productController.deleteUserCustomerUsingDELETEByMap(collector).pipe(take(1)).toPromise();
+    let res = await this.productController.deleteUserCustomerUsingDELETE(collector).pipe(take(1)).toPromise();
     if (res && res.status == 'OK') {
       this.reloadPage()
     }
@@ -210,10 +195,10 @@ export class ProductLabelStakeholdersCollectorsComponent implements OnInit {
 
   showLocation(type, location) {
     if (type === 'cell') {
-      if (location && location.cell) return location.cell;
+      if (location && location.address && location.address.cell) return location.address.cell;
       else return '-'
     } else {
-      if (location && location.village) return location.village;
+      if (location && location.address && location.address.village) return location.address.village;
       else return '-'
     }
 

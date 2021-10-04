@@ -257,6 +257,7 @@
     "aboutApp.info.button.ok": "OK",
     "aboutApp.info.title": "Über diese App",
     "aboutApp.info.message": "App Version: {$PH}",
+    "authorisedSideNav.link.company": "Company",
     "authorisedSideNav.link.products": "Produkte",
     "authorisedSideNav.link.system": "System",
     "userBox.dropdown.home": "Startseite",
@@ -997,6 +998,15 @@
     "locationForm.textinput.village.error": "Dorf wird benötigt",
     "locationForm.textinput.cell.error": "Zelle wird benötigt",
     "locationForm.sector.village.error": "Sektor wird benötigt",
+    "locationForm.textinput.farm.label": "Farm",
+    "locationForm.textinput.farm.placeholder": "Enter farm",
+    "locationForm.textinput.farm.error": "Farm is required",
+    "locationForm.textinput.municipality.label": "Municipality",
+    "locationForm.textinput.municipality.placeholder": "Enter municipality",
+    "locationForm.textinput.municipality.error": "Municipality is required",
+    "locationForm.textinput.department.label": "Department",
+    "locationForm.textinput.department.placeholder": "Enter department",
+    "locationForm.textinput.department.error": "Department is required",
     "locationForm.textinput.country.error": "Land wird benötigt.",
     "customerDetail.newCustomer.title": "Neuer Kunde",
     "customerDetail.updateCustomer.title": "Kunde bearbeiten",
@@ -2735,6 +2745,7 @@
     "systemLeftPanel.sideTitle.currencies": "Currencies",
     "currencyList.tableCol.action.enable": "Enable",
     "currencyList.tableCol.action.disable": "Disable",
+    "currencyList.noCurrencies": "No currencies",
     "companyDetail.base.currency": "Base currency"
   }
 }

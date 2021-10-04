@@ -24,11 +24,11 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CacheRouteReuseStrategy } from './cache-route-reuse.strategy';
-import { CompanyDetailComponent } from './company-detail/company-detail.component';
-import { CompanyListComponent } from './company-list/company-list.component';
-import { CompanySelectModalComponent } from './company-list/company-select-modal/company-select-modal.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { CompanyListComponent } from './company/company-list/company-list.component';
+import { CompanySelectModalComponent } from './company/company-list/company-select-modal/company-select-modal.component';
 import { ComponentsModule } from './components/components.module';
-import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ConfirmEmailComponent } from './user/confirm-email/confirm-email.component';
 import { ContentsModule } from './contents/contents.module';
 import { ClearCookieConsentComponent } from './cookies/clear-cookie-consent/clear-cookie-consent.component';
 import { CookieBannerComponent } from './cookies/cookie-banner/cookie-banner.component';
@@ -40,33 +40,32 @@ import { KnowledgeBlogFrontComponent } from './knowledge-blog-front/knowledge-bl
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LanguageCodeHelper } from './language-code-helper';
 import { LayoutModule } from './layout/layout.module';
-import { LoginComponent } from './login/login.component';
-import { ProductLabelFrontFeedbackComponent } from './product-label-front-feedback/product-label-front-feedback.component';
+import { LoginComponent } from './user/login/login.component';
+import { ProductLabelFrontFeedbackComponent } from './product-label-front-page/product-label-front-feedback/product-label-front-feedback.component';
 import { CheckBatchNumberModalComponent } from './product-label-front-page/check-batch-number-modal/check-batch-number-modal.component';
 import { CheckBatchNumberResponseModalComponent } from './product-label-front-page/check-batch-number-response-modal/check-batch-number-response-modal.component';
 import { ProductLabelFrontPageComponent } from './product-label-front-page/product-label-front-page.component';
 import { QrCodeRedirectComponent } from './product-label-front-page/qr-code-redirect/qr-code-redirect.component';
 import { SectionContentPieceComponent } from './product-label-front-page/section-content-piece/section-content-piece.component';
 import { SectionTitleComponent } from './product-label-front-page/section-title/section-title.component';
-import { RegisterActivationComponent } from './register-activation/register-activation.component';
-import { RegisterComponent } from './register/register.component';
-import { ResetPasswordRequestComponent } from './reset-password-request/reset-password-request.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SelectedUserCompanyModalComponent } from './selected-user-company-modal/selected-user-company-modal.component';
+import { RegisterActivationComponent } from './user/register-activation/register-activation.component';
+import { RegisterComponent } from './user/register/register.component';
+import { ResetPasswordRequestComponent } from './user/reset-password-request/reset-password-request.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { SelectedUserCompanyModalComponent } from './user/selected-user-company-modal/selected-user-company-modal.component';
 import { SettingsAdditionalComponent } from './settings/settings-additional/settings-additional.component';
 import { SettingsTypesComponent } from './settings/settings-types/settings-types.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SharedModule } from './shared/shared.module';
 import { SystemLeftPanelComponent } from './system-left-panel/system-left-panel.component';
-import { SystemModule } from './system/system.module';
-import { TokenInterceptor } from './system/token.interceptor';
-import { TypeDetailModalComponent } from './type-detail-modal/type-detail-modal.component';
-import { TypeListComponent } from './type-list/type-list.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserHomeComponent } from './user-home/user-home.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { CoreModule } from './core/core.module';
+import { TokenInterceptor } from './core/token.interceptor';
+import { TypeDetailModalComponent } from './settings/type-detail-modal/type-detail-modal.component';
+import { TypeListComponent } from './settings/type-list/type-list.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserHomeComponent } from './user/user-home/user-home.component';
+import { UserListComponent } from './user/user-list/user-list.component';
 import { WelcomeScreenUnconfirmedComponent } from './welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
-import { FrontPageComponent } from './front-page/front-page.component';
 import { FrontPageFirstComponent } from './front-page/front-page-first/front-page-first.component';
 import { FrontPageJourneyComponent } from './front-page/front-page-journey/front-page-journey.component';
 import { FrontPageFairPricesComponent } from './front-page/front-page-fair-prices/front-page-fair-prices.component';
@@ -81,19 +80,19 @@ import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { FrontPageCarouselComponent } from './front-page/front-page-carousel/front-page-carousel.component';
 import { FrontPageSlidingComponent } from './front-page/front-page-sliding/front-page-sliding.component';
-import { CompanyDetailTranslateComponent } from './company-detail/company-detail-translate/company-detail-translate.component';
-import { CompanyDetailTabManagerComponent } from './company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
-import { CompanyUserRoleComponent } from './company-user-role/company-user-role.component';
-import { ValueChainListComponent } from './value-chain-list/value-chain-list.component';
-import { ValueChainDetailComponent } from './value-chain-detail/value-chain-detail.component';
-import { ValueChainConfigItemComponent } from './value-chain-detail/value-chain-config-item/value-chain-config-item.component';
-import { CompanyDetailUsersComponent } from './company-detail/company-detail-users/company-detail-users.component';
-import { CompanyDetailFacilitiesComponent } from './company-detail/company-detail-facilities/company-detail-facilities.component';
-import { CompanyDetailFacilityAddComponent } from './company-detail/company-detail-facility-add/company-detail-facility-add.component';
-import { CompanyAndValueChainSelectModalComponent } from './company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
-import { CompanyDetailProcessingActionsDetailComponent } from './company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
-import { CompanyProcessingActionsComponent } from './company-detail/company-processing-actions/company-processing-actions.component';
-import { CompanyDetailProcessingActionsListComponent } from './company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
+import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
+import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
+import { CompanyUserRoleComponent } from './company/company-user-role/company-user-role.component';
+import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
+import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
+import { ValueChainConfigItemComponent } from './value-chain/value-chain-detail/value-chain-config-item/value-chain-config-item.component';
+import { CompanyDetailUsersComponent } from './company/company-detail/company-detail-users/company-detail-users.component';
+import { CompanyDetailFacilitiesComponent } from './company/company-detail/company-detail-facilities/company-detail-facilities.component';
+import { CompanyDetailFacilityAddComponent } from './company/company-detail/company-detail-facility-add/company-detail-facility-add.component';
+import { CompanyAndValueChainSelectModalComponent } from './company/company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
+import { CompanyDetailProcessingActionsDetailComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
+import { CompanyProcessingActionsComponent } from './company/company-detail/company-processing-actions/company-processing-actions.component';
+import { CompanyDetailProcessingActionsListComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 
 export class HammerConfig extends HammerGestureConfig {
@@ -152,7 +151,6 @@ export function getConfiguration(): Configuration {
     SelectedUserCompanyModalComponent,
     SettingsAdditionalComponent,
     SettingsTypesComponent,
-    FrontPageComponent,
     FrontPageFirstComponent,
     FrontPageJourneyComponent,
     FrontPageFairPricesComponent,
@@ -199,7 +197,7 @@ export function getConfiguration(): Configuration {
       }
     }),
     //////////
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,
@@ -232,7 +230,7 @@ export function getConfiguration(): Configuration {
     {
       // see LanguageCodeHelper for source
       provide: APP_BASE_HREF, useFactory: () => {
-        return `/${LanguageCodeHelper.getCurrentLocale()}/`;
+        return `/${ LanguageCodeHelper.getCurrentLocale() }/`;
       }
     },
     {
@@ -243,6 +241,7 @@ export function getConfiguration(): Configuration {
       useClass: HammerConfig
     }
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,81 @@
+<app-authorised-layout>
+
+  <div class="container">
+    <div class="row">
+      <div class="col my-products-container">
+        <ng-container *ngIf="products$ | async as products">
+          <div class="main-inside-top content-element">
+            <div class="d-flex justify-content-between content-element--row1">
+              <div class="title-page content-element--title">My Products</div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products.items">
+              <app-product-card
+                      [product]= product>
+              </app-product-card>
+            </div>
+          </div>
+
+          <div *ngIf="products && products.items && products.items.length == 0" class="no-list-results" i18n="@@productList.noProducts">
+            No products
+          </div>
+
+          <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+            <ngb-pagination
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    [collectionSize]="products.count"
+                    (pageChange)="onPageChange($event)"
+                    [maxSize]="7"
+                    [rotate]="true">
+            </ngb-pagination>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col nav-buttons-container">
+        <div class="nav-button">
+          <a routerLink="/my-stock">
+            <div class="nav-button-inner">
+              <h5>My stock</h5>
+            </div>
+          </a>
+        </div>
+        <div class="nav-button">
+          <a routerLink="/my-orders">
+            <div class="nav-button-inner">
+              <h5>My orders</h5>
+            </div>
+          </a>
+        </div>
+        <div class="nav-button">
+          <a routerLink="/">
+            <div class="nav-button-inner">
+              <h5>My customers</h5>
+            </div>
+          </a>
+        </div>
+        <div class="nav-button">
+          <a routerLink="/">
+            <div class="nav-button-inner">
+              <h5>My farmers</h5>
+            </div>
+          </a>
+        </div>
+        <div class="nav-button">
+          <a routerLink="/">
+            <div class="nav-button-inner">
+              <h5>My collectors</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</app-authorised-layout>

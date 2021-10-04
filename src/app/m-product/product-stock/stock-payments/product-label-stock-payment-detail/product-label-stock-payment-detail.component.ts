@@ -16,8 +16,8 @@ import { ProductControllerService } from 'src/api/api/productController.service'
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { ActiveUserCustomersByOrganizationAndRoleService } from 'src/app/shared-services/active-user-customers-by-organization-and-role.service';
 import { AllOrganizationService } from 'src/app/shared-services/all-organizations.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnightISOString, dateAtNoonISOString, dbKey, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainPaymentValidationScheme } from './validation';
