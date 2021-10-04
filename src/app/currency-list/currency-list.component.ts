@@ -5,7 +5,7 @@ import { first, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SortKeyAndOrder, SortOption, SortOrder } from '../shared/result-sorter/result-sorter-types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { FormControl } from '@angular/forms';
 import { ApiPaginatedResponseApiCurrencyType } from '../../api/model/apiPaginatedResponseApiCurrencyType';
 
