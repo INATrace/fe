@@ -67,10 +67,6 @@ export interface ApiUserCustomer {
      */
     phone?: string;
     /**
-     * Product id
-     */
-    productId?: number;
-    /**
      * Surname
      */
     surname?: string;
@@ -127,10 +123,6 @@ export namespace ApiUserCustomer {
          * Phone
          */
         phone = 'phone',
-        /**
-         * Product id
-         */
-        productId = 'productId',
         /**
          * Surname
          */
@@ -305,17 +297,6 @@ export namespace ApiUserCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productId',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'surname',
                     classname: 'ApiUserCustomer',
                     dataType: 'string',
@@ -360,8 +341,6 @@ export namespace ApiUserCustomer {
                 name: [
                 ],
                 phone: [
-                ],
-                productId: [
                 ],
                 surname: [
                 ],
@@ -408,9 +387,6 @@ export namespace ApiUserCustomer {
   //                   validators: []
   //               },
   //               phone: {
-  //                   validators: []
-  //               },
-  //               productId: {
   //                   validators: []
   //               },
   //               surname: {
