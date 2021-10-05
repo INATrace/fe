@@ -59,7 +59,7 @@ export const ApiProcessingActionValidationScheme = {
                   validators: []
               },
               description: {
-                  validators: [Validators.required]
+                  validators: []
               },
               id: {
                   validators: []
@@ -71,7 +71,7 @@ export const ApiProcessingActionValidationScheme = {
                   validators: []
               },
               name: {
-                  validators: [Validators.required]
+                  validators: []
               },
               outputSemiProduct: {
                   validators: [Validators.required]
