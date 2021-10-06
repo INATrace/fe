@@ -134,7 +134,7 @@ export class CompanyFarmersListComponent implements OnInit {
   async deleteFarmer(id) {
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize `@@productLabelStakeholdersCollectors.deleteCollector.error.message:Are you sure you want to delete the collector?`,
+      message: $localize`:@@productLabelStakeholdersCollectors.deleteCollector.error.message:Are you sure you want to delete the collector?`,
       options: {
         centered: true
       }
