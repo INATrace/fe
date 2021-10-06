@@ -128,7 +128,7 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   editFarmer(id) {
-
+    this.router.navigate(['my-farmers', 'edit', id]);
   }
 
   async deleteFarmer(id) {
