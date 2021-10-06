@@ -1872,7 +1872,7 @@ export class CompanyControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiUserCustomer>(`${this.configuration.basePath}/api/company/userCustomers/edit/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.put<ApiResponseApiUserCustomer>(`${this.configuration.basePath}/api/company/userCustomers/edit`,
             ApiUserCustomer,
             {
                 withCredentials: this.configuration.withCredentials,
