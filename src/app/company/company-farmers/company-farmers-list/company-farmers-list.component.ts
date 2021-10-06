@@ -103,7 +103,8 @@ export class CompanyFarmersListComponent implements OnInit {
                 sortBy: sort.key,
                 offset: (page - 1) * this.pageSize,
                 limit: this.pageSize,
-                query: queryString
+                query: queryString,
+                searchBy: search
               };
               return params;
             }),
@@ -188,12 +189,12 @@ export class CompanyFarmersListComponent implements OnInit {
 
   onSearchInput(event) {
     console.log('search event', event);
-    this.search$.next(event);
+    this.query$.next(event);
   }
 
   onCategoryChange(event) {
     console.log('category change event', event);
-    this.ping$.next(null);
+    this.search$.next(event);
   }
 
 }
