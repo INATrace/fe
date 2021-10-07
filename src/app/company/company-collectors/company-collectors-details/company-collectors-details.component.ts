@@ -174,7 +174,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       case 'update':
         this.title = $localize`:@@collectorDetail.editCollector.title:Edit collector`;
         this.update = true;
-        console.log('route snapshot', this.route.snapshot);
         const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.collector = uc.data;
@@ -192,12 +191,9 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
 
   newCollector() {
     this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyCollector(), ApiUserCustomerValidationScheme);
-    console.log('new form', this.collectorForm);
-    console.log('new form location', this.collectorForm.get('location'));
   }
 
   editCollector() {
-    console.log('collector', this.collector);
     this.prepareEdit();
     this.collectorForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.collector, ApiUserCustomerValidationScheme);
   }
@@ -268,12 +264,9 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   }
 
   async save() {
-    console.log('saving');
     this.submitted = true;
-    console.log('collector form', this.collectorForm);
     if (this.collectorForm.invalid) { return; }
     const data = this.prepareData();
-    console.log('data', data);
 
     try {
       this.globalEventsManager.showLoading(true);

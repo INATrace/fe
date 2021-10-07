@@ -86,8 +86,6 @@ export class CompanyFarmersListComponent implements OnInit {
   ngOnInit(): void {
     this.organizationId = localStorage.getItem('selectedUserCompany');
 
-    console.log('getting farmers');
-
     this.loadFarmers();
   }
 
@@ -95,7 +93,6 @@ export class CompanyFarmersListComponent implements OnInit {
     this.farmer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
-              console.log('preparing params');
               const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
                 companyId: this.organizationId,
                 type: 'FARMER',
@@ -114,7 +111,6 @@ export class CompanyFarmersListComponent implements OnInit {
               if (response) {
                 this.farmerCount = response.data.count;
                 this.showing = this.farmerCount >= this.pageSize ? Math.min(this.page * this.pageSize, this.farmerCount) : this.farmerCount;
-                console.log('data', response.data);
                 return response.data;
               }
             }),
@@ -149,7 +145,6 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   changeSort(event) {
-    console.log('change sort', event);
     let newKey = '';
     switch (event.key) {
       case 'id':
@@ -163,7 +158,6 @@ export class CompanyFarmersListComponent implements OnInit {
         break;
     }
     event.key = newKey;
-    console.log("changed event", event);
     this.sorting$.next(event);
   }
 
@@ -183,17 +177,14 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   onPageChange(event) {
-    console.log('changing page', event);
     this.pagination$.next(event);
   }
 
   onSearchInput(event) {
-    console.log('search event', event);
     this.query$.next(event);
   }
 
   onCategoryChange(event) {
-    console.log('category change event', event);
     this.search$.next(event);
   }
 

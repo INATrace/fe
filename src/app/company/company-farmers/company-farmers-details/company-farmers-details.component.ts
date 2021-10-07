@@ -174,7 +174,6 @@ export class CompanyFarmersDetailsComponent implements OnInit {
       case 'update':
         this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
         this.update = true;
-        console.log('route snapshot', this.route.snapshot);
         const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
@@ -192,12 +191,9 @@ export class CompanyFarmersDetailsComponent implements OnInit {
 
   newFarmer() {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyFarmer(), ApiUserCustomerValidationScheme);
-    console.log('new form', this.farmerForm);
-    console.log('new form location', this.farmerForm.get('location'));
   }
 
   editFarmer() {
-    console.log('farmer', this.farmer);
     this.prepareEdit();
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.farmer, ApiUserCustomerValidationScheme);
   }
@@ -268,12 +264,9 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   async save() {
-    console.log('saving');
     this.submitted = true;
-    console.log('farmer form', this.farmerForm);
     if (this.farmerForm.invalid) { return; }
     const data = this.prepareData();
-    console.log('data', data);
 
     try {
       this.globalEventsManager.showLoading(true);

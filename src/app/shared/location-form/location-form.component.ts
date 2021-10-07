@@ -47,8 +47,6 @@ export class LocationFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("location form", this.form);
-    console.log("location form value", this.form.value);
     setTimeout(() => {
       this.form.get('address.village').setValidators([Validators.required])
       this.form.get('address.cell').setValidators([Validators.required])
@@ -57,7 +55,6 @@ export class LocationFormComponent implements OnInit {
 
     let sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
       loaded => {
-        console.log("form", this.form);
         // console.log("EMM:", loaded)
         if (loaded) this.isGoogleMapsLoaded = true;
         this.initializeMarker();
@@ -68,8 +65,6 @@ export class LocationFormComponent implements OnInit {
     )
     this.subs.push(sub2);
 
-    console.log('this form country', this.form.get('country'));
-    console.log('this form country', this.form.get('address.country'));
     let sub3 = this.form.get('address.country').valueChanges
       .subscribe(value => {
         // Honduras specifics

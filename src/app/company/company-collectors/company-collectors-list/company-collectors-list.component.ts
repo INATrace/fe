@@ -94,7 +94,6 @@ export class CompanyCollectorsListComponent implements OnInit{
     this.collector$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
-              console.log('preparing params');
               const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
                 companyId: this.organizationId,
                 type: 'COLLECTOR',
@@ -113,7 +112,6 @@ export class CompanyCollectorsListComponent implements OnInit{
               if (response) {
                 this.collectorCount = response.data.count;
                 this.showing = this.collectorCount >= this.pageSize ? Math.min(this.page * this.pageSize, this.collectorCount) : this.collectorCount;
-                console.log('data', response.data);
                 return response.data;
               }
             }),
@@ -148,7 +146,6 @@ export class CompanyCollectorsListComponent implements OnInit{
   }
 
   changeSort(event) {
-    console.log('change sort', event);
     let newKey = '';
     switch (event.key) {
       case 'id':
@@ -162,7 +159,6 @@ export class CompanyCollectorsListComponent implements OnInit{
         break;
     }
     event.key = newKey;
-    console.log("changed event", event);
     this.sorting$.next(event);
   }
 
@@ -182,17 +178,14 @@ export class CompanyCollectorsListComponent implements OnInit{
   }
 
   onPageChange(event) {
-    console.log('changing page', event);
     this.pagination$.next(event);
   }
 
   onSearchInput(event) {
-    console.log('search event', event);
     this.query$.next(event);
   }
 
   onCategoryChange(event) {
-    console.log('category change event', event);
     this.search$.next(event);
   }
 
