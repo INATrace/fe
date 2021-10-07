@@ -333,7 +333,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     if (!item) {
       return;
     }
-    if (this.collectorForm.value.associations.some(a => a.company.id == item.id)) {
+    if (this.collectorForm.value.associations.some(a => a.company.id === item.id)) {
       form.setValue(null);
       return;
     }

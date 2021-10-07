@@ -122,7 +122,7 @@ export class CollectorDetailModalComponent implements OnInit {
       if (this.type === 'farmers') this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
       else this.title = $localize`:@@collectorDetail.editCollector.title:Edit collector`;
       this.update = true;
-      const resp = await this.productService.getUserCustomerUsingGET(this.route.snapshot.params.userCustomerId).pipe(first()).toPromise();
+      const resp = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.userCustomerId).pipe(first()).toPromise();
       if (resp && resp.status === 'OK') {
         this.collector = resp.data;
         this.organizationId = resp.data.companyId.toString();
@@ -248,9 +248,9 @@ export class CollectorDetailModalComponent implements OnInit {
       this.globalEventsManager.showLoading(true);
       let res;
       if (!this.update) {
-        res = await this.productService.addUserCustomerUsingPOST(this.route.snapshot.params.id, this.route.snapshot.params.organizationId, data).toPromise();
+        res = await this.companyService.addUserCustomerUsingPOST(this.route.snapshot.params.id, this.route.snapshot.params.organizationId, data).toPromise();
       } else {
-        res = await this.productService.updateUserCustomerUsingPUT(data).toPromise();
+        res = await this.companyService.updateUserCustomerUsingPUT(data).toPromise();
       }
       if (res && res.status == 'OK') {
         this.dismiss();

@@ -333,7 +333,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     if (!item) {
       return;
     }
-    if (this.farmerForm.value.associations.some(a => a.company.id == item.id)) {
+    if (this.farmerForm.value.associations.some(a => a.company.id === item.id)) {
       form.setValue(null);
       return;
     }
