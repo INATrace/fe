@@ -30,7 +30,7 @@ export class StockProcessingTabComponent extends StockCoreTabComponent implement
   }
 
   newProcessingOrder() {
-    this.router.navigate(['my-stock', 'purchases', 'processing', 'NEW', 'facility', 'NEW', 'new']).then();
+    this.router.navigate(['my-stock', 'processing', 'NEW', 'facility', 'NEW', 'new']).then();
   }
 
 }

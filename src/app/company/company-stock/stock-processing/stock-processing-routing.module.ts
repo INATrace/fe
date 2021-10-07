@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StockProcessingTabComponent } from './stock-processing-tab/stock-processing-tab.component';
+import { StockProcessingOrderDetailsComponent } from './stock-processing-order-details/stock-processing-order-details.component';
+import { ProductLabelStockProcessingOrderDetailComponent } from '../../../m-product/product-stock/stock-processing/product-label-stock-processing-order-detail/product-label-stock-processing-order-detail.component';
 
 const routes: Routes = [
   {
@@ -14,7 +16,58 @@ const routes: Routes = [
       tab: 'processing',
       drobtinice: null
     }
-  }
+  },
+  {
+    path: ':actionId/facility/:inputFacilityId/new',
+    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
+    data: {
+      action: 'new',
+      drobtinice: {
+        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
+        route: 'my-stock/processing',
+        goBack: true
+      }
+    }
+  },
+  {
+    path: 'update/shipment-order/:orderId',
+    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    data: {
+      action: 'update',
+      type: 'SHIPMENT',
+      drobtinice: {
+        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
+        route: 'my-stock/processing',
+        goBack: true
+      }
+    }
+  },
+  {
+    path: 'update/processing-order/:orderId',
+    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    data: {
+      action: 'update',
+      type: 'PROCESSING',
+      drobtinice: {
+        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
+        route: 'my-stock/processing',
+        goBack: true
+      }
+    }
+  },
+  {
+    path: 'update/transfer-order/:orderId',
+    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    data: {
+      action: 'update',
+      type: 'TRANSFER',
+      drobtinice: {
+        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
+        route: 'my-stock/processing',
+        goBack: true
+      }
+    }
+  },
 ];
 
 @NgModule({
