@@ -28,7 +28,7 @@ import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing
 import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
-  declarations: [
+declarations: [
     CollectorDetailModalComponent,
     CompanyCardComponent,
     CustomerDetailModalComponent,
@@ -40,6 +40,9 @@ import { ProductCommonModule } from '../product-common/product-common.module';
     StakeholdersCustomersComponent,
     StakeholdersFarmersComponent,
     StakeholdersValueChainComponent
+  ],
+  exports: [
+      ProducersItemComponent
   ],
   imports: [
     CommonModule,
