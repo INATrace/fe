@@ -26,6 +26,7 @@ import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import { CollectorDetailModalComponent } from '../../../m-product/product-stakeholders/collector-detail-modal/collector-detail-modal.component';
+import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -216,6 +217,8 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   prepareData() {
+    this.farmerForm.get('type').setValue(UserCustomerTypeEnum.FARMER);
+
     if (this.farmerForm.get('hasSmartphone').value === null) {
       this.farmerForm.get('hasSmartphone').setValue(false);
     }
