@@ -6,6 +6,9 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import { ApiPaginatedResponseApiFacility } from '../../../../../api/model/apiPaginatedResponseApiFacility';
 import { ApiPaginatedListApiFacility } from '../../../../../api/model/apiPaginatedListApiFacility';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
+import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
+import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/model/apiPaginatedResponseApiProcessingAction';
 
 @Component({
   selector: 'app-stock-processing-facility-list',
@@ -35,9 +38,12 @@ export class StockProcessingFacilityListComponent implements OnInit {
   other = [];
   storage = [];
 
+  processingActions: ApiProcessingAction[] = [];
+
   constructor(
     private globalEventsManager: GlobalEventManagerService,
-    private facilityControllerService: FacilityControllerService
+    private facilityControllerService: FacilityControllerService,
+    private processingActionControllerService: ProcessingActionControllerService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +51,12 @@ export class StockProcessingFacilityListComponent implements OnInit {
     this.facilities$ = combineLatest([this.reloadPingList$])
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
+        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId)),
+        tap((res: ApiPaginatedResponseApiProcessingAction) => {
+          if (res) {
+            this.processingActions = res.data.items;
+          }
+        }),
         switchMap(() => this.loadEntityList()),
         map((res: ApiPaginatedResponseApiFacility) => {
           if (res) {

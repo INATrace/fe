@@ -4,19 +4,26 @@
 
     <div class="row" style="margin-top: 30px;">
       <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of collection">
-        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+        <app-facility-card [facility]="facility"
+                           [companyId]="companyId"
+                           [actions]="processingActions">
+        </app-facility-card>
       </div>
     </div>
 
     <div class="row" style="margin-top: 30px;">
       <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of other">
-        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+        <app-facility-card [facility]="facility"
+                           [companyId]="companyId"
+                           [actions]="processingActions"></app-facility-card>
       </div>
     </div>
 
     <div class="row" style="margin-top: 30px;">
       <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of storage">
-        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+        <app-facility-card [facility]="facility"
+                           [companyId]="companyId"
+                           [actions]="processingActions"></app-facility-card>
       </div>
     </div>
 

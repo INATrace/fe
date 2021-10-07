@@ -1,13 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../../api/model/apiFacility';
 import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAction';
-import { ProcessingActionControllerService } from '../../../../../../api/api/processingActionController.service';
-import { ApiPaginatedResponseApiProcessingAction } from '../../../../../../api/model/apiPaginatedResponseApiProcessingAction';
-import StatusEnum = ApiPaginatedResponseApiProcessingAction.StatusEnum;
 
 @Component({
   selector: 'app-facility-card',
@@ -22,22 +18,22 @@ export class FacilityCardComponent implements OnInit {
   @Input()
   companyId: number;
 
-  description = '';
-
+  @Input()
   actions: ApiProcessingAction[] = [];
+
+  description = '';
 
   menuOptions: { id: any; name: string }[] = [];
 
   constructor(
     private chainSemiProductService: SemiProductService,
-    private processingActionControllerService: ProcessingActionControllerService,
     private router: Router,
     private codebookTranslations: CodebookTranslations
   ) { }
 
   ngOnInit(): void {
     this.semiProductsIncluded().then();
-    this.setProcessingActions().then();
+    this.setMenuOptions();
   }
 
   whereIsIt(facility: ApiFacility) {
@@ -81,18 +77,7 @@ export class FacilityCardComponent implements OnInit {
     }
   }
 
-  async setProcessingActions() {
-
-    const res = await this.processingActionControllerService
-      .listProcessingActionsByCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-
-    if (res && res.status === StatusEnum.OK && res.data) {
-      this.actions = res.data.items;
-      this.setMenuOptions();
-    }
-  }
-
-  setMenuOptions() {
+  private setMenuOptions() {
     for (const action of this.actions) {
       for (const facilitySemiProd of this.facility.facilitySemiProductList) {
         if (action.inputSemiProduct.id === facilitySemiProd.id) {
