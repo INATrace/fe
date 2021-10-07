@@ -70,6 +70,23 @@
                                 placeholder=""
                                 i18n-label="@@collectorDetail.textinput.userCustomerId.label">
                         </textinput>
+
+                        <textinput
+                            [form]="farmerForm.get('farmerCompanyInternalId')"
+                            label="Company internal ID"
+                            style="width: 100%"
+                            placeholder="Enter company internal ID"
+                            i18n-label="@@collectorDetail.textinput.farmerCompanyInternalId.label"
+                            i18n-placeholder="@@collectorDetail.textinput.farmerCompanyInternalId.placeholder"
+                            [isInvalid]="submitted && farmerForm.get('farmerComnapyInternalId')">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="farmerForm.get('farmerCompanyInternalId').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.farmerCompanyInternalId.error">
+                                        Company internal ID is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
                     </div>
                 </div>
 
