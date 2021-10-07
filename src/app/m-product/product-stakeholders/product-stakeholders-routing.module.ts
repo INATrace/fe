@@ -24,21 +24,13 @@ const routes: Routes = [
   },
   {
     path: 'collectors',
-    component: StakeholdersCollectorsComponent,
     pathMatch: 'full',
-    data: {
-      drobtinice: null,
-      tab: 'collectors'
-    }
+    redirectTo: '/my-collectors'
   },
   {
     path: 'farmers',
-    component: StakeholdersFarmersComponent,
     pathMatch: 'full',
-    data: {
-      tab: 'farmers',
-      drobtinice: null
-    }
+    redirectTo: '/my-farmers'
   },
   {
     path: 'customers',

@@ -304,6 +304,14 @@ const routes: Routes = [
     path: 'my-orders',
     loadChildren: () => import('./company/company-orders/company-orders.module').then(m => m.CompanyOrdersModule)
   },
+  {
+    path: 'my-farmers',
+    loadChildren: () => import('./company/company-farmers/company-farmers.module').then(m => m.CompanyFarmersModule)
+  },
+  {
+    path: 'my-collectors',
+    loadChildren: () => import('./company/company-collectors/company-collectors.module').then(m => m.CompanyCollectorsModule)
+  },
   ///////////////////////
   ///////////////////////
   ///////////////////////

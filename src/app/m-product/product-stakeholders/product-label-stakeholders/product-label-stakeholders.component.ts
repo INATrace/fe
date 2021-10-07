@@ -104,11 +104,11 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   public reloadFarmersPing$ = new BehaviorSubject<boolean>(false)
 
 
-  byCategoryFarmer: string = 'name';
-  byCategoryCollector: string = 'name';
+  byCategoryFarmer: string = 'BY_NAME';
+  byCategoryCollector: string = 'BY_NAME';
   public sortingParamsFarmer$ = new BehaviorSubject({ queryBy: this.byCategoryFarmer, sort: 'ASC' })
   public sortingParamsCollector$ = new BehaviorSubject({ queryBy: this.byCategoryCollector, sort: 'ASC' })
-  items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }, { name: $localize`:@@productLabelStakeholders.search.id:id`, category: 'BY_USER_CUSTOMER_ID' }]
+  items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }]
 
   ngOnInit(): void {
     this.unsubscribeList.add(

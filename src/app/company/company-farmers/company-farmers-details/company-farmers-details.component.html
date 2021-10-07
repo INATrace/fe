@@ -1,0 +1,425 @@
+<app-authorised-layout>
+    <div *ngIf="farmerForm" class="af-layout--authorised">
+        <div class="af-form-wrapper">
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <div class="title-page content-element--title">{{title}}</div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.basicInfo">Basic information</h2>
+                    <div class="af-form-element">
+                        <textinput
+                                [form]="farmerForm.get('name')"
+                                label="First name"
+                                style="width: 100%"
+                                placeholder="Enter first name"
+                                i18n-label="@@collectorDetail.textinput.name.label"
+                                i18n-placeholder="@@collectorDetail.textinput.name.placeholder"
+                                [isInvalid]="submitted && farmerForm.get('name').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="farmerForm.get('name').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.name.error">
+                                        Name is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('surname')"
+                                label="Last name"
+                                style="width: 100%"
+                                placeholder="Enter last name"
+                                i18n-label="@@collectorDetail.textinput.surname.label"
+                                i18n-placeholder="@@collectorDetail.textinput.surname.placeholder"
+                                [isInvalid]="submitted && farmerForm.get('surname').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="farmerForm.get('surname').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.name.error">
+                                        Last name is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
+
+                        <single-choice
+                                label="Gender"
+                                i18n-label="@@collectorDetail.label.gender"
+                                [formControlInput]="farmerForm.get('gender')"
+                                [codebookService]="genderCodebook"
+                                [isInvalidChoice]="submitted && farmerForm.get('gender').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="farmerForm.get('gender').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.name.error">
+                                        Gender is required
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </single-choice>
+
+                        <textinput
+                                *ngIf="update"
+                                [readOnly]=true
+                                [form]="farmerForm.get('id')"
+                                label="User ID"
+                                style="width: 100%"
+                                placeholder=""
+                                i18n-label="@@collectorDetail.textinput.userCustomerId.label">
+                        </textinput>
+                    </div>
+                </div>
+
+                <div class="af-form-block--c6" *ngIf="update">
+                    <div class="d-flex justify-content-center align-items-center" style="margin-top: 32px;">
+                        <div class="label-card">
+                            <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image">
+                            <div class="name-sector">{{farmerForm.get('name').value}} {{farmerForm.get('surname').value}}</div>
+                            <div class="location-sector">{{farmerForm.get('location.address.village').value}}, {{farmerForm.get('location.address.cell').value}}, {{farmerForm.get('location.address.sector').value}}</div>
+                            <div class="qr-code-container">
+                                <qr-code [value]="farmerForm.get('id').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
+                            </div>
+                            <div style="flex: 1 1 0"></div>
+                            <div class="trademark-title">
+                                {{appName}}™
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <h2 i18n="@@collectorDetail.section.location">Location</h2>
+                    <div class="af-form-element">
+                        <location-form
+                                [form]="farmerForm.get('location')"
+                                [submitted]="submitted"></location-form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.additionalInfo">Additional information about user</h2>
+                    <div class="af-form-element">
+                        <textinput
+                                [form]="farmerForm.get('phone')"
+                                label="Phone number"
+                                style="width: 100%"
+                                placeholder="Enter phone number"
+                                i18n-label="@@collectorDetail.textinput.phone.label"
+                                i18n-placeholder="@@collectorDetail.textinput.phone.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('email')"
+                                label="E-mail"
+                                style="width: 100%"
+                                placeholder="Enter e-mail address"
+                                i18n-label="@@collectorDetail.textinput.email.label"
+                                i18n-placeholder="@@collectorDetail.textinput.email.placeholder">
+                        </textinput>
+
+                        <checkbox-input [form]="farmerForm.get('hasSmartphone')"
+                                        [invalid]="submitted && farmerForm.get('hasSmartphone')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
+                                Smart phone
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+                    </div>
+                </div>
+
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.bankInfo">Bank information</h2>
+                    <div class="af-form-element">
+                        <textinput
+                                [form]="farmerForm.get('bank.accountHolderName')"
+                                label="Account holder's name"
+                                style="width: 100%"
+                                placeholder="Enter account holder's name"
+                                i18n-label="@@collectorDetail.textinput.accountHoldersName.label"
+                                i18n-placeholder="@@collectorDetail.textinput.accountHoldersName.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('bank.accountNumber')"
+                                label="Account number"
+                                style="width: 100%"
+                                placeholder="Enter account number"
+                                i18n-label="@@collectorDetail.textinput.accountNumber.label"
+                                i18n-placeholder="@@collectorDetail.textinput.accountNumber.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('bank.bankName')"
+                                label="Bank name"
+                                style="width: 100%"
+                                placeholder="Enter bank name"
+                                i18n-label="@@collectorDetail.textinput.bankName.label"
+                                i18n-placeholder="@@collectorDetail.textinput.bankName.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('bank.additionalInformation')"
+                                label="Additional information"
+                                style="width: 100%"
+                                placeholder="Enter additional information"
+                                i18n-label="@@collectorDetail.textinput.additionalInfo.label"
+                                i18n-placeholder="@@collectorDetail.textinput.additionalInfo.placeholder">
+                        </textinput>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
+                    <div class="af-form-element">
+                        <list-editor *ngIf="producersListManager"
+                                     label="Customer of"
+                                     [listEditorManager]="producersListManager"
+                                     addText="Add new"
+                                     [canAdd]="true"
+                                     i18n-label="@@collectorDetail.list-editor.cooperatives.label"
+                                     i18n-addText="@@collectorDetail.list-editor.cooperatives.addText"
+                                     [invalid]="submitted && farmerForm.get('cooperatives')?.invalid">
+                            <list-editor-items>
+                                <div cdkDropList
+                                     (cdkDropListDropped)="producersListManager.onDrop($event)">
+                                    <div *ngFor="let item of farmerForm.get('cooperatives').controls; let i=index;">
+                                        <app-producers-item *ngIf="codebookCoop"
+                                                [codebookCoop]="codebookCoop"
+                                                [assocCoop]="assocCoop"
+                                                title=null
+                                                [formControlInput]="item"
+                                                [isOpen]="producersListManager.isOpen(i)"
+                                                [listEditorManager]="this.producersListManager"
+                                                [listEditorManagerPosition]="i">
+                                        </app-producers-item>
+                                    </div>
+                                </div>
+                            </list-editor-items>
+                            <list-editor-errors>
+                                <ng-container *ngIf="submitted">
+                                    <div *ngIf="farmerForm.get('cooperatives').errors as errors" class="sc-invalid-feedback">
+                                        <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.cooperatives.error">
+                                            <span>
+                                                Cooperative is required
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </list-editor-errors>
+                        </list-editor>
+                    </div>
+                </div>
+
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.associations">Associations</h2>
+                    <div class="af-form-element">
+                        <div class="search-field">
+                            <textinput
+                                    label="Member of associations"
+                                    [form]="assocForm"
+                                    i18n-label="@@collectorDetail.textinput.assoc.label"
+                                    placeholder="Type association ..."
+                                    i18n-placeholder="@@collectorDetail.textinput.assoc.placeholder"
+                                    [codebookService]="codebookAssoc"
+                                    [resultFormatter]="roleResultFormatter"
+                                    [inputFormatter]="roleInputFormatter"
+                                    (itemMatching)="addAssociation($event, assocForm)">
+                            </textinput>
+                        </div>
+                        <div *ngFor="let item of farmerForm.value.associations; index as i">
+                            <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                                <div>{{item.company.name}}</div>
+                                <div (click)="deleteAssociation(item, i)">
+                                    <fa-icon
+                                            class="del-icon"
+                                            [icon]="faTimes"></fa-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@collectorDetail.section.farmInfo">Additional information about the farm</h2>
+                    <div class="af-form-element">
+                        <textinput
+                                [form]="farmerForm.get('farm.totalCultivatedArea')"
+                                label="Total cultivated area (ha)"
+                                style="width: 100%"
+                                placeholder="Enter total cultivated area"
+                                i18n-label="@@collectorDetail.textinput.totalCultivatedArea.label"
+                                i18n-placeholder="@@collectorDetail.textinput.totalCultivatedArea.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('farm.coffeeCultivatedArea')"
+                                label="Area cultivated with coffee (ha)"
+                                style="width: 100%"
+                                placeholder="Enter area cultivated with coffee"
+                                i18n-label="@@collectorDetail.textinput.coffeeCultivatedArea.label"
+                                i18n-helpText="@@collectorDetail.textinput.coffeeCultivatedArea.placeholder">
+                        </textinput>
+
+                        <textinput
+                                [form]="farmerForm.get('farm.numberOfTrees')"
+                                label="Number of trees"
+                                style="width: 100%"
+                                placeholder="Enter number of trees"
+                                i18n-label="@@collectorDetail.textinput.numberOfTrees.label"
+                                i18n-placeholder="@@collectorDetail.textinput.numberOfTrees.placeholder">
+                        </textinput>
+
+                        <checkbox-input [form]="farmerForm.get('farm.organic')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">
+                                Organic farm
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+
+                        <textinput
+                                [form]="farmerForm.get('farm.areaOrganicCertified')"
+                                label="Organic certified area (ha)"
+                                style="width: 100%"
+                                placeholder="Enter organic certified area (ha)"
+                                i18n-label="@@collectorDetail.textinput.areaOrganicCertified.label"
+                                i18n-placeholder="@@collectorDetail.textinput.areaOrganicCertified.placeholder">
+                        </textinput>
+
+                        <app-datepicker
+                                [form]="farmerForm.get('farm.startTransitionToOrganic')"
+                                label="Start transition to organic"
+                                style="width: 100%"
+                                i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label">
+                        </app-datepicker>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="this.update">
+                    <div class="af-form-block--c6">
+                        <h2 i18n="@@collectorDetail.section.balance">Farmer balance</h2>
+                        <div class="af-form-element">
+                            <textinput
+                                    [form]="openBalanceForm"
+                                    label="Open balance (RWF)"
+                                    style="width: 100%"
+                                    i18n-label="@@collectorDetail.textinput.openBalance.label"
+                                    [readOnly]="true">
+                            </textinput>
+
+                            <textinput
+                                    [form]="totalPaidFarmerForm"
+                                    label="Total paid to farmer (RWF)"
+                                    style="width: 100%"
+                                    i18n-label="@@collectorDetail.textinput.totalPaidToFarmer.label"
+                                    [readOnly]="true">
+                            </textinput>
+
+                            <textinput
+                                    [form]="totalBroughtFarmerForm"
+                                    label="Total brought from farmer (kg)"
+                                    style="width: 100%"
+                                    i18n-label="@@collectorDetail.textinput.kgBrought.label"
+                                    [readOnly]="true">
+                            </textinput>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="af-form-row" *ngIf="this.update">
+                <div class="af-form-block--c12">
+                    <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
+                    <div class="af-form-element">
+                        <ng-container *ngIf="purchaseOrders">
+                            <div class="d-flex justify-content-end">
+                                <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+                                    <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@collectorDetail.filter.openBalanceOnly.filter">Open balance
+                                        <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
+                                            <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                                            </fa-icon>
+                                        </div>
+                                    </div>
+
+                                    <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@collectorDetail.filter.placeholder">
+                                        <div class="button-icon">
+                                            <span class="button-icon-shape button-icon-shape--filter"></span>
+                                        </div>
+                                        <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+                                    </button>
+
+                                    <div class="dropdown-menu" ngbDropdownMenu>
+                                        <button *ngIf="!openBalanceOnly" ngbDropdownItem (click)="setOpenBalanceOnly(true)" i18n="@@collectorDetail.filter.openBalanceOnly.button">Open balance</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table *ngIf="purchaseOrders && purchaseOrders.length> 0" class="af-table af-checkbox--small">
+                                <thead>
+                                <tr scope="col" result-sorter [sortOptions]="sortOptionsPO" (sortByKey)="changeSort($event)"></tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let order of purchaseOrders; index as i">
+                                    <td scope="row" [attr.data-label]="sortOptionsPO[0].name"><span>{{formatDate(order.productionDate)}}</span></td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPO[1].name"><span>{{order.identifier}}</span></td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPO[2].name"><span>{{order.totalQuantity}}</span></td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPO[3].name"><span>{{order.cost}} / {{order.balance}}</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="purchaseOrders && purchaseOrders.length == 0" class="no-list-results" i18n="@@collectorDetail.noPurchaseOrders">
+                                No orders found
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row" *ngIf="this.update">
+                <div class="af-form-block--c12">
+                    <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
+                    <div class="af-form-element">
+                        <ng-container *ngIf="payments">
+                            <table *ngIf="payments && payments.length> 0" class="af-table af-checkbox--small">
+                                <thead>
+                                <tr scope="col" result-sorter [sortOptions]="sortOptionsPay" (sortByKey)="changeSort($event, 'PAYMENT')"></tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let payment of payments; index as i">
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[0].name">{{formatDate(payment.formalCreationTime)}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[1].name">{{payment.receiptNumber}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[2].name">{{payment.paymentPurposeType}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[3].name">{{payment.amount}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[4].name">{{payment.amountPaidToTheCollector ? payment.amountPaidToTheCollector : 0}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[5].name">{{payment.queryPurchaseOrderName}}</td>
+                                    <td scope="row" [attr.data-label]="sortOptionsPay[6].name">{{payment.paymentStatus}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="payments && payments.length == 0" class="no-list-results" i18n="@@collectorDetail.noPayments">
+                                No payments found
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <div class="af-bottom-buttons" i18n="@@collectorDetail.modal.footer.buttons">
+                        <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+                        <button class="btn" type="button" (click)="save()"><span>Save</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-authorised-layout>
