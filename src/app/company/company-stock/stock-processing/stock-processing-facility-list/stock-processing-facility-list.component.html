@@ -1,0 +1,31 @@
+<ng-container *ngIf="facilities$ | async as facilities">
+
+  <div class="container container--bare">
+
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of collection">
+        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of other">
+        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of storage">
+        <app-facility-card [facility]="facility" [companyId]="companyId"></app-facility-card>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="facilities && facilities.items && facilities.items.length == 0"
+       class="no-list-results"
+       i18n="@@productLabelStockProcessingFacilityList.noFacilities">
+    No facilities
+  </div>
+
+</ng-container>

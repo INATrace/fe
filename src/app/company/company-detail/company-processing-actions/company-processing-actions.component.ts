@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { ProcessingActionService } from '../../../../api-chain/api/processingAction.service';
 import { ProcessingActionControllerService } from '../../../../api/api/processingActionController.service';
 import { take } from 'rxjs/operators';
 
@@ -25,7 +24,6 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
       protected router: Router,
       protected route: ActivatedRoute,
       protected globalEventsManager: GlobalEventManagerService,
-      protected processingActionService: ProcessingActionService,
       protected processingActionControllerService: ProcessingActionControllerService
   ) {
     super(router, route);

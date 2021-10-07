@@ -16,7 +16,6 @@ import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { ProcessingEvidenceItemComponent } from './processing-evidence-item/processing-evidence-item.component';
-import { FacilityCardComponent } from './facility-card/facility-card.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { PaymentItemComponent } from './payment-item/payment-item.component';
 import { StockTabCoreComponent } from './stock-tab-core/stock-tab-core.component';
@@ -32,7 +31,6 @@ import { ProductCommonModule } from '../../product-common/product-common.module'
   declarations: [
     FacilityStockOrderSelectorForNewPaymentModalComponent,
     ProcessingEvidenceItemComponent,
-    FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
     StockTabCoreComponent,
@@ -69,7 +67,6 @@ import { ProductCommonModule } from '../../product-common/product-common.module'
   exports: [
     FacilityStockOrderSelectorForNewPaymentModalComponent,
     ProcessingEvidenceItemComponent,
-    FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
     StockTabCoreComponent,
