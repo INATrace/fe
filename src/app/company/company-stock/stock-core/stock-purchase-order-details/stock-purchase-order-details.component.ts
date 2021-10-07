@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
-import { ProductControllerService } from '../../../../../api/api/productController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { take } from 'rxjs/operators';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
@@ -79,7 +78,6 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private globalEventsManager: GlobalEventManagerService,
-    private productControllerService: ProductControllerService,
     private facilityControllerService: FacilityControllerService,
     private companyControllerService: CompanyControllerService,
     private stockOrderControllerService: StockOrderControllerService,
@@ -216,8 +214,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.submitted = false;
 
     this.initializeData().then(() => {
-      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'FARMER');
-      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'COLLECTOR');
+      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'FARMER');
+      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'COLLECTOR');
 
       if (this.update) {
         this.editStockOrder().then();
@@ -535,7 +533,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private async setIdentifier() {
 
-    const farmerResponse = await this.productControllerService
+    const farmerResponse = await this.companyControllerService
       .getUserCustomerUsingGET(this.stockOrderForm.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
 
     if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
