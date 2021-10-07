@@ -55,6 +55,8 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   toFilterDatePayments = new FormControl(null);
   deliveryDatesPingPayments$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
 
+  isAuthRoleToSeeProcessing = true;
+
   // TABS
   @ViewChild(AuthorisedLayoutComponent)
   authorizedLayout;
@@ -97,6 +99,8 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
+    this.isAuthorisedCompanyRole().then();
 
     this.selectedOrders = [];
     this.selectedIds = [];
@@ -194,6 +198,30 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   selectedIdsChanged(event, type?) {
     if (type === 'PURCHASE') { this.selectedOrders = event; }
     else { this.selectedIds = event; }
+  }
+
+  public async isAuthorisedCompanyRole() {
+    // TODO: implement
+    // const orgId = localStorage.getItem('selectedUserCompany');
+    // const currrentUser = await this.userController.getProfileForUserUsingGET().pipe(take(1)).toPromise();
+    // if (currrentUser && currrentUser.status === 'OK' && currrentUser.data) {
+    //   const res = await this.chainOrganizationService.getOrganization(orgId).pipe(take(1)).toPromise();
+    //   if (res && res.status === 'OK' && res.data) {
+    //     const resC = await this.companyController.getCompanyUsingGET(res.data.id).pipe(take(1)).toPromise();
+    //     if (resC && resC.status === 'OK' && resC.data) {
+    //       for (const user of resC.data.users) {
+    //         if (user.email === currrentUser.data.email) {
+    //           if (user.companyRole === 'USER') { this.isAuthRoleToSeeConfiguration = false; }
+    //           if (user.companyRole === 'ACCOUNTANT') {
+    //             this.isAuthRoleToSeeProcessing = false;
+    //             this.isAuthRoleToSeeMyStock = false;
+    //           }
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
 }

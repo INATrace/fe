@@ -2,4 +2,48 @@
 
   <app-company-left-panel></app-company-left-panel>
 
+  <div class="main" *ngIf="this.isAuthRoleToSeeProcessing">
+
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="d-flex justify-content-start">
+          <div class="title-page content-element--title"
+               i18n="@@productLabelStock.title.processingOrders">
+            Processing actions
+          </div>
+        </div>
+        <button class="btn btn-solid round btn-table-new content-element--btn"
+                (click)="newProcessingOrder()"
+                i18n="@@productLabelStock.button.newProcessingOrders">
+          <span>+ Add processing action</span>
+        </button>
+      </div>
+
+      <div class="d-flex justify-content-between main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle"
+               i18n="@@productLabelStock.title.processingOrders.facilitySelectedTitle">
+            List of facilties</div>
+          <div class="counting-page content-element--counting"
+               i18n="@@productLabelStock.title.processingOrders.facility.showing">
+            Showing {{ showedProcessFacilities }}/{{ allProcessFacilities }}
+          </div>
+        </div>
+      </div>
+
+<!--      <app-product-label-stock-processing-facilty-list-->
+<!--              [reloadPingList$]="reloadProcessingFacilitiesListPing$"-->
+<!--              (countAll)="onCountAll($event, 'PROCESS')"-->
+<!--              [organizationId]="organizationId"-->
+<!--              (showing)="onShow($event, 'PROCESS')">-->
+<!--      </app-product-label-stock-processing-facilty-list>-->
+
+    </div>
+
+  </div>
+
+  <div class="main" *ngIf="!this.isAuthRoleToSeeProcessing">
+    <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
+  </div>
+
 </app-authorised-layout>
