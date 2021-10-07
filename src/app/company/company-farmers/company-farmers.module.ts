@@ -10,6 +10,7 @@ import { CompanyFarmersDetailsComponent } from './company-farmers-details/compan
 import { QRCodeModule } from 'angular2-qrcode';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProductStakeholdersModule } from '../../m-product/product-stakeholders/product-stakeholders.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -24,7 +25,8 @@ import { ProductStakeholdersModule } from '../../m-product/product-stakeholders/
         NgbPaginationModule,
         QRCodeModule,
         DragDropModule,
-        ProductStakeholdersModule
+        ProductStakeholdersModule,
+        FontAwesomeModule
     ]
 })
 export class CompanyFarmersModule { }
