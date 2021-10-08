@@ -31,22 +31,6 @@
         class="img-style">
     </div>
 
-<!--    <li style="max-width:100%; margin-top: 2.375rem">-->
-<!--      <a class="link-normal"-->
-<!--        routerLinkActive="active"-->
-<!--        [routerLink]="goTo('orders')"-->
-<!--        i18n="@@productLabel.sideTitle.orders">-->
-<!--        Orders-->
-<!--      </a>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <a class="link-normal"-->
-<!--        routerLinkActive="active"-->
-<!--        [routerLink]="goTo('stock')"-->
-<!--        i18n="@@productLabel.sideTitle.stock">-->
-<!--        My stock-->
-<!--      </a>-->
-<!--    </li>-->
     <li style="max-width:100%; margin-top: 2.375rem">
       <a class="link-normal"
         [routerLinkActiveOptions]="{exact: true}"
@@ -86,10 +70,6 @@
       <div class="spacer"></div>
       <a class="link-error">
         <div (click)="deleteCurrentProduct()" [class.side-menu-item-disabled]="changed" i18n="@@productLabel.sideTitle.archiveProduct">
-          <fa-icon
-            style="margin-right: 8px;"
-            [icon]="faTrashAlt">
-          </fa-icon>
           Archive product
         </div>
       </a>
@@ -98,6 +78,5 @@
   </ul>
 
 </div>
-
 
 <button [routerLink]="['/product-labels', this.productId, 'labels']" routerLinkActive #labelsActive="routerLinkActive" style="display: none"></button>

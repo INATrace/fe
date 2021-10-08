@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { take } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { AuthService } from 'src/app/core/auth.service';
@@ -21,8 +20,6 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
 
   @Input()
   create = false;
-
-  faTrashAlt = faTrashAlt;
 
   imgStorageKey: string = null;
 
