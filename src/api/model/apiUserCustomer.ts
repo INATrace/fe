@@ -46,6 +46,10 @@ export interface ApiUserCustomer {
     email?: string;
     farm?: ApiFarmInformation;
     /**
+     * Company internal farmer ID
+     */
+    farmerCompanyInternalId?: string;
+    /**
      * Gender
      */
     gender?: ApiUserCustomer.GenderEnum;
@@ -102,6 +106,10 @@ export namespace ApiUserCustomer {
          */
         email = 'email',
         farm = 'farm',
+        /**
+         * Company internal farmer ID
+         */
+        farmerCompanyInternalId = 'farmerCompanyInternalId',
         /**
          * Gender
          */
@@ -227,6 +235,17 @@ export namespace ApiUserCustomer {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farmerCompanyInternalId',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiUserCustomer.GenderEnum',
                     required: false,
@@ -330,6 +349,8 @@ export namespace ApiUserCustomer {
                 ],
                 farm: [
                 ],
+                farmerCompanyInternalId: [
+                ],
                 gender: [
                 ],
                 hasSmartphone: [
@@ -369,6 +390,9 @@ export namespace ApiUserCustomer {
   //                   validators: []
   //               },
   //               farm: {
+  //                   validators: []
+  //               },
+  //               farmerCompanyInternalId: {
   //                   validators: []
   //               },
   //               gender: {
