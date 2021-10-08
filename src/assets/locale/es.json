@@ -2649,6 +2649,7 @@
     "currencyList.tableCol.action.enable": "Enable",
     "currencyList.tableCol.action.disable": "Disable",
     "currencyList.noCurrencies": "No currencies",
-    "companyDetail.base.currency": "Base currency"
+    "companyDetail.base.currency": "Base currency",
+    "companyDetail.currency.error": "Base currency is required"
   }
 }
