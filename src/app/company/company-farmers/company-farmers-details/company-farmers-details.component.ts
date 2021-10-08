@@ -63,8 +63,8 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   assocForm = new FormControl(null);
 
   genderCodebook = EnumSifrant.fromObject({
-    MALE: $localize`:@@collectorDetail.gender.farmer:Male`,
-    FEMALE: $localize`:@@collectorDetail.gender.collector:Female`
+    MALE: $localize`:@@collectorDetail.gender.male:Male`,
+    FEMALE: $localize`:@@collectorDetail.gender.female:Female`
   });
 
   get roles() {
