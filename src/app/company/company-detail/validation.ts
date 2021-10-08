@@ -100,6 +100,9 @@ export const ApiCompanyGetValidationScheme = {
     certifications: {
       validators: []
     },
+    currency: {
+      validators: [Validators.required]
+    },
     documents: {
       validators: []
     },

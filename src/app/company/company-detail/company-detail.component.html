@@ -340,6 +340,15 @@
                            [formControlInput]="companyDetailForm.get('currency')"
                            [codebookService]="currencyCodes">
             </single-choice>
+            <ng-container *ngIf="submitted">
+              <div *ngIf="companyDetailForm.get('currency').errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n-title="@@companyDetail.currency.error">
+                  <span>
+                    Base currency is required
+                  </span>
+                </div>
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>
