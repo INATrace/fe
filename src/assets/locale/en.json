@@ -1180,6 +1180,8 @@
     "productLabel.sideTitle.qrLabels": "QR labels",
     "productLabel.sideTitle.knowledgeBlog": "Knowledge blog",
     "productLabel.sideTitle.stakeholders": "Stakeholders",
+    "companyLeftPanel.farmers": "Farmers",
+    "companyLeftPanel.collectors": "Collectors",
     "productLabelOrder.tab0.title": "Dashboard",
     "productLabelOrder.tab1.title": "All orders",
     "productLabelOrder.tab2.title": "Customer orders",

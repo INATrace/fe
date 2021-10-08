@@ -279,6 +279,8 @@
     "productLabel.sideTitle.qrLabels": "Ibirango bya QR",
     "productLabel.sideTitle.knowledgeBlog": "Urubuga rw'ubumenyi",
     "productLabel.sideTitle.stakeholders": "Abafatanyabikorwa",
+    "companyLeftPanel.farmers": "Abahinzi",
+    "companyLeftPanel.collectors": "Abakusanya umusaruro",
     "productLabel.sideTitle.archiveProduct": "{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON} Bika kure burundu igicuruzwa",
     "productLabel.deleteCurrentProduct.warning.message": "Uzi neza ko ushaka gusiba igicuruzwa? Ibi bizasiba ibirango byose hamwe n'ibyiciro biri ku gicuruzwa!",
     "productLabel.deleteCurrentProduct.success.title": "Byasibwe",

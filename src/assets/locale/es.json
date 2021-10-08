@@ -1904,6 +1904,8 @@
     "productLabel.sideTitle.knowledgeBlog": "Blog",
     "productLabel.sideTitle.FPQExplorer": "F-P-Q Explorer",
     "productLabel.sideTitle.stakeholders": "Partes interesadas",
+    "companyLeftPanel.farmers": "Agricultores",
+    "companyLeftPanel.collectors": "Colectores",
     "productLabel.sideTitle.archiveProduct": "{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON} Archivar producto",
     "productLabelLeftPanelContent.title": "Producto",
     "front-page.footer.termsOfUse": "Términos de Uso",

@@ -275,6 +275,8 @@
     "productLabel.sideTitle.qrLabels": "QR-Code Label",
     "productLabel.sideTitle.knowledgeBlog": "Wissensblog",
     "productLabel.sideTitle.stakeholders": "Stakeholder",
+    "companyLeftPanel.farmers": "Landwirt*innen",
+    "companyLeftPanel.collectors": "Sammler*innen",
     "productLabelStakeholders.title.buyers": "Käufer",
     "productLabelStakeholders.button.newBuyer": "{$START_TAG_SPAN}+ Käufer hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.producers": "Produzent*innen",
