@@ -169,7 +169,7 @@
                         [label]="quantityLabel"
                         style="width: 100%"
                         placeholder="Enter quantity"
-                        i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelieveredInKG.placeholder"
+                        i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.placeholder"
                         [isInvalid]="submitted && stockOrderForm.get('totalQuantity').invalid">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="stockOrderForm.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
@@ -187,10 +187,9 @@
                         min="0"
                         step="0.01"
                         [form]="stockOrderForm.get('pricePerUnit')"
-                        label="Price per unit (RWF/kg)"
+                        [label]="pricePerUnitLabel"
                         style="width: 100%"
                         placeholder="Enter price per unit"
-                        i18n-label="@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.placeholder"
                         [isInvalid]="submitted && stockOrderForm.get('pricePerUnit').invalid">
                   <ng-container *ngIf="submitted">
@@ -208,10 +207,9 @@
               <div class="af-c6">
                 <textinput
                         [form]="stockOrderForm.get('cost')"
-                        label="Payable 1st installment (RWF)"
+                        [label]="costLabel"
                         style="width: 100%"
                         placeholder="Payable 1st installment"
-                        i18n-label="@@productLabelStockPurchaseOrdersModal.textinput.cost.label"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.cost.placeholder"
                         [value]="setToBePaid()"
                         [readOnly]=true>
@@ -221,10 +219,9 @@
               <div class="af-c6">
                 <textinput
                         [form]="stockOrderForm.get('balance')"
-                        label="Open balance (RWF)"
+                        [label]="balanceLabel"
                         style="width: 100%"
                         placeholder="Open balance"
-                        i18n-label="@@productLabelStockPurchaseOrdersModal.textinput.balance.label"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.balance.placeholder"
                         [value]="setBalance()"
                         [readOnly]=true>

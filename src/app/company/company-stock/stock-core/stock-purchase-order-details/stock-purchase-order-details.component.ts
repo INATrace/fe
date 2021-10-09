@@ -19,12 +19,13 @@ import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
-import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ChainActivityProof } from '../../../../../api-chain/model/chainActivityProof';
 import { ApiActivityProofValidationScheme } from '../additional-proof-item/validation';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
-import StatusEnum = ApiResponseApiStockOrder.StatusEnum;
+import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
+import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
+import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -61,6 +62,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   options: ApiSemiProduct[] = [];
   modelChoice = null;
 
+  measureUnit = '-';
+  companyBaseCurrency = '-';
+
   searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
 
@@ -81,6 +85,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     private facilityControllerService: FacilityControllerService,
     private companyControllerService: CompanyControllerService,
     private stockOrderControllerService: StockOrderControllerService,
+    private semiProductControllerService: SemiProductControllerService,
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService,
   ) { }
@@ -156,10 +161,22 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   get quantityLabel() {
     if (this.orderType === 'PURCHASE_ORDER') {
-      return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantityDelieveredInKG.label:Quantity (kg)`;
+      return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.label:Quantity` + ` (${this.measureUnit})`;
     } else {
       return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantity.label:Quantity (units)`;
     }
+  }
+
+  get pricePerUnitLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.companyBaseCurrency}/${this.measureUnit})`;
+  }
+
+  get costLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.companyBaseCurrency})`;
+  }
+
+  get balanceLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.companyBaseCurrency})`;
   }
 
   get additionalProofsForm(): FormArray {
@@ -173,8 +190,18 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     return obj;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+
+    // Get the company base currency
+    if (this.companyId) {
+      const res = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
+      if (res && res.status === StatusEnum.OK && res.data) {
+        this.companyBaseCurrency = res.data.currency?.code ? res.data.currency.code : '-';
+      }
+    }
+
     this.reloadOrder();
   }
 
@@ -316,6 +343,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     if (this.options && this.options.length === 1) {
       this.modelChoice = this.options[0].id;
       this.stockOrderForm.get('semiProduct').setValue({ id: this.options[0].id });
+      this.setMeasureUnit(this.modelChoice).then();
     }
 
     this.prepareData();
@@ -466,12 +494,23 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     if (id) {
       this.stockOrderForm.get('semiProduct').setValue({ id });
+      this.setMeasureUnit(Number(id)).then();
     } else {
       this.stockOrderForm.get('semiProduct').setValue(null);
     }
 
     this.stockOrderForm.get('semiProduct').markAsDirty();
     this.stockOrderForm.get('semiProduct').updateValueAndValidity();
+  }
+
+  async setMeasureUnit(semiProdId: number) {
+
+    const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
+    if (res && res.status === StatusEnum.OK && res.data) {
+      this.measureUnit = res.data.apiMeasureUnitType.label;
+    } else {
+      this.measureUnit = '-';
+    }
   }
 
   setToBePaid() {
