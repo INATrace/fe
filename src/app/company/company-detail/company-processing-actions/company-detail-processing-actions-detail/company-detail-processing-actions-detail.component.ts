@@ -22,6 +22,7 @@ import { SemiProductService } from '../../../../../api-chain/api/semiProduct.ser
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
+import { AuthService } from '../../../../core/auth.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -75,11 +76,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private semiProductControllerService: SemiProductControllerService,
       private semiProductService: SemiProductService,
       private cdr: ChangeDetectorRef,
+      protected authService: AuthService
   ) {
-    super(router, route);
+    super(router, route, authService);
   }
 
   ngOnInit(): void {
+
+    super.ngOnInit();
 
     this.globalEventsManager.showLoading(true);
 
@@ -109,6 +113,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   emptyObject() {

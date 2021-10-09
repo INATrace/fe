@@ -1,14 +1,15 @@
 <app-authorised-layout>
   <app-system-left-panel
-    i18n="@@companyDetail.navTitle"
-    title="System">
+          [isAdmin]="isAdmin"
+          i18n="@@companyDetail.navTitle"
+          title="System">
   </app-system-left-panel>
 
-  <div class="main"
-    *ngIf="companyDetailForm"
-    contents
-    [initialValue]=""
-    [submitted]="submitted">
+  <div [class.main]="isAdmin" [class.company-profile]="!isAdmin"
+       *ngIf="companyDetailForm"
+       contents
+       [initialValue]=""
+       [submitted]="submitted">
 
     <div class="af-form-wrapper">
 

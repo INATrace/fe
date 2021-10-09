@@ -1,16 +1,18 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
+import { AuthService } from '../../../core/auth.service';
+import { ApiUserGet } from '../../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-company-detail-tab-manager',
   templateUrl: './company-detail-tab-manager.component.html',
   styleUrls: ['./company-detail-tab-manager.component.scss']
 })
-export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate implements OnInit, AfterViewInit {
+export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate implements OnInit, OnDestroy, AfterViewInit {
 
   // TABS
   @ViewChild(AuthorisedLayoutComponent) authorizedLayout;
@@ -35,9 +37,13 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   cId = this.route.snapshot.params.id;
   selectedTab: Subscription;
 
+  isAdmin = false;
+  userProfileSubscription: Subscription;
+
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
+    protected authService: AuthService
   ) { super(); }
 
   get tabCommunicationService(): TabCommunicationService {
@@ -45,6 +51,18 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   }
 
   ngOnInit(): void {
+    this.userProfileSubscription = this.authService.userProfile$
+      .subscribe(userProfile => {
+        if (userProfile) {
+          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.ADMIN;
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userProfileSubscription) {
+      this.userProfileSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit() {

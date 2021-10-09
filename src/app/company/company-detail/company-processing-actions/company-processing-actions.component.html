@@ -1,28 +1,31 @@
 <app-authorised-layout>
     <app-system-left-panel
+            [isAdmin]="isAdmin"
             i18n="@@companyDetailTranslate.navTitle"
             title="System">
     </app-system-left-panel>
 
-    <div class="main" *ngIf="prepared">
-        <div class="main-inside-top content-element">
-            <div class="d-flex justify-content-between content-element--row1">
-                <div class="title-page content-element--title" i18n="@@companyDetailProcessingActions.title:Processing actions">Processing actions</div>
-                <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessingAction()" i18n="@@productLabelStock.button.newProcessingActions">
-                    <span>+ Add processing action</span>
-                </button>
-            </div>
-            <div class="d-flex align-items-start content-element--row2">
-                <div>
-                    <div class="sub-title-page content-element--subtitle" i18n="@@companyDetailProcessingActions.subTitle.listOfProcessingActions">List of processing actions</div>
-                    <div class="counting-page content-element--counting" i18n="@@companyDetailProcessingActions.subTitle.showingProcessingActions">Showing {{showedProcessingActions}}/{{allProcessingActions}}</div>
+    <div [class.main]="isAdmin" [class.company-profile]="!isAdmin" *ngIf="prepared">
+        <div class="af-form-wrapper">
+            <div class="main-inside-top content-element">
+                <div class="d-flex justify-content-between content-element--row1">
+                    <div class="title-page content-element--title" i18n="@@companyDetailProcessingActions.title:Processing actions">Processing actions</div>
+                    <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessingAction()" i18n="@@productLabelStock.button.newProcessingActions">
+                        <span>+ Add processing action</span>
+                    </button>
+                </div>
+                <div class="d-flex align-items-start content-element--row2">
+                    <div>
+                        <div class="sub-title-page content-element--subtitle" i18n="@@companyDetailProcessingActions.subTitle.listOfProcessingActions">List of processing actions</div>
+                        <div class="counting-page content-element--counting" i18n="@@companyDetailProcessingActions.subTitle.showingProcessingActions">Showing {{showedProcessingActions}}/{{allProcessingActions}}</div>
+                    </div>
                 </div>
             </div>
+            <app-company-list-processing-actions
+                    [organizationId]="organizationId"
+                    (showing)="onShowSP($event)"
+                    (countAll)="onCountAll($event)">
+            </app-company-list-processing-actions>
         </div>
-        <app-company-list-processing-actions
-                [organizationId]="organizationId"
-                (showing)="onShowSP($event)"
-                (countAll)="onCountAll($event)">
-        </app-company-list-processing-actions>
     </div>
 </app-authorised-layout>

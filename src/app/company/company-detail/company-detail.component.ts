@@ -20,6 +20,7 @@ import { ApiCertificationValidationScheme } from '../../m-product/product-label/
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
 import { CurrenciesService } from '../../shared-services/currencies.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -88,9 +89,10 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
     public currencyCodes: CurrenciesService,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) {
-    super(router, route);
+    super(router, route, authService);
   }
 
   static generateSocialMediaForm() {
@@ -126,6 +128,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this._companyErrorStatus$ = new BehaviorSubject<string>('');
     if (this.mode === 'update') {
       this.title = $localize`:@@companyDetail.title.edit:Edit company`;
@@ -137,6 +140,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   }
 
   ngOnDestroy() {
+    super.ngOnDestroy();
     if (this.sub) { this.sub.unsubscribe(); }
   }
 

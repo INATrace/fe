@@ -1,6 +1,7 @@
 <app-authorised-layout>
   <app-system-left-panel
     *ngIf="this.mode === 'adminUserProfileView'"
+    [isAdmin]="this.mode === 'adminUserProfileView'"
     i18n="@@userDetail.navTitle"
     title="System">
   </app-system-left-panel>

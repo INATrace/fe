@@ -15,6 +15,7 @@ import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manage
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiCertificationValidationScheme } from 'src/app/m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-company-detail-translate',
@@ -52,15 +53,18 @@ export class CompanyDetailTranslateComponent extends CompanyDetailTabManagerComp
     protected router: Router,
     private companyController: CompanyControllerService,
     protected globalEventsManager: GlobalEventManagerService,
+    protected authService: AuthService
   ) {
-    super(router, route);
+    super(router, route, authService);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.getCompany();
   }
 
   ngOnDestroy() {
+    super.ngOnDestroy();
     if (this.sub) { this.sub.unsubscribe(); }
     if (this.subDE) { this.subDE.unsubscribe(); }
   }
