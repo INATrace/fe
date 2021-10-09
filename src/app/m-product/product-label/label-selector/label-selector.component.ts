@@ -87,39 +87,42 @@ export class LabelSelectorComponent implements OnInit {
   ) { }
 
   showInView(event) {
-    let target = null
+
+    if (!event?.path) {
+      return;
+    }
+
+    let target = null;
     let parent = null;
-    let scroll = null
-    // console.log(event.path)
-    for (let el of event.path) {
-      if(!target && [...(el as any).classList].indexOf('label-card') >= 0) {
+
+    for (const el of event.path) {
+      if (!target && [...(el as any).classList].indexOf('label-card') >= 0) {
         target = el;
       }
-      if(!parent && [...(el as any).classList].indexOf('outer-wrapper') >= 0) {
+      if (!parent && [...(el as any).classList].indexOf('outer-wrapper') >= 0) {
         parent = el;
       }
     }
-    let card = target.getBoundingClientRect()
-    let container = parent.getBoundingClientRect()
-    if(card.x < container.x || card.x + card.width > container.x + container.width) {
+    const card = target.getBoundingClientRect();
+    const container = parent.getBoundingClientRect();
+    if (card.x < container.x || card.x + card.width > container.x + container.width) {
         window.setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 200)
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
     }
   }
 
-  @ViewChild("scroll", { static: false })
+  @ViewChild('scroll', { static: false })
   scrollBox: ElementRef;
 
-
   nudgeRight() {
-    if(this.scrollBox) {
+    if (this.scrollBox) {
       this.scrollBox.nativeElement.scrollBy({behavior: 'smooth', left: 180})
     }
   }
 
   nudgeLeft() {
-    if(this.scrollBox) {
+    if (this.scrollBox) {
       this.scrollBox.nativeElement.scrollBy({behavior: 'smooth', left: -180})
     }
   }
