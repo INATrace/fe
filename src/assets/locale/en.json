@@ -2763,6 +2763,13 @@
     "currencyList.tableCol.action.enable": "Enable",
     "currencyList.tableCol.action.disable": "Disable",
     "currencyList.noCurrencies": "No currencies",
+    "currencyList.currency.list": "Currency list",
+    "currencyList.currencies.enabled": "Enabled currencies",
+    "currencyList.currencies.disabled": "Disabled currencies",
+    "currencyList.count": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
+    "currencyList.sortOptions.name.name": "Name",
+    "currencyList.sortOptions.description.name": "Description",
+    "currencyList.sortOptions.actions.name": "Actions",
     "companyDetail.base.currency": "Base currency",
     "companyDetail.currency.error": "Base currency is required",
     "productLabelProcessingAction.singleChoice.type.error.requred": "Type is required"

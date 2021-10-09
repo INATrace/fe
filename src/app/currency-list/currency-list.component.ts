@@ -37,16 +37,16 @@ export class CurrencyListComponent implements OnInit {
   sortOptions: SortOption[] = [
     {
       key: 'code',
-      name: $localize`:@@valueChainList.sortOptions.name.name:Name`,
+      name: $localize`:@@currencyList.sortOptions.name.name:Name`,
       defaultSortOrder: 'ASC'
     },
     {
       key: 'label',
-      name: $localize`:@@valueChainList.sortOptions.description.name:Description`
+      name: $localize`:@@currencyList.sortOptions.description.name:Description`
     },
     {
       key: 'actions',
-      name: $localize`:@@valueChainList.sortOptions.actions.name:Actions`,
+      name: $localize`:@@currencyList.sortOptions.actions.name:Actions`,
       inactive: true
     }
   ];
