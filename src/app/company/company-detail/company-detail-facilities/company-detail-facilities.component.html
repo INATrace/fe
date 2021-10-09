@@ -3,21 +3,17 @@
 
   <div class="main">
 
-      <div class="af-form-row">
-        <div class="af-form-block--c12">
-          <div class="d-flex justify-content-between content-element--row1"></div>
-            <div class="title-page content-element--title">{{ title }}</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" style="margin-bottom: 1rem;" i18n="@@productLabelStock.button.newFacility">
-              <span>+ Add facility</span>
-            </button>
-        </div>
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between content-element--row1">
+        <div class="title-page content-element--title">{{ title }}</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" i18n="@@productLabelStock.button.newFacility">
+          <span>+ Add facility</span>
+        </button>
       </div>
-
-    <div class="af-form-row">
       <div class="d-flex align-items-start content-element--row2">
         <div>
           <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfFacilities">List of facilities</div>
-          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingFacilities" style="margin-top: 0px;">Showing {{displayedFacilities}}/{{allFacilities}}</div>
+          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingFacilities">Showing {{ displayedFacilities }}/{{ allFacilities }}</div>
         </div>
       </div>
     </div>
@@ -30,15 +26,15 @@
               <tr scope="col" result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
             </thead>
             <tbody>
-              <tr *ngFor="let facilitiy of facilities.data.items">
-                <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{facilitiy | translateCodebook: 'name'}}</span></td>
-                <td [attr.data-label]="sortOptions[1].name"><span>{{facilitiy.facilityType | translateCodebook: 'label'}}</span></td>
-                <td [attr.data-label]="sortOptions[2].name"><span>{{publicSort(facilitiy.isPublic)}}</span></td>
-                <td [attr.data-label]="sortOptions[3].name"><span>{{locationName(facilitiy.facilityLocation)}}</span></td>
+              <tr *ngFor="let facility of facilities.data.items">
+                <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{facility | translateCodebook: 'name'}}</span></td>
+                <td [attr.data-label]="sortOptions[1].name"><span>{{facility.facilityType | translateCodebook: 'label'}}</span></td>
+                <td [attr.data-label]="sortOptions[2].name"><span>{{publicSort(facility.isPublic)}}</span></td>
+                <td [attr.data-label]="sortOptions[3].name"><span>{{locationName(facility.facilityLocation)}}</span></td>
                 <td [attr.data-label]="sortOptions[4].name">
                   <span>
                     <a i18n="@@productLabelFacilities.tableCol.edit"
-                       [routerLink]="['/', 'companies', companyId, 'facilities', facilitiy.id, 'edit']"
+                       [routerLink]="['/', 'companies', companyId, 'facilities', facility.id, 'edit']"
                        class="company-action"
                        [class.enabled-action]="true">
                       Edit
