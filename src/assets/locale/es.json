@@ -1880,6 +1880,7 @@
     "userBox.dropdown.home": "Inicio",
     "userBox.dropdown.products": "Productos",
     "userBox.dropdown.userProfile": "Perfil del usuario",
+    "userBox.dropdown.companyProfile": "Perfil de la empresa",
     "userBox.dropdown.logout": "Cerrar sesión",
     "userBox.dropdown.aboutApp": "Acerca de",
     "userBox.dropdown.system": "Sistema",

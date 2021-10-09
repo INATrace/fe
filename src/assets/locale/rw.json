@@ -267,6 +267,7 @@
     "userBox.dropdown.products": "Ibicuruzwa",
     "userBox.dropdown.system": "Sisiteme",
     "userBox.dropdown.userProfile": "Umwirondoro w'ukoresha porogaramu",
+    "userBox.dropdown.companyProfile": "Umwirondoro wa kompanyi",
     "userBox.dropdown.logout": "Gusohoka",
     "userBox.dropdown.aboutApp": "Ibitwerekeyeho",
     "version.appVersion": "Verisiyo ya porogaramu: {$INTERPOLATION}",

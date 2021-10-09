@@ -1173,6 +1173,7 @@
     "userBox.dropdown.home": "Home",
     "userBox.dropdown.products": "Products",
     "userBox.dropdown.userProfile": "User profile",
+    "userBox.dropdown.companyProfile": "Company profile",
     "userBox.dropdown.logout": "Logout",
     "userBox.dropdown.aboutApp": "About",
     "productLabel.sideTitle.orders": "Orders",

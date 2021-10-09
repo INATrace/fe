@@ -263,6 +263,7 @@
     "userBox.dropdown.home": "Startseite",
     "userBox.dropdown.products": "Produkte",
     "userBox.dropdown.userProfile": "Benutzerprofil",
+    "userBox.dropdown.companyProfile": "Unternehmensprofil",
     "userBox.dropdown.logout": "Ausloggen",
     "userBox.dropdown.aboutApp": "Über",
     "version.appVersion": "App Version: {$INTERPOLATION}",
