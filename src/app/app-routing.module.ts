@@ -184,6 +184,7 @@ const routes: Routes = [
     path: 'users/:id',
     component: UserDetailComponent,
     pathMatch: 'full',
+    canActivate: [AuthGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
