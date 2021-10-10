@@ -2689,9 +2689,11 @@
             "required": false,
             "schema": {
               "enum": [
-                "CASH_VIA_COOPERATIVE",
+                "CASH",
                 "CASH_VIA_COLLECTOR",
                 "BANK_TRANSFER",
+                "CHEQUE",
+                "OFFSETTING",
                 "UNKNOWN"
               ],
               "type": "string"
@@ -2842,9 +2844,11 @@
             "required": false,
             "schema": {
               "enum": [
-                "CASH_VIA_COOPERATIVE",
+                "CASH",
                 "CASH_VIA_COLLECTOR",
                 "BANK_TRANSFER",
+                "CHEQUE",
+                "OFFSETTING",
                 "UNKNOWN"
               ],
               "type": "string"
@@ -6880,12 +6884,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6895,19 +6896,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6917,19 +6915,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6939,19 +6934,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6961,19 +6953,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -6983,19 +6972,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7005,19 +6991,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7027,8 +7010,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -7301,7 +7284,7 @@
           },
           "currency": {
             "$ref": "#/components/schemas/ApiCurrencyType",
-            "description": "Preffered currency of the company"
+            "description": "Preferred currency of the company"
           },
           "documents": {
             "description": "company documents",
@@ -7557,7 +7540,7 @@
           },
           "currency": {
             "$ref": "#/components/schemas/ApiCurrencyType",
-            "description": "Preffered currency of the company"
+            "description": "Preferred currency of the company"
           },
           "documents": {
             "description": "company documents",
@@ -7704,7 +7687,7 @@
           },
           "currency": {
             "$ref": "#/components/schemas/ApiCurrencyType",
-            "description": "Preffered currency of the company"
+            "description": "Preferred currency of the company"
           },
           "documents": {
             "description": "company documents",
@@ -8412,8 +8395,7 @@
           },
           "weight": {
             "description": "the weight of the measurement unit type",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           }
         },
         "type": "object"
@@ -12434,9 +12416,11 @@
           "preferredWayOfPayment": {
             "description": "Preferred way of payment",
             "enum": [
-              "CASH_VIA_COOPERATIVE",
+              "CASH",
               "CASH_VIA_COLLECTOR",
               "BANK_TRANSFER",
+              "CHEQUE",
+              "OFFSETTING",
               "UNKNOWN"
             ],
             "type": "string"
@@ -12686,6 +12670,10 @@
           "farm": {
             "$ref": "#/components/schemas/ApiFarmInformation",
             "description": "Farm information"
+          },
+          "farmerCompanyInternalId": {
+            "description": "Company internal farmer ID",
+            "type": "string"
           },
           "gender": {
             "description": "Gender",
