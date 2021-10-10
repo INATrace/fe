@@ -155,6 +155,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
 
     obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
+    obj['CHEQUE'] = $localize`:@@preferredWayOfPayment.cheque:Cheque`;
+    obj['OFFSETTING'] = $localize`:@@preferredWayOfPayment.offsetting:Cheque`;
 
     return obj;
   }
