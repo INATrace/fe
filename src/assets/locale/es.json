@@ -1288,7 +1288,7 @@
     "ui.createUpdateDeleteButtons.update.btn.label": "Guardar",
     "ui.createUpdateDeleteButtons.delete.btn.label": "Eliminar",
     "miniButtons.button.cancel": "{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}",
-    "miniButtons.button.confirm": "{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}",
+    "miniButtons.button.confirm": "{$START_TAG_SPAN}Confirmar{$CLOSE_TAG_SPAN}",
     "searchTextinput.by": "Por {$INTERPOLATION}",
     "ui.attachmentUploader.error.prisloJeDoNapake.message": "Hubo un error durante la carga",
     "ui.attachmentUploader.poskusitePonovnoAliPripniteDrugoDatoteko.label": "inténtalo de nuevo o adjunte otro archivo",
