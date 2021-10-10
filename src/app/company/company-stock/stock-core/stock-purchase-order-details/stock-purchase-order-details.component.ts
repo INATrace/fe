@@ -46,7 +46,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   submitted = false;
 
-  codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
+  codebookPreferredWayOfPayment: EnumSifrant;
 
   searchFarmers = new FormControl(null, Validators.required);
   searchCollectors = new FormControl(null);
@@ -136,25 +136,26 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   get preferredWayOfPaymentList() {
 
     const obj = {};
-    obj['CASH_VIA_COOPERATIVE'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCooperative:Cash via cooperative`;
+    obj['CASH'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cash:Cash`;
 
     if (this.stockOrderForm &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId') &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId').value) {
+      this.stockOrderForm.get('representativeOfProducerUserCustomer') &&
+      this.stockOrderForm.get('representativeOfProducerUserCustomer').value) {
 
       obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
     }
 
     if (this.stockOrderForm &&
-      this.stockOrderForm.get('producerUserCustomerId') &&
-      this.stockOrderForm.get('producerUserCustomerId').value &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId') &&
-      !this.stockOrderForm.get('representativeOfProducerUserCustomerId').value) {
+      this.stockOrderForm.get('producerUserCustomer') &&
+      this.stockOrderForm.get('producerUserCustomer').value &&
+      this.stockOrderForm.get('representativeOfProducerUserCustomer') &&
+      !this.stockOrderForm.get('representativeOfProducerUserCustomer').value) {
 
       obj['UNKNOWN'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.unknown:Unknown`;
     }
 
     obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
+
     return obj;
   }
 
@@ -327,6 +328,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), { facility: { id: this.facility.id } }, ApiStockOrderValidationScheme(this.orderType));
 
+    // Initialize preferred way of payments
+    this.codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
+
     // Set initial data
     if (this.selectedCurrency !== '-') {
       this.stockOrderForm.get('currency').setValue(this.selectedCurrency);
@@ -352,6 +356,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     // Generate the form
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.order, ApiStockOrderValidationScheme(this.orderType));
+
+    // Initialize preferred way of payments
+    this.codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
 
     if (this.orderType === 'PURCHASE_ORDER') {
       this.selectedCurrency = this.stockOrderForm.get('currency').value ? this.stockOrderForm.get('currency').value : '-';
