@@ -142,8 +142,9 @@
             <div class="af-row">
               <div class="af-c12">
                 <div class="form-group">
-                  <label class="d-flex mb-0 text-input-label"
-                         i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct">Semi-product<span>*</span></label>
+                  <label class="d-flex mb-0 text-input-label">
+                    <span i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct">Semi-product</span><span>*</span>
+                  </label>
                   <ng-select bindLabel="name"
                              bindValue="id"
                              placeholder="Select semi-product"
@@ -151,6 +152,7 @@
                              i18n-placeholder="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.placeholder"
                              [items]="options"
                              [(ngModel)]="modelChoice"
+                             [required]="true"
                              notFoundText="Nothing found"
                              i18-notFoundText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.nothing"
                              i18-typeToSearchText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.enterSearchTerm"

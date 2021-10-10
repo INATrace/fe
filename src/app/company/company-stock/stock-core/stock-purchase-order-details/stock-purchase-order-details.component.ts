@@ -20,7 +20,6 @@ import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
-import { ChainActivityProof } from '../../../../../api-chain/model/chainActivityProof';
 import { ApiActivityProofValidationScheme } from '../additional-proof-item/validation';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
@@ -63,7 +62,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   modelChoice = null;
 
   measureUnit = '-';
-  companyBaseCurrency = '-';
+  selectedCurrency = '-';
 
   searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
@@ -168,15 +167,15 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   get pricePerUnitLabel() {
-    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.companyBaseCurrency}/${this.measureUnit})`;
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.selectedCurrency}/${this.measureUnit})`;
   }
 
   get costLabel() {
-    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.companyBaseCurrency})`;
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.selectedCurrency})`;
   }
 
   get balanceLabel() {
-    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.companyBaseCurrency})`;
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.selectedCurrency})`;
   }
 
   get additionalProofsForm(): FormArray {
@@ -195,10 +194,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
 
     // Get the company base currency
-    if (this.companyId) {
+    if (this.companyId && this.route.snapshot.data.action === 'new') {
       const res = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
       if (res && res.status === StatusEnum.OK && res.data) {
-        this.companyBaseCurrency = res.data.currency?.code ? res.data.currency.code : '-';
+        this.selectedCurrency = res.data.currency?.code ? res.data.currency.code : '-';
       }
     }
 
@@ -315,7 +314,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private initializeListManager() {
 
-    this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
+    this.additionalProofsListManager = new ListEditorManager<ApiActivityProof>(
       this.additionalProofsForm as FormArray,
       StockPurchaseOrderDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
       ApiActivityProofValidationScheme
@@ -329,8 +328,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), { facility: { id: this.facility.id } }, ApiStockOrderValidationScheme(this.orderType));
 
     // Set initial data
-    if (!this.stockOrderForm.get('currency').value) {
-      this.stockOrderForm.get('currency').setValue('RWF');
+    if (this.selectedCurrency !== '-') {
+      this.stockOrderForm.get('currency').setValue(this.selectedCurrency);
     }
 
     this.stockOrderForm.get('orderType').setValue(this.orderType);
@@ -355,6 +354,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.order, ApiStockOrderValidationScheme(this.orderType));
 
     if (this.orderType === 'PURCHASE_ORDER') {
+      this.selectedCurrency = this.stockOrderForm.get('currency').value ? this.stockOrderForm.get('currency').value : '-';
       this.searchFarmers.setValue(this.order.producerUserCustomer);
       if (this.order.representativeOfProducerUserCustomer && this.order.representativeOfProducerUserCustomer.id) {
         this.searchCollectors.setValue(this.order.representativeOfProducerUserCustomer);
@@ -362,6 +362,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
 
     this.modelChoice = this.order.semiProduct?.id;
+    if (this.modelChoice) {
+      this.setMeasureUnit(this.modelChoice).then();
+    }
+
     this.employeeForm.setValue(this.order.creatorId.toString());
     this.searchWomenCoffeeForm.setValue(this.order.womenShare ? 'YES' : 'NO');
 
@@ -385,6 +389,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.globalEventsManager.showLoading(true);
     this.submitted = true;
 
+    // Set the user ID that creates the purchase order
+    this.stockOrderForm.get('creatorId').setValue(this.employeeForm.value);
+
+    // Set women share field
+    this.stockOrderForm.get('womenShare').setValue(this.searchWomenCoffeeForm.value === 'YES');
+
     // Validate forms
     if (this.cannotUpdatePO()) {
       this.updatePOInProgress = false;
@@ -392,19 +402,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       return;
     }
 
-    // Set the user ID that creates the purchase order
-    this.stockOrderForm.get('creatorId').setValue(this.employeeForm.value);
-
     // Set the identifier if we are creating new purchase order
     if (!this.update) {
       await this.setIdentifier();
     }
 
-    let data: ApiStockOrder = _.cloneDeep(this.stockOrderForm.value);
-    data = {
-      ...data,
-      womenShare: this.searchWomenCoffeeForm.value === 'YES'
-    };
+    const data: ApiStockOrder = _.cloneDeep(this.stockOrderForm.value);
 
     // Remove keys that are not set
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);

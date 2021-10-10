@@ -3,63 +3,19 @@ import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { StockOrderType } from 'src/shared/types';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 
-// TODO: Set required fields
 export function ApiStockOrderValidationScheme(orderType: StockOrderType) {
   return {
     validators: [],
     fields: {
-      docType: {
-        validators: []
+      semiProduct: {
+        validators: orderType === 'PURCHASE_ORDER' ? [Validators.required] : []
       },
-      _id: {
-        validators: []
-      },
-      _rev: {
-        validators: []
-      },
-      created: {
-        validators: []
-      },
-      lastChange: {
-        validators: []
-      },
-      userCreatedId: {
-        validators: []
-      },
-      userChangedId: {
-        validators: []
-      },
-      formalCreationTime: {
-        validators: []
-      },
-      identifier: {
-        validators: []
-      },
-      creatorId: {
-        validators: []
-      },
-      representativeOfProducerUserCustomerId: {
-        validators: []
-      },
-      producerUserCustomerId: {
+      producerUserCustomer: {
         validators: orderType === 'PURCHASE_ORDER'
           ? [Validators.required]
           : []
       },
-      productionLocation: {
-        validators: []
-      },
-      consumerCompanyCustomer: {
-        validators: []
-      },
-
-      semiProductId: {
-        validators: []
-      },
-      facilityId: {
-        validators: []
-      },
-      measurementUnitType: {
+      representativeOfProducerUserCustomer: {
         validators: []
       },
       totalQuantity: {
@@ -67,35 +23,8 @@ export function ApiStockOrderValidationScheme(orderType: StockOrderType) {
           ? [Validators.required]
           : []
       },
-      fullfilledQuantity: {
-        validators: []
-      },
-      availableQuantity: {
-        validators: []
-      },
-      isAvailable: {
-        validators: []
-      },
       productionDate: {
         validators: [Validators.required]
-      },
-      expiryDate: {
-        validators: []
-      },
-      estimatedDeliveryDate: {
-        validators: []
-      },
-      deliveryTime: {
-        validators: []
-      },
-      orderId: {
-        validators: []
-      },
-      globalOrderId: {
-        validators: []
-      },
-      documentRequirements: {
-        validators: []
       },
       pricePerUnit: {
         validators: orderType === 'PURCHASE_ORDER'
@@ -117,60 +46,15 @@ export function ApiStockOrderValidationScheme(orderType: StockOrderType) {
           ? [Validators.required]
           : []
       },
-      isPurchaseOrder: {
-        validators: []
-      },
-      orderType: {
-        validators: []
-      },
-      internalLotNumber: {
-        validators: []
-      },
-      lotNumber: {
-        validators: []
-      },
-      screenSize: {
-        validators: []
-      },
-      comments: {
-        validators: []
-      },
-      actionType: {
-        validators: []
-      },
-      womenShare: {
-        validators: []
-      },
-      cost: {
-        validators: []
-      },
-      paid: {
-        validators: []
-      },
-      balance: {
-        validators: []
-      },
-      semiProduct: {
-        validators: []
-      },
-      facility: {
-        validators: []
-      },
-      representativeOfProducerUserCustomer: {
-        validators: []
-      },
-      producerUserCustomer: {
-        validators: []
-      },
-      inputTransactions: {
-        validators: []
-      },
-      outputTransactions: {
-        validators: []
-      },
       preferredWayOfPayment: {
         validators: [Validators.required]
       },
+      womenShare: {
+        validators: orderType === 'PURCHASE_ORDER' ? [Validators.required] : []
+      },
+      creatorId: {
+        validators: orderType === 'PURCHASE_ORDER' ? [Validators.required] : []
+      }
     }
   } as SimpleValidationScheme<ApiStockOrder>;
 }
