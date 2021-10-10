@@ -2761,6 +2761,8 @@
     "currencyList.sortOptions.actions.name": "Aktionen",
     "companyDetail.base.currency": "Hauptwährung",
     "companyDetail.currency.error": "Hauptwährung wird benötigt",
-    "productLabelProcessingAction.singleChoice.type.error.requred": "Art wird benötigt"
+    "productLabelProcessingAction.singleChoice.type.error.requred": "Art wird benötigt",
+    "preferredWayOfPayment.cheque": "Cheque",
+    "preferredWayOfPayment.offsetting": "Offsetting"
   }
 }

@@ -2676,6 +2676,8 @@
     "collectorDetail.textinput.areaOrganicCertified.label": "Área con certificación orgánica (ha)",
     "collectorDetail.textinput.areaOrganicCertified.placeholder": "Introduzca el área con la certificación orgánica (ha)",
     "collectorDetail.textinput.startTransitionToOrganic.label": "Inicio de la producción orgánica",
-    "collectorDetail.textinput.startTransitionToOrganic.placeholder": "Introduzca la fecha del inicio de la producción orgánica"
+    "collectorDetail.textinput.startTransitionToOrganic.placeholder": "Introduzca la fecha del inicio de la producción orgánica",
+    "preferredWayOfPayment.cheque": "Cheque",
+    "preferredWayOfPayment.offsetting": "Offsetting"
   }
 }

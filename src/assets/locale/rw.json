@@ -2773,6 +2773,8 @@
     "collectorDetail.textinput.areaOrganicCertified.label": "Ubuso bufite seritifika ya oruganike (ha)",
     "collectorDetail.textinput.areaOrganicCertified.placeholder": "Injiza ubuso bufite seritifika ya oruganike (ha)",
     "collectorDetail.textinput.startTransitionToOrganic.label": "Abatangiye urugendo rwo guhinga oruganike",
-    "collectorDetail.textinput.startTransitionToOrganic.placeholder": "Injiza itariki yigihe cyatangiriweho kwinjira muri oruganike"
+    "collectorDetail.textinput.startTransitionToOrganic.placeholder": "Injiza itariki yigihe cyatangiriweho kwinjira muri oruganike",
+    "preferredWayOfPayment.cheque": "Cheque",
+    "preferredWayOfPayment.offsetting": "Offsetting"
   }
 }
