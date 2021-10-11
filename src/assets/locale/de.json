@@ -1021,7 +1021,7 @@
     "producersItem.label.role": "Rolle",
     "producersItem.textinput.customer.error": "Kooperative wird benötigt",
     "producersItem.textinput.role.error": "Rolle wird benötigt",
-    "collectorDetail.list-editor.cooperatives.label": "Lieferant*in von",
+    "collectorDetail.list-editor.cooperatives.label": "Lieferant*in",
     "collectorDetail.list-editor.cooperatives.addText": "Neu hinzufügen",
     "productLabelStakeholdersCollectors.sortOptions.id.name": "ID",
     "productLabelStockPurchaseOrdersModal.section.purchaseDetails": "Kaufdetails",
