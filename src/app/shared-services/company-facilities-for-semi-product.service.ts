@@ -1,24 +1,22 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiFacility } from '../../api/model/apiFacility';
-import {
-  FacilityControllerService,
-  ListSellingFacilitiesByCompanyUsingGET
-} from '../../api/api/facilityController.service';
+import { FacilityControllerService, ListFacilitiesByCompanyUsingGET } from '../../api/api/facilityController.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
 import { ApiPaginatedResponseApiFacility } from '../../api/model/apiPaginatedResponseApiFacility';
 
-export class CompanySellingFacilitiesService extends GeneralSifrantService<ApiFacility> {
+export class CompanyFacilitiesForSemiProductService extends GeneralSifrantService<ApiFacility> {
 
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as ListSellingFacilitiesByCompanyUsingGET.PartialParamMap;
+  } as ListFacilitiesByCompanyUsingGET.PartialParamMap;
 
   constructor(
     private facilityControllerService: FacilityControllerService,
-    private companyId: number
+    private companyId: number,
+    private semiProductId: number
   ) {
     super();
   }
@@ -38,19 +36,20 @@ export class CompanySellingFacilitiesService extends GeneralSifrantService<ApiFa
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiFacility>> {
 
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqParams = {
+    const reqParams: ListFacilitiesByCompanyUsingGET.PartialParamMap = {
       id: this.companyId,
+      semiProductId: this.semiProductId,
       ...this.requestParams
     };
 
-    return this.facilityControllerService.listSellingFacilitiesByCompanyUsingGETByMap(reqParams)
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
           return {
-            results: res.data.items,
-            offset: 0,
-            limit,
-            totalCount: res.data.count
+           results: res.data.items,
+           offset: 0,
+           limit,
+           totalCount: res.data.count
           };
         })
       );
