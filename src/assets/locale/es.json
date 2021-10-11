@@ -1908,6 +1908,7 @@
     "productLabel.sideTitle.stakeholders": "Partes interesadas",
     "companyLeftPanel.farmers": "Agricultores",
     "companyLeftPanel.collectors": "Colectores",
+    "companyLeftPanel.customers": "Clientes",
     "productLabel.sideTitle.archiveProduct": "{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON} Archivar producto",
     "productLabel.sideTitle.farmers": "Agricultores",
     "productLabel.sideTitle.collectors": "Colectores",

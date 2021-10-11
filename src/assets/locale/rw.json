@@ -282,6 +282,7 @@
     "productLabel.sideTitle.stakeholders": "Abafatanyabikorwa",
     "companyLeftPanel.farmers": "Abahinzi",
     "companyLeftPanel.collectors": "Abakusanya umusaruro",
+    "companyLeftPanel.customers": "Abaguzi",
     "productLabel.sideTitle.archiveProduct": "{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON} Bika kure burundu igicuruzwa",
     "productLabel.sideTitle.farmers": "Abahinzi",
     "productLabel.sideTitle.collectors": "Abakusanya umusaruro",
