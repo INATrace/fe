@@ -31,11 +31,14 @@ import { catchError }                                        from 'rxjs/operator
 
 import { ApiCompany } from '../model/apiCompany';
 import { ApiCompanyActionRequest } from '../model/apiCompanyActionRequest';
+import { ApiCompanyCustomer } from '../model/apiCompanyCustomer';
 import { ApiCompanyUpdate } from '../model/apiCompanyUpdate';
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
+import { ApiPaginatedResponseApiCompanyCustomer } from '../model/apiPaginatedResponseApiCompanyCustomer';
 import { ApiPaginatedResponseApiCompanyListResponse } from '../model/apiPaginatedResponseApiCompanyListResponse';
 import { ApiPaginatedResponseApiUserCustomer } from '../model/apiPaginatedResponseApiUserCustomer';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
+import { ApiResponseApiCompanyCustomer } from '../model/apiResponseApiCompanyCustomer';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
@@ -88,6 +91,38 @@ export namespace AddUserCustomerUsingPOST {
 }
 
 /**
+ * Namespace for createCompanyCustomerUsingPOST.
+ */
+export namespace CreateCompanyCustomerUsingPOST {
+    /**
+     * Parameter map for createCompanyCustomerUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * apiCompanyCustomer
+       */
+      ApiCompanyCustomer: ApiCompanyCustomer;
+    }
+
+    /**
+     * Enumeration of all parameters for createCompanyCustomerUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * apiCompanyCustomer
+       */
+      ApiCompanyCustomer = 'ApiCompanyCustomer'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createCompanyCustomerUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CreateCompanyCustomerUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
  * Namespace for createCompanyUsingPOST.
  */
 export namespace CreateCompanyUsingPOST {
@@ -116,6 +151,41 @@ export namespace CreateCompanyUsingPOST {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof CreateCompanyUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
+ * Namespace for deleteCompanyCustomerUsingDELETE.
+ */
+export namespace DeleteCompanyCustomerUsingDELETE {
+    /**
+     * Parameter map for deleteCompanyCustomerUsingDELETE.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company customer ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for deleteCompanyCustomerUsingDELETE.
+     */
+    export enum Parameters {
+      /**
+       * Company customer ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteCompanyCustomerUsingDELETE
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof DeleteCompanyCustomerUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
     };
 }
 
@@ -193,6 +263,146 @@ export namespace ExecuteActionUsingPOST {
     export const ParamValidators: {[K in keyof ExecuteActionUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
       action: [
               ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getCompanyCustomerUsingGET.
+ */
+export namespace GetCompanyCustomerUsingGET {
+    /**
+     * Parameter map for getCompanyCustomerUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company customer ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getCompanyCustomerUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company customer ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCompanyCustomerUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetCompanyCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getCompanyCustomersListUsingGET.
+ */
+export namespace GetCompanyCustomersListUsingGET {
+    /**
+     * Parameter map for getCompanyCustomersListUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company id
+       */
+      companyId: number;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+      /**
+       * Name
+       */
+      query?: string;
+      /**
+       * Phone number
+       */
+      phone?: string;
+    }
+
+    /**
+     * Enumeration of all parameters for getCompanyCustomersListUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company id
+       */
+      companyId = 'companyId',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort',
+      /**
+       * Name
+       */
+      query = 'query',
+      /**
+       * Phone number
+       */
+      phone = 'phone'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCompanyCustomersListUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetCompanyCustomersListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
+      query: [
+      ],
+      phone: [
       ],
     };
 }
@@ -637,6 +847,38 @@ export namespace ListCompaniesUsingGET {
 }
 
 /**
+ * Namespace for updateCompanyCustomerUsingPUT.
+ */
+export namespace UpdateCompanyCustomerUsingPUT {
+    /**
+     * Parameter map for updateCompanyCustomerUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * apiCompanyCustomer
+       */
+      ApiCompanyCustomer: ApiCompanyCustomer;
+    }
+
+    /**
+     * Enumeration of all parameters for updateCompanyCustomerUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * apiCompanyCustomer
+       */
+      ApiCompanyCustomer = 'ApiCompanyCustomer'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of updateCompanyCustomerUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof UpdateCompanyCustomerUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
  * Namespace for updateCompanyUsingPUT.
  */
 export namespace UpdateCompanyUsingPUT {
@@ -831,6 +1073,94 @@ export class CompanyControllerService {
 
 
   /**
+   * Create company customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createCompanyCustomerUsingPOSTByMap(
+    map: CreateCompanyCustomerUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiCompanyCustomer>;
+  public createCompanyCustomerUsingPOSTByMap(
+    map: CreateCompanyCustomerUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+  public createCompanyCustomerUsingPOSTByMap(
+    map: CreateCompanyCustomerUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+  public createCompanyCustomerUsingPOSTByMap(
+    map: CreateCompanyCustomerUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.createCompanyCustomerUsingPOST(
+      map.ApiCompanyCustomer,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Create company customer
+     * 
+     * @param ApiCompanyCustomer apiCompanyCustomer
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createCompanyCustomerUsingPOST(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyCustomer>;
+    public createCompanyCustomerUsingPOST(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+    public createCompanyCustomerUsingPOST(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+    public createCompanyCustomerUsingPOST(ApiCompanyCustomer: ApiCompanyCustomer, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiCompanyCustomer === null || ApiCompanyCustomer === undefined) {
+            throw new Error('Required parameter ApiCompanyCustomer was null or undefined when calling createCompanyCustomerUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiCompanyCustomer>(`${this.configuration.basePath}/api/company/companyCustomers`,
+            ApiCompanyCustomer,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createCompanyCustomerUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Create a new company (with the logged-in user as company admin) by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -913,6 +1243,88 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createCompanyUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Delete company customer with ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deleteCompanyCustomerUsingDELETEByMap(
+    map: DeleteCompanyCustomerUsingDELETE.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public deleteCompanyCustomerUsingDELETEByMap(
+    map: DeleteCompanyCustomerUsingDELETE.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public deleteCompanyCustomerUsingDELETEByMap(
+    map: DeleteCompanyCustomerUsingDELETE.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public deleteCompanyCustomerUsingDELETEByMap(
+    map: DeleteCompanyCustomerUsingDELETE.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.deleteCompanyCustomerUsingDELETE(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Delete company customer with ID
+     * 
+     * @param id Company customer ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteCompanyCustomerUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteCompanyCustomerUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteCompanyCustomerUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteCompanyCustomerUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteCompanyCustomerUsingDELETE.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.delete<ApiDefaultResponse>(`${this.configuration.basePath}/api/company/companyCustomers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteCompanyCustomerUsingDELETE')));
         }
         return handle;
     }
@@ -1088,6 +1500,208 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'executeActionUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get company customer by ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCompanyCustomerUsingGETByMap(
+    map: GetCompanyCustomerUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiCompanyCustomer>;
+  public getCompanyCustomerUsingGETByMap(
+    map: GetCompanyCustomerUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+  public getCompanyCustomerUsingGETByMap(
+    map: GetCompanyCustomerUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+  public getCompanyCustomerUsingGETByMap(
+    map: GetCompanyCustomerUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getCompanyCustomerUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get company customer by ID
+     * 
+     * @param id Company customer ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyCustomerUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyCustomer>;
+    public getCompanyCustomerUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+    public getCompanyCustomerUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+    public getCompanyCustomerUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getCompanyCustomerUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiCompanyCustomer>(`${this.configuration.basePath}/api/company/companyCustomers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyCustomerUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * List company customers for company by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCompanyCustomersListUsingGETByMap(
+    map: GetCompanyCustomersListUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiCompanyCustomer>;
+  public getCompanyCustomersListUsingGETByMap(
+    map: GetCompanyCustomersListUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiCompanyCustomer>>;
+  public getCompanyCustomersListUsingGETByMap(
+    map: GetCompanyCustomersListUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiCompanyCustomer>>;
+  public getCompanyCustomersListUsingGETByMap(
+    map: GetCompanyCustomersListUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getCompanyCustomersListUsingGET(
+      map.companyId,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      map.query,
+      map.phone,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * List company customers for company
+     * 
+     * @param companyId Company id
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param query Name
+     * @param phone Phone number
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyCustomersListUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCompanyCustomer>;
+    public getCompanyCustomersListUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCompanyCustomer>>;
+    public getCompanyCustomersListUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCompanyCustomer>>;
+    public getCompanyCustomersListUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, phone?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getCompanyCustomersListUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
+        }
+        if (phone !== undefined && phone !== null) {
+            queryParameters = queryParameters.set('phone', <any>phone);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiCompanyCustomer>(`${this.configuration.basePath}/api/company/companyCustomers/list/${encodeURIComponent(String(companyId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyCustomersListUsingGET')));
         }
         return handle;
     }
@@ -1707,6 +2321,94 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listCompaniesUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Update company customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public updateCompanyCustomerUsingPUTByMap(
+    map: UpdateCompanyCustomerUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiCompanyCustomer>;
+  public updateCompanyCustomerUsingPUTByMap(
+    map: UpdateCompanyCustomerUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+  public updateCompanyCustomerUsingPUTByMap(
+    map: UpdateCompanyCustomerUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+  public updateCompanyCustomerUsingPUTByMap(
+    map: UpdateCompanyCustomerUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.updateCompanyCustomerUsingPUT(
+      map.ApiCompanyCustomer,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Update company customer
+     * 
+     * @param ApiCompanyCustomer apiCompanyCustomer
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateCompanyCustomerUsingPUT(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyCustomer>;
+    public updateCompanyCustomerUsingPUT(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyCustomer>>;
+    public updateCompanyCustomerUsingPUT(ApiCompanyCustomer: ApiCompanyCustomer, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyCustomer>>;
+    public updateCompanyCustomerUsingPUT(ApiCompanyCustomer: ApiCompanyCustomer, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiCompanyCustomer === null || ApiCompanyCustomer === undefined) {
+            throw new Error('Required parameter ApiCompanyCustomer was null or undefined when calling updateCompanyCustomerUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiResponseApiCompanyCustomer>(`${this.configuration.basePath}/api/company/companyCustomers`,
+            ApiCompanyCustomer,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateCompanyCustomerUsingPUT')));
         }
         return handle;
     }

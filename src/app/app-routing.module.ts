@@ -313,6 +313,10 @@ const routes: Routes = [
     path: 'my-collectors',
     loadChildren: () => import('./company/company-collectors/company-collectors.module').then(m => m.CompanyCollectorsModule)
   },
+  {
+    path: 'my-customers',
+    loadChildren: () => import('./company/company-customers/company-customers.module').then(m => m.CompanyCustomersModule)
+  },
   ///////////////////////
   ///////////////////////
   ///////////////////////
