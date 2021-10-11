@@ -55,6 +55,7 @@ export class ProducersItemComponent extends GenericEditableItemComponent<ChainUs
       this.form.get('company.id').setValue(this.codebookCoop.keys[0]);
       this.readonly = true;
     }
+    this.form.markAsDirty();
   }
 
   get name() {
