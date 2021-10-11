@@ -111,7 +111,7 @@ export class GeoaddressFormComponent implements OnInit, OnDestroy {
 
   enableValidationHonduras() {
     this.form.get('hondurasDepartment').setValidators([Validators.required]);
-    this.form.get('hondurasFarm').setValidators([Validators.required]);
+    this.form.get('hondurasFarm').setValidators(null);
     this.form.get('hondurasMunicipality').setValidators([Validators.required]);
     this.form.get('hondurasVillage').setValidators([Validators.required]);
   }
