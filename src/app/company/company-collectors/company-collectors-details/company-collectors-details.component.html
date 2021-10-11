@@ -177,10 +177,10 @@
 
             <div class="af-form-row">
                 <div class="af-form-block--c6">
-                    <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
+                    <h2 i18n="@@collectorDetail.section.companies">Companies</h2>
                     <div class="af-form-element">
                         <list-editor *ngIf="producersListManager"
-                                     label="Customer of"
+                                     label="Supplier of"
                                      [listEditorManager]="producersListManager"
                                      addText="Add new"
                                      [canAdd]="true"
@@ -196,6 +196,7 @@
                                                             [assocCoop]="assocCoop"
                                                             title=null
                                                             [formControlInput]="item"
+                                                            [type]="'COLLECTOR'"
                                                             [isOpen]="producersListManager.isOpen(i)"
                                                             [listEditorManager]="this.producersListManager"
                                                             [listEditorManagerPosition]="i">
