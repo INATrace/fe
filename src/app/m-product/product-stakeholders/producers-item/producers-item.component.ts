@@ -12,6 +12,7 @@ import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
+import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
   selector: 'app-producers-item',
@@ -40,10 +41,16 @@ export class ProducersItemComponent extends GenericEditableItemComponent<ChainUs
   @Input()
   assocCoop
 
+  @Input()
+  type: UserCustomerTypeEnum;
+
   readonly: boolean = false;
 
 
   ngOnInit() {
+    if (this.type && this.form.get('userCustomerType') && this.form.get('userCustomerType').value == null) {
+      this.form.get('userCustomerType').setValue(this.type);
+    }
     if(this.codebookCoop && this.codebookCoop.keys.length === 1) {
       this.form.get('company.id').setValue(this.codebookCoop.keys[0]);
       this.readonly = true;
@@ -52,7 +59,15 @@ export class ProducersItemComponent extends GenericEditableItemComponent<ChainUs
 
   get name() {
     if (this.form.get('company').value && this.form.get('company.name').value && this.form.get('userCustomerType').value) {
-      return this.form.get('company.name').value + ', ' + this.form.get('userCustomerType').value;
+      let typeText = this.form.get('userCustomerType').value;
+      if (typeText) {
+        if (typeText === UserCustomerTypeEnum.FARMER) {
+          typeText = $localize`:@@collectorDetail.roles.farmer:Farmer`;
+        } else if (typeText === UserCustomerTypeEnum.COLLECTOR) {
+          typeText = $localize`:@@collectorDetail.roles.collector:Collector`;
+        }
+      }
+      return this.form.get('company.name').value + ', ' + typeText;
     }
     if (this.form.get('company').value && this.form.get('company.id').value) {
       return this.assocCoop[this.form.get('company.id').value.toString()] + ', ' + this.form.get('userCustomerType').value;

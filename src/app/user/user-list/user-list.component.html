@@ -1,8 +1,9 @@
 <app-authorised-layout class="af-layout--system">
 
   <app-system-left-panel
-    i18n="@@userList.navTitle"
-    title="System">
+          [isAdmin]="true"
+          i18n="@@userList.navTitle"
+          title="System">
   </app-system-left-panel>
 
   <div class="main">

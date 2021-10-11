@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
-import { ProductControllerService } from '../../../../../api/api/productController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { take } from 'rxjs/operators';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
@@ -20,12 +19,12 @@ import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
 import _ from 'lodash-es';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
-import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
-import { ChainActivityProof } from '../../../../../api-chain/model/chainActivityProof';
 import { ApiActivityProofValidationScheme } from '../additional-proof-item/validation';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
-import StatusEnum = ApiResponseApiStockOrder.StatusEnum;
+import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
+import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
+import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -47,7 +46,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   submitted = false;
 
-  codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
+  codebookPreferredWayOfPayment: EnumSifrant;
 
   searchFarmers = new FormControl(null, Validators.required);
   searchCollectors = new FormControl(null);
@@ -61,6 +60,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   options: ApiSemiProduct[] = [];
   modelChoice = null;
+
+  measureUnit = '-';
+  selectedCurrency = '-';
 
   searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
@@ -79,10 +81,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private globalEventsManager: GlobalEventManagerService,
-    private productControllerService: ProductControllerService,
     private facilityControllerService: FacilityControllerService,
     private companyControllerService: CompanyControllerService,
     private stockOrderControllerService: StockOrderControllerService,
+    private semiProductControllerService: SemiProductControllerService,
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService,
   ) { }
@@ -134,34 +136,49 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   get preferredWayOfPaymentList() {
 
     const obj = {};
-    obj['CASH_VIA_COOPERATIVE'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCooperative:Cash via cooperative`;
+    obj['CASH'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cash:Cash`;
 
     if (this.stockOrderForm &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId') &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId').value) {
+      this.stockOrderForm.get('representativeOfProducerUserCustomer') &&
+      this.stockOrderForm.get('representativeOfProducerUserCustomer').value) {
 
       obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
     }
 
     if (this.stockOrderForm &&
-      this.stockOrderForm.get('producerUserCustomerId') &&
-      this.stockOrderForm.get('producerUserCustomerId').value &&
-      this.stockOrderForm.get('representativeOfProducerUserCustomerId') &&
-      !this.stockOrderForm.get('representativeOfProducerUserCustomerId').value) {
+      this.stockOrderForm.get('producerUserCustomer') &&
+      this.stockOrderForm.get('producerUserCustomer').value &&
+      this.stockOrderForm.get('representativeOfProducerUserCustomer') &&
+      !this.stockOrderForm.get('representativeOfProducerUserCustomer').value) {
 
       obj['UNKNOWN'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.unknown:Unknown`;
     }
 
     obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
+    obj['CHEQUE'] = $localize`:@@preferredWayOfPayment.cheque:Cheque`;
+    obj['OFFSETTING'] = $localize`:@@preferredWayOfPayment.offsetting:Cheque`;
+
     return obj;
   }
 
   get quantityLabel() {
     if (this.orderType === 'PURCHASE_ORDER') {
-      return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantityDelieveredInKG.label:Quantity (kg)`;
+      return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.label:Quantity` + ` (${this.measureUnit})`;
     } else {
       return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.quantity.label:Quantity (units)`;
     }
+  }
+
+  get pricePerUnitLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.selectedCurrency}/${this.measureUnit})`;
+  }
+
+  get costLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.selectedCurrency})`;
+  }
+
+  get balanceLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.selectedCurrency})`;
   }
 
   get additionalProofsForm(): FormArray {
@@ -175,8 +192,18 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     return obj;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+
+    // Get the company base currency
+    if (this.companyId && this.route.snapshot.data.action === 'new') {
+      const res = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
+      if (res && res.status === StatusEnum.OK && res.data) {
+        this.selectedCurrency = res.data.currency?.code ? res.data.currency.code : '-';
+      }
+    }
+
     this.reloadOrder();
   }
 
@@ -216,8 +243,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.submitted = false;
 
     this.initializeData().then(() => {
-      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'FARMER');
-      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.productControllerService, this.companyId, 'COLLECTOR');
+      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'FARMER');
+      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'COLLECTOR');
 
       if (this.update) {
         this.editStockOrder().then();
@@ -290,7 +317,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private initializeListManager() {
 
-    this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
+    this.additionalProofsListManager = new ListEditorManager<ApiActivityProof>(
       this.additionalProofsForm as FormArray,
       StockPurchaseOrderDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
       ApiActivityProofValidationScheme
@@ -303,9 +330,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), { facility: { id: this.facility.id } }, ApiStockOrderValidationScheme(this.orderType));
 
+    // Initialize preferred way of payments
+    this.codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
+
     // Set initial data
-    if (!this.stockOrderForm.get('currency').value) {
-      this.stockOrderForm.get('currency').setValue('RWF');
+    if (this.selectedCurrency !== '-') {
+      this.stockOrderForm.get('currency').setValue(this.selectedCurrency);
     }
 
     this.stockOrderForm.get('orderType').setValue(this.orderType);
@@ -318,6 +348,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     if (this.options && this.options.length === 1) {
       this.modelChoice = this.options[0].id;
       this.stockOrderForm.get('semiProduct').setValue({ id: this.options[0].id });
+      this.setMeasureUnit(this.modelChoice).then();
     }
 
     this.prepareData();
@@ -328,7 +359,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     // Generate the form
     this.stockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.order, ApiStockOrderValidationScheme(this.orderType));
 
+    // Initialize preferred way of payments
+    this.codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
+
     if (this.orderType === 'PURCHASE_ORDER') {
+      this.selectedCurrency = this.stockOrderForm.get('currency').value ? this.stockOrderForm.get('currency').value : '-';
       this.searchFarmers.setValue(this.order.producerUserCustomer);
       if (this.order.representativeOfProducerUserCustomer && this.order.representativeOfProducerUserCustomer.id) {
         this.searchCollectors.setValue(this.order.representativeOfProducerUserCustomer);
@@ -336,6 +371,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
 
     this.modelChoice = this.order.semiProduct?.id;
+    if (this.modelChoice) {
+      this.setMeasureUnit(this.modelChoice).then();
+    }
+
     this.employeeForm.setValue(this.order.creatorId.toString());
     this.searchWomenCoffeeForm.setValue(this.order.womenShare ? 'YES' : 'NO');
 
@@ -359,6 +398,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.globalEventsManager.showLoading(true);
     this.submitted = true;
 
+    // Set the user ID that creates the purchase order
+    this.stockOrderForm.get('creatorId').setValue(this.employeeForm.value);
+
+    // Set women share field
+    this.stockOrderForm.get('womenShare').setValue(this.searchWomenCoffeeForm.value === 'YES');
+
     // Validate forms
     if (this.cannotUpdatePO()) {
       this.updatePOInProgress = false;
@@ -366,19 +411,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       return;
     }
 
-    // Set the user ID that creates the purchase order
-    this.stockOrderForm.get('creatorId').setValue(this.employeeForm.value);
-
     // Set the identifier if we are creating new purchase order
     if (!this.update) {
       await this.setIdentifier();
     }
 
-    let data: ApiStockOrder = _.cloneDeep(this.stockOrderForm.value);
-    data = {
-      ...data,
-      womenShare: this.searchWomenCoffeeForm.value === 'YES'
-    };
+    const data: ApiStockOrder = _.cloneDeep(this.stockOrderForm.value);
 
     // Remove keys that are not set
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
@@ -468,12 +506,23 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     if (id) {
       this.stockOrderForm.get('semiProduct').setValue({ id });
+      this.setMeasureUnit(Number(id)).then();
     } else {
       this.stockOrderForm.get('semiProduct').setValue(null);
     }
 
     this.stockOrderForm.get('semiProduct').markAsDirty();
     this.stockOrderForm.get('semiProduct').updateValueAndValidity();
+  }
+
+  async setMeasureUnit(semiProdId: number) {
+
+    const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
+    if (res && res.status === StatusEnum.OK && res.data) {
+      this.measureUnit = res.data.apiMeasureUnitType.label;
+    } else {
+      this.measureUnit = '-';
+    }
   }
 
   setToBePaid() {
@@ -535,7 +584,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private async setIdentifier() {
 
-    const farmerResponse = await this.productControllerService
+    const farmerResponse = await this.companyControllerService
       .getUserCustomerUsingGET(this.stockOrderForm.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
 
     if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {

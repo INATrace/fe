@@ -5,6 +5,8 @@ import { CompanyControllerService } from '../../../../api/api/companyController.
 import { take } from 'rxjs/operators';
 import { ApiResponseApiCompanyGet } from '../../../../api/model/apiResponseApiCompanyGet';
 import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-left-panel',
@@ -13,13 +15,17 @@ import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 })
 export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
 
+  faCog = faCog;
+
   companyTitle: string;
+  private companyId: number;
 
   imgStorageKey: string = null;
 
   private companySubs: Subscription;
 
   constructor(
+    private router: Router,
     private globalEventManager: GlobalEventManagerService,
     private companyControllerService: CompanyControllerService
   ) { }
@@ -32,7 +38,9 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.companyControllerService.getCompanyUsingGET(Number(selectedCompanyId))
+    this.companyId = Number(selectedCompanyId);
+
+    this.companyControllerService.getCompanyUsingGET(this.companyId)
       .pipe(
         take(1)
       )
@@ -47,6 +55,14 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
     if (this.companySubs) {
       this.companySubs.unsubscribe();
     }
+  }
+
+  openCompanyProfile() {
+    if (!this.companyId) {
+      return;
+    }
+
+    this.router.navigate(['companies', this.companyId, 'company']).then();
   }
 
 }

@@ -4728,3 +4728,12 @@ $af-graph-col-bg: inherit;
   bottom: 0;
   right: 0;
 }
+
+.company-profile {
+  margin-left: 8px;
+  margin-right: 8px;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 2rem;
+  }
+}

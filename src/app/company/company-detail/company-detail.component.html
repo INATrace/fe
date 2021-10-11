@@ -1,14 +1,15 @@
 <app-authorised-layout>
   <app-system-left-panel
-    i18n="@@companyDetail.navTitle"
-    title="System">
+          [isAdmin]="isAdmin"
+          i18n="@@companyDetail.navTitle"
+          title="System">
   </app-system-left-panel>
 
-  <div class="main"
-    *ngIf="companyDetailForm"
-    contents
-    [initialValue]=""
-    [submitted]="submitted">
+  <div [class.main]="isAdmin" [class.company-profile]="!isAdmin"
+       *ngIf="companyDetailForm"
+       contents
+       [initialValue]=""
+       [submitted]="submitted">
 
     <div class="af-form-wrapper">
 
@@ -340,6 +341,15 @@
                            [formControlInput]="companyDetailForm.get('currency')"
                            [codebookService]="currencyCodes">
             </single-choice>
+            <ng-container *ngIf="submitted">
+              <div *ngIf="companyDetailForm.get('currency').errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n-title="@@companyDetail.currency.error">
+                  <span>
+                    Base currency is required
+                  </span>
+                </div>
+              </div>
+            </ng-container>
           </div>
         </div>
       </div>

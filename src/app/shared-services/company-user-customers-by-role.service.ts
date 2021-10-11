@@ -1,15 +1,15 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiUserCustomer } from '../../api/model/apiUserCustomer';
-import { GetUserCustomerListForCompanyAndTypeUsingGET, ProductControllerService } from '../../api/api/productController.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
 import { ApiPaginatedResponseApiUserCustomer } from '../../api/model/apiPaginatedResponseApiUserCustomer';
+import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } from '../../api/api/companyController.service';
 
 export class CompanyUserCustomersByRoleService extends GeneralSifrantService<ApiUserCustomer> {
 
   constructor(
-    private productControllerService: ProductControllerService,
+    private companyControllerService: CompanyControllerService,
     private companyId: number,
     private role: string
   ) {
@@ -19,7 +19,7 @@ export class CompanyUserCustomersByRoleService extends GeneralSifrantService<Api
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap;
+  } as GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap;
 
   identifier(el: ApiUserCustomer) {
     return el.id;
@@ -32,13 +32,13 @@ export class CompanyUserCustomersByRoleService extends GeneralSifrantService<Api
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiUserCustomer>> {
 
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqParams: GetUserCustomerListForCompanyAndTypeUsingGET.PartialParamMap = {
+    const reqParams: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
       companyId: this.companyId,
       type: this.role,
       ...this.requestParams
     };
 
-    return this.productControllerService.getUserCustomerListForCompanyAndTypeUsingGETByMap(reqParams)
+    return this.companyControllerService.getUserCustomersForCompanyAndTypeUsingGETByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiUserCustomer) => {
           return {

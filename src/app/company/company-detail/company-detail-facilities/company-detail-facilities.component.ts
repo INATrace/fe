@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
@@ -9,13 +9,14 @@ import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiFacility } from '../../../../api/model/apiPaginatedResponseApiFacility';
 import { ApiPaginatedListApiFacility } from '../../../../api/model/apiPaginatedListApiFacility';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-company-detail-facilities',
   templateUrl: './company-detail-facilities.component.html',
   styleUrls: ['./company-detail-facilities.component.scss']
 })
-export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerComponent implements OnInit {
+export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -93,11 +94,13 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     protected route: ActivatedRoute,
     protected facilityControllerService: FacilityControllerService,
     protected globalEventsManager: GlobalEventManagerService,
+    protected authService: AuthService
   ) {
-    super(router, route);
+    super(router, route, authService);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.companyId = this.route.snapshot.params.id;
     this.initializeFacilitiesObservable();
 
@@ -106,6 +109,10 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
         this.isGoogleMapsLoaded = true;
       }
     });
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   loadEntityList(params: any) {

@@ -1,11 +1,12 @@
 <app-authorised-layout>
     <app-system-left-panel
+            [isAdmin]="isAdmin"
             i18n="@@companyDetailTranslate.navTitle"
             title="System">
     </app-system-left-panel>
 
-    <div class="main" *ngIf="prepared">
-        <div class="main-inside-top content-element">
+    <div [class.main]="isAdmin" [class.company-profile]="!isAdmin" *ngIf="prepared">
+        <div class="af-form-wrapper">
             <div class="main-inside-top content-element">
                 <div class="d-flex justify-content-between content-element--row1">
                     <div class="title-page content-element--title" i18n="@@companyDetailProcessingActions.title:Processing actions">Processing actions</div>

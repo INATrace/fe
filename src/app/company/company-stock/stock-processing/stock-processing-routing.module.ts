@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StockProcessingTabComponent } from './stock-processing-tab/stock-processing-tab.component';
 import { StockProcessingOrderDetailsComponent } from './stock-processing-order-details/stock-processing-order-details.component';
-import { ProductLabelStockProcessingOrderDetailComponent } from '../../../m-product/product-stock/stock-processing/product-label-stock-processing-order-detail/product-label-stock-processing-order-detail.component';
 
 const routes: Routes = [
   {
@@ -31,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'update/shipment-order/:orderId',
-    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
     data: {
       action: 'update',
       type: 'SHIPMENT',
@@ -44,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'update/processing-order/:orderId',
-    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
     data: {
       action: 'update',
       type: 'PROCESSING',
@@ -57,7 +56,7 @@ const routes: Routes = [
   },
   {
     path: 'update/transfer-order/:orderId',
-    component: ProductLabelStockProcessingOrderDetailComponent, pathMatch: 'full',
+    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
     data: {
       action: 'update',
       type: 'TRANSFER',

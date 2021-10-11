@@ -3,6 +3,7 @@ import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-cor
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-stock-processing-tab',
@@ -15,6 +16,8 @@ export class StockProcessingTabComponent extends StockCoreTabComponent implement
 
   allProcessFacilities = 0;
   showedProcessFacilities = 0;
+
+  reloadProcessingFacilitiesListPing$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     protected router: Router,
@@ -31,6 +34,14 @@ export class StockProcessingTabComponent extends StockCoreTabComponent implement
 
   newProcessingOrder() {
     this.router.navigate(['my-stock', 'processing', 'NEW', 'facility', 'NEW', 'new']).then();
+  }
+
+  public onCountAll(event) {
+    this.allProcessFacilities = event;
+  }
+
+  public onShow(event) {
+    this.showedProcessFacilities = event;
   }
 
 }

@@ -1,8 +1,14 @@
 <div class="af-sidenav--block">
 
   <div class="above-sidenav">
-    <div class="above-sidenav-title">
-      {{ companyTitle }}
+    <div class="above-sidenav-title company-title-wrapper">
+      <div>{{ companyTitle }}</div>
+      <div class="settings-icon"
+           (click)="openCompanyProfile()"
+           title="Company profile"
+           i18n-title="@@userBox.dropdown.companyProfile">
+        <fa-icon [icon]="faCog"></fa-icon>
+      </div>
     </div>
   </div>
 
@@ -38,7 +44,7 @@
       <a class="link-normal"
          routerLinkActive="active"
          routerLink="/my-farmers"
-         i18n="@@productLabel.sideTitle.farmers">
+         i18n="@@companyLeftPanel.farmers">
         Farmers
       </a>
     </li>
@@ -47,7 +53,7 @@
       <a class="link-normal"
          routerLinkActive="active"
          routerLink="/my-collectors"
-         i18n="@@productLabel.sideTitle.collectors">
+         i18n="@@companyLeftPanel.collectors">
         Collectors
       </a>
     </li>

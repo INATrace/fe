@@ -17,7 +17,6 @@ import { CollectorDetailModalComponent } from './collector-detail-modal/collecto
 import { CompanyCardComponent } from './company-card/company-card.component';
 import { CustomerDetailModalComponent } from './customer-detail-modal/customer-detail-modal.component';
 import { ProducersItemComponent } from './producers-item/producers-item.component';
-import { ProductLabelStakeholdersCollectorsComponent } from './product-label-stakeholders-collectors/product-label-stakeholders-collectors.component';
 import { ProductLabelStakeholdersCustomersComponent } from './product-label-stakeholders-customers/product-label-stakeholders-customers.component';
 import { ProductLabelStakeholdersComponent } from './product-label-stakeholders/product-label-stakeholders.component';
 import { StakeholdersCollectorsComponent } from './product-label-stakeholders/stakeholders-collectors/stakeholders-collectors.component';
@@ -33,7 +32,6 @@ declarations: [
     CompanyCardComponent,
     CustomerDetailModalComponent,
     ProductLabelStakeholdersComponent,
-    ProductLabelStakeholdersCollectorsComponent,
     ProductLabelStakeholdersCustomersComponent,
     ProducersItemComponent,
     StakeholdersCollectorsComponent,

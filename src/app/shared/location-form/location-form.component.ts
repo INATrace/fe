@@ -115,7 +115,7 @@ export class LocationFormComponent implements OnInit {
 
   enableValidationHonduras() {
     this.form.get('address.hondurasDepartment').setValidators([Validators.required]);
-    this.form.get('address.hondurasFarm').setValidators([Validators.required]);
+    this.form.get('address.hondurasFarm').setValidators(null);
     this.form.get('address.hondurasMunicipality').setValidators([Validators.required]);
     this.form.get('address.hondurasVillage').setValidators([Validators.required]);
   }

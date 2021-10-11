@@ -31,13 +31,12 @@
         </div>
       </div>
 
-<!--      <app-product-label-stock-processing-facilty-list-->
-<!--              [reloadPingList$]="reloadProcessingFacilitiesListPing$"-->
-<!--              (countAll)="onCountAll($event, 'PROCESS')"-->
-<!--              [organizationId]="organizationId"-->
-<!--              (showing)="onShow($event, 'PROCESS')">-->
-<!--      </app-product-label-stock-processing-facilty-list>-->
-
+      <app-stock-processing-facility-list
+              [reloadPingList$]="reloadProcessingFacilitiesListPing$"
+              (countAll)="onCountAll($event)"
+              [companyId]="companyId"
+              (showing)="onShow($event)">
+      </app-stock-processing-facility-list>
     </div>
 
   </div>

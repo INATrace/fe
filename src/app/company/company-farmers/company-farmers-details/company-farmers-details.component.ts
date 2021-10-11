@@ -63,8 +63,8 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   assocForm = new FormControl(null);
 
   genderCodebook = EnumSifrant.fromObject({
-    MALE: $localize`:@@collectorDetail.gender.farmer:Male`,
-    FEMALE: $localize`:@@collectorDetail.gender.collector:Female`
+    MALE: $localize`:@@collectorDetail.gender.male:Male`,
+    FEMALE: $localize`:@@collectorDetail.gender.female:Female`
   });
 
   get roles() {
@@ -333,7 +333,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     if (!item) {
       return;
     }
-    if (this.farmerForm.value.associations.some(a => a.company.id == item.id)) {
+    if (this.farmerForm.value.associations.some(a => a.company.id === item.id)) {
       form.setValue(null);
       return;
     }

@@ -13,27 +13,25 @@
 
     <div class="dropdown-menu" ngbDropdownMenu>
       <button ngbDropdownItem routerLink="/home" i18n="@@userBox.dropdown.home">Home</button>
-      <button [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/product-labels" i18n="@@userBox.dropdown.products">Products</button>
 
+      <button [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/product-labels" i18n="@@userBox.dropdown.products">Products</button>
       <div *ngIf="this.showProductNav" class="af-mobnav--block">
-        <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders')" i18n="@@productLabel.sideTitle.orders">Orders</button>
-        <ng-container *ngIf="this.showProductOrdersTabs">
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/dashboard')" i18n="@@productLabelOrder.tab0.title">Dashboard</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/all-orders')" i18n="@@productLabelOrder.tab1.title">Orders for me</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/customer-orders')" i18n="@@productLabelOrder.tab2.title">My orders</button>
-        </ng-container>
-        <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock')" i18n="@@productLabel.sideTitle.stock">My stock</button>
-        <ng-container *ngIf="this.showProductMyStockTabs">
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/purchases')" i18n="@@productLabelStock.tab0.title">Purchases</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/processing')" i18n="@@productLabelStock.tab1.title">Processing</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/payments')" i18n="@@productLabelStock.tab2.title">Payments</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/configuration')" i18n="@@productLabelStock.tab3.title">Configuration</button>
-          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/stock-orders')" i18n="@@productLabelStock.tab4.title">My stock</button>
-        </ng-container>
-        <!-- <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('supply')" i18n="@@productLabel.sideTitle.supply">Supply</button> -->
+<!--        <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders')" i18n="@@productLabel.sideTitle.orders">Orders</button>-->
+<!--        <ng-container *ngIf="this.showProductOrdersTabs">-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/dashboard')" i18n="@@productLabelOrder.tab0.title">Dashboard</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/all-orders')" i18n="@@productLabelOrder.tab1.title">Orders for me</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('orders/customer-orders')" i18n="@@productLabelOrder.tab2.title">My orders</button>-->
+<!--        </ng-container>-->
+<!--        <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock')" i18n="@@productLabel.sideTitle.stock">My stock</button>-->
+<!--        <ng-container *ngIf="this.showProductMyStockTabs">-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/purchases')" i18n="@@productLabelStock.tab0.title">Purchases</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/processing')" i18n="@@productLabelStock.tab1.title">Processing</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/payments')" i18n="@@productLabelStock.tab2.title">Payments</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/configuration')" i18n="@@productLabelStock.tab3.title">Configuration</button>-->
+<!--          <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stock/stock-orders')" i18n="@@productLabelStock.tab4.title">My stock</button>-->
+<!--        </ng-container>-->
         <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/product-labels/{{this.productId}}" i18n="@@productLabel.sideTitle.qrLabels">QR labels</button>
         <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('knowledge-blog')" i18n="@@productLabel.sideTitle.knowledgeBlog">Knowledge blog</button>
-        <!-- <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('f-p-q-explorer')" i18n="@@productLabel.sideTitle.FPQExplorer">F-P-Q explorer</button> -->
         <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stakeholders')" i18n="@@productLabel.sideTitle.stakeholders">Stakeholders</button>
         <ng-container *ngIf="this.showProductStakeholdersTabs">
           <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goTo('stakeholders/value-chain')" i18n="@@productLabelStakeholders.tab0.title">Value chain</button>
@@ -47,21 +45,33 @@
       <ng-container *ngIf="isAdmin">
         <button [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/companies" i18n="@@userBox.dropdown.system">System</button>
         <div *ngIf="this.showSystemNav" class="af-mobnav--block">
-          <button class="subMenu" [disabled]="isConfirmedOnly" *ngIf="isAdmin" ngbDropdownItem routerLink="/companies" i18n="@@systemLeftPanel.sideTitle.companies">Companies</button>
+          <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/companies" i18n="@@systemLeftPanel.sideTitle.companies">Companies</button>
           <ng-container *ngIf="this.showCompaniesTabs">
             <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('company')" i18n="@@companyDetailTab.tab0.title">Company</button>
+            <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('users')" i18n="@@companyDetailTab.tab2.title">Users</button>
+            <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('facilities')" i18n="@@companyDetailTab.tab3.title">Facilities</button>
+            <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('processingActions')" i18n="@@companyDetailTab.tab4.title">Processing actions</button>
             <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('translate')" i18n="@@companyDetailTab.tab1.title">Translations</button>
           </ng-container>
-          <button class="subMenu" [disabled]="isConfirmedOnly" *ngIf="isAdmin" ngbDropdownItem routerLink="/users" i18n="@@systemLeftPanel.sideTitle.users">Users</button>
-          <button class="subMenu" [disabled]="isConfirmedOnly" *ngIf="isAdmin" ngbDropdownItem routerLink="/settings" i18n="@@systemLeftPanel.sideTitle.settings">Settings</button>
+          <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/users" i18n="@@systemLeftPanel.sideTitle.users">Users</button>
+          <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/settings" i18n="@@systemLeftPanel.sideTitle.settings">Settings</button>
           <ng-container *ngIf="this.showSystemNav">
             <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/settings/additional" i18n="@@settingsPage.tab0.title">Additional settings</button>
             <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/settings/types" i18n="@@settingsPage.tab1.title">Types</button>
           </ng-container>
+          <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/value-chains" i18n="@@systemLeftPanel.sideTitle.valueChains">Value chains</button>
+          <button class="subMenu" [disabled]="isConfirmedOnly" ngbDropdownItem routerLink="/currencies" i18n="@@systemLeftPanel.sideTitle.currencies">Currencies</button>
         </div>
       </ng-container>
       <div class="line"></div>
       <button ngbDropdownItem (click)="aboutUser()" i18n="@@userBox.dropdown.userProfile">User profile</button>
+      <button ngbDropdownItem (click)="companyProfile()" i18n="@@userBox.dropdown.companyProfile">Company profile</button>
+      <div *ngIf="showCompaniesTabs && !isAdmin" class="af-mobnav--block">
+        <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('users')" i18n="@@companyDetailTab.tab2.title">Users</button>
+        <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('facilities')" i18n="@@companyDetailTab.tab3.title">Facilities</button>
+        <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('processingActions')" i18n="@@companyDetailTab.tab4.title">Processing actions</button>
+        <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('translate')" i18n="@@companyDetailTab.tab1.title">Translations</button>
+      </div>
       <button ngbDropdownItem (click)="logout()" i18n="@@userBox.dropdown.logout">Logout</button>
       <div class="line"></div>
       <button ngbDropdownItem (click)="aboutApp()" i18n="@@userBox.dropdown.aboutApp">About</button>
@@ -73,12 +83,6 @@
         [class.white-texts]="whitetexts"
         [icon]="faBars"></fa-icon>
     </div>
-
-    <!-- <div class="user-icon-box">
-      <fa-icon
-        class="user-icon"
-        [icon]="faUser"></fa-icon>
-    </div> -->
 
   </div>
 </div>

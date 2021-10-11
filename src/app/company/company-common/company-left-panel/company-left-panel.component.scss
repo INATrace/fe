@@ -88,3 +88,13 @@
   border-radius: 4px;
   object-fit: cover; // hopefully fixes image placement
 }
+
+.company-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 40px;
+
+  .settings-icon {
+    cursor: pointer;
+  }
+}

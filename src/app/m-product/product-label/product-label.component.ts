@@ -1,11 +1,11 @@
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {moveItemInArray} from '@angular/cdk/drag-drop';
-import {Location} from '@angular/common';
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {GoogleMap, MapInfoWindow} from '@angular/google-maps';
-import {ActivatedRoute, Router} from '@angular/router';
-import {faArrowAltCircleDown, faCompass, faTrashAlt} from '@fortawesome/free-regular-svg-icons';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { Location } from '@angular/common';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsAlt,
   faCodeBranch,
@@ -17,37 +17,35 @@ import {
   faSlidersH,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import {BehaviorSubject, combineLatest, of} from 'rxjs';
-import {catchError, filter, map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
-import {ProductService} from 'src/api-chain/api/product.service';
-import {CommonControllerService} from 'src/api/api/commonController.service';
-import {CompanyControllerService} from 'src/api/api/companyController.service';
-import {ProductControllerService} from 'src/api/api/productController.service';
-import {ApiAddress} from 'src/api/model/apiAddress';
-import {ApiCompany} from 'src/api/model/apiCompany';
-import {ApiProcess} from 'src/api/model/apiProcess';
-import {ApiProcessDocument} from 'src/api/model/apiProcessDocument';
-import {ApiCertification} from 'src/api/model/apiCertification';
-import {ApiProduct} from 'src/api/model/apiProduct';
-import {ApiProductLabel} from 'src/api/model/apiProductLabel';
-import {ApiProductOrigin} from 'src/api/model/apiProductOrigin';
-import {ApiResponseApiBaseEntity} from 'src/api/model/apiResponseApiBaseEntity';
-import {ApiResponsibility} from 'src/api/model/apiResponsibility';
-import {ApiResponsibilityFarmerPicture} from 'src/api/model/apiResponsibilityFarmerPicture';
-import {ApiSustainability} from 'src/api/model/apiSustainability';
-import {CompanyDetailComponent} from 'src/app/company/company-detail/company-detail.component';
-import {ComponentCanDeactivate} from 'src/app/shared-services/component-can-deactivate';
-import {CountryService} from 'src/app/shared-services/countries.service';
-import {UsersService} from 'src/app/shared-services/users.service';
-import {ListEditorManager} from 'src/app/shared/list-editor/list-editor-manager';
-import {TextinputComponent} from 'src/app/shared/textinput/textinput.component';
-import {AuthService} from 'src/app/core/auth.service';
-import {GlobalEventManagerService} from 'src/app/core/global-event-manager.service';
-import {NgbModalImproved} from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
-import {environment} from 'src/environments/environment';
-import {UnsubscribeList} from 'src/shared/rxutils';
-import {dbKey, defaultEmptyObject, generateFormFromMetadata} from 'src/shared/utils';
-import {PrefillProductSelectionModalComponent} from './prefill-product-selection-modal/prefill-product-selection-modal.component';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { CommonControllerService } from 'src/api/api/commonController.service';
+import { CompanyControllerService } from 'src/api/api/companyController.service';
+import { ProductControllerService } from 'src/api/api/productController.service';
+import { ApiAddress } from 'src/api/model/apiAddress';
+import { ApiCompany } from 'src/api/model/apiCompany';
+import { ApiProcess } from 'src/api/model/apiProcess';
+import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
+import { ApiCertification } from 'src/api/model/apiCertification';
+import { ApiProduct } from 'src/api/model/apiProduct';
+import { ApiProductLabel } from 'src/api/model/apiProductLabel';
+import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
+import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
+import { ApiResponsibility } from 'src/api/model/apiResponsibility';
+import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
+import { ApiSustainability } from 'src/api/model/apiSustainability';
+import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
+import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
+import { UsersService } from 'src/app/shared-services/users.service';
+import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
+import { TextinputComponent } from 'src/app/shared/textinput/textinput.component';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
+import { environment } from 'src/environments/environment';
+import { UnsubscribeList } from 'src/shared/rxutils';
+import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
+import { PrefillProductSelectionModalComponent } from './prefill-product-selection-modal/prefill-product-selection-modal.component';
 import {
   ApiCertificationValidationScheme,
   ApiCompanyValidationScheme,
@@ -161,18 +159,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     private location: Location,
     private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    public countryCodes: CountryService,
     public userSifrant: UsersService,
     public companyController: CompanyControllerService,
     public valueChainController: ValueChainControllerService,
     private modalService: NgbModalImproved,
     private authService: AuthService,
-    private commonController: CommonControllerService,
-    private chainProductService: ProductService,
-    private activatedRoute: ActivatedRoute
+    private commonController: CommonControllerService
   ) {
-    super()
-    this.generateLabelMaps()
+    super();
+    this.generateLabelMaps();
     if (this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.labelId) {
       this.redirectToCertainLabel = this.router.getCurrentNavigation().extras.state.labelId;
       this.initialReload = true;
@@ -194,7 +189,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.labelTitleForm.value || noName
   }
 
-  action = this.route.snapshot.data.action
+  action = this.route.snapshot.data.action;
   ngOnInit(): void {
     this.userProfile = this.authService.currentUserProfile;
     let subUserProfile = this.authService.userProfile$.subscribe(val => {
@@ -376,28 +371,33 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
 
   async prepareForm(data) {
-    let product = data;
-    // console.log("CURRENT LABEL DATA:", data)
+
+    const product = data;
+
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
-    let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
+
+    const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
     this.productForm.setControl('keyMarketsShare', marketShareForm);
-    let pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
+
+    const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
-    let comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
+
+    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
     this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-    let priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
+
+    const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
     (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
+
     this.initializeListManagers();
-    let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
-    let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
+
+    const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
+    const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-    let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
-    this.productForm.setControl('valueChain', valueChainForm);
+
     this.productForm.updateValueAndValidity();
     this.initializeOriginLocations();
     this.initializeMarkers();
-    //console.log('FORM:', this.productForm);
   }
 
   static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
@@ -567,22 +567,20 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         notificationType: 'error',
         title: $localize`:@@productLabel.saveProduct.error.title:Error`,
         message: $localize`:@@productLabel.saveProduct.error.message:Errors on page. Please check!`
-      })
+      });
       return false;
     }
 
     let result = false;
     try {
       this.globalEventsManager.showLoading(true);
-      let data = this.productForm.value
-      // console.log("DATA", data);
-      let res = await this.productController.updateProductUsingPUT(data).pipe(take(1)).toPromise()
+      const data = this.productForm.value;
+      const res = await this.productController.updateProductUsingPUT(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
-        this.productForm.markAsPristine()
-        if(this.visibilityForm) this.visibilityForm.markAsPristine();
-        this.mapToChain(this.pId);
+        this.productForm.markAsPristine();
+        if (this.visibilityForm) { this.visibilityForm.markAsPristine(); }
         if (reload) {
-          this.reload()
+          this.reload();
         }
         result = true;
       }
@@ -595,8 +593,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async saveCurrentLabel(reload = false) {
-    let labels = this.currentLabelFields()
-    let res = await this.productController.updateProductLabelUsingPUT(
+    const labels = this.currentLabelFields();
+    const res = await this.productController.updateProductLabelUsingPUT(
       {
         ...this.currentLabel,
         fields: labels,
@@ -604,19 +602,20 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       },
     ).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
-      let data = this.productForm.value;
+      const data = this.productForm.value;
 
       data['labelId'] = this.currentLabel.id;
       data['id'] = this.pId;
-      let resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
-      if (resC && resC.status === 'OK') this.productForm.markAsPristine();
-      this.mapToChain(this.pId);
+
+      const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
+      if (resC && resC.status === 'OK') { this.productForm.markAsPristine(); }
+
       this.visibilityForm.markAsPristine();
       this.labelTitleForm.setValue(null);
       this.labelTitleForm.markAsPristine();
       this.resetMoveIndicator();
       if (reload) {
-        this.reloadLabels()
+        this.reloadLabels();
       }
       return true;
     }
@@ -632,18 +631,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         notificationType: 'error',
         title: $localize`:@@productLabel.create.error.title:Error`,
         message: $localize`:@@productLabel.create.error.message:Errors on page. Please check!`
-      })
-      return
+      });
+      return;
     }
+
     try {
       this.globalEventsManager.showLoading(true);
-      let data = this.productForm.value
-      delete data['id']
-      // data.company.id = 1 //* I guess this should be removed? */
-      let res: ApiResponseApiBaseEntity = await this.productController.createProductUsingPOST(data).pipe(take(1)).toPromise()
+      const data = this.productForm.value;
+      delete data['id'];
+      const res: ApiResponseApiBaseEntity = await this.productController.createProductUsingPOST(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
-        if (res.data && res.data.id) this.mapToChain(res.data.id, false)
-        this.productForm.markAsPristine()
+        this.productForm.markAsPristine();
         this.goBack();
       }
     } catch (e) {
@@ -652,63 +650,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.globalEventsManager.showLoading(false);
     }
   }
-
-
-  async mapToChain(id: number, update: boolean = true) {
-    let respProd = await this.productController.getProductUsingGET(id).pipe(take(1)).toPromise();
-    if (respProd && 'OK' === respProd.status && respProd.data) {
-      let p = respProd.data;
-      let organizationRoles = [];
-      if (p.associatedCompanies && p.associatedCompanies.length > 0) {
-        for (let com of p.associatedCompanies) {
-          let assocComp = {
-            companyId: com.company.id,
-            role: com.type
-          }
-          organizationRoles.push(assocComp);
-        }
-      }
-      let labels = [];
-      let respProd1 = await this.productController.getProductLabelsUsingGET(id).pipe(take(1)).toPromise();
-      if (respProd1 && "OK" == respProd1.status && respProd1.data) {
-        for (let d of respProd1.data) {
-          let respProd2 = await this.productController.getProductLabelValuesUsingGET(d.id).pipe(take(1)).toPromise();
-          if (respProd2 && "OK" === respProd2.status && respProd2.data) {
-            labels.push(respProd2.data);
-          }
-        }
-      }
-      let obj = {
-        id: p.id,
-        name: p.name,
-        description: p.description,
-        howToUse: p.howToUse ? p.howToUse : "",
-        ingredients: p.ingredients ? p.ingredients : "",
-        nutritionalValue: p.nutritionalValue ? p.nutritionalValue : "",
-        origin: p.origin,
-        photo: p.photo,
-        process: p.process,
-        responsibility: p.responsibility,
-        sustainability: p.sustainability,
-        keyMarketsShare: p.keyMarketsShare ? p.keyMarketsShare : {},
-        companyId: p.company && p.company.id ? p.company.id : null,
-        organizationRoles: organizationRoles,
-        labels: labels
-      }
-      if (update) {
-        let res = await this.chainProductService.getProductByAFId(id).pipe(take(1)).toPromise();
-        if (res && 'OK' === res.status && res.data) {
-          obj['_id'] = dbKey(res.data);
-          obj['_rev'] = res.data._rev;
-        }
-      }
-      let res = await this.chainProductService.postProduct(obj).pipe(take(1)).toPromise()
-      if (res && 'OK' != res.status) {
-      }
-    }
-  }
-
-
 
   onFileUpload(event) {
     // console.log(event)
@@ -1361,37 +1302,29 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.setLanguageForLabel();
   }
 
-
   async deleteLabel(labelMessage) {
-    let position = labelMessage.position;
-    let label = labelMessage.label
-    // if(this.productChanged || (label.id != this.currentLabel.id && this.labelChanged)) {
+
+    const position = labelMessage.position;
+    const label = labelMessage.label;
+
     if (this.changed) {
       this.globalEventsManager.push({
         action: 'error',
         notificationType: 'warning',
         title: $localize`:@@productLabel.deleteLabel.warning.title:Error`,
         message: $localize`:@@productLabel.deleteLabel.warning.message:Unsaved data. Please save changes before deleting the label.`
-      })
+      });
       return;
     }
-    let res = await this.productController.deleteProductLabelUsingDELETE(label.id).pipe(take(1)).toPromise()
-    if (res && res.status == 'OK') {
-      this.mapToChain(this.pId);
+
+    const res = await this.productController.deleteProductLabelUsingDELETE(label.id).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       if (label.id === this.currentLabel.id) {
-        this.labelSelect$.next({ position: position, preventEmit: false })
+        this.labelSelect$.next({ position, preventEmit: false });
       }
-      this.reload()
+      this.reload();
     }
   }
-
-  //   export interface ApiProductLabel {
-  //     fields?: Array<ApiProductLabelField>;
-  //     id?: number;
-  //     productId?: number;
-  //     title?: string;
-  //     uuid?: string;
-  // }
 
   preparePricingTransparencyElements(): any[] {
     let elts = [];
@@ -1489,60 +1422,65 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   async initializeByLabel(label: ApiProductLabel) {
 
-    if (!this.currentLabel) { this.currentLabel = label; this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true });};
-    let res = await this.productController.getProductLabelContentUsingGET(label.id).pipe(take(1)).toPromise();
+    if (!this.currentLabel) { this.currentLabel = label; this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true }); }
+    const res = await this.productController.getProductLabelContentUsingGET(label.id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
-      this.prepareForm(res.data);
+      this.prepareForm(res.data).then();
     }
-    let newFieldMap = new Map();
-    let sortOrderMap = new Map();
+
+    const newFieldMap = new Map();
+    const sortOrderMap = new Map();
     let farmerStoryVisible = false;
     let specialityVisible = false;
     let increaseVisible = false;
     this.generateDefaultElements();
-    let allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
+
+    const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
     ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
     let i = 0;
     allList.forEach(el => {    // default order
       sortOrderMap.set(el.name, i);
       i++;
-    })
+    });
     i = 0;
+
     label.fields.forEach(field => {
-      if (field.name == 'responsibility.farmer') farmerStoryVisible = field.visible;
-      if (field.name == 'specialityDescription') specialityVisible = field.visible;
-      if (field.name == 'settings.incomeIncreaseDescription') increaseVisible = field.visible;
-      newFieldMap.set(field.name, field)
+      if (field.name === 'responsibility.farmer') { farmerStoryVisible = field.visible; }
+      if (field.name === 'specialityDescription') { specialityVisible = field.visible; }
+      if (field.name === 'settings.incomeIncreaseDescription') { increaseVisible = field.visible; }
+      newFieldMap.set(field.name, field);
       sortOrderMap.set(field.name, i);
       i++;
-    })
-    this.productElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.processElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.socialResponsibilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.environmentalSustainabilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.pricingTransparencyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.comparisonOfPriceElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.settingsElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.companyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1)
-    this.visibilityMap = new Map()
+    });
+    this.productElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.processElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.socialResponsibilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.environmentalSustainabilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.pricingTransparencyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.comparisonOfPriceElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.settingsElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.companyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
+    this.visibilityMap = new Map();
     allList.forEach(el => {    // set visibility forms
-      let field = newFieldMap.get(el.name)
+      const field = newFieldMap.get(el.name);
       if (field) {
-        el.visible.setValue(field.visible)
+        el.visible.setValue(field.visible);
         // el.visible.markAsDirty()
         // el.visible.updateValueAndValidity()
       } else {
         // console.log("STRANGE", el, field, newFieldMap)
-        el.visible.setValue(false)
+        el.visible.setValue(false);
       }
-      if (el.name == "responsibility.farmerStory") el.visible.setValue(farmerStoryVisible)
-      if (el.name == "speciality") el.visible.setValue(specialityVisible)
-      if (el.name == "settings.increaseIncome") el.visible.setValue(increaseVisible)
-      this.visibilityMap.set(el.name, el.visible)
-    })
-    this.visibilityForm.markAsPristine()
-    this.labelTitleForm.setValue(label.title)
-    this.labelTitleForm.markAsPristine()
+
+      if (el.name === 'responsibility.farmerStory') { el.visible.setValue(farmerStoryVisible); }
+      if (el.name === 'speciality') { el.visible.setValue(specialityVisible); }
+      if (el.name === 'settings.increaseIncome') { el.visible.setValue(increaseVisible); }
+      this.visibilityMap.set(el.name, el.visible);
+    });
+
+    this.visibilityForm.markAsPristine();
+    this.labelTitleForm.setValue(label.title);
+    this.labelTitleForm.markAsPristine();
   }
 
   get changed(): Boolean {
@@ -1587,40 +1525,35 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async togglePublish() {
+
     if (this.changed) {
-      // this.globalEventsManager.push({
-      //   action: 'error',
-      //   notificationType: 'warning',
-      //   title: "Error",
-      //   message: "Unsaved data. Please save changes before publishing."
-      // })
       return;
     }
-    let successTitlePublished = $localize`:@@productLabel.togglePublish.success.title.published:Published`;
-    let successTitleWithdrawn = $localize`:@@productLabel.togglePublish.success.title.withdrawn:Withdrawn`;
-    let successMessagePublished = $localize`:@@productLabel.togglePublish.success.message.published:Label has been successfully published.`;
-    let successMessageWithdrawn = $localize`:@@productLabel.togglePublish.success.message.withdrawn:Label is not published anymore.`;
-    if (!this.currentLabel || !this.currentLabel.status) return;
-    let toBePublished = this.currentLabel.status === ApiProductLabel.StatusEnum.UNPUBLISHED
-    let action = toBePublished ? 'PUBLISH_LABEL' : 'UNPUBLISH_LABEL'
-    let res = await this.productController.executeAction(action as any, this.currentLabel).pipe(take(1)).toPromise()
-    if (res && res.status == "OK") {
-      this.mapToChain(this.pId);
+
+    const successTitlePublished = $localize`:@@productLabel.togglePublish.success.title.published:Published`;
+    const successTitleWithdrawn = $localize`:@@productLabel.togglePublish.success.title.withdrawn:Withdrawn`;
+    const successMessagePublished = $localize`:@@productLabel.togglePublish.success.message.published:Label has been successfully published.`;
+    const successMessageWithdrawn = $localize`:@@productLabel.togglePublish.success.message.withdrawn:Label is not published anymore.`;
+    if (!this.currentLabel || !this.currentLabel.status) { return; }
+    const toBePublished = this.currentLabel.status === ApiProductLabel.StatusEnum.UNPUBLISHED;
+    const action = toBePublished ? 'PUBLISH_LABEL' : 'UNPUBLISH_LABEL';
+    const res = await this.productController.executeAction(action as any, this.currentLabel).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.reloadLabel();
-      this.reloadLabels();//this is needed for label-card updating (maybe there is a better way of doing)
+      this.reloadLabels(); // this is needed for label-card updating (maybe there is a better way of doing)
       this.globalEventsManager.push({
         action: 'success',
         notificationType: 'success',
         title: toBePublished ? successTitlePublished : successTitleWithdrawn,
         message: toBePublished ? successMessagePublished : successMessageWithdrawn
-      })
+      });
     } else {
       this.globalEventsManager.push({
         action: 'error',
         notificationType: 'error',
         title: $localize`:@@productLabel.togglePublish.error.title:Error`,
         message: $localize`:@@productLabel.togglePublish.error.message:Operation cannot be executed. Please try again.`
-      })
+      });
     }
   }
 

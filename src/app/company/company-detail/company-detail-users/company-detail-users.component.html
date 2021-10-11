@@ -1,7 +1,7 @@
 <app-authorised-layout>
-  <app-system-left-panel title="System"></app-system-left-panel>
+  <app-system-left-panel title="System" [isAdmin]="isAdmin"></app-system-left-panel>
 
-  <div class="main"
+  <div [class.main]="isAdmin" [class.company-profile]="!isAdmin"
        *ngIf="companyUsersFormArray"
        contents
        [initialValue]=""

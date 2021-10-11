@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiCompanyUser } from '../../../../api/model/apiCompanyUser';
 import { FormArray, FormControl } from '@angular/forms';
@@ -11,13 +11,14 @@ import { defaultEmptyObject } from '../../../../shared/utils';
 import { ApiResponseListApiCompanyUser } from '../../../../api/model/apiResponseListApiCompanyUser';
 import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-company-detail-users',
   templateUrl: './company-detail-users.component.html',
   styleUrls: ['./company-detail-users.component.scss']
 })
-export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponent implements OnInit {
+export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
 
   companyUsersFormArray: FormArray;
   companyUserListManager = null;
@@ -32,9 +33,10 @@ export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponen
     protected router: Router,
     protected route: ActivatedRoute,
     private companyController: CompanyControllerService,
-    private globalEventsManager: GlobalEventManagerService
+    private globalEventsManager: GlobalEventManagerService,
+    protected authService: AuthService
   ) {
-    super(router, route);
+    super(router, route, authService);
   }
 
   static ApiCompanyUserCreateEmptyObject(): ApiCompanyUser {
@@ -53,6 +55,7 @@ export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponen
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.globalEventsManager.showLoading(true);
     const id = this.route.snapshot.paramMap.get('id');
     this.companyController.getCompanyUsersUsingGET(Number(id))
@@ -68,6 +71,10 @@ export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponen
           }
         }
       );
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   canDeactivate(): boolean {

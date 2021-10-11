@@ -3,12 +3,11 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, map, shareReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
-import { ProductService } from 'src/api-chain/api/product.service';
-import { ChainProcessingAction } from 'src/api-chain/model/chainProcessingAction';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/model/apiPaginatedResponseApiProcessingAction';
+import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 
 @Component({
   selector: 'app-company-list-processing-actions',
@@ -18,14 +17,14 @@ import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/mode
 export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
   @Input()
-  organizationId: string;
+  organizationId: number;
 
   @Output()
   showing = new EventEmitter<number>();
   @Output()
   countAll = new EventEmitter<number>();
 
-  processingActionToShow: ChainProcessingAction;
+  processingActionToShow: ApiProcessingAction;
 
   searchName = new FormControl(null);
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -120,7 +119,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       protected globalEventsManager: GlobalEventManagerService,
       private route: ActivatedRoute,
       private router: Router,
-      private chainProductService: ProductService,
       private codebookTranslations: CodebookTranslations
   ) { }
 
@@ -178,7 +176,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
     this.reloadPingList$.next(true);
   }
 
-  view(action: ChainProcessingAction) {
+  view(action: ApiProcessingAction) {
     this.processingActionToShow = action;
   }
 

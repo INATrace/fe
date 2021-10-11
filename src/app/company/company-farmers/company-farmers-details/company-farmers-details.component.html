@@ -70,6 +70,23 @@
                                 placeholder=""
                                 i18n-label="@@collectorDetail.textinput.userCustomerId.label">
                         </textinput>
+
+                        <textinput
+                            [form]="farmerForm.get('farmerCompanyInternalId')"
+                            label="Company internal ID"
+                            style="width: 100%"
+                            placeholder="Enter company internal ID"
+                            i18n-label="@@collectorDetail.textinput.farmerCompanyInternalId.label"
+                            i18n-placeholder="@@collectorDetail.textinput.farmerCompanyInternalId.placeholder"
+                            [isInvalid]="submitted && farmerForm.get('farmerComnapyInternalId')">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="farmerForm.get('farmerCompanyInternalId').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.farmerCompanyInternalId.error">
+                                        Company internal ID is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
                     </div>
                 </div>
 
@@ -177,10 +194,10 @@
 
             <div class="af-form-row">
                 <div class="af-form-block--c6">
-                    <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
+                    <h2 i18n="@@collectorDetail.section.companies">Companies</h2>
                     <div class="af-form-element">
                         <list-editor *ngIf="producersListManager"
-                                     label="Customer of"
+                                     label="Supplier of"
                                      [listEditorManager]="producersListManager"
                                      addText="Add new"
                                      [canAdd]="true"
@@ -196,6 +213,7 @@
                                                 [assocCoop]="assocCoop"
                                                 title=null
                                                 [formControlInput]="item"
+                                                [type]="'FARMER'"
                                                 [isOpen]="producersListManager.isOpen(i)"
                                                 [listEditorManager]="this.producersListManager"
                                                 [listEditorManagerPosition]="i">
