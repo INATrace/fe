@@ -126,8 +126,6 @@
                 </div>
               </div>
 
-              <!-- TODO: to here -->
-
               <div *ngIf="showInputTransactions" class="d-flex justify-content-between" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
 
                 <div class="af-row">
@@ -270,6 +268,9 @@
                 <div *ngIf="inputQuantityOrOutputFacilityNotSet" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
 
               </div>
+
+              <!-- TODO: to here -->
+
               <ng-container *ngIf="this.prAction && this.prAction.requiredFields">
                 <app-order-fields *ngFor="let fieldInfo of this.prAction.requiredFields"
                   side="left"

@@ -11,6 +11,8 @@ import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockProcessingOrderDetailsComponent } from './stock-processing-order-details/stock-processing-order-details.component';
 import { StockProcessingFacilityListComponent } from './stock-processing-facility-list/stock-processing-facility-list.component';
 import { FacilityCardComponent } from './stock-processing-facility-list/facility-card/facility-card.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { FacilityCardComponent } from './stock-processing-facility-list/facility
     LayoutModule,
     SharedModule,
     CompanyCommonModule,
-    StockCoreModule
+    StockCoreModule,
+    NgbDropdownModule,
+    FontAwesomeModule
   ]
 })
 export class StockProcessingModule { }

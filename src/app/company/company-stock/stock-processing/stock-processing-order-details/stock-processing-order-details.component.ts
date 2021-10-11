@@ -25,6 +25,8 @@ import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { CompanyFacilitiesForSemiProductService } from '../../../../shared-services/company-facilities-for-semi-product.service';
 import { Subscription } from 'rxjs';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -37,6 +39,9 @@ export interface ApiStockOrderSelectable extends ApiStockOrder {
   styleUrls: ['./stock-processing-order-details.component.scss']
 })
 export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
+
+  // FontAwesome icons
+  faTimes = faTimes;
 
   title: string;
 
@@ -55,8 +60,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
 
+  checkboxClipOrderFrom = new FormControl(false);
+
   // Input facility
   inputFacilityFromUrl: ApiFacility = null;
+  currentInputFacility: ApiFacility = null;
   inputFacilityForm = new FormControl(null, Validators.required);
   inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | CompanySellingFacilitiesForSemiProductService;
 
@@ -78,8 +86,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   cbSelectAllForm = new FormControl(false);
   outputStockOrderForm: FormGroup;
 
+  // Processing orders
+  editableProcessingOrder: ApiProcessingOrder;
+
+  // Input stock orders filters
   showWomensFilter = false;
   womensOnlyForm = new FormControl(null);
+  fromFilterDate = new FormControl(null);
+  toFilterDate = new FormControl(null);
+  womensOnlyStatus = new FormControl(null);
 
   activeProcessingCodebook: CompanyProcessingActionsService;
 
@@ -121,6 +136,57 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.actionType === 'TRANSFER' &&
       !(this.prAction && this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id) &&
       this.semiProductsInFacility;
+  }
+
+  get showInputTransactions() {
+    return this.inputFacilityForm.value;
+  }
+
+  get womensOnlyStatusValue() {
+    if (this.womensOnlyStatus.value != null) {
+      if (this.womensOnlyStatus.value) { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.womenCoffee:Women coffee`; }
+      else { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.nonWomenCoffee:Non-women coffee`; }
+    }
+    return null;
+  }
+
+  get inputFacility(): ApiFacility {
+    return this.inputFacilityForm.value as ApiFacility;
+  }
+
+  get showLeftSide() {
+    const facility = this.inputFacility;
+    if (!facility) { return true; }
+    if (!this.update) { return true; }
+    return this.companyId === facility.company?.id;
+  }
+
+  get disabledLeftFields() {
+    return !this.inputFacility || this.inputFacility.company?.id !== this.companyId;
+  }
+
+  get nonOutputSemiProductsInputSemiProductsLength() {
+
+    if (!this.outputStockOrderForm) { return 0; }
+    if (!this.update) { return this.inputStockOrders.length; }
+
+    const allSet = new Set(this.inputStockOrders.map(x => x.id));
+
+    if (this.actionType === 'PROCESSING' || this.actionType === 'TRANSFER') {
+      this.editableProcessingOrder.targetStockOrders.forEach(x => {
+        allSet.delete(x.id);
+      });
+    }
+
+    if (this.actionType === 'SHIPMENT') {
+      const id = this.outputStockOrderForm.value.id;
+      allSet.delete(id);
+    }
+    return allSet.size;
+  }
+
+  get isClipOrder(): boolean {
+    return !!this.checkboxClipOrderFrom.value;
   }
 
   ngOnInit(): void {
@@ -224,15 +290,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // TODO: implement new proc. order
   }
 
-  private async defineInputAndOutputSemiProduct(event) {
+  private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
 
-    if (event.inputSemiProductId) {
-      const resInSP = await this.semiProductsController.getSemiProductUsingGET(event.inputSemiProductId).pipe(take(1)).toPromise();
+    if (event.inputSemiProduct && event.inputSemiProduct.id) {
+      const resInSP = await this.semiProductsController.getSemiProductUsingGET(event.inputSemiProduct.id).pipe(take(1)).toPromise();
       if (resInSP && resInSP.status === 'OK') { this.currentInputSemiProduct = resInSP.data; }
     }
 
-    if (event.outputSemiProductId) {
-      const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProductId).pipe(take(1)).toPromise();
+    if (event.outputSemiProduct && event.outputSemiProduct.id) {
+      const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
       if (resOutSP && resOutSP.status === 'OK') {
         this.currentOutputSemiProduct = resOutSP.data;
         this.currentOutputSemiProductNameForm.setValue(this.translateName(this.currentOutputSemiProduct));
@@ -388,8 +454,118 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private translateName(obj) {
+  translateName(obj) {
     return this.codebookTranslations.translate(obj, 'name');
+  }
+
+  selectAll() {
+
+    if (!this.showLeftSide) { return; }
+    if (this.disabledLeftFields) { return; }
+
+    if (this.cbSelectAllForm.value) {
+
+      this.selectedInputStockOrders = [];
+      for (const item of this.inputStockOrders) {
+        this.selectedInputStockOrders.push(item);
+      }
+
+      this.inputStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
+
+      if (this.isClipOrder) {
+        this.clipOrder(true);
+      }
+    } else {
+      this.selectedInputStockOrders = [];
+      this.inputStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
+    }
+    this.calcInputQuantity(true);
+    this.setWomensOnly();
+  }
+
+  clipOrder(value: boolean) {
+    // TODO: implement clip order
+    // if (value) {
+    //   // let outputQuantity = this.outputStockOrderForm.get('totalQuantity').value
+    //   const outputQuantity = this.totalQuantity;
+    //   let tmpQuantity = 0;
+    //   for (const tx of this.inputTransactions) {
+    //     tmpQuantity += tx.outputQuantity;
+    //   }
+    //   for (const item of this.inputSemiProducts) {
+    //     if (!item.selected) { continue; }
+    //     if (tmpQuantity + item.availableQuantity <= outputQuantity) {
+    //       tmpQuantity += item.availableQuantity;
+    //       item.selectedQuantity = item.availableQuantity;
+    //       continue;
+    //     }
+    //     if (tmpQuantity >= outputQuantity) {
+    //       item.selected = false;
+    //       item.selectedQuantity = 0;
+    //       continue;
+    //     }
+    //     item.selectedQuantity = outputQuantity - tmpQuantity;
+    //     tmpQuantity = outputQuantity;
+    //   }
+    //   this.calcInputQuantity(true);
+    // }
+  }
+
+  cbSelected(semiProduct, index: number) {
+    // TODO: implement checkbox select event listener
+    // if (!this.showLeftSide) { return; }
+    // if (this.cbSelectAllForm.value) {
+    //   this.cbSelectAllForm.setValue(false);
+    // }
+    // if (!this.inputSemiProducts[index].selected) {
+    //   // let outputQuantity = this.form.get('outputQuantity').value as number || 0
+    //   // let outputQuantity = this.outputStockOrderForm.get('totalQuantity').value as number || 0
+    //   const outputQuantity = this.totalQuantity as number || 0;
+    //   const toFill = outputQuantity - this.calcInputQuantity(false); // Todo - odštej obstoječe transakcije
+    //
+    //   // console.log("TO-FILL:", toFill, this.actionType, this.isClipOrder)
+    //   const currentAvailable = this.inputSemiProducts[index].availableQuantity;
+    //   if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
+    //     if (toFill > 0 && currentAvailable > 0) {
+    //       this.inputSemiProducts[index].selected = true;
+    //       this.inputSemiProducts[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
+    //     } else {
+    //       this.inputSemiProducts[index].selected = true;
+    //       this.inputSemiProducts[index].selectedQuantity = 0;
+    //       setTimeout(() => { this.inputSemiProducts[index].selected = false; this.calcInputQuantity(true); }, 600);
+    //     }
+    //   } else {
+    //     this.inputSemiProducts[index].selected = true;
+    //     this.inputSemiProducts[index].selectedQuantity = currentAvailable;
+    //   }
+    // } else {
+    //   this.inputSemiProducts[index].selected = false;
+    //   this.inputSemiProducts[index].selectedQuantity = 0;
+    // }
+    //
+    // // this.inputSemiProducts[index].selected = !this.inputSemiProducts[index].selected;
+    // this.select(semiProduct);
+  }
+
+  isOutputStockOrder(order: ApiStockOrder) {
+    if (!this.update) { return false; }
+    return this.editableProcessingOrder.targetStockOrders.some(x => x === order.id);
+  }
+
+  private setWomensOnly() {
+
+    let count = 0;
+    let all = 0;
+
+    for (const item of this.selectedInputStockOrders) {
+      if (item.womenShare) {
+        count += item.availableQuantity;
+      }
+      all += item.availableQuantity;
+    }
+    if (count === all && all > 0) { this.womensOnlyForm.setValue('YES'); }
+    else if (count < all && all > 0) { this.womensOnlyForm.setValue('NO'); }
+    else { this.womensOnlyForm.setValue(null); }
   }
 
   private setRequiredFields(action: ApiProcessingAction) {
@@ -578,6 +754,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.outputFacilitiesCodebook = new FacilitiesCodebookService(this.facilityController, this.codebookTranslations);
     }
+  }
+
+  async setWomensOnlyStatus(status: boolean) {
+    if (!this.showLeftSide) { return; }
+    this.womensOnlyStatus.setValue(status);
+    if (this.currentInputFacility) {
+      this.dateSearch().then();
+    }
+  }
+
+  async dateSearch() {
+    // TODO: implement date search for available stock at facility
   }
 
 }
