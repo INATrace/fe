@@ -81,13 +81,12 @@
 
               <div class="af-row" *ngIf="showFilterSemiProduct">
                 <div class="af-c12">
-
                   <single-choice
                           label="Select semi-product"
                           i18n-label="@@productLabelStockProcessingOrderDetail.filterSemiProduct.label"
                           [formControlInput]="filterSemiProduct"
                           [codebookService]="semiProductsInFacility"
-                          (onChange)="setSelectedSemiProduct($event)">
+                          (onChange)="selectedSemiProductChange($event)">
                   </single-choice>
                 </div>
               </div>
