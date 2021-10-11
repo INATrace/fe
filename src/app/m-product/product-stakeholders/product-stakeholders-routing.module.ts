@@ -34,12 +34,8 @@ const routes: Routes = [
   },
   {
     path: 'customers',
-    component: StakeholdersCustomersComponent,
     pathMatch: 'full',
-    data: {
-      tab: 'customers',
-      drobtinice: null
-    }
+    redirectTo: '/my-collectors'
   },
   {
     path: 'customers/organization/:organizationId/new/:customerId',
