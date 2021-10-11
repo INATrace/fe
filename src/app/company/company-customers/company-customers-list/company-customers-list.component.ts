@@ -89,7 +89,6 @@ export class CompanyCustomersListComponent implements OnInit {
             switchMap(params => this.companyController.getCompanyCustomersListUsingGETByMap(params)),
             map(response => {
               if (response) {
-                console.log('meme');
                 this.customerCount = response.data.count;
                 this.showing = this.customerCount >= this.pageSize ? Math.min(this.page * this.pageSize, this.customerCount) : this.customerCount;
                 return response.data;

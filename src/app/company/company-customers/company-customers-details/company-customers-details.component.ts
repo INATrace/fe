@@ -114,19 +114,16 @@ export class CompanyCustomersDetailsComponent implements OnInit {
 
   newCustomer() {
     this.customerForm = generateFormFromMetadata(ApiCompanyCustomer.formMetadata(), this.emptyCustomer(), ApiCompanyCustomerValidationScheme);
-    console.log('customer form', this.customerForm);
   }
 
   editCustomer() {
     this.customerForm = generateFormFromMetadata(ApiCompanyCustomer.formMetadata(), this.customer, ApiCompanyCustomerValidationScheme);
-    console.log('edit customer form', this.customerForm);
   }
 
   emptyCustomer() {
     const obj: ApiCompanyCustomer = defaultEmptyObject(ApiCompanyCustomer.formMetadata());
     obj.location = defaultEmptyObject(ApiGeoAddress.formMetadata()) as ApiGeoAddress;
 
-    console.log('empty object', obj);
     return obj;
   }
 
@@ -138,34 +135,24 @@ export class CompanyCustomersDetailsComponent implements OnInit {
 
   dismiss() {
     this.location.back();
-    console.log('dismiss');
   }
 
   async save() {
-    console.log('saving');
     this.submitted = true;
     if (this.customerForm.invalid) {
       return;
     }
     const data = this.prepareData();
-    console.log('saving data', data);
 
     try {
-      console.log('trying');
       this.globalEventsManager.showLoading(true);
 
-      console.log('trying');
       let res;
       if (!this.update) {
-        console.log('trying new');
         res = await this.companyService.createCompanyCustomerUsingPOST(data).toPromise();
       } else {
-        console.log('trying edit edit');
         res = await this.companyService.updateCompanyCustomerUsingPUT(data).toPromise();
       }
-
-      console.log('res', res);
-      console.log('res status', res.status);
 
       if (res && res.status === 'OK') {
         this.dismiss();
