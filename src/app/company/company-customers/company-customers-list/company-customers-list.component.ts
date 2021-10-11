@@ -111,7 +111,7 @@ export class CompanyCustomersListComponent implements OnInit {
   async deleteCustomer(id) {
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@productLabelStakeholdersCollectors.deleteCollector.error.message:Are you sure you want to delete the collector?`,
+      message: $localize`:@@productLabelStakeholdersCustomers.deleteCustomer.error.message:Are you sure you want to delete the customer?`,
       options: {
         centered: true
       }
@@ -119,7 +119,7 @@ export class CompanyCustomersListComponent implements OnInit {
     if (result !== 'ok') {
       return;
     }
-    const res = await this.companyController.deleteUserCustomerUsingDELETE(id).pipe(take(1)).toPromise();
+    const res = await this.companyController.deleteCompanyCustomerUsingDELETE(id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.ping$.next(null);
     }

@@ -255,7 +255,7 @@
     "customerDetail.textinput.phone.placeholder": "Introduzca el número de telefóno",
     "customerDetail.section.location": "Ubicación",
     "customerDetail.section.skuPrices": "Precios SKU",
-    "customerDetail.textinput.name.error": "Se requiere el nombre",
+    "customerDetail.textinput.name.error": "Se requiere el nombre de la empresa",
     "customerDetail.textinput.email.error": "{$START_TAG_SPAN} El formato del correo electrónico está incorrecto {$CLOSE_TAG_SPAN}",
     "customerDetail.button.skuPrices.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
     "customerDetail.textinput.skuPrices.from": "Desde",

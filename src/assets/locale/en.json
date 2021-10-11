@@ -1824,7 +1824,7 @@
     "customerDetail.textinput.phone.placeholder": "Enter phone number",
     "customerDetail.section.location": "Location",
     "customerDetail.section.skuPrices": "SKU prices",
-    "customerDetail.textinput.name.error": "Name is required",
+    "customerDetail.textinput.name.error": "Company name is required",
     "customerDetail.textinput.email.error": "{$START_TAG_SPAN} E-mail is in the wrong format {$CLOSE_TAG_SPAN}",
     "customerDetail.button.skuPrices.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
     "customerDetail.textinput.skuPrices.from": "From",

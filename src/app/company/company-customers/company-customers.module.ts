@@ -7,6 +7,7 @@ import { LayoutModule } from '../../layout/layout.module';
 import { CompanyCommonModule } from '../company-common/company-common.module';
 import { SharedModule } from '../../shared/shared.module';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -18,7 +19,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     LayoutModule,
     CompanyCommonModule,
     SharedModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    FontAwesomeModule
   ]
 })
 export class CompanyCustomersModule { }

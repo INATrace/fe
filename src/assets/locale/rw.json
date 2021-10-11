@@ -758,7 +758,7 @@
     "customerDetail.textinput.phone.label": "Inomero ya telephone",
     "customerDetail.textinput.phone.placeholder": "Shyiraho inomero ya telephone",
     "customerDetail.modal.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Hagarika{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Bika{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
-    "customerDetail.textinput.name.error": "Izina rirakenewe",
+    "customerDetail.textinput.name.error": "Izina rya kompanyi rirakenewe",
     "customerDetail.textinput.email.error": "{$START_TAG_SPAN} E-mail iri mu buryo butari bwo {$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.button.newCustomer": "{$START_TAG_SPAN}+ Ongeraho umuguzi{$CLOSE_TAG_SPAN}",
     "productLabelStakeholdersCustomers.tableCol.edit": "Guhindura",
