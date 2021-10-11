@@ -52,17 +52,14 @@ export class GeoaddressFormComponent implements OnInit, OnDestroy {
       this.form.get('sector').setValidators([Validators.required]);
     });
 
-    // const sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
-    //     loaded => {
-    //       // console.log("EMM:", loaded)
-    //       if (loaded) { this.isGoogleMapsLoaded = true; }
-    //       this.initializeMarker();
-    //       const tmpVis = this.form.get('publiclyVisible').value;
-    //       if (tmpVis != null) { this.form.get('publiclyVisible').setValue(tmpVis.toString()); }
-    //     },
-    //     error => { }
-    // );
-    // this.subs.push(sub2);
+    const sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
+        loaded => {
+          if (loaded) { this.isGoogleMapsLoaded = true; }
+          this.initializeMarker();
+        },
+        error => { }
+    );
+    this.subs.push(sub2);
 
     const sub3 = this.form.get('country').valueChanges
         .subscribe(value => {
