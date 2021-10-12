@@ -3273,6 +3273,15 @@
             }
           },
           {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Production date range start",
             "in": "query",
             "name": "productionDateStart",
