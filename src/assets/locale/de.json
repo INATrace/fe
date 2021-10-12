@@ -2768,6 +2768,22 @@
     "companyDetail.currency.error": "Hauptwährung wird benötigt",
     "productLabelProcessingAction.singleChoice.type.error.requred": "Art wird benötigt",
     "preferredWayOfPayment.cheque": "Cheque",
-    "preferredWayOfPayment.offsetting": "Offsetting"
+    "preferredWayOfPayment.offsetting": "Offsetting",
+    "productLabelStakeholders.title.importers": "Importers",
+    "productLabelStakeholders.button.newImporter": "{$START_TAG_SPAN}+ Add importer{$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.title.exporters": "Exporters",
+    "productLabelStakeholders.button.newExporter": "{$START_TAG_SPAN}+ Add exporter{$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.title.processors": "Processors",
+    "productLabelStakeholders.button.newProcessor": "{$START_TAG_SPAN}+ Add processor{$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.title.traders": "Traders",
+    "productLabelStakeholders.button.newTrader": "{$START_TAG_SPAN}+ Add trader{$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.modal.importer.title": "Add importer",
+    "productLabelStakeholders.modal.importer.instructionsHtml": "Select importer company",
+    "productLabelStakeholders.modal.exporter.title": "Add exporter",
+    "productLabelStakeholders.modal.exporter.instructionsHtml": "Select exporter company",
+    "productLabelStakeholders.modal.processor.title": "Add processor",
+    "productLabelStakeholders.modal.processor.instructionsHtml": "Select processor company",
+    "productLabelStakeholders.modal.trader.title": "Add trader",
+    "productLabelStakeholders.modal.trader.instructionsHtml": "Select trader company"
   }
 }
