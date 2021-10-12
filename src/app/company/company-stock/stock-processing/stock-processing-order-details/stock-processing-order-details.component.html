@@ -163,27 +163,27 @@
 
               <div *ngIf="showInputTransactions" style="position: relative;">
 
-<!--                <div class="af-row">-->
-<!--                  <div class="af-c12">-->
-<!--                    <ng-container *ngIf="inputTransactions && inputTransactions.length">-->
-<!--                      <label class="ml-1">Existing transactions</label>-->
-<!--                      <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">-->
-<!--                        <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">-->
-<!--                          <div class="af-c9 pl-3">{{inputStockOrder.identifier}} {{inputStockOrder.internalLotNumber}} ({{tx.status | formatTransactionStatus}})-->
-<!--                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>-->
-<!--                          </div>-->
-<!--                          <div class="af-c2 text-right">{{tx.outputQuantity}} {{tx.inputMeasureUnitType?.label}}</div>-->
+                <div class="af-row">
+                  <div class="af-c12">
+                    <ng-container *ngIf="inputTransactions && inputTransactions.length">
+                      <label class="ml-1">Existing transactions</label>
+                      <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
+                        <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
+                          <div class="af-c9 pl-3">{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
+                          </div>
+                          <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
 
-<!--                          <div class="af-c1 text-right" (click)="deleteTransaction(i)">-->
-<!--                            <fa-icon-->
-<!--                                    class="del-icon"-->
-<!--                                    [icon]="faTimes"></fa-icon>-->
-<!--                          </div>-->
-<!--                        </ng-container>-->
-<!--                      </div>-->
-<!--                    </ng-container>-->
-<!--                  </div>-->
-<!--                </div>-->
+                          <div class="af-c1 text-right" (click)="deleteTransaction(i)">
+                            <fa-icon
+                                    class="del-icon"
+                                    [icon]="faTimes"></fa-icon>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
 
                 <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputSemiProductsInputSemiProductsLength > 0">
                   <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
@@ -200,11 +200,11 @@
                   <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
                 </div>
 
-                <ng-container *ngFor="let item of inputStockOrders; index as i">
+                <ng-container *ngFor="let item of availableStockOrders; index as i">
                   <div class="af-row" *ngIf="!isOutputStockOrder(item)">
                     <div class="af-c1">
                       <checkbox-input inTable="true" (onClick)="cbSelected(item, i)" [disabled]="disabledLeftFields"
-                                      [checked]="this.inputStockOrders[i].selected"></checkbox-input>
+                                      [checked]="this.availableStockOrders[i].selected"></checkbox-input>
                     </div>
                     <div class="af-c8">
                       <ng-container *ngIf="item.orderType === 'PURCHASE_ORDER'">

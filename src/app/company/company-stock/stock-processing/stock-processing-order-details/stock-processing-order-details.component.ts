@@ -88,7 +88,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   currentOutputSemiProductNameForm = new FormControl(null);
 
   // Stock orders
-  inputStockOrders: ApiStockOrderSelectable[] = [];
+  availableStockOrders: ApiStockOrderSelectable[] = [];
   selectedInputStockOrders: ApiStockOrderSelectable[] = [];
   cbSelectAllForm = new FormControl(false);
   outputStockOrderForm: FormGroup;
@@ -97,6 +97,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Processing orders
   editableProcessingOrder: ApiProcessingOrder;
   processingOrderInputTransactions: ApiTransaction[];
+  processingOrderInputOrders: ApiStockOrder[];
 
   // Input stock orders filters
   showWomensFilter = false;
@@ -177,9 +178,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get nonOutputSemiProductsInputSemiProductsLength() {
 
     if (!this.outputStockOrderForm) { return 0; }
-    if (!this.update) { return this.inputStockOrders.length; }
+    if (!this.update) { return this.availableStockOrders.length; }
 
-    const allSet = new Set(this.inputStockOrders.map(x => x.id));
+    const allSet = new Set(this.availableStockOrders.map(x => x.id));
 
     if (this.actionType === 'PROCESSING' || this.actionType === 'TRANSFER') {
       this.editableProcessingOrder.targetStockOrders.forEach(x => {
@@ -214,6 +215,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
 
       return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
+    }
+    return [];
+  }
+
+  get inputStockOrders() {
+    if (this.update) {
+      if (this.actionType === 'SHIPMENT' && this.outputStockOrderForm) { return this.outputStockOrderForm.get('inputOrders').value; }
+      return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
     return [];
   }
@@ -466,8 +475,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           .pipe(take(1)).toPromise();
 
         if (res && res.status === 'OK' && res.data) {
-          this.inputStockOrders = res.data.items;
-          this.showWomensFilter = this.inputStockOrders.length > 0 && this.inputStockOrders[0].orderType === 'PURCHASE_ORDER';
+          this.availableStockOrders = res.data.items;
+          this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
         }
       } else {
         this.semiProductsInFacility = new FacilitySemiProductsCodebookService(this.facilityController, event.id, this.codebookTranslations);
@@ -508,8 +517,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       .getAvailableStockForSemiProductInFacilityUsingGET(this.inputFacilityForm.value.id, event.id).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
-      this.inputStockOrders = res.data.items;
-      this.showWomensFilter = this.inputStockOrders.length > 0 && this.inputStockOrders[0].orderType === 'PURCHASE_ORDER';
+      this.availableStockOrders = res.data.items;
+      this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
     }
   }
 
@@ -537,18 +546,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.cbSelectAllForm.value) {
 
       this.selectedInputStockOrders = [];
-      for (const item of this.inputStockOrders) {
+      for (const item of this.availableStockOrders) {
         this.selectedInputStockOrders.push(item);
       }
 
-      this.inputStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
+      this.availableStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
 
       if (this.isClipOrder) {
         this.clipOrder(true);
       }
     } else {
       this.selectedInputStockOrders = [];
-      this.inputStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
+      this.availableStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
     }
     this.calcInputQuantity(true);
     this.setWomensOnly();
@@ -601,32 +610,32 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.cbSelectAllForm.setValue(false);
     }
 
-    if (!this.inputStockOrders[index].selected) {
+    if (!this.availableStockOrders[index].selected) {
 
       const outputQuantity = this.totalQuantity as number || 0;
       const toFill = outputQuantity - this.calcInputQuantity(false);
 
-      const currentAvailable = this.inputStockOrders[index].availableQuantity;
+      const currentAvailable = this.availableStockOrders[index].availableQuantity;
 
       if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
         if (toFill > 0 && currentAvailable > 0) {
-          this.inputStockOrders[index].selected = true;
-          this.inputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
+          this.availableStockOrders[index].selected = true;
+          this.availableStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
         } else {
-          this.inputStockOrders[index].selected = true;
-          this.inputStockOrders[index].selectedQuantity = 0;
+          this.availableStockOrders[index].selected = true;
+          this.availableStockOrders[index].selectedQuantity = 0;
 
-          this.inputStockOrders[index].selected = false;
+          this.availableStockOrders[index].selected = false;
           this.calcInputQuantity(true);
         }
       } else {
-        this.inputStockOrders[index].selected = true;
-        this.inputStockOrders[index].selectedQuantity = currentAvailable;
+        this.availableStockOrders[index].selected = true;
+        this.availableStockOrders[index].selectedQuantity = currentAvailable;
       }
 
     } else {
-      this.inputStockOrders[index].selected = false;
-      this.inputStockOrders[index].selectedQuantity = 0;
+      this.availableStockOrders[index].selected = false;
+      this.availableStockOrders[index].selectedQuantity = 0;
     }
 
     this.select(semiProduct);
@@ -714,7 +723,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private clearCBAndValues() {
-    this.inputStockOrders = [];
+    this.availableStockOrders = [];
     this.selectedInputStockOrders = [];
     this.cbSelectAllForm.setValue(false);
   }
@@ -767,7 +776,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     let inputQuantity = 0;
     if (this.update) {
-      for (const item of this.inputStockOrders) {
+      for (const item of this.availableStockOrders) {
         inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
       }
 
@@ -780,7 +789,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
 
     } else {
-      for (const item of this.inputStockOrders) {
+      for (const item of this.availableStockOrders) {
         inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
       }
     }
@@ -963,12 +972,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const res = await this.stockOrderController
       .getAvailableStockForSemiProductInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
     if (res && res.status === StatusEnum.OK && res.data) {
-      this.inputStockOrders = res.data.items;
+      this.availableStockOrders = res.data.items;
     }
 
     // Reinitialize selections
     const tmpSelected = [];
-    for (const item of this.inputStockOrders) {
+    for (const item of this.availableStockOrders) {
       for (const selected of this.selectedInputStockOrders) {
         if (selected.id === item.id) {
           tmpSelected.push(item);
@@ -979,6 +988,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
     this.selectedInputStockOrders = tmpSelected;
     this.calcInputQuantity(true);
+  }
+
+  deleteTransaction(i: number) {
+
+    if (!this.showLeftSide) { return; }
+
+    if (this.actionType === 'SHIPMENT') {
+      (this.outputStockOrderForm.get('inputTransactions') as FormArray).removeAt(i);
+      this.calcInputQuantity(true);
+      return;
+    }
+
+    if (this.actionType === 'PROCESSING') {
+      this.processingOrderInputTransactions.splice(i, 1);
+      this.calcInputQuantity(true);
+      return;
+    }
+
+    if (this.actionType === 'TRANSFER') {
+      this.processingOrderInputTransactions.splice(i, 1);
+      this.editableProcessingOrder.targetStockOrders.splice(i, 1);
+      this.calcInputQuantity(true);
+    }
   }
 
 }
