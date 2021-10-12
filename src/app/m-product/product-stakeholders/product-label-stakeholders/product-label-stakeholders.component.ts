@@ -317,6 +317,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   )
 
   async newBuyer() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.buyer.title:Add buyer`,
@@ -329,6 +333,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
   
   async newImporter() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.importer.title:Add importer`,
@@ -341,6 +349,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async newExporter() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.exporter.title:Add exporter`,
@@ -353,6 +365,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async newProducer() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.producer.title:Add producer`,
@@ -377,6 +393,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async newAssociation() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.association.title:Add association`,
@@ -389,6 +409,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async newProcessor() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.processor.title:Add processor`,
@@ -401,6 +425,10 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async newTrader() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.trader.title:Add trader`,
@@ -461,6 +489,17 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       this.globalEventsManager.showLoading(false);
     }
 
+  }
+
+  async dialogEmptyOwner() {
+    await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelStakeholders.modal.owner.add.warning.title:Please add an owner first.`,
+      options: {
+        centered: true
+      },
+      dismissable: false
+    });
   }
 
 
