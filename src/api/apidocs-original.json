@@ -13159,6 +13159,10 @@
       },
       "ApiStockOrder": {
         "properties": {
+          "actionType": {
+            "$ref": "#/components/schemas/ApiActionType",
+            "description": "Action type"
+          },
           "activityProofs": {
             "description": "Activity proofs",
             "items": {
@@ -13177,6 +13181,10 @@
           "balance": {
             "description": "Balance",
             "type": "number"
+          },
+          "comments": {
+            "description": "Comments",
+            "type": "string"
           },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
@@ -13207,6 +13215,10 @@
           "facility": {
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
+          },
+          "flavourProfile": {
+            "description": "Flavour profile",
+            "type": "string"
           },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
@@ -13239,6 +13251,10 @@
             "description": "Is order of type PURCHASE_ORDER",
             "example": false,
             "type": "boolean"
+          },
+          "lotLabel": {
+            "description": "LOT label",
+            "type": "string"
           },
           "lotNumber": {
             "description": "LOT number",
@@ -13299,9 +13315,18 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Representative of producer user customer. E.g. collector."
           },
+          "screenSize": {
+            "description": "Screen size",
+            "type": "string"
+          },
           "semiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Semi product"
+          },
+          "startOfDrying": {
+            "description": "Date when product has been started drying",
+            "format": "date-time",
+            "type": "string"
           },
           "totalQuantity": {
             "description": "Total quantity",
