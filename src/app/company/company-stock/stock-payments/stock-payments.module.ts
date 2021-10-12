@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-tab.component';
+import { StockPaymentsRoutingModule } from './stock-payments-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-t
   ],
   imports: [
     CommonModule,
+    StockPaymentsRoutingModule,
     CoreModule,
     ComponentsModule,
     LayoutModule,
