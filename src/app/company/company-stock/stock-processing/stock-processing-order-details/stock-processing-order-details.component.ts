@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -18,8 +18,10 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { ProcessingActionType } from '../../../../../shared/types';
 import { CompanySellingFacilitiesForSemiProductService } from '../../../../shared-services/company-selling-facilities-for-semi-product.service';
 import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
-import { SemiProductInFacilityCodebookServiceStandalone } from '../../../../shared-services/semi-products-in-facility-standalone-codebook.service';
-import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
+import {
+  GetAvailableStockForSemiProductInFacilityUsingGET,
+  StockOrderControllerService
+} from '../../../../../api/api/stockOrderController.service';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
@@ -27,6 +29,11 @@ import { CompanyFacilitiesForSemiProductService } from '../../../../shared-servi
 import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
+import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
+import { ApiTransaction } from '../../../../../api/model/apiTransaction';
+import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
+import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
+import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -51,8 +58,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // List for holding references to observable subscriptions
   subscriptions: Subscription[] = [];
 
-  // TODO: this is temporary
-  form: FormGroup = new FormGroup({});
+  form: FormGroup;
 
   submitted = false;
   update = false;
@@ -60,7 +66,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
 
+  // Checkboxes form controls
   checkboxClipOrderFrom = new FormControl(false);
+  checkboxUseInputFrom = new FormControl();
 
   // Input facility
   inputFacilityFromUrl: ApiFacility = null;
@@ -74,8 +82,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // Semi-products
   filterSemiProduct = new FormControl(null);
-  // TODO: change this
-  semiProductsInFacility: SemiProductInFacilityCodebookServiceStandalone = null;
+  semiProductsInFacility: FacilitySemiProductsCodebookService = null;
   currentInputSemiProduct: ApiSemiProduct;
   currentOutputSemiProduct: ApiSemiProduct;
   currentOutputSemiProductNameForm = new FormControl(null);
@@ -85,9 +92,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   selectedInputStockOrders: ApiStockOrderSelectable[] = [];
   cbSelectAllForm = new FormControl(false);
   outputStockOrderForm: FormGroup;
+  outputStockOrders = new FormArray([], customValidateArrayGroup());
 
   // Processing orders
   editableProcessingOrder: ApiProcessingOrder;
+  processingOrderInputTransactions: ApiTransaction[];
 
   // Input stock orders filters
   showWomensFilter = false;
@@ -189,6 +198,45 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return !!this.checkboxClipOrderFrom.value;
   }
 
+  get isSemiProductDefined() {
+    return !(this.actionType === 'TRANSFER' && !(this.prAction && this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id));
+  }
+
+  get totalQuantity() {
+    return this.outputStockOrderForm.getRawValue().totalQuantity;
+  }
+
+  get inputTransactions(): ApiTransaction[] {
+
+    if (this.update) {
+      if (this.actionType === 'SHIPMENT' && this.outputStockOrderForm) {
+        return this.outputStockOrderForm.get('inputTransactions').value;
+      }
+
+      return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
+    }
+    return [];
+  }
+
+  get isUsingInput(): boolean {
+    return !!this.checkboxUseInputFrom.value;
+  }
+
+  get inputQuantityOrOutputFacilityNotSet() {
+    if (this.actionType === 'SHIPMENT') {
+      return !this.inputFacilityForm.value || !this.outputStockOrderForm || !this.totalQuantity;
+    }
+  }
+
+  get oneInputStockOrderRequired() {
+
+    if (this.actionType === 'SHIPMENT') { return false; }
+
+    const inTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
+    const selTRCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
+    return inTRCount + selTRCount === 0;
+  }
+
   ngOnInit(): void {
 
     this.initInitialData().then(
@@ -282,12 +330,31 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.creatorId = await this.getCreatorId();
   }
 
-  private updateProcessingOrder() {
-    // TODO: implement update of proc. order
+  private newProcessingOrder() {
+
+    this.form = generateFormFromMetadata(ApiTransaction.formMetadata(), {}, ApiTransactionValidationScheme);
+    this.outputStockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), {}, ApiStockOrderValidationScheme);
+
+    if (this.actionType === 'SHIPMENT') {
+      this.checkboxClipOrderFrom.setValue(true);
+    }
+
+    // TODO: check if this is needed
+    // Inject transaction form for easier validation purposes
+    // this.outputStockOrderForm.setControl('form', this.form);
+    // this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
+    // this.outputStockOrderForm.setControl('processingActionForm', this.processingActionForm);
+
+    this.initializeListManager();
+
+    if (this.prAction) {
+      this.setRequiredFields(this.prAction);
+      this.initializeClientName().then();
+    }
   }
 
-  private newProcessingOrder() {
-    // TODO: implement new proc. order
+  private updateProcessingOrder() {
+    // TODO: implement update of proc. order
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
@@ -378,40 +445,44 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async setInputFacility(event: any, clearOutputForm = true) {
+  async setInputFacility(event: ApiFacility, clearOutputForm = true) {
 
-    // TODO: set input facility
-    // this.clearCBAndValues();
-    //
-    // if (!event) {
-    //   this.clearInputFacilityForm();
-    //   if (clearOutputForm) { this.clearOutputForm(); }
-    //   this.currentInputFacility = null;
-    //   this.activeSemiProductsInFacility = null;
-    //   return;
-    // }
-    // if (event) {
-    //   this.currentInputFacility = event;
-    //   if (this.isSemiProductDefined) {
-    //     const res = await this.chainStockOrderService.listAvailableStockForSemiProductInFacility(dbKey(event),
-    //     this.processingActionForm.value.inputSemiProductId).pipe(take(1)).toPromise();
-    //     if (res && res.status === 'OK' && res.data) {
-    //       this.inputSemiProducts = res.data.items;
-    //       if (this.inputSemiProducts.length > 0 && this.inputSemiProducts[0].orderType === 'PURCHASE_ORDER') { this.showWomensFilter = true; }
-    //       else { this.showWomensFilter = false; }
-    //     }
-    //   } else {
-    //     this.activeSemiProductsInFacility = new SemiProductInFacilityCodebookServiceStandalone(this.chainFacilityService, event, this.codebookTranslations);
-    //   }
-    // }
-    // if (!this.update) {
-    //   this.prefillOutputFacility();
-    // }
-    // if (this.disabledLeftFields) {
-    //   this.cbSelectAllForm.disable();
-    // } else {
-    //   this.cbSelectAllForm.enable();
-    // }
+    this.clearCBAndValues();
+
+    if (!event) {
+      this.clearInputFacilityForm();
+      if (clearOutputForm) { this.clearOutputForm(); }
+      this.currentInputFacility = null;
+      this.semiProductsInFacility = null;
+      return;
+    }
+
+    if (event) {
+      this.currentInputFacility = event;
+      if (this.isSemiProductDefined) {
+
+        const res = await this.stockOrderController
+          .getAvailableStockForSemiProductInFacilityUsingGET(event.id, this.processingActionForm.value.inputSemiProduct.id)
+          .pipe(take(1)).toPromise();
+
+        if (res && res.status === 'OK' && res.data) {
+          this.inputStockOrders = res.data.items;
+          this.showWomensFilter = this.inputStockOrders.length > 0 && this.inputStockOrders[0].orderType === 'PURCHASE_ORDER';
+        }
+      } else {
+        this.semiProductsInFacility = new FacilitySemiProductsCodebookService(this.facilityController, event.id, this.codebookTranslations);
+      }
+    }
+
+    if (!this.update) {
+      this.prefillOutputFacility();
+    }
+
+    if (this.disabledLeftFields) {
+      this.cbSelectAllForm.disable();
+    } else {
+      this.cbSelectAllForm.enable();
+    }
   }
 
   setOutputFacility(event: any, clearOutputForm = false) {
@@ -511,40 +582,54 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // }
   }
 
+  private select(semiProduct) {
+    const index = this.selectedInputStockOrders.indexOf(semiProduct);
+    if (index !== -1) {
+      this.selectedInputStockOrders.splice(index, 1);
+    } else {
+      this.selectedInputStockOrders.push(semiProduct);
+    }
+    this.calcInputQuantity(true);
+    this.setWomensOnly();
+  }
+
   cbSelected(semiProduct, index: number) {
-    // TODO: implement checkbox select event listener
-    // if (!this.showLeftSide) { return; }
-    // if (this.cbSelectAllForm.value) {
-    //   this.cbSelectAllForm.setValue(false);
-    // }
-    // if (!this.inputSemiProducts[index].selected) {
-    //   // let outputQuantity = this.form.get('outputQuantity').value as number || 0
-    //   // let outputQuantity = this.outputStockOrderForm.get('totalQuantity').value as number || 0
-    //   const outputQuantity = this.totalQuantity as number || 0;
-    //   const toFill = outputQuantity - this.calcInputQuantity(false); // Todo - odštej obstoječe transakcije
-    //
-    //   // console.log("TO-FILL:", toFill, this.actionType, this.isClipOrder)
-    //   const currentAvailable = this.inputSemiProducts[index].availableQuantity;
-    //   if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
-    //     if (toFill > 0 && currentAvailable > 0) {
-    //       this.inputSemiProducts[index].selected = true;
-    //       this.inputSemiProducts[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
-    //     } else {
-    //       this.inputSemiProducts[index].selected = true;
-    //       this.inputSemiProducts[index].selectedQuantity = 0;
-    //       setTimeout(() => { this.inputSemiProducts[index].selected = false; this.calcInputQuantity(true); }, 600);
-    //     }
-    //   } else {
-    //     this.inputSemiProducts[index].selected = true;
-    //     this.inputSemiProducts[index].selectedQuantity = currentAvailable;
-    //   }
-    // } else {
-    //   this.inputSemiProducts[index].selected = false;
-    //   this.inputSemiProducts[index].selectedQuantity = 0;
-    // }
-    //
-    // // this.inputSemiProducts[index].selected = !this.inputSemiProducts[index].selected;
-    // this.select(semiProduct);
+
+    if (!this.showLeftSide) { return; }
+
+    if (this.cbSelectAllForm.value) {
+      this.cbSelectAllForm.setValue(false);
+    }
+
+    if (!this.inputStockOrders[index].selected) {
+
+      const outputQuantity = this.totalQuantity as number || 0;
+      const toFill = outputQuantity - this.calcInputQuantity(false);
+
+      const currentAvailable = this.inputStockOrders[index].availableQuantity;
+
+      if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
+        if (toFill > 0 && currentAvailable > 0) {
+          this.inputStockOrders[index].selected = true;
+          this.inputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
+        } else {
+          this.inputStockOrders[index].selected = true;
+          this.inputStockOrders[index].selectedQuantity = 0;
+
+          this.inputStockOrders[index].selected = false;
+          this.calcInputQuantity(true);
+        }
+      } else {
+        this.inputStockOrders[index].selected = true;
+        this.inputStockOrders[index].selectedQuantity = currentAvailable;
+      }
+
+    } else {
+      this.inputStockOrders[index].selected = false;
+      this.inputStockOrders[index].selectedQuantity = 0;
+    }
+
+    this.select(semiProduct);
   }
 
   isOutputStockOrder(order: ApiStockOrder) {
@@ -679,57 +764,42 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private calcInputQuantity(setValue) {
-    // TODO: implement calc input quantity
-    // let inputQuantity = 0;
-    // if (this.update) {
-    //   for (const item of this.inputSemiProducts) {
-    //     inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
-    //   }
-    //   // let txs = this.outputStockOrderForm.get('inputTransactions').value as ChainTransaction[];
-    //   const txs = this.inputTransactions;
-    //   if (txs) {
-    //     for (const tx of txs) {
-    //       inputQuantity += tx.outputQuantity;
-    //     }
-    //   }
-    // } else {
-    //   // for (let item of this.selectedInputStockOrders) {
-    //   //   inputQuantity += item.availableQuantity
-    //   // }
-    //   for (const item of this.inputSemiProducts) {
-    //     inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
-    //   }
-    //
-    // }
-    //
-    // if (setValue) {
-    //   if (this.actionType == 'PROCESSING') {
-    //     this.form.get('outputQuantity').setValue(inputQuantity);
-    //     if (!this.update) {
-    //       this.setInputOutputFormAccordinglyToTransaction();
-    //     }
-    //     if (this.isUsingInput) {
-    //       this.outputStockOrderForm.get('totalQuantity').setValue(inputQuantity);
-    //     }
-    //   } else {
-    //     if (this.form) { this.form.get('outputQuantity').setValue(inputQuantity); }
-    //   }
-    // }
-    //
-    // // if (setValue && (this.actionType == 'PROCESSING' || this.actionType === 'SHIPMENT') {
-    // //   this.form.get('outputQuantity').setValue(inputQuantity);
-    // //   if (!this.update) {
-    // //     this.setInputOutputFormAccordinglyToTransaction();
-    // //   }
-    // //   if (this.isUsingInput) {
-    // //     this.outputStockOrderForm.get('totalQuantity').setValue(inputQuantity)
-    // //   }
-    // // }
-    // // if (setValue && this.actionType == 'TRANSFER') {
-    // //   this.form.get('outputQuantity').setValue(inputQuantity);
-    // // }
-    //
-    // return inputQuantity;
+
+    let inputQuantity = 0;
+    if (this.update) {
+      for (const item of this.inputStockOrders) {
+        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
+      }
+
+      const txs = this.inputTransactions;
+
+      if (txs) {
+        for (const tx of txs) {
+          inputQuantity += tx.outputQuantity;
+        }
+      }
+
+    } else {
+      for (const item of this.inputStockOrders) {
+        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
+      }
+    }
+
+    if (setValue) {
+      if (this.actionType === 'PROCESSING') {
+        this.form.get('outputQuantity').setValue(inputQuantity);
+        if (!this.update) {
+          this.setInputOutputFormAccordinglyToTransaction();
+        }
+        if (this.isUsingInput) {
+          this.outputStockOrderForm.get('totalQuantity').setValue(inputQuantity);
+        }
+      } else {
+        if (this.form) { this.form.get('outputQuantity').setValue(inputQuantity); }
+      }
+    }
+
+    return inputQuantity;
   }
 
   private initializeFacilitiesCodebooks() {
@@ -756,6 +826,66 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private initializeListManager() {
+    // TODO: initialize list manager for processing evidence types
+    // this.processingEvidenceListManager = new ListEditorManager<ChainActivityProof>(
+    //   this.otherProcessingEvidenceArray as FormArray,
+    //   ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
+    //   ApiActivityProofValidationScheme
+    // );
+  }
+
+  private async initializeClientName() {
+
+    // TODO: recheck this because it connects to associated companies through the product
+    // if (this.prAction.requiredFields) {
+    //   const cname = this.prAction.requiredFields.find(x => x.label === 'CLIENT_NAME');
+    //   if (!cname) { return; }
+    //   const form = this.outputStockOrderForm.get('clientId');
+    //   if (!form || !form.value) { return; }
+    //   const candidates = await this.associatedCompaniesService.getAllCandidates().pipe(take(1)).toPromise();
+    //   const val = candidates.find(x => x.company.id === form.value);
+    //   if (val) {
+    //     form.setValue(val);
+    //   } else {
+    //     form.setValue(null);
+    //   }
+    // }
+  }
+
+  private setInputOutputFormAccordinglyToTransaction() {
+
+    // Prevent recalculating sac numbers if something already entered.
+    if (this.outputStockOrders && this.outputStockOrders.length > 0) {
+      if ((this.outputStockOrders.value).some(item => item.sacNumber || item.totalQuantity)) { return; }
+    }
+
+    (this.outputStockOrders as FormArray).clear();
+
+    if (this.prAction && this.actionType === 'PROCESSING') {
+
+      if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
+
+        let avQua = 0;
+        for (const item of this.selectedInputStockOrders) {
+          avQua += item.availableQuantity;
+        }
+
+        const outputStockOrdersSize = Math.ceil(avQua / this.prAction.maxOutputWeight);
+        for (let i = 0; i < outputStockOrdersSize; i++) {
+          let w = this.prAction.maxOutputWeight;
+          if (i === outputStockOrdersSize - 1) { w = avQua - i * this.prAction.maxOutputWeight; }
+          (this.outputStockOrders as FormArray).push(new FormGroup({
+            identifier: new FormControl(null),
+            id: new FormControl(null),
+            totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
+            sacNumber: new FormControl(null, [Validators.required])
+          }));
+        }
+      }
+    }
+  }
+
   async setWomensOnlyStatus(status: boolean) {
     if (!this.showLeftSide) { return; }
     this.womensOnlyStatus.setValue(status);
@@ -764,8 +894,91 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private prefillOutputFacility() {
+
+    // TODO: complete the implementation
+    const prefillOutputFacility = false;
+
+    // if (this.prAction && this.prAction.requiredFields) {
+    //   for (const item of this.prAction.requiredFields) {
+    //     if (item.label === 'PREFILL_OUTPUT_FACILITY') {
+    //       if (this.inputFacilityForm && this.inputFacilityForm.value) {
+    //         this.subs.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+    //           if (val) {
+    //             for (const item of val) {
+    //               if (item._id === this.inputFacilityForm.value._id && !this.update) {
+    //                 this.outputFacilityForm.setValue(this.inputFacilityForm.value);
+    //                 prefillOutputFacility = true;
+    //                 break;
+    //               }
+    //             }
+    //           }
+    //         }));
+    //       }
+    //       break;
+    //     }
+    //   }
+    // }
+
+    if (!prefillOutputFacility) {
+      this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+        if (val && val.length === 1 && !this.update) {
+          this.outputFacilityForm.setValue(val[0]);
+        }
+      }));
+    }
+  }
+
   async dateSearch() {
-    // TODO: implement date search for available stock at facility
+
+    if (!this.showLeftSide) { return; }
+    const from = this.fromFilterDate.value;
+    const to = this.toFilterDate.value;
+    if (!this.currentInputFacility) { return; }
+
+    // Prepare initial request params
+    const requestParams: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap = {
+      facilityId: this.currentInputFacility.id,
+      semiProductId: this.processingActionForm.value.inputSemiProduct.id,
+      isWomenShare: this.womensOnlyStatus.value
+    };
+
+    // Prepare date filters
+    if (from && to) {
+      requestParams.productionDateStart = new Date(from);
+      requestParams.productionDateEnd = new Date(to);
+    } else if (from) {
+      requestParams.productionDateStart = new Date(from);
+
+      const tomorrow = new Date();
+      tomorrow.setDate(new Date().getDate() + 1);
+      requestParams.productionDateEnd = tomorrow;
+
+    } else if (to) {
+      requestParams.productionDateStart = new Date(null);
+      requestParams.productionDateEnd = new Date(to);
+    }
+
+    // Get the available stock in the provided facility for the provided semi-product
+    const res = await this.stockOrderController
+      .getAvailableStockForSemiProductInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
+    if (res && res.status === StatusEnum.OK && res.data) {
+      this.inputStockOrders = res.data.items;
+    }
+
+    // Reinitialize selections
+    const tmpSelected = [];
+    for (const item of this.inputStockOrders) {
+      for (const selected of this.selectedInputStockOrders) {
+        if (selected.id === item.id) {
+          tmpSelected.push(item);
+          item.selected = true;
+          item.selectedQuantity = selected.availableQuantity;
+        }
+      }
+    }
+    this.selectedInputStockOrders = tmpSelected;
+    this.calcInputQuantity(true);
   }
 
 }

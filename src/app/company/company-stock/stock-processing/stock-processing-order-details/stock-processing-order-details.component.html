@@ -214,25 +214,24 @@
                         {{ item.identifier }} {{ item.internalLotNumber }}
                       </ng-container>
                     </div>
-                    <div class="af-c2 text-right">
+                    <div class="af-c3 text-right">
                       <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputSemiProduct.apiMeasureUnitType.label }}
                     </div>
-                    <div class="af-c1"></div>
                   </div>
                 </ng-container>
 
-<!--                <ng-container *ngIf="inputQuantityOrOutputFacilityNotSet">-->
-<!--                  <small class="sc-invalid-feedback" [class.blink_text]="blinkInputQuantityFacilityError" i18n="@@productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error">-->
-<!--                    Set output quantity first-->
-<!--                  </small>-->
-<!--                </ng-container>-->
+                <ng-container *ngIf="inputQuantityOrOutputFacilityNotSet">
+                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error">
+                    Set output quantity first
+                  </small>
+                </ng-container>
 
-<!--                <ng-container *ngIf="submitted && oneInputStockOrderRequired">-->
-<!--                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputSemiProducts.error">-->
-<!--                    At least one input semi-product is required-->
-<!--                  </small>-->
-<!--                </ng-container>-->
-<!--                <div *ngIf="inputQuantityOrOutputFacilityNotSet" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>-->
+                <ng-container *ngIf="submitted && oneInputStockOrderRequired">
+                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputSemiProducts.error">
+                    At least one input semi-product is required
+                  </small>
+                </ng-container>
+                <div *ngIf="inputQuantityOrOutputFacilityNotSet" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
               </div>
 
               <!-- TODO -->
