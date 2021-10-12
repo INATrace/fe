@@ -6,7 +6,90 @@
 
         <div class="main-inside-top content-element">
 
-            <p>Stock payments tab works!</p>
+            <div class="d-flex justify-content-between content-element--row1">
+                <div class="title-page content-element--title"
+                     i18n="@@productLabelStock.title.payments">Payments</div>
+                <button class="btn btn-solid round btn-table-new content-element--btn"
+                        (click)="newPayment()"
+                        i18n="@@productLabelStock.button.newPayment">
+                    <span>+ Add payment</span>
+                </button>
+            </div>
+
+            <div class="d-flex justify-content-between main-inside-top--row2">
+
+                <div>
+                    <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfPayments">List of payments</div>
+                    <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingPayments">Showing {{ showedPayments }}/{{ allPayments }}</div>
+                </div>
+
+                <div class="d-flex align-items-top">
+                    <div class="d-flex align-items-center"
+                         style="margin-bottom: 1rem;"
+                         ngbDropdown
+                         placement="bottom-right"
+                         display="dynamic"
+                         container="body">
+
+                        <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.openBalanceOnly.filter">Open balance
+                            <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
+                                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                                </fa-icon>
+                            </div>
+                        </div>
+
+                        <!-- TODO: Filters -->
+
+                        <!-- TODO: Search -->
+<!--                        <app-search-textinput-->
+<!--                                [form]="searchFarmerNameAndSurname"-->
+<!--                                (valueChange)="searchPurchaseInput($event)">-->
+<!--                        </app-search-textinput>-->
+
+                        <button class="af-actions-btn"
+                                [class.af-actions-btn--disabled]="selectedPayments.length === 0"
+                                (click)="confirmPayments()">
+                            <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.confirmPayments">Confirm payments</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <app-datepicker
+                        label="From"
+                        i18n-label="@@productLabelStock.datepicker.date.from"
+                        [form]="fromFilterDate"
+                        [invalid]="fromFilterDate.invalid"
+                        (onChange)="onFilterDateRangeChange()"
+                        style="width: 130px; margin-right: 1rem;">
+                </app-datepicker>
+
+                <app-datepicker
+                        label="To"
+                        i18n-label="@@productLabelStock.datepicker.date.to"
+                        [form]="toFilterDate"
+                        [invalid]="toFilterDate.invalid"
+                        (onChange)="onFilterDateRangeChange()"
+                        style="width: 130px">
+                </app-datepicker>
+
+<!--                <button style="margin-top: 1.7rem"-->
+<!--                        class="af-actions-btn"-->
+<!--                        [class.af-actions-btn&#45;&#45;disabled]="selectedOrders.length === 0"-->
+<!--                        (click)="selectedOrders.length > 0 && clickClearCheckboxesPing$.next(true)">-->
+<!--                    <span class="af-actions-btn-label" i18n="@@productLabelStock.button.clearCheckbox">Clear checkboxes</span>-->
+<!--                </button>-->
+            </div>
+
+            <app-stock-payments-list
+                    [companyId]="companyId"
+                    [selectedPayments]="selectedPayments"
+                    (selectedPaymentsChanged)="selectedIdsChanged($event)"
+                    (showing)="onShowPayments($event)"
+                    (countAll)="onCountAllPayments($event)">
+            </app-stock-payments-list>
 
         </div>
 

@@ -13,6 +13,9 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   rootTab = 2;
 
+  showedPayments = 0;
+  allPayments = 0;
+
   constructor(
       protected router: Router,
       protected route: ActivatedRoute,
@@ -24,6 +27,22 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   ngOnInit(): void {
     super.ngOnInit();
+  }
+
+  newPayment() {
+    this.router.navigate(['my-stock', 'payments', 'new']).then();
+  }
+
+  confirmPayments(){
+    // TODO: TBD
+  }
+
+  onShowPayments(event) {
+    this.showedPayments = event;
+  }
+
+  onCountAllPayments(event) {
+    this.allPayments = event;
   }
 
 }

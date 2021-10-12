@@ -1,0 +1,370 @@
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {AuthService} from 'src/app/core/auth.service';
+import {GlobalEventManagerService} from 'src/app/core/global-event-manager.service';
+import {ApiPayment} from '../../../../../api/model/apiPayment';
+import {PaymentControllerService} from '../../../../../api/api/paymentController.service';
+import {SortOption} from '../../../../shared/result-sorter/result-sorter-types';
+import {ApiPaginatedResponseApiPayment} from '../../../../../api/model/apiPaginatedResponseApiPayment';
+import {formatDateWithDots} from '../../../../../shared/utils';
+
+
+@Component({
+  selector: 'app-stock-payments-list',
+  templateUrl: './stock-payments-list.component.html',
+  styleUrls: ['./stock-payments-list.component.scss']
+})
+export class StockPaymentsListComponent implements OnInit, OnDestroy {
+
+  constructor(
+      private route: ActivatedRoute,
+      private router: Router,
+      protected globalEventsManager: GlobalEventManagerService,
+      private authService: AuthService,
+      private paymentControllerService: PaymentControllerService
+  ) { }
+
+//   @Input()
+  reloadPingList$ = new BehaviorSubject<boolean>(false);
+  @Input()
+  companyId: number;
+  @Input()
+  selectedPayments: ApiPayment[];
+
+  @Output()
+  showing = new EventEmitter<number>();
+  @Output()
+  countAll = new EventEmitter<number>();
+  @Output()
+  selectedPaymentsChanged = new EventEmitter<ApiPayment[]>();
+
+  allPayments = 0;
+  showedPayments = 0;
+
+  clickClearCheckboxesPing$ = new BehaviorSubject<boolean>(false);
+  cbCheckedAll = new FormControl(false);
+
+  pagingParams$ = new BehaviorSubject({});
+  sortingParams$ = new BehaviorSubject({ sortBy: 'productionDate', sort: 'DESC' });
+  paging$ = new BehaviorSubject<number>(1);
+  page = 0;
+  pageSize = 10;
+
+  currentData: ApiPayment[];
+  sortOptions: SortOption[];
+  clearCheckboxesSubscription: Subscription;
+  allSelected = false;
+  payments$;
+
+  ngOnInit(): void {
+
+    this.clearCheckboxesSubscription = this.clickClearCheckboxesPing$.subscribe(val => {
+      if (val) {
+        this.clearCBs();
+      }
+    });
+
+    this.initSortOptions();
+
+    this.payments$ = combineLatest([
+      this.reloadPingList$,
+      this.paging$,
+      this.sortingParams$
+    ]).pipe(
+        map(([ping, page, sorting]) => {
+          return {
+            offset: (page - 1) * this.pageSize,
+            limit: this.pageSize,
+            ...sorting
+          };
+        }),
+        tap(() => this.globalEventsManager.showLoading(true)),
+        switchMap(params => {
+          return this.loadPayments(params);
+        }),
+        map((resp: ApiPaginatedResponseApiPayment) => {
+
+          if (!resp) {
+            return null;
+          }
+
+          this.clearCBs();
+
+          this.allPayments = 0;
+          this.showedPayments = 0;
+
+          if (resp.data.count) {
+            this.allPayments = resp.data.count;
+          }
+
+          if (resp.data.count && (this.pageSize - resp.data.count > 0)) {
+            this.showedPayments = resp.data.count;
+
+          } else if (resp.data.count && (this.pageSize - resp.data.count <= 0)) {
+            const temp = resp.data.count - (this.pageSize * (this.page - 1));
+            this.showedPayments = temp >= this.pageSize ? this.pageSize : temp;
+          }
+          this.showing.emit(this.showedPayments);
+          this.countAll.emit(this.allPayments);
+          this.currentData = resp.data.items;
+
+          console.log('Payments: ');
+          console.log(resp.data);
+
+          return resp.data;
+        }),
+        tap(() => this.globalEventsManager.showLoading(false))
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.clearCheckboxesSubscription) {
+      this.clearCheckboxesSubscription.unsubscribe();
+    }
+  }
+
+  initSortOptions() {
+    this.sortOptions = [
+      {
+        key: 'cb',
+        name: '',
+        selectAllCheckbox: true,
+        hide: false
+      },
+      {
+        key: 'purpose',
+        name: $localize`:@@productLabelPayments.sortOptions.paymentPurposeType.name:Payment purpose`,
+        inactive: true
+      },
+      {
+        key: 'amountPaidToTheFarmer',
+        name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer (RWF)`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'amountPaidToTheCollector',
+        name: $localize`:@@productLabelPayments.sortOptions.amount.company.name:Amount paid (EUR)`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'representativeOfRecipientUserCustomer',
+        name: $localize`:@@productLabelPayments.sortOptions.producer_name.name:Farmer name`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'recipientCompany',
+        name: $localize`:@@productLabelPayments.sortOptions.company_name.name:Company name`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'productionDate',
+        name: $localize`:@@productLabelPayments.sortOptions.deliveryDate.name:Delivery date`,
+        hide: false
+      },
+      {
+        // TODO: Not present in BE
+        key: 'PAYMENT_DATE',
+        name: $localize`:@@productLabelPayments.sortOptions.paymentDate.name:Payment date`,
+        hide: true
+      },
+      {
+        key: 'paymentStatus',
+        name: $localize`:@@productLabelPayments.sortOptions.paymentStatus.name:Status`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'preferredWayOfPayment',
+        name: $localize`:@@productLabelPayments.sortOptions.wayOfPayment.name:Way of payment`,
+        inactive: true,
+        hide: false
+      },
+      {
+        key: 'actions',
+        name: $localize`:@@productLabelPayments.sortOptions.actions.name:Actions`,
+        inactive: true
+      }
+    ];
+  }
+
+  loadPayments(params): Observable<ApiPaginatedResponseApiPayment> {
+    return this.paymentControllerService.listPaymentsByCompanyUsingGETByMap({
+      ...params,
+      id: this.companyId
+    });
+  }
+
+//   edit(payment) {
+//     this.router.navigate(['product-labels', this.productId, 'stock', 'payments', 'update', dbKey(payment), this.isCooperative ? 'PURCHASE' : 'CUSTOMER']);
+//   }
+
+//   removeEntity(entity) {
+//     return this.chainPaymentsService.deletePayment(entity);
+//   }
+
+//   async delete(entity) {
+//     const result = await this.globalEventsManager.openMessageModal({
+//       type: 'warning',
+//       message: $localize`:@@productLabelPayments.delete.error.message:Are you sure you want to delete this payment?`,
+//       options: { centered: true }
+//     });
+//     if (result != 'ok') { return; }
+//     const res = await this.removeEntity(entity).pipe(take(1)).toPromise();
+//     if (res && res.status == 'OK') {
+//       this.reloadPage();
+//     }
+//   }
+
+//   async confirm(payment) {
+//     const result = await this.globalEventsManager.openMessageModal({
+//       type: 'warning',
+//       message: $localize`:@@productLabelPayments.confirm.error.message:Are you sure you want to confirm this payment?`,
+//       options: { centered: true }
+//     });
+//     if (result != 'ok') { return; }
+//     this.confirmPayment(payment);
+//   }
+
+//   async confirmPayments() {
+//     const result = await this.globalEventsManager.openMessageModal({
+//       type: 'warning',
+//       message: $localize`:@@productLabelPayments.confirmPayments.error.message:Are you sure you want to confirm payments?`,
+//       options: { centered: true }
+//     });
+//     if (result != 'ok') { return; }
+//     for (const payment of this.selectedIds) {
+//       this.confirmPayment(payment);
+//     }
+//     this.selectedIds = [];
+//     this.selectedIdsChanged.emit(this.selectedIds);
+//   }
+
+//   async confirmPayment(payment: ChainPayment) {
+//     delete payment['selected'];
+//     payment.paymentStatus = ChainPayment.PaymentStatusEnum.CONFIRMED; // "CONFIRMED";
+//     payment.paymentConfirmedAtTime = new Date().toUTCString();
+//     const resUser = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
+//     if (resUser && resUser.status === 'OK' && resUser.data) {
+//       payment.paymentConfirmedByUser = dbKey(resUser.data);
+//     }
+//     payment.paymentConfirmedByOrganization = localStorage.getItem('selectedUserCompany');
+
+//     const res = await this.chainPaymentsService.confirmPayment(payment).pipe(take(1)).toPromise();
+//     if (res && res.status == 'OK') {
+//       this.reloadPage();
+//     }
+//   }
+
+//   totalPaid(preferredWayOfPayment, toFarmer, toCollector) {
+//     if (preferredWayOfPayment === 'CASH_VIA_COLLECTOR') { return toFarmer; }
+//     if (toCollector) { return toFarmer + toCollector; }
+//     return toFarmer;
+//   }
+
+  changeSort(event) {
+    if (event.key === 'cb') {
+      this.selectAll(event.checked);
+      return;
+    }
+    this.sortingParams$.next({ sortBy: event.key, sort: event.sortOrder });
+    this.clearCBs();
+  }
+
+  async selectAll(checked) {
+    if (checked) {
+      this.selectedPayments = [];
+      for (const item of this.currentData) {
+        // if (item.paymentStatus === 'UNCONFIRMED') {
+          this.selectedPayments.push(item);
+        // }
+      }
+      this.currentData.map(item => {
+        // if (item.paymentStatus === 'UNCONFIRMED') {
+          (item as any).selected = true;
+          return item;
+        // }
+      });
+      this.allSelected = true;
+      this.selectedPaymentsChanged.emit(this.selectedPayments);
+    } else {
+      this.selectedPayments = [];
+      this.allSelected = false;
+      this.currentData.map(item => {
+        (item as any).selected = false;
+        return item;
+      });
+      this.selectedPaymentsChanged.emit(this.selectedPayments);
+    }
+  }
+
+  cbSelected(payment: ApiPayment, index: number) {
+    if (this.allSelected) {
+      this.allSelected = false;
+      this.cbCheckedAll.setValue(false);
+    }
+    (this.currentData[index] as any).selected = !(this.currentData[index] as any).selected;
+
+    const selectedIndex = this.selectedPayments.indexOf(payment);
+
+    if (selectedIndex !== -1) {
+      this.selectedPayments.splice(selectedIndex, 1);
+    } else {
+      this.selectedPayments.push(payment);
+    }
+    this.selectedPaymentsChanged.emit(this.selectedPayments);
+  }
+
+  private clearCBs() {
+    this.selectedPayments = [];
+    this.allSelected = false;
+    this.cbCheckedAll.setValue(false);
+    this.selectedPaymentsChanged.emit(this.selectedPayments);
+    if (this.currentData) {
+      for (const item of this.currentData) {
+        if ((item as any).selected) {
+          (item as any).selected = false;
+        }
+      }
+    }
+  }
+
+  showPagination() {
+    return ((this.showedPayments - this.pageSize) === 0 && this.allPayments > this.pageSize) || this.page > 1;
+  }
+
+  formatDate(productionDate) {
+    if (productionDate) { return formatDateWithDots(productionDate); }
+    return '';
+  }
+
+  readablePaymentPurpose(id) {
+    return this.paymentPurposeTypes[id];
+  }
+
+  get paymentPurposeTypes() {
+    const obj = {};
+    obj['ADVANCE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.advancedPayment:Advanced payment`;
+    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Cherry payment`;
+    obj['SECOND_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.secondInstallment:Member bonus`;
+    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:AF Women premium`;
+    obj['INVOICE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
+    return obj;
+  }
+
+  onPageChange(event) {
+    this.paging$.next(event);
+  }
+
+  // reloadPage() {
+  //   this.reloadPingList$.next(true);
+  //   this.clearCBs();
+  // }
+
+}
