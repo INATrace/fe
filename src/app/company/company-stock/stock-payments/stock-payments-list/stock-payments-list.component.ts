@@ -230,7 +230,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // delete payment['selected'];
+    delete payment['selected'];
     payment.paymentStatus = ApiPayment.PaymentStatusEnum.CONFIRMED;
 
     const res = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(payment)
@@ -261,15 +261,15 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     if (checked) {
       this.selectedPayments = [];
       for (const item of this.currentData) {
-        // if (item.paymentStatus === 'UNCONFIRMED') {
+        if (item.paymentStatus === 'UNCONFIRMED') {
           this.selectedPayments.push(item);
-        // }
+        }
       }
       this.currentData.map(item => {
-        // if (item.paymentStatus === 'UNCONFIRMED') {
+        if (item.paymentStatus === 'UNCONFIRMED') {
           (item as any).selected = true;
           return item;
-        // }
+        }
       });
       this.allSelected = true;
       this.selectedPaymentsChanged.emit(this.selectedPayments);
