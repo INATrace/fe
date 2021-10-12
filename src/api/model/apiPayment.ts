@@ -27,7 +27,7 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 
 
-export interface ApiPayment {
+export interface ApiPayment { 
     /**
      * Payment amount paid to the collector
      */

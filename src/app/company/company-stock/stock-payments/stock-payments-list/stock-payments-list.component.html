@@ -14,8 +14,8 @@
                 </td>
                 <td *ngIf="!sortOptions[1].hide" scope="row" [attr.data-label]="sortOptions[1].name"><span>{{readablePaymentPurpose(payment.paymentPurposeType)}}</span></td>
                 <td *ngIf="!sortOptions[2].hide" scope="row" [attr.data-label]="sortOptions[2].name"><span>{{payment.amountPaidToTheFarmer}}</span></td>
-                <td *ngIf="!sortOptions[3].hide" scope="row" [attr.data-label]="sortOptions[3].name"><span>{{payment.amountPaidToTheFarmer}}</span></td> <!-- TODO: Shouldn't it be 'totalPaid' instead of 'amountPaidToTheFarmer' -->
-                <td *ngIf="!sortOptions[4].hide" scope="row" [attr.data-label]="sortOptions[4].name"><span>{{payment.representativeOfRecipientUserCustomer ? payment.representativeOfRecipientUserCustomer.name : ''}}</span></td>
+                <td *ngIf="!sortOptions[3].hide" scope="row" [attr.data-label]="sortOptions[3].name"><span>{{payment.amountPaidToTheFarmer}}</span></td>
+                <td *ngIf="!sortOptions[4].hide" scope="row" [attr.data-label]="sortOptions[4].name"><span>{{payment.recipientUserCustomer ? payment.recipientUserCustomer.name + ' ' + payment.recipientUserCustomer.surname   : ''}}</span></td>
                 <td *ngIf="!sortOptions[5].hide" scope="row" [attr.data-label]="sortOptions[5].name"><span>{{payment.recipientCompany ? payment.recipientCompany.name : ''}}</span></td>
                 <td *ngIf="!sortOptions[6].hide" scope="row" [attr.data-label]="sortOptions[6].name"><span>{{formatDate(payment.productionDate)}}</span></td>
                 <td *ngIf="!sortOptions[7].hide" scope="row" [attr.data-label]="sortOptions[7].name"><span>{{formatDate(payment.formalCreationTime)}}</span></td>

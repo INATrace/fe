@@ -7,6 +7,7 @@ import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { take } from 'rxjs/operators';
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
 import { BehaviorSubject } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -21,6 +22,13 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
   allPayments = 0;
 
   reloadPaymentPingList$ = new BehaviorSubject<boolean>(false);
+
+  filterPaymentStatus = new FormControl('');
+  paymentStatusPing$ = new BehaviorSubject<string>(this.filterPaymentStatus.value);
+
+  searchFarmerNameAndSurname = new FormControl(null);
+  searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
+
 
   constructor(
       protected router: Router,
@@ -37,10 +45,22 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
   }
 
   newPayment() {
-    this.router.navigate(['my-stock', 'payments', 'new']).then();
+    // this.router.navigate(['my-stock', 'payments', 'new']).then();
+  }
+
+  setPaymentStatus(value: string){
+    this.filterPaymentStatus.setValue(value);
+    this.paymentStatusPing$.next(value);
+  }
+
+  searchPaymentByFarmerNameInput(event) {
+    this.searchFarmerNameSurnamePing$.next(event);
   }
 
   async confirmPayments(){
+    if (this.selectedPayments.length === 0) {
+      return;
+    }
     const result = await this.globalEventManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabelPayments.confirmPayments.error.message:Are you sure you want to confirm payments?`,

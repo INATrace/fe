@@ -133,6 +133,26 @@ export namespace GetPaymentListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * Preferred way of payment
+       */
+      preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'CASH_VIA_COOPERATIVE' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN';
+      /**
+       * Payment status
+       */
+      paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED';
+      /**
+       * Production date range start
+       */
+      productionDateStart?: Date;
+      /**
+       * Production date range end
+       */
+      productionDateEnd?: Date;
+      /**
+       * Search by farmer name
+       */
+      query?: string;
     }
 
     /**
@@ -158,7 +178,27 @@ export namespace GetPaymentListUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * Preferred way of payment
+       */
+      preferredWayOfPayment = 'preferredWayOfPayment',
+      /**
+       * Payment status
+       */
+      paymentStatus = 'paymentStatus',
+      /**
+       * Production date range start
+       */
+      productionDateStart = 'productionDateStart',
+      /**
+       * Production date range end
+       */
+      productionDateEnd = 'productionDateEnd',
+      /**
+       * Search by farmer name
+       */
+      query = 'query'
     }
 
     /**
@@ -175,6 +215,16 @@ export namespace GetPaymentListUsingGET {
       sortBy: [
       ],
       sort: [
+      ],
+      preferredWayOfPayment: [
+      ],
+      paymentStatus: [
+      ],
+      productionDateStart: [
+      ],
+      productionDateEnd: [
+      ],
+      query: [
       ],
     };
 }
@@ -620,6 +670,11 @@ export class PaymentControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.preferredWayOfPayment,
+      map.paymentStatus,
+      map.productionDateStart,
+      map.productionDateEnd,
+      map.query,
       observe,
       reportProgress
     );
@@ -634,13 +689,18 @@ export class PaymentControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param preferredWayOfPayment Preferred way of payment
+     * @param paymentStatus Payment status
+     * @param productionDateStart Production date range start
+     * @param productionDateEnd Production date range end
+     * @param query Search by farmer name
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiPayment>;
-    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiPayment>>;
-    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiPayment>>;
-    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'CASH_VIA_COOPERATIVE' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiPayment>;
+    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'CASH_VIA_COOPERATIVE' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiPayment>>;
+    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'CASH_VIA_COOPERATIVE' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiPayment>>;
+    public getPaymentListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'CASH_VIA_COOPERATIVE' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -657,6 +717,21 @@ export class PaymentControllerService {
         }
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (preferredWayOfPayment !== undefined && preferredWayOfPayment !== null) {
+            queryParameters = queryParameters.set('preferredWayOfPayment', <any>preferredWayOfPayment);
+        }
+        if (paymentStatus !== undefined && paymentStatus !== null) {
+            queryParameters = queryParameters.set('paymentStatus', <any>paymentStatus);
+        }
+        if (productionDateStart !== undefined && productionDateStart !== null) {
+            queryParameters = queryParameters.set('productionDateStart', <any>productionDateStart.toISOString());
+        }
+        if (productionDateEnd !== undefined && productionDateEnd !== null) {
+            queryParameters = queryParameters.set('productionDateEnd', <any>productionDateEnd.toISOString());
+        }
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
         }
 
         let headers = this.defaultHeaders;

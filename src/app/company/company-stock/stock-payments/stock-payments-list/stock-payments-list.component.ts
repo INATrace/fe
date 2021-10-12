@@ -10,6 +10,7 @@ import { PaymentControllerService } from '../../../../../api/api/paymentControll
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
+import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 
 
 @Component({
@@ -33,6 +34,14 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   companyId: number;
   @Input()
   selectedPayments: ApiPayment[];
+  @Input()
+  wayOfPaymentPing$ = new BehaviorSubject<string>('');
+  @Input()
+  paymentStatusPing$ = new BehaviorSubject<string>('');
+  @Input()
+  deliveryDatesPing$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
+  @Input()
+  searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
   @Output()
   showing = new EventEmitter<number>();
@@ -48,7 +57,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   cbCheckedAll = new FormControl(false);
 
   pagingParams$ = new BehaviorSubject({});
-  sortingParams$ = new BehaviorSubject({ sortBy: 'productionDate', sort: 'DESC' });
+  sortingParams$ = new BehaviorSubject(null);
   paging$ = new BehaviorSubject<number>(1);
   page = 0;
   pageSize = 10;
@@ -72,13 +81,22 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     this.payments$ = combineLatest([
       this.reloadPingList$,
       this.paging$,
-      this.sortingParams$
+      this.sortingParams$,
+      this.paymentStatusPing$,
+      this.wayOfPaymentPing$,
+      this.deliveryDatesPing$,
+      this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting]) => {
+        map(([ping, page, sorting, paymentStatus, wayOfPayment, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
-            ...sorting
+            ...sorting,
+            paymentStatus,
+            preferredWayOfPayment: wayOfPayment,
+            productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
+            productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
+            query: query ? query : null
           };
         }),
         tap(() => this.globalEventManager.showLoading(true)),
