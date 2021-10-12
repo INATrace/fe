@@ -21,6 +21,7 @@
 import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
+import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
@@ -66,6 +67,7 @@ export interface ApiStockOrder {
      * Fulfilled quantity
      */
     fulfilledQuantity?: number;
+    gradeAbbreviation?: ApiGradeAbbreviation;
     /**
      * Entity id
      */
@@ -171,6 +173,7 @@ export namespace ApiStockOrder {
          * Fulfilled quantity
          */
         fulfilledQuantity = 'fulfilledQuantity',
+        gradeAbbreviation = 'gradeAbbreviation',
         /**
          * Entity id
          */
@@ -396,6 +399,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiGradeAbbreviation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'gradeAbbreviation',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiGradeAbbreviation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiGradeAbbreviation'
                 },
                 {
                     isReadOnly: false,
@@ -651,6 +666,8 @@ export namespace ApiStockOrder {
                 ],
                 fulfilledQuantity: [
                 ],
+                gradeAbbreviation: [
+                ],
                 id: [
                 ],
                 identifier: [
@@ -732,6 +749,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               gradeAbbreviation: {
   //                   validators: []
   //               },
   //               id: {
