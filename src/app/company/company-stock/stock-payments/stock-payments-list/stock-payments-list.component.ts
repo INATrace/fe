@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap, take, tap} from 'rxjs/operators';
 import {AuthService} from 'src/app/core/auth.service';
 import {GlobalEventManagerService} from 'src/app/core/global-event-manager.service';
 import {ApiPayment} from '../../../../../api/model/apiPayment';
@@ -206,21 +206,23 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 //   }
 
 //   removeEntity(entity) {
-//     return this.chainPaymentsService.deletePayment(entity);
+//     return ;
 //   }
 
-//   async delete(entity) {
-//     const result = await this.globalEventsManager.openMessageModal({
-//       type: 'warning',
-//       message: $localize`:@@productLabelPayments.delete.error.message:Are you sure you want to delete this payment?`,
-//       options: { centered: true }
-//     });
-//     if (result != 'ok') { return; }
-//     const res = await this.removeEntity(entity).pipe(take(1)).toPromise();
-//     if (res && res.status == 'OK') {
-//       this.reloadPage();
-//     }
-//   }
+  async delete(entity) {
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelPayments.delete.error.message:Are you sure you want to delete this payment?`,
+      options: {
+        centered: true
+      }
+    });
+    if (result !== 'ok') { return; }
+    const res = await this.paymentControllerService.deletePaymentUsingDELETEByMap(entity).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
+      this.reloadPage();
+    }
+  }
 
 //   async confirm(payment) {
 //     const result = await this.globalEventsManager.openMessageModal({
@@ -362,9 +364,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     this.paging$.next(event);
   }
 
-  // reloadPage() {
-  //   this.reloadPingList$.next(true);
-  //   this.clearCBs();
-  // }
+  reloadPage() {
+    this.reloadPingList$.next(true);
+    // this.clearCBs();
+  }
 
 }
