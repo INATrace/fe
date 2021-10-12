@@ -13,11 +13,13 @@ import { StockProcessingFacilityListComponent } from './stock-processing-facilit
 import { FacilityCardComponent } from './stock-processing-facility-list/facility-card/facility-card.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StockProcessingOrderFieldsComponent } from './stock-processing-order-details/stock-processing-order-fields/stock-processing-order-fields.component';
 
 @NgModule({
   declarations: [
     StockProcessingTabComponent,
     StockProcessingOrderDetailsComponent,
+    StockProcessingOrderFieldsComponent,
     StockProcessingFacilityListComponent,
     FacilityCardComponent
   ],

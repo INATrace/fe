@@ -234,11 +234,20 @@
                 <div *ngIf="inputQuantityOrOutputFacilityNotSet" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
               </div>
 
-              <!-- TODO -->
+              <ng-container *ngIf="this.prAction && this.prAction.requiredEvidenceFields">
+                <app-order-fields *ngFor="let fieldInfo of this.prAction.requiredEvidenceFields"
+                                  side="left"
+                                  [disabled]="disabledLeftFields"
+                                  [isQuote]="actionType === 'SHIPMENT'"
+                                  [fieldInfo]="fieldInfo"
+                                  [formGroup]="outputStockOrderForm"
+                                  [submitted]="submitted"></app-order-fields>
+              </ng-container>
+
+              <div *ngIf="!showLeftSide" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
 
             </ng-container>
           </div>
-
         </div>
 
         <!-- row 2, col 2 -->

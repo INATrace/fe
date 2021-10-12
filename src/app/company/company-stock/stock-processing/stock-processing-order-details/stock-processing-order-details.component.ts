@@ -9,7 +9,6 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { dateAtMidnightISOString, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
-import { GradeAbbreviationCodebook } from '../../../../shared-services/grade-abbreviation-codebook';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { ApiCompanyGetValidationScheme } from '../../../company-detail/validation';
@@ -133,7 +132,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
-    public gradeAbbreviationCodebook: GradeAbbreviationCodebook,
     public actionTypesCodebook: ActionTypesService
   ) { }
 
@@ -428,13 +426,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       this.initializeFacilitiesCodebooks();
 
+      // If there is only one appropriate input facility selected it
       this.subscriptions.push(this.inputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-        if (val && val.length === 1) { this.inputFacilityForm.setValue(val[0]); }
-      }));
-      this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-        if (val && val.length === 1 && !this.update) {
-          this.outputFacilityForm.setValue(val[0]);
+        if (val && val.length === 1) {
+          this.inputFacilityForm.setValue(val[0]);
+          this.setInputFacility(this.inputFacilityForm.value);
         }
+      }));
+
+      // If there is only one appropriate output facility select it
+      this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+        if (val && val.length === 1 && !this.update) { this.outputFacilityForm.setValue(val[0]); }
       }));
 
       this.defineInputAndOutputSemiProduct(event).then();
@@ -679,12 +681,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // Clear all validators
     this.outputStockOrderForm.controls.gradeAbbreviation.clearValidators();
     this.outputStockOrderForm.controls.gradeAbbreviation.updateValueAndValidity();
+
     this.outputStockOrderForm.controls.lotNumber.clearValidators();
     this.outputStockOrderForm.controls.lotNumber.updateValueAndValidity();
+
     this.outputStockOrderForm.controls.pricePerUnit.clearValidators();
     this.outputStockOrderForm.controls.pricePerUnit.updateValueAndValidity();
+
     this.outputStockOrderForm.controls.screenSize.clearValidators();
     this.outputStockOrderForm.controls.screenSize.updateValueAndValidity();
+
     this.outputStockOrderForm.controls.actionType.clearValidators();
     this.outputStockOrderForm.controls.actionType.updateValueAndValidity();
 
@@ -736,14 +742,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.get('actionType').setValue(null);
     this.outputStockOrderForm.get('pricePerUnit').setValue(null);
     this.outputStockOrderForm.get('lotNumber').setValue(null);
-    this.outputStockOrderForm.get('screenSize').setValue(null);
     this.outputStockOrderForm.get('lotLabel').setValue(null);
+    this.outputStockOrderForm.get('screenSize').setValue(null);
     this.outputStockOrderForm.get('startOfDrying').setValue(null);
-    this.outputStockOrderForm.get('clientId').setValue(null);
     this.outputStockOrderForm.get('flavourProfile').setValue(null);
     this.outputStockOrderForm.get('comments').setValue(null);
 
     this.womensOnlyForm.setValue(null);
+    this.womensOnlyStatus.setValue(null);
+
+    this.fromFilterDate.setValue(null);
+    this.toFilterDate.setValue(null);
 
     this.currentOutputSemiProductNameForm.setValue(null);
   }
