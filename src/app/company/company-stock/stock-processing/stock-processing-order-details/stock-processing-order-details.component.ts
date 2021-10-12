@@ -33,6 +33,7 @@ import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
 import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
+import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -122,6 +123,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   showCertificatesIds = false;
   showTransactionType = false;
   showFlavourProfile = false;
+
+  remainingForm = new FormControl(null);
 
   constructor(
     private route: ActivatedRoute,
@@ -242,6 +245,66 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const inTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
     const selTRCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
     return inTRCount + selTRCount === 0;
+  }
+
+  get productOrderId() {
+    const form = this.outputStockOrderForm.get('productOrder');
+    if (form && form.value) {
+      const val = form.value as ChainProductOrder;
+      return val.id;
+    }
+    return null;
+  }
+
+  get showInternalLotNumberField() {
+    return this.actionType !== 'TRANSFER';
+  }
+
+  get inputQuantityLabel() {
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ 
+      this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.apiMeasureUnitType, 'label') : '' 
+    }`;
+  }
+
+  get showRemainingForm() {
+    if (this.actionType === 'PROCESSING') {
+      return !!this.underlyingMeasurementUnit;
+    }
+    return this.actionType === 'SHIPMENT';
+  }
+
+  get underlyingMeasurementUnit() {
+
+    if (!this.prAction) { return null; }
+
+    if (this.actionType === 'PROCESSING') {
+
+      const inputMeasurementUnit = this.prAction.inputSemiProduct.apiMeasureUnitType;
+      const outputMeasurementUnit = this.prAction.outputSemiProduct.apiMeasureUnitType;
+
+      if (inputMeasurementUnit.id === outputMeasurementUnit.id) { return inputMeasurementUnit; }
+
+      const underlyingOutputMesUnit = outputMeasurementUnit.underlyingMeasurementUnitType;
+      if (underlyingOutputMesUnit && underlyingOutputMesUnit.id === inputMeasurementUnit.id) { return inputMeasurementUnit; }
+
+      const underlyingInputMesUnit = inputMeasurementUnit.underlyingMeasurementUnitType;
+      if (underlyingInputMesUnit && underlyingInputMesUnit.id === outputMeasurementUnit.id) { return outputMeasurementUnit; }
+    }
+
+    return null;
+  }
+
+  get calculateOutputQuantity() {
+
+    if (this.outputStockOrders.length > 0) {
+      let sum = 0;
+      for (const item of (this.outputStockOrders as FormArray).value) {
+        if (item.totalQuantity != null) { sum += parseFloat(item.totalQuantity); }
+      }
+      return sum;
+    }
+
+    return this.totalQuantity;
   }
 
   ngOnInit(): void {
@@ -1019,6 +1082,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.processingOrderInputTransactions.splice(i, 1);
       this.editableProcessingOrder.targetStockOrders.splice(i, 1);
       this.calcInputQuantity(true);
+    }
+  }
+
+  setRemaining() {
+
+    if (this.actionType === 'PROCESSING') {
+      this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
+    }
+    if (this.actionType === 'SHIPMENT') {
+      this.remainingForm.setValue((this.totalQuantity - this.calcInputQuantity(false)).toFixed(2));
     }
   }
 
