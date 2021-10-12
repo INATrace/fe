@@ -413,6 +413,17 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async remove(company) {
+    if (company.type === ApiProductCompany.TypeEnum.OWNER && this.owners.length <= 1) {
+      await this.globalEventsManager.openMessageModal({
+        type: 'error',
+        message: $localize`:@@productLabelStakeholders.modal.owner.remove.error.title:The product must have at least one owner. If you want to delete the current owner, add another owner first.`,
+        options: {
+          centered: true
+        },
+        dismissable: false
+      });
+      return;
+    }
     let result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabelStakeholders.remove.warning.message:Are you sure you want to remove ${company.company.name}?`,

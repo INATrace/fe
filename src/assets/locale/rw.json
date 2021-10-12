@@ -2796,6 +2796,7 @@
     "productLabelStakeholders.modal.processor.title": "Add processor",
     "productLabelStakeholders.modal.processor.instructionsHtml": "Select processor company",
     "productLabelStakeholders.modal.trader.title": "Add trader",
-    "productLabelStakeholders.modal.trader.instructionsHtml": "Select trader company"
+    "productLabelStakeholders.modal.trader.instructionsHtml": "Select trader company",
+    "productLabelStakeholders.modal.owner.remove.error.title": "The product must have at least one owner. If you want to delete the current owner, add another owner first."
   }
 }
