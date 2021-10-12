@@ -1,0 +1,19 @@
+<app-authorised-layout>
+
+    <app-company-left-panel></app-company-left-panel>
+
+    <div class="main" *ngIf="this.isAuthRoleToSeeProcessing">
+
+        <div class="main-inside-top content-element">
+
+            <p>Stock payments tab works!</p>
+
+        </div>
+
+    </div>
+
+    <div class="main" *ngIf="!this.isAuthRoleToSeeProcessing">
+        <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
+    </div>
+
+</app-authorised-layout>

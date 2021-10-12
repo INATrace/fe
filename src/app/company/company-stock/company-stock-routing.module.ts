@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'processing',
     loadChildren: () => import('./stock-processing/stock-processing.module').then(m => m.StockProcessingModule)
+  },
+  {
+    path: 'payments',
+    loadChildren: () => import('./stock-payments/stock-payments.module').then(m => m.StockPaymentsModule)
   }
 ];
 
