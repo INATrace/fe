@@ -13240,6 +13240,10 @@
             "example": false,
             "type": "boolean"
           },
+          "lotNumber": {
+            "description": "LOT number",
+            "type": "string"
+          },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"

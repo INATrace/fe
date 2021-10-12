@@ -88,6 +88,10 @@ export interface ApiStockOrder {
      * Is order of type PURCHASE_ORDER
      */
     isPurchaseOrder?: boolean;
+    /**
+     * LOT number
+     */
+    lotNumber?: string;
     measureUnitType?: ApiMeasureUnitType;
     /**
      * Order type
@@ -194,6 +198,10 @@ export namespace ApiStockOrder {
          * Is order of type PURCHASE_ORDER
          */
         isPurchaseOrder = 'isPurchaseOrder',
+        /**
+         * LOT number
+         */
+        lotNumber = 'lotNumber',
         measureUnitType = 'measureUnitType',
         /**
          * Order type
@@ -468,6 +476,17 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lotNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -678,6 +697,8 @@ export namespace ApiStockOrder {
                 ],
                 isPurchaseOrder: [
                 ],
+                lotNumber: [
+                ],
                 measureUnitType: [
                 ],
                 orderType: [
@@ -767,6 +788,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               isPurchaseOrder: {
+  //                   validators: []
+  //               },
+  //               lotNumber: {
   //                   validators: []
   //               },
   //               measureUnitType: {
