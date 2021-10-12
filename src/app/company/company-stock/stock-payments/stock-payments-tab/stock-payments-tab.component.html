@@ -84,6 +84,7 @@
             </div>
 
             <app-stock-payments-list
+                    [reloadPingList$]="reloadPaymentPingList$"
                     [companyId]="companyId"
                     [selectedPayments]="selectedPayments"
                     (selectedPaymentsChanged)="selectedIdsChanged($event)"

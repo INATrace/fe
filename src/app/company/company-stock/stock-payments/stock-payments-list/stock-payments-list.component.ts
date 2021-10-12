@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
-import {map, switchMap, take, tap} from 'rxjs/operators';
-import {AuthService} from 'src/app/core/auth.service';
-import {GlobalEventManagerService} from 'src/app/core/global-event-manager.service';
-import {ApiPayment} from '../../../../../api/model/apiPayment';
-import {PaymentControllerService} from '../../../../../api/api/paymentController.service';
-import {SortOption} from '../../../../shared/result-sorter/result-sorter-types';
-import {ApiPaginatedResponseApiPayment} from '../../../../../api/model/apiPaginatedResponseApiPayment';
-import {formatDateWithDots} from '../../../../../shared/utils';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { ApiPayment } from '../../../../../api/model/apiPayment';
+import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
+import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
+import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
+import { formatDateWithDots } from '../../../../../shared/utils';
 
 
 @Component({
@@ -22,12 +22,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      protected globalEventsManager: GlobalEventManagerService,
+      protected globalEventManager: GlobalEventManagerService,
       private authService: AuthService,
       private paymentControllerService: PaymentControllerService
   ) { }
 
-//   @Input()
+  @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   @Input()
   companyId: number;
@@ -81,7 +81,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
             ...sorting
           };
         }),
-        tap(() => this.globalEventsManager.showLoading(true)),
+        tap(() => this.globalEventManager.showLoading(true)),
         switchMap(params => {
           return this.loadPayments(params);
         }),
@@ -116,7 +116,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
           return resp.data;
         }),
-        tap(() => this.globalEventsManager.showLoading(false))
+        tap(() => this.globalEventManager.showLoading(false))
     );
   }
 
@@ -201,16 +201,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-//   edit(payment) {
+//   editPayment(payment) {
 //     this.router.navigate(['product-labels', this.productId, 'stock', 'payments', 'update', dbKey(payment), this.isCooperative ? 'PURCHASE' : 'CUSTOMER']);
 //   }
 
-//   removeEntity(entity) {
-//     return ;
-//   }
-
-  async delete(entity) {
-    const result = await this.globalEventsManager.openMessageModal({
+  async deletePayment(entity) {
+    const result = await this.globalEventManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabelPayments.delete.error.message:Are you sure you want to delete this payment?`,
       options: {
@@ -224,45 +220,27 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     }
   }
 
-//   async confirm(payment) {
-//     const result = await this.globalEventsManager.openMessageModal({
-//       type: 'warning',
-//       message: $localize`:@@productLabelPayments.confirm.error.message:Are you sure you want to confirm this payment?`,
-//       options: { centered: true }
-//     });
-//     if (result != 'ok') { return; }
-//     this.confirmPayment(payment);
-//   }
+  async confirmPayment(payment) {
+    const result = await this.globalEventManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelPayments.confirm.error.message:Are you sure you want to confirm this payment?`,
+      options: { centered: true }
+    });
+    if (result !== 'ok') {
+      return;
+    }
 
-//   async confirmPayments() {
-//     const result = await this.globalEventsManager.openMessageModal({
-//       type: 'warning',
-//       message: $localize`:@@productLabelPayments.confirmPayments.error.message:Are you sure you want to confirm payments?`,
-//       options: { centered: true }
-//     });
-//     if (result != 'ok') { return; }
-//     for (const payment of this.selectedIds) {
-//       this.confirmPayment(payment);
-//     }
-//     this.selectedIds = [];
-//     this.selectedIdsChanged.emit(this.selectedIds);
-//   }
+    // delete payment['selected'];
+    payment.paymentStatus = ApiPayment.PaymentStatusEnum.CONFIRMED;
 
-//   async confirmPayment(payment: ChainPayment) {
-//     delete payment['selected'];
-//     payment.paymentStatus = ChainPayment.PaymentStatusEnum.CONFIRMED; // "CONFIRMED";
-//     payment.paymentConfirmedAtTime = new Date().toUTCString();
-//     const resUser = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
-//     if (resUser && resUser.status === 'OK' && resUser.data) {
-//       payment.paymentConfirmedByUser = dbKey(resUser.data);
-//     }
-//     payment.paymentConfirmedByOrganization = localStorage.getItem('selectedUserCompany');
+    const res = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(payment)
+        .pipe(take(1))
+        .toPromise();
 
-//     const res = await this.chainPaymentsService.confirmPayment(payment).pipe(take(1)).toPromise();
-//     if (res && res.status == 'OK') {
-//       this.reloadPage();
-//     }
-//   }
+    if (res && res.status === 'OK') {
+      this.reloadPage();
+    }
+  }
 
 //   totalPaid(preferredWayOfPayment, toFarmer, toCollector) {
 //     if (preferredWayOfPayment === 'CASH_VIA_COLLECTOR') { return toFarmer; }
@@ -366,7 +344,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   reloadPage() {
     this.reloadPingList$.next(true);
-    // this.clearCBs();
   }
 
 }

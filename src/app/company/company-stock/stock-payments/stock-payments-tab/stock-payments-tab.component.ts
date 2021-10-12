@@ -3,6 +3,10 @@ import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-cor
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { ApiPayment } from '../../../../../api/model/apiPayment';
+import { take } from 'rxjs/operators';
+import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -16,11 +20,14 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
   showedPayments = 0;
   allPayments = 0;
 
+  reloadPaymentPingList$ = new BehaviorSubject<boolean>(false);
+
   constructor(
       protected router: Router,
       protected route: ActivatedRoute,
       protected globalEventManager: GlobalEventManagerService,
-      protected facilityControllerService: FacilityControllerService
+      protected facilityControllerService: FacilityControllerService,
+      private paymentControllerService: PaymentControllerService
   ) {
     super(router, route, globalEventManager, facilityControllerService);
   }
@@ -33,8 +40,30 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     this.router.navigate(['my-stock', 'payments', 'new']).then();
   }
 
-  confirmPayments(){
-    // TODO: TBD
+  async confirmPayments(){
+    const result = await this.globalEventManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelPayments.confirmPayments.error.message:Are you sure you want to confirm payments?`,
+      options: { centered: true }
+    });
+    if (result !== 'ok') {
+      return;
+    }
+
+    for (const payment of this.selectedPayments) {
+
+      payment.paymentStatus = ApiPayment.PaymentStatusEnum.CONFIRMED;
+
+      const res = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(payment)
+          .pipe(take(1))
+          .toPromise();
+
+      if (res && res.status === 'OK') {
+        this.reloadPage();
+      }
+    }
+    this.selectedPayments = [];
+    this.selectedIdsChanged(this.selectedPayments);
   }
 
   onShowPayments(event) {
@@ -43,6 +72,10 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   onCountAllPayments(event) {
     this.allPayments = event;
+  }
+
+  reloadPage() {
+    this.reloadPaymentPingList$.next(true);
   }
 
 }

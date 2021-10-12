@@ -28,20 +28,20 @@
                         <a class="company-action"
                            i18n="@@productLabelPayments.tableCol.view"
                            [class.enabled-action]="true">
-<!--                               (click)="edit(payment)"-->
+<!--                               (click)="editPayment(payment)"-->
                             View
                         </a>
 <!--                        <a *ngIf="this.isCooperative"-->
-<!--                           class="company-action"-->
-<!--                           i18n="@@productLabelPayments.tableCol.confirm"-->
-<!--                           (click)="payment.paymentStatus != 'CONFIRMED' && confirm(payment)"-->
-<!--                           [class.enabled-action]="payment.paymentStatus != 'CONFIRMED'"-->
-<!--                           [class.disabled-action]="payment.paymentStatus === 'CONFIRMED'">-->
-<!--                            Confirm-->
-<!--                        </a>-->
+                        <a class="company-action"
+                           i18n="@@productLabelPayments.tableCol.confirm"
+                           (click)="payment.paymentStatus != 'CONFIRMED' && confirmPayment(payment)"
+                           [class.enabled-action]="payment.paymentStatus !== 'CONFIRMED'"
+                           [class.disabled-action]="payment.paymentStatus === 'CONFIRMED'">
+                            Confirm
+                        </a>
                         <a class="company-action"
                            i18n="@@productLabelPayments.tableCol.delete"
-                           (click)="delete(payment)"
+                           (click)="deletePayment(payment)"
                            [class.enabled-action]="true">
                             Delete
                         </a>
