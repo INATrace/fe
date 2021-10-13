@@ -15,6 +15,7 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
+import { ApiProduct } from '../../../../api/model/apiProduct';
 
 @Component({
   selector: 'app-product-label-stakeholders',
@@ -22,6 +23,15 @@ import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
   styleUrls: ['./product-label-stakeholders.component.scss']
 })
 export class ProductLabelStakeholdersComponent implements OnInit {
+  
+  buyers: ApiProductCompany[] = [];
+  importers: ApiProductCompany[] = [];
+  exporters: ApiProductCompany[] = [];
+  owners: ApiProductCompany[] = [];
+  producers: ApiProductCompany[] = [];
+  associations: ApiProductCompany[] = [];
+  processors: ApiProductCompany[] = [];
+  traders: ApiProductCompany[] = [];
 
   constructor(
     protected productController: ProductControllerService,
@@ -88,11 +98,6 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   searchNameFarmers = new FormControl(null);
 
   productId = this.route.snapshot.params.id;
-  buyers: ApiProductCompany[] = [];
-  producers: ApiProductCompany[] = [];
-  associations: ApiProductCompany[] = [];
-  owners: ApiProductCompany[] = [];
-  roasters: ApiProductCompany[] = [];
   unsubscribeList = new UnsubscribeList()
   currentProduct;
   organizationId;
@@ -285,43 +290,93 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     tap(val => { this.globalEventsManager.showLoading(false); }),
     tap(data => {
       this.currentProduct = data
+
       this.buyers = [];
-      this.producers = [];
+      this.importers = [];
+      this.exporters = [];
       this.owners = [];
+      this.producers = [];
       this.associations = [];
-      this.roasters = [];
-      for (let c of this.currentProduct.associatedCompanies) {
-        if (c.type === "BUYER") this.buyers.push(c);
-        if (c.type === "PRODUCER") this.producers.push(c);
-        if (c.type === "OWNER") this.owners.push(c);
-        if (c.type === "ASSOCIATION") this.associations.push(c);
-        if (c.type === "ROASTER") this.roasters.push(c);
+      this.processors = [];
+      this.traders = [];
+
+      for (const ac of this.currentProduct.associatedCompanies) {
+        switch (ac.type) {
+          case ApiProductCompany.TypeEnum.BUYER: this.buyers.push(ac); break;
+          case ApiProductCompany.TypeEnum.IMPORTER: this.importers.push(ac); break;
+          case ApiProductCompany.TypeEnum.EXPORTER: this.exporters.push(ac); break;
+          case ApiProductCompany.TypeEnum.OWNER: this.owners.push(ac); break;
+          case ApiProductCompany.TypeEnum.PRODUCER: this.producers.push(ac); break;
+          case ApiProductCompany.TypeEnum.ASSOCIATION: this.associations.push(ac); break;
+          case ApiProductCompany.TypeEnum.PROCESSOR: this.processors.push(ac); break;
+          case ApiProductCompany.TypeEnum.TRADER: this.traders.push(ac); break;
+        }
       }
     }),
     shareReplay(1)
   )
 
   async newBuyer() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.buyer.title:Add buyer`,
       instructionsHtml: $localize`:@@productLabelStakeholders.modal.buyer.instructionsHtml:Select buyer company`
-    })
-    let company = await modalRef.result;
+    });
+    const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, "BUYER")
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.BUYER);
+    }
+  }
+  
+  async newImporter() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
+    const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      title: $localize`:@@productLabelStakeholders.modal.importer.title:Add importer`,
+      instructionsHtml: $localize`:@@productLabelStakeholders.modal.importer.instructionsHtml:Select importer company`
+    });
+    const company = await modalRef.result;
+    if (company) {
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.IMPORTER);
+    }
+  }
+
+  async newExporter() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
+    const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      title: $localize`:@@productLabelStakeholders.modal.exporter.title:Add exporter`,
+      instructionsHtml: $localize`:@@productLabelStakeholders.modal.exporter.instructionsHtml:Select exporter company`
+    });
+    const company = await modalRef.result;
+    if (company) {
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.EXPORTER);
     }
   }
 
   async newProducer() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.producer.title:Add producer`,
       instructionsHtml: $localize`:@@productLabelStakeholders.modal.producer.instructionsHtml:Select producer company`
-    })
-    let company = await modalRef.result;
+    });
+    const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, "PRODUCER")
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.PRODUCER);
     }
   }
 
@@ -330,38 +385,73 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.owner.title:Add owner`,
       instructionsHtml: $localize`:@@productLabelStakeholders.modal.owner.instructionsHtml:Select owner company`
-    })
-    let company = await modalRef.result;
+    });
+    const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, "OWNER")
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.OWNER);
     }
   }
 
   async newAssociation() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productLabelStakeholders.modal.association.title:Add association`,
       instructionsHtml: $localize`:@@productLabelStakeholders.modal.association.instructionsHtml:Select association company`
-    })
-    let company = await modalRef.result;
+    });
+    const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, "ASSOCIATION")
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.ASSOCIATION);
     }
   }
 
-  async newRoaster() {
+  async newProcessor() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@productLabelStakeholders.modal.roaster.title:Add roaster`,
-      instructionsHtml: $localize`:@@productLabelStakeholders.modal.roaster.instructionsHtml:Select roaster company`
-    })
-    let company = await modalRef.result;
+      title: $localize`:@@productLabelStakeholders.modal.processor.title:Add processor`,
+      instructionsHtml: $localize`:@@productLabelStakeholders.modal.processor.instructionsHtml:Select processor company`
+    });
+    const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, "ROASTER")
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.PROCESSOR);
+    }
+  }
+
+  async newTrader() {
+    if (this.owners && this.owners.length === 0) {
+      await this.dialogEmptyOwner();
+      return;
+    }
+    const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      title: $localize`:@@productLabelStakeholders.modal.trader.title:Add trader`,
+      instructionsHtml: $localize`:@@productLabelStakeholders.modal.trader.instructionsHtml:Select trader company`
+    });
+    const company = await modalRef.result;
+    if (company) {
+      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.TRADER);
     }
   }
 
   async remove(company) {
+    if (company.type === ApiProductCompany.TypeEnum.OWNER && this.owners.length <= 1) {
+      await this.globalEventsManager.openMessageModal({
+        type: 'error',
+        message: $localize`:@@productLabelStakeholders.modal.owner.remove.error.title:The product must have at least one owner. If you want to delete the current owner, add another owner first.`,
+        options: {
+          centered: true
+        },
+        dismissable: false
+      });
+      return;
+    }
     let result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabelStakeholders.remove.warning.message:Are you sure you want to remove ${company.company.name}?`,
@@ -399,6 +489,17 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       this.globalEventsManager.showLoading(false);
     }
 
+  }
+
+  async dialogEmptyOwner() {
+    await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelStakeholders.modal.owner.add.warning.title:Please add an owner first.`,
+      options: {
+        centered: true
+      },
+      dismissable: false
+    });
   }
 
 
