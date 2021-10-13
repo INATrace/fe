@@ -172,6 +172,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.companyId === facility.company?.id;
   }
 
+  get showRightSide() {
+    const facility = this.outputFacilityForm.value as ApiFacility;
+    if (!facility) { return true; }
+    return this.companyId === facility.company?.id;
+  }
+
   get disabledLeftFields() {
     return !this.inputFacility || this.inputFacility.company?.id !== this.companyId;
   }
@@ -266,6 +272,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }`;
   }
 
+  get outputQuantityLabel() {
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${ 
+      this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+  }
+
   get showRemainingForm() {
     if (this.actionType === 'PROCESSING') {
       return !!this.underlyingMeasurementUnit;
@@ -305,6 +316,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return this.totalQuantity;
+  }
+
+  get showTotalQuantityForm() {
+
+    if (this.actionType === 'SHIPMENT') { return true; }
+    if (this.actionType !== 'PROCESSING') { return false; }
+    return !this.prAction.repackedOutputs;
+  }
+
+  get invalidOutputQuantity() {
+    return this.showTotalQuantityForm && !this.totalQuantity;
+  }
+
+  get invalidOutputQuantityForShipment() {
+    return this.actionType === 'SHIPMENT' && this.invalidOutputQuantity;
+  }
+
+  get showUseInput() {
+    return this.actionType === 'PROCESSING' && this.underlyingMeasurementUnit;
+  }
+
+  get showClipOrder() {
+    return this.actionType === 'SHIPMENT';
   }
 
   ngOnInit(): void {
@@ -629,31 +663,45 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   clipOrder(value: boolean) {
-    // TODO: implement clip order
-    // if (value) {
-    //   // let outputQuantity = this.outputStockOrderForm.get('totalQuantity').value
-    //   const outputQuantity = this.totalQuantity;
-    //   let tmpQuantity = 0;
-    //   for (const tx of this.inputTransactions) {
-    //     tmpQuantity += tx.outputQuantity;
-    //   }
-    //   for (const item of this.inputSemiProducts) {
-    //     if (!item.selected) { continue; }
-    //     if (tmpQuantity + item.availableQuantity <= outputQuantity) {
-    //       tmpQuantity += item.availableQuantity;
-    //       item.selectedQuantity = item.availableQuantity;
-    //       continue;
-    //     }
-    //     if (tmpQuantity >= outputQuantity) {
-    //       item.selected = false;
-    //       item.selectedQuantity = 0;
-    //       continue;
-    //     }
-    //     item.selectedQuantity = outputQuantity - tmpQuantity;
-    //     tmpQuantity = outputQuantity;
-    //   }
-    //   this.calcInputQuantity(true);
-    // }
+
+    if (value) {
+
+      const outputQuantity = this.totalQuantity;
+      let tmpQuantity = 0;
+
+      for (const tx of this.inputTransactions) {
+        tmpQuantity += tx.outputQuantity;
+      }
+
+      for (const item of this.availableStockOrders) {
+
+        if (!item.selected) { continue; }
+
+        if (tmpQuantity + item.availableQuantity <= outputQuantity) {
+          tmpQuantity += item.availableQuantity;
+          item.selectedQuantity = item.availableQuantity;
+          continue;
+        }
+
+        if (tmpQuantity >= outputQuantity) {
+          item.selected = false;
+          item.selectedQuantity = 0;
+          continue;
+        }
+
+        item.selectedQuantity = outputQuantity - tmpQuantity;
+        tmpQuantity = outputQuantity;
+      }
+
+      this.calcInputQuantity(true);
+    }
+  }
+
+  useInput(value: boolean) {
+    if (!this.showRightSide) { return; }
+    if (value) {
+      this.outputStockOrderForm.get('totalQuantity').setValue(this.form.get('outputQuantity').value);
+    }
   }
 
   private select(semiProduct) {
@@ -758,7 +806,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.controls.actionType.updateValueAndValidity();
 
     if (this.actionType === 'PROCESSING' && !this.prAction.repackedOutputs) {
-      this.outputStockOrderForm.get('totalQuantity').setValidators([Validators.required]);
+      setTimeout(() => this.outputStockOrderForm.get('totalQuantity').setValidators([Validators.required]));
     }
 
     // Set fields specifically to the
@@ -801,6 +849,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.form.get('outputQuantity').setValue(null);
 
+    this.outputStockOrderForm.get('totalQuantity').setValue(null);
     this.outputStockOrderForm.get('gradeAbbreviation').setValue(null);
     this.outputStockOrderForm.get('actionType').setValue(null);
     this.outputStockOrderForm.get('pricePerUnit').setValue(null);
@@ -811,11 +860,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.get('flavourProfile').setValue(null);
     this.outputStockOrderForm.get('comments').setValue(null);
 
+    this.remainingForm.setValue(null);
+
     this.womensOnlyForm.setValue(null);
     this.womensOnlyStatus.setValue(null);
 
     this.fromFilterDate.setValue(null);
     this.toFilterDate.setValue(null);
+
+    this.checkboxUseInputFrom.setValue(false);
+    this.checkboxClipOrderFrom.setValue(false);
 
     this.currentOutputSemiProductNameForm.setValue(null);
   }

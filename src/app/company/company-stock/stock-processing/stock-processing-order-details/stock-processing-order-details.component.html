@@ -368,6 +368,58 @@
                 </div>
               </div>
 
+              <div class="af-row" *ngIf="showTotalQuantityForm">
+                <div class="af-c6">
+                  <textinput
+                          [form]="outputStockOrderForm.get('totalQuantity')"
+                          [label]="outputQuantityLabel"
+                          style="width: 100%"
+                          placeholder="Enter quantity"
+                          i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder"
+                          [readOnly]="isUsingInput"
+                          [isInvalid]="(submitted && (outputStockOrderForm.get('totalQuantity').invalid || invalidOutputQuantity)) || invalidOutputQuantityForShipment">
+                    <ng-container>
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="outputStockOrderForm.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error">
+                            Quantity is required
+                          </div>
+                          <div *ngIf="errors.tooSmall as inputQuantity" i18n="@@productLabelStockProcessingOrderDetail.outputQuantityTooSmall.textinput.error">
+                            Quantity is too small. The sum of input transactions is {{inputQuantity}}.
+                          </div>
+                        </div>
+                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)" i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
+                          Quantity is required
+                        </div>
+                      </ng-container>
+                      <div *ngIf="invalidOutputQuantityForShipment" i18n="@@productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error" class="sc-invalid-feedback">
+                        Enter the desired output quantity first
+                      </div>
+                    </ng-container>
+                  </textinput>
+                </div>
+                <div class="af-c6 d-flex align-items-end mb-2">
+                  <checkbox-input
+                          *ngIf="showUseInput"
+                          [form]="checkboxUseInputFrom"
+                          (onClick)="useInput($event)">
+                    <checkbox-input-rich-label
+                            i18n="@@productLabelStockProcessingOrderDetail.checkbox.useInput.label">
+                      Use input
+                    </checkbox-input-rich-label>
+                  </checkbox-input>
+                  <checkbox-input
+                          *ngIf="showClipOrder"
+                          [form]="checkboxClipOrderFrom"
+                          (onClick)="clipOrder($event)">
+                    <checkbox-input-rich-label
+                            i18n="@@productLabelStockProcessingOrderDetail.checkbox.clipOrder.label">
+                      Clip input quantity
+                    </checkbox-input-rich-label>
+                  </checkbox-input>
+                </div>
+              </div>
+
               <!-- TODO -->
 
             </ng-container>
