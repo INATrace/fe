@@ -170,7 +170,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
         hide: false
       },
       {
-        key: 'representativeOfRecipientUserCustomer',
+        key: 'recipientUserCustomer',
         name: $localize`:@@productLabelPayments.sortOptions.producer_name.name:Farmer name`,
         inactive: true,
         hide: false

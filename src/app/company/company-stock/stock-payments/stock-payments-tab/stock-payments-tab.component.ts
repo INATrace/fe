@@ -8,6 +8,8 @@ import { take } from 'rxjs/operators';
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
 import { BehaviorSubject } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { StockPaymentsSelectorForNewPaymentModalComponent } from '../stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -34,6 +36,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected router: Router,
       protected route: ActivatedRoute,
       protected globalEventManager: GlobalEventManagerService,
+      protected modalService: NgbModalImproved,
       protected facilityControllerService: FacilityControllerService,
       private paymentControllerService: PaymentControllerService
   ) {
@@ -44,8 +47,15 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     super.ngOnInit();
   }
 
-  newPayment() {
-    // this.router.navigate(['my-stock', 'payments', 'new']).then();
+  async newPayment() {
+    const modalRef = this.modalService.open(StockPaymentsSelectorForNewPaymentModalComponent, {centered: true});
+    Object.assign(modalRef.componentInstance, {
+      companyId: this.companyId,
+    });
+    const stockOrder = await modalRef.result;
+    if (stockOrder) {
+      // this.router.navigate(['product-labels', this.productId, 'stock', 'payments', 'purchase-order', dbKey(stockOrder), 'new'])
+    }
   }
 
   setPaymentStatus(value: string){
