@@ -75,31 +75,6 @@
           </div>
         </div>
 
-
-        <div class="main-inside-top content-element">
-
-          <div class="d-flex justify-content-between content-element--row1">
-            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
-              <span>+ Add owner</span>
-            </button>
-          </div>
-
-          <div class="container container--bare">
-            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
-              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
-
-                <app-company-card
-                  (onSelect)="remove($event)"
-                  [company]="owner">
-                </app-company-card>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-
         <div class="main-inside-top content-element">
 
           <div class="d-flex justify-content-between content-element--row1">
@@ -185,6 +160,29 @@
                 <app-company-card
                   (onSelect)="remove($event)"
                   [company]="trader">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
+              <span>+ Add owner</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="owner"
+                  [owner]="true">
                 </app-company-card>
               </div>
             </div>
