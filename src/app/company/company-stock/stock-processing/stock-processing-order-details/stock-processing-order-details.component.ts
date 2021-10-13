@@ -36,6 +36,7 @@ import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiP
 import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
 import { Location } from '@angular/common';
+import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -142,6 +143,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private location: Location,
     private route: ActivatedRoute,
+    private globalEventsManager: GlobalEventManagerService,
     private stockOrderController: StockOrderControllerService,
     private procActionController: ProcessingActionControllerService,
     private facilityController: FacilityControllerService,
@@ -372,6 +374,52 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.outputStockOrderForm.get('certificates') as FormArray;
   }
 
+  get noRepackaging() {
+    if (this.prAction) {
+      return this.prAction.repackedOutputs != null && !this.prAction.repackedOutputs;
+    }
+    return false;
+  }
+
+  get canSave() {
+
+    if (this.processingDateForm.invalid) {
+      return false;
+    }
+
+    if (this.outputStockOrderForm.invalid) {
+      return false;
+    }
+
+    if (!this.noRepackaging) {
+      if (this.form.invalid) {
+        return false;
+      }
+
+      if (this.requiredProcessingEvidenceArray.invalid) {
+        return false;
+      }
+    }
+
+    if (this.invalidOutputQuantity) {
+      return false;
+    }
+    if (this.inputFacilityForm.invalid) {
+      return false;
+    }
+    if (this.outputFacilityForm.invalid) {
+      return false;
+    }
+    if (this.processingActionForm.invalid) {
+      return false;
+    }
+    if (this.oneInputStockOrderRequired) {
+      return false;
+    }
+
+    return !(this.outputStockOrders.value.length > 0 && this.outputStockOrders.invalid);
+  }
+
   ngOnInit(): void {
 
     this.initInitialData().then(
@@ -474,11 +522,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.checkboxClipOrderFrom.setValue(true);
     }
 
-    // TODO: check if this is needed
     // Inject transaction form for easier validation purposes
-    // this.outputStockOrderForm.setControl('form', this.form);
-    // this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
-    // this.outputStockOrderForm.setControl('processingActionForm', this.processingActionForm);
+    this.outputStockOrderForm.setControl('form', this.form);
+    this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
+    this.outputStockOrderForm.setControl('processingActionForm', this.processingActionForm);
 
     this.initializeListManager();
 
@@ -493,6 +540,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   async saveProcessingOrder() {
+
+    if (this.saveProcessingOrderInProgress) { return; }
+    this.globalEventsManager.showLoading(true);
+    this.saveProcessingOrderInProgress = true;
+    this.submitted = true;
+
+    if (!this.canSave) {
+      this.saveProcessingOrderInProgress = false;
+      this.globalEventsManager.showLoading(false);
+      return;
+    }
+
     // TODO: implement save operation
   }
 

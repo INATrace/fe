@@ -1,18 +1,17 @@
-import { ChainTransaction } from 'src/api-chain/model/chainTransaction';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { FormArray, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { multiFieldValidator } from 'src/shared/validation';
-import { ChainProcessingAction } from 'src/api-chain/model/chainProcessingAction';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
+import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 
 function tooSmallOutputQuantity(control: FormGroup): ValidationErrors | null {
 
   if (!control.value) { return null; }
   if (!control.value.processingAction) { return null; }
-  const action = control.value.processingAction as ChainProcessingAction;
+  const action = control.value.processingAction as ApiProcessingAction;
   if (action.type !== 'SHIPMENT') { return null; }
-  const transactions = control.value.inputTransactions as ChainTransaction[];
+  const transactions = control.value.inputTransactions as ApiTransaction[];
   if (!transactions || transactions.length === 0) { return null; }
   if (!control.value.form) { return null; }
   const inputQuantity = transactions.map(tx => tx.outputQuantity).reduce((a, b) => a + b, 0);
@@ -26,7 +25,7 @@ function deliveryTimeRequired(control: FormGroup): ValidationErrors | null {
   if (!control) { return null; }
   if (!control.value) { return null; }
 
-  const action = control.getRawValue().processingActionForm as ChainProcessingAction;
+  const action = control.getRawValue().processingActionForm as ApiProcessingAction;
   if (!action) { return null; }
   if (action.type !== 'SHIPMENT') { return null; }
   if (!control.value.deliveryTime) { return {required: true}; }
@@ -38,7 +37,7 @@ function internalLotNumberRequired(control: FormGroup): ValidationErrors | null 
   if (!control) { return null; }
   if (!control.value) { return null; }
 
-  const action = control.getRawValue().processingActionForm as ChainProcessingAction;
+  const action = control.getRawValue().processingActionForm as ApiProcessingAction;
   if (!action) { return null; }
   if (action.type !== 'TRANSFER' && !control.value.internalLotNumber) { return { required: true }; }
   return null;
