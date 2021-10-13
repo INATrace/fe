@@ -368,6 +368,7 @@
                 </div>
               </div>
 
+              <!-- FORM CONTROLS FOR DEFINING OUTPUT QUANTITY -->
               <div class="af-row" *ngIf="showTotalQuantityForm">
                 <div class="af-c6">
                   <textinput
@@ -420,13 +421,281 @@
                 </div>
               </div>
 
-              <!-- TODO -->
+              <div class="af-row" *ngIf="showDeliveryData">
+                <div class="af-c6">
+                  <app-datepicker
+                          label="Preferred delivery date"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.preferedDeliveryDate.label"
+                          [form]="outputStockOrderForm.get('deliveryTime')"
+                          [invalid]="submitted && outputStockOrderForm.get('deliveryTime').invalid">
+                    <ng-container>
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="outputStockOrderForm.get('deliveryTime').errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.preferedDeliveryDate.textinput.error">
+                            Preferred delivery date is required
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </app-datepicker>
+                </div>
+              </div>
+
+              <!-- TODO: check and rethink this -->
+              <ng-container *ngIf="this.prAction && this.prAction.requiredEvidenceFields">
+                <app-order-fields *ngFor="let fieldInfo of this.prAction.requiredEvidenceFields"
+                                  side="right"
+                                  [isQuote]="actionType === 'SHIPMENT'"
+                                  [fieldInfo]="fieldInfo"
+                                  [formGroup]="outputStockOrderForm"
+                                  [submitted]="submitted"></app-order-fields>
+              </ng-container>
+
+              <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
+              <div class="af-row">
+                <div class="af-c12">
+                  <textinput
+                          [form]="outputStockOrderForm.get('comments')"
+                          label="Comments"
+                          style="width: 100%"
+                          [textarea]="true"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.comments.label">
+                  </textinput>
+                </div>
+              </div>
+
+              <!-- OUTPUT STOCK ORDER (SHOWN IF MULTIPLE OUTPUT STOCK ORDERS ARE PRESENT) -->
+              <ng-container *ngIf="outputStockOrders.length > 0">
+                <div class="af-row" style="margin-top: 1rem;">
+                  <div class="af-c10">
+                    <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
+                  </div>
+
+                  <div class="af-c2">
+                    <button class="btn btn-solid round" (click)="addOutputStockOrder()"
+                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
+                      <span>+</span>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- LIST OF OUTPPUT STOCK ORDERS -->
+              <ng-container *ngFor="let item of outputStockOrders.controls; index as idx">
+                <div class="af-row">
+                  <div class="af-c12">
+                    <div class="row">
+                      <div class="col-3">
+                        <textinput
+                                [form]="item.get('sacNumber')"
+                                type="number"
+                                min="0"
+                                step="1"
+                                i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
+                                label="Sac number"
+                                [isInvalid]="submitted && item.get('sacNumber').invalid">
+                          <ng-container *ngIf="submitted">
+                            <div *ngIf="item.get('sacNumber').errors as errors" class="sc-invalid-feedback">
+                              <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
+                                Sac number is required
+                              </div>
+                            </div>
+                          </ng-container>
+                        </textinput>
+                      </div>
+
+                      <div class="col-8">
+                        <textinput
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                [form]="item.get('totalQuantity')"
+                                i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacTotalQuantity"
+                                [label]="sacNetWLabel"
+                                [isInvalid]="submitted && item.get('totalQuantity').invalid">
+                          <ng-container *ngIf="submitted">
+                            <div *ngIf="item.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                              <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
+                                Input exceeds the max value
+                              </div>
+                              <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.min.error">
+                                Input is too small. Stock order is already partially used.
+                              </div>
+                            </div>
+                          </ng-container>
+                        </textinput>
+                      </div>
+
+                      <div class="col-1">
+                        <div style="margin-top: 1.75rem; cursor: pointer" (click)="removeOutputStockOrder(idx)">
+                          <fa-icon
+                                  class="del-icon"
+                                  [icon]="faTrashAlt">
+                          </fa-icon>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- VALIDATION MESSAGE -->
+              <ng-container *ngIf="submitted && this.outputStockOrders.value.length > 0">
+                <div *ngIf="outputStockOrders.errors as errors" class="sc-invalid-feedback"
+                     i18n="@@productLabelStockProcessingOrderDetail.outputs.atLeastOne.error">
+                  At least one non-empty field is required
+                </div>
+              </ng-container>
+
+              <div *ngIf="!showRightSide" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
 
             </ng-container>
           </div>
-
         </div>
+      </div>
 
+      <!-- REQUIRED AND OTHER ADDITIONAL PROCESSING EVIDENCES -->
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processingEvidence">Processing evidence</h2>
+
+          <div class="af-form-element">
+            <ng-container *ngIf="this.requiredProcessingEvidenceArray.length> 0">
+              <ng-container *ngFor="let item of requiredProcessingEvidenceArray.controls; index as idx">
+                <div class="d-flex">
+
+                  <div class="af-row">
+                    <div class="af-c4">
+                      <app-datepicker
+                              label="Date"
+                              i18n-label="@@processingEvidenceItem.datepicker.date.label"
+                              [form]="item.get('date')"
+                              [invalid]="submitted && item.get('date').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('date').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
+                              Date is required
+                            </div>
+                          </div>
+                        </ng-container>
+                      </app-datepicker>
+                    </div>
+                    <div class="af-c8">
+                      <textinput
+                              [value]="item.get('type').value?.label"
+                              label="Type"
+                              [valueTextInput]="true"
+                              i18n-label="@@productLabelStockProcessingOrderDetail.label.type"
+                              [readOnly]="true">
+                      </textinput>
+                    </div>
+                  </div>
+
+                  <div class="af-c6">
+                    <attachment-uploader
+                            allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
+                            allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+                            mode="simpleAsTextField"
+                            label="Document (JPG, PNG, PDF)"
+                            i18n-label="@@productLabelStockProcessingOrderDetail.attachment-uploader.label"
+                            i18n-allowedMimeTypeErrorMessage="@@productLabelStockProcessingOrderDetail.attachment-uploader.allowedMimeTypeErrorMessage"
+                            [form]="item.get('document')"
+                            [attachmentUploaderId]="'productLabelStockProcessingOrderDetail'+idx"
+                            [invalid]="submitted && item.get('document').invalid"
+                            [readOnly]="item.get('document').disabled">
+                      <attachment-uploader-content i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.content">
+                        Upload document
+                      </attachment-uploader-content>
+                    </attachment-uploader>
+                    <attachment-uploader-errors>
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="item.get('document').errors as errors" validation-error class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.error">
+                              <span>
+                                Document is required
+                              </span>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </attachment-uploader-errors>
+                  </div>
+
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <list-editor *ngIf="processingEvidenceListManager"
+                         label="Other evidence documents"
+                         [listEditorManager]="processingEvidenceListManager"
+                         addText="Add document"
+                         [canAdd]="showRightSide"
+                         i18n-label="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.label"
+                         i18n-addText="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.addText">
+              <list-editor-items>
+                <div *ngFor="let item of otherProcessingEvidenceArray.controls; let i=index;">
+                  <!-- TODO: check and add component -->
+<!--                  <app-processing-evidence-item-->
+<!--                          title=null-->
+<!--                          [formControlInput]="item"-->
+<!--                          [typeAsObject]="true"-->
+<!--                          [isOpen]="processingEvidenceListManager.isOpen(i)"-->
+<!--                          [listEditorManager]="this.processingEvidenceListManager"-->
+<!--                          [listEditorManagerPosition]="i">-->
+<!--                  </app-processing-evidence-item>-->
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+              </list-editor-errors>
+            </list-editor>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATES AND STANDARDS -->
+      <ng-container *ngIf="showCertificatesIds">
+        <div class="af-form-row">
+          <div class="af-form-block--c12">
+            <h2 i18n="@@productLabelStockProcessingOrderDetail.section.certificationId">Certificates</h2>
+
+            <div class="af-form-element">
+              <list-editor
+                      label="Certificates"
+                      [listEditorManager]="certificationListManager"
+                      addText="Add document"
+                      [canAdd]="false"
+                      i18n-label="@@productLabelStockProcessingOrderDetail.section.certificationId.label"
+                      i18n-addText="@@productLabelStockProcessingOrderDetail.section.certificationId.addText">
+                <list-editor-items>
+                  <div *ngFor="let item of stockOrderCertificatedForm?.controls; let i=index;">
+                    <app-certification-and-standard-item
+                            title="Certification"
+                            i18n-title="@@roductLabelStockProcessingOrderDetail.section.certificationId.title"
+                            [formControlInput]="item"
+                            [isOpen]="certificationListManager.isOpen(i)"
+                            [listEditorManager]="this.certificationListManager"
+                            [listEditorManagerPosition]="i">
+                    </app-certification-and-standard-item>
+                  </div>
+                </list-editor-items>
+                <list-editor-errors>
+                </list-editor-errors>
+              </list-editor>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- CONTROL BUTTONS -->
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons" i18n="@@productLabelStockProcessingOrderDetail.footer.buttons">
+            <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+            <button class="btn" type="button" (click)="!this.saveProcessingOrderInProgress && saveProcessingOrder()"><span>Save</span></button>
+          </div>
+        </div>
       </div>
 
     </div>

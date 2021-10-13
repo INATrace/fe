@@ -27,6 +27,7 @@ import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { CompanyFacilitiesForSemiProductService } from '../../../../shared-services/company-facilities-for-semi-product.service';
 import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -34,6 +35,7 @@ import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customVa
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
 import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
+import { Location } from '@angular/common';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -49,6 +51,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // FontAwesome icons
   faTimes = faTimes;
+  faTrashAlt = faTrashAlt;
 
   title: string;
 
@@ -120,13 +123,24 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   showLotLabel = false;
   showStartOfDrying = false;
   showClientName = false;
-  showCertificatesIds = false;
   showTransactionType = false;
   showFlavourProfile = false;
 
+  // Processing evidence controls
+  requiredProcessingEvidenceArray = new FormArray([]);
+  otherProcessingEvidenceArray = new FormArray([]);
+  processingEvidenceListManager = null;
+
+  // Certificated and standards controls
+  showCertificatesIds = false;
+  certificationListManager = null;
+
   remainingForm = new FormControl(null);
 
+  saveProcessingOrderInProgress = false;
+
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private stockOrderController: StockOrderControllerService,
     private procActionController: ProcessingActionControllerService,
@@ -341,6 +355,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.actionType === 'SHIPMENT';
   }
 
+  get showDeliveryData() {
+    return this.actionType === 'SHIPMENT';
+  }
+
+  get sacNetWLabel() {
+    if (this.prAction) {
+      const unit = this.underlyingMeasurementUnit ?
+        this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.apiMeasureUnitType.label;
+
+      return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.prAction.maxOutputWeight } ${ unit })`;
+    }
+  }
+
+  get stockOrderCertificatedForm(): FormArray {
+    return this.outputStockOrderForm.get('certificates') as FormArray;
+  }
+
   ngOnInit(): void {
 
     this.initInitialData().then(
@@ -459,6 +490,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private updateProcessingOrder() {
     // TODO: implement update of proc. order
+  }
+
+  async saveProcessingOrder() {
+    // TODO: implement save operation
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
@@ -1147,6 +1182,24 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.actionType === 'SHIPMENT') {
       this.remainingForm.setValue((this.totalQuantity - this.calcInputQuantity(false)).toFixed(2));
     }
+  }
+
+  addOutputStockOrder() {
+    (this.outputStockOrders as FormArray).push(
+      new FormGroup({
+        identifier: new FormControl(null),
+        id: new FormControl(null),
+        totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
+        sacNumber: new FormControl(null, [Validators.required])
+      }));
+  }
+
+  removeOutputStockOrder(idx) {
+    (this.outputStockOrders as FormArray).removeAt(idx);
+  }
+
+  dismiss() {
+    this.location.back();
   }
 
 }
