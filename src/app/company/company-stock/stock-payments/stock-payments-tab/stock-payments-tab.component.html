@@ -32,16 +32,17 @@
                          container="body">
 
                         <div *ngIf="filterWayOfPayment && filterWayOfPayment?.value.length > 0"
-                             class="d-flex filter-text"
-                             style="margin-left: 0.75rem"
-                             i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">{{ filterWayOfPayment.value | formatWayOfPayment }}
+                             class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">
+                            {{ filterWayOfPayment.value | formatWayOfPayment }}
                             <div (click)="setWayOfPayment('')" style="margin-left: 0.5rem;">
                                 <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
                                 </fa-icon>
                             </div>
                         </div>
 
-                        <div *ngIf="filterPaymentStatus.value != null" class="d-flex filter-text" style="margin-left: 1rem"> {{ filterPaymentStatus.value | formatPaymentStatus }}
+                        <div *ngIf="filterPaymentStatus && filterPaymentStatus?.value?.length > 0"
+                             class="d-flex filter-text" style="margin-left: 1rem" i18n="@@productLabelStock.filter.paymentStatus.status">
+                            {{ filterPaymentStatus.value | formatPaymentStatus }}
                             <div (click)="setPaymentStatus(null)" style="margin-left: 0.5rem;">
                                 <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
                                 </fa-icon>

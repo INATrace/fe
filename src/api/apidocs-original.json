@@ -1704,6 +1704,97 @@
               ],
               "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "getPaymentListUsingGET",
+        "summary": "Get a paginated list of payments."
+      }
+    },
+    "/api/chain/payment/list/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           },
           {
             "description": "Preferred way of payment",
@@ -1781,23 +1872,13 @@
         "tags": [
           "payment-controller"
         ],
-        "operationId": "getPaymentListUsingGET",
-        "summary": "Get a paginated list of payments."
+        "operationId": "listPaymentsByCompanyUsingGET",
+        "summary": "Get a list of payments by company ID."
       }
     },
-    "/api/chain/payment/list/company/{id}": {
+    "/api/chain/payment/list/purchase/{id}": {
       "get": {
         "parameters": [
-          {
-            "description": "Company ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
           {
             "description": "Only count, only fetch, or return both values (if null)",
             "in": "query",
@@ -1855,30 +1936,7 @@
               ],
               "type": "string"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "listPaymentsByCompanyUsingGET",
-        "summary": "Get a list of payments by company ID."
-      }
-    },
-    "/api/chain/payment/list/purchase/{id}": {
-      "get": {
-        "parameters": [
+          },
           {
             "description": "Purchase ID",
             "in": "path",
@@ -1890,60 +1948,62 @@
             }
           },
           {
-            "description": "Only count, only fetch, or return both values (if null)",
+            "description": "Preferred way of payment",
             "in": "query",
-            "name": "requestType",
+            "name": "preferredWayOfPayment",
             "required": false,
             "schema": {
               "enum": [
-                "COUNT",
-                "FETCH"
+                "CASH",
+                "CASH_VIA_COLLECTOR",
+                "CASH_VIA_COOPERATIVE",
+                "BANK_TRANSFER",
+                "CHEQUE",
+                "OFFSETTING",
+                "UNKNOWN"
               ],
               "type": "string"
             }
           },
           {
-            "description": "Number of records to return. Min: 1, default: 100",
+            "description": "Payment status",
             "in": "query",
-            "name": "limit",
+            "name": "paymentStatus",
             "required": false,
             "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
+              "enum": [
+                "UNCONFIRMED",
+                "CONFIRMED"
+              ],
               "type": "string"
             }
           },
           {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "description": "Production date range start",
             "in": "query",
-            "name": "sort",
+            "name": "productionDateStart",
             "required": false,
             "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by farmer name",
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
               "type": "string"
             }
           }
@@ -7615,12 +7675,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7630,19 +7687,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7652,19 +7706,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7674,19 +7725,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7696,19 +7744,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7718,19 +7763,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7740,19 +7782,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -7762,8 +7801,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -10832,13 +10871,17 @@
             ],
             "type": "string"
           },
+          "recipientUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "User customer that receives the payment (farmer)"
+          },
           "representativeOfRecipientCompany": {
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Representative of the company that receives the payment"
           },
           "representativeOfRecipientUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
-            "description": "Representative of the user customer that receives the payment"
+            "description": "Representative of the user customer that receives the payment (collector)"
           },
           "stockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",

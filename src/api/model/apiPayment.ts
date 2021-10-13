@@ -93,6 +93,7 @@ export interface ApiPayment {
      * Recipient type
      */
     recipientType?: ApiPayment.RecipientTypeEnum;
+    recipientUserCustomer?: ApiUserCustomer;
     representativeOfRecipientCompany?: ApiCompanyBase;
     representativeOfRecipientUserCustomer?: ApiUserCustomer;
     stockOrder?: ApiStockOrder;
@@ -179,6 +180,7 @@ export namespace ApiPayment {
          * Recipient type
          */
         recipientType = 'recipientType',
+        recipientUserCustomer = 'recipientUserCustomer',
         representativeOfRecipientCompany = 'representativeOfRecipientCompany',
         representativeOfRecipientUserCustomer = 'representativeOfRecipientUserCustomer',
         stockOrder = 'stockOrder',
@@ -498,6 +500,18 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUserCustomer.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'recipientUserCustomer',
+                    classname: 'ApiPayment',
+                    dataType: 'ApiUserCustomer',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUserCustomer'
+                },
+                {
                     metadata: ApiCompanyBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -597,6 +611,8 @@ export namespace ApiPayment {
                 ],
                 recipientType: [
                 ],
+                recipientUserCustomer: [
+                ],
                 representativeOfRecipientCompany: [
                 ],
                 representativeOfRecipientUserCustomer: [
@@ -672,6 +688,9 @@ export namespace ApiPayment {
   //                   validators: []
   //               },
   //               recipientType: {
+  //                   validators: []
+  //               },
+  //               recipientUserCustomer: {
   //                   validators: []
   //               },
   //               representativeOfRecipientCompany: {

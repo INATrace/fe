@@ -57,7 +57,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   cbCheckedAll = new FormControl(false);
 
   pagingParams$ = new BehaviorSubject({});
-  sortingParams$ = new BehaviorSubject(null);
+  sortingParams$ = new BehaviorSubject(null); // { sortBy: 'productionDate', sort: 'DESC' }
   paging$ = new BehaviorSubject<number>(1);
   page = 0;
   pageSize = 10;
@@ -187,10 +187,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
         hide: false
       },
       {
-        // TODO: Not present in BE
-        key: 'PAYMENT_DATE',
+        key: 'paymentConfirmedAtTime',
         name: $localize`:@@productLabelPayments.sortOptions.paymentDate.name:Payment date`,
-        hide: true
+        hide: false
       },
       {
         key: 'paymentStatus',
