@@ -362,13 +362,13 @@ export class UserCustomerControllerService {
    * Get a paginated list of user customers for provided company. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
-   * @param observe? set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress? flag to report request and response progress.
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
    */
   public getUserCustomerListForCompanyUsingGETByMap(
-      map: { companyId: string; requestType?: "COUNT" | "FETCH"; offset?: number; limit?: number; userCustomerType: string; sortBy?: string; sort?: "ASC" | "DESC" },
-      observe?: "body",
-      reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserCustomer>;
+    map: GetUserCustomerListForCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserCustomer>;
   public getUserCustomerListForCompanyUsingGETByMap(
     map: GetUserCustomerListForCompanyUsingGET.PartialParamMap,
     observe?: 'response',
