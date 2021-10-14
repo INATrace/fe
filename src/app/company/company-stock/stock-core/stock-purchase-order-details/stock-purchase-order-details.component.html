@@ -80,7 +80,7 @@
               </div>
             </div>
 
-            <div class="af-row">
+            <div class="af-row" *ngIf="showCollector()">
               <div class="af-c9">
                 <single-choice
                         label="Collector"
@@ -205,6 +205,64 @@
               </div>
             </div>
 
+            <div class="af-row" *ngIf="showTare() || showDamagedPriceDeduction()">
+              <div class="af-c6">
+                <textinput *ngIf="showTare()"
+                    [form]="stockOrderForm.get('tare')"
+                    [label]="tareLabel"
+                    style="width: 100%"
+                    placeholder="Enter tare"
+                    i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.tare.placeholder"
+                    [isInvalid]="submitted && stockOrderForm.get('tare').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="stockOrderForm.get('tare').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.textinput.tare.error">
+                        Tare is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+              <div class="af-c6">
+                <textinput *ngIf="showDamagedPriceDeduction()"
+                        [form]="stockOrderForm.get('damagedPriceDeduction')"
+                        [label]="damagedPriceDeductionLabel"
+                        style="width: 100%"
+                        placeholder="Enter damaged price deduction"
+                        i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder"
+                        [isInvalid]="submitted && stockOrderForm.get('damagedPriceDeduction').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="stockOrderForm.get('damagedPriceDeduction').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.error">
+                        Damaged price reduction is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
+            <div class="af-row" *ngIf="showTare()">
+              <div class="af-c6">
+                <textinput [form]="netWeightForm"
+                           [label]="netLabel"
+                           [readOnly]="true"
+                           [value]="netWeight()"
+                           style="width: 100%"
+                           placeholder="Enter net weight"
+                           i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.netWeight.placeholder"
+                           [isInvalid]="submitted && stockOrderForm.get('tare').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="stockOrderForm.get('tare').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.textinput.netWeight.error">
+                        Net weight is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
             <div class="af-row">
               <div class="af-c6">
                 <textinput
@@ -252,6 +310,30 @@
             </div>
 
             <div class="af-row">
+
+            </div>
+
+            <div class="af-row" *ngIf="showOrganic()">
+              <div class="af-c12">
+                <single-choice
+                        label="Organic"
+                        i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.organic.label"
+                        [formControlInput]="stockOrderForm.get('organic')"
+                        [codebookService]="codebookOrganic"
+                        style="min-width: 150px;"
+                        [isInvalidChoice]="submitted && stockOrderForm.get('organic').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="stockOrderForm.get('organic').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.organic.error">
+                        Organic is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </single-choice>
+              </div>
+            </div>
+
+            <div class="af-row" *ngIf="showWomensOnly()">
               <div class="af-c12">
                 <single-choice
                         label="Women’s only"

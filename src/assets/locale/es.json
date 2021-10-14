@@ -2706,6 +2706,19 @@
     "productLabelStockFacilityModal.checkbox.organic.label": "Display \"Organic\"",
     "productLabelStockFacilityModal.checkbox.womenOnly.label": "Display \"Women only\"",
     "productLabelStockFacilityModal.checkbox.tare.label": "Display \"Tare\"",
-    "productLabelStockFacilityModal.checkbox.priceReductionDamage.label": "Display \"Price reduction damage\""
+    "productLabelStockFacilityModal.checkbox.priceReductionDamage.label": "Display \"Price reduction damage\"",
+    "productLabelStockPurchaseOrdersModal.organic.yes": "Yes",
+    "productLabelStockPurchaseOrdersModal.organic.no": "No",
+    "productLabelStockPurchaseOrdersModal.singleChoice.organic.label": "Organic",
+    "productLabelStockPurchaseOrdersModal.singleChoice.organic.error": "Organic is required",
+    "productLabelStockPurchaseOrdersModal.textinput.tare.label": "Tare",
+    "productLabelStockPurchaseOrdersModal.textinput.tare.placeholder": "Enter tare",
+    "productLabelStockPurchaseOrdersModal.textinput.tare.error": "Tare is required",
+    "productLabelStockPurchaseOrdersModal.textinput.netWeight.placeholder": "Enter net weight",
+    "productLabelStockPurchaseOrdersModal.textinput.netWeight.error": "Net weight is required",
+    "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Net weight",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder": "Enter damaged price deduction",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.error": "Damaged price deduction is required",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label": "Damaged price deduction"
   }
 }
