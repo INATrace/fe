@@ -1500,6 +1500,8 @@
     "register.textinput.email.errorRequired": "El correo electrónico es obligatorio",
     "register.textinput.password.error": "La contraseña debe contener al menos 8 caracteres.",
     "register.checkbox-input.error": "Tiene que estar de acuerdo con las condiciones.",
+    "register.checkbox-input.conditions.pretext": "Yes, I agree with",
+    "register.checkbox-input.conditions.link": "your conditions",
     "register.error.userExists": "El usuario ya existe",
     "register.error.somethingWentWrong": "Algo salió mal durante el registro",
     "resetPasswordRequest.title": "¿Restablecer la contraseña?",

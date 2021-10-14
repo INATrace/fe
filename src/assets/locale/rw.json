@@ -69,6 +69,8 @@
     "register.textinput.email.errorRequired": "imeri irakenewe",
     "register.textinput.password.error": "Ijambo ry'ibanga rigomba kuba rifite byibuze inyuguti 8",
     "register.checkbox-input.error": "Ugomba kwemeranya n'ibisabwa",
+    "register.checkbox-input.conditions.pretext": "Yes, I agree with",
+    "register.checkbox-input.conditions.link": "your conditions",
     "register.error.userExists": "Ukoresha porogaramu arahari",
     "register.error.somethingWentWrong": "Hari ikitagenze neza mu gihe cyo kwiyandikisha",
     "welcomeScreen.modal.title": "Ishyuka!",

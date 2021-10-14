@@ -780,6 +780,8 @@
     "register.textinput.email.errorRequired": "E-mail is required",
     "register.textinput.password.error": "Password must contain at least 8 characters",
     "register.checkbox-input.error": "You have to agree with conditions",
+    "register.checkbox-input.conditions.pretext": "Yes, I agree with",
+    "register.checkbox-input.conditions.link": "your conditions",
     "register.error.userExists": "User already exists",
     "register.error.somethingWentWrong": "Something went wrong during register",
     "resetPasswordRequest.title": "Reset password?",
