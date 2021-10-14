@@ -1734,7 +1734,7 @@
     "companyDetailTranslate.saveCompany.error.message": "Amakosa kuri pagi. Nyamuneka reba!",
     "companyDetailProcessingActions.title": "Ubwoko bw'itunganya",
     "companyDetailProcessingActions.subTitle.listOfProcessingActions": "Urutonde bw'ubwoko bw'itunganya",
-    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Kwerekana {$SHOWING}/{$ALL}",
+    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Kwerekana {$INTERPOLATION}/{$INTERPOLATION_1}",
     "companyDetailProcessingActions.title.new": "Igikorwa cy'itunganya gishya",
     "companyDetailProcessingActions.title.edit": "Hindura igikorwa cy'itunganya",
     "companyDetailProcessingActions.section0.translations": "Amakuru y'ibanze",

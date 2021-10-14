@@ -1758,7 +1758,7 @@
     "companyDetailTranslate.saveCompany.error.message": "Errores en la página. ¡Por favor, compruebe!",
     "companyDetailProcessingActions.title": "Acciones de procesamiento",
     "companyDetailProcessingActions.subTitle.listOfProcessingActions": "Lista de acciones de procesamiento",
-    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Mostrando {$SHOWING}/{$ALL}",
+    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Mostrando {$INTERPOLATION}/{$INTERPOLATION_1}",
     "companyDetailProcessingActions.title.new": "Acción de procesamiento nueva",
     "companyDetailProcessingActions.title.edit": "Editar acción de procesamiento nueva",
     "companyDetailProcessingActions.section0.translations": "Información básica",

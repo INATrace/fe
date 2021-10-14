@@ -1733,7 +1733,7 @@
     "companyDetailTranslate.saveCompany.error.message": "Fehler auf der Seite. Bitte prüfen!",
     "companyDetailProcessingActions.title": "Processing actions",
     "companyDetailProcessingActions.subTitle.listOfProcessingActions": "List of processing actions",
-    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Showing {$SHOWING}/{$ALL}",
+    "companyDetailProcessingActions.subTitle.showingProcessingActions": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
     "companyDetailProcessingActions.title.new": "New processing action",
     "companyDetailProcessingActions.title.edit": "Edit processing action",
     "companyDetailProcessingActions.section0.translations": "Basic information",
