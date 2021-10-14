@@ -26,7 +26,7 @@ export class ActivateUserCustomerByCompanyAndRoleService extends GeneralSifrantS
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetUserCustomerListForCompanyUsingGET.PartialParamMap;
+  } as any;
 
   public identifier(el: ApiUserCustomer) {
     return el.id;

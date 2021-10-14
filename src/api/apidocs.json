@@ -1026,6 +1026,16 @@
             }
           },
           {
+            "description": "Semi product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
             "description": "Only count, only fetch, or return both values (if null)",
             "in": "query",
             "name": "requestType",
@@ -1111,6 +1121,16 @@
             "in": "path",
             "name": "id",
             "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Semi product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
             "schema": {
               "format": "int64",
               "type": "integer"
@@ -2873,6 +2893,183 @@
         "summary": "Get a single processing evidence type with the provided ID."
       }
     },
+    "/api/chain/processing-order": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-order-controller"
+        ],
+        "operationId": "createOrUpdateProcessingOrderUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProcessingOrder"
+              }
+            }
+          },
+          "description": "apiProcessingOrder",
+          "required": true
+        },
+        "summary": "Create or update processing order. If the ID is provided, then the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/processing-order/list": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-order-controller"
+        ],
+        "operationId": "getProcessingOrderUsingGET",
+        "summary": "Get a paginated list of processing orders."
+      }
+    },
+    "/api/chain/processing-order/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "ProcessingOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-order-controller"
+        ],
+        "operationId": "deleteProcessingOrderUsingDELETE",
+        "summary": "Deletes a processing order with the provided ID."
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "ProcessingOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-order-controller"
+        ],
+        "operationId": "getProcessingOrder",
+        "summary": "Get a single processing order with the provided ID."
+      }
+    },
     "/api/chain/semi-product": {
       "put": {
         "responses": {
@@ -3235,6 +3432,16 @@
             }
           },
           {
+            "description": "Farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
             "description": "Is open balance only",
             "in": "query",
             "name": "isOpenBalanceOnly",
@@ -3266,6 +3473,22 @@
                 "CHEQUE",
                 "OFFSETTING",
                 "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Order type",
+            "in": "query",
+            "name": "orderType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "PURCHASE_ORDER",
+                "PROCESSING_ORDER",
+                "SALES_ORDER",
+                "GENERAL_ORDER",
+                "TRANSFER_ORDER"
               ],
               "type": "string"
             }
@@ -3473,6 +3696,127 @@
         ],
         "operationId": "getStockOrderListByFacilityIdUsingGET",
         "summary": "Get a paginated list of stock orders by facility ID."
+      }
+    },
+    "/api/chain/stock-order/listAvailableStockForSemiProductInFacility": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Facility ID",
+            "in": "query",
+            "name": "facilityId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "SemiProduct ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getAvailableStockForSemiProductInFacilityUsingGET",
+        "summary": "Get a paginated list of stock orders for provided semi product ID and facility ID."
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -9798,6 +10142,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiProcessingOrder_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingOrder"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiProductLabelBatch_": {
         "properties": {
           "count": {
@@ -10578,6 +10949,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingEvidenceType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiProcessingOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingOrder_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -11404,6 +11818,44 @@
               "CALCULATED"
             ],
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingOrder": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "initiatorUserId": {
+            "description": "Initiator user ID",
+            "format": "int64",
+            "type": "integer"
+          },
+          "inputTransactions": {
+            "description": "Input transactions",
+            "items": {
+              "$ref": "#/components/schemas/ApiTransaction"
+            },
+            "type": "array"
+          },
+          "processingAction": {
+            "$ref": "#/components/schemas/ApiProcessingAction",
+            "description": "Processing action"
+          },
+          "processingDate": {
+            "description": "Processing date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "targetStockOrders": {
+            "description": "Target stock orders",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrder"
+            },
+            "type": "array"
           }
         },
         "type": "object"
@@ -12839,6 +13291,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiProcessingOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProcessingOrder",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiProductLabelAnalytics_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -13869,6 +14364,101 @@
         },
         "type": "object"
       },
+      "ApiTransaction": {
+        "properties": {
+          "actionType": {
+            "$ref": "#/components/schemas/ApiActionType",
+            "description": "Action type"
+          },
+          "company": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Company that is part of the transaction"
+          },
+          "currency": {
+            "description": "Currency",
+            "type": "string"
+          },
+          "gradeAbbreviation": {
+            "$ref": "#/components/schemas/ApiGradeAbbreviation",
+            "description": "Grade abbreviation"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "initiationUserId": {
+            "description": "Initiator user ID",
+            "format": "int64",
+            "type": "integer"
+          },
+          "inputMeasureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "Input measurement unit type"
+          },
+          "inputQuantity": {
+            "description": "Input quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "isProcessing": {
+            "description": "Is order of type processing",
+            "example": false,
+            "type": "boolean"
+          },
+          "outputMeasureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType",
+            "description": "Output measurement unit type"
+          },
+          "outputQuantity": {
+            "description": "Output quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pricePerUnit": {
+            "type": "number"
+          },
+          "rejectComment": {
+            "description": "Reject comment",
+            "type": "string"
+          },
+          "semiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Semi product"
+          },
+          "shipmentId": {
+            "description": "Shipment ID",
+            "format": "int64",
+            "type": "integer"
+          },
+          "sourceFacility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Source facility"
+          },
+          "sourceStockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Source stock order"
+          },
+          "status": {
+            "description": "Transaction status",
+            "enum": [
+              "PENDING",
+              "CANCELED",
+              "EXECUTED"
+            ],
+            "type": "string"
+          },
+          "targetFacility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Target facility"
+          },
+          "targetStockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Target stock order"
+          }
+        },
+        "type": "object"
+      },
       "ApiUser": {
         "properties": {
           "email": {
@@ -14510,6 +15100,10 @@
     {
       "description": "Currency Controller",
       "name": "currency-controller"
+    },
+    {
+      "description": "Processing Order Controller",
+      "name": "processing-order-controller"
     },
     {
       "description": "User Controller",

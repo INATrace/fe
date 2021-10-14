@@ -129,8 +129,8 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
           this.countAll.emit(this.allPayments);
           this.currentData = resp.data.items;
 
-          console.log('Payments: ');
-          console.log(resp.data);
+          // console.log('Payments: ');
+          // console.log(resp.data);
 
           return resp.data;
         }),
