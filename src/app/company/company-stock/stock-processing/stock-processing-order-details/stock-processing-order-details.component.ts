@@ -7,7 +7,7 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -32,11 +32,13 @@ import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder'
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
-import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
-import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
 import { Location } from '@angular/common';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
+import _ from 'lodash-es';
+import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -145,6 +147,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderController: StockOrderControllerService,
+    private processingOrderController: ProcessingOrderControllerService,
     private procActionController: ProcessingActionControllerService,
     private facilityController: FacilityControllerService,
     private semiProductsController: SemiProductControllerService,
@@ -552,7 +555,154 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // TODO: implement save operation
+    const outputStockOrderList = await this.prepareDataAndStoreStockOrder();
+
+    if (outputStockOrderList) {
+
+      const processingOrder: ApiProcessingOrder = {
+        id: this.editableProcessingOrder ? this.editableProcessingOrder.id : undefined,
+        initiatorUserId: this.creatorId,
+        processingAction: this.prAction,
+        targetStockOrders: outputStockOrderList,
+        inputTransactions: this.actionType === 'SHIPMENT' ? [] : this.inputTransactions,
+        processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
+      };
+
+      for (const stockOrder of this.selectedInputStockOrders) {
+
+        // If there is now selected quantity, proceed with the next
+        if (stockOrder.selectedQuantity === 0) {
+          continue;
+        }
+
+        // Create transaction for current stock order from the list of selected stock orders
+        const transaction: ApiTransaction = {
+          isProcessing: this.actionType === 'PROCESSING',
+          company: { id: this.companyId },
+          initiationUserId: this.creatorId,
+          sourceStockOrder: stockOrder,
+          status: (outputStockOrderList.length === 1 && this.prAction.type === 'SHIPMENT' && outputStockOrderList[0].orderType === 'GENERAL_ORDER') ?
+            ApiTransactionStatus.PENDING : ApiTransactionStatus.EXECUTED,
+          inputQuantity: stockOrder.selectedQuantity,
+          outputQuantity: stockOrder.selectedQuantity
+        };
+
+        const cleanTransaction = _.cloneDeep(transaction);
+        deleteNullFields(cleanTransaction);
+
+        if (!processingOrder.inputTransactions) {
+          processingOrder.inputTransactions = [cleanTransaction];
+        } else {
+          processingOrder.inputTransactions.push(cleanTransaction);
+        }
+      }
+
+      try {
+
+        const res = await this.processingOrderController
+          .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+
+        if (!res || res.status !== 'OK') {
+          throw Error('Error while creating processing order for order type: ' + this.actionType);
+        }
+
+      } finally {
+        this.globalEventsManager.showLoading(false);
+        this.saveProcessingOrderInProgress = false;
+      }
+
+      this.dismiss();
+    }
+  }
+
+  private async prepareDataAndStoreStockOrder(): Promise<ApiStockOrder[]> {
+
+    const stockOrderList: ApiStockOrder[] = [];
+
+    // TODO: prepare required proc. evidence types
+
+    const sharedFields: ApiStockOrder = {
+      gradeAbbreviation: this.outputStockOrderForm.get('gradeAbbreviation').value ? this.outputStockOrderForm.get('gradeAbbreviation').value : null,
+      lotNumber: this.outputStockOrderForm.get('lotNumber').value ? this.outputStockOrderForm.get('lotNumber').value : null,
+      pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
+      screenSize: this.outputStockOrderForm.get('screenSize').value ? this.outputStockOrderForm.get('screenSize').value : null,
+      lotLabel: this.outputStockOrderForm.get('lotLabel').value ? this.outputStockOrderForm.get('lotLabel').value : null,
+      startOfDrying: this.outputStockOrderForm.get('startOfDrying').value ? this.outputStockOrderForm.get('startOfDrying').value : null,
+      flavourProfile: this.outputStockOrderForm.get('flavourProfile').value ? this.outputStockOrderForm.get('flavourProfile').value : null,
+      comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
+      womenShare: this.womensOnlyForm.value === 'YES'
+    };
+
+    // In this case we only copy the input stock orders to the destination stock orders
+    if (this.actionType === 'TRANSFER') {
+
+      if (this.editableProcessingOrder) {
+        for (const targetStockOrder of this.editableProcessingOrder.targetStockOrders) {
+          const newStockOrder: ApiStockOrder = {
+            ...targetStockOrder,
+            ...sharedFields
+          };
+
+          deleteNullFields(newStockOrder);
+          stockOrderList.push(newStockOrder);
+        }
+      }
+
+      for (const inputStockOrder of this.selectedInputStockOrders) {
+        const newStockOrder: ApiStockOrder = {
+          ...sharedFields,
+          facility: this.outputFacilityForm.value,
+          creatorId: this.creatorId,
+          productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
+          orderType: OrderTypeEnum.TRANSFERORDER,
+          totalQuantity: inputStockOrder.availableQuantity,
+          fulfilledQuantity: 0,
+          availableQuantity: 0
+        };
+
+        deleteNullFields(newStockOrder);
+        stockOrderList.push(newStockOrder);
+      }
+
+      return stockOrderList;
+
+    } else {
+
+      // In this case we have multiple destination stock orders because we are repacking outputs
+      if (this.actionType === 'PROCESSING' && this.outputStockOrders.value.length > 0) {
+
+        // TODO: implement processing order with repacking
+        return stockOrderList;
+      }
+
+      // In this case we are dealing with ordinary processing or shipmen (Quote) order
+      const outputStockOrder: ApiStockOrder = this.outputStockOrderForm.getRawValue();
+
+      // Delete injected sub-forms used for easier validation
+      delete (outputStockOrder as any).form;
+      delete (outputStockOrder as any).remainingForm;
+      delete (outputStockOrder as any).processingActionForm;
+
+      // Set the rest of the fields for the Stock order
+      const newStockOrder: ApiStockOrder = {
+        ...outputStockOrder,
+        ...sharedFields,
+        creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
+        semiProduct: this.currentOutputSemiProduct,
+        facility: this.outputFacilityForm.value,
+        totalQuantity: parseFloat(this.totalQuantity),
+        fulfilledQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
+        availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
+        productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
+        orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
+        currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? 'RWF' : null)
+      };
+
+      deleteNullFields(newStockOrder);
+      stockOrderList.push(newStockOrder);
+
+      return stockOrderList;
+    }
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
@@ -1191,7 +1341,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // Get the available stock in the provided facility for the provided semi-product
     const res = await this.stockOrderController
       .getAvailableStockForSemiProductInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
-    if (res && res.status === StatusEnum.OK && res.data) {
+    if (res && res.status === 'OK' && res.data) {
       this.availableStockOrders = res.data.items;
     }
 
