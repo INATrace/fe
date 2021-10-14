@@ -11395,10 +11395,19 @@
             "description": "Payment's currency",
             "type": "string"
           },
+          "formalCreationTime": {
+            "description": "Formal date of payment (for example: date on receipt)",
+            "format": "date-time",
+            "type": "string"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "payingCompany": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Company that is paying for product"
           },
           "paymentConfirmedAtTime": {
             "description": "Payment time confirmation",
@@ -11408,16 +11417,6 @@
           "paymentConfirmedByUser": {
             "$ref": "#/components/schemas/ApiUser",
             "description": "User who confirmed the payment"
-          },
-          "paymentPurporseType": {
-            "enum": [
-              "ADVANCE_PAYMENT",
-              "FIRST_INSTALLMENT",
-              "SECOND_INSTALLMENT",
-              "WOMEN_PREMIUM",
-              "INVOICE_PAYMENT"
-            ],
-            "type": "string"
           },
           "paymentPurposeType": {
             "description": "Payment purpose type",
@@ -11487,7 +11486,7 @@
             "type": "integer"
           },
           "recipientCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
+            "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that receives the payment"
           },
           "recipientCompanyCustomer": {
@@ -11508,7 +11507,7 @@
             "description": "User customer that receives the payment (farmer)"
           },
           "representativeOfRecipientCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
+            "$ref": "#/components/schemas/ApiCompany",
             "description": "Representative of the company that receives the payment"
           },
           "representativeOfRecipientUserCustomer": {

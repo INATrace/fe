@@ -187,7 +187,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
         hide: false
       },
       {
-        key: 'paymentConfirmedAtTime',
+        key: 'formalCreationTime',
         name: $localize`:@@productLabelPayments.sortOptions.paymentDate.name:Payment date`,
         hide: false
       },

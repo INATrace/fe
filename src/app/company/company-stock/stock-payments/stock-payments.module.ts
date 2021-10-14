@@ -12,12 +12,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StockPaymentsListComponent } from './stock-payments-list/stock-payments-list.component';
 import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockPaymentsSelectorForNewPaymentModalComponent } from './stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
+import { StockPaymentsDetailComponent } from './stock-payments-detail/stock-payments-detail.component';
+import { StockPaymentsFormComponent } from './stock-payments-form/stock-payments-form.component';
+
 
 @NgModule({
   declarations: [
       StockPaymentsTabComponent,
       StockPaymentsListComponent,
-      StockPaymentsSelectorForNewPaymentModalComponent
+      StockPaymentsSelectorForNewPaymentModalComponent,
+      StockPaymentsDetailComponent,
+      StockPaymentsFormComponent
   ],
     imports: [
         CommonModule,

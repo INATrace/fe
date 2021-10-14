@@ -16,22 +16,23 @@ import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 })
 export class StockPaymentsSelectorForNewPaymentModalComponent implements OnInit {
 
+  title = $localize`:@@facilityStockOrderPaymentModal.title:Select farmer and purchase order`;
+
   @Input()
   dismissible = true;
   @Input()
-  companyId;
-  title = $localize`:@@facilityStockOrderPaymentModal.title:Select farmer and purchase order`;
+  companyId: number;
 
-  purchaseOrdersForPaymentsCodebook: StockOrdersForCompanyService;
+  purchaseOrderId: number;
+  currentFarmerId: number;
+
   farmersCodebook: ActivateUserCustomerByCompanyAndRoleService;
   womenShareCodebook = EnumSifrant.fromObject(this.womenShareTypes);
+  purchaseOrdersForPaymentsCodebook: StockOrdersForCompanyService;
 
   farmerForm = new FormControl(null);
   womenCoffeeOnlyForm = new FormControl(null);
   stockOrderForPaymentForm = new FormControl(null);
-
-  purchaseOrderId = null;
-  currentFarmerId = null;
 
   constructor(
       public activeModal: NgbActiveModal,

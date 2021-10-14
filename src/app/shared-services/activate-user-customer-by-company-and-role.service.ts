@@ -17,7 +17,7 @@ export class ActivateUserCustomerByCompanyAndRoleService extends GeneralSifrantS
 
   constructor(
       private userCustomerControllerService: UserCustomerControllerService,
-      private companyId: string,
+      private companyId: number,
       private userCustomerType: string
   ) {
     super();
@@ -26,7 +26,7 @@ export class ActivateUserCustomerByCompanyAndRoleService extends GeneralSifrantS
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as any;
+  } as any; // GetUserCustomerListForCompanyUsingGET.PartialParamMap;
 
   public identifier(el: ApiUserCustomer) {
     return el.id;
