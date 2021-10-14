@@ -2771,6 +2771,8 @@
     "productLabelProcessingAction.singleChoice.type.error.requred": "Ubwoko burakenewe",
     "companyDetailProcessingActions.textInput.search-field.processingEvidenceFields.placeholder": "Hitamo imyanya y'itunganywa",
     "companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder": "Hitamo impapuro zemeza",
+    "collectorDetail.textinput.areaUnit.label": "Area unit",
+    "collectorDetail.textinput.areaUnit.placeholder": "Enter area unit",
     "collectorDetail.textinput.totalCultivatedArea.label": "Ubuso buhinzwe bwose (ha)",
     "collectorDetail.textinput.totalCultivatedArea.placeholder": "Injiza ubuso buhinzwe bwose (ha)",
     "collectorDetail.textinput.coffeeCultivatedArea.label": "Ubuso buhinzweho kawa (ha)",

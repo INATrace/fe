@@ -2217,6 +2217,8 @@
     "productLabelStakeholdersCollectors.sortOptions.village.name": "Dorf",
     "productLabelStakeholdersCollectors.sortOptions.cell.name": "Zelle",
     "productLabelPurchaseOrder.tableCol.farmerProfile": "Farmer-Profil",
+    "collectorDetail.textinput.areaUnit.label": "Area unit",
+    "collectorDetail.textinput.areaUnit.placeholder": "Enter area unit",
     "collectorDetail.textinput.totalPaidToFarmer.label": "Total Gezahlt an Farmer (RWF)",
     "collectorDetail.textinput.kgBrought.label": "Total von Farmer gebracht (kg)",
     "productLabelProcessingAction.selectRequiredMandatoryQuoteRequiredFields": "Select required/mandatory/required on quote fields:",
