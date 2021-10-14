@@ -20,7 +20,7 @@
           <!--<td *ngIf="!sortOptions[3].hide" scope="row" [attr.data-label]="sortOptions[3].name">{{order.identifier}}</td>-->
           <td *ngIf="!sortOptions[4].hide" scope="row" [attr.data-label]="sortOptions[4].name">{{farmerName(order.producerUserCustomer)}}</td>
           <td *ngIf="!sortOptions[5].hide" scope="row" [attr.data-label]="sortOptions[5].name">{{order.semiProduct?.name}}</td>
-          <td *ngIf="!sortOptions[6].hide" scope="row" [attr.data-label]="sortOptions[6].name">{{order.totalQuantity}}</td>
+          <td *ngIf="!sortOptions[6].hide" scope="row" [attr.data-label]="sortOptions[6].name">{{order.totalQuantity}} kg</td>
           <td *ngIf="!sortOptions[7].hide" scope="row" [attr.data-label]="sortOptions[7].name">{{order.totalQuantity}} / {{order.fullfilledQuantity}} / {{order.availableQuantity}}</td>
           <td *ngIf="!sortOptions[8].hide" scope="row" [attr.data-label]="sortOptions[8].name">{{order.measurementUnitType?.label}}</td>
           <td *ngIf="!sortOptions[9].hide" scope="row" [attr.data-label]="sortOptions[9].name">{{order.cost}} / {{order.balance}}</td>

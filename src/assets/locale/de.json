@@ -1104,7 +1104,7 @@
     "facilityStockOrderPaymentModal.modal.button.confirm": "{$START_TAG_SPAN}Bestätigen{$CLOSE_TAG_SPAN}",
     "facilityStockOrderPaymentModal.title": "Landwirt*in und Kaufauftrag auswählen",
     "productLabelPurchaseOrder.sortOptions.farmer.name": "Landwirt/in",
-    "productLabelPurchaseOrder.sortOptions.quantity.name": "Menge (kg)",
+    "productLabelPurchaseOrder.sortOptions.quantity.name": "Menge",
     "productLabelPurchaseOrder.sortOptions.payable.name": "Gesamtbetrag /Offener Betrag",
     "productLabelPayments.sortOptions.producer_name.name": "Name der Landwirt*in",
     "productLabelFacilities.sortOptions.sellabaleSemiProducts.name": "Käufliche Halbfertigprodukte",

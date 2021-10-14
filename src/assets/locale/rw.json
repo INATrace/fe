@@ -1105,7 +1105,7 @@
     "facilityStockOrderPaymentModal.modal.button.confirm": "{$START_TAG_SPAN}Emeza{$CLOSE_TAG_SPAN}",
     "facilityStockOrderPaymentModal.title": "Hitamo umuhinzi n'igikorwa cyo kugura",
     "productLabelPurchaseOrder.sortOptions.farmer.name": "Umuhinzi",
-    "productLabelPurchaseOrder.sortOptions.quantity.name": "Ingano (kg)",
+    "productLabelPurchaseOrder.sortOptions.quantity.name": "Ingano",
     "productLabelPurchaseOrder.sortOptions.payable.name": "Ayishyurwa / Asigaye",
     "productLabelPayments.sortOptions.producer_name.name": "Izina ry'umuhinzi",
     "productLabelFacilities.sortOptions.sellabaleSemiProducts.name": "Ibiicuruzwa bigitunganywa ariko bigurishwa",
