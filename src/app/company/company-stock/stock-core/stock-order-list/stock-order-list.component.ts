@@ -34,6 +34,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   openBalanceOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
+  purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
+
+  @Input()
   selectedOrders: ApiStockOrder[];
 
   @Input()
@@ -119,18 +122,20 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.facilityId$,
       this.openBalanceOnly$,
+      this.purchaseOrderOnly$,
       this.wayOfPaymentPing$,
       this.womenOnlyPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
+      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, isPurchaseOrderOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
         return {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sorting,
           facilityId,
           isOpenBalanceOnly,
+          isPurchaseOrderOnly,
           wayOfPayment,
           isWomenShare,
           productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
@@ -276,7 +281,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
     if (this.mode === 'PURCHASE') {
       if (!facilityId) {
-        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({...params, companyId: this.companyId});
+        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({ ...params, companyId: this.companyId });
       }
       return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
     }
