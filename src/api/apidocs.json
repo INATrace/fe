@@ -2962,6 +2962,15 @@
             }
           },
           {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Is women share",
             "in": "query",
             "name": "isWomenShare",
@@ -3111,6 +3120,15 @@
             "description": "Is open balance only",
             "in": "query",
             "name": "isOpenBalanceOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -3895,7 +3913,7 @@
             "name": "resize",
             "required": false,
             "schema": {
-              "default": false,
+              "default": true,
               "type": "boolean"
             }
           }
@@ -11027,9 +11045,13 @@
             "description": "associated company type",
             "enum": [
               "BUYER",
-              "PRODUCER",
+              "IMPORTER",
+              "EXPORTER",
               "OWNER",
+              "PRODUCER",
               "ASSOCIATION",
+              "PROCESSOR",
+              "TRADER",
               "ROASTER"
             ],
             "type": "string"
