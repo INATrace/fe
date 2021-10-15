@@ -9,12 +9,12 @@ import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { environment } from 'src/environments/environment';
 import { formatDateWithDotsAtHour } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { UserControllerService } from '../../../../../api/api/userController.service';
-import { ActivateUserCustomerByCompanyAndRoleService } from '../../../../shared-services/activate-user-customer-by-company-and-role.service';
 import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
 import PreferredWayOfPaymentEnum = ApiStockOrder.PreferredWayOfPaymentEnum;
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
@@ -46,9 +46,9 @@ export class StockPaymentsFormComponent implements OnInit {
   @Input()
   searchFarmersForm = new FormControl(null);
   @Input()
-  collectorsCodebook: ActivateUserCustomerByCompanyAndRoleService;
+  collectorsCodebook: CompanyUserCustomersByRoleService;
   @Input()
-  farmersCodebook: ActivateUserCustomerByCompanyAndRoleService;
+  farmersCodebook: CompanyUserCustomersByRoleService;
   @Input()
   submitted: boolean;
   @Input()

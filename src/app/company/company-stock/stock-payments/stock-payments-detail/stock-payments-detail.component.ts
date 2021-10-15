@@ -6,9 +6,8 @@ import { StockOrderControllerService } from '../../../../../api/api/stockOrderCo
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { ApiProduct } from '../../../../../api/model/apiProduct';
-import { ActivateUserCustomerByCompanyAndRoleService } from '../../../../shared-services/activate-user-customer-by-company-and-role.service';
-import { UserCustomerControllerService } from '../../../../../api/api/userCustomerController.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
 import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiPaymentValidationScheme } from '../validation';
@@ -47,8 +46,8 @@ export class StockPaymentsDetailComponent implements OnInit {
   payment: ApiPayment;
   product: ApiProduct;
 
-  farmersCodebook: ActivateUserCustomerByCompanyAndRoleService;
-  collectorsCodebook: ActivateUserCustomerByCompanyAndRoleService;
+  farmersCodebook: CompanyUserCustomersByRoleService;
+  collectorsCodebook: CompanyUserCustomersByRoleService;
 
   paymentForm: FormGroup;
   searchFarmersForm = new FormControl(null);
@@ -62,7 +61,6 @@ export class StockPaymentsDetailComponent implements OnInit {
       private route: ActivatedRoute,
       private globalEventsManager: GlobalEventManagerService,
       private companyControllerService: CompanyControllerService,
-      private userCustomerControllerService: UserCustomerControllerService,
       private stockOrderControllerService: StockOrderControllerService,
       private paymentControllerService: PaymentControllerService
   ) { }
@@ -76,14 +74,14 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     this.initInitialData().then(
         () => {
-          this.farmersCodebook = new ActivateUserCustomerByCompanyAndRoleService(
-              this.userCustomerControllerService,
+          this.farmersCodebook = new CompanyUserCustomersByRoleService(
+              this.companyControllerService,
               this.companyId,
               UserCustomerTypeEnum.FARMER
           );
 
-          this.collectorsCodebook = new ActivateUserCustomerByCompanyAndRoleService(
-              this.userCustomerControllerService,
+          this.collectorsCodebook = new CompanyUserCustomersByRoleService(
+              this.companyControllerService,
               this.companyId,
               UserCustomerTypeEnum.COLLECTOR
           );
