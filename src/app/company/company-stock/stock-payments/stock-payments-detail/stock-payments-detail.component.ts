@@ -15,9 +15,9 @@ import { ApiPaymentValidationScheme } from '../validation';
 import { Location } from '@angular/common';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ModeEnum } from '../stock-payments-form/stock-payments-form.component';
+import { ApiUserCustomerCooperative } from '../../../../../api/model/apiUserCustomerCooperative';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
-import {ApiUserCustomerCooperative} from "../../../../../api/model/apiUserCustomerCooperative";
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
@@ -102,7 +102,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     const action = this.route.snapshot.data.action;
     const type = this.route.snapshot.params.type;
 
-    if (this.customerOrderId || type === ModeEnum.PURCHASE) {
+    if (this.customerOrderId || type === ModeEnum.CUSTOMER) {
       this.mode = ModeEnum.CUSTOMER;
     }
 
@@ -247,9 +247,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
   async editPayment() {
 
-
     this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), this.payment, ApiPaymentValidationScheme);
-    console.log(this.paymentForm.value);
 
     this.searchCompaniesForm.setValue(this.paymentForm.get('recipientCompany').value);
     this.searchCollectorsForm.setValue(this.paymentForm.get('representativeOfRecipientUserCustomer').value);

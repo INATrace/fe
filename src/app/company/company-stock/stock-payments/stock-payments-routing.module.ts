@@ -27,7 +27,6 @@ const routes: Routes = [
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.payments.myStock:My stock`
             + ' / ' + $localize`:@@breadCrumb.payments.payment:Balance payment`,
-        route: 'product/:id/stock/payments',
         goBack: true
       }
     }
@@ -41,7 +40,6 @@ const routes: Routes = [
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.payments.myStock:My stock`
             + ' / ' + $localize`:@@breadCrumb.payments.payment:Balance payment`,
-        route: 'product/:id/stock/payments',
         goBack: true
       }
     }

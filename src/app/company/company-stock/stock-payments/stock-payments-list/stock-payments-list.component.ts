@@ -220,7 +220,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   }
 
   editPayment(payment) {
-
     this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
   }
 

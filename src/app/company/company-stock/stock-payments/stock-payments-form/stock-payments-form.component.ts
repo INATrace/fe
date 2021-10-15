@@ -109,7 +109,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       this.searchFarmersForm.disable();
 
       if (this.mode === ModeEnum.PURCHASE) {
-
         this.searchCompaniesForm.disable();
 
         if (!this.paymentForm.get('paymentPurposeType').value) {
