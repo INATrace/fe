@@ -2802,7 +2802,7 @@
     "productLabelStockFacilityModal.checkbox.organic.label": "Display \"Organic\"",
     "productLabelStockFacilityModal.checkbox.womenOnly.label": "Display \"Women only\"",
     "productLabelStockFacilityModal.checkbox.tare.label": "Display \"Tare\"",
-    "productLabelStockFacilityModal.checkbox.priceReductionDamage.label": "Display \"Price reduction damage\"",
+    "productLabelStockFacilityModal.checkbox.priceReductionDamage.label": "Display \"Damaged price deduction\"",
     "productLabelStockPurchaseOrdersModal.organic.yes": "Yes",
     "productLabelStockPurchaseOrdersModal.organic.no": "No",
     "productLabelStockPurchaseOrdersModal.singleChoice.organic.label": "Organic",
