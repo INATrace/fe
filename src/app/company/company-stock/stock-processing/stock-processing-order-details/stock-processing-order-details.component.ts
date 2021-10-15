@@ -451,11 +451,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             // Clear output form on new
             this.setInputFacility(this.inputFacilityFromUrl, !this.update).then();
           }
-
-          // TODO: correct this when new API for Company customers is available
-          // if (this.actionType === 'SHIPMENT') {
-          //   this.companyCustomerCodebook = new ActiveCompanyCustomersByOrganizationService(this.chainCompanyCustomerService, this.organizationId);
-          // }
         }
 
         if (this.update) {
