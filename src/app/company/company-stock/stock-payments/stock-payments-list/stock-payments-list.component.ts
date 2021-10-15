@@ -12,6 +12,8 @@ import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPagi
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import {ModeEnum} from "../stock-payments-form/stock-payments-form.component";
+import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
+import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 
 
 @Component({
@@ -354,6 +356,10 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:AF Women premium`;
     obj['INVOICE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
     return obj;
+  }
+
+  get paymentStatusEnum(): typeof PaymentStatusEnum {
+    return PaymentStatusEnum;
   }
 
   onPageChange(event) {

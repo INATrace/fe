@@ -7,9 +7,9 @@
             <tbody>
             <tr *ngFor="let payment of payments.items; index as i">
                 <td *ngIf="!sortOptions[0].hide" scope="row" [attr.data-label]="sortOptions[0].name">
-                    <checkbox-input *ngIf="this.currentData[i].paymentStatus === 'UNCONFIRMED'"
+                    <checkbox-input *ngIf="this.currentData[i].paymentStatus === paymentStatusEnum.UNCONFIRMED"
                                     (onClick)="cbSelected(payment, i)"
-                                    [checked]="this.currentData[i].selected && this.currentData[i].paymentStatus === 'UNCONFIRMED'">
+                                    [checked]="this.currentData[i].selected && this.currentData[i].paymentStatus === paymentStatusEnum.UNCONFIRMED">
                     </checkbox-input>
                 </td>
                 <td *ngIf="!sortOptions[1].hide" scope="row" [attr.data-label]="sortOptions[1].name"><span>{{readablePaymentPurpose(payment.paymentPurposeType)}}</span></td>
@@ -32,9 +32,9 @@
 <!--                        <a *ngIf="this.isCooperative"-->
                         <a class="company-action"
                            i18n="@@productLabelPayments.tableCol.confirm"
-                           (click)="payment.paymentStatus != 'CONFIRMED' && confirmPayment(payment)"
-                           [class.enabled-action]="payment.paymentStatus !== 'CONFIRMED'"
-                           [class.disabled-action]="payment.paymentStatus === 'CONFIRMED'">
+                           (click)="payment.paymentStatus != paymentStatusEnum.CONFIRMED && confirmPayment(payment)"
+                           [class.enabled-action]="payment.paymentStatus !== paymentStatusEnum.CONFIRMED"
+                           [class.disabled-action]="payment.paymentStatus === paymentStatusEnum.CONFIRMED">
                             Confirm
                         </a>
                         <a class="company-action"

@@ -12,13 +12,13 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
+import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { UserControllerService } from '../../../../../api/api/userController.service';
 import { ActivateUserCustomerByCompanyAndRoleService } from '../../../../shared-services/activate-user-customer-by-company-and-role.service';
 import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
 import PreferredWayOfPaymentEnum = ApiStockOrder.PreferredWayOfPaymentEnum;
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
-import {ApiUserCustomer} from '../../../../../api/model/apiUserCustomer';
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
 
 export enum ModeEnum {
@@ -31,7 +31,7 @@ export enum ModeEnum {
   templateUrl: './stock-payments-form.component.html',
   styleUrls: ['./stock-payments-form.component.scss']
 })
-export class StockPaymentsFormComponent implements OnInit, OnDestroy {
+export class StockPaymentsFormComponent implements OnInit {
 
   @Input()
   paymentForm: FormGroup;
@@ -60,18 +60,16 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
-  searchPreferredWayOfPayment = new FormControl(null);
-
-  subConditional: Subscription;
-  associatedCompaniesService: AssociatedCompaniesService;
-
-  chainRootUrl: string = environment.chainRelativeFileUploadUrl;
-  chainDownloadRootUrl: string = environment.chainRelativeFileDownloadUrl;
   uploaderLabel: string;
   confirmedAt: string;
   confirmedByUser: string;
   readonlyPaymentType: boolean;
   currency: string;
+
+  associatedCompaniesService: AssociatedCompaniesService;
+  searchPreferredWayOfPayment = new FormControl(null);
+
+  fileUploadUrl: string = environment.relativeFileUploadUrl;
 
   uploaderLabelStr = $localize`:@@paymentForm.attachment-uploader.receipt.label:Signed receipt (PDF/PNG/JPG)`;
   uploaderLabelRequiredStr = $localize`:@@paymentForm.attachment-uploader.receipt.required.label:Signed receipt (PDF/PNG/JPG)*`;
@@ -126,7 +124,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
         this.paymentForm.get('paymentPurposeType').disable();
         this.paymentForm.get('formalCreationTime').disable();
         this.paymentForm.get('receiptDocumentType').disable();
-        // this.paymentForm.get('receiptDocument').disable();
+        this.paymentForm.get('receiptDocument').disable();
 
         this.searchCompaniesForm.disable();
 
@@ -161,22 +159,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
       }
     });
-
-    // this.subConditional = this.form.get('paymentType').valueChanges.subscribe(val => {
-    //   if (val === 'CASH') {
-    //     this.form.controls['receiptDocument'].setValidators([Validators.required]);
-    //     this.form.controls['receiptDocument'].updateValueAndValidity();
-    //   } else {
-    //     this.form.controls['receiptDocument'].clearValidators();
-    //     this.form.controls['receiptDocument'].updateValueAndValidity();
-    //   }
-    // });
-  }
-
-  ngOnDestroy() {
-    if (this.subConditional) {
-      this.subConditional.unsubscribe();
-    }
   }
 
   async initInitialData() {
@@ -314,7 +296,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     }
     return totalPaid;
   }
-
 
   get paymentTypes() {
     const obj = {};

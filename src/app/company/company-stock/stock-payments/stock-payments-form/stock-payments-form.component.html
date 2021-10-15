@@ -403,36 +403,33 @@
 
                         <!-- Recipient document -->
                         <div class="af-c8">
-<!--                            <ng-container>-->
-<!--                                <attachment-uploader-->
-<!--                                        [chainFile]="true"-->
-<!--                                        url="{{chainRootUrl}}"-->
-<!--                                        downloadUrl="{{chainDownloadRootUrl}}"-->
-<!--                                        allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"-->
-<!--                                        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."-->
-<!--                                        mode="simpleAsTextField"-->
-<!--                                        [label]="uploaderLabel"-->
-<!--                                        i18n-allowedMimeTypeErrorMessage="@@paymentForm.attachment-uploader.allowedMimeTypeErrorMessage"-->
-<!--                                        [form]="paymentForm.get('receiptDocument')"-->
-<!--                                        [attachmentUploaderId]="'paymentForm'+'orderReferenceForm.value'"-->
-<!--                                        [invalid]="submitted && paymentForm.get('receiptDocument').invalid"-->
-<!--                                        [readOnly]="viewOnly">-->
-<!--                                    <attachment-uploader-content i18n="@@paymentForm.attachment-uploader.content">-->
-<!--                                        Upload signed receipt-->
-<!--                                    </attachment-uploader-content>-->
-<!--                                </attachment-uploader>-->
-<!--                                <attachment-uploader-errors>-->
-<!--                                    <ng-container *ngIf="submitted">-->
-<!--                                        <div *ngIf="paymentForm.get('receiptDocument').errors as errors" class="sc-invalid-feedback" validation-error>-->
-<!--                                            <div *ngIf="errors.required" i18n="@@paymentForm.attachment-uploader.error">-->
-<!--                                                <span>-->
-<!--                                                  Signed receipt is required-->
-<!--                                                </span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </ng-container>-->
-<!--                                </attachment-uploader-errors>-->
-<!--                            </ng-container>-->
+                            <ng-container>
+                                <attachment-uploader
+                                        allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
+                                        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+                                        i18n-allowedMimeTypeErrorMessage="@@paymentForm.attachment-uploader.allowedMimeTypeErrorMessage"
+                                        mode="simpleAsTextField"
+                                        [label]="uploaderLabel"
+                                        [form]="paymentForm.get('receiptDocument')"
+                                        [attachmentUploaderId]="'paymentForm' + 'orderReferenceForm.value'"
+                                        [invalid]="submitted && paymentForm.get('receiptDocument').invalid"
+                                        [readOnly]="viewOnly">
+                                    <attachment-uploader-content i18n="@@paymentForm.attachment-uploader.content">
+                                        Upload signed receipt
+                                    </attachment-uploader-content>
+                                </attachment-uploader>
+                                <attachment-uploader-errors>
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="paymentForm.get('receiptDocument').errors as errors" class="sc-invalid-feedback" validation-error>
+                                            <div *ngIf="errors.required" i18n="@@paymentForm.attachment-uploader.error">
+                                                <span>
+                                                  Signed receipt is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </attachment-uploader-errors>
+                            </ng-container>
                         </div>
 
                     </div>

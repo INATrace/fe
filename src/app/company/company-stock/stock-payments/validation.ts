@@ -32,7 +32,7 @@ export const ApiPaymentValidationScheme = {
     validators: [
         multiFieldValidator(['recipientCompany', 'recipientUserCustomer'], atLeastOnePayableTo, ['atLeastOnePayableTo']),
         multiFieldValidator(['recipientCompany', 'recipientUserCustomer'], onlyOnePayableTo, ['onlyOnePayableTo']),
-        // multiFieldValidator(['receiptDocument'], requireReceiptDocument, ['required'])
+        multiFieldValidator(['receiptDocument'], requireReceiptDocument, ['required'])
     ],
     fields: {
               amountPaidToTheCollector: {

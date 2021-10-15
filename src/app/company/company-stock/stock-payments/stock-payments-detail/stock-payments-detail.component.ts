@@ -231,7 +231,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     }
 
     try {
-      const paymentResp = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(this.paymentForm.value)
+      const paymentResp = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(this.paymentForm.getRawValue())
           .pipe(take(1))
           .toPromise();
 
