@@ -310,7 +310,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   async listOfOrgAssociation() {
-    const res = await this.companyService.listCompaniesUsingGET().pipe(take(1)).toPromise();
+    const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
       const companiesObj = {};
