@@ -273,6 +273,7 @@ export namespace ApiStockOrder {
     export enum PreferredWayOfPaymentEnum {
         CASH = 'CASH',
         CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
+        CASHVIACOOPERATIVE = 'CASH_VIA_COOPERATIVE',
         BANKTRANSFER = 'BANK_TRANSFER',
         CHEQUE = 'CHEQUE',
         OFFSETTING = 'OFFSETTING',

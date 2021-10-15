@@ -34,6 +34,7 @@ import { GenerateQRCodeModalComponent } from './generate-qr-code-modal/generate-
 import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-type';
 import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing-evidence-field-type.pipe';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     GenerateQRCodeModalComponent,
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
-    ProductCardComponent
+    ProductCardComponent,
+    FormatPaymentStatusPipe
   ],
   imports: [
     CommonModule,
@@ -101,7 +103,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
     DocumentCardComponent,
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
-    ProductCardComponent
+    ProductCardComponent,
+    FormatPaymentStatusPipe
   ],
   providers: [
     FormatPaymentPurposeTypePipe
