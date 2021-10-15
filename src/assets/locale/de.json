@@ -1520,7 +1520,7 @@
     "compDocItem.attachment-uploader.content": "Foto hochladen",
     "compDocItem.attachment-uploader.error": "{$START_TAG_SPAN} Foto wird benötigt {$CLOSE_TAG_SPAN}",
     "compDocItem.textinput.link.label": "Link",
-    "compDocItem.textinput.quote.label": "Quote",
+    "compDocItem.textinput.quote.label": "Zitat",
     "compDocItem.farmer.attachment-uploader.label": "Foto Landwirt*in",
     "productLabelStockProcessingOrderDetail.section.certificationId": "Zertifikate",
     "productLabelStockProcessingOrderDetail.section.certificationId.label": "Zertifikate",
