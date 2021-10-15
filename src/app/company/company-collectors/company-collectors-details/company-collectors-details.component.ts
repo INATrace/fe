@@ -62,6 +62,15 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   assocCoop;
   assocForm = new FormControl(null);
 
+  public areaTranslations = {
+    totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
+    totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
+    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
+    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
+    organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
+    organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
+  };
+
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
     FEMALE: $localize`:@@collectorDetail.gender.female:Female`
@@ -369,15 +378,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     this.openBalanceOnly = action;
     this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
   }
-  
-  public areaTranslations = {
-    totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
-    totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
-    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
-    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
-    organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
-    organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
-  };
   
   public get areaUnit(): FormControl {
     return this.collectorForm.get('farm.areaUnit') as FormControl;
