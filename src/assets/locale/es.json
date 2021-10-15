@@ -857,7 +857,7 @@
     "productLabelStockProcessingOrderDetail.textinput.remaining.label": "Restante",
     "productLabelStockProcessingOrderDetail.textinput.comments.label": "Comentarios",
     "productLabelStockProcessingOrderDetail.section.processingEvidence": "Prueba del procesamiento",
-    "productLabelStockProcessingOrderDetail.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Confirmar$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
+    "productLabelStockProcessingOrderDetail.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Confirmar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
     "productLabelStockProcessingOrderDetail.processingActionForm.error": "Se requiere una acción",
     "productLabelStockProcessingOrderDetail.inputFacilityForm.label": "Instalación",
     "productLabelStockProcessingOrderDetail.inputFacilityForm.error": "Se requiere la instalación de entrada",
