@@ -165,7 +165,7 @@ export class ProductLabelStockOrderListComponent implements OnInit {
       },
       {
         key: 'quantity',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity (kg)`,
+        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity`,
         inactive: true,
         hide: ["COMPANY_ADMIN", "ADMIN"].indexOf(this.pageListingMode) >= 0,
       },
