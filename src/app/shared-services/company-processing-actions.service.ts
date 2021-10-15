@@ -1,0 +1,63 @@
+import { GeneralSifrantService } from './general-sifrant.service';
+import { ApiProcessingAction } from '../../api/model/apiProcessingAction';
+import {
+  ListProcessingActionsByCompanyUsingGET,
+  ProcessingActionControllerService
+} from '../../api/api/processingActionController.service';
+import { CodebookTranslations } from './codebook-translations';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+
+export class CompanyProcessingActionsService extends GeneralSifrantService<ApiProcessingAction> {
+
+  private requestParams = {
+    limit: 1000,
+    offset: 0,
+    id: this.companyId
+  } as ListProcessingActionsByCompanyUsingGET.PartialParamMap;
+
+  constructor(
+    private processingActionController: ProcessingActionControllerService,
+    private companyId: number,
+    private codebookTranslations: CodebookTranslations
+  ) {
+    super();
+    this.initializeCodebook();
+  }
+
+  public identifier(el: ApiProcessingAction) {
+    return el.id;
+  }
+
+  public textRepresentation(el: ApiProcessingAction) {
+    return this.codebookTranslations.translate(el, 'name');
+  }
+
+  public placeholder(): string {
+    return $localize`:@@activeProcessingAction.input.placehoder:Select processing action`;
+  }
+
+  public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProcessingAction>> {
+    const lkey = key ? key.toLocaleLowerCase() : null;
+    return this.sifrant$.pipe(
+      map((allChoices: PagedSearchResults<ApiProcessingAction>) => {
+        return {
+          results: allChoices.results.filter((x: ApiProcessingAction) => lkey == null || x.name.toLocaleLowerCase().indexOf(lkey) >= 0),
+          offset: allChoices.offset,
+          limit: allChoices.limit,
+          totalCount: allChoices.totalCount
+        };
+      })
+    );
+  }
+
+  public initializeCodebook() {
+    this.sifrant$ = this.sifrant$ ||
+      this.processingActionController.listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams })
+        .pipe(
+          map(x => this.pack(x.data.items))
+        );
+  }
+
+}

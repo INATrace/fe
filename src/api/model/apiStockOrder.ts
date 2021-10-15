@@ -18,9 +18,11 @@
  */
 
 
+import { ApiActionType } from './apiActionType';
 import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
+import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
@@ -30,6 +32,7 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 
 export interface ApiStockOrder { 
+    actionType?: ApiActionType;
     /**
      * Activity proofs
      */
@@ -43,6 +46,10 @@ export interface ApiStockOrder {
      * Balance
      */
     balance?: number;
+    /**
+     * Comments
+     */
+    comments?: string;
     company?: ApiCompany;
     /**
      * Cost
@@ -67,9 +74,14 @@ export interface ApiStockOrder {
     deliveryTime?: Date;
     facility?: ApiFacility;
     /**
+     * Flavour profile
+     */
+    flavourProfile?: string;
+    /**
      * Fulfilled quantity
      */
     fulfilledQuantity?: number;
+    gradeAbbreviation?: ApiGradeAbbreviation;
     /**
      * Entity id
      */
@@ -90,6 +102,14 @@ export interface ApiStockOrder {
      * Is order of type PURCHASE_ORDER
      */
     isPurchaseOrder?: boolean;
+    /**
+     * LOT label
+     */
+    lotLabel?: string;
+    /**
+     * LOT number
+     */
+    lotNumber?: string;
     measureUnitType?: ApiMeasureUnitType;
     /**
      * Order type
@@ -119,7 +139,19 @@ export interface ApiStockOrder {
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
+    /**
+     * SAC number
+     */
+    sacNumber?: number;
+    /**
+     * Screen size
+     */
+    screenSize?: string;
     semiProduct?: ApiSemiProduct;
+    /**
+     * Date when product has been started drying
+     */
+    startOfDrying?: Date;
     /**
      * Tare
      */
@@ -147,6 +179,7 @@ export namespace ApiStockOrder {
      * All properties of ApiStockOrder.
      */
     export enum Properties {
+        actionType = 'actionType',
         /**
          * Activity proofs
          */
@@ -160,6 +193,10 @@ export namespace ApiStockOrder {
          * Balance
          */
         balance = 'balance',
+        /**
+         * Comments
+         */
+        comments = 'comments',
         company = 'company',
         /**
          * Cost
@@ -184,9 +221,14 @@ export namespace ApiStockOrder {
         deliveryTime = 'deliveryTime',
         facility = 'facility',
         /**
+         * Flavour profile
+         */
+        flavourProfile = 'flavourProfile',
+        /**
          * Fulfilled quantity
          */
         fulfilledQuantity = 'fulfilledQuantity',
+        gradeAbbreviation = 'gradeAbbreviation',
         /**
          * Entity id
          */
@@ -207,6 +249,14 @@ export namespace ApiStockOrder {
          * Is order of type PURCHASE_ORDER
          */
         isPurchaseOrder = 'isPurchaseOrder',
+        /**
+         * LOT label
+         */
+        lotLabel = 'lotLabel',
+        /**
+         * LOT number
+         */
+        lotNumber = 'lotNumber',
         measureUnitType = 'measureUnitType',
         /**
          * Order type
@@ -236,7 +286,19 @@ export namespace ApiStockOrder {
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
+        /**
+         * SAC number
+         */
+        sacNumber = 'sacNumber',
+        /**
+         * Screen size
+         */
+        screenSize = 'screenSize',
         semiProduct = 'semiProduct',
+        /**
+         * Date when product has been started drying
+         */
+        startOfDrying = 'startOfDrying',
         /**
          * Tare
          */
@@ -287,6 +349,18 @@ export namespace ApiStockOrder {
             classname: 'ApiStockOrder',
             vars: [
                 {
+                    metadata: ApiActionType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'actionType',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiActionType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiActionType'
+                },
+                {
                     metadata: ApiActivityProof.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -327,6 +401,17 @@ export namespace ApiStockOrder {
                     name: 'balance',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'comments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -426,12 +511,35 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'flavourProfile',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'fulfilledQuantity',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiGradeAbbreviation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'gradeAbbreviation',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiGradeAbbreviation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiGradeAbbreviation'
                 },
                 {
                     isReadOnly: false,
@@ -484,6 +592,28 @@ export namespace ApiStockOrder {
                     name: 'isPurchaseOrder',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lotLabel',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lotNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -616,6 +746,28 @@ export namespace ApiStockOrder {
                     complexType: 'ApiUserCustomer'
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sacNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'screenSize',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiSemiProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -626,6 +778,17 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiSemiProduct'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'startOfDrying',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -685,6 +848,8 @@ export namespace ApiStockOrder {
                 },
             ],
             validators: {
+                actionType: [
+                ],
                 activityProofs: [
                 ],
                 available: [
@@ -692,6 +857,8 @@ export namespace ApiStockOrder {
                 availableQuantity: [
                 ],
                 balance: [
+                ],
+                comments: [
                 ],
                 company: [
                 ],
@@ -709,7 +876,11 @@ export namespace ApiStockOrder {
                 ],
                 facility: [
                 ],
+                flavourProfile: [
+                ],
                 fulfilledQuantity: [
+                ],
+                gradeAbbreviation: [
                 ],
                 id: [
                 ],
@@ -720,6 +891,10 @@ export namespace ApiStockOrder {
                 isAvailable: [
                 ],
                 isPurchaseOrder: [
+                ],
+                lotLabel: [
+                ],
+                lotNumber: [
                 ],
                 measureUnitType: [
                 ],
@@ -743,7 +918,13 @@ export namespace ApiStockOrder {
                 ],
                 representativeOfProducerUserCustomer: [
                 ],
+                sacNumber: [
+                ],
+                screenSize: [
+                ],
                 semiProduct: [
+                ],
+                startOfDrying: [
                 ],
                 tare: [
                 ],
@@ -762,6 +943,9 @@ export namespace ApiStockOrder {
   // export const ApiStockOrderValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               actionType: {
+  //                   validators: []
+  //               },
   //               activityProofs: {
   //                   validators: []
   //               },
@@ -772,6 +956,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               balance: {
+  //                   validators: []
+  //               },
+  //               comments: {
   //                   validators: []
   //               },
   //               company: {
@@ -798,7 +985,13 @@ export namespace ApiStockOrder {
   //               facility: {
   //                   validators: []
   //               },
+  //               flavourProfile: {
+  //                   validators: []
+  //               },
   //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               gradeAbbreviation: {
   //                   validators: []
   //               },
   //               id: {
@@ -814,6 +1007,12 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               isPurchaseOrder: {
+  //                   validators: []
+  //               },
+  //               lotLabel: {
+  //                   validators: []
+  //               },
+  //               lotNumber: {
   //                   validators: []
   //               },
   //               measureUnitType: {
@@ -849,7 +1048,16 @@ export namespace ApiStockOrder {
   //               representativeOfProducerUserCustomer: {
   //                   validators: []
   //               },
+  //               sacNumber: {
+  //                   validators: []
+  //               },
+  //               screenSize: {
+  //                   validators: []
+  //               },
   //               semiProduct: {
+  //                   validators: []
+  //               },
+  //               startOfDrying: {
   //                   validators: []
   //               },
   //               tare: {

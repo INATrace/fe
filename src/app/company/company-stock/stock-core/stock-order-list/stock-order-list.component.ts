@@ -34,6 +34,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   openBalanceOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
+  purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
+
+  @Input()
   selectedOrders: ApiStockOrder[];
 
   @Input()
@@ -119,18 +122,20 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.facilityId$,
       this.openBalanceOnly$,
+      this.purchaseOrderOnly$,
       this.wayOfPaymentPing$,
       this.womenOnlyPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
+      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, isPurchaseOrderOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
         return {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sorting,
           facilityId,
           isOpenBalanceOnly,
+          isPurchaseOrderOnly,
           wayOfPayment,
           isWomenShare,
           productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
@@ -276,7 +281,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
     if (this.mode === 'PURCHASE') {
       if (!facilityId) {
-        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({...params, companyId: this.companyId});
+        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({ ...params, companyId: this.companyId });
       }
       return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
     }
@@ -472,15 +477,23 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   farmerName(farmer: ApiUserCustomer) {
-    // TODO: complete this when available on the API
-    // if (farmer) {
-    //   const cell = farmer.location ? (farmer.location.cell ? farmer.location.cell.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   const village = farmer.location ? (farmer.location.village ? farmer.location.village.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
-    // }
+
     if (farmer) {
+      if (farmer.location?.address?.country?.code === 'RW') {
+
+        const cell = farmer.location.address.cell ? farmer.location.address.cell.substring(0, 2).toLocaleUpperCase() : '--';
+        const village = farmer.location.address.village ? farmer.location.address.village.substring(0, 2).toLocaleUpperCase() : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
+
+      } else if (farmer.location?.address?.country?.code === 'HN') {
+        const municipality = farmer.location.address.hondurasMunicipality ? farmer.location.address.hondurasMunicipality : '--';
+        const village = farmer.location.address.hondurasVillage ? farmer.location.address.hondurasVillage : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + municipality + '-' + village + ')';
+      }
+
       return farmer.name + ' ' + farmer.surname;
     }
+
     return '';
   }
 

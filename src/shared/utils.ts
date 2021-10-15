@@ -503,3 +503,7 @@ export async function setSelectedIdFieldFromQueryParams(component: any, route: A
     setCallback(res)
   }
 }
+
+export function deleteNullFields(object: any) {
+  Object.keys(object).forEach((key) => (object[key] == null) && delete object[key]);
+}

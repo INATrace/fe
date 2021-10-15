@@ -1632,608 +1632,6 @@
         "summary": "Get a single measurement unit type with the provided ID."
       }
     },
-    "/api/chain/payment": {
-      "put": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "createOrUpdatePaymentUsingPUT",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiPayment"
-              }
-            }
-          },
-          "description": "apiPayment",
-          "required": true
-        },
-        "summary": "Create or update payment. If ID is provided, then the entity with the provided ID is updated."
-      }
-    },
-    "/api/chain/payment/bulk-payment": {
-      "put": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "createOrUpdateBulkPaymentUsingPUT",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiBulkPayment"
-              }
-            }
-          },
-          "description": "apiBulkPayment",
-          "required": true
-        },
-        "summary": "Create bulk payment."
-      }
-    },
-    "/api/chain/payment/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "getPaymentListUsingGET",
-        "summary": "Get a paginated list of payments."
-      }
-    },
-    "/api/chain/payment/list/bulk-payment/company/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Company ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiBulkPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "listBulkPaymentsByCompanyUsingGET",
-        "summary": "Get a list of bulk payments by company ID."
-      }
-    },
-    "/api/chain/payment/list/company/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Company ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Preferred way of payment",
-            "in": "query",
-            "name": "preferredWayOfPayment",
-            "required": false,
-            "schema": {
-              "enum": [
-                "CASH",
-                "CASH_VIA_COLLECTOR",
-                "CASH_VIA_COOPERATIVE",
-                "BANK_TRANSFER",
-                "CHEQUE",
-                "OFFSETTING",
-                "UNKNOWN"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Payment status",
-            "in": "query",
-            "name": "paymentStatus",
-            "required": false,
-            "schema": {
-              "enum": [
-                "UNCONFIRMED",
-                "CONFIRMED"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Production date range start",
-            "in": "query",
-            "name": "productionDateStart",
-            "required": false,
-            "schema": {
-              "format": "date-time",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Production date range end",
-            "in": "query",
-            "name": "productionDateEnd",
-            "required": false,
-            "schema": {
-              "format": "date-time",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Search by farmer name",
-            "in": "query",
-            "name": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "listPaymentsByCompanyUsingGET",
-        "summary": "Get a list of payments by company ID."
-      }
-    },
-    "/api/chain/payment/list/purchase/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Purchase ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Preferred way of payment",
-            "in": "query",
-            "name": "preferredWayOfPayment",
-            "required": false,
-            "schema": {
-              "enum": [
-                "CASH",
-                "CASH_VIA_COLLECTOR",
-                "CASH_VIA_COOPERATIVE",
-                "BANK_TRANSFER",
-                "CHEQUE",
-                "OFFSETTING",
-                "UNKNOWN"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Payment status",
-            "in": "query",
-            "name": "paymentStatus",
-            "required": false,
-            "schema": {
-              "enum": [
-                "UNCONFIRMED",
-                "CONFIRMED"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Production date range start",
-            "in": "query",
-            "name": "productionDateStart",
-            "required": false,
-            "schema": {
-              "format": "date-time",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Production date range end",
-            "in": "query",
-            "name": "productionDateEnd",
-            "required": false,
-            "schema": {
-              "format": "date-time",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Search by farmer name",
-            "in": "query",
-            "name": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "listPaymentsByPurchaseUsingGET",
-        "summary": "Get a list of payments by purchase order (stock order) ID."
-      }
-    },
-    "/api/chain/payment/{id}": {
-      "delete": {
-        "parameters": [
-          {
-            "description": "Payment ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "deletePaymentUsingDELETE",
-        "summary": "Deletes a payment with the provided ID."
-      },
-      "get": {
-        "parameters": [
-          {
-            "description": "Payment ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "getPaymentUsingGET",
-        "summary": "Get a single payment with the provided ID."
-      }
-    },
     "/api/chain/processing-action": {
       "put": {
         "responses": {
@@ -3555,19 +2953,18 @@
             }
           },
           {
-            "description": "Farmer (UserCustomer) ID",
-            "in": "query",
-            "name": "farmerId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
             "description": "Is open balance only",
             "in": "query",
             "name": "isOpenBalanceOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -3591,27 +2988,10 @@
               "enum": [
                 "CASH",
                 "CASH_VIA_COLLECTOR",
-                "CASH_VIA_COOPERATIVE",
                 "BANK_TRANSFER",
                 "CHEQUE",
                 "OFFSETTING",
                 "UNKNOWN"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Order type",
-            "in": "query",
-            "name": "orderType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "PURCHASE_ORDER",
-                "PROCESSING_ORDER",
-                "SALES_ORDER",
-                "GENERAL_ORDER",
-                "TRANSFER_ORDER"
               ],
               "type": "string"
             }
@@ -3746,6 +3126,15 @@
             }
           },
           {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Is women share",
             "in": "query",
             "name": "isWomenShare",
@@ -3763,7 +3152,6 @@
               "enum": [
                 "CASH",
                 "CASH_VIA_COLLECTOR",
-                "CASH_VIA_COOPERATIVE",
                 "BANK_TRANSFER",
                 "CHEQUE",
                 "OFFSETTING",
@@ -3903,6 +3291,15 @@
             }
           },
           {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Production date range start",
             "in": "query",
             "name": "productionDateStart",
@@ -4004,224 +3401,6 @@
         ],
         "operationId": "getStockOrderUsingGET",
         "summary": "Get a single stock order with the provided ID."
-      }
-    },
-    "/api/chain/user-customer/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiUserCustomer_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "user-customer-controller"
-        ],
-        "operationId": "getUserCustomerListUsingGET",
-        "summary": "Get a paginated list of user customers."
-      }
-    },
-    "/api/chain/user-customer/list/company/{companyId}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Company ID",
-            "in": "path",
-            "name": "companyId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "User customer type",
-            "in": "query",
-            "name": "userCustomerType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COLLECTOR",
-                "FARMER"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiUserCustomer_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "user-customer-controller"
-        ],
-        "operationId": "getUserCustomerListForCompanyUsingGET",
-        "summary": "Get a paginated list of user customers for provided company."
-      }
-    },
-    "/api/chain/user-customer/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "UserCustomer ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiUserCustomer_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "user-customer-controller"
-        ],
-        "operationId": "getUserCustomer",
-        "summary": "Get a single user customer with the provided ID."
       }
     },
     "/api/chain/value-chain": {
@@ -4734,7 +3913,7 @@
             "name": "resize",
             "required": false,
             "schema": {
-              "default": false,
+              "default": true,
               "type": "boolean"
             }
           }
@@ -4953,6 +4132,97 @@
         ],
         "operationId": "listCompaniesAdminUsingGET",
         "summary": "Lists all companies. Must be admin. Sorting: name or default"
+      }
+    },
+    "/api/company/associations/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiCompanyListResponse_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getAssociationsUsingGET",
+        "summary": "Get list of associations for the selected company with given ID"
       }
     },
     "/api/company/companyCustomers": {
@@ -8751,76 +8021,6 @@
         },
         "type": "object"
       },
-      "ApiBulkPayment": {
-        "properties": {
-          "additionalCost": {
-            "description": "Bulk payment additional cost",
-            "type": "number"
-          },
-          "additionalCostDescription": {
-            "description": "Bulk payment additional cost description",
-            "type": "string"
-          },
-          "additionalProofs": {
-            "description": "Bulk payment additional proofs",
-            "items": {
-              "$ref": "#/components/schemas/ApiActivityProof"
-            },
-            "type": "array"
-          },
-          "createdBy": {
-            "description": "Bulk payment created by",
-            "format": "int64",
-            "type": "integer"
-          },
-          "currency": {
-            "description": "Bulk payment currency",
-            "type": "string"
-          },
-          "id": {
-            "description": "Entity id",
-            "format": "int64",
-            "type": "integer"
-          },
-          "payingCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
-            "description": "Company that pays for the bulk payment"
-          },
-          "paymentDescription": {
-            "description": "Bulk payment drescription",
-            "type": "string"
-          },
-          "paymentPurposeType": {
-            "description": "Bulk payment purpose type",
-            "enum": [
-              "ADVANCE_PAYMENT",
-              "FIRST_INSTALLMENT",
-              "SECOND_INSTALLMENT",
-              "WOMEN_PREMIUM",
-              "INVOICE_PAYMENT"
-            ],
-            "type": "string"
-          },
-          "receiptNumber": {
-            "description": "Bulk payment receipt numbet",
-            "format": "int64",
-            "type": "integer"
-          },
-          "stockOrders": {
-            "description": "Bulk payment stock orders",
-            "items": {
-              "format": "int64",
-              "type": "integer"
-            },
-            "type": "array"
-          },
-          "totalAmount": {
-            "description": "Bulk payment total amount",
-            "type": "number"
-          }
-        },
-        "type": "object"
-      },
       "ApiCertification": {
         "properties": {
           "certificate": {
@@ -8863,6 +8063,11 @@
           "currency": {
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
+          },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "documents": {
             "description": "company documents",
@@ -8911,6 +8116,11 @@
             "description": "webpage",
             "type": "string"
           },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "webPage": {
             "description": "webpage",
             "type": "string"
@@ -8958,6 +8168,11 @@
             "description": "about the company",
             "type": "string"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "email": {
             "description": "email",
             "type": "string"
@@ -8989,6 +8204,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "webPage": {
             "description": "webpage",
@@ -9120,6 +8340,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -9166,6 +8391,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Company users",
@@ -9267,6 +8497,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -9323,6 +8558,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Add users with these ids",
@@ -9578,6 +8818,31 @@
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Facility company"
           },
+          "displayMayInvolveCollectors": {
+            "description": "Enable form control 'May involve collectors'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayOrganic": {
+            "description": "Enable form control 'Organic'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayPriceDeductionDamage": {
+            "description": "Enable form control 'Price deduction damage'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayTare": {
+            "description": "Enable form control 'Tare'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayWomenOnly": {
+            "description": "Enable form control 'Women only'",
+            "example": false,
+            "type": "boolean"
+          },
           "facilityLocation": {
             "$ref": "#/components/schemas/ApiFacilityLocation",
             "description": "Facility location"
@@ -9669,6 +8934,10 @@
           "areaOrganicCertified": {
             "description": "Area is organic certified",
             "type": "number"
+          },
+          "areaUnit": {
+            "description": "Area unit",
+            "type": "string"
           },
           "coffeeCultivatedArea": {
             "description": "Area cultivated with coffee (ha)",
@@ -10005,33 +9274,6 @@
         },
         "type": "object"
       },
-      "ApiPaginatedList_ApiBulkPayment_": {
-        "properties": {
-          "count": {
-            "description": "Count of all items satisfying 'paginatable' request.",
-            "format": "int32",
-            "type": "integer"
-          },
-          "items": {
-            "description": "Response items.",
-            "items": {
-              "$ref": "#/components/schemas/ApiBulkPayment"
-            },
-            "type": "array"
-          },
-          "limit": {
-            "description": "Limit got from request",
-            "format": "int32",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "Offset got from request",
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
       "ApiPaginatedList_ApiCompanyCustomer_": {
         "properties": {
           "count": {
@@ -10259,33 +9501,6 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiMeasureUnitType"
-            },
-            "type": "array"
-          },
-          "limit": {
-            "description": "Limit got from request",
-            "format": "int32",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "Offset got from request",
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
-      "ApiPaginatedList_ApiPayment_": {
-        "properties": {
-          "count": {
-            "description": "Count of all items satisfying 'paginatable' request.",
-            "format": "int32",
-            "type": "integer"
-          },
-          "items": {
-            "description": "Response items.",
-            "items": {
-              "$ref": "#/components/schemas/ApiPayment"
             },
             "type": "array"
           },
@@ -10631,49 +9846,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiActionType_",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiPaginatedResponse_ApiBulkPayment_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPaginatedList_ApiBulkPayment_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -11061,49 +10233,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiMeasureUnitType_",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiPaginatedResponse_ApiPayment_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPaginatedList_ApiPayment_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -11658,166 +10787,6 @@
         ],
         "type": "object"
       },
-      "ApiPayment": {
-        "properties": {
-          "amountPaidToTheCollector": {
-            "description": "Payment amount paid to the collector",
-            "format": "int32",
-            "type": "integer"
-          },
-          "amountPaidToTheFarmer": {
-            "description": "Payment amount paid to the farmer",
-            "format": "int32",
-            "type": "integer"
-          },
-          "createdBy": {
-            "$ref": "#/components/schemas/ApiUser",
-            "description": "Payment created by user"
-          },
-          "currency": {
-            "description": "Payment's currency",
-            "type": "string"
-          },
-          "formalCreationTime": {
-            "description": "Formal date of payment (for example: date on receipt)",
-            "format": "date-time",
-            "type": "string"
-          },
-          "id": {
-            "description": "Entity id",
-            "format": "int64",
-            "type": "integer"
-          },
-          "payingCompany": {
-            "$ref": "#/components/schemas/ApiCompany",
-            "description": "Company that is paying for product"
-          },
-          "paymentConfirmedAtTime": {
-            "description": "Payment time confirmation",
-            "format": "date-time",
-            "type": "string"
-          },
-          "paymentConfirmedByUser": {
-            "$ref": "#/components/schemas/ApiUser",
-            "description": "User who confirmed the payment"
-          },
-          "paymentPurposeType": {
-            "description": "Payment purpose type",
-            "enum": [
-              "ADVANCE_PAYMENT",
-              "FIRST_INSTALLMENT",
-              "SECOND_INSTALLMENT",
-              "WOMEN_PREMIUM",
-              "INVOICE_PAYMENT"
-            ],
-            "type": "string"
-          },
-          "paymentStatus": {
-            "description": "Payment status",
-            "enum": [
-              "UNCONFIRMED",
-              "CONFIRMED"
-            ],
-            "type": "string"
-          },
-          "paymentType": {
-            "description": "Payment type",
-            "enum": [
-              "CASH",
-              "BANK"
-            ],
-            "type": "string"
-          },
-          "preferredWayOfPayment": {
-            "description": "Preferred way of payment",
-            "enum": [
-              "CASH",
-              "CASH_VIA_COLLECTOR",
-              "CASH_VIA_COOPERATIVE",
-              "BANK_TRANSFER",
-              "CHEQUE",
-              "OFFSETTING",
-              "UNKNOWN"
-            ],
-            "type": "string"
-          },
-          "productionDate": {
-            "description": "Production date",
-            "format": "date-time",
-            "type": "string"
-          },
-          "purchased": {
-            "description": "Quantity purchased to be paid",
-            "format": "int32",
-            "type": "integer"
-          },
-          "receiptDocument": {
-            "$ref": "#/components/schemas/ApiDocument",
-            "description": "Receipt document"
-          },
-          "receiptDocumentType": {
-            "description": "Receipt document type",
-            "enum": [
-              "PURCHASE_SHEET",
-              "RECEIPT"
-            ],
-            "type": "string"
-          },
-          "receiptNumber": {
-            "description": "Receipt number",
-            "format": "int64",
-            "type": "integer"
-          },
-          "recipientCompany": {
-            "$ref": "#/components/schemas/ApiCompany",
-            "description": "Company that receives the payment"
-          },
-          "recipientCompanyCustomer": {
-            "$ref": "#/components/schemas/ApiCompanyCustomer",
-            "description": "Company customer that receives the payment"
-          },
-          "recipientType": {
-            "description": "Recipient type",
-            "enum": [
-              "ORGANIZATION",
-              "COMPANY_CUSTOMER",
-              "USER_CUSTOMER"
-            ],
-            "type": "string"
-          },
-          "recipientUserCustomer": {
-            "$ref": "#/components/schemas/ApiUserCustomer",
-            "description": "User customer that receives the payment (farmer)"
-          },
-          "representativeOfRecipientCompany": {
-            "$ref": "#/components/schemas/ApiCompany",
-            "description": "Representative of the company that receives the payment"
-          },
-          "representativeOfRecipientUserCustomer": {
-            "$ref": "#/components/schemas/ApiUserCustomer",
-            "description": "Representative of the user customer that receives the payment (collector)"
-          },
-          "stockOrder": {
-            "$ref": "#/components/schemas/ApiStockOrder",
-            "description": "Stock order related to the payment"
-          },
-          "totalPaid": {
-            "description": "Payment total amount",
-            "format": "int32",
-            "type": "integer"
-          },
-          "updatedBy": {
-            "$ref": "#/components/schemas/ApiUser",
-            "description": "Payment updated by user"
-          },
-          "updatedTimestamp": {
-            "description": "Last updated timestamp",
-            "format": "date-time",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
       "ApiProcess": {
         "properties": {
           "codesOfConduct": {
@@ -12257,9 +11226,13 @@
             "description": "associated company type",
             "enum": [
               "BUYER",
-              "PRODUCER",
+              "IMPORTER",
+              "EXPORTER",
               "OWNER",
+              "PRODUCER",
               "ASSOCIATION",
+              "PROCESSOR",
+              "TRADER",
               "ROASTER"
             ],
             "type": "string"
@@ -13405,49 +12378,6 @@
         ],
         "type": "object"
       },
-      "ApiResponse_ApiPayment_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPayment",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
       "ApiResponse_ApiProcessingAction_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -14432,6 +13362,10 @@
       },
       "ApiStockOrder": {
         "properties": {
+          "actionType": {
+            "$ref": "#/components/schemas/ApiActionType",
+            "description": "Action type"
+          },
           "activityProofs": {
             "description": "Activity proofs",
             "items": {
@@ -14450,6 +13384,10 @@
           "balance": {
             "description": "Balance",
             "type": "number"
+          },
+          "comments": {
+            "description": "Comments",
+            "type": "string"
           },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
@@ -14472,6 +13410,10 @@
             "description": "Currency",
             "type": "string"
           },
+          "damagedPriceDeduction": {
+            "description": "Damaged price deduction",
+            "type": "number"
+          },
           "deliveryTime": {
             "description": "Delivery time",
             "format": "date-time",
@@ -14481,10 +13423,18 @@
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
           },
+          "flavourProfile": {
+            "description": "Flavour profile",
+            "type": "string"
+          },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
             "format": "int32",
             "type": "integer"
+          },
+          "gradeAbbreviation": {
+            "$ref": "#/components/schemas/ApiGradeAbbreviation",
+            "description": "Grade abbreviation"
           },
           "id": {
             "description": "Entity id",
@@ -14509,6 +13459,14 @@
             "example": false,
             "type": "boolean"
           },
+          "lotLabel": {
+            "description": "LOT label",
+            "type": "string"
+          },
+          "lotNumber": {
+            "description": "LOT number",
+            "type": "string"
+          },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"
@@ -14524,6 +13482,11 @@
             ],
             "type": "string"
           },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
           "paid": {
             "description": "Paid",
             "type": "number"
@@ -14533,7 +13496,6 @@
             "enum": [
               "CASH",
               "CASH_VIA_COLLECTOR",
-              "CASH_VIA_COOPERATIVE",
               "BANK_TRANSFER",
               "CHEQUE",
               "OFFSETTING",
@@ -14565,9 +13527,27 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Representative of producer user customer. E.g. collector."
           },
+          "sacNumber": {
+            "description": "SAC number",
+            "format": "int32",
+            "type": "integer"
+          },
+          "screenSize": {
+            "description": "Screen size",
+            "type": "string"
+          },
           "semiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Semi product"
+          },
+          "startOfDrying": {
+            "description": "Date when product has been started drying",
+            "format": "date-time",
+            "type": "string"
+          },
+          "tare": {
+            "description": "Tare",
+            "type": "number"
           },
           "totalQuantity": {
             "description": "Total quantity",
@@ -15324,10 +14304,6 @@
       "name": "product-controller"
     },
     {
-      "description": "User Customer Controller",
-      "name": "user-customer-controller"
-    },
-    {
       "description": "Company Controller",
       "name": "company-controller"
     },
@@ -15378,10 +14354,6 @@
     {
       "description": "Facility Controller",
       "name": "facility-controller"
-    },
-    {
-      "description": "Payment Controller",
-      "name": "payment-controller"
     },
     {
       "description": "Currency Controller",
