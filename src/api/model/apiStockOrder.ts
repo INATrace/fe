@@ -58,6 +58,10 @@ export interface ApiStockOrder {
      */
     currency?: string;
     /**
+     * Damaged price deduction
+     */
+    damagedPriceDeduction?: number;
+    /**
      * Delivery time
      */
     deliveryTime?: Date;
@@ -92,6 +96,10 @@ export interface ApiStockOrder {
      */
     orderType?: ApiStockOrder.OrderTypeEnum;
     /**
+     * Organic
+     */
+    organic?: boolean;
+    /**
      * Paid
      */
     paid?: number;
@@ -112,6 +120,10 @@ export interface ApiStockOrder {
     purchaseOrder?: boolean;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     semiProduct?: ApiSemiProduct;
+    /**
+     * Tare
+     */
+    tare?: number;
     /**
      * Total quantity
      */
@@ -163,6 +175,10 @@ export namespace ApiStockOrder {
          */
         currency = 'currency',
         /**
+         * Damaged price deduction
+         */
+        damagedPriceDeduction = 'damagedPriceDeduction',
+        /**
          * Delivery time
          */
         deliveryTime = 'deliveryTime',
@@ -197,6 +213,10 @@ export namespace ApiStockOrder {
          */
         orderType = 'orderType',
         /**
+         * Organic
+         */
+        organic = 'organic',
+        /**
          * Paid
          */
         paid = 'paid',
@@ -217,6 +237,10 @@ export namespace ApiStockOrder {
         purchaseOrder = 'purchaseOrder',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         semiProduct = 'semiProduct',
+        /**
+         * Tare
+         */
+        tare = 'tare',
         /**
          * Total quantity
          */
@@ -367,6 +391,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'damagedPriceDeduction',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'deliveryTime',
                     classname: 'ApiStockOrder',
                     dataType: 'Date',
@@ -480,6 +515,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'organic',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'paid',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -584,6 +630,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'tare',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'totalQuantity',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -645,6 +702,8 @@ export namespace ApiStockOrder {
                 ],
                 currency: [
                 ],
+                damagedPriceDeduction: [
+                ],
                 deliveryTime: [
                 ],
                 facility: [
@@ -665,6 +724,8 @@ export namespace ApiStockOrder {
                 ],
                 orderType: [
                 ],
+                organic: [
+                ],
                 paid: [
                 ],
                 preferredWayOfPayment: [
@@ -682,6 +743,8 @@ export namespace ApiStockOrder {
                 representativeOfProducerUserCustomer: [
                 ],
                 semiProduct: [
+                ],
+                tare: [
                 ],
                 totalQuantity: [
                 ],
@@ -725,6 +788,9 @@ export namespace ApiStockOrder {
   //               currency: {
   //                   validators: []
   //               },
+  //               damagedPriceDeduction: {
+  //                   validators: []
+  //               },
   //               deliveryTime: {
   //                   validators: []
   //               },
@@ -755,6 +821,9 @@ export namespace ApiStockOrder {
   //               orderType: {
   //                   validators: []
   //               },
+  //               organic: {
+  //                   validators: []
+  //               },
   //               paid: {
   //                   validators: []
   //               },
@@ -780,6 +849,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               semiProduct: {
+  //                   validators: []
+  //               },
+  //               tare: {
   //                   validators: []
   //               },
   //               totalQuantity: {
