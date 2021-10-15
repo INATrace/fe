@@ -725,6 +725,8 @@
     "productLabelFacilities.sortOptions.type.name": "Ubwoko bw'ahabera igikorwa",
     "productLabelFacilities.sortOptions.actions.name": "Ibikorwa",
     "productLabelStockFacilityModal.modal.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Hagarika{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Bika{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
+    "productLabelStockFacilityModal.modal.footer.button.cancel": "Hagarika",
+    "productLabelStockFacilityModal.modal.footer.button.save": "Bika",
     "settingsPage.button.newMeasurementUnitType": "{$START_TAG_SPAN}+ Ongeraho{$CLOSE_TAG_SPAN}",
     "settingsPage.newMeasurementUnitType.addTitle": "Ongeraho ubwoko bwi'igipimo",
     "settingsPage.newActionType.addTitle": "Ongeraho ubwoko bw'igikorwa",
@@ -2802,6 +2804,8 @@
     "productLabelStakeholders.modal.trader.title": "Add trader",
     "productLabelStakeholders.modal.trader.instructionsHtml": "Select trader company",
     "productLabelStakeholders.modal.owner.remove.error.title": "The product must have at least one owner. If you want to delete the current owner, add another owner first.",
-    "productLabelStakeholders.modal.owner.add.warning.title": "Please add an owner first."
+    "productLabelStakeholders.modal.owner.add.warning.title": "Please add an owner first.",
+    "userHome.products.title": "My Products",
+    "userHome.customers.title": "My customers"
   }
 }

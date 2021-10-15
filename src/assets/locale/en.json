@@ -1553,6 +1553,8 @@
     "productLabelStockFacilityModal.textinput.search-field.placeholder": "Type semi-product ...",
     "productLabelStockFacilityModal.section.suggestePrice": "Suggested semi-product prices",
     "productLabelStockFacilityModal.modal.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancel{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Save{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
+    "productLabelStockFacilityModal.modal.footer.button.cancel": "Cancel",
+    "productLabelStockFacilityModal.modal.footer.button.save": "Save",
     "productLabelStockFacilityModal.newFacility.newTitle": "New facility",
     "productLabelStockFacilityModal.newFacility.editTitle": "Edit facility",
     "productLabelStockFacilityModal.publiclyVisible.yes": "YES",
@@ -2801,6 +2803,8 @@
     "productLabelStakeholders.modal.trader.title": "Add trader",
     "productLabelStakeholders.modal.trader.instructionsHtml": "Select trader company",
     "productLabelStakeholders.modal.owner.remove.error.title": "The product must have at least one owner. If you want to delete the current owner, add another owner first.",
-    "productLabelStakeholders.modal.owner.add.warning.title": "Please add an owner first."
+    "productLabelStakeholders.modal.owner.add.warning.title": "Please add an owner first.",
+    "userHome.products.title": "My Products",
+    "userHome.customers.title": "My customers"
   }
 }
