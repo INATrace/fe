@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from "@angular/core";
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -81,6 +81,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
         return {
           ...search,
           ...sorting,
+          language: this.userLocale.toUpperCase(),
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize
         };
@@ -119,7 +120,8 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       protected globalEventsManager: GlobalEventManagerService,
       private route: ActivatedRoute,
       private router: Router,
-      private codebookTranslations: CodebookTranslations
+      private codebookTranslations: CodebookTranslations,
+      @Inject(LOCALE_ID) public userLocale: string
   ) { }
 
   ngOnInit(): void {

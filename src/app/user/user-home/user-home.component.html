@@ -6,7 +6,7 @@
         <ng-container *ngIf="products$ | async as products">
           <div class="main-inside-top content-element">
             <div class="d-flex justify-content-between content-element--row1">
-              <div class="title-page content-element--title">My Products</div>
+              <div class="title-page content-element--title" i18n="@@userHome.products.title">My Products</div>
             </div>
           </div>
 
@@ -55,7 +55,7 @@
         <div class="nav-button">
           <a routerLink="/my-customers">
             <div class="nav-button-inner">
-              <h5>My customers</h5>
+              <h5 i18n="@@userHome.customers.title">My customers</h5>
             </div>
           </a>
         </div>

@@ -209,7 +209,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       },
       {
         key: 'quantity',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity (kg)`,
+        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity`,
         inactive: true,
         hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
       },

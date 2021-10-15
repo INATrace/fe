@@ -86,11 +86,13 @@
         </checkbox-input>
 
         <div *ngIf="!(submitted && registerForm.get('condition').errors && registerForm.get('condition').errors.conditionsNotConfirmed)" style="margin-top:-2.5rem; margin-left: 2.2rem">
-          Yes, I agree with <a target="_blank" [routerLink]="['/s', 'privacy-policy']"><span>your conditions</span></a>
+          <span i18n="@@register.checkbox-input.conditions.pretext">Yes, I agree with
+          </span>&nbsp;<a target="_blank" [routerLink]="['/s', 'privacy-policy']"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
         </div>
 
         <div *ngIf="submitted && registerForm.get('condition').errors && registerForm.get('condition').errors.conditionsNotConfirmed" style="margin-top:-6.7rem; margin-left: 2.2rem">
-          Yes, I agree with <a target="_blank" [routerLink]="['/s', 'privacy-policy']"><span>your conditions</span></a>
+          <span i18n="@@register.checkbox-input.conditions.pretext">Yes, I agree with
+          </span>&nbsp;<a target="_blank" [routerLink]="['/s', 'privacy-policy']"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
         </div>
 
         <div class="login-medium-spacer"></div>
