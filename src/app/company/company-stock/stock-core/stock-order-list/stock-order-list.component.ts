@@ -477,15 +477,23 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   farmerName(farmer: ApiUserCustomer) {
-    // TODO: complete this when available on the API
-    // if (farmer) {
-    //   const cell = farmer.location ? (farmer.location.cell ? farmer.location.cell.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   const village = farmer.location ? (farmer.location.village ? farmer.location.village.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
-    // }
+
     if (farmer) {
+      if (farmer.location?.address?.country?.code === 'RW') {
+
+        const cell = farmer.location.address.cell ? farmer.location.address.cell.substring(0, 2).toLocaleUpperCase() : '--';
+        const village = farmer.location.address.village ? farmer.location.address.village.substring(0, 2).toLocaleUpperCase() : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
+
+      } else if (farmer.location?.address?.country?.code === 'HN') {
+        const municipality = farmer.location.address.hondurasMunicipality ? farmer.location.address.hondurasMunicipality : '--';
+        const village = farmer.location.address.hondurasVillage ? farmer.location.address.hondurasVillage : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + municipality + '-' + village + ')';
+      }
+
       return farmer.name + ' ' + farmer.surname;
     }
+
     return '';
   }
 
