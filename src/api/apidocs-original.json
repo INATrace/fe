@@ -13337,6 +13337,11 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Representative of producer user customer. E.g. collector."
           },
+          "sacNumber": {
+            "description": "SAC number",
+            "format": "int32",
+            "type": "integer"
+          },
           "screenSize": {
             "description": "Screen size",
             "type": "string"

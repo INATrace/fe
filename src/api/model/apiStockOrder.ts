@@ -132,6 +132,10 @@ export interface ApiStockOrder {
     purchaseOrder?: boolean;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
+     * SAC number
+     */
+    sacNumber?: number;
+    /**
      * Screen size
      */
     screenSize?: string;
@@ -262,6 +266,10 @@ export namespace ApiStockOrder {
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
+        /**
+         * SAC number
+         */
+        sacNumber = 'sacNumber',
         /**
          * Screen size
          */
@@ -694,6 +702,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'sacNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'screenSize',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
@@ -837,6 +856,8 @@ export namespace ApiStockOrder {
                 ],
                 representativeOfProducerUserCustomer: [
                 ],
+                sacNumber: [
+                ],
                 screenSize: [
                 ],
                 semiProduct: [
@@ -955,6 +976,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               representativeOfProducerUserCustomer: {
+  //                   validators: []
+  //               },
+  //               sacNumber: {
   //                   validators: []
   //               },
   //               screenSize: {
