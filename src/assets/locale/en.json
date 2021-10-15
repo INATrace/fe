@@ -1737,7 +1737,7 @@
     "ordersDashboard.filter.openOnly.button": "Open only",
     "breadCrumb.purchasesOrders.myStock": "My stock",
     "breadCrumb.orders.globalOrder": "Order",
-    "producersItem.label.customer": "Customer of",
+    "producersItem.label.customer": "Supplier of",
     "producersItem.label.role": "Role",
     "producersItem.textinput.customer.error": "Cooperative is required",
     "producersItem.textinput.role.error": "Role is required",

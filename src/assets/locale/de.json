@@ -1025,7 +1025,7 @@
     "locationForm.textinput.country.error": "Land wird benötigt.",
     "customerDetail.newCustomer.title": "Neuer Kunde",
     "customerDetail.updateCustomer.title": "Kunde bearbeiten",
-    "producersItem.label.customer": "Kunde von",
+    "producersItem.label.customer": "Lieferant*in",
     "producersItem.label.role": "Rolle",
     "producersItem.textinput.customer.error": "Kooperative wird benötigt",
     "producersItem.textinput.role.error": "Rolle wird benötigt",

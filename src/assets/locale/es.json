@@ -170,7 +170,7 @@
     "breadCrumb.semiProduct.semiProduct": "Semiproducto",
     "breadCrumb.processingAction.myStock": "Mis existencias",
     "breadCrumb.processingAction.processingAction": "Acción de procesamiento",
-    "producersItem.label.customer": "Cliente de",
+    "producersItem.label.customer": "Proveedor de",
     "producersItem.label.role": "Rol",
     "producersItem.textinput.customer.error": "Se requiere la cooperativa",
     "producersItem.textinput.role.error": "Se requiere el rol",
