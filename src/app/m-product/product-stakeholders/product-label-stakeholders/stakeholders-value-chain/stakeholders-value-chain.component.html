@@ -35,29 +35,44 @@
 
         </div>
 
-
         <div class="main-inside-top content-element">
-
           <div class="d-flex justify-content-between content-element--row1">
-            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
-              <span>+ Add owner</span>
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.importers">Importers</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newImporter()" i18n="@@productLabelStakeholders.button.newImporter">
+              <span>+ Add importer</span>
             </button>
           </div>
 
           <div class="container container--bare">
-            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
-              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
-
+            <div class="row" style="margin-top: 30px" *ngIf="this.importers">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let importer of this.importers">
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="owner">
+                  [company]="importer">
                 </app-company-card>
-
               </div>
             </div>
           </div>
+        </div>
 
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.exporters">Exporters</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newExporter()" i18n="@@productLabelStakeholders.button.newExporter">
+              <span>+ Add exporter</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px" *ngIf="this.exporters">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let exporter of this.exporters">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="exporter">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="main-inside-top content-element">
@@ -76,29 +91,6 @@
                 <app-company-card
                   (onSelect)="remove($event)"
                   [company]="producer">
-                </app-company-card>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="main-inside-top content-element">
-
-          <div class="d-flex justify-content-between content-element--row1">
-            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.roasters">Roasters</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newRoaster()" i18n="@@productLabelStakeholders.button.newRoaster">
-              <span>+ Add roaster</span>
-            </button>
-          </div>
-
-          <div class="container container--bare">
-            <div class="row" style="margin-top: 30px;" *ngIf="this.roasters">
-              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let roaster of this.roasters">
-
-                <app-company-card
-                  (onSelect)="remove($event)"
-                  [company]="roaster">
                 </app-company-card>
 
               </div>
@@ -130,7 +122,72 @@
 
         </div>
 
+        <div class="main-inside-top content-element">
 
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.processors">Processors</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessor()" i18n="@@productLabelStakeholders.button.newProcessor">
+              <span>+ Add processor</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px;" *ngIf="this.processors">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let processor of this.processors">
+
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="processor">
+                </app-company-card>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.traders">Traders</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newTrader()" i18n="@@productLabelStakeholders.button.newTrader">
+              <span>+ Add trader</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px" *ngIf="this.traders">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let trader of this.traders">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="trader">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
+            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
+              <span>+ Add owner</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="owner"
+                  [owner]="true">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

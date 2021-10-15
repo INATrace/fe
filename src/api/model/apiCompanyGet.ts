@@ -46,6 +46,10 @@ export interface ApiCompanyGet {
     certifications?: Array<ApiCertification>;
     currency?: ApiCurrencyType;
     /**
+     * Display preferred way of payment on purchase order form
+     */
+    displayPrefferedWayOfPayment?: boolean;
+    /**
      * company documents
      */
     documents?: Array<ApiCompanyDocument>;
@@ -79,6 +83,10 @@ export interface ApiCompanyGet {
      * webpage
      */
     phone?: string;
+    /**
+     * Enable adding multiple farmers for one proof document on purchase order form
+     */
+    purchaseProofDocumentMultipleFarmers?: boolean;
     /**
      * Company users
      */
@@ -115,6 +123,10 @@ export namespace ApiCompanyGet {
         certifications = 'certifications',
         currency = 'currency',
         /**
+         * Display preferred way of payment on purchase order form
+         */
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
+        /**
          * company documents
          */
         documents = 'documents',
@@ -148,6 +160,10 @@ export namespace ApiCompanyGet {
          * webpage
          */
         phone = 'phone',
+        /**
+         * Enable adding multiple farmers for one proof document on purchase order form
+         */
+        purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
          * Company users
          */
@@ -235,6 +251,17 @@ export namespace ApiCompanyGet {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCurrencyType'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiCompanyDocument.formMetadata,
@@ -350,6 +377,17 @@ export namespace ApiCompanyGet {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiCompanyUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -384,6 +422,8 @@ export namespace ApiCompanyGet {
                 ],
                 currency: [
                 ],
+                displayPrefferedWayOfPayment: [
+                ],
                 documents: [
                 ],
                 email: [
@@ -403,6 +443,8 @@ export namespace ApiCompanyGet {
                 name: [
                 ],
                 phone: [
+                ],
+                purchaseProofDocumentMultipleFarmers: [
                 ],
                 users: [
                 ],
@@ -428,6 +470,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               currency: {
+  //                   validators: []
+  //               },
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               documents: {
@@ -458,6 +503,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               phone: {
+  //                   validators: []
+  //               },
+  //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
   //               users: {
