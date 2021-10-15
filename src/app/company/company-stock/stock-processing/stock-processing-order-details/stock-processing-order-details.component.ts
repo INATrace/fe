@@ -707,16 +707,25 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
 
+    // If we have defined input semi-product, get its definition
     if (event.inputSemiProduct && event.inputSemiProduct.id) {
       const resInSP = await this.semiProductsController.getSemiProductUsingGET(event.inputSemiProduct.id).pipe(take(1)).toPromise();
-      if (resInSP && resInSP.status === 'OK') { this.currentInputSemiProduct = resInSP.data; }
+      if (resInSP && resInSP.status === 'OK') {
+        this.currentInputSemiProduct = resInSP.data;
+      }
+
+      // In case we have TRANSFER order, there is not output semi-product defined because
+      // it's the same as the input (we don't make any processing in this case)
+      if (this.actionType === 'TRANSFER') {
+        this.currentOutputSemiProductNameForm.setValue(this.currentInputSemiProduct.name);
+      }
     }
 
     if (event.outputSemiProduct && event.outputSemiProduct.id) {
       const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
       if (resOutSP && resOutSP.status === 'OK') {
         this.currentOutputSemiProduct = resOutSP.data;
-        this.currentOutputSemiProductNameForm.setValue(this.translateName(this.currentOutputSemiProduct));
+        this.currentOutputSemiProductNameForm.setValue(this.currentOutputSemiProduct.name);
       }
     }
   }
