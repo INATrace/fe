@@ -36,10 +36,7 @@ export interface ApiPayment {
      * Payment amount paid to the farmer
      */
     amountPaidToTheFarmer?: number;
-    /**
-     * Payment created by user
-     */
-    createdBy?: number;
+    createdBy?: ApiUser;
     /**
      * Payment's currency
      */
@@ -105,10 +102,11 @@ export interface ApiPayment {
      * Payment total amount
      */
     totalPaid?: number;
+    updatedBy?: ApiUser;
     /**
-     * Payment updated by user
+     * Last updated timestamp
      */
-    updatedBy?: number;
+    updatedTimestamp?: Date;
 }
 
 /**
@@ -127,9 +125,6 @@ export namespace ApiPayment {
          * Payment amount paid to the farmer
          */
         amountPaidToTheFarmer = 'amountPaidToTheFarmer',
-        /**
-         * Payment created by user
-         */
         createdBy = 'createdBy',
         /**
          * Payment's currency
@@ -196,10 +191,11 @@ export namespace ApiPayment {
          * Payment total amount
          */
         totalPaid = 'totalPaid',
+        updatedBy = 'updatedBy',
         /**
-         * Payment updated by user
+         * Last updated timestamp
          */
-        updatedBy = 'updatedBy'
+        updatedTimestamp = 'updatedTimestamp'
     }
 
     /**
@@ -288,15 +284,16 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'createdBy',
                     classname: 'ApiPayment',
-                    dataType: 'number',
-                    isPrimitiveType: true,
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiUser'
                 },
                 {
                     isReadOnly: false,
@@ -567,12 +564,24 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'updatedBy',
                     classname: 'ApiPayment',
-                    dataType: 'number',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updatedTimestamp',
+                    classname: 'ApiPayment',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -632,6 +641,8 @@ export namespace ApiPayment {
                 totalPaid: [
                 ],
                 updatedBy: [
+                ],
+                updatedTimestamp: [
                 ],
             }
         }
@@ -719,6 +730,9 @@ export namespace ApiPayment {
   //                   validators: []
   //               },
   //               updatedBy: {
+  //                   validators: []
+  //               },
+  //               updatedTimestamp: {
   //                   validators: []
   //               },
   //     }

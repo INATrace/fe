@@ -29,7 +29,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
+import { ApiBulkPayment } from '../model/apiBulkPayment';
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
+import { ApiPaginatedResponseApiBulkPayment } from '../model/apiPaginatedResponseApiBulkPayment';
 import { ApiPaginatedResponseApiPayment } from '../model/apiPaginatedResponseApiPayment';
 import { ApiPayment } from '../model/apiPayment';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
@@ -37,6 +39,38 @@ import { ApiResponseApiPayment } from '../model/apiResponseApiPayment';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+
+/**
+ * Namespace for createOrUpdateBulkPaymentUsingPUT.
+ */
+export namespace CreateOrUpdateBulkPaymentUsingPUT {
+    /**
+     * Parameter map for createOrUpdateBulkPaymentUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * apiBulkPayment
+       */
+      ApiBulkPayment: ApiBulkPayment;
+    }
+
+    /**
+     * Enumeration of all parameters for createOrUpdateBulkPaymentUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * apiBulkPayment
+       */
+      ApiBulkPayment = 'ApiBulkPayment'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateBulkPaymentUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CreateOrUpdateBulkPaymentUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
 
 /**
  * Namespace for createOrUpdatePaymentUsingPUT.
@@ -210,6 +244,91 @@ export namespace GetPaymentUsingGET {
     export const ParamValidators: {[K in keyof GetPaymentUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for listBulkPaymentsByCompanyUsingGET.
+ */
+export namespace ListBulkPaymentsByCompanyUsingGET {
+    /**
+     * Parameter map for listBulkPaymentsByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      id: number;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for listBulkPaymentsByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      id = 'id',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listBulkPaymentsByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ListBulkPaymentsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
       ],
     };
 }
@@ -519,6 +638,94 @@ export class PaymentControllerService {
         return false;
     }
 
+
+
+  /**
+   * Create bulk payment. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createOrUpdateBulkPaymentUsingPUTByMap(
+    map: CreateOrUpdateBulkPaymentUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
+  public createOrUpdateBulkPaymentUsingPUTByMap(
+    map: CreateOrUpdateBulkPaymentUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+  public createOrUpdateBulkPaymentUsingPUTByMap(
+    map: CreateOrUpdateBulkPaymentUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+  public createOrUpdateBulkPaymentUsingPUTByMap(
+    map: CreateOrUpdateBulkPaymentUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.createOrUpdateBulkPaymentUsingPUT(
+      map.ApiBulkPayment,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Create bulk payment.
+     * 
+     * @param ApiBulkPayment apiBulkPayment
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createOrUpdateBulkPaymentUsingPUT(ApiBulkPayment: ApiBulkPayment, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateBulkPaymentUsingPUT(ApiBulkPayment: ApiBulkPayment, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateBulkPaymentUsingPUT(ApiBulkPayment: ApiBulkPayment, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateBulkPaymentUsingPUT(ApiBulkPayment: ApiBulkPayment, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiBulkPayment === null || ApiBulkPayment === undefined) {
+            throw new Error('Required parameter ApiBulkPayment was null or undefined when calling createOrUpdateBulkPaymentUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/payment/bulk-payment`,
+            ApiBulkPayment,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateBulkPaymentUsingPUT')));
+        }
+        return handle;
+    }
 
 
   /**
@@ -873,6 +1080,116 @@ export class PaymentControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPaymentUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a list of bulk payments by company ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public listBulkPaymentsByCompanyUsingGETByMap(
+    map: ListBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiBulkPayment>;
+  public listBulkPaymentsByCompanyUsingGETByMap(
+    map: ListBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiBulkPayment>>;
+  public listBulkPaymentsByCompanyUsingGETByMap(
+    map: ListBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiBulkPayment>>;
+  public listBulkPaymentsByCompanyUsingGETByMap(
+    map: ListBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.listBulkPaymentsByCompanyUsingGET(
+      map.id,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a list of bulk payments by company ID.
+     * 
+     * @param id Company ID
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listBulkPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiBulkPayment>;
+    public listBulkPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiBulkPayment>>;
+    public listBulkPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiBulkPayment>>;
+    public listBulkPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling listBulkPaymentsByCompanyUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiBulkPayment>(`${this.configuration.basePath}/api/chain/payment/list/bulk-payment/company/${encodeURIComponent(String(id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listBulkPaymentsByCompanyUsingGET')));
         }
         return handle;
     }

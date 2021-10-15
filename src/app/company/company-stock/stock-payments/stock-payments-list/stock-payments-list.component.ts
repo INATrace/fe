@@ -11,6 +11,7 @@ import { SortOption } from '../../../../shared/result-sorter/result-sorter-types
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
+import {ModeEnum} from "../stock-payments-form/stock-payments-form.component";
 
 
 @Component({
@@ -218,9 +219,10 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-//   editPayment(payment) {
-//     this.router.navigate(['product-labels', this.productId, 'stock', 'payments', 'update', dbKey(payment), this.isCooperative ? 'PURCHASE' : 'CUSTOMER']);
-//   }
+  editPayment(payment) {
+
+    this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
+  }
 
   async deletePayment(entity) {
     const result = await this.globalEventManager.openMessageModal({

@@ -8,8 +8,8 @@
                 <div class="af-form-block--c12 d-flex justify-content-between">
                     <div class="title-page content-element--title">{{title}} <span>{{paymentForm.get('receiptNumber').value}}</span></div>
                     <app-last-seen-tag *ngIf="this.update"
-                                       [dateFormat]="paymentForm.get('lastChange').value">
-<!--                                       [identifier]="userLastChanged">-->
+                                       [dateFormat]="paymentForm.get('updatedTimestamp').value"
+                                       [identifier]="lastUpdatedByUser">
                     </app-last-seen-tag>
                 </div>
             </div>

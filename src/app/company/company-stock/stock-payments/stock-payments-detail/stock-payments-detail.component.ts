@@ -8,6 +8,7 @@ import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { ApiProduct } from '../../../../../api/model/apiProduct';
 import { ActivateUserCustomerByCompanyAndRoleService } from '../../../../shared-services/activate-user-customer-by-company-and-role.service';
 import { UserCustomerControllerService } from '../../../../../api/api/userCustomerController.service';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiPaymentValidationScheme } from '../validation';
@@ -16,6 +17,8 @@ import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ModeEnum } from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
+import {ApiUserCustomerCooperative} from "../../../../../api/model/apiUserCustomerCooperative";
+import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
   selector: 'app-stock-payments-detail',
@@ -29,6 +32,7 @@ export class StockPaymentsDetailComponent implements OnInit {
   update: boolean;
   title: string;
 
+  lastUpdatedByUser: string;
   companyId: number;
   userCompanyId: number;
   purchaseOrderId: number;
@@ -57,6 +61,7 @@ export class StockPaymentsDetailComponent implements OnInit {
       private location: Location,
       private route: ActivatedRoute,
       private globalEventsManager: GlobalEventManagerService,
+      private companyControllerService: CompanyControllerService,
       private userCustomerControllerService: UserCustomerControllerService,
       private stockOrderControllerService: StockOrderControllerService,
       private paymentControllerService: PaymentControllerService
@@ -71,10 +76,20 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     this.initInitialData().then(
         () => {
-          this.farmersCodebook = new ActivateUserCustomerByCompanyAndRoleService(this.userCustomerControllerService, this.companyId, 'FARMER');
-          this.collectorsCodebook = new ActivateUserCustomerByCompanyAndRoleService(this.userCustomerControllerService, this.companyId, 'COLLECTOR');
+          this.farmersCodebook = new ActivateUserCustomerByCompanyAndRoleService(
+              this.userCustomerControllerService,
+              this.companyId,
+              UserCustomerTypeEnum.FARMER
+          );
+
+          this.collectorsCodebook = new ActivateUserCustomerByCompanyAndRoleService(
+              this.userCustomerControllerService,
+              this.companyId,
+              UserCustomerTypeEnum.COLLECTOR
+          );
+
           if (this.update) {
-            // this.editPayment();
+            this.editPayment().then();
           } else {
             this.newPayment().then();
           }
@@ -90,9 +105,6 @@ export class StockPaymentsDetailComponent implements OnInit {
     if (this.customerOrderId || type === ModeEnum.PURCHASE) {
       this.mode = ModeEnum.CUSTOMER;
     }
-
-    // Standalone on route
-    this.productId = this.route.snapshot.params.id;
 
     if (action === 'new') {
 
@@ -120,25 +132,22 @@ export class StockPaymentsDetailComponent implements OnInit {
           .pipe(take(1))
           .toPromise();
 
-      // Fetch StockOrder from received Payment
+      // Fetch Payment and StockOrder from received Payment
       if (paymentResp && paymentResp.status === 'OK' && paymentResp.data) {
         this.payment = paymentResp.data;
-        this.stockOrder = this.payment.stockOrder;
+
+        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(this.payment.stockOrder.id)
+            .pipe(take(1))
+            .toPromise();
+
+        if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
+          this.stockOrder = stockOrderResp.data;
+        }
       }
 
     } else {
       throw Error('Unrecognized action "' + action + '".');
     }
-
-    // Fetch product
-    // const productResp = await this.productControllerService.getProductUsingGET(this.productId)
-    //     .pipe(take(1))
-    //     .toPromise();
-    //
-    // if (productResp && productResp.status === 'OK' && productResp.data && productResp.data.id) {
-    //   this.product = productResp.data;
-    //   this.companyId = productResp.data.company.id;
-    // }
 
     // Check if current user is owner.
     // Owner is if product's company ID matches user's company ID
@@ -169,7 +178,9 @@ export class StockPaymentsDetailComponent implements OnInit {
     this.paymentForm.get('stockOrder').setValue(this.stockOrder);
 
     // Set purchase order (identifier/LOT)
-    this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE ? this.stockOrder.identifier : this.stockOrder.internalLotNumber);
+    this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE
+        ? this.stockOrder.identifier
+        : this.stockOrder.internalLotNumber);
 
     // Collector
     if (this.stockOrder.representativeOfProducerUserCustomer) {
@@ -219,18 +230,6 @@ export class StockPaymentsDetailComponent implements OnInit {
       this.paymentForm.get('formalCreationTime').setValue(dateAtNoonISOString(formalCreationTime));
     }
 
-    // let data = this.paymentForm.value;
-    // Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
-
-    //
-    // if (this.update && this.authService.currentUserProfile) {
-    //   let res = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
-    //   if (res && res.status === "OK" && res.data) data.userChangedId = dbKey(res.data);
-    // } else if (this.authService.currentUserProfile) {
-    //   let res = await this.chainUserService.getUserByAFId(this.authService.currentUserProfile.id).pipe(take(1)).toPromise();
-    //   if (res && res.status === "OK" && res.data) data.userCreatedId = dbKey(res.data);
-    // }
-
     try {
       const paymentResp = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(this.paymentForm.value)
           .pipe(take(1))
@@ -243,6 +242,37 @@ export class StockPaymentsDetailComponent implements OnInit {
     } finally {
       this.paymentUpdateInProgress = false;
       this.globalEventsManager.showLoading(false);
+    }
+  }
+
+  async editPayment() {
+
+
+    this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), this.payment, ApiPaymentValidationScheme);
+    console.log(this.paymentForm.value);
+
+    this.searchCompaniesForm.setValue(this.paymentForm.get('recipientCompany').value);
+    this.searchCollectorsForm.setValue(this.paymentForm.get('representativeOfRecipientUserCustomer').value);
+    this.searchFarmersForm.setValue(this.paymentForm.get('recipientUserCustomer').value);
+
+    // let resOrg = await this.chainOrganizationService.getOrganization(this.userOrgId).pipe(take(1)).toPromise();
+    // if (resOrg && resOrg.status === 'OK' && resOrg.data) {
+    //   this.payableFromForm.setValue(resOrg.data.name)
+    // }
+
+    const companyResp = await this.companyControllerService.getCompanyUsingGET(this.payment.payingCompany.id)
+        .pipe(take(1))
+        .toPromise();
+    if (companyResp && companyResp.status === 'OK' && companyResp.data) {
+      this.payableFromForm.setValue(companyResp.data.name);
+    }
+
+    this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE
+        ? this.stockOrder.identifier
+        : this.stockOrder.internalLotNumber);
+
+    if (this.payment.updatedBy) {
+      this.lastUpdatedByUser = this.payment.updatedBy.name + ' ' + this.payment.updatedBy.surname;
     }
   }
 
