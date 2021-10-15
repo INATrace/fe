@@ -27,6 +27,26 @@ import { ApiSemiProduct } from './apiSemiProduct';
 
 export interface ApiFacility { 
     company?: ApiCompanyBase;
+    /**
+     * Enable form control 'May involve collectors'
+     */
+    displayMayInvolveCollectors?: boolean;
+    /**
+     * Enable form control 'Organic'
+     */
+    displayOrganic?: boolean;
+    /**
+     * Enable form control 'Price deduction damage'
+     */
+    displayPriceDeductionDamage?: boolean;
+    /**
+     * Enable form control 'Tare'
+     */
+    displayTare?: boolean;
+    /**
+     * Enable form control 'Women only'
+     */
+    displayWomenOnly?: boolean;
     facilityLocation?: ApiFacilityLocation;
     /**
      * List of semi product ID's for this facility
@@ -60,6 +80,26 @@ export namespace ApiFacility {
      */
     export enum Properties {
         company = 'company',
+        /**
+         * Enable form control 'May involve collectors'
+         */
+        displayMayInvolveCollectors = 'displayMayInvolveCollectors',
+        /**
+         * Enable form control 'Organic'
+         */
+        displayOrganic = 'displayOrganic',
+        /**
+         * Enable form control 'Price deduction damage'
+         */
+        displayPriceDeductionDamage = 'displayPriceDeductionDamage',
+        /**
+         * Enable form control 'Tare'
+         */
+        displayTare = 'displayTare',
+        /**
+         * Enable form control 'Women only'
+         */
+        displayWomenOnly = 'displayWomenOnly',
         facilityLocation = 'facilityLocation',
         /**
          * List of semi product ID's for this facility
@@ -101,6 +141,61 @@ export namespace ApiFacility {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompanyBase'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayMayInvolveCollectors',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayOrganic',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayPriceDeductionDamage',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayTare',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayWomenOnly',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiFacilityLocation.formMetadata,
@@ -186,6 +281,16 @@ export namespace ApiFacility {
             validators: {
                 company: [
                 ],
+                displayMayInvolveCollectors: [
+                ],
+                displayOrganic: [
+                ],
+                displayPriceDeductionDamage: [
+                ],
+                displayTare: [
+                ],
+                displayWomenOnly: [
+                ],
                 facilityLocation: [
                 ],
                 facilitySemiProductList: [
@@ -208,6 +313,21 @@ export namespace ApiFacility {
   //     validators: [],
   //     fields: {
   //               company: {
+  //                   validators: []
+  //               },
+  //               displayMayInvolveCollectors: {
+  //                   validators: []
+  //               },
+  //               displayOrganic: {
+  //                   validators: []
+  //               },
+  //               displayPriceDeductionDamage: {
+  //                   validators: []
+  //               },
+  //               displayTare: {
+  //                   validators: []
+  //               },
+  //               displayWomenOnly: {
   //                   validators: []
   //               },
   //               facilityLocation: {

@@ -32,6 +32,10 @@ export interface ApiCompanyBase {
      */
     about?: string;
     /**
+     * Display preferred way of payment on purchase order form
+     */
+    displayPrefferedWayOfPayment?: boolean;
+    /**
      * email
      */
     email?: string;
@@ -57,6 +61,10 @@ export interface ApiCompanyBase {
      */
     phone?: string;
     /**
+     * Enable adding multiple farmers for one proof document on purchase order form
+     */
+    purchaseProofDocumentMultipleFarmers?: boolean;
+    /**
      * webpage
      */
     webPage?: string;
@@ -78,6 +86,10 @@ export namespace ApiCompanyBase {
          * about the company
          */
         about = 'about',
+        /**
+         * Display preferred way of payment on purchase order form
+         */
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
         /**
          * email
          */
@@ -103,6 +115,10 @@ export namespace ApiCompanyBase {
          * webpage
          */
         phone = 'phone',
+        /**
+         * Enable adding multiple farmers for one proof document on purchase order form
+         */
+        purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
          * webpage
          */
@@ -133,6 +149,17 @@ export namespace ApiCompanyBase {
                     name: 'about',
                     classname: 'ApiCompanyBase',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyBase',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -219,6 +246,17 @@ export namespace ApiCompanyBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyBase',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'webPage',
                     classname: 'ApiCompanyBase',
                     dataType: 'string',
@@ -231,6 +269,8 @@ export namespace ApiCompanyBase {
                 abbreviation: [
                 ],
                 about: [
+                ],
+                displayPrefferedWayOfPayment: [
                 ],
                 email: [
                 ],
@@ -246,6 +286,8 @@ export namespace ApiCompanyBase {
                 ],
                 phone: [
                 ],
+                purchaseProofDocumentMultipleFarmers: [
+                ],
                 webPage: [
                 ],
             }
@@ -259,6 +301,9 @@ export namespace ApiCompanyBase {
   //                   validators: []
   //               },
   //               about: {
+  //                   validators: []
+  //               },
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               email: {
@@ -280,6 +325,9 @@ export namespace ApiCompanyBase {
   //                   validators: []
   //               },
   //               phone: {
+  //                   validators: []
+  //               },
+  //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
   //               webPage: {
