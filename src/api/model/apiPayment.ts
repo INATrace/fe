@@ -19,6 +19,7 @@
 
 
 import { ApiCompany } from './apiCompany';
+import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiDocument } from './apiDocument';
 import { ApiStockOrder } from './apiStockOrder';
@@ -42,7 +43,7 @@ export interface ApiPayment {
      */
     currency?: string;
     /**
-     * Formal date of payment (for example: date on receipt)
+     * Formal creation time (for example: date on receipt)
      */
     formalCreationTime?: Date;
     /**
@@ -88,14 +89,14 @@ export interface ApiPayment {
      * Receipt number
      */
     receiptNumber?: number;
-    recipientCompany?: ApiCompany;
+    recipientCompany?: ApiCompanyBase;
     recipientCompanyCustomer?: ApiCompanyCustomer;
     /**
      * Recipient type
      */
     recipientType?: ApiPayment.RecipientTypeEnum;
     recipientUserCustomer?: ApiUserCustomer;
-    representativeOfRecipientCompany?: ApiCompany;
+    representativeOfRecipientCompany?: ApiCompanyBase;
     representativeOfRecipientUserCustomer?: ApiUserCustomer;
     stockOrder?: ApiStockOrder;
     /**
@@ -131,7 +132,7 @@ export namespace ApiPayment {
          */
         currency = 'currency',
         /**
-         * Formal date of payment (for example: date on receipt)
+         * Formal creation time (for example: date on receipt)
          */
         formalCreationTime = 'formalCreationTime',
         /**
@@ -231,7 +232,6 @@ export namespace ApiPayment {
     export enum PreferredWayOfPaymentEnum {
         CASH = 'CASH',
         CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
-        CASHVIACOOPERATIVE = 'CASH_VIA_COOPERATIVE',
         BANKTRANSFER = 'BANK_TRANSFER',
         CHEQUE = 'CHEQUE',
         OFFSETTING = 'OFFSETTING',
@@ -469,16 +469,16 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
-                    metadata: ApiCompany.formMetadata,
+                    metadata: ApiCompanyBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'recipientCompany',
                     classname: 'ApiPayment',
-                    dataType: 'ApiCompany',
+                    dataType: 'ApiCompanyBase',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiCompany'
+                    complexType: 'ApiCompanyBase'
                 },
                 {
                     metadata: ApiCompanyCustomer.formMetadata,
@@ -517,16 +517,16 @@ export namespace ApiPayment {
                     complexType: 'ApiUserCustomer'
                 },
                 {
-                    metadata: ApiCompany.formMetadata,
+                    metadata: ApiCompanyBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'representativeOfRecipientCompany',
                     classname: 'ApiPayment',
-                    dataType: 'ApiCompany',
+                    dataType: 'ApiCompanyBase',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiCompany'
+                    complexType: 'ApiCompanyBase'
                 },
                 {
                     metadata: ApiUserCustomer.formMetadata,
