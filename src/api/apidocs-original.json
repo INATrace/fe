@@ -7952,6 +7952,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -7998,6 +8003,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "webPage": {
             "description": "webpage",
@@ -8046,6 +8056,11 @@
             "description": "about the company",
             "type": "string"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "email": {
             "description": "email",
             "type": "string"
@@ -8077,6 +8092,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "webPage": {
             "description": "webpage",
@@ -8208,6 +8228,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -8254,6 +8279,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Company users",
@@ -8355,6 +8385,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -8411,6 +8446,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Add users with these ids",
@@ -8666,6 +8706,31 @@
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Facility company"
           },
+          "displayMayInvolveCollectors": {
+            "description": "Enable form control 'May involve collectors'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayOrganic": {
+            "description": "Enable form control 'Organic'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayPriceDeductionDamage": {
+            "description": "Enable form control 'Price deduction damage'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayTare": {
+            "description": "Enable form control 'Tare'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayWomenOnly": {
+            "description": "Enable form control 'Women only'",
+            "example": false,
+            "type": "boolean"
+          },
           "facilityLocation": {
             "$ref": "#/components/schemas/ApiFacilityLocation",
             "description": "Facility location"
@@ -8757,6 +8822,10 @@
           "areaOrganicCertified": {
             "description": "Area is organic certified",
             "type": "number"
+          },
+          "areaUnit": {
+            "description": "Area unit",
+            "type": "string"
           },
           "coffeeCultivatedArea": {
             "description": "Area cultivated with coffee (ha)",
@@ -13229,6 +13298,10 @@
             "description": "Currency",
             "type": "string"
           },
+          "damagedPriceDeduction": {
+            "description": "Damaged price deduction",
+            "type": "number"
+          },
           "deliveryTime": {
             "description": "Delivery time",
             "format": "date-time",
@@ -13297,6 +13370,11 @@
             ],
             "type": "string"
           },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
           "paid": {
             "description": "Paid",
             "type": "number"
@@ -13354,6 +13432,10 @@
             "description": "Date when product has been started drying",
             "format": "date-time",
             "type": "string"
+          },
+          "tare": {
+            "description": "Tare",
+            "type": "number"
           },
           "totalQuantity": {
             "description": "Total quantity",
