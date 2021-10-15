@@ -2804,6 +2804,9 @@
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Net weight",
     "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder": "Enter damaged price deduction",
     "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.error": "Damaged price deduction is required",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label": "Damaged price deduction"
+    "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label": "Damaged price deduction",
+    "productLabelStockPurchaseOrdersModal.textinput.finalPrice.placeholder": "Enter final price",
+    "productLabelStockPurchaseOrdersModal.textinput.finalPrice.error": "Final price is required",
+    "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Final price"
   }
 }
