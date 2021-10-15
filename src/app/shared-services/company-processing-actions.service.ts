@@ -20,7 +20,8 @@ export class CompanyProcessingActionsService extends GeneralSifrantService<ApiPr
   constructor(
     private processingActionController: ProcessingActionControllerService,
     private companyId: number,
-    private codebookTranslations: CodebookTranslations
+    private codebookTranslations: CodebookTranslations,
+    private userLocale: string
   ) {
     super();
     this.initializeCodebook();
@@ -54,7 +55,7 @@ export class CompanyProcessingActionsService extends GeneralSifrantService<ApiPr
 
   public initializeCodebook() {
     this.sifrant$ = this.sifrant$ ||
-      this.processingActionController.listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams })
+      this.processingActionController.listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams, language: this.userLocale.toUpperCase() })
         .pipe(
           map(x => this.pack(x.data.items))
         );

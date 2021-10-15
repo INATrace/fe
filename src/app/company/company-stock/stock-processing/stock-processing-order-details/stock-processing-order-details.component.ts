@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -154,7 +154,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
-    public actionTypesCodebook: ActionTypesService
+    public actionTypesCodebook: ActionTypesService,
+    @Inject(LOCALE_ID) public userLocale: string
   ) { }
 
   get actionType(): ProcessingActionType {
@@ -429,7 +430,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       async (resp: any) => {
 
         await this.generateCompanyDetailForm();
-        this.activeProcessingCodebook = new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
+        this.activeProcessingCodebook =
+          new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations, this.userLocale);
 
         if (this.prAction) {
 
@@ -480,7 +482,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const facilityIdFromLink = this.route.snapshot.params.inputFacilityId;
 
       if (actionId !== 'NEW') {
-        const respProcAction = await this.procActionController.getProcessingActionUsingGET(actionId).pipe(take(1)).toPromise();
+        const respProcAction = await this.procActionController
+          .getProcessingActionUsingGET(actionId, (this.userLocale.toUpperCase() as any)).pipe(take(1)).toPromise();
         if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
           this.prAction = respProcAction.data;
           this.processingActionForm.setValue(this.prAction);

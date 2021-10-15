@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
@@ -43,7 +43,8 @@ export class StockProcessingFacilityListComponent implements OnInit {
   constructor(
     private globalEventsManager: GlobalEventManagerService,
     private facilityControllerService: FacilityControllerService,
-    private processingActionControllerService: ProcessingActionControllerService
+    private processingActionControllerService: ProcessingActionControllerService,
+    @Inject(LOCALE_ID) public userLocale: string
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +52,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
     this.facilities$ = combineLatest([this.reloadPingList$])
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
-        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId)),
+        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId, this.userLocale.toUpperCase())),
         tap((res: ApiPaginatedResponseApiProcessingAction) => {
           if (res) {
             this.processingActions = res.data.items;
