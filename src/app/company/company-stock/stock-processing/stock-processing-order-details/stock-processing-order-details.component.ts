@@ -646,6 +646,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         const newStockOrder: ApiStockOrder = {
           ...sharedFields,
           facility: this.outputFacilityForm.value,
+          semiProduct: inputStockOrder.semiProduct,
           creatorId: this.creatorId,
           productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
           orderType: OrderTypeEnum.TRANSFERORDER,
