@@ -529,7 +529,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.prAction) {
       this.setRequiredFields(this.prAction);
-      this.initializeClientName().then();
     }
   }
 
@@ -666,37 +665,62 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // In this case we have multiple destination stock orders because we are repacking outputs
       if (this.actionType === 'PROCESSING' && this.outputStockOrders.value.length > 0) {
 
-        // TODO: implement processing order with repacking
+        for (const item of this.outputStockOrders.value) {
+          const outputStockOrder = item as ApiStockOrder;
+          if (outputStockOrder.totalQuantity) {
+            const newStockOrder: ApiStockOrder = {
+              ...sharedFields,
+              id: outputStockOrder.id,
+              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
+              creatorId: this.creatorId,
+              semiProduct: this.currentOutputSemiProduct,
+              facility: this.outputFacilityForm.value,
+              totalQuantity: outputStockOrder.totalQuantity,
+              fulfilledQuantity: outputStockOrder.totalQuantity,
+              availableQuantity: outputStockOrder.totalQuantity,
+              productionDate: new Date(),
+              sacNumber: outputStockOrder.sacNumber,
+              currency: this.outputStockOrderForm.get('pricePerUnit').value ? 'RWF' : null,
+              orderType: OrderTypeEnum.PROCESSINGORDER
+            };
+
+            deleteNullFields(newStockOrder);
+            stockOrderList.push(newStockOrder);
+          }
+        }
+
+        return stockOrderList;
+
+      } else {
+
+        // In this case we are dealing with ordinary processing or shipmen (Quote) order
+        const outputStockOrder: ApiStockOrder = this.outputStockOrderForm.getRawValue();
+
+        // Delete injected sub-forms used for easier validation
+        delete (outputStockOrder as any).form;
+        delete (outputStockOrder as any).remainingForm;
+        delete (outputStockOrder as any).processingActionForm;
+
+        // Set the rest of the fields for the Stock order
+        const newStockOrder: ApiStockOrder = {
+          ...outputStockOrder,
+          ...sharedFields,
+          creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
+          semiProduct: this.currentOutputSemiProduct,
+          facility: this.outputFacilityForm.value,
+          totalQuantity: parseFloat(this.totalQuantity),
+          fulfilledQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
+          availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
+          productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
+          orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
+          currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? 'RWF' : null)
+        };
+
+        deleteNullFields(newStockOrder);
+        stockOrderList.push(newStockOrder);
+
         return stockOrderList;
       }
-
-      // In this case we are dealing with ordinary processing or shipmen (Quote) order
-      const outputStockOrder: ApiStockOrder = this.outputStockOrderForm.getRawValue();
-
-      // Delete injected sub-forms used for easier validation
-      delete (outputStockOrder as any).form;
-      delete (outputStockOrder as any).remainingForm;
-      delete (outputStockOrder as any).processingActionForm;
-
-      // Set the rest of the fields for the Stock order
-      const newStockOrder: ApiStockOrder = {
-        ...outputStockOrder,
-        ...sharedFields,
-        creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
-        semiProduct: this.currentOutputSemiProduct,
-        facility: this.outputFacilityForm.value,
-        totalQuantity: parseFloat(this.totalQuantity),
-        fulfilledQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
-        availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
-        productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
-        orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
-        currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? 'RWF' : null)
-      };
-
-      deleteNullFields(newStockOrder);
-      stockOrderList.push(newStockOrder);
-
-      return stockOrderList;
     }
   }
 
@@ -1216,24 +1240,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     //   ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
     //   ApiActivityProofValidationScheme
     // );
-  }
-
-  private async initializeClientName() {
-
-    // TODO: recheck this because it connects to associated companies through the product
-    // if (this.prAction.requiredFields) {
-    //   const cname = this.prAction.requiredFields.find(x => x.label === 'CLIENT_NAME');
-    //   if (!cname) { return; }
-    //   const form = this.outputStockOrderForm.get('clientId');
-    //   if (!form || !form.value) { return; }
-    //   const candidates = await this.associatedCompaniesService.getAllCandidates().pipe(take(1)).toPromise();
-    //   const val = candidates.find(x => x.company.id === form.value);
-    //   if (val) {
-    //     form.setValue(val);
-    //   } else {
-    //     form.setValue(null);
-    //   }
-    // }
   }
 
   private setInputOutputFormAccordinglyToTransaction() {
