@@ -10,10 +10,10 @@ import { dateAtMidnightISOString, setNavigationParameter } from '../../../../../
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ChainPayment } from '../../../../../api-chain/model/chainPayment';
 import { AuthorisedLayoutComponent } from '../../../../layout/authorised/authorised-layout/authorised-layout.component';
 import { TabCommunicationService } from '../../../../shared/tab-communication.service';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
+import { ApiPayment } from '../../../../../api/model/apiPayment';
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
@@ -43,7 +43,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   wayOfPaymentPing$ = new BehaviorSubject<string>(this.filterWayOfPayment.value);
 
   selectedOrders: ApiStockOrder[];
-  selectedIds: ChainPayment[];
+  selectedPayments: ApiPayment[];
 
   clickAddPaymentsPing$ = new BehaviorSubject<boolean>(false);
 
@@ -103,7 +103,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     this.isAuthorisedCompanyRole().then();
 
     this.selectedOrders = [];
-    this.selectedIds = [];
+    this.selectedPayments = [];
 
     this.initFacilityCodebook();
   }
@@ -197,7 +197,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   selectedIdsChanged(event, type?) {
     if (type === 'PURCHASE') { this.selectedOrders = event; }
-    else { this.selectedIds = event; }
+    else { this.selectedPayments = event; }
   }
 
   public async isAuthorisedCompanyRole() {
