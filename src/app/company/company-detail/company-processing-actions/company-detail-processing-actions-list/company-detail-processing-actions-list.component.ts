@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, map, shareReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
-import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/model/apiPaginatedResponseApiProcessingAction';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
+import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-company-list-processing-actions',
@@ -36,7 +36,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
   showed = 0;
   all = 0;
 
-  sortOptions = [
+  sortOptions: SortOption[] = [
     {
       key: 'name',
       name: $localize`:@@processingActionList.sortOptions.description.name:Name of process`,
@@ -120,7 +120,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       protected globalEventsManager: GlobalEventManagerService,
       private route: ActivatedRoute,
       private router: Router,
-      private codebookTranslations: CodebookTranslations,
       @Inject(LOCALE_ID) public userLocale: string
   ) { }
 
@@ -153,10 +152,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
     if (resp && resp.status === 'OK') {
       this.reloadPage();
     }
-  }
-
-  semiProductName(item) {
-    return this.codebookTranslations.translate(item, 'name');
   }
 
   changeSort(event) {
