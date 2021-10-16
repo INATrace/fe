@@ -2490,6 +2490,7 @@
     "productLabelStock.subTitle.showingOrders": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productLabelStock.filter.purchaseOrderOnly.filter": "Purchase order only {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "productLabelStock.filter.availableOnly.filter": "Available only {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
+    "productLabelStock.filter.purchaseOrderOnly.button": "Purchase order only",
     "productLabelStock.filter.availableOnly.button": "Available only",
     "breadCrumb.stockOrders.stockOrders": "Stock Orders",
     "breadCrumb.stockOrders.stockOrderView": "Stock order details",

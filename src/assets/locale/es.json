@@ -980,6 +980,7 @@
     "productLabelStock.subTitle.showingOrders": "Mostrando {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productLabelStock.filter.purchaseOrderOnly.filter": "Compras sólo {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "productLabelStock.filter.availableOnly.filter": "Disponible solo {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
+    "productLabelStock.filter.purchaseOrderOnly.button": "Purchase order only",
     "productLabelStock.filter.availableOnly.button": "Disponible solo",
     "breadCrumb.stockOrders.stockOrders": "Pedidos de existencias",
     "breadCrumb.stockOrders.stockOrderView": "Detalles de los pedidos de existencias",
