@@ -173,6 +173,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
         if (response && response.data) {
           this.currentData = response.data.items;
+          this.setCounts(response.data.count);
           return response.data;
         } else {
           return null;
@@ -320,6 +321,21 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       }
       return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
     }
+  }
+
+  private setCounts(allCount: number) {
+
+    this.allOrders = allCount;
+
+    if (this.pageSize > this.allOrders) {
+      this.showedOrders = this.allOrders;
+    } else {
+      const temp = this.allOrders - (this.pageSize * (this.page - 1));
+      this.showedOrders = temp >= this.pageSize ? this.pageSize : temp;
+    }
+
+    this.showing.emit(this.showedOrders);
+    this.countAll.emit(this.allOrders);
   }
 
   edit(order: ApiStockOrder) {
