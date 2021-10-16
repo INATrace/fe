@@ -40,7 +40,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   availableOnly$ = new BehaviorSubject<boolean>(true);
 
   @Input()
-  semiProductId$: Observable<number>;
+  semiProductId$ = new BehaviorSubject<number>(null);
 
   @Input()
   selectedOrders: ApiStockOrder[];
@@ -86,7 +86,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   private allOrders = 0;
   private showedOrders = 0;
-  page = 0;
+  page = 1;
   pageSize = 10;
   private paging$ = new BehaviorSubject<number>(1);
 
