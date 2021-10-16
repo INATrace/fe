@@ -6,7 +6,9 @@ import { StockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.com
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { LayoutModule } from '../../../layout/layout.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
-
+import { SharedModule } from '../../../shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [StockOrdersTabComponent],
@@ -15,7 +17,11 @@ import { CompanyCommonModule } from '../../company-common/company-common.module'
     StockCoreModule,
     StockOrdersRoutingModule,
     LayoutModule,
-    CompanyCommonModule
+    CompanyCommonModule,
+    SharedModule,
+    FontAwesomeModule,
+    NgbDropdownModule,
+    StockCoreModule
   ]
 })
 export class StockOrdersModule { }

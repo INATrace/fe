@@ -9,6 +9,8 @@ import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { dateAtMidnightISOString } from '../../../../../shared/utils';
 import { QuoteOrdersOnOrganizationStandaloneService } from '../../../../shared-services/quote-orders-on-organization-standalone.service';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
+import { AuthService } from '../../../../core/auth.service';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -95,9 +97,11 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected router: Router,
     protected route: ActivatedRoute,
     protected globalEventManager: GlobalEventManagerService,
-    protected facilityControllerService: FacilityControllerService
+    protected facilityControllerService: FacilityControllerService,
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService,
   ) {
-    super(router, route, globalEventManager, facilityControllerService);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
 
   get womenOnlyStatusValue() {

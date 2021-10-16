@@ -10,6 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { StockPaymentsSelectorForNewPaymentModalComponent } from '../stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
+import { AuthService } from '../../../../core/auth.service';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -38,9 +40,11 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected globalEventManager: GlobalEventManagerService,
       protected modalService: NgbModalImproved,
       protected facilityControllerService: FacilityControllerService,
+      protected authService: AuthService,
+      protected companyController: CompanyControllerService,
       private paymentControllerService: PaymentControllerService
   ) {
-    super(router, route, globalEventManager, facilityControllerService);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
 
   ngOnInit(): void {

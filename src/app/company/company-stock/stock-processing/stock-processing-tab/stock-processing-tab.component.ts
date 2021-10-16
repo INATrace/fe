@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '../../../../core/auth.service';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-stock-processing-tab',
@@ -23,9 +25,11 @@ export class StockProcessingTabComponent extends StockCoreTabComponent implement
     protected router: Router,
     protected route: ActivatedRoute,
     protected globalEventManager: GlobalEventManagerService,
-    protected facilityControllerService: FacilityControllerService
+    protected facilityControllerService: FacilityControllerService,
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService
   ) {
-    super(router, route, globalEventManager, facilityControllerService);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
 
   ngOnInit(): void {

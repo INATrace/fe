@@ -37,6 +37,12 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
 
   @Input()
+  availableOnly$ = new BehaviorSubject<boolean>(true);
+
+  @Input()
+  semiProductId$: Observable<number>;
+
+  @Input()
   selectedOrders: ApiStockOrder[];
 
   @Input()
@@ -123,12 +129,26 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.facilityId$,
       this.openBalanceOnly$,
       this.purchaseOrderOnly$,
+      this.availableOnly$,
+      this.semiProductId$,
       this.wayOfPaymentPing$,
       this.womenOnlyPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, isPurchaseOrderOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
+      map(([
+             ping,
+             page,
+             sorting,
+             facilityId,
+             isOpenBalanceOnly,
+             isPurchaseOrderOnly,
+             availableOnly,
+             semiProductId,
+             wayOfPayment,
+             isWomenShare,
+             deliveryDates,
+             query]) => {
         return {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
@@ -136,6 +156,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           facilityId,
           isOpenBalanceOnly,
           isPurchaseOrderOnly,
+          availableOnly,
+          semiProductId,
           wayOfPayment,
           isWomenShare,
           productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
@@ -155,7 +177,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         } else {
           return null;
         }
-
       }),
       tap(() => this.globalEventsManager.showLoading(false))
     );
@@ -287,7 +308,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
     }
 
     if (this.mode === 'GENERAL') {
-      if (!params.facilityId) {
+
+      if (!facilityId) {
         return of({
           data: {
             count: 0,

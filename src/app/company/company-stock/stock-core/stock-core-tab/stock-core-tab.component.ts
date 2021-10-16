@@ -14,6 +14,13 @@ import { AuthorisedLayoutComponent } from '../../../../layout/authorised/authori
 import { TabCommunicationService } from '../../../../shared/tab-communication.service';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
+import { AuthService } from '../../../../core/auth.service';
+import { take } from 'rxjs/operators';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { ApiResponseListApiCompanyUser } from '../../../../../api/model/apiResponseListApiCompanyUser';
+import { ApiCompanyUser } from '../../../../../api/model/apiCompanyUser';
+import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
+import CompanyRoleEnum = ApiCompanyUser.CompanyRoleEnum;
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
@@ -56,6 +63,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   deliveryDatesPingPayments$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
 
   isAuthRoleToSeeProcessing = true;
+  isAuthRoleToSeeMyStock = true;
 
   // TABS
   @ViewChild(AuthorisedLayoutComponent)
@@ -82,7 +90,9 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     protected router: Router,
     protected route: ActivatedRoute,
     protected globalEventManager: GlobalEventManagerService,
-    protected facilityControllerService: FacilityControllerService
+    protected facilityControllerService: FacilityControllerService,
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService
   ) { }
 
   get pageMode(): StockOrderListingPageMode {
@@ -200,28 +210,26 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     else { this.selectedPayments = event; }
   }
 
-  public async isAuthorisedCompanyRole() {
-    // TODO: implement
-    // const orgId = localStorage.getItem('selectedUserCompany');
-    // const currrentUser = await this.userController.getProfileForUserUsingGET().pipe(take(1)).toPromise();
-    // if (currrentUser && currrentUser.status === 'OK' && currrentUser.data) {
-    //   const res = await this.chainOrganizationService.getOrganization(orgId).pipe(take(1)).toPromise();
-    //   if (res && res.status === 'OK' && res.data) {
-    //     const resC = await this.companyController.getCompanyUsingGET(res.data.id).pipe(take(1)).toPromise();
-    //     if (resC && resC.status === 'OK' && resC.data) {
-    //       for (const user of resC.data.users) {
-    //         if (user.email === currrentUser.data.email) {
-    //           if (user.companyRole === 'USER') { this.isAuthRoleToSeeConfiguration = false; }
-    //           if (user.companyRole === 'ACCOUNTANT') {
-    //             this.isAuthRoleToSeeProcessing = false;
-    //             this.isAuthRoleToSeeMyStock = false;
-    //           }
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+  private async isAuthorisedCompanyRole() {
+
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
+
+    const companyUsersRes = await this.companyController.getCompanyUsersUsingGET(companyId).pipe(take(1)).toPromise();
+    if (companyUsersRes && companyUsersRes.status === StatusEnum.OK) {
+      const companyUsers = companyUsersRes.data;
+      const user = companyUsers.find(cu => cu.id === userProfile.id);
+      if (user) {
+        if (user.companyRole === CompanyRoleEnum.ACCOUNTANT) {
+          this.isAuthRoleToSeeProcessing = false;
+          this.isAuthRoleToSeeMyStock = false;
+        }
+        return;
+      }
+    }
+
+    this.isAuthRoleToSeeProcessing = false;
+    this.isAuthRoleToSeeMyStock = false;
   }
 
 }
