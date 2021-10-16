@@ -50,9 +50,13 @@ export namespace ApiProductCompany {
      */
     export enum TypeEnum {
         BUYER = 'BUYER',
-        PRODUCER = 'PRODUCER',
+        IMPORTER = 'IMPORTER',
+        EXPORTER = 'EXPORTER',
         OWNER = 'OWNER',
+        PRODUCER = 'PRODUCER',
         ASSOCIATION = 'ASSOCIATION',
+        PROCESSOR = 'PROCESSOR',
+        TRADER = 'TRADER',
         ROASTER = 'ROASTER'
     }
 

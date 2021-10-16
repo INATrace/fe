@@ -25,6 +25,7 @@ import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
 import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
+import { ApiCompany } from '../../../../../api/model/apiCompany';
 
 @Component({
   selector: 'app-stock-purchase-order-details',
@@ -66,9 +67,14 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
+  codebookOrganic = EnumSifrant.fromObject(this.yesNo);
+
+  netWeightForm = new FormControl(null);
+  finalPriceForm = new FormControl(null);
 
   updatePOInProgress = false;
 
+  company: ApiCompany;
   private companyId: number = null;
 
   private facility: ApiFacility;
@@ -169,6 +175,18 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     }
   }
 
+  get tareLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.tare.label:Tare` + ` (${this.measureUnit})`;
+  }
+
+  get netLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.netWeight.label:Net weight` + ` (${this.measureUnit})`;
+  }
+
+  get finalPriceLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.finalPrice.label:Final price` + ` (${this.selectedCurrency}/${this.measureUnit})`;
+  }
+
   get pricePerUnitLabel() {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.selectedCurrency}/${this.measureUnit})`;
   }
@@ -179,6 +197,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   get balanceLabel() {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.selectedCurrency})`;
+  }
+
+  get damagedPriceDeductionLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label: Deduction` + ` (${this.selectedCurrency}/${this.measureUnit})`;
   }
 
   get additionalProofsForm(): FormArray {
@@ -192,6 +214,13 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     return obj;
   }
 
+  get yesNo() {
+    const obj = {};
+    obj['true'] = $localize`:@@productLabelStockPurchaseOrdersModal.organic.yes:Yes`;
+    obj['false'] = $localize`:@@productLabelStockPurchaseOrdersModal.organic.no:No`;
+    return obj;
+  }
+
   async ngOnInit() {
 
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
@@ -200,6 +229,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     if (this.companyId && this.route.snapshot.data.action === 'new') {
       const res = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
       if (res && res.status === StatusEnum.OK && res.data) {
+        this.company = res.data;
         this.selectedCurrency = res.data.currency?.code ? res.data.currency.code : '-';
       }
     }
@@ -251,6 +281,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       } else {
         this.newStockOrder();
       }
+      this.updateValidators();
       this.initializeListManager();
       this.globalEventsManager.showLoading(false);
     });
@@ -386,6 +417,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     } else if (this.order.createdBy && this.order.createdBy.id) {
       const userCreatedBy = this.order.createdBy;
       this.userLastChanged = `${userCreatedBy.name} ${userCreatedBy.surname}`;
+    }
+
+    if (this.stockOrderForm.get('organic').value != null) {
+      this.stockOrderForm.get('organic').setValue(this.stockOrderForm.get('organic').value.toString());
     }
   }
 
@@ -527,10 +562,19 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   setToBePaid() {
 
-    if (this.stockOrderForm && this.stockOrderForm.get('totalQuantity').value &&
-      this.stockOrderForm.get('pricePerUnit').value) {
+    if (this.stockOrderForm && this.stockOrderForm.get('totalQuantity').value && this.stockOrderForm.get('pricePerUnit').value) {
+      let netWeight = this.stockOrderForm.get('totalQuantity').value;
+      let finalPrice = this.stockOrderForm.get('pricePerUnit').value;
 
-      this.stockOrderForm.get('cost').setValue(this.stockOrderForm.get('totalQuantity').value * this.stockOrderForm.get('pricePerUnit').value);
+      if (this.stockOrderForm.get('tare').value) {
+        netWeight -= this.stockOrderForm.get('tare').value;
+      }
+
+      if (this.stockOrderForm.get('damagedPriceDeduction').value) {
+        finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
+      }
+
+      this.stockOrderForm.get('cost').setValue(netWeight * finalPrice);
     } else {
 
       this.stockOrderForm.get('cost').setValue(null);
@@ -551,6 +595,101 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   dismiss() {
     this.location.back();
+  }
+
+  get showCollector() {
+    return this.facility && this.facility.displayMayInvolveCollectors;
+  }
+
+  get readonlyCollector() {
+    return this.facility && !this.facility.displayMayInvolveCollectors;
+  }
+
+  get showOrganic() {
+    return this.facility && this.facility.displayOrganic || this.stockOrderForm.get('organic').value;
+  }
+
+  get readonlyOrganic() {
+    return this.facility && !this.facility.displayOrganic;
+  }
+  
+  get showWomensOnly() {
+    return this.facility && this.facility.displayWomenOnly || this.searchWomenCoffeeForm.value;
+  }
+
+  get readonlyWomensOnly() {
+    return this.facility && !this.facility.displayWomenOnly;
+  }
+
+  get showTare() {
+    return this.facility && this.facility.displayTare || this.stockOrderForm.get('tare').value;
+  }
+
+  get readonlyTare() {
+    return this.facility && !this.facility.displayTare;
+  }
+
+  get showDamagedPriceDeduction() {
+    return this.facility && this.facility.displayPriceDeductionDamage || this.stockOrderForm.get('damagedPriceDeduction').value;
+  }
+
+  get readonlyDamagedPriceDeduction() {
+    return this.facility && !this.facility.displayPriceDeductionDamage;
+  }
+
+  netWeight() {
+    if (this.stockOrderForm && this.stockOrderForm.get('totalQuantity').value) {
+      if (this.stockOrderForm.get('tare').value) {
+        this.netWeightForm.setValue(this.stockOrderForm.get('totalQuantity').value - this.stockOrderForm.get('tare').value);
+      } else {
+        this.netWeightForm.setValue(this.stockOrderForm.get('totalQuantity').value);
+      }
+    } else {
+      this.netWeightForm.setValue(null);
+    }
+  }
+
+  finalPrice() {
+    if (this.stockOrderForm && this.stockOrderForm.get('pricePerUnit').value) {
+      let finalPrice = this.stockOrderForm.get('pricePerUnit').value;
+      if (this.stockOrderForm.get('damagedPriceDeduction').value) {
+        finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
+      }
+      this.finalPriceForm.setValue(finalPrice);
+    } else {
+      this.finalPriceForm.setValue(null);
+    }
+  }
+
+  updateValidators() {
+    this.stockOrderForm.get('organic').setValidators(
+        this.orderType === 'PURCHASE_ORDER' &&
+        this.facility &&
+        this.facility.displayOrganic ?
+            [Validators.required] : []
+    );
+    this.stockOrderForm.get('organic').updateValueAndValidity();
+    this.stockOrderForm.get('tare').setValidators(
+        this.orderType === 'PURCHASE_ORDER' &&
+        this.facility &&
+        this.facility.displayTare ?
+            [Validators.required] : []
+    );
+    this.stockOrderForm.get('tare').updateValueAndValidity();
+    this.stockOrderForm.get('damagedPriceDeduction').setValidators(
+        this.orderType === 'PURCHASE_ORDER' &&
+        this.facility &&
+        this.facility.displayPriceDeductionDamage ?
+            [Validators.required] : []
+    );
+    this.stockOrderForm.get('damagedPriceDeduction').updateValueAndValidity();
+    this.searchWomenCoffeeForm.setValidators(
+        this.orderType === 'PURCHASE_ORDER' &&
+        this.facility &&
+        this.facility.displayWomenOnly ?
+            [Validators.required] : []
+    );
+    this.searchWomenCoffeeForm.updateValueAndValidity();
   }
 
   private setQuantities() {

@@ -34,6 +34,15 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   openBalanceOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
+  purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
+
+  @Input()
+  availableOnly$ = new BehaviorSubject<boolean>(true);
+
+  @Input()
+  semiProductId$ = new BehaviorSubject<number>(null);
+
+  @Input()
   selectedOrders: ApiStockOrder[];
 
   @Input()
@@ -77,7 +86,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   private allOrders = 0;
   private showedOrders = 0;
-  page = 0;
+  page = 1;
   pageSize = 10;
   private paging$ = new BehaviorSubject<number>(1);
 
@@ -119,18 +128,36 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.facilityId$,
       this.openBalanceOnly$,
+      this.purchaseOrderOnly$,
+      this.availableOnly$,
+      this.semiProductId$,
       this.wayOfPaymentPing$,
       this.womenOnlyPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-      map(([ping, page, sorting, facilityId, isOpenBalanceOnly, wayOfPayment, isWomenShare, deliveryDates, query]) => {
+      map(([
+             ping,
+             page,
+             sorting,
+             facilityId,
+             isOpenBalanceOnly,
+             isPurchaseOrderOnly,
+             availableOnly,
+             semiProductId,
+             wayOfPayment,
+             isWomenShare,
+             deliveryDates,
+             query]) => {
         return {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sorting,
           facilityId,
           isOpenBalanceOnly,
+          isPurchaseOrderOnly,
+          availableOnly,
+          semiProductId,
           wayOfPayment,
           isWomenShare,
           productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
@@ -146,11 +173,11 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
         if (response && response.data) {
           this.currentData = response.data.items;
+          this.setCounts(response.data.count);
           return response.data;
         } else {
           return null;
         }
-
       }),
       tap(() => this.globalEventsManager.showLoading(false))
     );
@@ -204,7 +231,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       },
       {
         key: 'quantity',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity (kg)`,
+        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity`,
         inactive: true,
         hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
       },
@@ -276,13 +303,14 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
     if (this.mode === 'PURCHASE') {
       if (!facilityId) {
-        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({...params, companyId: this.companyId});
+        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({ ...params, companyId: this.companyId });
       }
       return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
     }
 
     if (this.mode === 'GENERAL') {
-      if (!params.facilityId) {
+
+      if (!facilityId) {
         return of({
           data: {
             count: 0,
@@ -293,6 +321,21 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       }
       return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
     }
+  }
+
+  private setCounts(allCount: number) {
+
+    this.allOrders = allCount;
+
+    if (this.pageSize > this.allOrders) {
+      this.showedOrders = this.allOrders;
+    } else {
+      const temp = this.allOrders - (this.pageSize * (this.page - 1));
+      this.showedOrders = temp >= this.pageSize ? this.pageSize : temp;
+    }
+
+    this.showing.emit(this.showedOrders);
+    this.countAll.emit(this.allOrders);
   }
 
   edit(order: ApiStockOrder) {
@@ -472,15 +515,23 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   farmerName(farmer: ApiUserCustomer) {
-    // TODO: complete this when available on the API
-    // if (farmer) {
-    //   const cell = farmer.location ? (farmer.location.cell ? farmer.location.cell.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   const village = farmer.location ? (farmer.location.village ? farmer.location.village.substring(0, 2).toLocaleUpperCase() : '--') : '--';
-    //   return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
-    // }
+
     if (farmer) {
+      if (farmer.location?.address?.country?.code === 'RW') {
+
+        const cell = farmer.location.address.cell ? farmer.location.address.cell.substring(0, 2).toLocaleUpperCase() : '--';
+        const village = farmer.location.address.village ? farmer.location.address.village.substring(0, 2).toLocaleUpperCase() : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + village + '-' + cell + ')';
+
+      } else if (farmer.location?.address?.country?.code === 'HN') {
+        const municipality = farmer.location.address.hondurasMunicipality ? farmer.location.address.hondurasMunicipality : '--';
+        const village = farmer.location.address.hondurasVillage ? farmer.location.address.hondurasVillage : '--';
+        return farmer.name + ' ' + farmer.surname + ' (' + farmer.id + ', ' + municipality + '-' + village + ')';
+      }
+
       return farmer.name + ' ' + farmer.surname;
     }
+
     return '';
   }
 

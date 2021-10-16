@@ -10,6 +10,9 @@ export class CompanyCardComponent implements OnInit {
   @Input()
   company;
 
+  @Input()
+  owner = false;
+
   @Output() onSelect = new EventEmitter<boolean>();
 
   constructor(

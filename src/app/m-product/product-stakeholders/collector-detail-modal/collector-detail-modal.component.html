@@ -208,7 +208,7 @@
           <h2 i18n="@@collectorDetail.section.cooperatives">Cooperatives</h2>
           <div class="af-form-element">
             <list-editor *ngIf="producersListManager"
-              label="Customer of"
+              label="Supplier of"
               [listEditorManager]="producersListManager"
               addText="Add new"
               [canAdd]="true"
@@ -286,6 +286,15 @@
         <div class="af-form-block--c6">
           <h2 i18n="@@collectorDetail.section.farmInfo">Additional information about the farm</h2>
           <div class="af-form-element">
+
+            <textinput
+              [form]="collectorForm.get('farm.areaUnit')"
+              label="Area unit"
+              i18n-label="@@collectorDetail.textinput.areaUnit.label"
+              style="width: 100%"
+              placeholder="Enter area unit"
+              i18n-placeholder="@@collectorDetail.textinput.areaUnit.placeholder">
+            </textinput>
 
             <textinput
               [form]="collectorForm.get('farm.totalCultivatedArea')"

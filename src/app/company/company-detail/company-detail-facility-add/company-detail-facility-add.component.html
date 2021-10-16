@@ -86,6 +86,31 @@
                                 </div>
                             </ng-container>
                         </single-choice>
+                        <checkbox-input [form]="form.get('displayMayInvolveCollectors')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStockFacilityModal.checkbox.mayInvolveCollectors.label">
+                                Display "May involve collectors"
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+                        <checkbox-input [form]="form.get('displayOrganic')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStockFacilityModal.checkbox.organic.label">
+                                Display "Organic"
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+                        <checkbox-input [form]="form.get('displayWomenOnly')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStockFacilityModal.checkbox.womenOnly.label">
+                                Display "Women only"
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+                        <checkbox-input [form]="form.get('displayTare')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStockFacilityModal.checkbox.tare.label">
+                                Display "Tare"
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
+                        <checkbox-input [form]="form.get('displayPriceDeductionDamage')">
+                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStockFacilityModal.checkbox.priceReductionDamage.label">
+                                Display "Damaged price deduction"
+                            </checkbox-input-rich-label>
+                        </checkbox-input>
                     </div>
                 </div>
                 <div class="af-form-block--c6">
@@ -117,9 +142,11 @@
 
             <div class="af-form-row">
                 <div class="af-form-block--c12">
-                    <div class="af-bottom-buttons" i18n="@@productLabelStockFacilityModal.modal.footer.buttons">
-                        <button class="btn btn-outlined mr-2" type="button" (click)="dismiss()">Cancel</button>
-                        <button class="btn" type="button" (click)="save()">Save</button>
+                    <div class="af-bottom-buttons">
+                        <button class="btn btn-outlined mr-2" type="button" (click)="dismiss()"
+                            i18n="@@productLabelStockFacilityModal.modal.footer.button.cancel">Cancel</button>
+                        <button class="btn" type="button" (click)="save()"
+                            i18n="@@productLabelStockFacilityModal.modal.footer.button.save">Save</button>
                     </div>
                 </div>
             </div>

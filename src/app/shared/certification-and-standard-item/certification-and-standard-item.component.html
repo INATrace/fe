@@ -15,7 +15,7 @@
           <a *ngIf="contentObject?.certificate?.storageKey" (click)="onDownload(); $event.stopPropagation()">
             <fa-icon class="tagitem-download-icon" style="margin-left: 0.5rem" [icon]="faStamp" size="1x"></fa-icon>
           </a>
-          {{contentObject.description}}
+          {{ contentObject.description }}
         </div>
       </div>
     </div>
@@ -78,23 +78,6 @@
 
         </ng-container>
 
-        <!--<textinput
-          label="Type"
-          [form]="form.get('type')"
-          style="width: 100%"
-          i18n-label="@@certAndStdItems.textinput.type.label"
-          [isInvalid]="submitted && form.get('type').invalid">
-          <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('type').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n-label="@@certAndStdItems.textinput.type.error">
-                <span>
-                  Type is required
-                </span>
-              </div>
-            </div>
-          </ng-container>
-        </textinput>-->
-
         <single-choice label="Type"
           i18n-label="@@certAndStdItems.textinput.type.label"
           [formControlInput]="form.get('type')"
@@ -123,8 +106,6 @@
             </div>
           </ng-container>
         </app-datepicker>
-
-
 
       </subform-form>
 

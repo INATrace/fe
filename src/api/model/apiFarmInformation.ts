@@ -27,6 +27,10 @@ export interface ApiFarmInformation {
      */
     areaOrganicCertified?: number;
     /**
+     * Area unit
+     */
+    areaUnit?: string;
+    /**
      * Area cultivated with coffee (ha)
      */
     coffeeCultivatedArea?: number;
@@ -60,6 +64,10 @@ export namespace ApiFarmInformation {
          * Area is organic certified
          */
         areaOrganicCertified = 'areaOrganicCertified',
+        /**
+         * Area unit
+         */
+        areaUnit = 'areaUnit',
         /**
          * Area cultivated with coffee (ha)
          */
@@ -95,6 +103,17 @@ export namespace ApiFarmInformation {
                     name: 'areaOrganicCertified',
                     classname: 'ApiFarmInformation',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'areaUnit',
+                    classname: 'ApiFarmInformation',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -158,6 +177,8 @@ export namespace ApiFarmInformation {
             validators: {
                 areaOrganicCertified: [
                 ],
+                areaUnit: [
+                ],
                 coffeeCultivatedArea: [
                 ],
                 numberOfTrees: [
@@ -176,6 +197,9 @@ export namespace ApiFarmInformation {
   //     validators: [],
   //     fields: {
   //               areaOrganicCertified: {
+  //                   validators: []
+  //               },
+  //               areaUnit: {
   //                   validators: []
   //               },
   //               coffeeCultivatedArea: {

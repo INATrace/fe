@@ -42,6 +42,10 @@ export interface ApiCompanyUpdate {
     certifications?: Array<ApiCertification>;
     currency?: ApiCurrencyType;
     /**
+     * Display preferred way of payment on purchase order form
+     */
+    displayPrefferedWayOfPayment?: boolean;
+    /**
      * company documents
      */
     documents?: Array<ApiCompanyDocument>;
@@ -80,6 +84,10 @@ export interface ApiCompanyUpdate {
      */
     phone?: string;
     /**
+     * Enable adding multiple farmers for one proof document on purchase order form
+     */
+    purchaseProofDocumentMultipleFarmers?: boolean;
+    /**
      * Add users with these ids
      */
     users?: Array<ApiBaseEntity>;
@@ -110,6 +118,10 @@ export namespace ApiCompanyUpdate {
          */
         certifications = 'certifications',
         currency = 'currency',
+        /**
+         * Display preferred way of payment on purchase order form
+         */
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
         /**
          * company documents
          */
@@ -148,6 +160,10 @@ export namespace ApiCompanyUpdate {
          * webpage
          */
         phone = 'phone',
+        /**
+         * Enable adding multiple farmers for one proof document on purchase order form
+         */
+        purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
          * Add users with these ids
          */
@@ -219,6 +235,17 @@ export namespace ApiCompanyUpdate {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCurrencyType'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyUpdate',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiCompanyDocument.formMetadata,
@@ -346,6 +373,17 @@ export namespace ApiCompanyUpdate {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyUpdate',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiBaseEntity.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -378,6 +416,8 @@ export namespace ApiCompanyUpdate {
                 ],
                 currency: [
                 ],
+                displayPrefferedWayOfPayment: [
+                ],
                 documents: [
                 ],
                 email: [
@@ -400,6 +440,8 @@ export namespace ApiCompanyUpdate {
                 ],
                 phone: [
                 ],
+                purchaseProofDocumentMultipleFarmers: [
+                ],
                 users: [
                 ],
                 webPage: [
@@ -421,6 +463,9 @@ export namespace ApiCompanyUpdate {
   //                   validators: []
   //               },
   //               currency: {
+  //                   validators: []
+  //               },
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               documents: {
@@ -454,6 +499,9 @@ export namespace ApiCompanyUpdate {
   //                   validators: []
   //               },
   //               phone: {
+  //                   validators: []
+  //               },
+  //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
   //               users: {

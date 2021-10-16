@@ -18,7 +18,7 @@
           <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{ order.orderType | formatStockOrderType }}</td>
           <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
           <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
-          <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }}</td>
+          <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }} {{ order.measureUnitType.label }}</td>
           <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">{{ order.totalQuantity }} / {{ order.fulfilledQuantity }} / {{ order.availableQuantity }}</td>
           <td *ngIf="!sortOptions[8].hide" [attr.data-label]="sortOptions[8].name">{{ order.measureUnitType?.label }}</td>
           <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost }} / {{ order.balance }}</td>

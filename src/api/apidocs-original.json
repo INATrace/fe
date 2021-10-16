@@ -3605,6 +3605,15 @@
             }
           },
           {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Is women share",
             "in": "query",
             "name": "isWomenShare",
@@ -3776,6 +3785,15 @@
             }
           },
           {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "Is women share",
             "in": "query",
             "name": "isWomenShare",
@@ -3929,6 +3947,15 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             }
           },
           {
@@ -4545,7 +4572,7 @@
             "name": "resize",
             "required": false,
             "schema": {
-              "default": false,
+              "default": true,
               "type": "boolean"
             }
           }
@@ -4764,6 +4791,97 @@
         ],
         "operationId": "listCompaniesAdminUsingGET",
         "summary": "Lists all companies. Must be admin. Sorting: name or default"
+      }
+    },
+    "/api/company/associations/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiCompanyListResponse_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getAssociationsUsingGET",
+        "summary": "Get list of associations for the selected company with given ID"
       }
     },
     "/api/company/companyCustomers": {
@@ -8171,12 +8289,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8186,19 +8301,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8208,19 +8320,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8230,19 +8339,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8252,19 +8358,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8274,19 +8377,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8296,19 +8396,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8318,8 +8415,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -8675,6 +8772,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -8721,6 +8823,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "webPage": {
             "description": "webpage",
@@ -8769,6 +8876,11 @@
             "description": "about the company",
             "type": "string"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "email": {
             "description": "email",
             "type": "string"
@@ -8800,6 +8912,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "webPage": {
             "description": "webpage",
@@ -8931,6 +9048,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -8977,6 +9099,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Company users",
@@ -9078,6 +9205,11 @@
             "$ref": "#/components/schemas/ApiCurrencyType",
             "description": "Preferred currency of the company"
           },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
           "documents": {
             "description": "company documents",
             "items": {
@@ -9134,6 +9266,11 @@
           "phone": {
             "description": "webpage",
             "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
           },
           "users": {
             "description": "Add users with these ids",
@@ -9389,6 +9526,31 @@
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Facility company"
           },
+          "displayMayInvolveCollectors": {
+            "description": "Enable form control 'May involve collectors'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayOrganic": {
+            "description": "Enable form control 'Organic'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayPriceDeductionDamage": {
+            "description": "Enable form control 'Price deduction damage'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayTare": {
+            "description": "Enable form control 'Tare'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayWomenOnly": {
+            "description": "Enable form control 'Women only'",
+            "example": false,
+            "type": "boolean"
+          },
           "facilityLocation": {
             "$ref": "#/components/schemas/ApiFacilityLocation",
             "description": "Facility location"
@@ -9480,6 +9642,10 @@
           "areaOrganicCertified": {
             "description": "Area is organic certified",
             "type": "number"
+          },
+          "areaUnit": {
+            "description": "Area unit",
+            "type": "string"
           },
           "coffeeCultivatedArea": {
             "description": "Area cultivated with coffee (ha)",
@@ -12064,9 +12230,13 @@
             "description": "associated company type",
             "enum": [
               "BUYER",
-              "PRODUCER",
+              "IMPORTER",
+              "EXPORTER",
               "OWNER",
+              "PRODUCER",
               "ASSOCIATION",
+              "PROCESSOR",
+              "TRADER",
               "ROASTER"
             ],
             "type": "string"
@@ -14282,6 +14452,10 @@
       },
       "ApiStockOrder": {
         "properties": {
+          "actionType": {
+            "$ref": "#/components/schemas/ApiActionType",
+            "description": "Action type"
+          },
           "activityProofs": {
             "description": "Activity proofs",
             "items": {
@@ -14300,6 +14474,10 @@
           "balance": {
             "description": "Balance",
             "type": "number"
+          },
+          "comments": {
+            "description": "Comments",
+            "type": "string"
           },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
@@ -14322,6 +14500,10 @@
             "description": "Currency",
             "type": "string"
           },
+          "damagedPriceDeduction": {
+            "description": "Damaged price deduction",
+            "type": "number"
+          },
           "deliveryTime": {
             "description": "Delivery time",
             "format": "date-time",
@@ -14331,10 +14513,18 @@
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
           },
+          "flavourProfile": {
+            "description": "Flavour profile",
+            "type": "string"
+          },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
             "format": "int32",
             "type": "integer"
+          },
+          "gradeAbbreviation": {
+            "$ref": "#/components/schemas/ApiGradeAbbreviation",
+            "description": "Grade abbreviation"
           },
           "id": {
             "description": "Entity id",
@@ -14359,6 +14549,14 @@
             "example": false,
             "type": "boolean"
           },
+          "lotLabel": {
+            "description": "LOT label",
+            "type": "string"
+          },
+          "lotNumber": {
+            "description": "LOT number",
+            "type": "string"
+          },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"
@@ -14373,6 +14571,11 @@
               "TRANSFER_ORDER"
             ],
             "type": "string"
+          },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
           },
           "paid": {
             "description": "Paid",
@@ -14414,9 +14617,27 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Representative of producer user customer. E.g. collector."
           },
+          "sacNumber": {
+            "description": "SAC number",
+            "format": "int32",
+            "type": "integer"
+          },
+          "screenSize": {
+            "description": "Screen size",
+            "type": "string"
+          },
           "semiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Semi product"
+          },
+          "startOfDrying": {
+            "description": "Date when product has been started drying",
+            "format": "date-time",
+            "type": "string"
+          },
+          "tare": {
+            "description": "Tare",
+            "type": "number"
           },
           "totalQuantity": {
             "description": "Total quantity",
