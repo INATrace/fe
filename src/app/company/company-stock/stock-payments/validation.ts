@@ -39,7 +39,7 @@ export const ApiPaymentValidationScheme = {
                   validators: []
               },
               amountPaidToTheFarmer: {
-                  validators: [Validators.required]
+                  validators: [Validators.required, Validators.min(0)]
               },
               createdBy: {
                   validators: []

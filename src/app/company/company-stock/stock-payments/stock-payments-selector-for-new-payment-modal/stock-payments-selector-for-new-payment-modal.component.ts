@@ -3,11 +3,13 @@ import { FormControl } from '@angular/forms';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
-import { UserCustomerControllerService } from '../../../../../api/api/userCustomerController.service';
-import { ActivateUserCustomerByCompanyAndRoleService } from '../../../../shared-services/activate-user-customer-by-company-and-role.service';
+import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { ApiUserCustomerCooperative } from '../../../../../api/model/apiUserCustomerCooperative';
 import { StockOrdersForCompanyService } from '../../../../shared-services/stock-orders-for-company.service';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
   selector: 'app-stock-payments-selector-for-new-payment-modal',
@@ -26,7 +28,7 @@ export class StockPaymentsSelectorForNewPaymentModalComponent implements OnInit 
   purchaseOrderId: number;
   currentFarmerId: number;
 
-  farmersCodebook: ActivateUserCustomerByCompanyAndRoleService;
+  farmersCodebook: CompanyUserCustomersByRoleService;
   womenShareCodebook = EnumSifrant.fromObject(this.womenShareTypes);
   purchaseOrdersForPaymentsCodebook: StockOrdersForCompanyService;
 
@@ -37,11 +39,15 @@ export class StockPaymentsSelectorForNewPaymentModalComponent implements OnInit 
   constructor(
       public activeModal: NgbActiveModal,
       private stockOrderControllerService: StockOrderControllerService,
-      private userCustomerControllerService: UserCustomerControllerService // TODO: Implement on BE
+      private companyControllerService: CompanyControllerService
   ) { }
 
   ngOnInit(): void {
-    this.farmersCodebook = new ActivateUserCustomerByCompanyAndRoleService(this.userCustomerControllerService, this.companyId, 'FARMER');
+    this.farmersCodebook = new CompanyUserCustomersByRoleService(
+        this.companyControllerService,
+        this.companyId,
+        UserCustomerTypeEnum.FARMER
+    );
   }
 
   farmersChanged(event) {
