@@ -75,7 +75,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     'purchases',
     'processing',
     'payments',
-    'stock-orders'
+    'orders'
   ];
 
   constructor(
