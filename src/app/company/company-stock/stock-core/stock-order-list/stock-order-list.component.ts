@@ -207,7 +207,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       },
       {
         key: 'identifier',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.identifier.name:Type`,
+        name: $localize`:@@productLabelPurchaseOrder.sortOptions.identifier.name:Identifier`,
         inactive: true,
         hide: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
       },
@@ -259,7 +259,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         hide: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
       },
       {
-        key: 'lastChange',
+        key: 'updateTimestamp',
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.lastChange.name:Date of last change`,
         defaultSortOrder: 'DESC',
         hide: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
