@@ -3,21 +3,17 @@ import { FormGroup } from '@angular/forms';
 import { ApiProcessingEvidenceField } from '../../../../../../api/model/apiProcessingEvidenceField';
 
 @Component({
-  selector: 'app-order-fields',
+  selector: 'app-stock-processing-order-fields',
   templateUrl: './stock-processing-order-fields.component.html',
   styleUrls: ['./stock-processing-order-fields.component.scss']
 })
 export class StockProcessingOrderFieldsComponent implements OnInit {
 
-  fieldInfoLocal: ApiProcessingEvidenceField;
-  formGroupLocal: FormGroup;
-  disabledLocal = false;
+  private fieldInfoLocal: ApiProcessingEvidenceField;
+  private formGroupLocal: FormGroup;
 
   @Input()
   submitted: boolean;
-
-  @Input()
-  productId: number;
 
   @Input()
   side: 'left' | 'right' = 'right';
@@ -34,7 +30,6 @@ export class StockProcessingOrderFieldsComponent implements OnInit {
   @Input()
   set fieldInfo(value: ApiProcessingEvidenceField) {
     this.fieldInfoLocal = value;
-    this.initialize();
   }
 
   get fieldInfo(): ApiProcessingEvidenceField {
@@ -44,34 +39,30 @@ export class StockProcessingOrderFieldsComponent implements OnInit {
   @Input()
   set formGroup(value: FormGroup) {
     this.formGroupLocal = value;
-    this.initialize();
   }
 
   get formGroup(): FormGroup {
     return this.formGroupLocal;
   }
 
-  @Input()
-  set disabled(value: boolean) {
-    this.disabledLocal = value;
-    this.refreshDisabled();
+  get isOnCorrectSide() {
+    // TODO: correct this
+    // if (this.side === 'right') {
+    //   return !(this.isQuote && this.settings.leftOnQuote);
+    // }
+    // if (this.side === 'left') {
+    //   return this.isQuote && this.settings.leftOnQuote;
+    // }
+    return true;
   }
 
-  get disabled(): boolean {
-    return this.disabledLocal;
+  get showRow() {
+    return this.fieldInfo && this.fieldInfo.fieldName && this.formGroup && this.isOnCorrectSide;
   }
 
   constructor() {}
 
   ngOnInit(): void {
-  }
-
-  private initialize() {
-    // TODO: implement
-  }
-
-  private refreshDisabled() {
-    // TODO: implement
   }
 
 }

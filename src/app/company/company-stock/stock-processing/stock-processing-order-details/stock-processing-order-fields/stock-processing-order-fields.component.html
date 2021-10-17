@@ -1,1 +1,58 @@
-<div><!-- TODO: implement UI for stock proc. order fields --></div>
+<div class="{{ rowClass }}" *ngIf="showRow">
+  <div class="{{ colClass }}">
+
+    <textinput *ngIf="fieldInfo.type === 'PRICE' || fieldInfo.type === 'EXCHANGE_RATE'"
+               type="number"
+               min="0"
+               step="0.01"
+               [form]="formGroup.get(fieldInfo.fieldName)"
+               [label]="fieldInfo.label"
+               style="width: 100%"
+               [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="formGroup.get(fieldInfo.fieldName).errors as errors" class="sc-invalid-feedback">
+          <div *ngIf="errors.required">
+            Field '{{ fieldInfo.fieldName }}' is required
+          </div>
+        </div>
+      </ng-container>
+    </textinput>
+
+    <textinput *ngIf="fieldInfo.type === 'STRING'"
+               [form]="formGroup.get(fieldInfo.fieldName)"
+               [label]="fieldInfo.label"
+               style="width: 100%"
+               [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="formGroup.get(fieldInfo.fieldName).errors as errors" class="sc-invalid-feedback">
+          Field '{{ fieldInfo.label }}' is required
+        </div>
+      </ng-container>
+    </textinput>
+
+    <app-datepicker *ngIf="fieldInfo.type === 'DATE'"
+                    [form]="formGroup.get(fieldInfo.fieldName)"
+                    [label]="fieldInfo.label"
+                    [invalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="formGroup.get(fieldInfo.fieldName).errors as errors" class="sc-invalid-feedback">
+          Field '{{ fieldInfo.label }}' is required
+        </div>
+      </ng-container>
+    </app-datepicker>
+
+    <textinput *ngIf="fieldInfo.type === 'TEXT'"
+               style="width: 100%"
+               [textarea]="true"
+               [form]="formGroup.get(fieldInfo.fieldName)"
+               [label]="fieldInfo.label"
+               [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
+      <ng-container *ngIf="submitted">
+        <div *ngIf="formGroup.get(fieldInfo.fieldName).errors as errors" class="sc-invalid-feedback">
+          Field '{{ fieldInfo.label }}' is required
+        </div>
+      </ng-container>
+    </textinput>
+
+  </div>
+</div>
