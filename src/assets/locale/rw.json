@@ -2338,7 +2338,7 @@
     "orderList.sortOptions.kgs.name": "kg",
     "productLabelStockProcessingOrderDetail.itemNetWeightLabel": "Ingano (nyinshi ntarengwa. {$PH} {$PH_1})",
     "facilityTypeDetail.single-choice.underlyingMeasurementUnit.label": "Igipimo cyifashishwa",
-    "productLabelPurchaseOrder.sortOptions.identifier.name": "Ubwoko",
+    "productLabelPurchaseOrder.sortOptions.identifier.name": "Ikiranga",
     "productLabelProcessingAction.newProcessingAction.field.womenShare": "Umugabane w'abagore",
     "productLabelProcessingAction.newProcessingAction.document.billOfLading": "Inyandiko iherekeza kontineri",
     "productLabelProcessingAction.newProcessingAction.document.ceparPayingSlip": "Inyemezabwishyu ya CEPAR",

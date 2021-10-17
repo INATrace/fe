@@ -21,7 +21,7 @@
     "productLabelPurchaseOrder.noOrders": "No se encuentran pedidos",
     "productLabelPurchaseOrder.sortOptions.date.name": "Fecha",
     "productLabelPurchaseOrder.sortOptions.orderType.name": "Tipo",
-    "productLabelPurchaseOrder.sortOptions.identifier.name": "Tipo",
+    "productLabelPurchaseOrder.sortOptions.identifier.name": "Identificador",
     "productLabelPurchaseOrder.sortOptions.farmer.name": "Agricultor",
     "productLabelPurchaseOrder.sortOptions.semiProduct.name": "Semiproducto",
     "productLabelPurchaseOrder.sortOptions.quantity.name": "Cantidad",

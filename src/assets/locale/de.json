@@ -2339,7 +2339,7 @@
     "orderList.sortOptions.kgs.name": "kgs",
     "productLabelStockProcessingOrderDetail.itemNetWeightLabel": "Quantity (max. {$PH} {$PH_1})",
     "facilityTypeDetail.single-choice.underlyingMeasurementUnit.label": "Underlying measure unit",
-    "productLabelPurchaseOrder.sortOptions.identifier.name": "Type",
+    "productLabelPurchaseOrder.sortOptions.identifier.name": "Kennung",
     "productLabelProcessingAction.newProcessingAction.field.womenShare": "Women's share",
     "productLabelProcessingAction.newProcessingAction.document.billOfLading": "Bill of lading",
     "productLabelProcessingAction.newProcessingAction.document.ceparPayingSlip": "CEPAR paying slip",

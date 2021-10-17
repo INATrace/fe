@@ -1395,7 +1395,7 @@
     "productLabelPurchaseOrder.noOrders": "No orders found",
     "productLabelPurchaseOrder.sortOptions.deliveryDate.name": "Delivery date",
     "productLabelPurchaseOrder.sortOptions.production.name": "Production date",
-    "productLabelPurchaseOrder.sortOptions.identifier.name": "Type",
+    "productLabelPurchaseOrder.sortOptions.identifier.name": "Identifier",
     "productLabelPurchaseOrder.sortOptions.orderType.name": "Type",
     "productLabelPurchaseOrder.sortOptions.farmer.name": "Farmer",
     "productLabelPurchaseOrder.sortOptions.semiProduct.name": "Semi-product",
