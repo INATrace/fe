@@ -12028,11 +12028,6 @@
             "format": "int32",
             "type": "integer"
           },
-          "required": {
-            "description": "Processing evidence field required",
-            "example": false,
-            "type": "boolean"
-          },
           "requiredOnQuote": {
             "description": "Processing evidence field required on quote",
             "example": false,

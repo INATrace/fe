@@ -47,10 +47,6 @@ export interface ApiProcessingEvidenceField {
      */
     numericValue?: number;
     /**
-     * Processing evidence field required
-     */
-    required?: boolean;
-    /**
      * Processing evidence field required on quote
      */
     requiredOnQuote?: boolean;
@@ -96,10 +92,6 @@ export namespace ApiProcessingEvidenceField {
          * Processing evidence field numeric value
          */
         numericValue = 'numericValue',
-        /**
-         * Processing evidence field required
-         */
-        required = 'required',
         /**
          * Processing evidence field required on quote
          */
@@ -205,17 +197,6 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'required',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'requiredOnQuote',
                     classname: 'ApiProcessingEvidenceField',
                     dataType: 'boolean',
@@ -260,8 +241,6 @@ export namespace ApiProcessingEvidenceField {
                 ],
                 numericValue: [
                 ],
-                required: [
-                ],
                 requiredOnQuote: [
                 ],
                 stringValue: [
@@ -291,9 +270,6 @@ export namespace ApiProcessingEvidenceField {
   //                   validators: []
   //               },
   //               numericValue: {
-  //                   validators: []
-  //               },
-  //               required: {
   //                   validators: []
   //               },
   //               requiredOnQuote: {
