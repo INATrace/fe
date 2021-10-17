@@ -285,8 +285,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get outputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${ 
-      this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+    if (this.actionType === 'SHIPMENT') {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
+        this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+    } else {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
+        this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+    }
   }
 
   get showRemainingForm() {
