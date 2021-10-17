@@ -8327,12 +8327,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8342,19 +8339,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8364,19 +8358,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8386,19 +8377,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8408,19 +8396,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8430,19 +8415,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8452,19 +8434,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8474,8 +8453,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -14513,10 +14492,6 @@
       },
       "ApiStockOrder": {
         "properties": {
-          "actionType": {
-            "$ref": "#/components/schemas/ApiActionType",
-            "description": "Action type"
-          },
           "activityProofs": {
             "description": "Activity proofs",
             "items": {
@@ -14574,18 +14549,10 @@
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
           },
-          "flavourProfile": {
-            "description": "Flavour profile",
-            "type": "string"
-          },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
             "format": "int32",
             "type": "integer"
-          },
-          "gradeAbbreviation": {
-            "$ref": "#/components/schemas/ApiGradeAbbreviation",
-            "description": "Grade abbreviation"
           },
           "id": {
             "description": "Entity id",
@@ -14609,14 +14576,6 @@
             "description": "Is order of type PURCHASE_ORDER",
             "example": false,
             "type": "boolean"
-          },
-          "lotLabel": {
-            "description": "LOT label",
-            "type": "string"
-          },
-          "lotNumber": {
-            "description": "LOT number",
-            "type": "string"
           },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
@@ -14683,18 +14642,9 @@
             "format": "int32",
             "type": "integer"
           },
-          "screenSize": {
-            "description": "Screen size",
-            "type": "string"
-          },
           "semiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
             "description": "Semi product"
-          },
-          "startOfDrying": {
-            "description": "Date when product has been started drying",
-            "format": "date-time",
-            "type": "string"
           },
           "tare": {
             "description": "Tare",
