@@ -23,6 +23,10 @@
 
 export interface ApiProcessingEvidenceField { 
     /**
+     * Processing evidence field name
+     */
+    fieldName?: string;
+    /**
      * Processing evidence field file multiplicity
      */
     fileMultiplicity?: number;
@@ -68,6 +72,10 @@ export namespace ApiProcessingEvidenceField {
      * All properties of ApiProcessingEvidenceField.
      */
     export enum Properties {
+        /**
+         * Processing evidence field name
+         */
+        fieldName = 'fieldName',
         /**
          * Processing evidence field file multiplicity
          */
@@ -116,11 +124,9 @@ export namespace ApiProcessingEvidenceField {
         INTEGER = 'INTEGER',
         DATE = 'DATE',
         OBJECT = 'OBJECT',
-        ARRAY = 'ARRAY',
         PRICE = 'PRICE',
         EXCHANGERATE = 'EXCHANGE_RATE',
-        TIMESTAMP = 'TIMESTAMP',
-        FILE = 'FILE'
+        TIMESTAMP = 'TIMESTAMP'
     }
 
 
@@ -129,6 +135,17 @@ export namespace ApiProcessingEvidenceField {
             metadata: formMetadata,
             classname: 'ApiProcessingEvidenceField',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'fieldName',
+                    classname: 'ApiProcessingEvidenceField',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -231,6 +248,8 @@ export namespace ApiProcessingEvidenceField {
                 },
             ],
             validators: {
+                fieldName: [
+                ],
                 fileMultiplicity: [
                 ],
                 id: [
@@ -256,6 +275,9 @@ export namespace ApiProcessingEvidenceField {
   // export const ApiProcessingEvidenceFieldValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               fieldName: {
+  //                   validators: []
+  //               },
   //               fileMultiplicity: {
   //                   validators: []
   //               },

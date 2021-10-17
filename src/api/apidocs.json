@@ -12021,6 +12021,10 @@
       },
       "ApiProcessingEvidenceField": {
         "properties": {
+          "fieldName": {
+            "description": "Processing evidence field name",
+            "type": "string"
+          },
           "fileMultiplicity": {
             "description": "Processing evidence field file multiplicity",
             "format": "int32",
@@ -12068,11 +12072,9 @@
               "INTEGER",
               "DATE",
               "OBJECT",
-              "ARRAY",
               "PRICE",
               "EXCHANGE_RATE",
-              "TIMESTAMP",
-              "FILE"
+              "TIMESTAMP"
             ],
             "type": "string"
           }
