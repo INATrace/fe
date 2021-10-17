@@ -71,7 +71,7 @@
 
         <ng-container *ngIf="(type === 'processing-evidence-fields')">
           <tr *ngFor="let type of types.items">
-            <td [attr.data-label]="sortOptionsEvidenceFields[0].name"><span>{{ type.id }}</span></td>
+            <td [attr.data-label]="sortOptionsEvidenceFields[0].name"><span>{{ type.fieldName }}</span></td>
             <td [attr.data-label]="sortOptionsEvidenceFields[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
             <td [attr.data-label]="sortOptionsEvidenceFields[2].name"><span>{{ type.type | formatProcessingEvidenceFieldType }}</span></td>
             <td [attr.data-label]="sortOptionsEvidenceFields[3].name">

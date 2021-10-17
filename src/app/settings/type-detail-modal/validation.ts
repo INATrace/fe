@@ -134,37 +134,40 @@ export const ApiProcessingEvidenceTypeValidationScheme = {
 } as SimpleValidationScheme<ApiProcessingEvidenceType>;
 
 export const ApiProcessingEvidenceFieldValidationScheme = {
-    validators: [],
-    fields: {
-              fileMultiplicity: {
-                  validators: []
-              },
-              files: {
-                  validators: []
-              },
-              id: {
-                  validators: []
-              },
-              label: {
-                  validators: [Validators.required]
-              },
-              mandatory: {
-                  validators: []
-              },
-              numericValue: {
-                  validators: []
-              },
-              required: {
-                  validators: []
-              },
-              requiredOnQuote: {
-                  validators: []
-              },
-              stringValue: {
-                  validators: []
-              },
-              type: {
-                  validators: [Validators.required]
-              },
+  validators: [],
+  fields: {
+    fileMultiplicity: {
+      validators: []
+    },
+    files: {
+      validators: []
+    },
+    id: {
+      validators: []
+    },
+    fieldName: {
+      validators: [Validators.required]
+    },
+    label: {
+      validators: [Validators.required]
+    },
+    mandatory: {
+      validators: []
+    },
+    numericValue: {
+      validators: []
+    },
+    required: {
+      validators: []
+    },
+    requiredOnQuote: {
+      validators: []
+    },
+    stringValue: {
+      validators: []
+    },
+    type: {
+      validators: [Validators.required]
     }
+  }
 } as SimpleValidationScheme<ApiProcessingEvidenceField>;

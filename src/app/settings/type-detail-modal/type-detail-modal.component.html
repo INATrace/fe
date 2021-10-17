@@ -186,6 +186,24 @@
       </ng-container>
 
       <ng-container *ngIf="this.type === 'processing-evidence-fields'">
+
+        <textinput
+                [form]="form.get('fieldName')"
+                label="Field name"
+                style="width: 100%"
+                placeholder="Enter field name"
+                i18n-label="@@procEvidenceField.fieldName.label"
+                i18n-placeholder="@@procEvidenceField.fieldName.placeholder"
+                [isInvalid]="submitted && form.get('fieldName').invalid">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('fieldName').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@procEvidenceField.fieldName.error.required">
+                Field name is required
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+
         <single-choice
                 label="Type"
                 i18n-label="@@productLabelProcessingAction.evidenceFieldType.label"

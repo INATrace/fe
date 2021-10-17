@@ -166,8 +166,8 @@ export class TypeListComponent implements OnInit, OnChanges {
 
   sortOptionsEvidenceFields: SortOption[] = [
     {
-      key: 'id',
-      name: $localize`:@@settingsTypes.sortOptions.id.name:Id`,
+      key: 'fieldName',
+      name: $localize`:@@procEvidenceField.fieldName.label:Field name`,
       inactive: true
     },
     {
