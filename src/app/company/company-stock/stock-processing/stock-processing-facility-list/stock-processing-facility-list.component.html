@@ -2,8 +2,8 @@
 
   <div class="container container--bare">
 
-    <div class="row" style="margin-top: 30px;">
-      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of collection">
+    <div class="row" style="margin-top: 30px;" *ngIf="categoryOne.length > 0">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of categoryOne">
         <app-facility-card [facility]="facility"
                            [companyId]="companyId"
                            [actions]="processingActions">
@@ -11,16 +11,32 @@
       </div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
-      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of other">
+    <div class="row" style="margin-top: 30px;" *ngIf="categoryTwo.length > 0">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of categoryTwo">
         <app-facility-card [facility]="facility"
                            [companyId]="companyId"
                            [actions]="processingActions"></app-facility-card>
       </div>
     </div>
 
-    <div class="row" style="margin-top: 30px;">
-      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of storage">
+    <div class="row" style="margin-top: 30px;" *ngIf="categoryThree.length > 0">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of categoryThree">
+        <app-facility-card [facility]="facility"
+                           [companyId]="companyId"
+                           [actions]="processingActions"></app-facility-card>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 30px;" *ngIf="categoryFour.length > 0">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of categoryFour">
+        <app-facility-card [facility]="facility"
+                           [companyId]="companyId"
+                           [actions]="processingActions"></app-facility-card>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 30px;" *ngIf="categoryFive.length > 0">
+      <div class="col-md-6 col-lg-4 col--bare" *ngFor="let facility of categoryFive">
         <app-facility-card [facility]="facility"
                            [companyId]="companyId"
                            [actions]="processingActions"></app-facility-card>

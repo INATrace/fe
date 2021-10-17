@@ -34,9 +34,11 @@ export class StockProcessingFacilityListComponent implements OnInit {
 
   facilities$: Observable<ApiPaginatedListApiFacility>;
 
-  collection = [];
-  other = [];
-  storage = [];
+  categoryOne = [];
+  categoryTwo = [];
+  categoryThree = [];
+  categoryFour = [];
+  categoryFive = [];
 
   processingActions: ApiProcessingAction[] = [];
 
@@ -87,40 +89,34 @@ export class StockProcessingFacilityListComponent implements OnInit {
 
   arrangeFacilities(facilities: ApiFacility[]) {
 
-    const washing = [];
-    const hulling = [];
-    const drying = [];
-    const nonSellable = [];
-    const sellable = [];
+    for (const facility of facilities) {
+      switch (facility.facilityType.code) {
+        case 'WASHING_STATION':
+        case 'DRYING_BED':
+        case 'BENEFICIO_HUMEDO':
+          this.categoryOne.push(facility);
+          break;
 
-    for (const item of facilities) {
-      if (item.facilityType.code === 'WASHING_STATION') {
-        if (item.isCollectionFacility) {
-          this.collection.push(item);
-        }
-        else {
-          washing.push(item);
-        }
-      } else if (item.facilityType.code === 'HULLING_STATION') {
-        hulling.push(item);
-      } else if (item.facilityType.code === 'DRYING_BED') {
-        drying.push(item);
-      } else if (item.facilityType.code === 'STORAGE') {
-        if (item.isPublic) { sellable.push(item); }
-        else { nonSellable.push(item); }
+        case 'STORAGE':
+        case 'ALMACEN':
+          this.categoryTwo.push(facility);
+          break;
+
+        case 'HULLING_STATION':
+        case 'MAQUILADO_CAFE':
+        case 'BENEFICIO_SECO':
+          this.categoryThree.push(facility);
+          break;
+
+        case 'GREEN_COFFEE_STORAGE':
+        case 'ALMACEN_CAFE_ORO':
+          this.categoryFour.push(facility);
+          break;
+        case 'ROASTED_COFFEE_STORAGE':
+          this.categoryFive.push(facility);
+          break;
       }
     }
-
-    this.collection.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-
-    washing.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-    hulling.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-    drying.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-    nonSellable.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-    sellable.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-
-    this.other = [...washing, ...hulling, ...drying, ...nonSellable];
-    this.storage = [...sellable];
   }
 
 }
