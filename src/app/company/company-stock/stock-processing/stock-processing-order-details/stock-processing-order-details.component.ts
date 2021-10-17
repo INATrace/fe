@@ -1173,16 +1173,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         this.inputFacilitiesCodebook =
           new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
       }
-    } else {
-      this.inputFacilitiesCodebook = new FacilitiesCodebookService(this.facilityController, this.codebookTranslations);
+
+      // If we have TRANSFER and SHIPMENT processing action we don't have defined output
+      // semi-product (use the input semi-product to filter output facilities)
+      if (this.actionType === 'TRANSFER' || this.actionType === 'SHIPMENT') {
+        this.outputFacilitiesCodebook =
+          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+      }
     }
 
     // If we have defined output semi-product, set output facility
     if (this.prAction.outputSemiProduct && this.prAction.outputSemiProduct.id) {
       this.outputFacilitiesCodebook =
         new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.outputSemiProduct.id);
-    } else {
-      this.outputFacilitiesCodebook = new FacilitiesCodebookService(this.facilityController, this.codebookTranslations);
     }
   }
 
