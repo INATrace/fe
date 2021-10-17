@@ -2818,6 +2818,9 @@
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.error": "Final price is required",
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Final price",
     "userHome.products.title": "My Products",
-    "userHome.customers.title": "My customers"
+    "userHome.customers.title": "My customers",
+    "procEvidenceField.fieldName.label": "Field name",
+    "procEvidenceField.fieldName.placeholder": "Enter field name",
+    "procEvidenceField.fieldName.error.required": "Field name is required"
   }
 }

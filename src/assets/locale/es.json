@@ -2737,7 +2737,6 @@
     "productLabelStockPurchaseOrdersModal.textinput.tare.placeholder": "Introduzca tara",
     "productLabelStockPurchaseOrdersModal.textinput.tare.error": "Se requiere tara",
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.error": "Se requiere peso neto",
-    "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Net weight",
     "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder": "Introducza descuento de precio",
     "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.error": "Se requiere descuento de precio para defectos",
     "productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label": "Descuento de precio para defectos",
@@ -2747,6 +2746,9 @@
     "userHome.products.title": "Mis Productos",
     "userHome.customers.title": "Mis clientes",
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.placeholder": "Introduza peso neto ",
-    "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Peso neto"
+    "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Peso neto",
+    "procEvidenceField.fieldName.label": "Field name",
+    "procEvidenceField.fieldName.placeholder": "Enter field name",
+    "procEvidenceField.fieldName.error.required": "Field name is required"
   }
 }
