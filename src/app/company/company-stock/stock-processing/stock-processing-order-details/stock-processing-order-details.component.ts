@@ -118,21 +118,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   companyDetailForm: FormGroup;
 
-  // Output stock order form fields
-  showGrade = false;
-  showExportLotNumber = false;
-  showPricePerUnit = false;
-  showScreenSize = false;
-  showLotLabel = false;
-  showStartOfDrying = false;
-  showClientName = false;
-  showTransactionType = false;
-  showFlavourProfile = false;
-
   // Processing evidence controls
   requiredProcessingEvidenceArray = new FormArray([]);
   otherProcessingEvidenceArray = new FormArray([]);
   processingEvidenceListManager = null;
+
+  // Processing evidence fields controls
+  requiredProcEvidenceFieldsForm: FormGroup;
 
   // Certificated and standards controls
   showCertificatesIds = false;
@@ -527,6 +519,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.setControl('form', this.form);
     this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
     this.outputStockOrderForm.setControl('processingActionForm', this.processingActionForm);
+    this.outputStockOrderForm.setControl('requiredProcEvidenceFieldsForm', this.requiredProcEvidenceFieldsForm);
 
     this.initializeListManager();
 
@@ -619,13 +612,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // TODO: prepare required proc. evidence types
 
     const sharedFields: ApiStockOrder = {
-      gradeAbbreviation: this.outputStockOrderForm.get('gradeAbbreviation').value ? this.outputStockOrderForm.get('gradeAbbreviation').value : null,
-      lotNumber: this.outputStockOrderForm.get('lotNumber').value ? this.outputStockOrderForm.get('lotNumber').value : null,
       pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
-      screenSize: this.outputStockOrderForm.get('screenSize').value ? this.outputStockOrderForm.get('screenSize').value : null,
-      lotLabel: this.outputStockOrderForm.get('lotLabel').value ? this.outputStockOrderForm.get('lotLabel').value : null,
-      startOfDrying: this.outputStockOrderForm.get('startOfDrying').value ? this.outputStockOrderForm.get('startOfDrying').value : null,
-      flavourProfile: this.outputStockOrderForm.get('flavourProfile').value ? this.outputStockOrderForm.get('flavourProfile').value : null,
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES'
     };
@@ -1053,66 +1040,30 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private setRequiredFields(action: ApiProcessingAction) {
 
-    // First clear all fields
-    this.showGrade = false;
-    this.showExportLotNumber = false;
-    this.showPricePerUnit = false;
-    this.showScreenSize = false;
-    this.showLotLabel = false;
-    this.showStartOfDrying = false;
-    this.showClientName = false;
-    this.showCertificatesIds = false;
-    this.showTransactionType = false;
-    this.showFlavourProfile = false;
-
     // Clear all validators
-    this.outputStockOrderForm.controls.gradeAbbreviation.clearValidators();
-    this.outputStockOrderForm.controls.gradeAbbreviation.updateValueAndValidity();
-
-    this.outputStockOrderForm.controls.lotNumber.clearValidators();
-    this.outputStockOrderForm.controls.lotNumber.updateValueAndValidity();
-
     this.outputStockOrderForm.controls.pricePerUnit.clearValidators();
     this.outputStockOrderForm.controls.pricePerUnit.updateValueAndValidity();
 
-    this.outputStockOrderForm.controls.screenSize.clearValidators();
-    this.outputStockOrderForm.controls.screenSize.updateValueAndValidity();
-
-    this.outputStockOrderForm.controls.actionType.clearValidators();
-    this.outputStockOrderForm.controls.actionType.updateValueAndValidity();
-
+    // Set validator on total quantity
     if (this.actionType === 'PROCESSING' && !this.prAction.repackedOutputs) {
       setTimeout(() => this.outputStockOrderForm.get('totalQuantity').setValidators([Validators.required]));
     }
 
-    // Set fields specifically to the
-    // TODO: rethink this and modify accordingly
-    // if (action && action.requiredFields) {
-    //   for (const item of action.requiredFields) {
-    //
-    //     if (item.label === 'CERTIFICATES_IDS') {
-    //       if (!this.outputStockOrderForm.get('certificates').value || this.outputStockOrderForm.get('certificates').value.length === 0) {
-    //         const formArrayCD = this.companyDetailForm.get('certifications') as FormArray;
-    //         const formArrayOSO = this.outputStockOrderForm.get('certificates') as FormArray;
-    //         const now = new Date();
-    //         for (const cd of formArrayCD.controls) {
-    //           const validity = new Date(cd.value.validity);
-    //           if (validity > now) {
-    //             formArrayOSO.push(cd);
-    //           }
-    //         }
-    //       }
-    //       this.initializeCertificationListManager();
-    //       this.showCertificatesIds = true;
-    //     }
-    //
-    //     if (item.label === 'PREFILL_OUTPUT_FACILITY') {
-    //       if (!this.update) {
-    //         this.prefillOutputFacility();
-    //       }
-    //     }
-    //   }
-    // }
+    // Clear the required fields form
+    this.requiredProcEvidenceFieldsForm = new FormGroup({});
+
+    // Set required fields form group
+    if (action) {
+      action.requiredEvidenceFields.forEach(field => {
+        if (field.mandatory) {
+          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(null, Validators.required));
+        } else {
+          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(null));
+        }
+      });
+
+      // TODO: set the current proc. evidence fields values from the stock order (if we are doing update there are already present values)
+    }
   }
 
   private clearCBAndValues() {
@@ -1126,14 +1077,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.form.get('outputQuantity').setValue(null);
 
     this.outputStockOrderForm.get('totalQuantity').setValue(null);
-    this.outputStockOrderForm.get('gradeAbbreviation').setValue(null);
-    this.outputStockOrderForm.get('actionType').setValue(null);
     this.outputStockOrderForm.get('pricePerUnit').setValue(null);
-    this.outputStockOrderForm.get('lotNumber').setValue(null);
-    this.outputStockOrderForm.get('lotLabel').setValue(null);
-    this.outputStockOrderForm.get('screenSize').setValue(null);
-    this.outputStockOrderForm.get('startOfDrying').setValue(null);
-    this.outputStockOrderForm.get('flavourProfile').setValue(null);
     this.outputStockOrderForm.get('comments').setValue(null);
 
     this.remainingForm.setValue(null);
