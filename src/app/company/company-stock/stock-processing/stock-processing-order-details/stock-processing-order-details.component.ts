@@ -1279,7 +1279,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Prevent recalculating sac numbers if something already entered.
     if (this.outputStockOrders && this.outputStockOrders.length > 0) {
-      if ((this.outputStockOrders.value).some(item => item.sacNumber || item.totalQuantity)) { return; }
+      if ((this.outputStockOrders.value).some(item => item.totalQuantity)) { return; }
     }
 
     (this.outputStockOrders as FormArray).clear();
@@ -1288,20 +1288,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
 
-        let avQua = 0;
+        let availableQua = 0;
         for (const item of this.selectedInputStockOrders) {
-          avQua += item.availableQuantity;
+          availableQua += item.availableQuantity;
         }
 
-        const outputStockOrdersSize = Math.ceil(avQua / this.prAction.maxOutputWeight);
+        const outputStockOrdersSize = Math.ceil(availableQua / this.prAction.maxOutputWeight);
         for (let i = 0; i < outputStockOrdersSize; i++) {
           let w = this.prAction.maxOutputWeight;
-          if (i === outputStockOrdersSize - 1) { w = avQua - i * this.prAction.maxOutputWeight; }
+          if (i === outputStockOrdersSize - 1) { w = availableQua - i * this.prAction.maxOutputWeight; }
           (this.outputStockOrders as FormArray).push(new FormGroup({
             identifier: new FormControl(null),
             id: new FormControl(null),
             totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
-            sacNumber: new FormControl(null, [Validators.required])
+            sacNumber: new FormControl(i + 1, [Validators.required])
           }));
         }
       }
@@ -1436,13 +1436,40 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  prefillOutputStockOrdersQuantities() {
+
+    let availableQua = 0;
+    for (const item of this.selectedInputStockOrders) {
+      availableQua += item.availableQuantity;
+    }
+
+    const maxWeight = this.prAction.maxOutputWeight;
+
+    this.outputStockOrders.controls.some((outputStockOrderGroup: FormGroup) => {
+      outputStockOrderGroup.get('totalQuantity').setValue(availableQua > maxWeight ? maxWeight : availableQua);
+      availableQua -= maxWeight;
+      if (availableQua <= 0) {
+        return true;
+      }
+    });
+  }
+
   addOutputStockOrder() {
+
+    let sacNumber = null;
+    if (this.outputStockOrders.length > 0) {
+      const lastSacNumber = Number(this.outputStockOrders.controls[this.outputStockOrders.length - 1].get('sacNumber').value);
+      if (lastSacNumber && lastSacNumber > 0) {
+        sacNumber = lastSacNumber + 1;
+      }
+    }
+
     (this.outputStockOrders as FormArray).push(
       new FormGroup({
         identifier: new FormControl(null),
         id: new FormControl(null),
         totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
-        sacNumber: new FormControl(null, [Validators.required])
+        sacNumber: new FormControl(sacNumber, [Validators.required])
       }));
   }
 

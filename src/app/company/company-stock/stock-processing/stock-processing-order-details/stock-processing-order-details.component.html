@@ -473,12 +473,18 @@
               <!-- OUTPUT STOCK ORDER (SHOWN IF MULTIPLE OUTPUT STOCK ORDERS ARE PRESENT) -->
               <ng-container *ngIf="outputStockOrders.length > 0">
                 <div class="af-row" style="margin-top: 1rem;">
-                  <div class="af-c10">
+                  <div class="af-c9">
                     <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
                   </div>
 
-                  <div class="af-c2">
-                    <button class="btn btn-solid round" (click)="addOutputStockOrder()"
+                  <div class="af-c3 text-right">
+                    <button class="btn btn-solid round mr-2"
+                            (click)="prefillOutputStockOrdersQuantities()"
+                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
+                      <span>Prefill</span>
+                    </button>
+                    <button class="btn btn-solid round"
+                            (click)="addOutputStockOrder()"
                             i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
                       <span>+</span>
                     </button>
