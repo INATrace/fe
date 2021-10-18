@@ -23,6 +23,7 @@ import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
+import { ApiStockOrderEvidenceFieldValue } from './apiStockOrderEvidenceFieldValue';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
 import { ApiUser } from './apiUser';
 import { ApiUserCustomer } from './apiUserCustomer';
@@ -123,6 +124,10 @@ export interface ApiStockOrder {
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
+    /**
+     * Processing evidence fields stored values for this stock order
+     */
+    requiredEvidenceFieldValues?: Array<ApiStockOrderEvidenceFieldValue>;
     /**
      * SAC number
      */
@@ -248,6 +253,10 @@ export namespace ApiStockOrder {
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
+        /**
+         * Processing evidence fields stored values for this stock order
+         */
+        requiredEvidenceFieldValues = 'requiredEvidenceFieldValues',
         /**
          * SAC number
          */
@@ -642,6 +651,18 @@ export namespace ApiStockOrder {
                     complexType: 'ApiUserCustomer'
                 },
                 {
+                    metadata: ApiStockOrderEvidenceFieldValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'requiredEvidenceFieldValues',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceFieldValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceFieldValue'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -782,6 +803,8 @@ export namespace ApiStockOrder {
                 ],
                 representativeOfProducerUserCustomer: [
                 ],
+                requiredEvidenceFieldValues: [
+                ],
                 sacNumber: [
                 ],
                 semiProduct: [
@@ -891,6 +914,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               representativeOfProducerUserCustomer: {
+  //                   validators: []
+  //               },
+  //               requiredEvidenceFieldValues: {
   //                   validators: []
   //               },
   //               sacNumber: {

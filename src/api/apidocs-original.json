@@ -8327,9 +8327,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8339,16 +8342,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8358,16 +8364,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8377,16 +8386,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8396,16 +8408,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8415,16 +8430,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8434,16 +8452,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8453,8 +8474,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -14618,6 +14639,13 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Representative of producer user customer. E.g. collector."
           },
+          "requiredEvidenceFieldValues": {
+            "description": "Processing evidence fields stored values for this stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderEvidenceFieldValue"
+            },
+            "type": "array"
+          },
           "sacNumber": {
             "description": "SAC number",
             "format": "int32",
@@ -14649,6 +14677,58 @@
             "description": "Is women share",
             "example": false,
             "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderEvidenceFieldValue": {
+        "properties": {
+          "booleanValue": {
+            "description": "Value holder of type Boolean",
+            "example": false,
+            "type": "boolean"
+          },
+          "dateValue": {
+            "description": "Value holder of type Date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "evidenceFieldId": {
+            "description": "The id of the Processing evidence field from the codebook",
+            "format": "int64",
+            "type": "integer"
+          },
+          "evidenceFieldName": {
+            "description": "The field name of the Processing evidence field from the codebook",
+            "type": "string"
+          },
+          "evidenceFieldType": {
+            "description": "The data type oof the Processing evidence field from the codebook",
+            "enum": [
+              "STRING",
+              "TEXT",
+              "NUMBER",
+              "INTEGER",
+              "DATE",
+              "OBJECT",
+              "PRICE",
+              "EXCHANGE_RATE",
+              "TIMESTAMP"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "numericValue": {
+            "description": "Value holder of type Number",
+            "type": "number"
+          },
+          "stringValue": {
+            "description": "Value holder of type String",
+            "type": "string"
           }
         },
         "type": "object"
