@@ -37,8 +37,11 @@ import { Location } from '@angular/common';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import _ from 'lodash-es';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
+import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
+import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -619,7 +622,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const sharedFields: ApiStockOrder = {
       pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
-      womenShare: this.womensOnlyForm.value === 'YES'
+      womenShare: this.womensOnlyForm.value === 'YES',
+      requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -718,6 +722,50 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         return stockOrderList;
       }
     }
+  }
+
+  private prepareRequiredEvidenceFieldValues(): ApiStockOrderEvidenceFieldValue[] {
+
+    const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] = [];
+
+    if (!this.prAction) {
+      return evidenceFieldsValues;
+    }
+
+    // Create stock order evidence field instances (values) for every form control
+    Object.keys(this.requiredProcEvidenceFieldsForm.controls).forEach(key => {
+
+      const formControl = this.requiredProcEvidenceFieldsForm.get(key);
+      const procEvidenceField = this.prAction.requiredEvidenceFields.find(pef => pef.fieldName === key);
+
+      const evidenceFieldValue: ApiStockOrderEvidenceFieldValue = {
+        evidenceFieldId: procEvidenceField.id,
+        evidenceFieldName: procEvidenceField.fieldName
+      };
+
+      switch (procEvidenceField.type) {
+        case TypeEnum.NUMBER:
+        case TypeEnum.INTEGER:
+        case TypeEnum.EXCHANGERATE:
+        case TypeEnum.PRICE:
+          evidenceFieldValue.numericValue = formControl.value;
+          break;
+        case TypeEnum.DATE:
+        case TypeEnum.TIMESTAMP:
+          evidenceFieldValue.dateValue = formControl.value;
+          break;
+        case TypeEnum.STRING:
+        case TypeEnum.TEXT:
+          evidenceFieldValue.stringValue = formControl.value;
+          break;
+        default:
+          evidenceFieldValue.stringValue = formControl.value;
+      }
+
+      evidenceFieldsValues.push(evidenceFieldValue);
+    });
+
+    return evidenceFieldsValues;
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
@@ -1059,15 +1107,44 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Set required fields form group
     if (action) {
+
+      const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] =
+        this.outputStockOrderForm.get('requiredEvidenceFieldValues')?.value ?
+          this.outputStockOrderForm.get('requiredEvidenceFieldValues').value : [];
+
       action.requiredEvidenceFields.forEach(field => {
+
+        let value = null;
+        const evidenceFieldValue = evidenceFieldsValues
+          .find(efv => efv.evidenceFieldId === field.id && efv.evidenceFieldName === field.fieldName);
+
+        if (evidenceFieldValue) {
+          switch (field.type) {
+            case TypeEnum.NUMBER:
+            case TypeEnum.INTEGER:
+            case TypeEnum.EXCHANGERATE:
+            case TypeEnum.PRICE:
+              value = evidenceFieldValue.numericValue;
+              break;
+            case TypeEnum.DATE:
+            case TypeEnum.TIMESTAMP:
+              value = evidenceFieldValue.dateValue;
+              break;
+            case TypeEnum.STRING:
+            case TypeEnum.TEXT:
+              value = evidenceFieldValue.stringValue;
+              break;
+            default:
+              value = evidenceFieldValue.stringValue;
+          }
+        }
+
         if (field.mandatory) {
-          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(null, Validators.required));
+          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(value, Validators.required));
         } else {
-          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(null));
+          this.requiredProcEvidenceFieldsForm.addControl(field.fieldName, new FormControl(value));
         }
       });
-
-      // TODO: set the current proc. evidence fields values from the stock order (if we are doing update there are already present values)
     }
   }
 
