@@ -217,11 +217,9 @@ export class TypeDetailModalComponent implements OnInit {
     obj['INTEGER'] = $localize`:@@processingEvidenceFieldType.integer:Integer`;
     obj['DATE'] = $localize`:@@processingEvidenceFieldType.date:Date`;
     obj['OBJECT'] = $localize`:@@processingEvidenceFieldType.object:Object`;
-    obj['ARRAY'] = $localize`:@@processingEvidenceFieldType.array:Array`;
     obj['PRICE'] = $localize`:@@processingEvidenceFieldType.price:Price`;
     obj['EXCHANGE_RATE'] = $localize`:@@processingEvidenceFieldType.exchange_rate:Exchange rate`;
     obj['TIMESTAMP'] = $localize`:@@processingEvidenceFieldType.timestamp:Timestamp`;
-    obj['FILE'] = $localize`:@@processingEvidenceFieldType.file:File`;
     return obj;
   }
 
