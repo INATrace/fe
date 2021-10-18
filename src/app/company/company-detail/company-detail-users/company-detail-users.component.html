@@ -22,7 +22,7 @@
                          label="Users with company roles"
                          [listEditorManager]="companyUserListManager"
                          addText="Add new"
-                         [canAdd]="true"
+                         [canAdd]="isAdmin"
                          i18n-label="@@companyDetail.list-editor.cooperatives.label"
                          i18n-addText="@@companyDetail.list-editor.cooperatives.addText"
                          [invalid]="submitted && companyUsersFormArray?.invalid">
@@ -33,7 +33,9 @@
                           [formControlInput]="item"
                           [isOpen]="companyUserListManager.isOpen(i)"
                           [listEditorManager]="this.companyUserListManager"
-                          [listEditorManagerPosition]="i">
+                          [listEditorManagerPosition]="i"
+                          [readonly]="!isAdmin"
+                          [disableDelete]="!isAdmin">
                   </app-company-user-role>
                 </div>
               </list-editor-items>
