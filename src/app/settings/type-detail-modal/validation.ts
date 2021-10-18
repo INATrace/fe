@@ -136,17 +136,11 @@ export const ApiProcessingEvidenceTypeValidationScheme = {
 export const ApiProcessingEvidenceFieldValidationScheme = {
   validators: [],
   fields: {
-    fileMultiplicity: {
-      validators: []
-    },
-    files: {
-      validators: []
-    },
     id: {
       validators: []
     },
     fieldName: {
-      validators: [Validators.required]
+      validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
     },
     label: {
       validators: [Validators.required]
@@ -154,16 +148,7 @@ export const ApiProcessingEvidenceFieldValidationScheme = {
     mandatory: {
       validators: []
     },
-    numericValue: {
-      validators: []
-    },
-    required: {
-      validators: []
-    },
     requiredOnQuote: {
-      validators: []
-    },
-    stringValue: {
       validators: []
     },
     type: {

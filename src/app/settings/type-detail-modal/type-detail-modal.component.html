@@ -197,6 +197,9 @@
                 [isInvalid]="submitted && form.get('fieldName').invalid">
           <ng-container *ngIf="submitted">
             <div *ngIf="form.get('fieldName').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.wrongInput" i18n="@@facilityTypeDetail.textinput.id.error">
+                Id should contain only capital letters, numbers and / or underscores
+              </div>
               <div *ngIf="errors.required" i18n="@@procEvidenceField.fieldName.error.required">
                 Field name is required
               </div>
