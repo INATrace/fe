@@ -1336,6 +1336,7 @@
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error": "Menge wird benötigt",
     "productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label": "Outputs",
     "productLabelStockProcessingOrderDetail.outputStockOrders.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.outputStockOrders.prefill": "{$START_TAG_SPAN}Prefill{$CLOSE_TAG_SPAN}",
     "productLabelStockProcessingOrderDetail.textinput.sacNumber": "Nummer des Sacks",
     "facilityTypeDetail.textinput.weight.label": "Gewicht (in kg)",
     "facilityTypeDetail.textinput.weight.placeholder": "Gewicht eingeben",

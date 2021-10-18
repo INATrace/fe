@@ -902,6 +902,7 @@
     "productLabelStockProcessingOrderDetail.flavourProfile.textinput.error": "Se requiere el perfil de sabor",
     "productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label": "Salidas",
     "productLabelStockProcessingOrderDetail.outputStockOrders.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.outputStockOrders.prefill": "{$START_TAG_SPAN}Prefill{$CLOSE_TAG_SPAN}",
     "productLabelStockProcessingOrderDetail.textinput.sacNumber": "Número de SAC",
     "productLabelStockProcessingOrderDetail.textinput.quantity.max.error": "Entrada excede el valor máximo",
     "productLabelStockProcessingOrderDetail.textinput.quantity.min.error": "La entrada es demasiado pequeña. El pedido de existencias ya está parcialmente utilizado.",

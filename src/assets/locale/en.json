@@ -1508,6 +1508,7 @@
     "productLabelStockProcessingOrderDetail.preferedDeliveryDate.textinput.error": "Preferred delivery date is required",
     "productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label": "Outputs",
     "productLabelStockProcessingOrderDetail.outputStockOrders.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.outputStockOrders.prefill": "{$START_TAG_SPAN}Prefill{$CLOSE_TAG_SPAN}",
     "productLabelStockProcessingOrderDetail.textinput.sacNumber": "Sac number",
     "productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error": "Sac number is required",
     "productLabelStockProcessingOrderDetail.textinput.quantity.max.error": "Input exceeds the max value",

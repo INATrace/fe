@@ -1337,6 +1337,7 @@
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error": "Ingano irakanewe",
     "productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label": "Ibisohoka",
     "productLabelStockProcessingOrderDetail.outputStockOrders.add": "{$START_TAG_SPAN}+{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.outputStockOrders.prefill": "{$START_TAG_SPAN}Prefill{$CLOSE_TAG_SPAN}",
     "productLabelStockProcessingOrderDetail.textinput.sacNumber": "Inomero y'umufuka",
     "facilityTypeDetail.textinput.weight.label": "Uburemere (muri kg)",
     "facilityTypeDetail.textinput.weight.placeholder": "Shyiramo uburemere",
