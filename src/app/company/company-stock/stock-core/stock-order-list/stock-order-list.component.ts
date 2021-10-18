@@ -226,8 +226,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       {
         key: 'semiProduct',
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.semiProduct.name:Semi-product`,
-        inactive: true,
-        hide: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
+        inactive: true
       },
       {
         key: 'quantity',
@@ -269,12 +268,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.status.name:Status`,
         inactive: true,
         hide: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
-      },
-      {
-        key: 'wayOfPayment',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.wayOfPayment.name:Way of payment`,
-        inactive: true,
-        hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
       },
       {
         key: 'actions',

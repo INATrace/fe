@@ -25,8 +25,7 @@
           <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name">{{ formatDate(order.deliveryTime) }}</td>
           <td *ngIf="!sortOptions[11].hide" [attr.data-label]="sortOptions[11].name">{{ order.updateTimestamp | date: 'yyyy-MM-dd hh:mm' }}</td>
           <td *ngIf="!sortOptions[12].hide" [attr.data-label]="sortOptions[12].name">{{ order.isAvailable | formatAvailability }}</td>
-          <td *ngIf="!sortOptions[13].hide" [attr.data-label]="sortOptions[13].name">{{ order.preferredWayOfPayment | formatWayOfPayment }}</td>
-          <td [attr.data-label]="sortOptions[14].name">
+          <td [attr.data-label]="sortOptions[13].name">
             <span>
               <a i18n="@@productLabelPurchaseOrder.tableCol.edit"
                  (click)="edit(order)"
