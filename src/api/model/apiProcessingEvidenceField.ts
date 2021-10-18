@@ -27,10 +27,6 @@ export interface ApiProcessingEvidenceField {
      */
     fieldName?: string;
     /**
-     * Processing evidence field file multiplicity
-     */
-    fileMultiplicity?: number;
-    /**
      * Entity id
      */
     id?: number;
@@ -43,17 +39,9 @@ export interface ApiProcessingEvidenceField {
      */
     mandatory?: boolean;
     /**
-     * Processing evidence field numeric value
-     */
-    numericValue?: number;
-    /**
      * Processing evidence field required on quote
      */
     requiredOnQuote?: boolean;
-    /**
-     * Processing evidence field string value
-     */
-    stringValue?: string;
     /**
      * Processing evidence field type
      */
@@ -73,10 +61,6 @@ export namespace ApiProcessingEvidenceField {
          */
         fieldName = 'fieldName',
         /**
-         * Processing evidence field file multiplicity
-         */
-        fileMultiplicity = 'fileMultiplicity',
-        /**
          * Entity id
          */
         id = 'id',
@@ -89,17 +73,9 @@ export namespace ApiProcessingEvidenceField {
          */
         mandatory = 'mandatory',
         /**
-         * Processing evidence field numeric value
-         */
-        numericValue = 'numericValue',
-        /**
          * Processing evidence field required on quote
          */
         requiredOnQuote = 'requiredOnQuote',
-        /**
-         * Processing evidence field string value
-         */
-        stringValue = 'stringValue',
         /**
          * Processing evidence field type
          */
@@ -142,17 +118,6 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'fileMultiplicity',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiProcessingEvidenceField',
                     dataType: 'number',
@@ -186,31 +151,9 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'numericValue',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'requiredOnQuote',
                     classname: 'ApiProcessingEvidenceField',
                     dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'stringValue',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -231,19 +174,13 @@ export namespace ApiProcessingEvidenceField {
             validators: {
                 fieldName: [
                 ],
-                fileMultiplicity: [
-                ],
                 id: [
                 ],
                 label: [
                 ],
                 mandatory: [
                 ],
-                numericValue: [
-                ],
                 requiredOnQuote: [
-                ],
-                stringValue: [
                 ],
                 type: [
                 ],
@@ -257,9 +194,6 @@ export namespace ApiProcessingEvidenceField {
   //               fieldName: {
   //                   validators: []
   //               },
-  //               fileMultiplicity: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
@@ -269,13 +203,7 @@ export namespace ApiProcessingEvidenceField {
   //               mandatory: {
   //                   validators: []
   //               },
-  //               numericValue: {
-  //                   validators: []
-  //               },
   //               requiredOnQuote: {
-  //                   validators: []
-  //               },
-  //               stringValue: {
   //                   validators: []
   //               },
   //               type: {

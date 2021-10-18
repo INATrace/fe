@@ -12004,11 +12004,6 @@
             "description": "Processing evidence field name",
             "type": "string"
           },
-          "fileMultiplicity": {
-            "description": "Processing evidence field file multiplicity",
-            "format": "int32",
-            "type": "integer"
-          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -12023,19 +12018,10 @@
             "example": false,
             "type": "boolean"
           },
-          "numericValue": {
-            "description": "Processing evidence field numeric value",
-            "format": "int32",
-            "type": "integer"
-          },
           "requiredOnQuote": {
             "description": "Processing evidence field required on quote",
             "example": false,
             "type": "boolean"
-          },
-          "stringValue": {
-            "description": "Processing evidence field string value",
-            "type": "string"
           },
           "type": {
             "description": "Processing evidence field type",
