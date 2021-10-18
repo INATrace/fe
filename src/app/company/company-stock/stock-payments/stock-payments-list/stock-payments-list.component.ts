@@ -132,9 +132,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
           this.countAll.emit(this.allPayments);
           this.currentData = resp.data.items;
 
-          // console.log('Payments: ');
-          // console.log(resp.data);
-
           return resp.data;
         }),
         tap(() => this.globalEventManager.showLoading(false))
@@ -192,12 +189,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       {
         key: 'formalCreationTime',
         name: $localize`:@@productLabelPayments.sortOptions.paymentDate.name:Payment date`,
-        hide: false
-      },
-      {
-        key: 'paymentStatus',
-        name: $localize`:@@productLabelPayments.sortOptions.paymentStatus.name:Status`,
-        inactive: true,
         hide: false
       },
       {
