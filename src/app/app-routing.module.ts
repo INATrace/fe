@@ -204,7 +204,6 @@ const routes: Routes = [
     path: 'companies/new',
     component: CompanyDetailComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
