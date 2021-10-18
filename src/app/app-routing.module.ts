@@ -40,6 +40,7 @@ import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
+import { AdminGuardService } from './shared-services/admin-guard.service';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -216,6 +217,7 @@ const routes: Routes = [
     path: 'companies/:id/company',
     component: CompanyDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -225,6 +227,7 @@ const routes: Routes = [
     path: 'companies/:id/translate',
     component: CompanyDetailTranslateComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -234,6 +237,7 @@ const routes: Routes = [
     path: 'companies/:id/processingActions',
     component: CompanyProcessingActionsComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -243,6 +247,7 @@ const routes: Routes = [
     path: 'companies/:id/processingActions/new',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     // canDeactivate: [DeactivateGuardService],
     data: {
       action: 'new',
@@ -253,6 +258,7 @@ const routes: Routes = [
   path: 'companies/:id/processingActions/:paId/edit',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     // canDeactivate: [DeactivateGuardService],
     data: {
       action: 'edit',
@@ -263,6 +269,7 @@ const routes: Routes = [
     path: 'companies/:id/users',
     component: CompanyDetailUsersComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: null
     }
@@ -271,6 +278,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities',
     component: CompanyDetailFacilitiesComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: null
     }
@@ -279,6 +287,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/add',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: {
         title: '',
@@ -290,6 +299,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/:facilityId/edit',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: {
         title: '',

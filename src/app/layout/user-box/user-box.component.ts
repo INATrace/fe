@@ -29,6 +29,8 @@ export class UserBoxComponent implements OnInit, OnDestroy {
 
   isConfirmedOnly = false;
   isAdmin = false;
+  isCompanyAdmin = false;
+  companyId: number;
 
   showProductNav = false;
   showSystemNav = false;
@@ -66,6 +68,8 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     this.showSettingsTabs = this.router.url.startsWith('/settings/');
     this.showCompaniesTabs = this.router.url.startsWith('/companies/');
 
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+
     this.userProfile = this.authService.currentUserProfile;
     this.unsubscribeList.add(
       this.authService.userProfile$.subscribe(val => {
@@ -73,6 +77,7 @@ export class UserBoxComponent implements OnInit, OnDestroy {
         if (this.userProfile) {
           this.isConfirmedOnly = 'CONFIRMED_EMAIL' === this.userProfile.status;
           this.isAdmin = 'ADMIN' === this.userProfile.role;
+          this.isCompanyAdmin = this.userProfile.companyIdsAdmin.includes(this.companyId);
           this.displayName = this.userProfile.name;
           this.setDisplayCompany().then();
           this.unsubscribeList.add(

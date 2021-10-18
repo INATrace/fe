@@ -31,6 +31,10 @@ export interface ApiUserGet {
      */
     companyIds?: Array<number>;
     /**
+     * User's company ids where user is company admin
+     */
+    companyIdsAdmin?: Array<number>;
+    /**
      * Email/username
      */
     email?: string;
@@ -76,6 +80,10 @@ export namespace ApiUserGet {
          * User's company ids
          */
         companyIds = 'companyIds',
+        /**
+         * User's company ids where user is company admin
+         */
+        companyIdsAdmin = 'companyIdsAdmin',
         /**
          * Email/username
          */
@@ -184,6 +192,17 @@ export namespace ApiUserGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'companyIdsAdmin',
+                    classname: 'ApiUserGet',
+                    dataType: 'Array&lt;number&gt;',
+                    isPrimitiveType: true,
+                    isListContainer: true,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'email',
                     classname: 'ApiUserGet',
                     dataType: 'string',
@@ -266,6 +285,8 @@ export namespace ApiUserGet {
                 ],
                 companyIds: [
                 ],
+                companyIdsAdmin: [
+                ],
                 email: [
                 ],
                 id: [
@@ -291,6 +312,9 @@ export namespace ApiUserGet {
   //                   validators: []
   //               },
   //               companyIds: {
+  //                   validators: []
+  //               },
+  //               companyIdsAdmin: {
   //                   validators: []
   //               },
   //               email: {
