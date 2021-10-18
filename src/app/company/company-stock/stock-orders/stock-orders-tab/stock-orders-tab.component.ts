@@ -23,7 +23,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   showedOrders = 0;
   allOrders = 0;
 
-  purchaseOrderOnly = true;
+  purchaseOrderOnly = false;
   purchaseOrderOnly$ = new BehaviorSubject<boolean>(this.purchaseOrderOnly);
 
   availableOnly = true;
