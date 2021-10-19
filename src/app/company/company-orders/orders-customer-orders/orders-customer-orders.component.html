@@ -77,17 +77,15 @@
         </div>
       </div>
 
-<!--      <app-quote-stock-order-list-->
-<!--              mode="CUSTOMER"-->
-<!--              [reloadPingList$]="reloadDataPing$"-->
-<!--              (countAll)="onCount($event)"-->
-<!--              [facilityId$]="facilityIdPing$"-->
-<!--              (showing)="onShow($event)"-->
-<!--              [semiProductId$]="semiProductId$"-->
-<!--              [organizationId]="organizationId"-->
-<!--              [companyCustomerId$]="companyCustomerId$"-->
-<!--              [openOnly$]="openOnly$">-->
-<!--      </app-quote-stock-order-list>-->
+      <app-quote-order-list
+              mode="CUSTOMER"
+              (countAll)="onCount($event)"
+              [facilityId$]="selectedFacilityId$"
+              (showing)="onShow($event)"
+              [companyId]="companyId"
+              [companyCustomerId$]="companyCustomerId$"
+              [openOnly$]="openOnly$">
+      </app-quote-order-list>
 
     </div>
   </div>
