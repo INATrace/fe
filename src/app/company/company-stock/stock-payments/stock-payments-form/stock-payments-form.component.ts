@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { AssociatedCompaniesService } from 'src/app/shared-services/associated-companies.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
@@ -20,6 +19,7 @@ import PreferredWayOfPaymentEnum = ApiStockOrder.PreferredWayOfPaymentEnum;
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
+import { Subject } from 'rxjs/internal/Subject';
 
 export enum ModeEnum {
   PURCHASE = 'PURCHASE',
@@ -31,7 +31,7 @@ export enum ModeEnum {
   templateUrl: './stock-payments-form.component.html',
   styleUrls: ['./stock-payments-form.component.scss']
 })
-export class StockPaymentsFormComponent implements OnInit {
+export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   @Input()
   paymentForm: FormGroup;
@@ -76,11 +76,13 @@ export class StockPaymentsFormComponent implements OnInit {
   labelDocumentStr = $localize`:@@paymentForm.attachment-uploader.document.label:Document (PDF/PNG/JPG)`;
   labelDocumentRequiredStr = $localize`:@@paymentForm.attachment-uploader.document.required.label:Document (PDF/PNG/JPG)*`;
 
-  paymentTypesCodebook = EnumSifrant.fromObject(this.paymentTypes);
+  paymentTypesCodebook = EnumSifrant.fromObject({});
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
   codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
   codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
   codebookCurrencyCodes = EnumSifrant.fromObject(this.currencyCodes);
+  
+  private destroy$ = new Subject<boolean>();
 
   constructor(
       private route: ActivatedRoute,
@@ -158,6 +160,12 @@ export class StockPaymentsFormComponent implements OnInit {
         }
 
       }
+    });
+  
+    this.searchCollectorsForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.paymentTypesCodebook = EnumSifrant.fromObject(
+          this.createPaymentTypes(value !== null)
+      );
     });
   }
 
@@ -296,11 +304,18 @@ export class StockPaymentsFormComponent implements OnInit {
     }
     return totalPaid;
   }
-
-  get paymentTypes() {
+  
+  createPaymentTypes(collector: boolean = false): object {
     const obj = {};
+    
     obj['CASH'] = $localize`:@@paymentForm.paymentTypes.cash:Cash`;
     obj['BANK'] = $localize`:@@paymentForm.paymentTypes.bank:Bank`;
+    if (collector) {
+      obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
+    }
+    obj['CHEQUE'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cheque:Cheque`;
+    obj['OFFSETTING'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.offsetting:Offsetting`;
+  
     return obj;
   }
 
@@ -353,4 +368,7 @@ export class StockPaymentsFormComponent implements OnInit {
     return PreferredWayOfPaymentEnum;
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
 }
