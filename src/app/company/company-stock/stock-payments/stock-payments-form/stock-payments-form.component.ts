@@ -5,7 +5,6 @@ import { take, takeUntil } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { AssociatedCompaniesService } from 'src/app/shared-services/associated-companies.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { environment } from 'src/environments/environment';
 import { formatDateWithDotsAtHour } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
@@ -50,22 +49,23 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   @Input()
   farmersCodebook: CompanyUserCustomersByRoleService;
   @Input()
+  payment: ApiPayment;
+  @Input()
   submitted: boolean;
   @Input()
   viewOnly: boolean;
   @Input()
-  openBalance: number;
-  @Input()
-  purchased: number;
-  @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
+  stockOrder: ApiStockOrder;
+  readonlyPaymentType: boolean;
   uploaderLabel: string;
   confirmedAt: string;
   confirmedByUser: string;
-  readonlyPaymentType: boolean;
   currency: string;
   unitLabel: string;
+  openBalance: number;
+  purchased: number;
 
   associatedCompaniesService: AssociatedCompaniesService;
   searchPreferredWayOfPayment = new FormControl(null);
@@ -101,6 +101,10 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.stockOrder = this.payment.stockOrder;
+    this.openBalance = this.stockOrder.balance;
+    this.purchased = this.stockOrder.fulfilledQuantity;
 
     this.initInitialData().then(() => {
 
@@ -183,37 +187,24 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   async initInitialData() {
 
-    const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(this.paymentForm.get('stockOrder').value.id)
-        .pipe(take(1))
-        .toPromise();
+    if (this.stockOrder) {
 
-    if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-      const stockOrder = stockOrderResp.data;
-
-      this.paymentForm.get('productionDate').setValue(stockOrder.productionDate);
-      this.paymentForm.get('preferredWayOfPayment').setValue(stockOrder.preferredWayOfPayment);
+      this.paymentForm.get('productionDate').setValue(this.stockOrder.productionDate);
+      this.paymentForm.get('preferredWayOfPayment').setValue(this.stockOrder.preferredWayOfPayment);
 
       if (this.mode === ModeEnum.PURCHASE) {
-        this.searchPreferredWayOfPayment.setValue(stockOrder.preferredWayOfPayment);
+        this.searchPreferredWayOfPayment.setValue(this.stockOrder.preferredWayOfPayment);
         this.searchPreferredWayOfPayment.disable();
 
-        if (stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        if (this.stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
           this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
           this.paymentForm.get('amountPaidToTheCollector').setValidators([Validators.required]);
 
-        } else if (stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        } else if (this.stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
           this.paymentForm.get('amountPaidToTheCollector').setValue(0);
           this.paymentForm.get('amountPaidToTheCollector').disable();
-        }
-
-        if (!this.openBalance) {
-          this.openBalance = stockOrder.balance;
-        }
-
-        if (!this.purchased) {
-          this.purchased = stockOrder.fulfilledQuantity;
         }
 
       } else {
@@ -229,21 +220,19 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
     this.confirmedAt = formatDateWithDotsAtHour(this.paymentForm.get('paymentConfirmedAtTime').value);
 
-    const userResp = await this.userControllerService.getProfileForUserUsingGET(this.paymentForm.get('paymentConfirmedByUser').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userResp && userResp.status === 'OK' && userResp.data) {
-      this.confirmedByUser = userResp.data.name + ' ' + userResp.data.surname;
+    const paymentConfirmedByUser = this.payment.paymentConfirmedByUser;
+    if (paymentConfirmedByUser) {
+      this.confirmedByUser = paymentConfirmedByUser.name + ' ' + paymentConfirmedByUser.surname;
     }
 
-    const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
-      this.confirmedByUser += ', ' + userCompanyResp.data.name;
-    }
+    // TODO: Confirmed by company (if it is still present)
+    // const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
+    //     .pipe(take(1))
+    //     .toPromise();
+    //
+    // if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
+    //   this.confirmedByUser += ', ' + userCompanyResp.data.name;
+    // }
   }
 
   setFarmer(event: ApiUserCustomer) {
