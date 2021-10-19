@@ -307,10 +307,14 @@ export class StockPaymentsFormComponent implements OnInit {
   get paymentPurposeTypes() {
     const obj = {};
     obj['ADVANCE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.advancedPayment:Advanced payment`;
-    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Cherry payment`;
+    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Base payment`;
     obj['SECOND_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.secondInstallment:Member bonus`;
-    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:AF Women premium`;
+    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:Women premium`;
     obj['INVOICE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
+    obj['ORGANIC_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.organicBonus:Organic bonus`;
+    obj['FT_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.ftBonus:FT bonus`;
+    obj['FT_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.ftPremium:FT premium`;
+    obj['OTHER_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.otherBonus:Other bonus`;
     return obj;
   }
 
