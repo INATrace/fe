@@ -8,6 +8,9 @@ import { OrdersAllOrdersComponent } from './orders-all-orders/orders-all-orders.
 import { OrdersCustomerOrdersComponent } from './orders-customer-orders/orders-customer-orders.component';
 import { LayoutModule } from '../../layout/layout.module';
 import { CompanyCommonModule } from '../company-common/company-common.module';
+import { SharedModule } from '../../shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -16,7 +19,10 @@ import { CompanyCommonModule } from '../company-common/company-common.module';
     CommonModule,
     CompanyOrdersRoutingModule,
     LayoutModule,
-    CompanyCommonModule
+    CompanyCommonModule,
+    SharedModule,
+    FontAwesomeModule,
+    NgbDropdownModule
   ]
 })
 export class CompanyOrdersModule { }

@@ -1,13 +1,21 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorisedLayoutComponent } from '../../../layout/authorised/authorised-layout/authorised-layout.component';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { TabCommunicationService } from '../../../shared/tab-communication.service';
+import { FormControl } from '@angular/forms';
+import { setNavigationParameter } from '../../../../shared/utils';
+import { ApiFacility } from '../../../../api/model/apiFacility';
+import { FacilityControllerService } from '../../../../api/api/facilityController.service';
+import { CompanyFacilitiesService } from '../../../shared-services/company-facilities.service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   template: ''
 })
 export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  faTimes = faTimes;
 
   rootTab = 0;
 
@@ -25,13 +33,28 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
     'customer-orders'
   ];
 
+  companyId: number;
+
+  // Controls for the facility dropdown select component
+  facilityCodebook: CompanyFacilitiesService;
+  facilityForStockOrderForm = new FormControl(null);
+  selectedFacilityId: number;
+  selectedFacilityId$ = new BehaviorSubject<number>(null);
+
+  allOrders = 0;
+  showedOrders = 0;
+
+  openOnly = true;
+  openOnly$ = new BehaviorSubject<boolean>(this.openOnly);
+
   // TABS
   @ViewChild(AuthorisedLayoutComponent)
   authorizedLayout;
 
   constructor(
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected facilityController: FacilityControllerService
   ) { }
 
   get tabCommunicationService(): TabCommunicationService {
@@ -39,6 +62,8 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
   }
 
   ngAfterViewInit() {
@@ -53,7 +78,23 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   targetNavigate(segment: string) {
-    this.router.navigate([segment], {relativeTo: this.route.parent}).then();
+    this.router.navigate([segment], { relativeTo: this.route.parent }).then();
+  }
+
+  facilityChanged(event: ApiFacility) {
+    if (event) {
+      this.selectedFacilityId = event.id;
+      this.selectedFacilityId$.next(event.id);
+    } else {
+      this.selectedFacilityId = null;
+      this.selectedFacilityId$.next(null);
+    }
+    setNavigationParameter(this.router, this.route, 'facilityId', String(this.selectedFacilityId));
+  }
+
+  setOpenOnly(openOnly: boolean) {
+    this.openOnly = openOnly;
+    this.openOnly$.next(openOnly);
   }
 
 }
