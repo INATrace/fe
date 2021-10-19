@@ -170,7 +170,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       }
     });
     
-    this.paymentForm.valueChanges.subscribe((values: any) => {
+    this.paymentForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values: any) => {
       const {currency, measureUnitType} = values.stockOrder;
       this.currency = currency;
       this.unitLabel = measureUnitType.label;
