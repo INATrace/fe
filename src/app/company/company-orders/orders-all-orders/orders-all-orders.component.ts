@@ -22,7 +22,7 @@ export class OrdersAllOrdersComponent extends OrdersTabComponent implements OnIn
   semiProductFrom = new FormControl(null);
   semiProductsInFacilityCodebook: FacilitySemiProductsCodebookService;
   semiProductId = null;
-  semiProductId$ = new BehaviorSubject<string>(null);
+  semiProductId$ = new BehaviorSubject<number>(null);
 
   facilityChangedSubs: Subscription;
 

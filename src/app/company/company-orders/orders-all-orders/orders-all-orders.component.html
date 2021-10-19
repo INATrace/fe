@@ -72,15 +72,14 @@
         </div>
       </div>
 
-<!--      <app-quote-stock-order-list-->
-<!--              [reloadPingList$]="reloadDataPing$"-->
-<!--              (countAll)="onCount($event)"-->
-<!--              [facilityId$]="facilityIdPing$"-->
-<!--              (showing)="onShow($event)"-->
-<!--              [semiProductId$]="semiProductId$"-->
-<!--              [organizationId]="organizationId"-->
-<!--              [openOnly$]="openOnly$">-->
-<!--      </app-quote-stock-order-list>-->
+      <app-quote-order-list
+              (countAll)="onCount($event)"
+              [facilityId$]="selectedFacilityId$"
+              (showing)="onShow($event)"
+              [semiProductId$]="semiProductId$"
+              [companyId]="companyId"
+              [openOnly$]="openOnly$">
+      </app-quote-order-list>
 
     </div>
   </div>

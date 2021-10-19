@@ -97,4 +97,12 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
     this.openOnly$.next(openOnly);
   }
 
+  onCount(event) {
+    this.allOrders = event;
+  }
+
+  onShow(event) {
+    this.showedOrders = event;
+  }
+
 }

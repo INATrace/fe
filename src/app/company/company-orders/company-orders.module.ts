@@ -11,10 +11,11 @@ import { CompanyCommonModule } from '../company-common/company-common.module';
 import { SharedModule } from '../../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.component';
 
 
 @NgModule({
-  declarations: [OrdersTabComponent, OrdersDashboardComponent, OrdersAllOrdersComponent, OrdersCustomerOrdersComponent],
+  declarations: [OrdersTabComponent, OrdersDashboardComponent, OrdersAllOrdersComponent, OrdersCustomerOrdersComponent, QuoteOrderListComponent],
   imports: [
     CommonModule,
     CompanyOrdersRoutingModule,
