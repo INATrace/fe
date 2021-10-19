@@ -33,23 +33,28 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
+
   @Input()
   companyId: number;
+
   @Input()
   selectedPayments: ApiPayment[];
+
   @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
-  @Input()
-  paymentStatusPing$ = new BehaviorSubject<string>('');
+
   @Input()
   deliveryDatesPing$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
+
   @Input()
   searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
   @Output()
   showing = new EventEmitter<number>();
+
   @Output()
   countAll = new EventEmitter<number>();
+
   @Output()
   selectedPaymentsChanged = new EventEmitter<ApiPayment[]>();
 
@@ -86,17 +91,15 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.reloadPingList$,
       this.paging$,
       this.sortingParams$,
-      this.paymentStatusPing$,
       this.wayOfPaymentPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting, paymentStatus, wayOfPayment, deliveryDates, query]) => {
+        map(([ping, page, sorting, wayOfPayment, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
             ...sorting,
-            paymentStatus,
             preferredWayOfPayment: wayOfPayment,
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
