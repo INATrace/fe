@@ -197,9 +197,8 @@
                 <div class="af-row" *ngIf="mode === modeEnum.PURCHASE">
                     <div class="af-c12">
                         <textinput
-                                label="Purchased (kg)"
+                                [label]="getUnitLabelString(currencyAndUnitStrs.purchasedLabel)"
                                 placeholder="Enter purchased quantity"
-                                i18n-label="@@paymentForm.textinput.purchased.label"
                                 i18n-placeholder="@@paymentForm.textinput.purchased.placeholder"
                                 style="width: 100%"
                                 [value]="purchased"
@@ -213,9 +212,8 @@
                 <div class="af-row" *ngIf="mode === modeEnum.PURCHASE">
                     <div class="af-c12">
                         <textinput
-                                label="Open balance (RWF)"
+                                [label]="getCurrencyString(currencyAndUnitStrs.openBalanceLabel)"
                                 placeholder="Enter balance"
-                                i18n-label="@@paymentForm.textinput.balance.label"
                                 i18n-placeholder="@@paymentForm.textinput.balance.placeholder"
                                 style="width: 100%"
                                 [value]="openBalance"
@@ -231,9 +229,8 @@
                     <div class="af-row" *ngIf="paymentForm.get('preferredWayOfPayment')?.value == preferredWayOfPayment.CASHVIACOLLECTOR">
                         <div class="af-c12">
                             <textinput
-                                    label="Amount already paid by collector to farmer (RWF)"
+                                    [label]="getCurrencyString(currencyAndUnitStrs.paidFromCollectorToFarmerLabel)"
                                     placeholder="Enter amount already paid"
-                                    i18n-label="@@paymentForm.textinput.amountAlready.label"
                                     i18n-placeholder="@@paymentForm.textinput.amountAlready.placeholder"
                                     style="width: 100%"
                                     [form]="paymentForm.get('amountPaidToTheFarmer')"
@@ -254,9 +251,8 @@
                     <div class="af-row" *ngIf="paymentForm.get('preferredWayOfPayment')?.value != preferredWayOfPayment.CASHVIACOLLECTOR">
                         <div class="af-c12">
                             <textinput
-                                    label="Amount paid to the farmer (RWF)"
+                                    [label]="getCurrencyString(currencyAndUnitStrs.paidToFarmerLabel)"
                                     placeholder="Enter paid amount"
-                                    i18n-label="@@paymentForm.textinput.amount.label"
                                     i18n-placeholder="@@paymentForm.textinput.amount.placeholder"
                                     style="width: 100%"
                                     [form]="paymentForm.get('amountPaidToTheFarmer')"
@@ -322,10 +318,9 @@
                 <div class="af-row" *ngIf="mode === modeEnum.PURCHASE">
                     <div class="af-c12">
                         <textinput
-                                label="Amount paid to the collector (RWF)"
+                                [label]="getCurrencyString(currencyAndUnitStrs.paidToCollectorLabel)"
                                 placeholder="Enter amount paid the collector"
                                 i18n-placeholder="@@paymentForm.textinput.amountPaidToTheCollector.placeholder"
-                                i18n-label="@@paymentForm.textinput.amountPaidToTheCollector.label"
                                 style="width: 100%"
                                 [form]="paymentForm.get('amountPaidToTheCollector')"
                                 [isInvalid]="submitted && paymentForm.get('amountPaidToTheCollector').invalid"
@@ -345,9 +340,8 @@
                 <div class="af-row" *ngIf="mode === modeEnum.PURCHASE">
                     <div class="af-c12">
                         <textinput
-                                label="Total paid (RWF)"
+                                [label]="getCurrencyString(currencyAndUnitStrs.totalPaidLabel)"
                                 placeholder="Enter total amount paid"
-                                i18n-label="@@paymentForm.textinput.totalPaid.label"
                                 i18n-placeholder="@@paymentForm.textinput.totalPaid.placeholder"
                                 style="width: 100%"
                                 [value]="totalPaid"

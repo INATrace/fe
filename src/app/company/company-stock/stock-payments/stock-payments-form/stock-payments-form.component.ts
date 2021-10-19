@@ -65,6 +65,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   confirmedByUser: string;
   readonlyPaymentType: boolean;
   currency: string;
+  unitLabel: string;
 
   associatedCompaniesService: AssociatedCompaniesService;
   searchPreferredWayOfPayment = new FormControl(null);
@@ -76,6 +77,15 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   labelDocumentStr = $localize`:@@paymentForm.attachment-uploader.document.label:Document (PDF/PNG/JPG)`;
   labelDocumentRequiredStr = $localize`:@@paymentForm.attachment-uploader.document.required.label:Document (PDF/PNG/JPG)*`;
 
+  currencyAndUnitStrs = {
+    purchasedLabel: $localize`:@@paymentForm.textinput.purchased.label:Purchased`,
+    openBalanceLabel: $localize`:@@paymentForm.textinput.balance.label:Open balance`,
+    paidToFarmerLabel: $localize`:@@paymentForm.textinput.amount.label:Amount paid to the farmer`,
+    paidToCollectorLabel: $localize`:@@paymentForm.textinput.amountPaidToTheCollector.label:Amount paid to the collector`,
+    totalPaidLabel: $localize`:@@paymentForm.textinput.totalPaid.label:Total paid`,
+    paidFromCollectorToFarmerLabel: $localize`:@@paymentForm.textinput.amountAlready.label:Amount already paid by collector to farmer`
+  };
+  
   paymentTypesCodebook = EnumSifrant.fromObject({});
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
   codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
@@ -93,8 +103,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
-    this.currency = this.paymentForm.contains('currency') ? this.paymentForm.get('currency').value : '?';
 
     this.initInitialData().then(() => {
 
@@ -161,7 +169,13 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
       }
     });
-  
+    
+    this.paymentForm.valueChanges.subscribe((values: any) => {
+      const {currency, measureUnitType} = values.stockOrder;
+      this.currency = currency;
+      this.unitLabel = measureUnitType.label;
+    });
+    
     this.searchCollectorsForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.paymentTypesCodebook = EnumSifrant.fromObject(
           this.createPaymentTypes(value !== null)
@@ -317,6 +331,20 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     obj['OFFSETTING'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.offsetting:Offsetting`;
   
     return obj;
+  }
+  
+  getCurrencyString(trString: string): string {
+    if (this.currency) {
+      return `${trString} (${this.currency})`;
+    }
+    return trString;
+  }
+  
+  getUnitLabelString(trString: string): string {
+    if (this.unitLabel) {
+      return `${trString} (${this.unitLabel})`;
+    }
+    return trString;
   }
 
   get paymentPurposeTypes() {
