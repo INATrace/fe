@@ -48,10 +48,10 @@ export const ApiFacilityLocationValidationScheme = {
     fields: {
         address: ApiAddressValidationScheme,
         latitude: {
-            validators: [Validators.required]
+            validators: []
         },
         longitude: {
-            validators: [Validators.required]
+            validators: []
         },
         publiclyVisible: {
             validators: [Validators.required]

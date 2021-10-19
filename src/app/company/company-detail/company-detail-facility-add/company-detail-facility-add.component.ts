@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacility } from '../../../../api/model/apiFacility';
 import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
 import { ApiFacilityValidationScheme } from './validation';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
 import { ApiAddress } from '../../../../api/model/apiAddress';
 import { ApiCompanyBase } from '../../../../api/model/apiCompanyBase';
@@ -16,14 +16,17 @@ import { SemiProductControllerService } from '../../../../api/api/semiProductCon
 import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
   selector: 'app-company-detail-facility-add',
   templateUrl: './company-detail-facility-add.component.html',
   styleUrls: ['./company-detail-facility-add.component.scss']
 })
-export class CompanyDetailFacilityAddComponent implements OnInit {
+export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
+  private destroy$ = new Subject<boolean>();
+  
   public edit: boolean;
   public title: string;
   public form: FormGroup;
@@ -53,6 +56,23 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
     } else {
       this.initializeEdit();
     }
+    this.registerValidatorsOnUpdate();
+  }
+  
+  registerValidatorsOnUpdate() {
+    this.fLoc.controls.publiclyVisible.valueChanges
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((val: string) => {
+          if (val === 'true') {
+            this.fLoc.controls.latitude.setValidators([Validators.required]);
+            this.fLoc.controls.longitude.setValidators([Validators.required]);
+          } else {
+            this.fLoc.controls.latitude.clearValidators();
+            this.fLoc.controls.longitude.clearValidators();
+          }
+          this.fLoc.controls.latitude.updateValueAndValidity();
+          this.fLoc.controls.longitude.updateValueAndValidity();
+        });
   }
 
   initializeNew() {
@@ -135,5 +155,13 @@ export class CompanyDetailFacilityAddComponent implements OnInit {
   deleteSP(sp: ApiSemiProduct, idx: number) {
     this.semiProducts.splice(idx, 1);
   }
-
+  
+  get fLoc(): FormGroup {
+    return this.form.controls.facilityLocation as FormGroup;
+  }
+  
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
+  
 }
