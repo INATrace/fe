@@ -1041,6 +1041,7 @@
     "productLabelPurchaseOrder.delete.error.message": "Urashaka koko gusiba ubusabe?",
     "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
     "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
+    "productLabelPurchaseOrder.aggregated.totalAmountPaid": "Total amount paid",
     "productLabelStock.title.payments": "Ubwishyu",
     "productLabelStock.button.newPayment": "{$START_TAG_SPAN}+ Ongeraho ubwishyu{$CLOSE_TAG_SPAN}",
     "productLabelStock.subTitle.listOfPayments": "Urutonde rw'ubwishyu",

@@ -23,3 +23,16 @@
 .spacer {
   height: 1.5rem
 }
+
+.aggregated-orders {
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 7px;
+
+  .aggregated-orders-table {
+    width: 50%;
+    tr {
+      background-color: white;
+    }
+  }
+}

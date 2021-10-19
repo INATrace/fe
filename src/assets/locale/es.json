@@ -36,6 +36,7 @@
     "productLabelPurchaseOrder.delete.error.message": "¿Está seguro que desea eliminar el pedido?",
     "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
     "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
+    "productLabelPurchaseOrder.aggregated.totalAmountPaid": "Total amount paid",
     "activeMeasureUnitTypes.input.placehoder": "Seleccione unidad de medida",
     "activeFacilityTypes.input.placehoder": "Seleccione tipo de instalación",
     "activeSemiProduct.input.placehoder": "Seleccione semiproducto",

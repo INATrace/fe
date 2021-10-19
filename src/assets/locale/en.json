@@ -1417,6 +1417,7 @@
     "productLabelPurchaseOrder.delete.error.message": "Are you sure you want to delete the order?",
     "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
     "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
+    "productLabelPurchaseOrder.aggregated.totalAmountPaid": "Total amount paid",
     "customerOrderView.tab0.title": "Order details",
     "customerOrderView.tab1.title": "Discussions",
     "customerOrderView.tab2.title": "F-P-Q Explorer",

@@ -1040,6 +1040,7 @@
     "productLabelPurchaseOrder.delete.error.message": "Sind Sie sicher, dass Sie den Auftrag löschen möchten?",
     "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
     "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
+    "productLabelPurchaseOrder.aggregated.totalAmountPaid": "Total amount paid",
     "productLabelStock.title.payments": "Zahlungen",
     "productLabelStock.button.newPayment": "{$START_TAG_SPAN}+ Zahlung hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStock.subTitle.listOfPayments": "Liste der Zahlungen",
