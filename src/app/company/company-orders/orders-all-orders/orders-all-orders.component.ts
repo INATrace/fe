@@ -67,7 +67,6 @@ export class OrdersAllOrdersComponent extends OrdersTabComponent implements OnIn
       this.semiProductFrom.setValue(null);
     }
 
-    this.semiProductId = event ? event.id : null;
     this.semiProductId$.next(this.semiProductId);
     setNavigationParameter(this.router, this.route, 'semiProductId', this.semiProductId);
   }
