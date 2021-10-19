@@ -70,8 +70,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   associatedCompaniesService: AssociatedCompaniesService;
   searchPreferredWayOfPayment = new FormControl(null);
 
-  fileUploadUrl: string = environment.relativeFileUploadUrl;
-
   uploaderLabelStr = $localize`:@@paymentForm.attachment-uploader.receipt.label:Signed receipt (PDF/PNG/JPG)`;
   uploaderLabelRequiredStr = $localize`:@@paymentForm.attachment-uploader.receipt.required.label:Signed receipt (PDF/PNG/JPG)*`;
   labelDocumentStr = $localize`:@@paymentForm.attachment-uploader.document.label:Document (PDF/PNG/JPG)`;
@@ -201,7 +199,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
         if (stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
-          this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANK);
+          this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
           this.paymentForm.get('amountPaidToTheCollector').setValidators([Validators.required]);
 
         } else if (stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
@@ -219,7 +217,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
         }
 
       } else {
-        this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANK);
+        this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
         this.readonlyPaymentType = true;
       }
     }
@@ -323,7 +321,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     const obj = {};
     
     obj['CASH'] = $localize`:@@paymentForm.paymentTypes.cash:Cash`;
-    obj['BANK'] = $localize`:@@paymentForm.paymentTypes.bank:Bank`;
+    obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
     if (collector) {
       obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
     }
