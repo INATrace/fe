@@ -11,9 +11,9 @@ import { SortOption } from '../../../../shared/result-sorter/result-sorter-types
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
-import {ModeEnum} from "../stock-payments-form/stock-payments-form.component";
-import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
+import {ModeEnum} from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
+import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginatedListApiPayment';
 
 
 @Component({
@@ -65,6 +65,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   page = 0;
   pageSize = 10;
 
+  aggregatedTotalPaid = 0;
   currentData: ApiPayment[];
   sortOptions: SortOption[];
   clearCheckboxesSubscription: Subscription;
@@ -133,6 +134,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
           this.currentData = resp.data.items;
 
           return resp.data;
+        }),
+        tap((data: ApiPaginatedListApiPayment ) => {
+          this.aggregatedTotalPaid = this.calculateAggregatedTotalPaid(data.items);
         }),
         tap(() => this.globalEventManager.showLoading(false))
     );
@@ -359,6 +363,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   reloadPage() {
     this.reloadPingList$.next(true);
+  }
+  
+  calculateAggregatedTotalPaid(items: ApiPayment[]): number {
+    return items.reduce((acc: number, item: ApiPayment) => {
+      return item.amountPaidToTheFarmer + acc;
+    }, 0);
   }
 
 }

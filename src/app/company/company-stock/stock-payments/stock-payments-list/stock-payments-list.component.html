@@ -55,4 +55,22 @@
         </ngb-pagination>
     </div>
 
+    <div class="sub-title-page content-element--subtitle mb-2"
+        i18n="@@productLabelPurchaseOrder.aggregated.title"
+    >Summed up quantities</div>
+    <div class="aggregated-orders">
+        <table class="aggregated-orders-table">
+            <thead>
+                <tr>
+                    <th i18n="@@productLabelPurchaseOrder.aggregated.totalAmountPaid">Total amount paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{aggregatedTotalPaid}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </ng-container>
