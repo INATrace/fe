@@ -80,6 +80,7 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
   }
 
   async firstSendToServer() {
+    this.submitted = true;
     if (this.form && this.form.value && this.form.value.id && this.form.value.companyRole) {
       const id = this.route.snapshot.params.id;
       if (this.contentObject && !this.contentObject.name) {
@@ -88,12 +89,18 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
           if (resAdd.status === 'OK') {
             const resSet = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE',
                 { companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole }).pipe(take(1)).toPromise();
-            if (resSet.status === 'OK') { this.save(); }
+            if (resSet.status === 'OK') {
+              this.submitted = false;
+              this.save();
+            }
           }
         } else {
           const res = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE',
               { companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole }).pipe(take(1)).toPromise();
-          if (res.status === 'OK') { this.save(); }
+          if (res.status === 'OK') {
+            this.submitted = false;
+            this.save();
+          }
         }
     }
   }
