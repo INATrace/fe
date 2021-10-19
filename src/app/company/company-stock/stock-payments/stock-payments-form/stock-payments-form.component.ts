@@ -49,23 +49,24 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   @Input()
   farmersCodebook: CompanyUserCustomersByRoleService;
   @Input()
-  payment: ApiPayment;
+  stockOrder: ApiStockOrder;
   @Input()
-  submitted: boolean;
+  openBalance: number;
+  @Input()
+  purchased: number;
   @Input()
   viewOnly: boolean;
   @Input()
+  submitted: boolean;
+  @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
-  stockOrder: ApiStockOrder;
   readonlyPaymentType: boolean;
   uploaderLabel: string;
   confirmedAt: string;
   confirmedByUser: string;
   currency: string;
   unitLabel: string;
-  openBalance: number;
-  purchased: number;
 
   associatedCompaniesService: AssociatedCompaniesService;
   searchPreferredWayOfPayment = new FormControl(null);
@@ -101,10 +102,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
-    this.stockOrder = this.payment.stockOrder;
-    this.openBalance = this.stockOrder.balance;
-    this.purchased = this.stockOrder.fulfilledQuantity;
 
     this.initInitialData().then(() => {
 
@@ -220,8 +217,8 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
     this.confirmedAt = formatDateWithDotsAtHour(this.paymentForm.get('paymentConfirmedAtTime').value);
 
-    const paymentConfirmedByUser = this.payment.paymentConfirmedByUser;
-    if (paymentConfirmedByUser) {
+    if (this.paymentForm.contains('paymentConfirmedByUser')) {
+      const paymentConfirmedByUser = this.paymentForm.get('paymentConfirmedByUser').value;
       this.confirmedByUser = paymentConfirmedByUser.name + ' ' + paymentConfirmedByUser.surname;
     }
 
@@ -247,14 +244,14 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   setCollector(event: ApiUserCustomer) {
     if (event) {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(event);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(event);
       this.paymentForm.get('receiptDocumentType').setValue(null);
     } else {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(null);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(null);
       this.paymentForm.get('receiptDocumentType').setValue(ReceiptDocumentTypeEnum.RECEIPT);
     }
-    this.paymentForm.get('representativeOfRecipientCompany').markAsDirty();
-    this.paymentForm.get('representativeOfRecipientCompany').updateValueAndValidity();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').markAsDirty();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').updateValueAndValidity();
   }
 
   async setCompany(event) {

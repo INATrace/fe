@@ -177,6 +177,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     // Collector
     if (this.stockOrder.representativeOfProducerUserCustomer) {
       this.searchCollectorsForm.setValue(this.stockOrder.representativeOfProducerUserCustomer);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(this.stockOrder.representativeOfProducerUserCustomer);
     }
 
     // Farmer
