@@ -1039,6 +1039,8 @@
     "productLabelPurchaseOrder.noOrders": "Nta busabe bwabonetse",
     "productLabelPurchaseOrder.sortOptions.actions.name": "Ibikorwa",
     "productLabelPurchaseOrder.delete.error.message": "Urashaka koko gusiba ubusabe?",
+    "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
+    "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
     "productLabelStock.title.payments": "Ubwishyu",
     "productLabelStock.button.newPayment": "{$START_TAG_SPAN}+ Ongeraho ubwishyu{$CLOSE_TAG_SPAN}",
     "productLabelStock.subTitle.listOfPayments": "Urutonde rw'ubwishyu",

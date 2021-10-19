@@ -81,10 +81,23 @@
     </ngb-pagination>
   </div>
 
-  <div *ngIf="aggregatedOrders && aggregatedOrders.length > 0">
-    <div *ngFor="let order of aggregatedOrders" class="d-flex">
-      <div>{{order.semiProduct}}:
-      </div>&nbsp;<div>{{order.amount}} {{order.unit}}</div>
-    </div>
+  <div class="sub-title-page content-element--subtitle mb-2"
+      i18n="@@productLabelPurchaseOrder.aggregated.title"
+  >Summed up quantities</div>
+  <div class="aggregated-orders">
+    <table class="aggregated-orders-table">
+      <thead>
+        <tr>
+          <th i18n="@@productLabelPurchaseOrder.sortOptions.semiProduct.name">Semi-product</th>
+          <th i18n="@@productLabelPurchaseOrder.aggregated.totalQuantity">Total quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of aggregatedOrders">
+          <td>{{order.semiProduct}}:</td>
+          <td>{{order.amount}} {{order.unit}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </ng-container>

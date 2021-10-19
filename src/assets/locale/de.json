@@ -1038,6 +1038,8 @@
     "productLabelPurchaseOrder.noOrders": "Keine Aufträge gefunden",
     "productLabelPurchaseOrder.sortOptions.actions.name": "Aktionen",
     "productLabelPurchaseOrder.delete.error.message": "Sind Sie sicher, dass Sie den Auftrag löschen möchten?",
+    "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
+    "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
     "productLabelStock.title.payments": "Zahlungen",
     "productLabelStock.button.newPayment": "{$START_TAG_SPAN}+ Zahlung hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStock.subTitle.listOfPayments": "Liste der Zahlungen",

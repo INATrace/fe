@@ -34,6 +34,8 @@
     "productLabelPurchaseOrder.deleteProcessingOrder.gettingProcessingOrder.error.message": "Se produjo un error al eliminar.",
     "productLabelPurchaseOrder.deleteProcessingOrder.error.message": "¿Está seguro de que quiere eliminar el pedido? Esto eliminará la transacción de procesamiento y posiblemente todos los pedidos relacionados.",
     "productLabelPurchaseOrder.delete.error.message": "¿Está seguro que desea eliminar el pedido?",
+    "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
+    "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
     "activeMeasureUnitTypes.input.placehoder": "Seleccione unidad de medida",
     "activeFacilityTypes.input.placehoder": "Seleccione tipo de instalación",
     "activeSemiProduct.input.placehoder": "Seleccione semiproducto",

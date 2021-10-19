@@ -1415,6 +1415,8 @@
     "productLabelPurchaseOrder.deleteProcessingOrder.gettingProcessingOrder.error.message": "Error occured while deleting.",
     "productLabelPurchaseOrder.deleteProcessingOrder.error.message": "Are you sure you want to delete the order? This will delete processing transaction and possibly all orders generated from it.",
     "productLabelPurchaseOrder.delete.error.message": "Are you sure you want to delete the order?",
+    "productLabelPurchaseOrder.aggregated.title": "Summed up quantities",
+    "productLabelPurchaseOrder.aggregated.totalQuantity": "Total quantity",
     "customerOrderView.tab0.title": "Order details",
     "customerOrderView.tab1.title": "Discussions",
     "customerOrderView.tab2.title": "F-P-Q Explorer",
