@@ -38,7 +38,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
 
   @Input()
-  availableOnly$ = new BehaviorSubject<boolean>(true);
+  availableOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
   semiProductId$ = new BehaviorSubject<number>(null);
