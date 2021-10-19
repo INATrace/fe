@@ -182,7 +182,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         }
       }),
       tap((data: ApiPaginatedListApiStockOrder) => {
-        this.aggregatedOrders = this.aggregateOrderItems(data.items);
+        if (data) {
+          this.aggregatedOrders = this.aggregateOrderItems(data.items);
+        }
       }),
       tap(() => this.globalEventsManager.showLoading(false))
     );

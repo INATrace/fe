@@ -136,7 +136,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
           return resp.data;
         }),
         tap((data: ApiPaginatedListApiPayment ) => {
-          this.aggregatedTotalPaid = this.calculateAggregatedTotalPaid(data.items);
+          if (data) {
+            this.aggregatedTotalPaid = this.calculateAggregatedTotalPaid(data.items);
+          }
         }),
         tap(() => this.globalEventManager.showLoading(false))
     );
