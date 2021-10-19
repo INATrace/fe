@@ -223,7 +223,10 @@ export namespace ApiPayment {
      */
     export enum PaymentTypeEnum {
         CASH = 'CASH',
-        BANK = 'BANK'
+        CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
+        BANKTRANSFER = 'BANK_TRANSFER',
+        CHEQUE = 'CHEQUE',
+        OFFSETTING = 'OFFSETTING'
     }
 
     /**

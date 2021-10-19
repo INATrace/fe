@@ -8327,12 +8327,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8342,19 +8339,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8364,19 +8358,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8386,19 +8377,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8408,19 +8396,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8430,19 +8415,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8452,19 +8434,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -8474,8 +8453,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -11758,7 +11737,10 @@
             "description": "Payment type",
             "enum": [
               "CASH",
-              "BANK"
+              "CASH_VIA_COLLECTOR",
+              "BANK_TRANSFER",
+              "CHEQUE",
+              "OFFSETTING"
             ],
             "type": "string"
           },
@@ -15170,6 +15152,14 @@
           },
           "companyIds": {
             "description": "User's company ids",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "companyIdsAdmin": {
+            "description": "User's company ids where user is company admin",
             "items": {
               "format": "int64",
               "type": "integer"
