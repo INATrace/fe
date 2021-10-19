@@ -80,4 +80,11 @@
             [rotate]="true">
     </ngb-pagination>
   </div>
+
+  <div *ngIf="aggregatedOrders && aggregatedOrders.length > 0">
+    <div *ngFor="let order of aggregatedOrders" class="d-flex">
+      <div>{{order.semiProduct}}:
+      </div>&nbsp;<div>{{order.amount}} {{order.unit}}</div>
+    </div>
+  </div>
 </ng-container>
