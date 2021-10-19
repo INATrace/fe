@@ -40,6 +40,8 @@ import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
+import { AdminGuardService } from './shared-services/admin-guard.service';
+import { ActivatedUserGuardService } from './shared-services/activated-user-guard.service';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -216,6 +218,7 @@ const routes: Routes = [
     path: 'companies/:id/company',
     component: CompanyDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -225,6 +228,7 @@ const routes: Routes = [
     path: 'companies/:id/translate',
     component: CompanyDetailTranslateComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -234,6 +238,7 @@ const routes: Routes = [
     path: 'companies/:id/processingActions',
     component: CompanyProcessingActionsComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -243,6 +248,7 @@ const routes: Routes = [
     path: 'companies/:id/processingActions/new',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     // canDeactivate: [DeactivateGuardService],
     data: {
       action: 'new',
@@ -253,6 +259,7 @@ const routes: Routes = [
   path: 'companies/:id/processingActions/:paId/edit',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     // canDeactivate: [DeactivateGuardService],
     data: {
       action: 'edit',
@@ -263,6 +270,7 @@ const routes: Routes = [
     path: 'companies/:id/users',
     component: CompanyDetailUsersComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: null
     }
@@ -271,6 +279,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities',
     component: CompanyDetailFacilitiesComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: null
     }
@@ -279,6 +288,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/add',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: {
         title: '',
@@ -290,6 +300,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/:facilityId/edit',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
+    canActivate: [AdminGuardService],
     data: {
       drobtinice: {
         title: '',
@@ -299,22 +310,27 @@ const routes: Routes = [
   },
   {
     path: 'my-stock',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-stock/company-stock.module').then(m => m.CompanyStockModule)
   },
   {
     path: 'my-orders',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-orders/company-orders.module').then(m => m.CompanyOrdersModule)
   },
   {
     path: 'my-farmers',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-farmers/company-farmers.module').then(m => m.CompanyFarmersModule)
   },
   {
     path: 'my-collectors',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-collectors/company-collectors.module').then(m => m.CompanyCollectorsModule)
   },
   {
     path: 'my-customers',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-customers/company-customers.module').then(m => m.CompanyCustomersModule)
   },
   ///////////////////////
@@ -324,6 +340,7 @@ const routes: Routes = [
   ///////////////////////
   {
     path: 'product-labels',
+    canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./m-product/m-product.module').then(m => m.MProductModule)
   },
   {

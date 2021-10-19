@@ -65,7 +65,7 @@
       </ng-container>
       <div class="line"></div>
       <button ngbDropdownItem (click)="aboutUser()" i18n="@@userBox.dropdown.userProfile">User profile</button>
-      <button ngbDropdownItem (click)="companyProfile()" i18n="@@userBox.dropdown.companyProfile">Company profile</button>
+      <button *ngIf="isAdmin || isCompanyAdmin" ngbDropdownItem (click)="companyProfile()" i18n="@@userBox.dropdown.companyProfile">Company profile</button>
       <div *ngIf="showCompaniesTabs && !isAdmin" class="af-mobnav--block">
         <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('users')" i18n="@@companyDetailTab.tab2.title">Users</button>
         <button class="subMenuTab" [disabled]="isConfirmedOnly" ngbDropdownItem (click)="goToCompany('facilities')" i18n="@@companyDetailTab.tab3.title">Facilities</button>

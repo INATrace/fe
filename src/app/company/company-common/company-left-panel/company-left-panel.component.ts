@@ -2,11 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { Subscription } from 'rxjs';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
-import { take } from 'rxjs/operators';
+import { shareReplay, take } from 'rxjs/operators';
 import { ApiResponseApiCompanyGet } from '../../../../api/model/apiResponseApiCompanyGet';
 import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/auth.service';
+import { ApiUserGet } from '../../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-company-left-panel',
@@ -24,9 +26,13 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
 
   private companySubs: Subscription;
 
+  isSystemAdmin = false;
+  isCompanyAdmin = false;
+
   constructor(
     private router: Router,
     private globalEventManager: GlobalEventManagerService,
+    private authService: AuthService,
     private companyControllerService: CompanyControllerService
   ) { }
 
@@ -49,6 +55,15 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
           this.imgStorageKey = response.data.logo.storageKey;
         }
       });
+
+    this.authService.userProfile$.subscribe(value => {
+      if (value.role === ApiUserGet.RoleEnum.ADMIN) {
+        this.isSystemAdmin = true;
+      }
+      if (value.companyIdsAdmin.includes(this.companyId)) {
+        this.isCompanyAdmin = true;
+      }
+    }, shareReplay(1));
   }
 
   ngOnDestroy(): void {
