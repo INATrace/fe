@@ -573,7 +573,7 @@
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processingEvidence">Processing evidence</h2>
 
           <div class="af-form-element">
-            <ng-container *ngIf="this.requiredProcessingEvidenceArray.length> 0">
+            <ng-container *ngIf="this.requiredProcessingEvidenceArray.length > 0">
               <ng-container *ngFor="let item of requiredProcessingEvidenceArray.controls; index as idx">
                 <div class="d-flex">
 
@@ -595,7 +595,7 @@
                     </div>
                     <div class="af-c8">
                       <textinput
-                              [value]="item.get('type').value?.label"
+                              [value]="item.get('evidenceTypeLabel').value"
                               label="Type"
                               [valueTextInput]="true"
                               i18n-label="@@productLabelStockProcessingOrderDetail.label.type"

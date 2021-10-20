@@ -796,36 +796,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async setRequiredProcessingEvidence(action: ApiProcessingAction) {
 
-    // TODO: implement initialization for processing evidence types
-    // (this.requiredProcessingEvidenceArray as FormArray).clear();
-    // if (action && action.requiredDocTypeIds) {
-    //   let types: ChainProcessingEvidenceType[] = [];
-    //   if (action.requiredDocTypes) { types = action.requiredDocTypes; }
-    //   else {
-    //     for (const id of action.requiredDocTypeIds) {
-    //       const res = await this.processingEvidenceTypeService.getProcessingEvidenceTypeUsingGET(Number(id)).pipe(take(1)).toPromise();
-    //       if (res && res.status === 'OK' && res.data) {
-    //         types.push(res.data as any); // FIXME: check this after other entities are migrated
-    //       }
-    //     }
-    //   }
-    //   if (types.length > 0) {
-    //     const validationConditions: DocTypeIdsWithRequired[] = action.requiredDocTypeIdsWithRequired || [];
-    //     for (const act of types) {
-    //       const item = validationConditions.find(x => x.processingEvidenceTypeId === dbKey(act));
-    //       this.requiredProcessingEvidenceArray.push(new FormGroup({
-    //         date: new FormControl(this.calcToday(), item && item.required ? Validators.required : null),
-    //         type: new FormControl(this.documentRequestFromProcessingEvidence(act)),
-    //         // type_label: new FormControl(act.label),
-    //         // type_id: new FormControl(act.id),
-    //         // type__id: new FormControl(dbKey(act)),
-    //         document: new FormControl(null, item && item.required ? Validators.required : null)
-    //       }));
-    //     }
-    //   }
-    // } else {
-    //   (this.requiredProcessingEvidenceArray as FormArray).clear();
-    // }
+    (this.requiredProcessingEvidenceArray as FormArray).clear();
+
+    if (action && action.requiredDocumentTypes && action.requiredDocumentTypes.length > 0) {
+
+      for (const requiredDocumentType of action.requiredDocumentTypes) {
+        this.requiredProcessingEvidenceArray.push(new FormGroup({
+          evidenceTypeId: new FormControl(requiredDocumentType.id),
+          evidenceTypedCode: new FormControl(requiredDocumentType.code),
+          evidenceTypeLabel: new FormControl(requiredDocumentType.label),
+          date: new FormControl(new Date(), requiredDocumentType.mandatory ? Validators.required : null),
+          document: new FormControl(null, requiredDocumentType.mandatory ? Validators.required : null)
+        }));
+      }
+
+    } else {
+      (this.requiredProcessingEvidenceArray as FormArray).clear();
+    }
   }
 
   async setProcessingAction(event) {
