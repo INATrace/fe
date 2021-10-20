@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { dateAtMidnightISOString } from '../../../../../shared/utils';
 import { QuoteOrdersOnOrganizationStandaloneService } from '../../../../shared-services/quote-orders-on-organization-standalone.service';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
+import { map, startWith } from 'rxjs/operators';
+import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -27,7 +31,7 @@ export interface SeasonalData {
   templateUrl: './stock-purchases-tab.component.html',
   styleUrls: ['./stock-purchases-tab.component.scss']
 })
-export class StockPurchasesTabComponent extends StockCoreTabComponent implements OnInit {
+export class StockPurchasesTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
   rootTab = 0;
 
@@ -55,6 +59,16 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
 
   orderListForm = new FormControl(null);
   orderListCheckbox = new FormControl(true);
+  semiProductFrom = new FormControl(null);
+  facilitySemiProducts: FacilitySemiProductsCodebookService = null;
+  semiProductId$: Observable<number> = this.semiProductFrom.valueChanges.pipe(
+      startWith(null),
+      map(semiProduct => {
+        if (semiProduct) { return semiProduct.id; }
+        return null;
+      })
+  );
+  private facilityIdChangeSub: Subscription;
 
   codebookCoop: EnumSifrant;
 
@@ -100,6 +114,7 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
+    private codebookTranslations: CodebookTranslations
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -131,6 +146,8 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
 
   ngOnInit(): void {
     super.ngOnInit();
+  
+    this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
   }
 
   newPurchaseOrder() {
@@ -236,5 +253,26 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       this.globalEventManager.showLoading(false);
     }
   }
-
+  
+  private setFacilitySemiProducts(facilityId: number) {
+    if (facilityId !== null && facilityId !== undefined) {
+      this.facilitySemiProducts = new FacilitySemiProductsCodebookService(this.facilityControllerService, facilityId, this.codebookTranslations);
+    } else {
+      this.facilitySemiProducts = null;
+    }
+  }
+  
+  whenFacilityForStockOrderChanged(event: ApiFacility) {
+    if (event === null) {
+      this.semiProductFrom.setValue(null);
+    }
+    this.facilityForStockOrderChanged(event);
+  }
+  
+  ngOnDestroy() {
+    if (this.facilityIdChangeSub) {
+      this.facilityIdChangeSub.unsubscribe();
+    }
+  }
+  
 }

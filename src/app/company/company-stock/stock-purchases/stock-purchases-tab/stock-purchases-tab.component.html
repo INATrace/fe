@@ -27,7 +27,7 @@
                                i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.facilityForStockOrder"
                                [formControlInput]="facilityForStockOrderForm"
                                [codebookService]="facilityCodebook"
-                               (onChange)="facilityForStockOrderChanged($event)"
+                               (onChange)="whenFacilityForStockOrderChanged($event)"
                                style="min-width: 150px;">
                 </single-choice>
               </div>
@@ -96,11 +96,14 @@
                     (valueChange)="searchPurchaseInput($event)">
             </app-search-textinput>
 
-            <button class="af-actions-btn"
-                    [class.af-actions-btn--disabled]="selectedOrders.length === 0"
-                    (click)="selectedOrders.length > 0 && clickAddPaymentsPing$.next(true)">
-              <span class="af-actions-btn-label" i18n="@@productLabelStock.button.bulkPayments">Add payments</span>
-            </button>
+            <div class="ml-2">
+              <single-choice
+                  [noMargin]="true"
+                  i18n-label="@@productLabelStockPurchaseOrdersModal.semiProduct.label"
+                  [formControlInput]="semiProductFrom"
+                  [codebookService]="facilitySemiProducts">
+              </single-choice>
+            </div>
 
           </div>
         </div>
@@ -131,6 +134,13 @@
                 (click)="selectedOrders.length > 0 && clickClearCheckboxesPing$.next(true)">
           <span class="af-actions-btn-label" i18n="@@productLabelStock.button.clearCheckbox">Clear checkboxes</span>
         </button>
+
+        <button class="af-actions-btn" style="margin-top: 1.7rem"
+            [class.af-actions-btn--disabled]="selectedOrders.length === 0"
+            (click)="selectedOrders.length > 0 && clickAddPaymentsPing$.next(true)">
+          <span class="af-actions-btn-label" i18n="@@productLabelStock.button.bulkPayments">Add payments</span>
+        </button>
+
       </div>
 
       <app-stock-order-list
@@ -146,6 +156,7 @@
               [wayOfPaymentPing$]="wayOfPaymentPing$"
               [womenOnlyPing$]="womenOnlyPing$"
               [deliveryDatesPing$]="deliveryDatesPing$"
+              [semiProductId$]="semiProductId$"
               [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
               [clickClearCheckboxesPing$]="clickClearCheckboxesPing$">
       </app-stock-order-list>
