@@ -1,0 +1,352 @@
+<app-authorised-layout>
+	<div *ngIf="purchaseOrderBulkForm"  class="af-layout--authorised">
+
+		<div class="af-form-row">
+
+			<div class="af-form-block--c12">
+
+				<div>
+					<h2 i18n="@@productLabelStockPurchaseOrdersModal.section.basicInfo">Basic information</h2>
+				</div>
+
+				<div class="af-form-element">
+					<div class="af-row">
+						<div class="af-c4">
+							<app-datepicker
+									label="Delivery date"
+									i18n-label="@@productLabelStockPurchaseOrdersModal.datepicker.date.label"
+									[form]="purchaseOrderBulkForm.get('productionDate')"
+									[invalid]="submitted && purchaseOrderBulkForm.get('productionDate').invalid">
+								<ng-container *ngIf="submitted">
+									<div *ngIf="purchaseOrderBulkForm.get('productionDate').errors as errors" class="sc-invalid-feedback">
+										<div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.datepicker.date.error">
+											Delivery date is required
+										</div>
+									</div>
+								</ng-container>
+							</app-datepicker>
+						</div>
+					</div>
+
+					<div class="af-row" *ngIf="showCollector">
+						<div class="af-c6">
+							<single-choice
+									label="Collector"
+									i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.collector"
+									[formControlInput]="searchCollectors"
+									[codebookService]="collectorsCodebook"
+									(onChange)="setCollector($event)"
+									style="min-width: 150px;"
+									[readonly]="readonlyCollector">
+							</single-choice>
+						</div>
+						<div class="af-c3 mt-4">
+							<button class="btn btn--el" type="button" [disabled]="true"
+							        i18n="@@productLabelStockPurchaseOrdersModal.button.collector.qrCode"><span>QR code</span></button>
+						</div>
+					</div>
+
+					<div class="af-row">
+						<div class="af-c6">
+							<single-choice
+									label="Cooperative employee"
+									i18n-label="Cooperative employee"
+									[formControlInput]="employeeForm"
+									[codebookService]="codebookUsers"
+									style="min-width: 150px;"
+									[isInvalidChoice]="submitted && employeeForm.invalid">
+								<ng-container *ngIf="submitted">
+									<div *ngIf="employeeForm.errors as errors" class="sc-invalid-feedback">
+										<div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer.error">
+											Cooperative employee is required
+										</div>
+									</div>
+								</ng-container>
+							</single-choice>
+						</div>
+					</div>
+
+					<div class="af-row">
+						<div class="af-c6">
+							<single-choice
+									label="Preferred way of payment"
+									i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.preferredWayOfPayment"
+									[formControlInput]="purchaseOrderBulkForm.get('preferredWayOfPayment')"
+									[codebookService]="codebookPreferredWayOfPayment"
+									style="min-width: 150px;"
+									[isInvalidChoice]="submitted && purchaseOrderBulkForm.get('preferredWayOfPayment').invalid">
+								<ng-container *ngIf="submitted">
+									<div *ngIf="purchaseOrderBulkForm.get('preferredWayOfPayment').errors as errors" class="sc-invalid-feedback">
+										<div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.preferredWayOfPayment.error">
+											Preferred way of payment is required
+										</div>
+									</div>
+								</ng-container>
+							</single-choice>
+						</div>
+					</div>
+
+					<div class="af-row">
+						<div class="af-c12">
+
+							<div class="af-row" style="margin-top: 1rem;">
+								<div class="af-c9">
+									<label i18n="@@productLabelStockPurchaseOrdersModal.section.farmers">Farmers</label>
+								</div>
+
+								<div class="af-c3 text-right">
+
+									<button class="btn btn-solid round"
+									        (click)="addFarmerInfo()"
+									        i18n="@@productLabelStockPurchaseOrdersModal.farmers.add">
+										<span>+</span>
+									</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<!-- LIST OF FARMERS INFO -->
+					<ng-container *ngFor="let item of farmersFormArray.controls; index as idx">
+
+
+						<div class="af-row mt-4">
+							<div class="af-c3">
+								<single-choice
+										label="Farmer"
+										i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer"
+										[formControlInput]="item.get('producerUserCustomer')"
+										[codebookService]="farmersCodebook"
+										(onChange)="setFarmer($event, idx)"
+										style="min-width: 150px;"
+										[isInvalidChoice]="submitted && item.get('producerUserCustomer').invalid">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('producerUserCustomer').errors as errors"
+										     class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer.error">
+												Farmer is required
+											</div>
+										</div>
+									</ng-container>
+								</single-choice>
+							</div>
+
+							<div class="af-c2" [formGroup]="farmersFormArray.at(idx)">
+								<div class="form-group">
+									<label class="d-flex mb-0 text-input-label">
+										<span i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct">Semi-product</span><span>*</span>
+									</label>
+									<ng-select bindLabel="name"
+									           placeholder="Select semi-product"
+									           (ngModelChange)="semiProductSelected($event, idx)"
+									           i18n-placeholder="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.placeholder"
+									           [items]="options"
+									           formControlName="semiProduct"
+									           [required]="true"
+									           notFoundText="Nothing found"
+									           i18-notFoundText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.nothing"
+									           i18-typeToSearchText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.enterSearchTerm"
+									           typeToSearchText="Enter search term"
+									           class="custom labelPlaceholder"
+									           style="border:none">
+									</ng-select>
+								</div>
+							</div>
+
+							<div class="af-c2">
+								<textinput
+										[form]="item.get('totalQuantity')"
+										[label]="quantityLabel(idx)"
+										style="width: 100%"
+										placeholder="Enter quantity"
+										i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.placeholder"
+										[isInvalid]="submitted && item.get('totalQuantity').invalid">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('totalQuantity').errors as errors"
+										     class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.quantityDelieveredInKG.textinput.quantityDelieveredInKG.error">
+												Quantity is required
+											</div>
+										</div>
+									</ng-container>
+								</textinput>
+							</div>
+
+							<div class="af-c1" *ngIf="showOrganic(idx)">
+								<single-choice
+										label="Organic"
+										i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.organic.label"
+										[formControlInput]="item.get('organic')"
+										[codebookService]="codebookOrganic"
+										[readonly]="readonlyOrganic"
+										style="min-width: 150px;"
+										[isInvalidChoice]="submitted && item.get('organic').invalid">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('organic').errors as errors" class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.organic.error">
+												Organic is required
+											</div>
+										</div>
+									</ng-container>
+								</single-choice>
+							</div>
+
+							<div class="af-c2" *ngIf="showWomensOnly(idx)">
+								<single-choice
+										label="Women’s only"
+										i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.womensOnly"
+										[formControlInput]="item.get('womenShare')"
+										[codebookService]="codebookWomenCoffee"
+										style="min-width: 150px;"
+										[isInvalidChoice]="submitted && item.get('womenShare').invalid"
+										[readonly]="readonlyWomensOnly">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('womenShare').errors as errors" class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.womensOnly.error">
+												Women’s only is required
+											</div>
+										</div>
+									</ng-container>
+								</single-choice>
+							</div>
+
+							<div class="af-c1">
+								<div style="margin-top: 1.75rem; cursor: pointer" (click)="removeFarmer(idx)">
+									<fa-icon
+											class="del-icon"
+											[icon]="faTrashAlt">
+									</fa-icon>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="af-row">
+
+							<div class="af-c3">
+
+							</div>
+
+							<div class="af-c2">
+								<textinput
+										type="number"
+										min="0"
+										step="0.01"
+										[form]="item.get('pricePerUnit')"
+										[label]="pricePerUnitLabel(idx)"
+										style="width: 100%"
+										placeholder="Enter price per unit"
+										i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.placeholder"
+										[isInvalid]="submitted && item.get('pricePerUnit').invalid">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('pricePerUnit').errors as errors"
+										     class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.unityPrice.textinput.unityPrice.error">
+												Price per unit is required
+											</div>
+										</div>
+									</ng-container>
+								</textinput>
+							</div>
+
+							<div class="af-c1">
+								<textinput *ngIf="showTare(idx)"
+								           [form]="item.get('tare')"
+								           [label]="tareLabel(idx)"
+								           style="width: 100%"
+								           placeholder="Enter tare"
+								           i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.tare.placeholder"
+								           [isInvalid]="submitted && item.get('tare').invalid"
+								           [readOnly]="readonlyTare">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('tare').errors as errors" class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.textinput.tare.error">
+												Tare is required
+											</div>
+										</div>
+									</ng-container>
+								</textinput>
+							</div>
+							<div class="af-c3">
+								<textinput *ngIf="showDamagedPriceDeduction"
+								           [form]="item.get('damagedPriceDeduction')"
+								           [label]="damagedPriceDeductionLabel(idx)"
+								           style="width: 100%"
+								           placeholder="Enter damaged price deduction"
+								           i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder"
+								           [isInvalid]="submitted && item.get('damagedPriceDeduction').invalid"
+								           [readOnly]="readonlyDamagedPriceDeduction">
+									<ng-container *ngIf="submitted">
+										<div *ngIf="item.get('damagedPriceDeduction').errors as errors"
+										     class="sc-invalid-feedback">
+											<div *ngIf="errors.required"
+											     i18n="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.error">
+												Damaged price deduction is required
+											</div>
+										</div>
+									</ng-container>
+								</textinput>
+							</div>
+
+						</div>
+
+					</ng-container>
+
+				</div>
+
+			</div>
+		</div>
+
+		<ng-container>
+			<div class="af-form-row">
+				<div class="af-form-block--c12">
+					<h2 i18n="@@productLabelStockPurchaseOrdersModal.section.additionalProofs">Additional proofs</h2>
+
+					<div class="af-form-element">
+						<list-editor *ngIf="additionalProofsListManager"
+						             label="List of additional proofs"
+						             [listEditorManager]="additionalProofsListManager"
+						             addText="Add document"
+						             [canAdd]="true"
+						             i18n-label="@@productLabelStockPurchaseOrdersModal.list-editor.additionalProofs.label"
+						             i18n-addText="@@productLabelStockPurchaseOrdersModal.list-editor.additionalProofs.addText"
+						             [invalid]="submitted && additionalProofsForm?.invalid">
+							<list-editor-items>
+								<div *ngFor="let item of additionalProofsForm.controls; let i=index;">
+									<app-additional-proof-item
+											title=null
+											[formControlInput]="item"
+											[isOpen]="additionalProofsListManager.isOpen(i)"
+											[listEditorManager]="this.additionalProofsListManager"
+											[listEditorManagerPosition]="i">
+									</app-additional-proof-item>
+								</div>
+							</list-editor-items>
+						</list-editor>
+					</div>
+
+				</div>
+			</div>
+		</ng-container>
+
+
+		<div class="af-form-row">
+			<div class="af-form-block--c12">
+
+				<div class="af-bottom-buttons" i18n="@@productLabelStockPurchaseOrdersModal.modal.footer.buttons">
+					<button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+					<button class="btn mr-2" type="button" (click)="!this.updatePOInProgress && createBulkPurchaseOrder(true)"><span>Save</span></button>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</app-authorised-layout>

@@ -145,6 +145,18 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
   }
 
+  newPurchaseOrderBulk() {
+
+    if (!this.facilityForStockOrderForm.value) {
+      const title = $localize`:@@productLabelStock.purchase.warning.title:Missing facility`;
+      const message = $localize`:@@productLabelStock.purchase.warning.message:Please select facility before continuing`;
+      this.showWarning(title, message);
+      return;
+    }
+
+    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new-bulk']).then();
+  }
+
   onShowPO(event) {
     this.showedPurchaseOrders = event;
   }
