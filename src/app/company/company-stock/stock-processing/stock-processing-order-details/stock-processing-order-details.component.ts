@@ -46,6 +46,7 @@ import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStoc
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -639,7 +640,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
       requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
-      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues()
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
+      otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -801,6 +803,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return evidenceTypesValues;
+  }
+
+  private prepareOtherEvidenceDocuments(): ApiStockOrderEvidenceTypeValue[] {
+
+    const otherEvidenceDocuments: ApiStockOrderEvidenceTypeValue[] = [];
+
+    if (!this.prAction) {
+      return otherEvidenceDocuments;
+    }
+
+    for (const control of this.otherProcessingEvidenceArray.controls) {
+
+      const evidenceType: ApiProcessingEvidenceType = control.value.type;
+
+      otherEvidenceDocuments.push({
+        evidenceTypeId: evidenceType.id,
+        evidenceTypeCode: evidenceType.code,
+        date: control.value.formalCreationDate,
+        document: control.value.document
+      });
+    }
+
+    return otherEvidenceDocuments;
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
