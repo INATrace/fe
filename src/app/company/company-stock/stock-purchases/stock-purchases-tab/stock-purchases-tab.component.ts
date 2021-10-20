@@ -14,6 +14,7 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { map, startWith } from 'rxjs/operators';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -259,6 +260,13 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     } else {
       this.facilitySemiProducts = null;
     }
+  }
+  
+  whenFacilityForStockOrderChanged(event: ApiFacility) {
+    if (event === null) {
+      this.semiProductFrom.setValue(null);
+    }
+    this.facilityForStockOrderChanged(event);
   }
   
   ngOnDestroy() {
