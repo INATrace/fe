@@ -75,7 +75,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   sortOptions: SortOption[];
   clearCheckboxesSubscription: Subscription;
   allSelected = false;
-  payments$;
+  payments$: Observable<ApiPaginatedListApiPayment>;
 
   ngOnInit(): void {
 
@@ -168,13 +168,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       },
       {
         key: 'amountPaidToTheFarmer',
-        name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer (RWF)`,
-        inactive: true,
-        hide: false
-      },
-      {
-        key: 'amountPaidToTheCollector',
-        name: $localize`:@@productLabelPayments.sortOptions.amount.company.name:Amount paid (EUR)`,
+        name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer`,
         inactive: true,
         hide: false
       },

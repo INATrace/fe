@@ -5,7 +5,6 @@ import { take, takeUntil } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { AssociatedCompaniesService } from 'src/app/shared-services/associated-companies.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { environment } from 'src/environments/environment';
 import { formatDateWithDotsAtHour } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
@@ -35,28 +34,40 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   @Input()
   paymentForm: FormGroup;
+
   @Input()
   orderReferenceForm = new FormControl(null);
+
   @Input()
   payableFromForm = new FormControl(null);
+
   @Input()
   searchCompaniesForm = new FormControl(null);
+
   @Input()
   searchCollectorsForm = new FormControl(null);
+
   @Input()
   searchFarmersForm = new FormControl(null);
+
   @Input()
   collectorsCodebook: CompanyUserCustomersByRoleService;
+
   @Input()
   farmersCodebook: CompanyUserCustomersByRoleService;
+
   @Input()
   submitted: boolean;
+
   @Input()
   viewOnly: boolean;
+
   @Input()
   openBalance: number;
+
   @Input()
   purchased: number;
+
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
