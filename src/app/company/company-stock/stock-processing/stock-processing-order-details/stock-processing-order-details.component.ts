@@ -42,6 +42,7 @@ import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessi
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
+import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -617,13 +618,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     const stockOrderList: ApiStockOrder[] = [];
 
-    // TODO: prepare required proc. evidence types
-
     const sharedFields: ApiStockOrder = {
       pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
-      requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues()
+      requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -769,6 +769,24 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return evidenceFieldsValues;
   }
 
+  private prepareRequiredEvidenceTypeValues(): ApiStockOrderEvidenceTypeValue[] {
+
+    const evidenceTypesValues: ApiStockOrderEvidenceTypeValue[] = [];
+
+    if (!this.prAction) {
+      return evidenceTypesValues;
+    }
+
+    for (const control of this.requiredProcessingEvidenceArray.controls) {
+      const controlValue: ApiStockOrderEvidenceTypeValue =  control.value;
+      if (controlValue && controlValue.document && controlValue.document.id) {
+        evidenceTypesValues.push(controlValue);
+      }
+    }
+
+    return evidenceTypesValues;
+  }
+
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
 
     // If we have defined input semi-product, get its definition
@@ -803,7 +821,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       for (const requiredDocumentType of action.requiredDocumentTypes) {
         this.requiredProcessingEvidenceArray.push(new FormGroup({
           evidenceTypeId: new FormControl(requiredDocumentType.id),
-          evidenceTypedCode: new FormControl(requiredDocumentType.code),
+          evidenceTypeCode: new FormControl(requiredDocumentType.code),
           evidenceTypeLabel: new FormControl(requiredDocumentType.label),
           date: new FormControl(new Date(), requiredDocumentType.mandatory ? Validators.required : null),
           document: new FormControl(null, requiredDocumentType.mandatory ? Validators.required : null)
