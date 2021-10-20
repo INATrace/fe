@@ -31,7 +31,9 @@ import { catchError }                                        from 'rxjs/operator
 
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiStockOrder } from '../model/apiPaginatedResponseApiStockOrder';
+import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
+import { ApiResponseApiPurchaseOrder } from '../model/apiResponseApiPurchaseOrder';
 import { ApiResponseApiStockOrder } from '../model/apiResponseApiStockOrder';
 import { ApiStockOrder } from '../model/apiStockOrder';
 
@@ -67,6 +69,38 @@ export namespace CreateOrUpdateStockOrderUsingPUT {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof CreateOrUpdateStockOrderUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
+ * Namespace for createPurchaseOrderBulkUsingPOST.
+ */
+export namespace CreatePurchaseOrderBulkUsingPOST {
+    /**
+     * Parameter map for createPurchaseOrderBulkUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * apiPurchaseOrder
+       */
+      ApiPurchaseOrder: ApiPurchaseOrder;
+    }
+
+    /**
+     * Enumeration of all parameters for createPurchaseOrderBulkUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * apiPurchaseOrder
+       */
+      ApiPurchaseOrder = 'ApiPurchaseOrder'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createPurchaseOrderBulkUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CreatePurchaseOrderBulkUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
@@ -830,6 +864,94 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateStockOrderUsingPUT')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Creates a list of purchase orders. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createPurchaseOrderBulkUsingPOSTByMap(
+    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiPurchaseOrder>;
+  public createPurchaseOrderBulkUsingPOSTByMap(
+    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPurchaseOrder>>;
+  public createPurchaseOrderBulkUsingPOSTByMap(
+    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPurchaseOrder>>;
+  public createPurchaseOrderBulkUsingPOSTByMap(
+    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.createPurchaseOrderBulkUsingPOST(
+      map.ApiPurchaseOrder,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Creates a list of purchase orders.
+     * 
+     * @param ApiPurchaseOrder apiPurchaseOrder
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPurchaseOrder>;
+    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPurchaseOrder>>;
+    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPurchaseOrder>>;
+    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiPurchaseOrder === null || ApiPurchaseOrder === undefined) {
+            throw new Error('Required parameter ApiPurchaseOrder was null or undefined when calling createPurchaseOrderBulkUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiPurchaseOrder>(`${this.configuration.basePath}/api/chain/stock-order/bulk-purchase`,
+            ApiPurchaseOrder,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createPurchaseOrderBulkUsingPOST')));
         }
         return handle;
     }

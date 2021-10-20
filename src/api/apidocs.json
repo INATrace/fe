@@ -3433,6 +3433,38 @@
         "summary": "Create or update stock order. If the ID is provided, then the entity with the provided ID is updated."
       }
     },
+    "/api/chain/stock-order/bulk-purchase": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPurchaseOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "createPurchaseOrderBulkUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiPurchaseOrder"
+              }
+            }
+          },
+          "description": "apiPurchaseOrder",
+          "required": true
+        },
+        "summary": "Creates a list of purchase orders."
+      }
+    },
     "/api/chain/stock-order/list": {
       "get": {
         "parameters": [
@@ -12891,6 +12923,148 @@
         },
         "type": "object"
       },
+      "ApiPurchaseOrder": {
+        "properties": {
+          "activityProofs": {
+            "description": "Activity proofs",
+            "items": {
+              "$ref": "#/components/schemas/ApiActivityProof"
+            },
+            "type": "array"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has created PurchaseOrder"
+          },
+          "creatorId": {
+            "description": "ID of the user who has created the stock order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Currency",
+            "type": "string"
+          },
+          "deliveryTime": {
+            "description": "Delivery date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "facility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Facility"
+          },
+          "farmers": {
+            "items": {
+              "$ref": "#/components/schemas/ApiPurchaseOrderFarmer"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "preferredWayOfPayment": {
+            "description": "Preferred way of payment",
+            "enum": [
+              "CASH",
+              "CASH_VIA_COLLECTOR",
+              "BANK_TRANSFER",
+              "CHEQUE",
+              "OFFSETTING",
+              "UNKNOWN"
+            ],
+            "type": "string"
+          },
+          "productionDate": {
+            "description": "Production date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "representativeOfProducerUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Representative of producer user customer. E.g. collector."
+          },
+          "updateTimestamp": {
+            "description": "Timestamp indicates when purchase order have been updated",
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has last updated PurchaseOrder"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPurchaseOrderFarmer": {
+        "properties": {
+          "availableQuantity": {
+            "description": "Available quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "number"
+          },
+          "cost": {
+            "description": "Cost",
+            "type": "number"
+          },
+          "damagedPriceDeduction": {
+            "description": "Damaged price deduction",
+            "type": "number"
+          },
+          "fulfilledQuantity": {
+            "description": "Fulfilled quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "identifier": {
+            "description": "Purchase order identifier",
+            "type": "string"
+          },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
+          "pricePerUnit": {
+            "description": "Price per unit",
+            "type": "number"
+          },
+          "producerUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Id of the person who has produced the entry."
+          },
+          "semiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Semi product"
+          },
+          "tare": {
+            "description": "Tare",
+            "type": "number"
+          },
+          "totalQuantity": {
+            "description": "Total quantity",
+            "format": "int32",
+            "type": "integer"
+          },
+          "womenShare": {
+            "description": "Women only",
+            "example": false,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "ApiResetPasswordRequest": {
         "properties": {
           "password": {
@@ -13945,6 +14119,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiProduct",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiPurchaseOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPurchaseOrder",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -15170,6 +15387,14 @@
           },
           "companyIds": {
             "description": "User's company ids",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "companyIdsAdmin": {
+            "description": "User's company ids where user is company admin",
             "items": {
               "format": "int64",
               "type": "integer"
