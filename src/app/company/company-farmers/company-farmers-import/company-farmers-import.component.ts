@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location} from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
 import { take } from 'rxjs/operators';
@@ -18,7 +19,8 @@ export class CompanyFarmersImportComponent implements OnInit {
 
   constructor(
       private companyControllerService: CompanyControllerService,
-      private toastService: ToastrService
+      private toastService: ToastrService,
+      private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class CompanyFarmersImportComponent implements OnInit {
     if (this.fileForm && this.fileForm.value) {
       this.companyControllerService.importFarmersSpreadsheetUsingPOST(this.companyId, this.fileForm.value.id).pipe(take(1)).subscribe(_ => {
         this.toastService.success($localize`:@@companyDetail.farmers.import.success.label:Farmers successfully imported. Please check the data on Company > Farmers tab`);
+        this.location.back();
       });
     }
   }
