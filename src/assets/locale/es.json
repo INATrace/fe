@@ -781,7 +781,7 @@
     "productLabelPayments.noPayments": "No se encuentran pagos",
     "productLabelPayments.sortOptions.name.name": "Número del recibo",
     "productLabelPayments.sortOptions.paymentPurposeType.name": "Propósito del pago",
-    "productLabelPayments.sortOptions.amount.name": "Importe pagado al agricultor (RWF)",
+    "productLabelPayments.sortOptions.amount.name": "Importe pagado al agricultor",
     "productLabelPayments.sortOptions.amountTotal.name": "Importe total (RWF)",
     "productLabelPayments.sortOptions.producer_name.name": "Nombre del agricultor",
     "productLabelPayments.sortOptions.purchaseOrderName.name": "Título del pedido de compra",

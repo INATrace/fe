@@ -1058,7 +1058,7 @@
     "productLabelStockPayments.newTitle": "Neue Zahlung",
     "productLabelStockPayments.updateTitle": "Zahlung aktualisieren",
     "productLabelPurchaseOrder.tableCol.payment": "Zahlung hinzufügen",
-    "productLabelPayments.sortOptions.amount.name": "Betrag an Landwirt*in gezahlt (RWF)",
+    "productLabelPayments.sortOptions.amount.name": "Betrag an Landwirt*in gezahlt",
     "breadCrumb.purchasesOrders.myStock": "Mein Bestand",
     "breadCrumb.purchaseOrders.purchase": "Einkauf",
     "breadCrumb.payments.myStock": "Mein Bestand",
