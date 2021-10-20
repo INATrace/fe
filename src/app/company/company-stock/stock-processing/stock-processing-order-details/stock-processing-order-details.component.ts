@@ -7,7 +7,7 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -43,6 +43,9 @@ import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
+import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -153,6 +156,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     public actionTypesCodebook: ActionTypesService,
     @Inject(LOCALE_ID) public userLocale: string
   ) { }
+
+  // Create form control for use in activity proofs list manager
+  static ApiActivityProofCreateEmptyObject(): ApiActivityProof {
+    const obj = ApiActivityProof.formMetadata();
+    return defaultEmptyObject(obj) as ApiActivityProof;
+  }
+
+  static ApiActivityProofEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(StockProcessingOrderDetailsComponent.ApiActivityProofCreateEmptyObject(),
+        ApiActivityProofValidationScheme.validators);
+    };
+  }
 
   get actionType(): ProcessingActionType {
     if (!this.prAction) { return null; }
@@ -1273,12 +1289,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private initializeListManager() {
-    // TODO: initialize list manager for processing evidence types
-    // this.processingEvidenceListManager = new ListEditorManager<ChainActivityProof>(
-    //   this.otherProcessingEvidenceArray as FormArray,
-    //   ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
-    //   ApiActivityProofValidationScheme
-    // );
+    this.processingEvidenceListManager = new ListEditorManager<ApiActivityProof>(
+      this.otherProcessingEvidenceArray as FormArray,
+      StockProcessingOrderDetailsComponent.ApiActivityProofEmptyObjectFormFactory(),
+      ApiActivityProofValidationScheme
+    );
   }
 
   private setInputOutputFormAccordinglyToTransaction() {
