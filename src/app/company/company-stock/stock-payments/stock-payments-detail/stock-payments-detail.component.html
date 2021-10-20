@@ -27,10 +27,11 @@
                                 [orderReferenceForm]="orderReferenceForm"
                                 [farmersCodebook]="farmersCodebook"
                                 [collectorsCodebook]="collectorsCodebook"
-                                [submitted]="submitted"
+                                [stockOrder]="this.stockOrder"
                                 [openBalance]="this.stockOrder.balance"
                                 [purchased]="this.stockOrder.fulfilledQuantity"
                                 [viewOnly]="this.update"
+                                [submitted]="this.submitted"
                                 [mode]="this.mode">
                         </app-stock-payments-form>
                     </div>

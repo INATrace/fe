@@ -63,6 +63,9 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   viewOnly: boolean;
 
   @Input()
+  stockOrder: ApiStockOrder;
+
+  @Input()
   openBalance: number;
 
   @Input()
@@ -71,10 +74,10 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
+  readonlyPaymentType: boolean;
   uploaderLabel: string;
   confirmedAt: string;
   confirmedByUser: string;
-  readonlyPaymentType: boolean;
   currency: string;
   unitLabel: string;
 
@@ -194,37 +197,24 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   async initInitialData() {
 
-    const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(this.paymentForm.get('stockOrder').value.id)
-        .pipe(take(1))
-        .toPromise();
+    if (this.stockOrder) {
 
-    if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-      const stockOrder = stockOrderResp.data;
-
-      this.paymentForm.get('productionDate').setValue(stockOrder.productionDate);
-      this.paymentForm.get('preferredWayOfPayment').setValue(stockOrder.preferredWayOfPayment);
+      this.paymentForm.get('productionDate').setValue(this.stockOrder.productionDate);
+      this.paymentForm.get('preferredWayOfPayment').setValue(this.stockOrder.preferredWayOfPayment);
 
       if (this.mode === ModeEnum.PURCHASE) {
-        this.searchPreferredWayOfPayment.setValue(stockOrder.preferredWayOfPayment);
+        this.searchPreferredWayOfPayment.setValue(this.stockOrder.preferredWayOfPayment);
         this.searchPreferredWayOfPayment.disable();
 
-        if (stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        if (this.stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
           this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
           this.paymentForm.get('amountPaidToTheCollector').setValidators([Validators.required]);
 
-        } else if (stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        } else if (this.stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
           this.paymentForm.get('amountPaidToTheCollector').setValue(0);
           this.paymentForm.get('amountPaidToTheCollector').disable();
-        }
-
-        if (!this.openBalance) {
-          this.openBalance = stockOrder.balance;
-        }
-
-        if (!this.purchased) {
-          this.purchased = stockOrder.fulfilledQuantity;
         }
 
       } else {
@@ -240,21 +230,19 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
     this.confirmedAt = formatDateWithDotsAtHour(this.paymentForm.get('paymentConfirmedAtTime').value);
 
-    const userResp = await this.userControllerService.getProfileForUserUsingGET(this.paymentForm.get('paymentConfirmedByUser').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userResp && userResp.status === 'OK' && userResp.data) {
-      this.confirmedByUser = userResp.data.name + ' ' + userResp.data.surname;
+    if (this.paymentForm.contains('paymentConfirmedByUser')) {
+      const paymentConfirmedByUser = this.paymentForm.get('paymentConfirmedByUser').value;
+      this.confirmedByUser = paymentConfirmedByUser.name + ' ' + paymentConfirmedByUser.surname;
     }
 
-    const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
-      this.confirmedByUser += ', ' + userCompanyResp.data.name;
-    }
+    // TODO: Confirmed by company (if it is still present)
+    // const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
+    //     .pipe(take(1))
+    //     .toPromise();
+    //
+    // if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
+    //   this.confirmedByUser += ', ' + userCompanyResp.data.name;
+    // }
   }
 
   setFarmer(event: ApiUserCustomer) {
@@ -269,14 +257,14 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   setCollector(event: ApiUserCustomer) {
     if (event) {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(event);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(event);
       this.paymentForm.get('receiptDocumentType').setValue(null);
     } else {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(null);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(null);
       this.paymentForm.get('receiptDocumentType').setValue(ReceiptDocumentTypeEnum.RECEIPT);
     }
-    this.paymentForm.get('representativeOfRecipientCompany').markAsDirty();
-    this.paymentForm.get('representativeOfRecipientCompany').updateValueAndValidity();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').markAsDirty();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').updateValueAndValidity();
   }
 
   async setCompany(event) {
