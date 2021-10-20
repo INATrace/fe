@@ -12079,11 +12079,6 @@
             "example": false,
             "type": "boolean"
           },
-          "required": {
-            "description": "whether the evidence is required",
-            "example": false,
-            "type": "boolean"
-          },
           "requiredOnQuote": {
             "description": "whether the evidence is required on quote",
             "example": false,

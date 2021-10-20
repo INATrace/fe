@@ -51,10 +51,6 @@ export interface ApiProcessingEvidenceType {
      */
     quality?: boolean;
     /**
-     * whether the evidence is required
-     */
-    required?: boolean;
-    /**
      * whether the evidence is required on quote
      */
     requiredOnQuote?: boolean;
@@ -104,10 +100,6 @@ export namespace ApiProcessingEvidenceType {
          * if evidence is of quality type
          */
         quality = 'quality',
-        /**
-         * whether the evidence is required
-         */
-        required = 'required',
         /**
          * whether the evidence is required on quote
          */
@@ -218,17 +210,6 @@ export namespace ApiProcessingEvidenceType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'required',
-                    classname: 'ApiProcessingEvidenceType',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'requiredOnQuote',
                     classname: 'ApiProcessingEvidenceType',
                     dataType: 'boolean',
@@ -275,8 +256,6 @@ export namespace ApiProcessingEvidenceType {
                 ],
                 quality: [
                 ],
-                required: [
-                ],
                 requiredOnQuote: [
                 ],
                 requiredOneOfGroupIdForQuote: [
@@ -309,9 +288,6 @@ export namespace ApiProcessingEvidenceType {
   //                   validators: []
   //               },
   //               quality: {
-  //                   validators: []
-  //               },
-  //               required: {
   //                   validators: []
   //               },
   //               requiredOnQuote: {
