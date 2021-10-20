@@ -29,13 +29,13 @@ export interface ApiStockOrderEvidenceTypeValue {
     date?: Date;
     document?: ApiDocument;
     /**
+     * The field name of the Processing evidence type from the codebook
+     */
+    evidenceTypeCode?: string;
+    /**
      * The id of the Processing evidence type from the codebook
      */
     evidenceTypeId?: number;
-    /**
-     * The field name of the Processing evidence type from the codebook
-     */
-    evidenceTypedCode?: string;
 }
 
 /**
@@ -52,13 +52,13 @@ export namespace ApiStockOrderEvidenceTypeValue {
         date = 'date',
         document = 'document',
         /**
-         * The id of the Processing evidence type from the codebook
-         */
-        evidenceTypeId = 'evidenceTypeId',
-        /**
          * The field name of the Processing evidence type from the codebook
          */
-        evidenceTypedCode = 'evidenceTypedCode'
+        evidenceTypeCode = 'evidenceTypeCode',
+        /**
+         * The id of the Processing evidence type from the codebook
+         */
+        evidenceTypeId = 'evidenceTypeId'
     }
 
 
@@ -94,9 +94,9 @@ export namespace ApiStockOrderEvidenceTypeValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'evidenceTypeId',
+                    name: 'evidenceTypeCode',
                     classname: 'ApiStockOrderEvidenceTypeValue',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -105,9 +105,9 @@ export namespace ApiStockOrderEvidenceTypeValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'evidenceTypedCode',
+                    name: 'evidenceTypeId',
                     classname: 'ApiStockOrderEvidenceTypeValue',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -118,9 +118,9 @@ export namespace ApiStockOrderEvidenceTypeValue {
                 ],
                 document: [
                 ],
-                evidenceTypeId: [
+                evidenceTypeCode: [
                 ],
-                evidenceTypedCode: [
+                evidenceTypeId: [
                 ],
             }
         }
@@ -135,10 +135,10 @@ export namespace ApiStockOrderEvidenceTypeValue {
   //               document: {
   //                   validators: []
   //               },
-  //               evidenceTypeId: {
+  //               evidenceTypeCode: {
   //                   validators: []
   //               },
-  //               evidenceTypedCode: {
+  //               evidenceTypeId: {
   //                   validators: []
   //               },
   //     }
