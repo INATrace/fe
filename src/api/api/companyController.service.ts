@@ -724,6 +724,52 @@ export namespace GetUserCustomersForCompanyAndTypeUsingGET {
 }
 
 /**
+ * Namespace for importFarmersSpreadsheetUsingPOST.
+ */
+export namespace ImportFarmersSpreadsheetUsingPOST {
+    /**
+     * Parameter map for importFarmersSpreadsheetUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * Document ID
+       */
+      documentId: number;
+    }
+
+    /**
+     * Enumeration of all parameters for importFarmersSpreadsheetUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * Document ID
+       */
+      documentId = 'documentId'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of importFarmersSpreadsheetUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ImportFarmersSpreadsheetUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      documentId: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
  * Namespace for listCompaniesAdminUsingGET.
  */
 export namespace ListCompaniesAdminUsingGET {
@@ -2276,6 +2322,94 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomersForCompanyAndTypeUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Upload .xls or .xlsx spreadsheet of farmers to import into DB by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public importFarmersSpreadsheetUsingPOSTByMap(
+    map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public importFarmersSpreadsheetUsingPOSTByMap(
+    map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public importFarmersSpreadsheetUsingPOSTByMap(
+    map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public importFarmersSpreadsheetUsingPOSTByMap(
+    map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.importFarmersSpreadsheetUsingPOST(
+      map.companyId,
+      map.documentId,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Upload .xls or .xlsx spreadsheet of farmers to import into DB
+     * 
+     * @param companyId Company ID
+     * @param documentId Document ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling importFarmersSpreadsheetUsingPOST.');
+        }
+        if (documentId === null || documentId === undefined) {
+            throw new Error('Required parameter documentId was null or undefined when calling importFarmersSpreadsheetUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiDefaultResponse>(`${this.configuration.basePath}/api/company/userCustomers/import/farmers/${encodeURIComponent(String(companyId))}/${encodeURIComponent(String(documentId))}`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'importFarmersSpreadsheetUsingPOST')));
         }
         return handle;
     }
