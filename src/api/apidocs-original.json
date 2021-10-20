@@ -14623,6 +14623,13 @@
             },
             "type": "array"
           },
+          "requiredEvidenceTypeValues": {
+            "description": "Processing evidence types stored values for this stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderEvidenceTypeValue"
+            },
+            "type": "array"
+          },
           "sacNumber": {
             "description": "SAC number",
             "format": "int32",
@@ -14705,6 +14712,29 @@
           },
           "stringValue": {
             "description": "Value holder of type String",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderEvidenceTypeValue": {
+        "properties": {
+          "date": {
+            "description": "The date of the document upload",
+            "format": "date-time",
+            "type": "string"
+          },
+          "document": {
+            "$ref": "#/components/schemas/ApiDocument",
+            "description": "The attached document reference of the processing evidence"
+          },
+          "evidenceTypeId": {
+            "description": "The id of the Processing evidence type from the codebook",
+            "format": "int64",
+            "type": "integer"
+          },
+          "evidenceTypedCode": {
+            "description": "The field name of the Processing evidence type from the codebook",
             "type": "string"
           }
         },
