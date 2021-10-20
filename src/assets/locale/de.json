@@ -1708,7 +1708,7 @@
     "orderHistoryView.tableCol.costPaidBalance": "Kosten / Bezahlt /Offen",
     "orderHistoryView.processingOrderName.purchase": "Käufe",
     "productLabelStock.filter.availableOnly.filter": "Nur verfügbare {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
-    "productLabelStock.filter.purchaseOrderOnly.button": "Purchase order only",
+    "productLabelStock.filter.purchaseOrderOnly.button": "Nur Kaufauftrag",
     "productLabelStock.filter.availableOnly.button": "Nur verfügbare",
     "breadCrumb.stockOrders.stockOrderView": "Details Lageraufträge",
     "companyDetailTab.tab0.title": "Unternehmen",
