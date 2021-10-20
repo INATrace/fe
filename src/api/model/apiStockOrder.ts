@@ -106,6 +106,10 @@ export interface ApiStockOrder {
      */
     organic?: boolean;
     /**
+     * Other processing evidence documents - evidence types that can be provided but are not mandatory
+     */
+    otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
+    /**
      * Paid
      */
     paid?: number;
@@ -238,6 +242,10 @@ export namespace ApiStockOrder {
          * Organic
          */
         organic = 'organic',
+        /**
+         * Other processing evidence documents - evidence types that can be provided but are not mandatory
+         */
+        otherEvidenceDocuments = 'otherEvidenceDocuments',
         /**
          * Paid
          */
@@ -568,6 +576,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'otherEvidenceDocuments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -808,6 +828,8 @@ export namespace ApiStockOrder {
                 ],
                 organic: [
                 ],
+                otherEvidenceDocuments: [
+                ],
                 paid: [
                 ],
                 preferredWayOfPayment: [
@@ -913,6 +935,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               organic: {
+  //                   validators: []
+  //               },
+  //               otherEvidenceDocuments: {
   //                   validators: []
   //               },
   //               paid: {

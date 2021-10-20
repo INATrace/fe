@@ -14597,6 +14597,13 @@
             "example": false,
             "type": "boolean"
           },
+          "otherEvidenceDocuments": {
+            "description": "Other processing evidence documents - evidence types that can be provided but are not mandatory",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderEvidenceTypeValue"
+            },
+            "type": "array"
+          },
           "paid": {
             "description": "Paid",
             "type": "number"
