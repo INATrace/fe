@@ -458,7 +458,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   setBalance(idx: number) {
 
-    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('cost').value) {
+    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('cost').value !== null && this.farmersFormArray.at(idx).get('cost').value !== undefined) {
       this.farmersFormArray.at(idx).get('balance').setValue(this.farmersFormArray.at(idx).get('cost').value);
     } else {
       this.farmersFormArray.at(idx).get('balance').setValue(null);
