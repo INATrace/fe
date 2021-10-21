@@ -1000,12 +1000,6 @@ export class StockOrderControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (facilityId !== undefined && facilityId !== null) {
-            queryParameters = queryParameters.set('facilityId', <any>facilityId);
-        }
-        if (semiProductId !== undefined && semiProductId !== null) {
-            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
-        }
         if (isWomenShare !== undefined && isWomenShare !== null) {
             queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
         }
@@ -1037,7 +1031,7 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/listAvailableStockForSemiProductInFacility`,
+        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/list/facility/${encodeURIComponent(String(facilityId))}/semi-product/${encodeURIComponent(String(semiProductId))}/available`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

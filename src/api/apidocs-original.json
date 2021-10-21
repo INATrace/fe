@@ -3906,7 +3906,7 @@
         "summary": "Get a paginated list of stock orders by facility ID."
       }
     },
-    "/api/chain/stock-order/listAvailableStockForSemiProductInFacility": {
+    "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
       "get": {
         "parameters": [
           {
@@ -3969,7 +3969,7 @@
           },
           {
             "description": "Facility ID",
-            "in": "query",
+            "in": "path",
             "name": "facilityId",
             "required": true,
             "schema": {
@@ -3979,7 +3979,7 @@
           },
           {
             "description": "SemiProduct ID",
-            "in": "query",
+            "in": "path",
             "name": "semiProductId",
             "required": true,
             "schema": {
