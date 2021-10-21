@@ -3,6 +3,7 @@ import { GlobalEventManagerService } from '../../../../core/global-event-manager
 import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { take } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
@@ -15,6 +16,7 @@ import { FacilitySemiProductsCodebookService } from '../../../../shared-services
 import { map, startWith } from 'rxjs/operators';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -114,6 +116,7 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
+    private commonCsvControllerService: CommonCsvControllerService,
     private codebookTranslations: CodebookTranslations
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
@@ -160,6 +163,22 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     }
 
     this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
+  }
+
+  async generatePurchasesCsv(){
+
+    const result = await this.globalEventManager.openMessageModal({
+      type: 'general',
+      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Purchases CSV was created successfully!`,
+      options: { centered: true }
+    });
+    if (result !== 'ok') {
+      return;
+    }
+
+    const res = await this.commonCsvControllerService.generatePurchasesByCompanyCsvUsingPOST(this.companyId)
+    .pipe(take(1))
+    .toPromise();
   }
 
   onShowPO(event) {
