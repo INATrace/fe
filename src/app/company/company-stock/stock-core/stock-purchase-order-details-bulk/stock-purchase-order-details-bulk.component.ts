@@ -83,6 +83,9 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   emptyFarmersFormArray = null;
 
+  netWeightFormArray: FormControl[] = [new FormControl(null)];
+  finalPriceFormArray: FormControl[] = [new FormControl(null)];
+
   constructor(
       private route: ActivatedRoute,
       private location: Location,
@@ -149,8 +152,24 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.tare.label:Tare` + ` (${this.measureUnitArray[idx]})`;
   }
 
+  netLabel(idx: number) {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.netWeight.label:Net weight` + ` (${this.measureUnitArray[idx]})`;
+  }
+
+  finalPriceLabel(idx: number) {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.finalPrice.label:Final price` + ` (${this.selectedCurrency}/${this.measureUnitArray[idx]})`;
+  }
+
   pricePerUnitLabel(idx: number) {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.label:Price per unit` + ` (${this.selectedCurrency}/${this.measureUnitArray[idx]})`;
+  }
+
+  get costLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.selectedCurrency})`;
+  }
+
+  get balanceLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.balance.label:Open balance` + ` (${this.selectedCurrency})`;
   }
 
   damagedPriceDeductionLabel(idx: number) {
@@ -490,6 +509,30 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return this.facility && !this.facility.displayPriceDeductionDamage;
   }
 
+  netWeight(idx: number) {
+    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalQuantity').value) {
+      if (this.farmersFormArray.at(idx).get('tare').value) {
+        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalQuantity').value - this.farmersFormArray.at(idx).get('tare').value);
+      } else {
+        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalQuantity').value);
+      }
+    } else {
+      this.netWeightFormArray[idx].setValue(null);
+    }
+  }
+
+  finalPrice(idx: number) {
+    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('pricePerUnit').value) {
+      let finalPrice = this.farmersFormArray.at(idx).get('pricePerUnit').value;
+      if (this.farmersFormArray.at(idx).get('damagedPriceDeduction').value) {
+        finalPrice -= this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
+      }
+      this.finalPriceFormArray[idx].setValue(finalPrice);
+    } else {
+      this.finalPriceFormArray[idx].setValue(null);
+    }
+  }
+
   updateValidators() {
 
     this.farmersFormArray.controls.forEach((nextFormGroup) => {
@@ -570,6 +613,9 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
       // init value
       this.measureUnitArray.push('-');
     }
+
+    this.netWeightFormArray.push(new FormControl(null));
+    this.finalPriceFormArray.push(new FormControl(null));
 
     // add new fields to form, and init semiProduct if only one available
     this.farmersFormArray.push(
