@@ -14519,6 +14519,10 @@
             "$ref": "#/components/schemas/ApiCompany",
             "description": "Company"
           },
+          "consumerCompanyCustomer": {
+            "$ref": "#/components/schemas/ApiCompanyCustomer",
+            "description": "The company customer for whom the stock order is created"
+          },
           "cost": {
             "description": "Cost",
             "type": "number"
@@ -14581,6 +14585,9 @@
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"
           },
+          "openOrder": {
+            "type": "boolean"
+          },
           "orderType": {
             "description": "Order type",
             "enum": [
@@ -14639,6 +14646,10 @@
           },
           "purchaseOrder": {
             "type": "boolean"
+          },
+          "quoteFacility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Quote facility"
           },
           "representativeOfProducerUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
