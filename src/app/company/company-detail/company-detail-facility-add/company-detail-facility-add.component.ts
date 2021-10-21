@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacility } from '../../../../api/model/apiFacility';
@@ -38,6 +38,9 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   public semiProductsForm = new FormControl(null);
 
   faTimes = faTimes;
+
+  languages = ['EN', 'DE', 'RW', 'ES'];
+  selectedLanguage = 'EN';
 
   constructor(
       private route: ActivatedRoute,
@@ -78,6 +81,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   initializeNew() {
     this.title = $localize `:@@productLabelStockFacilityModal.newFacility.newTitle:New facility`;
     this.form = generateFormFromMetadata(ApiFacility.formMetadata(), this.emptyObject(), ApiFacilityValidationScheme);
+    this.finalizeForm();
   }
 
   initializeEdit() {
@@ -85,16 +89,18 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.title = $localize`:@@productLabelStockFacilityModal.newFacility.editTitle:Edit facility`;
     this.companyId = this.route.snapshot.params.id;
     const facilityId = this.route.snapshot.params.facilityId;
-    this.facilityControllerService.getFacilityUsingGET(facilityId).pipe(first()).subscribe(res => {
+    this.facilityControllerService.getFacilityDetailUsingGET(facilityId).pipe(first()).subscribe(res => {
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
       this.semiProducts = res.data.facilitySemiProductList;
 
-      let tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
+      const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }
-      let tmpPub = this.form.get('isPublic').value;
+      const tmpPub = this.form.get('isPublic').value;
       if (tmpPub != null) { this.form.get('isPublic').setValue(tmpPub.toString()); }
-      let tmpCollection = this.form.get('isCollectionFacility').value;
+      const tmpCollection = this.form.get('isCollectionFacility').value;
       if (tmpCollection != null) { this.form.get('isCollectionFacility').setValue(tmpCollection.toString()); }
+
+      this.finalizeForm();
     });
     this.semiProductControllerService.getSemiProductListUsingGET();
   }
@@ -162,6 +168,28 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.destroy$.next(true);
+  }
+
+  selectLanguage(lang: string) {
+    this.selectedLanguage = lang;
+  }
+
+  finalizeForm() {
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        name: new FormControl(translation ? translation.name : ''),
+        language: new FormControl(lang)
+      }));
+    }
   }
   
 }

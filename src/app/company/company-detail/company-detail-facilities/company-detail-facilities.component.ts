@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
@@ -94,7 +94,8 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     protected route: ActivatedRoute,
     protected facilityControllerService: FacilityControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    @Inject(LOCALE_ID) public userLocale: string
   ) {
     super(router, route, authService);
   }
@@ -116,7 +117,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   loadEntityList(params: any) {
-    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId, language: this.userLocale.toUpperCase() });
   }
 
   canDeactivate(): boolean {
