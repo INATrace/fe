@@ -21,9 +21,9 @@
 
           <div class="af-form-element">
             <div class="af-row">
-              <div class="af-c11">
+              <div class="af-c11 af-md-c11">
                 <div class="af-row">
-                  <div class="af-c3">
+                  <div class="af-c3 af-md-c6 af-sm-c11">
                     <app-datepicker
                       label="Delivery date"
                       i18n-label="@@productLabelStockPurchaseOrdersModal.datepicker.date.label"
@@ -41,7 +41,7 @@
                     </app-datepicker>
                   </div>
 
-                  <div class="af-c3" *ngIf="showCollector">
+                  <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showCollector">
                     <single-choice
                       label="Collector"
                       i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.collector"
@@ -53,7 +53,7 @@
                     </single-choice>
                   </div>
 
-                  <div class="af-c3">
+                  <div class="af-c3 af-md-c6 af-sm-c11">
                     <single-choice
                       label="Cooperative employee"
                       i18n-label="Cooperative employee"
@@ -72,7 +72,7 @@
                     </single-choice>
                   </div>
 
-                  <div class="af-c3">
+                  <div class="af-c3 af-md-c6 af-sm-c11">
                     <single-choice
                       label="Preferred way of payment"
                       i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.preferredWayOfPayment"
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="af-row">
-                  <div class="af-c3">
+                  <div class="af-c3 af-md-c6 af-sm-c11">
                     <textinput [form]="facilityNameForm"
                                label="Facility name"
                                style="width: 100%"
@@ -116,11 +116,11 @@
               <div class="af-c12">
 
                 <div class="af-row" style="margin-top: 1rem;">
-                  <div class="af-c11">
+                  <div class="af-c11 af-md-c11">
                     <label i18n="@@productLabelStockPurchaseOrdersModal.section.farmers">Farmers</label>
                   </div>
 
-                  <div class="ml-5 text-right">
+                  <div class="ml-xl-5 ml-lg-4 ml-md-3 ml-sm-1 text-right">
 
                     <button class="btn btn-solid round"
                             (click)="addFarmerInfo()"
@@ -134,9 +134,9 @@
                 <ng-container *ngFor="let item of farmersFormArray.controls; index as idx">
 
                   <div class="af-row" style="margin-top: 1rem;">
-                    <div class="af-c11">
+                    <div class="af-c11 af-md-c11">
                       <div class="af-row mt-4">
-                        <div class="af-c3">
+                        <div class="af-c3 af-md-c6 af-sm-c11">
                           <single-choice
                             label="Farmer"
                             i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer"
@@ -157,7 +157,7 @@
                           </single-choice>
                         </div>
 
-                        <div class="af-c3" [formGroup]="farmersFormArray.at(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" [formGroup]="farmersFormArray.at(idx)">
                           <div class="form-group">
                             <label class="d-flex mb-0 text-input-label">
                               <span
@@ -180,7 +180,7 @@
                           </div>
                         </div>
 
-                        <div class="af-c3">
+                        <div class="af-c3 af-md-c6 af-sm-c11">
                           <textinput
                             [form]="item.get('totalQuantity')"
                             [label]="quantityLabel(idx)"
@@ -200,7 +200,7 @@
                           </textinput>
                         </div>
 
-                        <div class="af-c3">
+                        <div class="af-c3 af-md-c6 af-sm-c11">
                           <textinput
                             type="number"
                             min="0"
@@ -225,7 +225,7 @@
 
                       </div>
                       <div class="af-row">
-                        <div class="af-c3" *ngIf="showTare(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showTare(idx)">
                           <textinput [form]="item.get('tare')"
                                      [label]="tareLabel(idx)"
                                      style="width: 100%"
@@ -245,7 +245,7 @@
                           </textinput>
                         </div>
 
-                        <div class="af-c3" *ngIf="showDamagedPriceDeduction(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showDamagedPriceDeduction(idx)">
                           <textinput [form]="item.get('damagedPriceDeduction')"
                                      [label]="damagedPriceDeductionLabel(idx)"
                                      style="width: 100%"
@@ -265,7 +265,7 @@
                           </textinput>
                         </div>
 
-                        <div class="af-c3" *ngIf="showOrganic(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showOrganic(idx)">
                           <single-choice
                             label="Organic"
                             i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.organic.label"
@@ -286,7 +286,7 @@
                           </single-choice>
                         </div>
 
-                        <div class="af-c3" *ngIf="showWomensOnly(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showWomensOnly(idx)">
                           <single-choice
                             label="Women’s only"
                             i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.womensOnly"
@@ -310,7 +310,7 @@
                       </div>
                       <div class="af-row">
 
-                        <div class="af-c3" *ngIf="showTare(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showTare(idx)">
                           <textinput [form]="netWeightFormArray[idx]"
                                      [label]="netLabel(idx)"
                                      [readOnly]="true"
@@ -328,7 +328,7 @@
                             </ng-container>
                           </textinput>
                         </div>
-                        <div class="af-c3" *ngIf="showTare(idx)">
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showTare(idx)">
                           <textinput [form]="finalPriceFormArray[idx]"
                                      [label]="finalPriceLabel(idx)"
                                      [readOnly]="true"
@@ -346,7 +346,7 @@
                           </textinput>
                         </div>
 
-                        <div class="af-c3">
+                        <div class="af-c3 af-md-c6 af-sm-c11">
                           <textinput
                             [form]="item.get('cost')"
                             [label]="costLabel"
@@ -358,7 +358,7 @@
                           </textinput>
                         </div>
 
-                        <div class="af-c3">
+                        <div class="af-c3 af-md-c6 af-sm-c11">
                           <textinput
                             [form]="item.get('balance')"
                             [label]="balanceLabel"
@@ -373,7 +373,7 @@
                       </div>
 
                     </div>
-                    <div class="ml-5 mt-4 text-right">
+                    <div class="ml-xl-5 ml-lg-4 ml-md-3 ml-sm-1 mt-4 text-right">
                       <div *ngIf="checkRemoveFarmerIconShow(idx)"
                            class="icon-remove-farmer"
                            (click)="removeFarmer(idx)">
