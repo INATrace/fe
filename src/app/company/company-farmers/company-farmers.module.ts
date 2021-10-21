@@ -11,11 +11,13 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProductStakeholdersModule } from '../../m-product/product-stakeholders/product-stakeholders.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompanyFarmersImportComponent } from './company-farmers-import/company-farmers-import.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [CompanyFarmersListComponent, CompanyFarmersDetailsComponent],
+  declarations: [CompanyFarmersListComponent, CompanyFarmersDetailsComponent, CompanyFarmersImportComponent],
     imports: [
         CommonModule,
         LayoutModule,
@@ -26,7 +28,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         QRCodeModule,
         DragDropModule,
         ProductStakeholdersModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        ReactiveFormsModule
     ]
 })
 export class CompanyFarmersModule { }
