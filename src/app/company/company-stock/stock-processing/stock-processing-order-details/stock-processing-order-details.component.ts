@@ -7,7 +7,7 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -42,6 +42,11 @@ import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessi
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
+import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
+import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -152,6 +157,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     public actionTypesCodebook: ActionTypesService,
     @Inject(LOCALE_ID) public userLocale: string
   ) { }
+
+  // Create form control for use in activity proofs list manager
+  static ApiActivityProofCreateEmptyObject(): ApiActivityProof {
+    const obj = ApiActivityProof.formMetadata();
+    return defaultEmptyObject(obj) as ApiActivityProof;
+  }
+
+  static ApiActivityProofEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(StockProcessingOrderDetailsComponent.ApiActivityProofCreateEmptyObject(),
+        ApiActivityProofValidationScheme.validators);
+    };
+  }
 
   get actionType(): ProcessingActionType {
     if (!this.prAction) { return null; }
@@ -617,13 +635,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     const stockOrderList: ApiStockOrder[] = [];
 
-    // TODO: prepare required proc. evidence types
-
     const sharedFields: ApiStockOrder = {
       pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
-      requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues()
+      requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
+      otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -769,6 +787,47 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return evidenceFieldsValues;
   }
 
+  private prepareRequiredEvidenceTypeValues(): ApiStockOrderEvidenceTypeValue[] {
+
+    const evidenceTypesValues: ApiStockOrderEvidenceTypeValue[] = [];
+
+    if (!this.prAction) {
+      return evidenceTypesValues;
+    }
+
+    for (const control of this.requiredProcessingEvidenceArray.controls) {
+      const controlValue: ApiStockOrderEvidenceTypeValue =  control.value;
+      if (controlValue && controlValue.document && controlValue.document.id) {
+        evidenceTypesValues.push(controlValue);
+      }
+    }
+
+    return evidenceTypesValues;
+  }
+
+  private prepareOtherEvidenceDocuments(): ApiStockOrderEvidenceTypeValue[] {
+
+    const otherEvidenceDocuments: ApiStockOrderEvidenceTypeValue[] = [];
+
+    if (!this.prAction) {
+      return otherEvidenceDocuments;
+    }
+
+    for (const control of this.otherProcessingEvidenceArray.controls) {
+
+      const evidenceType: ApiProcessingEvidenceType = control.value.type;
+
+      otherEvidenceDocuments.push({
+        evidenceTypeId: evidenceType.id,
+        evidenceTypeCode: evidenceType.code,
+        date: control.value.formalCreationDate,
+        document: control.value.document
+      });
+    }
+
+    return otherEvidenceDocuments;
+  }
+
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
 
     // If we have defined input semi-product, get its definition
@@ -796,36 +855,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async setRequiredProcessingEvidence(action: ApiProcessingAction) {
 
-    // TODO: implement initialization for processing evidence types
-    // (this.requiredProcessingEvidenceArray as FormArray).clear();
-    // if (action && action.requiredDocTypeIds) {
-    //   let types: ChainProcessingEvidenceType[] = [];
-    //   if (action.requiredDocTypes) { types = action.requiredDocTypes; }
-    //   else {
-    //     for (const id of action.requiredDocTypeIds) {
-    //       const res = await this.processingEvidenceTypeService.getProcessingEvidenceTypeUsingGET(Number(id)).pipe(take(1)).toPromise();
-    //       if (res && res.status === 'OK' && res.data) {
-    //         types.push(res.data as any); // FIXME: check this after other entities are migrated
-    //       }
-    //     }
-    //   }
-    //   if (types.length > 0) {
-    //     const validationConditions: DocTypeIdsWithRequired[] = action.requiredDocTypeIdsWithRequired || [];
-    //     for (const act of types) {
-    //       const item = validationConditions.find(x => x.processingEvidenceTypeId === dbKey(act));
-    //       this.requiredProcessingEvidenceArray.push(new FormGroup({
-    //         date: new FormControl(this.calcToday(), item && item.required ? Validators.required : null),
-    //         type: new FormControl(this.documentRequestFromProcessingEvidence(act)),
-    //         // type_label: new FormControl(act.label),
-    //         // type_id: new FormControl(act.id),
-    //         // type__id: new FormControl(dbKey(act)),
-    //         document: new FormControl(null, item && item.required ? Validators.required : null)
-    //       }));
-    //     }
-    //   }
-    // } else {
-    //   (this.requiredProcessingEvidenceArray as FormArray).clear();
-    // }
+    (this.requiredProcessingEvidenceArray as FormArray).clear();
+
+    if (action && action.requiredDocumentTypes && action.requiredDocumentTypes.length > 0) {
+
+      for (const requiredDocumentType of action.requiredDocumentTypes) {
+        this.requiredProcessingEvidenceArray.push(new FormGroup({
+          evidenceTypeId: new FormControl(requiredDocumentType.id),
+          evidenceTypeCode: new FormControl(requiredDocumentType.code),
+          evidenceTypeLabel: new FormControl(requiredDocumentType.label),
+          date: new FormControl(new Date(), requiredDocumentType.mandatory ? Validators.required : null),
+          document: new FormControl(null, requiredDocumentType.mandatory ? Validators.required : null)
+        }));
+      }
+
+    } else {
+      (this.requiredProcessingEvidenceArray as FormArray).clear();
+    }
   }
 
   async setProcessingAction(event) {
@@ -1268,12 +1314,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private initializeListManager() {
-    // TODO: initialize list manager for processing evidence types
-    // this.processingEvidenceListManager = new ListEditorManager<ChainActivityProof>(
-    //   this.otherProcessingEvidenceArray as FormArray,
-    //   ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
-    //   ApiActivityProofValidationScheme
-    // );
+    this.processingEvidenceListManager = new ListEditorManager<ApiActivityProof>(
+      this.otherProcessingEvidenceArray as FormArray,
+      StockProcessingOrderDetailsComponent.ApiActivityProofEmptyObjectFormFactory(),
+      ApiActivityProofValidationScheme
+    );
   }
 
   private setInputOutputFormAccordinglyToTransaction() {

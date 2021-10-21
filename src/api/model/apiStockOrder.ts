@@ -20,10 +20,12 @@
 
 import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
+import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderEvidenceFieldValue } from './apiStockOrderEvidenceFieldValue';
+import { ApiStockOrderEvidenceTypeValue } from './apiStockOrderEvidenceTypeValue';
 import { ApiStockOrderLocation } from './apiStockOrderLocation';
 import { ApiUser } from './apiUser';
 import { ApiUserCustomer } from './apiUserCustomer';
@@ -49,6 +51,7 @@ export interface ApiStockOrder {
      */
     comments?: string;
     company?: ApiCompany;
+    consumerCompanyCustomer?: ApiCompanyCustomer;
     /**
      * Cost
      */
@@ -96,6 +99,7 @@ export interface ApiStockOrder {
      */
     isPurchaseOrder?: boolean;
     measureUnitType?: ApiMeasureUnitType;
+    openOrder?: boolean;
     /**
      * Order type
      */
@@ -104,6 +108,10 @@ export interface ApiStockOrder {
      * Organic
      */
     organic?: boolean;
+    /**
+     * Other processing evidence documents - evidence types that can be provided but are not mandatory
+     */
+    otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
     /**
      * Paid
      */
@@ -123,11 +131,16 @@ export interface ApiStockOrder {
     productionDate?: Date;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
+    quoteFacility?: ApiFacility;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
      * Processing evidence fields stored values for this stock order
      */
     requiredEvidenceFieldValues?: Array<ApiStockOrderEvidenceFieldValue>;
+    /**
+     * Processing evidence types stored values for this stock order
+     */
+    requiredEvidenceTypeValues?: Array<ApiStockOrderEvidenceTypeValue>;
     /**
      * SAC number
      */
@@ -178,6 +191,7 @@ export namespace ApiStockOrder {
          */
         comments = 'comments',
         company = 'company',
+        consumerCompanyCustomer = 'consumerCompanyCustomer',
         /**
          * Cost
          */
@@ -225,6 +239,7 @@ export namespace ApiStockOrder {
          */
         isPurchaseOrder = 'isPurchaseOrder',
         measureUnitType = 'measureUnitType',
+        openOrder = 'openOrder',
         /**
          * Order type
          */
@@ -233,6 +248,10 @@ export namespace ApiStockOrder {
          * Organic
          */
         organic = 'organic',
+        /**
+         * Other processing evidence documents - evidence types that can be provided but are not mandatory
+         */
+        otherEvidenceDocuments = 'otherEvidenceDocuments',
         /**
          * Paid
          */
@@ -252,11 +271,16 @@ export namespace ApiStockOrder {
         productionDate = 'productionDate',
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
+        quoteFacility = 'quoteFacility',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         /**
          * Processing evidence fields stored values for this stock order
          */
         requiredEvidenceFieldValues = 'requiredEvidenceFieldValues',
+        /**
+         * Processing evidence types stored values for this stock order
+         */
+        requiredEvidenceTypeValues = 'requiredEvidenceTypeValues',
         /**
          * SAC number
          */
@@ -377,6 +401,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompany'
+                },
+                {
+                    metadata: ApiCompanyCustomer.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'consumerCompanyCustomer',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiCompanyCustomer',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompanyCustomer'
                 },
                 {
                     isReadOnly: false,
@@ -537,6 +573,17 @@ export namespace ApiStockOrder {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'openOrder',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
                     required: false,
@@ -557,6 +604,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'otherEvidenceDocuments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
                 },
                 {
                     isReadOnly: false,
@@ -639,6 +698,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiFacility.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'quoteFacility',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFacility',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFacility'
+                },
+                {
                     metadata: ApiUserCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -661,6 +732,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiStockOrderEvidenceFieldValue'
+                },
+                {
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'requiredEvidenceTypeValues',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
                 },
                 {
                     isReadOnly: false,
@@ -755,6 +838,8 @@ export namespace ApiStockOrder {
                 ],
                 company: [
                 ],
+                consumerCompanyCustomer: [
+                ],
                 cost: [
                 ],
                 createdBy: [
@@ -783,9 +868,13 @@ export namespace ApiStockOrder {
                 ],
                 measureUnitType: [
                 ],
+                openOrder: [
+                ],
                 orderType: [
                 ],
                 organic: [
+                ],
+                otherEvidenceDocuments: [
                 ],
                 paid: [
                 ],
@@ -801,9 +890,13 @@ export namespace ApiStockOrder {
                 ],
                 purchaseOrder: [
                 ],
+                quoteFacility: [
+                ],
                 representativeOfProducerUserCustomer: [
                 ],
                 requiredEvidenceFieldValues: [
+                ],
+                requiredEvidenceTypeValues: [
                 ],
                 sacNumber: [
                 ],
@@ -842,6 +935,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               company: {
+  //                   validators: []
+  //               },
+  //               consumerCompanyCustomer: {
   //                   validators: []
   //               },
   //               cost: {
@@ -886,10 +982,16 @@ export namespace ApiStockOrder {
   //               measureUnitType: {
   //                   validators: []
   //               },
+  //               openOrder: {
+  //                   validators: []
+  //               },
   //               orderType: {
   //                   validators: []
   //               },
   //               organic: {
+  //                   validators: []
+  //               },
+  //               otherEvidenceDocuments: {
   //                   validators: []
   //               },
   //               paid: {
@@ -913,10 +1015,16 @@ export namespace ApiStockOrder {
   //               purchaseOrder: {
   //                   validators: []
   //               },
+  //               quoteFacility: {
+  //                   validators: []
+  //               },
   //               representativeOfProducerUserCustomer: {
   //                   validators: []
   //               },
   //               requiredEvidenceFieldValues: {
+  //                   validators: []
+  //               },
+  //               requiredEvidenceTypeValues: {
   //                   validators: []
   //               },
   //               sacNumber: {

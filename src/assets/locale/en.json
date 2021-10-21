@@ -2516,7 +2516,7 @@
     "productLabelStock.purchase.warning.message": "Please select facility before continuing",
     "productLabelStock.warning.button.ok": "OK",
     "productLabelPayments.sortOptions.paymentPurposeType.name": "Payment purpose",
-    "productLabelPayments.sortOptions.amount.name": "Amount paid to the farmer (RWF)",
+    "productLabelPayments.sortOptions.amount.name": "Amount paid to the farmer",
     "productLabelPayments.sortOptions.amount.company.name": "Amount paid (EUR)",
     "productLabelPayments.sortOptions.producer_name.name": "Farmer name",
     "productLabelPayments.sortOptions.company_name.name": "Company name",

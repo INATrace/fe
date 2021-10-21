@@ -159,11 +159,9 @@ export class StockPaymentsDetailComponent implements OnInit {
     const today = dateAtMidnightISOString(new Date().toDateString());
     this.paymentForm.get('formalCreationTime').setValue(today);
 
-    // TODO: This seems a bit sketchy, don't you think?
+    // If we are in purchase mode (purchase order from a farmer), set the currency of the payment to be the currency of the stock order
     if (this.mode === ModeEnum.PURCHASE) {
-      if (!this.paymentForm.get('currency').value) {
-        this.paymentForm.get('currency').setValue('RWF');
-      }
+      this.paymentForm.get('currency').setValue(this.stockOrder.currency);
     }
 
     this.paymentForm.get('paymentStatus').setValue(PaymentStatusEnum.UNCONFIRMED);

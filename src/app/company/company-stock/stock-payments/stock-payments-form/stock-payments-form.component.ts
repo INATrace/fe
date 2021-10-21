@@ -34,30 +34,43 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   @Input()
   paymentForm: FormGroup;
+
   @Input()
   orderReferenceForm = new FormControl(null);
+
   @Input()
   payableFromForm = new FormControl(null);
+
   @Input()
   searchCompaniesForm = new FormControl(null);
+
   @Input()
   searchCollectorsForm = new FormControl(null);
+
   @Input()
   searchFarmersForm = new FormControl(null);
+
   @Input()
   collectorsCodebook: CompanyUserCustomersByRoleService;
+
   @Input()
   farmersCodebook: CompanyUserCustomersByRoleService;
-  @Input()
-  stockOrder: ApiStockOrder;
-  @Input()
-  openBalance: number;
-  @Input()
-  purchased: number;
-  @Input()
-  viewOnly: boolean;
+
   @Input()
   submitted: boolean;
+
+  @Input()
+  viewOnly: boolean;
+
+  @Input()
+  stockOrder: ApiStockOrder;
+
+  @Input()
+  openBalance: number;
+
+  @Input()
+  purchased: number;
+
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 

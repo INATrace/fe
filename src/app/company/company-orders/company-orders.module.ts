@@ -10,7 +10,7 @@ import { LayoutModule } from '../../layout/layout.module';
 import { CompanyCommonModule } from '../company-common/company-common.module';
 import { SharedModule } from '../../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.component';
 
 
@@ -23,7 +23,8 @@ import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.com
     CompanyCommonModule,
     SharedModule,
     FontAwesomeModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgbPaginationModule
   ]
 })
 export class CompanyOrdersModule { }

@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
-import { dateAtMidnightISOString, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { environment } from 'src/environments/environment';
+import { FormGroup } from '@angular/forms';
+import { dateAtMidnightISOString, generateFormFromMetadata } from 'src/shared/utils';
 import { ApiActivityProofValidationScheme } from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
@@ -10,6 +9,9 @@ import { ImageViewerComponent } from 'src/app/shared/image-viewer/image-viewer.c
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
+import { ProcessingEvidenceTypeService } from '../../../../shared-services/processing-evidence-types.service';
+import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
+import { ProcessingEvidenceTypeControllerService } from '../../../../../api/api/processingEvidenceTypeController.service';
 
 @Component({
   selector: 'app-additional-proof-item',
@@ -21,7 +23,9 @@ export class AdditionalProofItemComponent extends GenericEditableItemComponent<A
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
     protected router: Router,
-    private modalService: NgbModalImproved
+    private modalService: NgbModalImproved,
+    private codebookTranslations: CodebookTranslations,
+    private procEvidenceTypeController: ProcessingEvidenceTypeControllerService
   ) {
     super(globalEventsManager);
   }
@@ -32,18 +36,10 @@ export class AdditionalProofItemComponent extends GenericEditableItemComponent<A
   @Input()
   formTitle = null;
 
-  codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
+  @Input()
+  evidenceType = false;
 
-  static createEmptyObject(): ApiActivityProof {
-    const object = ApiActivityProof.formMetadata();
-    return defaultEmptyObject(object) as ApiActivityProof;
-  }
-
-  static emptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(AdditionalProofItemComponent.createEmptyObject(), ApiActivityProofValidationScheme.validators);
-    };
-  }
+  codebookAdditionalProofs;
 
   get addProofs() {
     const obj = {};
@@ -59,26 +55,38 @@ export class AdditionalProofItemComponent extends GenericEditableItemComponent<A
     return obj;
   }
 
-  ngOnInit(): void {
-    if (this.form.value?.id == null) {
-      const today = dateAtMidnightISOString(new Date().toDateString());
-      this.form.get('formalCreationDate').setValue(today);
-    }
-  }
-
-  public generateForm(value: any): FormGroup {
-    return generateFormFromMetadata(ApiActivityProof.formMetadata(), value, ApiActivityProofValidationScheme);
-  }
-
   get name() {
+
     if (this.contentObject && this.contentObject.formalCreationDate && this.contentObject.type) {
       const tmpDate = new Date(this.contentObject.formalCreationDate);
       const day = tmpDate.getDate();
       const month = tmpDate.getMonth() + 1;
       const year = tmpDate.getFullYear();
+
+      if (this.evidenceType) {
+        return this.contentObject.type.label + ' (' + day + '.' + month + '.' + year + ')';
+      }
       return this.addProofs[this.contentObject.type] + ' (' + day + '.' + month + '.' + year + ')';
     }
     return '';
+  }
+
+  ngOnInit(): void {
+
+    if (this.form.value?.id == null) {
+      const today = dateAtMidnightISOString(new Date().toDateString());
+      this.form.get('formalCreationDate').setValue(today);
+    }
+
+    if (this.evidenceType) {
+      this.codebookAdditionalProofs = new ProcessingEvidenceTypeService(this.procEvidenceTypeController, this.codebookTranslations, 'DOCUMENT');
+    } else {
+      this.codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
+    }
+  }
+
+  public generateForm(value: any): FormGroup {
+    return generateFormFromMetadata(ApiActivityProof.formMetadata(), value, ApiActivityProofValidationScheme);
   }
 
   viewImage() {
