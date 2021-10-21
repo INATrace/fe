@@ -135,6 +135,15 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     }
   ];
 
+  public areaTranslations = {
+    totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
+    totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
+    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
+    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
+    organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
+    organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
+  };
+
   constructor(
       private location: Location,
       private formBuilder: FormBuilder,
@@ -147,7 +156,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initData().then(res => {
+    this.initData().then(() => {
       if (!this.update) {
         this.newFarmer();
       } else {
@@ -297,13 +306,11 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   async listOfOrgProducer() {
-    const res = await this.companyService.listCompaniesUsingGET().pipe(take(1)).toPromise();
+    const company = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
 
-    if (res && res.status === 'OK' && res.data) {
+    if (company && company.status === 'OK' && company.data) {
       const companiesObj = {};
-      for (const company of res.data.items) {
-        companiesObj[company.id] = company.name;
-      }
+      companiesObj[company.data.id] = company.data.name;
       this.codebookCoop = EnumSifrant.fromObject(companiesObj);
       this.assocCoop = companiesObj;
     }
@@ -369,16 +376,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     this.openBalanceOnly = action;
     this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
   }
-  
-  public areaTranslations = {
-    totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
-    totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
-    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
-    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
-    organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
-    organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
-  };
-  
+
   public get areaUnit(): FormControl {
     return this.farmerForm.get('farm.areaUnit') as FormControl;
   }
