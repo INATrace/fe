@@ -232,6 +232,111 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
 }
 
 /**
+ * Namespace for getQuoteOrdersInFacilityUsingGET.
+ */
+export namespace GetQuoteOrdersInFacilityUsingGET {
+    /**
+     * Parameter map for getQuoteOrdersInFacilityUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Facility ID
+       */
+      facilityId: number;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+      /**
+       * Semi-product ID
+       */
+      semiProductId?: number;
+      /**
+       * Return only open stock orders
+       */
+      openOnly?: boolean;
+    }
+
+    /**
+     * Enumeration of all parameters for getQuoteOrdersInFacilityUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Facility ID
+       */
+      facilityId = 'facilityId',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort',
+      /**
+       * Semi-product ID
+       */
+      semiProductId = 'semiProductId',
+      /**
+       * Return only open stock orders
+       */
+      openOnly = 'openOnly'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getQuoteOrdersInFacilityUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetQuoteOrdersInFacilityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      facilityId: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
+      semiProductId: [
+      ],
+      openOnly: [
+      ],
+    };
+}
+
+/**
  * Namespace for getStockOrderListByCompanyIdUsingGET.
  */
 export namespace GetStockOrderListByCompanyIdUsingGET {
@@ -1153,6 +1258,126 @@ export class StockOrderControllerService {
 
 
   /**
+   * getQuoteOrdersInFacility by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getQuoteOrdersInFacilityUsingGETByMap(
+    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
+  public getQuoteOrdersInFacilityUsingGETByMap(
+    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+  public getQuoteOrdersInFacilityUsingGETByMap(
+    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+  public getQuoteOrdersInFacilityUsingGETByMap(
+    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getQuoteOrdersInFacilityUsingGET(
+      map.facilityId,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      map.semiProductId,
+      map.openOnly,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * getQuoteOrdersInFacility
+     * 
+     * @param facilityId Facility ID
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param semiProductId Semi-product ID
+     * @param openOnly Return only open stock orders
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (facilityId === null || facilityId === undefined) {
+            throw new Error('Required parameter facilityId was null or undefined when calling getQuoteOrdersInFacilityUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (semiProductId !== undefined && semiProductId !== null) {
+            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (openOnly !== undefined && openOnly !== null) {
+            queryParameters = queryParameters.set('openOnly', <any>openOnly);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/list/facility/${encodeURIComponent(String(facilityId))}/quote-orders`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQuoteOrdersInFacilityUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Get a paginated list of stock orders by company ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -1660,7 +1885,7 @@ export class StockOrderControllerService {
 
 
   /**
-   * getStockOrdersInFacilityForCustomer by map.
+   * Get a paginated list of stock orders by facility ID for customers. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1698,7 +1923,7 @@ export class StockOrderControllerService {
 
 
     /**
-     * getStockOrdersInFacilityForCustomer
+     * Get a paginated list of stock orders by facility ID for customers.
      * 
      * @param facilityId Facility ID
      * @param requestType Only count, only fetch, or return both values (if null)

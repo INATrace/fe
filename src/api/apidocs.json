@@ -4013,7 +4013,117 @@
           "stock-order-controller"
         ],
         "operationId": "getStockOrdersInFacilityForCustomerUsingGET",
-        "summary": "getStockOrdersInFacilityForCustomer"
+        "summary": "Get a paginated list of stock orders by facility ID for customers."
+      }
+    },
+    "/api/chain/stock-order/list/facility/{facilityId}/quote-orders": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Facility ID",
+            "in": "path",
+            "name": "facilityId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Return only open stock orders",
+            "in": "query",
+            "name": "openOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getQuoteOrdersInFacilityUsingGET",
+        "summary": "getQuoteOrdersInFacility"
       }
     },
     "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
