@@ -342,7 +342,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'SHIPMENT') { return true; }
     if (this.actionType !== 'PROCESSING') { return false; }
-    return !this.prAction.repackedOutputs;
+    return true;
   }
 
   get invalidOutputQuantity() {
@@ -460,6 +460,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         } else {
           this.newProcessingOrder();
         }
+
+        this.registerOutputValueChangeListener();
       }
     );
   }
@@ -467,6 +469,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  private registerOutputValueChangeListener(){
+
+    this.subscriptions.push(this.outputStockOrderForm.get('totalQuantity').valueChanges
+      .subscribe((val: number) => {
+        this.setInputOutputFormAccordinglyToTransaction(val);
+      }));
+
+  }
+
 
   private async initInitialData() {
 
@@ -1225,9 +1237,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (setValue) {
       if (this.actionType === 'PROCESSING') {
         this.form.get('outputQuantity').setValue(inputQuantity);
-        if (!this.update) {
-          this.setInputOutputFormAccordinglyToTransaction();
-        }
         if (this.isUsingInput) {
           this.outputStockOrderForm.get('totalQuantity').setValue(inputQuantity);
         }
@@ -1275,23 +1284,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // );
   }
 
-  private setInputOutputFormAccordinglyToTransaction() {
-
-    // Prevent recalculating sac numbers if something already entered.
-    if (this.outputStockOrders && this.outputStockOrders.length > 0) {
-      if ((this.outputStockOrders.value).some(item => item.totalQuantity)) { return; }
-    }
+  private setInputOutputFormAccordinglyToTransaction(availableQua: number) {
 
     (this.outputStockOrders as FormArray).clear();
 
     if (this.prAction && this.actionType === 'PROCESSING') {
 
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
-
-        let availableQua = 0;
-        for (const item of this.selectedInputStockOrders) {
-          availableQua += item.availableQuantity;
-        }
 
         const outputStockOrdersSize = Math.ceil(availableQua / this.prAction.maxOutputWeight);
         for (let i = 0; i < outputStockOrdersSize; i++) {
@@ -1438,10 +1437,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   prefillOutputStockOrdersQuantities() {
 
-    let availableQua = 0;
-    for (const item of this.selectedInputStockOrders) {
-      availableQua += item.availableQuantity;
-    }
+    let availableQua = this.outputStockOrderForm.get('totalQuantity').value;
 
     const maxWeight = this.prAction.maxOutputWeight;
 
