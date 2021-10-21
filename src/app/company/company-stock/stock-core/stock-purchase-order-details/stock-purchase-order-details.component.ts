@@ -192,7 +192,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   get costLabel() {
-    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Payable 1st installment` + ` (${this.selectedCurrency})`;
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.cost.label:Base payment` + ` (${this.selectedCurrency})`;
   }
 
   get balanceLabel() {
