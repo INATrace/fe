@@ -308,7 +308,8 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     if (this.options && this.options.length === 1) {
 
       const index = 0;
-      this.farmersFormArray.at(index).get('semiProduct').setValue({ id: this.options[0].id });
+
+      this.farmersFormArray.at(index).get('semiProduct').setValue(this.options[0]);
       this.setMeasureUnit(this.options[0].id, index).then();
     }
 
@@ -598,14 +599,14 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   addFarmerInfo() {
 
-    let semiProductValueControl = new FormControl(null);
+    let semiProductControlValue = null;
 
     // use size as new index
     const farmerListSize = this.farmersFormArray.length;
 
     // If only one semi-product, select it as a default
     if (this.options && this.options.length === 1) {
-      semiProductValueControl =  new FormControl({ id: this.options[0].id });
+      semiProductControlValue =  this.options[0];
       this.setMeasureUnit(this.options[0].id, farmerListSize).then();
     }
 
@@ -618,8 +619,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     this.finalPriceFormArray.push(new FormControl(null));
 
     // add new fields to form, and init semiProduct if only one available
+    const emptyFarmersFormArrayNewItem = _.cloneDeep(this.emptyFarmersFormArray);
+    (emptyFarmersFormArrayNewItem as FormGroup).get('semiProduct').setValue(semiProductControlValue);
     this.farmersFormArray.push(
-      _.cloneDeep(this.emptyFarmersFormArray)
+      emptyFarmersFormArrayNewItem
     );
 
     this.updateValidators();
