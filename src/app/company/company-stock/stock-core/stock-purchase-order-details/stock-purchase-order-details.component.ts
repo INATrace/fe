@@ -584,9 +584,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   setBalance() {
 
     if (this.stockOrderForm && this.stockOrderForm.get('cost').value !== null && this.stockOrderForm.get('cost').value !== undefined) {
-      if (!this.update) {
         this.stockOrderForm.get('balance').setValue(this.stockOrderForm.get('cost').value);
-      }
     } else {
 
       this.stockOrderForm.get('balance').setValue(null);
