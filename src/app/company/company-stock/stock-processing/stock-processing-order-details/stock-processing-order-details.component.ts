@@ -2,7 +2,7 @@ import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import {debounceTime, take} from 'rxjs/operators';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
@@ -349,6 +349,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.showTotalQuantityForm && !this.totalQuantity;
   }
 
+  get invalidOutputQuantityTooLargeValue() {
+    const inputQuantity = this.form.get('outputQuantity').value as number;
+    const outputQuantity = this.outputStockOrderForm.get('totalQuantity').value as number;
+    return inputQuantity && outputQuantity && (outputQuantity > inputQuantity);
+  }
+
   get invalidOutputQuantityForShipment() {
     return this.actionType === 'SHIPMENT' && this.invalidOutputQuantity;
   }
@@ -473,8 +479,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private registerOutputValueChangeListener(){
 
     this.subscriptions.push(this.outputStockOrderForm.get('totalQuantity').valueChanges
+      .pipe(debounceTime(300))
       .subscribe((val: number) => {
-        this.setInputOutputFormAccordinglyToTransaction(val);
+        if (!this.invalidOutputQuantityTooLargeValue) {
+          this.setInputOutputFormAccordinglyToTransaction(val);
+        }
       }));
 
   }

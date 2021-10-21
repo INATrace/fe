@@ -383,7 +383,7 @@
                           placeholder="Enter quantity"
                           i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder"
                           [readOnly]="isUsingInput"
-                          [isInvalid]="(submitted && (outputStockOrderForm.get('totalQuantity').invalid || invalidOutputQuantity)) || invalidOutputQuantityForShipment">
+                          [isInvalid]="(submitted && (outputStockOrderForm.get('totalQuantity').invalid || invalidOutputQuantity)) || invalidOutputQuantityForShipment || invalidOutputQuantityTooLargeValue">
                     <ng-container>
                       <ng-container *ngIf="submitted">
                         <div *ngIf="outputStockOrderForm.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
