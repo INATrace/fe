@@ -38,7 +38,7 @@ export function ApiPurchaseOrderFarmerValidationScheme() {
         validators: [Validators.required]
       },
       totalQuantity: {
-        validators: []
+        validators: [Validators.required]
       },
       pricePerUnit: {
         validators: [Validators.required]

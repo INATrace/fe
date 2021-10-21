@@ -306,6 +306,9 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     this.globalEventsManager.showLoading(true);
     this.submitted = true;
 
+    // Set the user ID that creates the purchase order
+    this.purchaseOrderBulkForm.get('creatorId').setValue(this.employeeForm.value);
+
     this.prepareData();
 
     // Validate forms
@@ -326,7 +329,9 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
       this.setBalance(index);
 
       // convert values for send
-      this.farmersFormArray.at(index).get('womenShare').setValue(this.farmersFormArray.at(index).get('womenShare').value === 'YES');
+      if (this.showWomensOnly(index)) {
+        this.farmersFormArray.at(index).get('womenShare').setValue(this.farmersFormArray.at(index).get('womenShare').value === 'YES');
+      }
     });
 
     const data: ApiPurchaseOrder = _.cloneDeep(this.purchaseOrderBulkForm.value);
@@ -477,8 +482,8 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return this.facility && !this.facility.displayTare;
   }
 
-  get showDamagedPriceDeduction() {
-    return this.facility && this.facility.displayPriceDeductionDamage || this.purchaseOrderBulkForm.get('damagedPriceDeduction').value;
+  showDamagedPriceDeduction(idx: number) {
+    return this.facility && this.facility.displayPriceDeductionDamage || this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
   }
 
   get readonlyDamagedPriceDeduction() {
@@ -571,6 +576,8 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
       _.cloneDeep(this.emptyFarmersFormArray)
     );
 
+    this.updateValidators();
+
   }
 
   removeFarmer(idx) {
@@ -580,6 +587,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   // get farmers form array
   get farmersFormArray() {
     return (this.purchaseOrderBulkForm.get('farmers') as FormArray);
+  }
+
+  checkRemoveFarmerIconShow(idx: number) {
+    return (idx > 0) || (idx === 0 && this.farmersFormArray.length > 1);
   }
 
   private async setIdentifier(idx: number) {
