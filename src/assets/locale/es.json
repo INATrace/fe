@@ -1977,6 +1977,7 @@
     "productLabelStockProcessingOrderDetail.filterSemiProduct.label": "Seleccione semiproducto",
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Se requiere una cantidad",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Introduzca primero la cantidad de salida deseada",
+    "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Output quantity is larger than the input quantity",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Cortar cantidad de entrada",
     "typeDetailModal.processingEvidenceType.checkbox.requiredOnQuote.label": "Requerido en el presupuesto",
     "typeDetailModal.processingEvidenceType.checkbox.fairness": "Equidad",

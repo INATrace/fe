@@ -401,6 +401,9 @@
                       <div *ngIf="invalidOutputQuantityForShipment" i18n="@@productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error" class="sc-invalid-feedback">
                         Enter the desired output quantity first
                       </div>
+                      <div *ngIf="invalidOutputQuantityTooLargeValue" i18n="@@productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error" class="sc-invalid-feedback">
+                        Output quantity is larger than the input quantity
+                      </div>
                     </ng-container>
                   </textinput>
                 </div>

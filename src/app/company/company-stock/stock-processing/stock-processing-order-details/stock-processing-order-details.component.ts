@@ -414,6 +414,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.invalidOutputQuantity) {
       return false;
     }
+    if (this.invalidOutputQuantityTooLargeValue) {
+      return false;
+    }
     if (this.inputFacilityForm.invalid) {
       return false;
     }
