@@ -340,7 +340,6 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
     // call for adding new bulk purchase
     // Set the identifier if we are creating new purchase order
-
     this.farmersFormArray.controls.forEach((nextFormGroup, index) => {
       this.setIdentifier(index);
 
