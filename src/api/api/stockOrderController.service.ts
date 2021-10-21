@@ -710,6 +710,111 @@ export namespace GetStockOrderUsingGET {
     };
 }
 
+/**
+ * Namespace for getStockOrdersInFacilityForCustomerUsingGET.
+ */
+export namespace GetStockOrdersInFacilityForCustomerUsingGET {
+    /**
+     * Parameter map for getStockOrdersInFacilityForCustomerUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Facility ID
+       */
+      facilityId: number;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+      /**
+       * Company customer ID
+       */
+      companyCustomerId?: number;
+      /**
+       * Return only open stock orders
+       */
+      openOnly?: boolean;
+    }
+
+    /**
+     * Enumeration of all parameters for getStockOrdersInFacilityForCustomerUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Facility ID
+       */
+      facilityId = 'facilityId',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort',
+      /**
+       * Company customer ID
+       */
+      companyCustomerId = 'companyCustomerId',
+      /**
+       * Return only open stock orders
+       */
+      openOnly = 'openOnly'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrdersInFacilityForCustomerUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      facilityId: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
+      companyCustomerId: [
+      ],
+      openOnly: [
+      ],
+    };
+}
+
 
 
 @Injectable({
@@ -1549,6 +1654,126 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * getStockOrdersInFacilityForCustomer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStockOrdersInFacilityForCustomerUsingGETByMap(
+    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
+  public getStockOrdersInFacilityForCustomerUsingGETByMap(
+    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+  public getStockOrdersInFacilityForCustomerUsingGETByMap(
+    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+  public getStockOrdersInFacilityForCustomerUsingGETByMap(
+    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getStockOrdersInFacilityForCustomerUsingGET(
+      map.facilityId,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      map.companyCustomerId,
+      map.openOnly,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * getStockOrdersInFacilityForCustomer
+     * 
+     * @param facilityId Facility ID
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param companyCustomerId Company customer ID
+     * @param openOnly Return only open stock orders
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (facilityId === null || facilityId === undefined) {
+            throw new Error('Required parameter facilityId was null or undefined when calling getStockOrdersInFacilityForCustomerUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (companyCustomerId !== undefined && companyCustomerId !== null) {
+            queryParameters = queryParameters.set('companyCustomerId', <any>companyCustomerId);
+        }
+        if (openOnly !== undefined && openOnly !== null) {
+            queryParameters = queryParameters.set('openOnly', <any>openOnly);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/list/facility/${encodeURIComponent(String(facilityId))}/orders-for-customers`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrdersInFacilityForCustomerUsingGET')));
         }
         return handle;
     }
