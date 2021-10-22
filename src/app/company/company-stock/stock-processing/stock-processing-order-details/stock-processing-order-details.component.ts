@@ -1248,12 +1248,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (setValue) {
       if (this.actionType === 'PROCESSING') {
-        this.form.get('outputQuantity').setValue(inputQuantity);
+        this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
         if (this.isUsingInput) {
-          this.outputStockOrderForm.get('totalQuantity').setValue(inputQuantity);
+          this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
         }
       } else {
-        if (this.form) { this.form.get('outputQuantity').setValue(inputQuantity); }
+        if (this.form) { this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2)); }
       }
     }
 
