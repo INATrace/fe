@@ -694,7 +694,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     if (this.stockOrderForm.get('totalGrossQuantity').valid) {
 
-      const quantity = parseFloat(this.stockOrderForm.get('totalGrossQuantity').value);
+      let quantity = parseFloat(this.stockOrderForm.get('totalGrossQuantity').value);
+
+      if (this.stockOrderForm.get('tare').value) {
+        quantity -= this.stockOrderForm.get('tare').value;
+      }
 
       let form = this.stockOrderForm.get('fulfilledQuantity');
       form.setValue(quantity);
