@@ -144,6 +144,10 @@ export class CompanyFarmersListComponent implements OnInit {
     }
   }
 
+  importFarmers() {
+    this.router.navigate(['my-farmers', 'import']);
+  }
+
   changeSort(event) {
     let newKey = '';
     switch (event.key) {
