@@ -700,7 +700,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         quantity -= this.stockOrderForm.get('tare').value;
       }
 
-      let form = this.stockOrderForm.get('fulfilledQuantity');
+      let form = this.stockOrderForm.get('totalQuantity');
+      form.setValue(quantity);
+      form.updateValueAndValidity();
+
+      form = this.stockOrderForm.get('fulfilledQuantity');
       form.setValue(quantity);
       form.updateValueAndValidity();
 
