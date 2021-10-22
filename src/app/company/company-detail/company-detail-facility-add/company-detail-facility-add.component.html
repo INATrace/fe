@@ -41,7 +41,7 @@
                         <div class="af-row">
                             <div class="af-c12">
                                 <div class="d-flex af-translation-language">
-                                    <div (click)="selectLanguage('EN')"
+                                    <div (click)="selectLanguage(languageEnum.EN)"
                                          [ngClass]="selectedLanguage === 'EN'
                                             ? 'af-translation-language--selected'
                                             : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
@@ -50,17 +50,17 @@
                                         <img src="../../../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
                                         <span>EN</span>
                                     </div>
-                                    <div (click)="selectLanguage('DE')"
+                                    <div (click)="selectLanguage(languageEnum.DE)"
                                          [ngClass]="selectedLanguage === 'DE' ? 'af-translation-language--selected' : ''">
                                         <img src="../../../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
                                         <span>DE</span>
                                     </div>
-                                    <div (click)="selectLanguage('RW')"
+                                    <div (click)="selectLanguage(languageEnum.RW)"
                                          [ngClass]="selectedLanguage === 'RW' ? 'af-translation-language--selected' : ''">
                                         <img src="../../../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
                                         <span>RW</span>
                                     </div>
-                                    <div (click)="selectLanguage('ES')"
+                                    <div (click)="selectLanguage(languageEnum.ES)"
                                          [ngClass]="selectedLanguage === 'ES' ? 'af-translation-language--selected' : ''">
                                         <img src="../../../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
                                         <span>ES</span>

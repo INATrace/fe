@@ -17,6 +17,8 @@ import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs/internal/Subject';
+import { ApiFacilityTranslation } from '../../../../api/model/apiFacilityTranslation';
+import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -39,8 +41,8 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
 
-  languages = ['EN', 'DE', 'RW', 'ES'];
-  selectedLanguage = 'EN';
+  languages = [LanguageEnum.EN, LanguageEnum.DE, LanguageEnum.RW, LanguageEnum.ES];
+  selectedLanguage = LanguageEnum.EN;
 
   constructor(
       private route: ActivatedRoute,
@@ -170,7 +172,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
-  selectLanguage(lang: string) {
+  selectLanguage(lang: LanguageEnum) {
     this.selectedLanguage = lang;
   }
 
@@ -190,6 +192,10 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
         language: new FormControl(lang)
       }));
     }
+  }
+
+  get languageEnum() {
+    return LanguageEnum;
   }
   
 }
