@@ -173,8 +173,17 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     .pipe(take(1))
     .toPromise();
 
-    let company = this.companyController.getCompanyUsingGET(this.companyId, null, null, null, null);
+    // let company = this.companyController.getCompanyUsingGET(this.companyId, null, null, null, null);
     let sub = this.fileSaverService.save(res, 'purchases.csv');
+
+    const result = await this.globalEventManager.openMessageModal({
+      type: 'general',
+      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Purchases CSV was saved under downloads!`,
+      options: { centered: true }
+    });
+    if (result !== 'ok') {
+      return;
+    }
 
   }
 
