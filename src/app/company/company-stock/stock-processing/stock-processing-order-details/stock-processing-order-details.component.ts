@@ -350,8 +350,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get invalidOutputQuantityTooLargeValue() {
-    const inputQuantity = this.form.get('outputQuantity').value as number;
-    const outputQuantity = this.outputStockOrderForm.get('totalQuantity').value as number;
+    const inputQuantity: number = Number(this.form.get('outputQuantity').value).valueOf();
+    const outputQuantity: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf();
     return inputQuantity && outputQuantity && (outputQuantity > inputQuantity);
   }
 
