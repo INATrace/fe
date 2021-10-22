@@ -67,6 +67,10 @@ export interface ApiPurchaseOrderFarmer {
      */
     tare?: number;
     /**
+     * Total gross quantity
+     */
+    totalGrossQuantity?: number;
+    /**
      * Total quantity
      */
     totalQuantity?: number;
@@ -126,6 +130,10 @@ export namespace ApiPurchaseOrderFarmer {
          * Tare
          */
         tare = 'tare',
+        /**
+         * Total gross quantity
+         */
+        totalGrossQuantity = 'totalGrossQuantity',
         /**
          * Total quantity
          */
@@ -280,6 +288,17 @@ export namespace ApiPurchaseOrderFarmer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'totalGrossQuantity',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'totalQuantity',
                     classname: 'ApiPurchaseOrderFarmer',
                     dataType: 'number',
@@ -323,6 +342,8 @@ export namespace ApiPurchaseOrderFarmer {
                 semiProduct: [
                 ],
                 tare: [
+                ],
+                totalGrossQuantity: [
                 ],
                 totalQuantity: [
                 ],
@@ -369,6 +390,9 @@ export namespace ApiPurchaseOrderFarmer {
   //                   validators: []
   //               },
   //               tare: {
+  //                   validators: []
+  //               },
+  //               totalGrossQuantity: {
   //                   validators: []
   //               },
   //               totalQuantity: {

@@ -1454,7 +1454,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const maxWeight = this.prAction.maxOutputWeight;
 
     this.outputStockOrders.controls.some((outputStockOrderGroup: FormGroup) => {
-      outputStockOrderGroup.get('totalQuantity').setValue(availableQua > maxWeight ? maxWeight : availableQua);
+      outputStockOrderGroup.get('totalQuantity').setValue(Number(availableQua > maxWeight ? maxWeight : availableQua).toFixed(2));
       availableQua -= maxWeight;
       if (availableQua <= 0) {
         return true;

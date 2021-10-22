@@ -562,8 +562,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   setToBePaid() {
 
-    if (this.stockOrderForm && this.stockOrderForm.get('totalQuantity').value && this.stockOrderForm.get('pricePerUnit').value) {
-      let netWeight = this.stockOrderForm.get('totalQuantity').value;
+    if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value && this.stockOrderForm.get('pricePerUnit').value) {
+      let netWeight = this.stockOrderForm.get('totalGrossQuantity').value;
       let finalPrice = this.stockOrderForm.get('pricePerUnit').value;
 
       if (this.stockOrderForm.get('tare').value) {
@@ -574,7 +574,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
       }
 
-      this.stockOrderForm.get('cost').setValue(netWeight * finalPrice);
+      this.stockOrderForm.get('cost').setValue(Number(netWeight * finalPrice).toFixed(2));
     } else {
 
       this.stockOrderForm.get('cost').setValue(null);
@@ -636,11 +636,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   netWeight() {
-    if (this.stockOrderForm && this.stockOrderForm.get('totalQuantity').value) {
+    if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value) {
       if (this.stockOrderForm.get('tare').value) {
-        this.netWeightForm.setValue(this.stockOrderForm.get('totalQuantity').value - this.stockOrderForm.get('tare').value);
+        this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
       } else {
-        this.netWeightForm.setValue(this.stockOrderForm.get('totalQuantity').value);
+        this.netWeightForm.setValue(this.stockOrderForm.get('totalGrossQuantity').value);
       }
     } else {
       this.netWeightForm.setValue(null);
@@ -653,7 +653,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       if (this.stockOrderForm.get('damagedPriceDeduction').value) {
         finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
       }
-      this.finalPriceForm.setValue(finalPrice);
+      this.finalPriceForm.setValue(Number(finalPrice).toFixed(2));
     } else {
       this.finalPriceForm.setValue(null);
     }
@@ -692,9 +692,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private setQuantities() {
 
-    if (this.stockOrderForm.get('totalQuantity').valid) {
+    if (this.stockOrderForm.get('totalGrossQuantity').valid) {
 
-      const quantity = parseFloat(this.stockOrderForm.get('totalQuantity').value);
+      const quantity = parseFloat(this.stockOrderForm.get('totalGrossQuantity').value);
 
       let form = this.stockOrderForm.get('fulfilledQuantity');
       form.setValue(quantity);

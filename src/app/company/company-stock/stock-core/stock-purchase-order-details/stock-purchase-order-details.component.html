@@ -168,14 +168,14 @@
             <div class="af-row">
               <div class="af-c6">
                 <textinput
-                        [form]="stockOrderForm.get('totalQuantity')"
+                        [form]="stockOrderForm.get('totalGrossQuantity')"
                         [label]="quantityLabel"
                         style="width: 100%"
                         placeholder="Enter quantity"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.placeholder"
-                        [isInvalid]="submitted && stockOrderForm.get('totalQuantity').invalid">
+                        [isInvalid]="submitted && stockOrderForm.get('totalGrossQuantity').invalid">
                   <ng-container *ngIf="submitted">
-                    <div *ngIf="stockOrderForm.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="stockOrderForm.get('totalGrossQuantity').errors as errors" class="sc-invalid-feedback">
                       <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.quantityDelieveredInKG.textinput.quantityDelieveredInKG.error">
                         Quantity is required
                       </div>

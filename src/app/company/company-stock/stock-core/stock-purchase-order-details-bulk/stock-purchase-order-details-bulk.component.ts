@@ -440,8 +440,8 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   setToBePaid(idx: number) {
 
-    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalQuantity').value && this.farmersFormArray.at(idx).get('pricePerUnit').value) {
-      let netWeight = this.farmersFormArray.at(idx).get('totalQuantity').value;
+    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalGrossQuantity').value && this.farmersFormArray.at(idx).get('pricePerUnit').value) {
+      let netWeight = this.farmersFormArray.at(idx).get('totalGrossQuantity').value;
       let finalPrice = this.farmersFormArray.at(idx).get('pricePerUnit').value;
 
       if (this.farmersFormArray.at(idx).get('tare').value) {
@@ -452,7 +452,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
         finalPrice -= this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
       }
 
-      this.farmersFormArray.at(idx).get('cost').setValue(netWeight * finalPrice);
+      this.farmersFormArray.at(idx).get('cost').setValue(Number(netWeight * finalPrice).toFixed(2));
     } else {
 
       this.farmersFormArray.at(idx).get('cost').setValue(null);
@@ -513,11 +513,11 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   }
 
   netWeight(idx: number) {
-    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalQuantity').value) {
+    if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalGrossQuantity').value) {
       if (this.farmersFormArray.at(idx).get('tare').value) {
-        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalQuantity').value - this.farmersFormArray.at(idx).get('tare').value);
+        this.netWeightFormArray[idx].setValue(Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value - this.farmersFormArray.at(idx).get('tare').value).toFixed(2));
       } else {
-        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalQuantity').value);
+        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalGrossQuantity').value);
       }
     } else {
       this.netWeightFormArray[idx].setValue(null);
@@ -530,7 +530,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
       if (this.farmersFormArray.at(idx).get('damagedPriceDeduction').value) {
         finalPrice -= this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
       }
-      this.finalPriceFormArray[idx].setValue(finalPrice);
+      this.finalPriceFormArray[idx].setValue(Number(finalPrice).toFixed(2));
     } else {
       this.finalPriceFormArray[idx].setValue(null);
     }
@@ -571,9 +571,9 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   private setQuantities() {
 
     this.farmersFormArray.controls.forEach((nextFormGroup) => {
-      if (nextFormGroup.get('totalQuantity').valid) {
+      if (nextFormGroup.get('totalGrossQuantity').valid) {
 
-        const quantity = parseFloat(nextFormGroup.get('totalQuantity').value);
+        const quantity = parseFloat(nextFormGroup.get('totalGrossQuantity').value);
 
         let form = nextFormGroup.get('fulfilledQuantity');
         form.setValue(quantity);

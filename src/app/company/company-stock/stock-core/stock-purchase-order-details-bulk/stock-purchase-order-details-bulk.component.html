@@ -182,14 +182,14 @@
 
                         <div class="af-c3 af-md-c6 af-sm-c11">
                           <textinput
-                            [form]="item.get('totalQuantity')"
+                            [form]="item.get('totalGrossQuantity')"
                             [label]="quantityLabel(idx)"
                             style="width: 100%"
                             placeholder="Enter quantity"
                             i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.placeholder"
-                            [isInvalid]="submitted && item.get('totalQuantity').invalid">
+                            [isInvalid]="submitted && item.get('totalGrossQuantity').invalid">
                             <ng-container *ngIf="submitted">
-                              <div *ngIf="item.get('totalQuantity').errors as errors"
+                              <div *ngIf="item.get('totalGrossQuantity').errors as errors"
                                    class="sc-invalid-feedback">
                                 <div *ngIf="errors.required"
                                      i18n="@@productLabelStockPurchaseOrdersModal.quantityDelieveredInKG.textinput.quantityDelieveredInKG.error">
