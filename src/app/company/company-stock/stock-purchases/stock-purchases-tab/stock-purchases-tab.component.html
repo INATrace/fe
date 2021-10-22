@@ -105,6 +105,7 @@
 
             <button class="af-actions-btn"
                     [class.af-actions-btn--disabled]="allPurchaseOrders < 1"
+                    [disabled]="allPurchaseOrders < 1"
                     (click)="generatePurchasesCsv()">
                 <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export</span>
             </button>
@@ -144,13 +145,15 @@
         <button style="margin-top: 1.7rem"
                 class="af-actions-btn"
                 [class.af-actions-btn--disabled]="selectedOrders.length === 0"
+                [disabled]="selectedOrders.length === 0"
                 (click)="selectedOrders.length > 0 && clickClearCheckboxesPing$.next(true)">
           <span class="af-actions-btn-label" i18n="@@productLabelStock.button.clearCheckbox">Clear checkboxes</span>
         </button>
 
         <button class="af-actions-btn" style="margin-top: 1.7rem"
-            [class.af-actions-btn--disabled]="selectedOrders.length === 0"
-            (click)="selectedOrders.length > 0 && clickAddPaymentsPing$.next(true)">
+                [class.af-actions-btn--disabled]="selectedOrders.length === 0"
+                [disabled]="selectedOrders.length === 0"
+                (click)="selectedOrders.length > 0 && clickAddPaymentsPing$.next(true)">
           <span class="af-actions-btn-label" i18n="@@productLabelStock.button.bulkPayments">Add payments</span>
         </button>
 

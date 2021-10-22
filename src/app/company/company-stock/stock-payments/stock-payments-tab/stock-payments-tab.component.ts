@@ -101,16 +101,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     .pipe(take(1))
     .toPromise();
 
-    let sub = this.fileSaverService.save(res, 'payments.csv');
-
-    const result = await this.globalEventManager.openMessageModal({
-      type: 'general',
-      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Payments CSV was generated correctly under downloads.`,
-      options: { centered: true }
-    });
-    if (result !== 'ok') {
-      return;
-    }
+    this.fileSaverService.save(res, 'payments.csv');
   }
 
   onShowPayments(event) {

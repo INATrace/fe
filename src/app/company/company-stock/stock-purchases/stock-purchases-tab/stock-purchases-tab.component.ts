@@ -186,15 +186,6 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       .toPromise();
 
     this.fileSaverService.save(res, 'purchases.csv');
-
-    const result = await this.globalEventManager.openMessageModal({
-      type: 'general',
-      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Purchases CSV was saved under downloads!`,
-      options: { centered: true }
-    });
-    if (result !== 'ok') {
-      return;
-    }
   }
 
   onShowPO(event) {
