@@ -66,6 +66,14 @@
         Stakeholders
       </a>
     </li>
+    <li>
+      <a class="link-normal"
+         routerLinkActive="active"
+         [routerLink]="goTo('final-products')"
+         i18n="@@productLabel.sideTitle.finalProducts">
+        Final products
+      </a>
+    </li>
     <li *ngIf="isAdmin">
       <div class="spacer"></div>
       <a class="link-error">
