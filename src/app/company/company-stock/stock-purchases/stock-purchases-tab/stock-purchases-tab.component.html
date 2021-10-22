@@ -103,6 +103,12 @@
                     (valueChange)="searchPurchaseInput($event)">
             </app-search-textinput>
 
+            <button class="af-actions-btn"
+                    [class.af-actions-btn--disabled]="allPurchaseOrders < 1"
+                    (click)="generatePurchasesCsv()">
+                <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export</span>
+            </button>
+
             <div class="ml-2">
               <single-choice
                   [noMargin]="true"

@@ -664,8 +664,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
       requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
-      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
-      otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders

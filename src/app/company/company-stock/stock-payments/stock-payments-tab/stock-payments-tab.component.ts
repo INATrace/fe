@@ -12,6 +12,8 @@ import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-
 import { StockPaymentsSelectorForNewPaymentModalComponent } from '../stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -38,7 +40,9 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected facilityControllerService: FacilityControllerService,
       protected authService: AuthService,
       protected companyController: CompanyControllerService,
-      private paymentControllerService: PaymentControllerService
+      private paymentControllerService: PaymentControllerService,
+      private commonCsvControllerService: CommonCsvControllerService,
+      private fileSaverService: FileSaverService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -89,6 +93,24 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     }
     this.selectedPayments = [];
     this.selectedIdsChanged(this.selectedPayments);
+  }
+
+  async generatePaymentsCsv(){
+
+    const res = await this.commonCsvControllerService.generatePaymentsByCompanyCsvUsingPOST(this.companyId)
+    .pipe(take(1))
+    .toPromise();
+
+    let sub = this.fileSaverService.save(res, 'payments.csv');
+
+    const result = await this.globalEventManager.openMessageModal({
+      type: 'general',
+      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Payments CSV was generated correctly under downloads.`,
+      options: { centered: true }
+    });
+    if (result !== 'ok') {
+      return;
+    }
   }
 
   onShowPayments(event) {
