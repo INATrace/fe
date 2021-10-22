@@ -1,12 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { AssociatedCompaniesService } from 'src/app/shared-services/associated-companies.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import { environment } from 'src/environments/environment';
 import { formatDateWithDotsAtHour } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
@@ -20,6 +18,7 @@ import PreferredWayOfPaymentEnum = ApiStockOrder.PreferredWayOfPaymentEnum;
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
+import { Subject } from 'rxjs/internal/Subject';
 
 export enum ModeEnum {
   PURCHASE = 'PURCHASE',
@@ -31,56 +30,81 @@ export enum ModeEnum {
   templateUrl: './stock-payments-form.component.html',
   styleUrls: ['./stock-payments-form.component.scss']
 })
-export class StockPaymentsFormComponent implements OnInit {
+export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   @Input()
   paymentForm: FormGroup;
+
   @Input()
   orderReferenceForm = new FormControl(null);
+
   @Input()
   payableFromForm = new FormControl(null);
+
   @Input()
   searchCompaniesForm = new FormControl(null);
+
   @Input()
   searchCollectorsForm = new FormControl(null);
+
   @Input()
   searchFarmersForm = new FormControl(null);
+
   @Input()
   collectorsCodebook: CompanyUserCustomersByRoleService;
+
   @Input()
   farmersCodebook: CompanyUserCustomersByRoleService;
+
   @Input()
   submitted: boolean;
+
   @Input()
   viewOnly: boolean;
+
+  @Input()
+  stockOrder: ApiStockOrder;
+
   @Input()
   openBalance: number;
+
   @Input()
   purchased: number;
+
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
+  readonlyPaymentType: boolean;
   uploaderLabel: string;
   confirmedAt: string;
   confirmedByUser: string;
-  readonlyPaymentType: boolean;
   currency: string;
+  unitLabel: string;
 
   associatedCompaniesService: AssociatedCompaniesService;
   searchPreferredWayOfPayment = new FormControl(null);
-
-  fileUploadUrl: string = environment.relativeFileUploadUrl;
 
   uploaderLabelStr = $localize`:@@paymentForm.attachment-uploader.receipt.label:Signed receipt (PDF/PNG/JPG)`;
   uploaderLabelRequiredStr = $localize`:@@paymentForm.attachment-uploader.receipt.required.label:Signed receipt (PDF/PNG/JPG)*`;
   labelDocumentStr = $localize`:@@paymentForm.attachment-uploader.document.label:Document (PDF/PNG/JPG)`;
   labelDocumentRequiredStr = $localize`:@@paymentForm.attachment-uploader.document.required.label:Document (PDF/PNG/JPG)*`;
 
-  paymentTypesCodebook = EnumSifrant.fromObject(this.paymentTypes);
+  currencyAndUnitStrs = {
+    purchasedLabel: $localize`:@@paymentForm.textinput.purchased.label:Purchased`,
+    openBalanceLabel: $localize`:@@paymentForm.textinput.balance.label:Open balance`,
+    paidToFarmerLabel: $localize`:@@paymentForm.textinput.amount.label:Amount paid to the farmer`,
+    paidToCollectorLabel: $localize`:@@paymentForm.textinput.amountPaidToTheCollector.label:Amount paid to the collector`,
+    totalPaidLabel: $localize`:@@paymentForm.textinput.totalPaid.label:Total paid`,
+    paidFromCollectorToFarmerLabel: $localize`:@@paymentForm.textinput.amountAlready.label:Amount already paid by collector to farmer`
+  };
+  
+  paymentTypesCodebook = EnumSifrant.fromObject({});
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
   codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
   codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
   codebookCurrencyCodes = EnumSifrant.fromObject(this.currencyCodes);
+  
+  private destroy$ = new Subject<boolean>();
 
   constructor(
       private route: ActivatedRoute,
@@ -91,8 +115,6 @@ export class StockPaymentsFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.currency = this.paymentForm.contains('currency') ? this.paymentForm.get('currency').value : '?';
 
     this.initInitialData().then(() => {
 
@@ -159,45 +181,44 @@ export class StockPaymentsFormComponent implements OnInit {
 
       }
     });
+    
+    this.paymentForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values: any) => {
+      const {currency, measureUnitType} = values.stockOrder;
+      this.currency = currency;
+      this.unitLabel = measureUnitType.label;
+    });
+    
+    this.searchCollectorsForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.paymentTypesCodebook = EnumSifrant.fromObject(
+          this.createPaymentTypes(value !== null)
+      );
+    });
   }
 
   async initInitialData() {
 
-    const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(this.paymentForm.get('stockOrder').value.id)
-        .pipe(take(1))
-        .toPromise();
+    if (this.stockOrder) {
 
-    if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-      const stockOrder = stockOrderResp.data;
-
-      this.paymentForm.get('productionDate').setValue(stockOrder.productionDate);
-      this.paymentForm.get('preferredWayOfPayment').setValue(stockOrder.preferredWayOfPayment);
+      this.paymentForm.get('productionDate').setValue(this.stockOrder.productionDate);
+      this.paymentForm.get('preferredWayOfPayment').setValue(this.stockOrder.preferredWayOfPayment);
 
       if (this.mode === ModeEnum.PURCHASE) {
-        this.searchPreferredWayOfPayment.setValue(stockOrder.preferredWayOfPayment);
+        this.searchPreferredWayOfPayment.setValue(this.stockOrder.preferredWayOfPayment);
         this.searchPreferredWayOfPayment.disable();
 
-        if (stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        if (this.stockOrder.preferredWayOfPayment === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
-          this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANK);
+          this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
           this.paymentForm.get('amountPaidToTheCollector').setValidators([Validators.required]);
 
-        } else if (stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
+        } else if (this.stockOrder.preferredWayOfPayment !== PreferredWayOfPaymentEnum.CASHVIACOLLECTOR
             && this.paymentForm && !this.paymentForm.get('paymentType').value) {
           this.paymentForm.get('amountPaidToTheCollector').setValue(0);
           this.paymentForm.get('amountPaidToTheCollector').disable();
         }
 
-        if (!this.openBalance) {
-          this.openBalance = stockOrder.balance;
-        }
-
-        if (!this.purchased) {
-          this.purchased = stockOrder.fulfilledQuantity;
-        }
-
       } else {
-        this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANK);
+        this.paymentForm.get('paymentType').setValue(PaymentTypeEnum.BANKTRANSFER);
         this.readonlyPaymentType = true;
       }
     }
@@ -209,21 +230,19 @@ export class StockPaymentsFormComponent implements OnInit {
 
     this.confirmedAt = formatDateWithDotsAtHour(this.paymentForm.get('paymentConfirmedAtTime').value);
 
-    const userResp = await this.userControllerService.getProfileForUserUsingGET(this.paymentForm.get('paymentConfirmedByUser').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userResp && userResp.status === 'OK' && userResp.data) {
-      this.confirmedByUser = userResp.data.name + ' ' + userResp.data.surname;
+    if (this.paymentForm.contains('paymentConfirmedByUser')) {
+      const paymentConfirmedByUser = this.paymentForm.get('paymentConfirmedByUser').value;
+      this.confirmedByUser = paymentConfirmedByUser.name + ' ' + paymentConfirmedByUser.surname;
     }
 
-    const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
-        .pipe(take(1))
-        .toPromise();
-
-    if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
-      this.confirmedByUser += ', ' + userCompanyResp.data.name;
-    }
+    // TODO: Confirmed by company (if it is still present)
+    // const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
+    //     .pipe(take(1))
+    //     .toPromise();
+    //
+    // if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
+    //   this.confirmedByUser += ', ' + userCompanyResp.data.name;
+    // }
   }
 
   setFarmer(event: ApiUserCustomer) {
@@ -238,14 +257,14 @@ export class StockPaymentsFormComponent implements OnInit {
 
   setCollector(event: ApiUserCustomer) {
     if (event) {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(event);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(event);
       this.paymentForm.get('receiptDocumentType').setValue(null);
     } else {
-      this.paymentForm.get('representativeOfRecipientCompany').setValue(null);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(null);
       this.paymentForm.get('receiptDocumentType').setValue(ReceiptDocumentTypeEnum.RECEIPT);
     }
-    this.paymentForm.get('representativeOfRecipientCompany').markAsDirty();
-    this.paymentForm.get('representativeOfRecipientCompany').updateValueAndValidity();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').markAsDirty();
+    this.paymentForm.get('representativeOfRecipientUserCustomer').updateValueAndValidity();
   }
 
   async setCompany(event) {
@@ -296,21 +315,46 @@ export class StockPaymentsFormComponent implements OnInit {
     }
     return totalPaid;
   }
-
-  get paymentTypes() {
+  
+  createPaymentTypes(collector: boolean = false): object {
     const obj = {};
+    
     obj['CASH'] = $localize`:@@paymentForm.paymentTypes.cash:Cash`;
-    obj['BANK'] = $localize`:@@paymentForm.paymentTypes.bank:Bank`;
+    obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
+    if (collector) {
+      obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
+    }
+    obj['CHEQUE'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cheque:Cheque`;
+    obj['OFFSETTING'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.offsetting:Offsetting`;
+  
     return obj;
+  }
+  
+  getCurrencyString(trString: string): string {
+    if (this.currency) {
+      return `${trString} (${this.currency})`;
+    }
+    return trString;
+  }
+  
+  getUnitLabelString(trString: string): string {
+    if (this.unitLabel) {
+      return `${trString} (${this.unitLabel})`;
+    }
+    return trString;
   }
 
   get paymentPurposeTypes() {
     const obj = {};
     obj['ADVANCE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.advancedPayment:Advanced payment`;
-    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Cherry payment`;
+    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Base payment`;
     obj['SECOND_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.secondInstallment:Member bonus`;
-    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:AF Women premium`;
+    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:Women premium`;
     obj['INVOICE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
+    obj['ORGANIC_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.organicBonus:Organic bonus`;
+    obj['FT_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.ftBonus:FT bonus`;
+    obj['FT_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.ftPremium:FT premium`;
+    obj['OTHER_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.otherBonus:Other bonus`;
     return obj;
   }
 
@@ -349,4 +393,7 @@ export class StockPaymentsFormComponent implements OnInit {
     return PreferredWayOfPaymentEnum;
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
 }

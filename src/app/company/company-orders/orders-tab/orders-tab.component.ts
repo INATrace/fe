@@ -38,7 +38,7 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   // Controls for the facility dropdown select component
   facilityCodebook: CompanyFacilitiesService;
   facilityForStockOrderForm = new FormControl(null);
-  selectedFacilityId: number;
+  selectedFacilityId = null;
   selectedFacilityId$ = new BehaviorSubject<number>(null);
 
   allOrders = 0;
@@ -89,12 +89,20 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedFacilityId = null;
       this.selectedFacilityId$.next(null);
     }
-    setNavigationParameter(this.router, this.route, 'facilityId', String(this.selectedFacilityId));
+    setNavigationParameter(this.router, this.route, 'facilityId', this.selectedFacilityId);
   }
 
   setOpenOnly(openOnly: boolean) {
     this.openOnly = openOnly;
     this.openOnly$.next(openOnly);
+  }
+
+  onCount(event) {
+    this.allOrders = event;
+  }
+
+  onShow(event) {
+    this.showedOrders = event;
   }
 
 }

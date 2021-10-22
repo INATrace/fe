@@ -579,7 +579,7 @@
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processingEvidence">Processing evidence</h2>
 
           <div class="af-form-element">
-            <ng-container *ngIf="this.requiredProcessingEvidenceArray.length> 0">
+            <div *ngIf="this.requiredProcessingEvidenceArray.length > 0" class="mb-3">
               <ng-container *ngFor="let item of requiredProcessingEvidenceArray.controls; index as idx">
                 <div class="d-flex">
 
@@ -601,7 +601,7 @@
                     </div>
                     <div class="af-c8">
                       <textinput
-                              [value]="item.get('type').value?.label"
+                              [value]="item.get('evidenceTypeLabel').value"
                               label="Type"
                               [valueTextInput]="true"
                               i18n-label="@@productLabelStockProcessingOrderDetail.label.type"
@@ -641,7 +641,7 @@
 
                 </div>
               </ng-container>
-            </ng-container>
+            </div>
 
             <list-editor *ngIf="processingEvidenceListManager"
                          label="Other evidence documents"
@@ -652,15 +652,13 @@
                          i18n-addText="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.addText">
               <list-editor-items>
                 <div *ngFor="let item of otherProcessingEvidenceArray.controls; let i=index;">
-                  <!-- TODO: check and add component -->
-<!--                  <app-processing-evidence-item-->
-<!--                          title=null-->
-<!--                          [formControlInput]="item"-->
-<!--                          [typeAsObject]="true"-->
-<!--                          [isOpen]="processingEvidenceListManager.isOpen(i)"-->
-<!--                          [listEditorManager]="this.processingEvidenceListManager"-->
-<!--                          [listEditorManagerPosition]="i">-->
-<!--                  </app-processing-evidence-item>-->
+                  <app-additional-proof-item title="null"
+                                             [evidenceType]="true"
+                                             [formControlInput]="item"
+                                             [isOpen]="processingEvidenceListManager.isOpen(i)"
+                                             [listEditorManager]="this.processingEvidenceListManager"
+                                             [listEditorManagerPosition]="i">
+                  </app-additional-proof-item>
                 </div>
               </list-editor-items>
               <list-editor-errors>

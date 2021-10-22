@@ -16,6 +16,7 @@ import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
 import StatusEnum = ApiDefaultResponse.StatusEnum;
+import { AggregatedStockItem } from './models';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -37,7 +38,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
 
   @Input()
-  availableOnly$ = new BehaviorSubject<boolean>(true);
+  availableOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
   semiProductId$ = new BehaviorSubject<number>(null);
@@ -96,6 +97,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   clearCheckboxesSubscription: Subscription;
 
   orders$: Observable<ApiPaginatedListApiStockOrder>;
+  aggregatedOrders: AggregatedStockItem[];
 
   addPaymentsSubscription: Subscription;
 
@@ -177,6 +179,11 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           return response.data;
         } else {
           return null;
+        }
+      }),
+      tap((data: ApiPaginatedListApiStockOrder) => {
+        if (data) {
+          this.aggregatedOrders = this.aggregateOrderItems(data.items);
         }
       }),
       tap(() => this.globalEventsManager.showLoading(false))
@@ -501,6 +508,27 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       return formatDateWithDots(productionDate);
     }
     return '';
+  }
+  
+  aggregateOrderItems(items: ApiStockOrder[]): AggregatedStockItem[] {
+    const aggregatedMap: Map<number, AggregatedStockItem> = items.reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
+      if (acc.has(item.semiProduct.id)) {
+        const prevElem = acc.get(item.semiProduct.id);
+        acc.set(item.semiProduct.id, {
+          ...prevElem,
+          amount: item.totalQuantity + prevElem.amount
+        });
+      } else {
+        acc.set(item.semiProduct.id, {
+          amount: item.totalQuantity,
+          unit: item.measureUnitType.label,
+          semiProduct: item.semiProduct.name
+        });
+      }
+      return acc;
+    }, new Map<number, AggregatedStockItem>());
+    
+    return Array.from(aggregatedMap.values());
   }
 
   orderIdentifier(order: ApiStockOrder) {

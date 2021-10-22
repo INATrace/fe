@@ -12,15 +12,14 @@
                                     [checked]="this.currentData[i].selected && this.currentData[i].paymentStatus === paymentStatusEnum.UNCONFIRMED">
                     </checkbox-input>
                 </td>
-                <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>{{readablePaymentPurpose(payment.paymentPurposeType)}}</span></td>
-                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{payment.amountPaidToTheFarmer}}</span></td>
-                <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name"><span>{{payment.amountPaidToTheFarmer}}</span></td>
-                <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name"><span>{{payment.recipientUserCustomer ? payment.recipientUserCustomer.name + ' ' + payment.recipientUserCustomer.surname   : ''}}</span></td>
-                <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name"><span>{{payment.recipientCompany ? payment.recipientCompany.name : ''}}</span></td>
-                <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name"><span>{{formatDate(payment.productionDate)}}</span></td>
-                <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name"><span>{{formatDate(payment.formalCreationTime)}}</span></td>
-                <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[8].name"><span>{{payment.preferredWayOfPayment | formatWayOfPayment}}</span></td>
-                <td [attr.data-label]="sortOptions[9].name">
+                <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>{{ readablePaymentPurpose(payment.paymentPurposeType) }}</span></td>
+                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ payment.amountPaidToTheFarmer }} {{ payment.currency }}</span></td>
+                <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name"><span>{{ payment.recipientUserCustomer ? payment.recipientUserCustomer.name + ' ' + payment.recipientUserCustomer.surname   : '' }}</span></td>
+                <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name"><span>{{ payment.recipientCompany ? payment.recipientCompany.name : '' }}</span></td>
+                <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name"><span>{{ formatDate(payment.productionDate) }}</span></td>
+                <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name"><span>{{ formatDate(payment.formalCreationTime) }}</span></td>
+                <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name"><span>{{ payment.preferredWayOfPayment | formatWayOfPayment }}</span></td>
+                <td [attr.data-label]="sortOptions[8].name">
                     <span>
                         <a class="company-action"
                            i18n="@@productLabelPayments.tableCol.view"
@@ -53,6 +52,24 @@
                 [maxSize]="7"
                 [rotate]="true">
         </ngb-pagination>
+    </div>
+
+    <div class="sub-title-page content-element--subtitle mb-2"
+        i18n="@@productLabelPurchaseOrder.aggregated.title"
+    >Summed up quantities</div>
+    <div class="aggregated-orders">
+        <table class="aggregated-orders-table">
+            <thead>
+                <tr>
+                    <th i18n="@@productLabelPurchaseOrder.aggregated.totalAmountPaid">Total amount paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{aggregatedTotalPaid}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </ng-container>

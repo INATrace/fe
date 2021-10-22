@@ -22,7 +22,7 @@ export class OrdersAllOrdersComponent extends OrdersTabComponent implements OnIn
   semiProductFrom = new FormControl(null);
   semiProductsInFacilityCodebook: FacilitySemiProductsCodebookService;
   semiProductId = null;
-  semiProductId$ = new BehaviorSubject<string>(null);
+  semiProductId$ = new BehaviorSubject<number>(null);
 
   facilityChangedSubs: Subscription;
 
@@ -67,7 +67,6 @@ export class OrdersAllOrdersComponent extends OrdersTabComponent implements OnIn
       this.semiProductFrom.setValue(null);
     }
 
-    this.semiProductId = event ? event.id : null;
     this.semiProductId$.next(this.semiProductId);
     setNavigationParameter(this.router, this.route, 'semiProductId', this.semiProductId);
   }

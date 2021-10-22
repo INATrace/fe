@@ -27,12 +27,8 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   reloadPaymentPingList$ = new BehaviorSubject<boolean>(false);
 
-  filterPaymentStatus = new FormControl('');
-  paymentStatusPing$ = new BehaviorSubject<string>(this.filterPaymentStatus.value);
-
   searchFarmerNameAndSurname = new FormControl(null);
   searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
-
 
   constructor(
       protected router: Router,
@@ -60,11 +56,6 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     if (stockOrder) {
       await this.router.navigate(['my-stock', 'payments', 'purchase-order', stockOrder.id, 'new']);
     }
-  }
-
-  setPaymentStatus(value: string){
-    this.filterPaymentStatus.setValue(value);
-    this.paymentStatusPing$.next(value);
   }
 
   searchPaymentByFarmerNameInput(event) {

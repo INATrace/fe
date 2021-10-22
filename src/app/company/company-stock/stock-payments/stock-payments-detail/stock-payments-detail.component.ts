@@ -133,24 +133,18 @@ export class StockPaymentsDetailComponent implements OnInit {
       // Fetch Payment and StockOrder from received Payment
       if (paymentResp && paymentResp.status === 'OK' && paymentResp.data) {
         this.payment = paymentResp.data;
-
-        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(this.payment.stockOrder.id)
-            .pipe(take(1))
-            .toPromise();
-
-        if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-          this.stockOrder = stockOrderResp.data;
-        }
+        this.stockOrder = this.payment.stockOrder;
       }
 
     } else {
       throw Error('Unrecognized action "' + action + '".');
     }
 
+    // TODO: Probably redundant as company is no longer bound to a product
     // Check if current user is owner.
     // Owner is if product's company ID matches user's company ID
     this.userCompanyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.companyId = this.userCompanyId; // TODO: Temporary (company ID should be fetched from Product)
+    this.companyId = this.userCompanyId;
     this.isOwner = this.userCompanyId
         ? this.companyId === this.userCompanyId
         : false;
@@ -165,11 +159,9 @@ export class StockPaymentsDetailComponent implements OnInit {
     const today = dateAtMidnightISOString(new Date().toDateString());
     this.paymentForm.get('formalCreationTime').setValue(today);
 
-    // TODO: This seems a bit sketchy, don't you think?
+    // If we are in purchase mode (purchase order from a farmer), set the currency of the payment to be the currency of the stock order
     if (this.mode === ModeEnum.PURCHASE) {
-      if (!this.paymentForm.get('currency').value) {
-        this.paymentForm.get('currency').setValue('RWF');
-      }
+      this.paymentForm.get('currency').setValue(this.stockOrder.currency);
     }
 
     this.paymentForm.get('paymentStatus').setValue(PaymentStatusEnum.UNCONFIRMED);
@@ -183,6 +175,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     // Collector
     if (this.stockOrder.representativeOfProducerUserCustomer) {
       this.searchCollectorsForm.setValue(this.stockOrder.representativeOfProducerUserCustomer);
+      this.paymentForm.get('representativeOfRecipientUserCustomer').setValue(this.stockOrder.representativeOfProducerUserCustomer);
     }
 
     // Farmer
@@ -251,17 +244,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     this.searchCollectorsForm.setValue(this.paymentForm.get('representativeOfRecipientUserCustomer').value);
     this.searchFarmersForm.setValue(this.paymentForm.get('recipientUserCustomer').value);
 
-    // let resOrg = await this.chainOrganizationService.getOrganization(this.userOrgId).pipe(take(1)).toPromise();
-    // if (resOrg && resOrg.status === 'OK' && resOrg.data) {
-    //   this.payableFromForm.setValue(resOrg.data.name)
-    // }
-
-    const companyResp = await this.companyControllerService.getCompanyUsingGET(this.payment.payingCompany.id)
-        .pipe(take(1))
-        .toPromise();
-    if (companyResp && companyResp.status === 'OK' && companyResp.data) {
-      this.payableFromForm.setValue(companyResp.data.name);
-    }
+    this.payableFromForm.setValue(this.payment.payingCompany?.name);
 
     this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE
         ? this.stockOrder.identifier

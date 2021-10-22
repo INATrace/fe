@@ -19,7 +19,9 @@
           <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
           <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
           <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }} {{ order.measureUnitType.label }}</td>
-          <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">{{ order.totalQuantity }} / {{ order.fulfilledQuantity }} / {{ order.availableQuantity }}</td>
+          <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">
+            {{ order.totalQuantity }} / {{ order.fulfilledQuantity ? order.fulfilledQuantity : 0 }} / {{ order.availableQuantity ? order.availableQuantity : 0 }}
+          </td>
           <td *ngIf="!sortOptions[8].hide" [attr.data-label]="sortOptions[8].name">{{ order.measureUnitType?.label }}</td>
           <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost }} / {{ order.balance }}</td>
           <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name">{{ formatDate(order.deliveryTime) }}</td>
@@ -79,5 +81,25 @@
             [maxSize]="7"
             [rotate]="true">
     </ngb-pagination>
+  </div>
+
+  <div class="sub-title-page content-element--subtitle mb-2"
+      i18n="@@productLabelPurchaseOrder.aggregated.title"
+  >Summed up quantities</div>
+  <div class="aggregated-orders">
+    <table class="aggregated-orders-table">
+      <thead>
+        <tr>
+          <th i18n="@@productLabelPurchaseOrder.sortOptions.semiProduct.name">Semi-product</th>
+          <th i18n="@@productLabelPurchaseOrder.aggregated.totalQuantity">Total quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of aggregatedOrders">
+          <td>{{order.semiProduct}}:</td>
+          <td>{{order.amount}} {{order.unit}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </ng-container>

@@ -11,9 +11,9 @@ import { SortOption } from '../../../../shared/result-sorter/result-sorter-types
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
-import {ModeEnum} from "../stock-payments-form/stock-payments-form.component";
-import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
+import {ModeEnum} from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
+import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginatedListApiPayment';
 
 
 @Component({
@@ -33,23 +33,28 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
+
   @Input()
   companyId: number;
+
   @Input()
   selectedPayments: ApiPayment[];
+
   @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
-  @Input()
-  paymentStatusPing$ = new BehaviorSubject<string>('');
+
   @Input()
   deliveryDatesPing$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
+
   @Input()
   searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
   @Output()
   showing = new EventEmitter<number>();
+
   @Output()
   countAll = new EventEmitter<number>();
+
   @Output()
   selectedPaymentsChanged = new EventEmitter<ApiPayment[]>();
 
@@ -65,11 +70,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   page = 0;
   pageSize = 10;
 
+  aggregatedTotalPaid = 0;
   currentData: ApiPayment[];
   sortOptions: SortOption[];
   clearCheckboxesSubscription: Subscription;
   allSelected = false;
-  payments$;
+  payments$: Observable<ApiPaginatedListApiPayment>;
 
   ngOnInit(): void {
 
@@ -85,17 +91,15 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.reloadPingList$,
       this.paging$,
       this.sortingParams$,
-      this.paymentStatusPing$,
       this.wayOfPaymentPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting, paymentStatus, wayOfPayment, deliveryDates, query]) => {
+        map(([ping, page, sorting, wayOfPayment, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
             ...sorting,
-            paymentStatus,
             preferredWayOfPayment: wayOfPayment,
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
@@ -134,6 +138,11 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
           return resp.data;
         }),
+        tap((data: ApiPaginatedListApiPayment ) => {
+          if (data) {
+            this.aggregatedTotalPaid = this.calculateAggregatedTotalPaid(data.items);
+          }
+        }),
         tap(() => this.globalEventManager.showLoading(false))
     );
   }
@@ -159,13 +168,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       },
       {
         key: 'amountPaidToTheFarmer',
-        name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer (RWF)`,
-        inactive: true,
-        hide: false
-      },
-      {
-        key: 'amountPaidToTheCollector',
-        name: $localize`:@@productLabelPayments.sortOptions.amount.company.name:Amount paid (EUR)`,
+        name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer`,
         inactive: true,
         hide: false
       },
@@ -359,6 +362,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   reloadPage() {
     this.reloadPingList$.next(true);
+  }
+  
+  calculateAggregatedTotalPaid(items: ApiPayment[]): number {
+    return items.reduce((acc: number, item: ApiPayment) => {
+      return item.amountPaidToTheFarmer + acc;
+    }, 0);
   }
 
 }
