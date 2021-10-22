@@ -386,7 +386,12 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   }
 
   private cannotUpdatePO() {
-    return (this.purchaseOrderBulkForm.invalid || this.employeeForm.invalid);
+    return (this.purchaseOrderBulkForm.invalid || this.employeeForm.invalid || this.checkWomenOnlyForm());
+  }
+
+  private checkWomenOnlyForm(): boolean {
+    const invalidExist = this.searchWomenCoffeeForm.find(control => control.invalid);
+    return invalidExist !== undefined;
   }
 
   setFarmer(event: ApiUserCustomer, idx: number) {
