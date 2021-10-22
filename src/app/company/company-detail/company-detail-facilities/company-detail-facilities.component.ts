@@ -94,8 +94,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     protected route: ActivatedRoute,
     protected facilityControllerService: FacilityControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    protected authService: AuthService,
-    @Inject(LOCALE_ID) public userLocale: string
+    protected authService: AuthService
   ) {
     super(router, route, authService);
   }
@@ -117,7 +116,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   loadEntityList(params: any) {
-    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId, language: this.userLocale.toUpperCase() });
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
   }
 
   canDeactivate(): boolean {
