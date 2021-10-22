@@ -544,33 +544,47 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   updateValidators() {
 
     this.farmersFormArray.controls.forEach((nextFormGroup, index) => {
-          nextFormGroup.get('organic').setValidators(
-              this.facility &&
-              this.facility.displayOrganic ?
-                  [Validators.required] : []
-          );
-          nextFormGroup.get('organic').updateValueAndValidity();
-          nextFormGroup.get('tare').setValidators(
-              this.facility &&
-              this.facility.displayTare ?
-                  [Validators.required] : []
-          );
-          nextFormGroup.get('tare').updateValueAndValidity();
-          nextFormGroup.get('damagedPriceDeduction').setValidators(
-              this.facility &&
-              this.facility.displayPriceDeductionDamage ?
-                  [Validators.required] : []
-          );
-          nextFormGroup.get('damagedPriceDeduction').updateValueAndValidity();
-          this.searchWomenCoffeeForm[index].setValidators(
-              this.facility &&
-              this.facility.displayWomenOnly ?
-                  [Validators.required] : []
-          );
-          this.searchWomenCoffeeForm[index].updateValueAndValidity();
-        }
-    );
 
+        // This is for field organic
+        nextFormGroup.get('organic').setValidators(
+          this.facility &&
+          this.facility.displayOrganic ?
+            [Validators.required] : []
+        );
+        nextFormGroup.get('organic').updateValueAndValidity();
+
+        // This is for field tare
+        nextFormGroup.get('tare').setValidators(
+          this.facility &&
+          this.facility.displayTare ?
+            [Validators.required] : []
+        );
+        nextFormGroup.get('tare').updateValueAndValidity();
+
+        // This is for field damagedPriceDeduction
+        nextFormGroup.get('damagedPriceDeduction').setValidators(
+          this.facility &&
+          this.facility.displayPriceDeductionDamage ?
+            [Validators.required] : []
+        );
+        nextFormGroup.get('damagedPriceDeduction').updateValueAndValidity();
+
+        // This is for field womenShare
+        nextFormGroup.get('womenShare').setValidators(
+          this.facility &&
+          this.facility.displayWomenOnly ?
+            [Validators.required] : []
+        );
+        nextFormGroup.get('womenShare').updateValueAndValidity();
+
+        this.searchWomenCoffeeForm[index].setValidators(
+          this.facility &&
+          this.facility.displayWomenOnly ?
+            [Validators.required] : []
+        );
+        this.searchWomenCoffeeForm[index].updateValueAndValidity();
+      }
+    );
   }
 
   private setQuantities() {
