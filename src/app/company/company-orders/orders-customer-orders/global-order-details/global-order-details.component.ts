@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyCustomersService } from '../../../../shared-services/company-customers.service';
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { GradeAbbreviationCodebook } from '../../../../shared-services/grade-abbreviation-codebook';
@@ -8,12 +8,15 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { take } from 'rxjs/operators';
-import { generateFormFromMetadata } from '../../../../../shared/utils';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ActivatedRoute } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { AuthService } from '../../../../core/auth.service';
 import { ApiProductOrderValidationScheme } from './validation';
 import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
+import { ApiStockOrderValidationScheme } from './product-order-item/validation';
 
 @Component({
   selector: 'app-global-order-details',
@@ -41,6 +44,8 @@ export class GlobalOrderDetailsComponent implements OnInit {
 
   gradeAbbreviationCodebook: GradeAbbreviationCodebook;
 
+  stockOrdersListManager = null;
+
   constructor(
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
@@ -50,6 +55,28 @@ export class GlobalOrderDetailsComponent implements OnInit {
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService
   ) { }
+
+  static StockOrderItemCreateEmptyObject(): ApiStockOrder {
+    const obj = ApiStockOrder.formMetadata();
+    return defaultEmptyObject(obj) as ApiStockOrder;
+  }
+
+  static StockOrderItemEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(GlobalOrderDetailsComponent.StockOrderItemCreateEmptyObject(), ApiStockOrderValidationScheme.validators);
+    };
+  }
+
+  get orderItemsFormArray(): FormArray {
+    return this.form.get('items') as FormArray;
+  }
+
+  get outputFacilityId() {
+    if (this.outputFacilityForm.value) {
+      return this.outputFacilityForm.value.id;
+    }
+    return null;
+  }
 
   ngOnInit(): void {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
@@ -141,13 +168,11 @@ export class GlobalOrderDetailsComponent implements OnInit {
   }
 
   private initializeListManager() {
-
-    // TODO: implement list manager init
-    // this.stockOrdersListManager = new ListEditorManager<ChainStockOrder>(
-    //   this.form.get('items') as FormArray,
-    //   GlobalOrderEditComponent.StockOrderItemEmptyObjectFormFactory(),
-    //   ChainStockOrderValidationScheme
-    // );
+    this.stockOrdersListManager = new ListEditorManager<ApiStockOrder>(
+      this.orderItemsFormArray,
+      GlobalOrderDetailsComponent.StockOrderItemEmptyObjectFormFactory(),
+      ApiStockOrderValidationScheme
+    );
   }
 
 }

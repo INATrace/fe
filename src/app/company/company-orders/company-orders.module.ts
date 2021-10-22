@@ -13,6 +13,7 @@ import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstr
 import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.component';
 import { GlobalOrderDetailsComponent } from './orders-customer-orders/global-order-details/global-order-details.component';
 import { ComponentsModule } from '../../components/components.module';
+import { ProductOrderItemComponent } from './orders-customer-orders/global-order-details/product-order-item/product-order-item.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ComponentsModule } from '../../components/components.module';
     OrdersAllOrdersComponent,
     OrdersCustomerOrdersComponent,
     QuoteOrderListComponent,
-    GlobalOrderDetailsComponent
+    GlobalOrderDetailsComponent,
+    ProductOrderItemComponent
   ],
   imports: [
     CommonModule,
