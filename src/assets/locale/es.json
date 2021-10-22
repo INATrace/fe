@@ -2758,6 +2758,25 @@
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Peso neto",
     "procEvidenceField.fieldName.label": "Nombre de campo",
     "procEvidenceField.fieldName.placeholder": "Introduzca nombre de campo",
-    "procEvidenceField.fieldName.error.required": "Se requiere nombre de campo"
+    "procEvidenceField.fieldName.error.required": "Se requiere nombre de campo",
+    "productLabelFinalProduct.title.finalProducts": "Final products",
+    "productLabelFinalProduct.subTitle.listOfFinalProducts": "List of final products",
+    "productLabelFinalProduct.subTitle.showingFinalProducts": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
+    "productLabelFinalProduct.sortOptions.name": "Name",
+    "productLabelFinalProduct.sortOptions.description": "Description",
+    "productLabelFinalProduct.sortOptions.unit.label": "Unit label",
+    "productLabelFinalProduct.sortOptions.actions": "Actions",
+    "productLabelFinalProduct.noFinalProducts": "No final products found",
+    "productLabelFinalProduct.message.warning.remove": "Are you sure you want to remove final product with name '{$FINAL_PRODUCT_NAME}'?",
+    "productLabelFinalProduct.modal.title.new": "Add new final product",
+    "productLabelFinalProduct.modal.title.update": "Edit final product",
+    "productLabelFinalProduct.modal.textInput.name.label": "Name",
+    "productLabelFinalProduct.modal.textInput.name.placeholder": "Enter name",
+    "productLabelFinalProduct.modal.textInput.name.error": "Name is required",
+    "productLabelFinalProduct.modal.textInput.description.label": "Description",
+    "productLabelFinalProduct.modal.textInput.description.helpText": "Enter short final product description.",
+    "productLabelFinalProduct.modal.textInput.description.error": "Description is required",
+    "productLabelFinalProduct.modal.singleChoice.measurementUnitType.label": "Measurement unit type",
+    "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Measure unit type is required"
   }
 }

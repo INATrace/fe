@@ -2853,7 +2853,13 @@
     "productLabelFinalProduct.message.warning.remove": "Are you sure you want to remove final product with name '{$FINAL_PRODUCT_NAME}'?",
     "productLabelFinalProduct.modal.title.new": "Add new final product",
     "productLabelFinalProduct.modal.title.update": "Edit final product",
-    "productLabelFinalProduct.modal.textInput.name": "Edit final product"
-
+    "productLabelFinalProduct.modal.textInput.name.label": "Name",
+    "productLabelFinalProduct.modal.textInput.name.placeholder": "Enter name",
+    "productLabelFinalProduct.modal.textInput.name.error": "Name is required",
+    "productLabelFinalProduct.modal.textInput.description.label": "Description",
+    "productLabelFinalProduct.modal.textInput.description.helpText": "Enter short final product description.",
+    "productLabelFinalProduct.modal.textInput.description.error": "Description is required",
+    "productLabelFinalProduct.modal.singleChoice.measurementUnitType.label": "Measurement unit type",
+    "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Measure unit type is required"
   }
 }

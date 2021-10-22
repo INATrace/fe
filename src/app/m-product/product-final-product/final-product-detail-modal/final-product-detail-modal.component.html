@@ -14,14 +14,14 @@
         <textinput
                 label="Name"
                 placeholder="Enter name"
-                i18n-label="@@semiProductDetail.textinput.name.label"
-                i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
+                i18n-label="@@productLabelFinalProduct.modal.textInput.name.label"
+                i18n-placeholder="@@productLabelFinalProduct.modal.textInput.name.placeholder"
                 style="width: 100%"
                 [form]="form.get('name')"
                 [isInvalid]="submitted && form.get('name').invalid">
             <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
-                    <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.name.error">
+                    <div *ngIf="errors.required" i18n="@@productLabelFinalProduct.modal.textInput.name.error">
                         <span>
                           Name is required
                         </span>
@@ -32,16 +32,16 @@
 
         <textinput
                 label="Description"
-                helpText="Enter short semi-product description."
-                i18n-label="@@semiProductDetail.textinput.description.label"
-                i18n-helpText="@@semiProductDetail.textinput.description.helpText"
+                helpText="Enter short final product description."
+                i18n-label="@@productLabelFinalProduct.modal.textInput.description.label"
+                i18n-helpText="@@productLabelFinalProduct.modal.textInput.description.helpText"
                 style="width: 100%"
                 [form]="form.get('description')"
                 [textarea]="true"
                 [isInvalid]="submitted && form.get('description').invalid">
             <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
-                    <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.description.error">
+                    <div *ngIf="errors.required" i18n="@@productLabelFinalProduct.modal.description.error">
                         <span>
                           Description is required
                         </span>
@@ -52,14 +52,14 @@
 
         <single-choice
                 label="Measurement unit type"
-                i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
+                i18n-label="@@productLabelFinalProduct.modal.singleChoice.measurementUnitType.label"
                 [formControlInput]="form.get('measurementUnitType')"
                 [codebookService]="activeMeasureUnitTypeService"
                 [isInvalidChoice]="submitted && form.get('measurementUnitType').invalid">
             <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('measurementUnitType').errors as errors" class="sc-invalid-feedback">
-                    <div *ngIf="errors.required" i18n="@@semiProductDetail.singleChoice.measurementUnit.error.requred">
-                        Measure unit is required
+                    <div *ngIf="errors.required" i18n="@@productLabelFinalProduct.modal.singleChoice.measurementUnitType.error">
+                        Measurement unit type is required
                     </div>
                 </div>
             </ng-container>
