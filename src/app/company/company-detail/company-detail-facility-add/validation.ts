@@ -1,9 +1,10 @@
 import { SimpleValidationScheme } from '../../../../interfaces/Validation';
 import { ApiFacility } from '../../../../api/model/apiFacility';
-import { Validators } from '@angular/forms';
+import { FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
 import { ApiAddress } from '../../../../api/model/apiAddress';
+import { multiFieldValidator } from '../../../../shared/validation';
 
 export const ApiFacilityTypeValidationScheme = {
     validators: [],
@@ -61,10 +62,12 @@ export const ApiFacilityLocationValidationScheme = {
 
 export const ApiFacilityValidationScheme = {
     forceExpand: true,
-    validators: [],
+    validators: [
+        multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslationsFacility(group), ['required'])
+    ],
     fields: {
         name: {
-            validators: [Validators.required]
+            validators: []
         },
         facilityType: {
             validators: [Validators.required]
@@ -73,8 +76,27 @@ export const ApiFacilityValidationScheme = {
         isCollectionFacility: {
             validators: [Validators.required]
         },
+        translations: {
+            validators: [Validators.required]
+        },
         isPublic: {
             validators: [Validators.required]
         }
     }
 } as SimpleValidationScheme<ApiFacility>;
+
+export function requiredTranslationsFacility(control: FormGroup): ValidationErrors | null {
+    if (!control || !control.value || !control.contains('translations')) {
+        return null;
+    }
+    const translations = control.value['translations'];
+    if (translations.length === 0) {
+        return {required: true};
+    }
+    // English translation is required, other are optional
+    const englishTranslation = translations.find(t => t.language === 'EN');
+    if (!englishTranslation || !englishTranslation.name) {
+        return {required: true};
+    }
+    return null;
+}
