@@ -2830,6 +2830,13 @@
     "userHome.customers.title": "My customers",
     "procEvidenceField.fieldName.label": "Field name",
     "procEvidenceField.fieldName.placeholder": "Enter field name",
-    "procEvidenceField.fieldName.error.required": "Field name is required"
+    "procEvidenceField.fieldName.error.required": "Field name is required",
+    "companyDetail.farmers.importFarmers.button": "{$START_TAG_SPAN}+ Import farmers{$CLOSE_TAG_SPAN}",
+    "companyDetail.farmers.import.title": "Import farmers",
+    "companyDetail.farmers.spreadsheet.label": "Spreadsheet of farmers",
+    "companyDetail.farmers.import.button": "Import",
+    "companyDetail.farmers.uploadSpreadsheet.label": "Upload an excel spreadsheet of farmers (xls, xlsx)",
+    "companyDetail.farmers.uploadSpreadsheet.error": "Upload only file types XLS or XLSX.",
+    "companyDetail.farmers.import.success.label": "Farmers successfully imported. Please check the data on Company > Farmers tab"
   }
 }

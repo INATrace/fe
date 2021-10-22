@@ -844,12 +844,18 @@
       "get": {
         "parameters": [
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -945,12 +951,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1056,12 +1068,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1167,12 +1185,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1297,6 +1321,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1329,6 +1369,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3122,6 +3178,24 @@
     },
     "/api/chain/processing-order": {
       "put": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3212,6 +3286,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3275,6 +3365,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3566,6 +3672,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3775,6 +3897,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3958,6 +4096,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4068,6 +4222,22 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4177,6 +4347,22 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -4308,6 +4494,22 @@
               "format": "date-time",
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4371,6 +4573,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -7325,6 +7543,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -8882,9 +9116,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8894,16 +9131,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8913,16 +9153,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8932,16 +9175,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8951,16 +9197,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8970,16 +9219,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8989,16 +9241,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -9008,8 +9263,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
