@@ -2286,7 +2286,7 @@ export class ProductControllerService {
 
 
   /**
-   * Deletes a final product by map.
+   * Delete a final product by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2318,7 +2318,7 @@ export class ProductControllerService {
 
 
     /**
-     * Deletes a final product
+     * Delete a final product
      * 
      * @param productId Product ID
      * @param finalProductId Final product ID

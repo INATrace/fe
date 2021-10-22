@@ -3403,6 +3403,87 @@
         "summary": "Get a single processing order with the provided ID."
       }
     },
+    "/api/chain/product-order": {
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-order-controller"
+        ],
+        "operationId": "createOrUpdateProductOrderUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProductOrder"
+              }
+            }
+          },
+          "description": "apiProductOrder",
+          "required": true
+        },
+        "summary": "Create or update product order. If the ID is provided, then the entity with the provided ID is updated."
+      }
+    },
+    "/api/chain/product-order/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Product order ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProductOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-order-controller"
+        ],
+        "operationId": "getProductOrderUsingGET",
+        "summary": "Get a single product order with the provided ID."
+      }
+    },
     "/api/chain/semi-product": {
       "put": {
         "responses": {
@@ -7829,7 +7910,7 @@
           "product-controller"
         ],
         "operationId": "deleteFinalProductUsingDELETE",
-        "summary": "Deletes a final product"
+        "summary": "Delete a final product"
       },
       "get": {
         "parameters": [
@@ -13712,6 +13793,55 @@
         },
         "type": "object"
       },
+      "ApiProductOrder": {
+        "properties": {
+          "customer": {
+            "$ref": "#/components/schemas/ApiCompanyCustomer",
+            "description": "The company customer for whom this order is placed"
+          },
+          "deliveryDeadline": {
+            "description": "The delivery deadline of this order",
+            "format": "date-time",
+            "type": "string"
+          },
+          "facility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Facility to which this order is order is ordered"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "items": {
+            "description": "The ordered items(final products) of this order",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrder"
+            },
+            "type": "array"
+          },
+          "requiredGrade": {
+            "$ref": "#/components/schemas/ApiGradeAbbreviation",
+            "description": "The grade required"
+          },
+          "requiredOrganic": {
+            "description": "Require organic coffee",
+            "example": false,
+            "type": "boolean"
+          },
+          "requiredWomensOnly": {
+            "description": "Require only women's coffee",
+            "example": false,
+            "type": "boolean"
+          },
+          "updateTimestamp": {
+            "description": "Timestamp indicates when product order have been updated",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiProductOrigin": {
         "properties": {
           "locations": {
@@ -14850,6 +14980,49 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiProductLabel",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProductOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProductOrder",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -16480,6 +16653,10 @@
     {
       "description": "Processing Evidence Field Controller",
       "name": "processing-evidence-field-controller"
+    },
+    {
+      "description": "Product Order Controller",
+      "name": "product-order-controller"
     },
     {
       "description": "Measure Unit Type Controller",
