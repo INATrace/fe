@@ -598,7 +598,11 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
           quantity -= nextFormGroup.get('tare').value;
         }
 
-        let form = nextFormGroup.get('fulfilledQuantity');
+        let form = nextFormGroup.get('totalQuantity');
+        form.setValue(quantity);
+        form.updateValueAndValidity();
+
+        form = nextFormGroup.get('fulfilledQuantity');
         form.setValue(quantity);
         form.updateValueAndValidity();
 
