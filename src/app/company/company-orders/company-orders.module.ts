@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CompanyOrdersRoutingModule } from './company-orders-routing.module';
 import { OrdersTabComponent } from './orders-tab/orders-tab.component';
 import { OrdersDashboardComponent } from './orders-dashboard/orders-dashboard.component';
@@ -12,10 +11,19 @@ import { SharedModule } from '../../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.component';
+import { GlobalOrderDetailsComponent } from './orders-customer-orders/global-order-details/global-order-details.component';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
-  declarations: [OrdersTabComponent, OrdersDashboardComponent, OrdersAllOrdersComponent, OrdersCustomerOrdersComponent, QuoteOrderListComponent],
+  declarations: [
+    OrdersTabComponent,
+    OrdersDashboardComponent,
+    OrdersAllOrdersComponent,
+    OrdersCustomerOrdersComponent,
+    QuoteOrderListComponent,
+    GlobalOrderDetailsComponent
+  ],
   imports: [
     CommonModule,
     CompanyOrdersRoutingModule,
@@ -24,7 +32,8 @@ import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.com
     SharedModule,
     FontAwesomeModule,
     NgbDropdownModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    ComponentsModule
   ]
 })
 export class CompanyOrdersModule { }
