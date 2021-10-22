@@ -349,6 +349,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.showTotalQuantityForm && !this.totalQuantity;
   }
 
+  get invalidFormat() {
+   return Number.isNaN(Number(this.outputStockOrderForm.get('totalQuantity').value));
+  }
+
   get invalidOutputQuantityTooLargeValue() {
     const inputQuantity: number = Number(this.form.get('outputQuantity').value).valueOf();
     const outputQuantity: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf();
@@ -411,10 +415,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.invalidOutputQuantity) {
-      return false;
-    }
-    if (this.invalidOutputQuantityTooLargeValue) {
+    if (this.invalidOutputQuantity || this.invalidOutputQuantityTooLargeValue || this.invalidFormat) {
       return false;
     }
     if (this.inputFacilityForm.invalid) {

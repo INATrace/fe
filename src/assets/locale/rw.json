@@ -1895,6 +1895,7 @@
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Ingano irakenewe",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Banza winjizemo ingano y'ibyifuzwa gusohorwa",
     "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Output quantity is larger than the input quantity",
+    "productLabelStockProcessingOrderDetail.invalidFormat.textinput.error": "Invalid number format",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Huza ingano y'ibyinjira ",
     "typeDetailModal.processingEvidenceType.checkbox.fairness": "Kutabogama",
     "typeDetailModal.processingEvidenceType.checkbox.provenance": "Inkomoko",
