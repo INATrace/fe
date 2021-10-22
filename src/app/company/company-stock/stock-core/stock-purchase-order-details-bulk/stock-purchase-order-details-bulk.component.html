@@ -290,13 +290,13 @@
                           <single-choice
                             label="Women’s only"
                             i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.womensOnly"
-                            [formControlInput]="item.get('womenShare')"
+                            [formControlInput]="searchWomenCoffeeForm[idx]"
                             [codebookService]="codebookWomenCoffee"
                             style="min-width: 150px;"
-                            [isInvalidChoice]="submitted && item.get('womenShare').invalid"
+                            [isInvalidChoice]="submitted && searchWomenCoffeeForm[idx].invalid"
                             [readonly]="readonlyWomensOnly">
                             <ng-container *ngIf="submitted">
-                              <div *ngIf="item.get('womenShare').errors as errors"
+                              <div *ngIf="searchWomenCoffeeForm[idx].errors as errors"
                                    class="sc-invalid-feedback">
                                 <div *ngIf="errors.required"
                                      i18n="@@productLabelStockPurchaseOrdersModal.singleChoice.womensOnly.error">

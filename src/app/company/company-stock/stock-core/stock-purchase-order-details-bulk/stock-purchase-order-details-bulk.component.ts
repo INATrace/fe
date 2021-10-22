@@ -75,7 +75,6 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   // temp objects for storing measureUnit for differentFarmers
   measureUnitArray: string[] = ['-'];
 
- // searchWomenCoffeeForm = new FormControl(null, Validators.required);
   codebookWomenCoffee = EnumSifrant.fromObject(this.womenCoffeeList);
   codebookOrganic = EnumSifrant.fromObject(this.yesNo);
 
@@ -83,6 +82,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   emptyFarmersFormArray = null;
 
+  searchWomenCoffeeForm: FormControl[] = [new FormControl(null, Validators.required)];
   netWeightFormArray: FormControl[] = [new FormControl(null)];
   finalPriceFormArray: FormControl[] = [new FormControl(null)];
 
@@ -329,6 +329,13 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     // Set the user ID that creates the purchase order
     this.purchaseOrderBulkForm.get('creatorId').setValue(this.employeeForm.value);
 
+    this.searchWomenCoffeeForm.forEach((next, index) => {
+      // convert values for send
+      if (this.showWomensOnly(index)) {
+        this.farmersFormArray.at(index).get('womenShare').setValue(next.value === 'YES');
+      }
+    });
+
     this.prepareData();
 
     // Validate forms
@@ -347,10 +354,6 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
       this.setBalance(index);
 
-      // convert values for send
-      if (this.showWomensOnly(index)) {
-        this.farmersFormArray.at(index).get('womenShare').setValue(this.farmersFormArray.at(index).get('womenShare').value === 'YES');
-      }
     });
 
     const data: ApiPurchaseOrder = _.cloneDeep(this.purchaseOrderBulkForm.value);
@@ -535,7 +538,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
   updateValidators() {
 
-    this.farmersFormArray.controls.forEach((nextFormGroup) => {
+    this.farmersFormArray.controls.forEach((nextFormGroup, index) => {
           nextFormGroup.get('organic').setValidators(
               this.facility &&
               this.facility.displayOrganic ?
@@ -554,12 +557,12 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
                   [Validators.required] : []
           );
           nextFormGroup.get('damagedPriceDeduction').updateValueAndValidity();
-          nextFormGroup.get('womenShare').setValidators(
+          this.searchWomenCoffeeForm[index].setValidators(
               this.facility &&
               this.facility.displayWomenOnly ?
                   [Validators.required] : []
           );
-          nextFormGroup.get('womenShare').updateValueAndValidity();
+          this.searchWomenCoffeeForm[index].updateValueAndValidity();
         }
     );
 
@@ -616,6 +619,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
     this.netWeightFormArray.push(new FormControl(null));
     this.finalPriceFormArray.push(new FormControl(null));
+    this.searchWomenCoffeeForm.push(new FormControl(null, Validators.required));
 
     // add new fields to form, and init semiProduct if only one available
     const emptyFarmersFormArrayNewItem = _.cloneDeep(this.emptyFarmersFormArray);
