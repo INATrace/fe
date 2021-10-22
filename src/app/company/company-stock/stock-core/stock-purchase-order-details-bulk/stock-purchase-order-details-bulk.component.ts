@@ -578,7 +578,11 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     this.farmersFormArray.controls.forEach((nextFormGroup) => {
       if (nextFormGroup.get('totalGrossQuantity').valid) {
 
-        const quantity = parseFloat(nextFormGroup.get('totalGrossQuantity').value);
+        let quantity = parseFloat(nextFormGroup.get('totalGrossQuantity').value);
+
+        if (nextFormGroup.get('tare').value) {
+          quantity -= nextFormGroup.get('tare').value;
+        }
 
         let form = nextFormGroup.get('fulfilledQuantity');
         form.setValue(quantity);
