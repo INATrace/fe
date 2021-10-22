@@ -17,6 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -117,7 +118,8 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
     private commonCsvControllerService: CommonCsvControllerService,
-    private codebookTranslations: CodebookTranslations
+    private codebookTranslations: CodebookTranslations,
+    private fileSaverService: FileSaverService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -167,18 +169,13 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
 
   async generatePurchasesCsv(){
 
-    const result = await this.globalEventManager.openMessageModal({
-      type: 'general',
-      message: $localize`:@@productLabelStock.confirmPurchasesCsv.success.message:Purchases CSV was created successfully!`,
-      options: { centered: true }
-    });
-    if (result !== 'ok') {
-      return;
-    }
-
     const res = await this.commonCsvControllerService.generatePurchasesByCompanyCsvUsingPOST(this.companyId)
     .pipe(take(1))
     .toPromise();
+
+    let company = this.companyController.getCompanyUsingGET(this.companyId, null, null, null, null);
+    let sub = this.fileSaverService.save(res, 'purchases.csv');
+
   }
 
   onShowPO(event) {

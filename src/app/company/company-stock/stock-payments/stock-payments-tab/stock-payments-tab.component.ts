@@ -13,6 +13,7 @@ import { StockPaymentsSelectorForNewPaymentModalComponent } from '../stock-payme
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -41,6 +42,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected companyController: CompanyControllerService,
       private paymentControllerService: PaymentControllerService,
       private commonCsvControllerService: CommonCsvControllerService,
+      private fileSaverService: FileSaverService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -95,18 +97,11 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   async generatePaymentsCsv(){
 
-    const result = await this.globalEventManager.openMessageModal({
-      type: 'general',
-      message: $localize`:@@productLabelPayments.confirmPaymentsCsv.success.message:Payments CSV was created successfully!`,
-      options: { centered: true }
-    });
-    if (result !== 'ok') {
-      return;
-    }
-
     const res = await this.commonCsvControllerService.generatePaymentsByCompanyCsvUsingPOST(this.companyId)
     .pipe(take(1))
     .toPromise();
+
+    let sub = this.fileSaverService.save(res, 'payments.csv');
   }
 
   onShowPayments(event) {
