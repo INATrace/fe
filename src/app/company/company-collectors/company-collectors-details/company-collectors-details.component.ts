@@ -156,7 +156,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initData().then(res => {
+    this.initData().then(() => {
       if (!this.update) {
         this.newCollector();
       } else {
@@ -306,13 +306,11 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   }
 
   async listOfOrgProducer() {
-    const res = await this.companyService.listCompaniesUsingGET().pipe(take(1)).toPromise();
+    const company = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
 
-    if (res && res.status === 'OK' && res.data) {
+    if (company && company.status === 'OK' && company.data) {
       const companiesObj = {};
-      for (const company of res.data.items) {
-        companiesObj[company.id] = company.name;
-      }
+      companiesObj[company.data.id] = company.data.name;
       this.codebookCoop = EnumSifrant.fromObject(companiesObj);
       this.assocCoop = companiesObj;
     }

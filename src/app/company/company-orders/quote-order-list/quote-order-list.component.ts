@@ -1,5 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { ApiPaginatedListApiStockOrder } from '../../../../api/model/apiPaginatedListApiStockOrder';
+import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
+import { FormControl } from '@angular/forms';
+import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
+import { ApiPaginatedResponseApiStockOrder } from '../../../../api/model/apiPaginatedResponseApiStockOrder';
+import {
+  GetQuoteOrdersInFacilityUsingGET,
+  GetStockOrdersInFacilityForCustomerUsingGET,
+  StockOrderControllerService
+} from '../../../../api/api/stockOrderController.service';
+import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 
 @Component({
   selector: 'app-quote-order-list',
@@ -10,6 +23,9 @@ export class QuoteOrderListComponent implements OnInit {
 
   @Input()
   mode: 'INPUT' | 'CUSTOMER' = 'INPUT';
+
+  @Input()
+  reloadPingList$ = new BehaviorSubject<boolean>(false);
 
   @Input()
   facilityId$ = new BehaviorSubject<number>(null);
@@ -32,9 +48,207 @@ export class QuoteOrderListComponent implements OnInit {
   @Output()
   countAll = new EventEmitter<number>();
 
-  constructor() { }
+  orders$: Observable<ApiPaginatedListApiStockOrder>;
+
+  sortOptions: SortOption[];
+  sortingParams$ = new BehaviorSubject(null);
+
+  page = 1;
+  pageSize = 10;
+  paging$ = new BehaviorSubject<number>(1);
+
+  allOrders = 0;
+  showedOrders = 0;
+
+  cbCheckedAll = new FormControl(false);
+
+  constructor(
+    private globalEventsManager: GlobalEventManagerService,
+    private stockOrderController: StockOrderControllerService
+  ) { }
 
   ngOnInit(): void {
+    this.initializeSortOptions().then();
+    this.initializeObservables().then();
+  }
+
+  changeSort(event) {
+    if (event.key === 'cb') {
+      return;
+    }
+    this.sortingParams$.next({ sortBy: event.key, sort: event.sortOrder });
+  }
+
+  onPageChange(event) {
+    this.paging$.next(event);
+  }
+
+  kgsOf(order: ApiStockOrder) {
+    if (order.measureUnitType.weight) {
+      return order.measureUnitType.weight * order.totalQuantity;
+    }
+    return '-';
+  }
+
+  showPagination() {
+    return ((this.showedOrders - this.pageSize) === 0 && this.allOrders >= this.pageSize) || this.page > 1;
+  }
+
+  private async initializeSortOptions() {
+
+    this.sortOptions = [
+      {
+        key: 'deliveryTime',
+        name: $localize`:@@orderList.sortOptions.dateOfDelivery.name:Date of delivery`,
+      },
+      {
+        key: 'semiProduct',
+        name: $localize`:@@orderList.sortOptions.semiProduct.name:SKU`,
+        inactive: true,
+      },
+      {
+        key: 'client',
+        name: $localize`:@@orderList.sortOptions.client.name:Client`,
+        inactive: true,
+        hide: this.mode === 'CUSTOMER'
+      },
+      {
+        key: 'customer',
+        name: $localize`:@@orderList.sortOptions.customer.name:Customer`,
+        inactive: true,
+        hide: this.mode === 'INPUT'
+      },
+      {
+        key: 'orderId',
+        name: $localize`:@@orderList.sortOptions.orderId.name:Order ID`,
+        inactive: true,
+      },
+      {
+        key: 'toFacility',
+        name: $localize`:@@orderList.sortOptions.toFacility.name:To facility`,
+        inactive: true,
+        hide: this.mode === 'CUSTOMER'
+      },
+      {
+        key: 'orderedTo',
+        name: $localize`:@@orderList.sortOptions.orderedTo.name:Ordered to`,
+        inactive: true,
+        hide: this.mode === 'INPUT'
+      },
+      {
+        key: 'fullfilled',
+        name: $localize`:@@orderList.sortOptions.quantityFulfilled.name:Quantity / Fulfilled`,
+        inactive: true,
+      },
+      {
+        key: 'unit',
+        name: $localize`:@@orderList.sortOptions.unit.name:Unit`,
+        inactive: true,
+      },
+      {
+        key: 'kilos',
+        name: $localize`:@@orderList.sortOptions.kgs.name:kgs`,
+        inactive: true,
+      },
+      {
+        key: 'lastChange',
+        name: $localize`:@@orderList.sortOptions.lastChange.name:Time of last change`,
+        defaultSortOrder: 'DESC',
+      },
+      {
+        key: 'actions',
+        name: $localize`:@@orderList.sortOptions.actions.name:Actions`,
+        inactive: true
+      }
+    ];
+
+    this.sortingParams$.next({ sortBy: 'updateTimestamp', sort: 'DESC' });
+  }
+
+  private async initializeObservables() {
+
+    this.orders$ = combineLatest([
+      this.reloadPingList$,
+      this.paging$,
+      this.sortingParams$,
+      this.facilityId$,
+      this.semiProductId$,
+      this.openOnly$,
+      this.companyCustomerId$
+    ]).pipe(
+      map(([
+             reload,
+             page,
+             sortingParams,
+             facilityId,
+             semiProductId,
+             openOnly,
+             companyCustomerId]) => {
+        return {
+          offset: (page - 1) * this.pageSize,
+          limit: this.pageSize,
+          ...sortingParams,
+          facilityId,
+          semiProductId,
+          openOnly,
+          companyCustomerId
+        };
+      }),
+      tap(() => this.globalEventsManager.showLoading(true)),
+      switchMap(params => this.loadStockOrders(params)),
+      map(response => {
+
+        if (response && response.data) {
+          this.setCounts(response.data.count);
+          return response.data;
+        } else {
+          return null;
+        }
+      }),
+      tap(() => this.globalEventsManager.showLoading(false))
+    );
+  }
+
+  private loadStockOrders(params: GetQuoteOrdersInFacilityUsingGET.PartialParamMap | GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap):
+    Observable<ApiPaginatedResponseApiStockOrder> {
+
+    if (!params.facilityId) {
+      return of({
+        data: {
+          items: [],
+          count: 0
+        },
+        status: StatusEnum.OK
+      });
+    }
+
+    // If we are in input mode, that means we need stock orders that are quoted to the current company
+    if (this.mode === 'INPUT') {
+
+      return this.stockOrderController.getQuoteOrdersInFacilityUsingGETByMap(params);
+
+    } else if (this.mode === 'CUSTOMER') {
+
+      // If we are in customer mode, that means we need stock orders the were created form the current company for a customer company
+      return this.stockOrderController.getStockOrdersInFacilityForCustomerUsingGETByMap(params);
+    }
+
+    throw Error('Wrong mode: ' + this.mode);
+  }
+
+  private setCounts(allCount: number) {
+
+    this.allOrders = allCount;
+
+    if (this.pageSize > this.allOrders) {
+      this.showedOrders = this.allOrders;
+    } else {
+      const temp = this.allOrders - (this.pageSize * (this.page - 1));
+      this.showedOrders = temp >= this.pageSize ? this.pageSize : temp;
+    }
+
+    this.showing.emit(this.showedOrders);
+    this.countAll.emit(this.allOrders);
   }
 
 }
