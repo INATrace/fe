@@ -2272,6 +2272,7 @@
     "globalOrderEdit.textinput.customer.label": "Customer",
     "globalOrderEdit.singleChoice.quality.label": "Quality",
     "globalOrderEdit.checkbox.womensCoffee.label": "Women's only",
+    "globalOrderEdit.checkbox.requiredOrganic.label": "Organic only",
     "globalOrderEdit.datepicker.latestDateOfDelivery.label": "Latest date of delivery",
     "globalOrderEdit.textinput.orderID.error.required": " Order ID is required ",
     "globalOrderEdit.textinput.customer.error.required": " Customer is required ",
