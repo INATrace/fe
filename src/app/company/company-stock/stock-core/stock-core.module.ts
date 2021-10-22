@@ -13,12 +13,14 @@ import { StockPurchaseOrderDetailsComponent } from './stock-purchase-order-detai
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
+import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-details-bulk/stock-purchase-order-details-bulk.component';
 
 @NgModule({
   declarations: [
     StockCoreTabComponent,
     StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
+    StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent
   ],
   imports: [
@@ -37,6 +39,7 @@ import { AdditionalProofItemComponent } from './additional-proof-item/additional
   exports: [
     StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
+    StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent
   ]
 })

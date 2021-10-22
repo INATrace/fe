@@ -167,14 +167,25 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
   }
 
+  newPurchaseOrderBulk() {
+
+    if (!this.facilityForStockOrderForm.value) {
+      const title = $localize`:@@productLabelStock.purchase.warning.title:Missing facility`;
+      const message = $localize`:@@productLabelStock.purchase.warning.message:Please select facility before continuing`;
+      this.showWarning(title, message);
+      return;
+    }
+
+    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new-bulk']).then();
+  }
+
   async generatePurchasesCsv(){
 
     const res = await this.commonCsvControllerService.generatePurchasesByCompanyCsvUsingPOST(this.companyId)
-    .pipe(take(1))
-    .toPromise();
+      .pipe(take(1))
+      .toPromise();
 
-    // let company = this.companyController.getCompanyUsingGET(this.companyId, null, null, null, null);
-    let sub = this.fileSaverService.save(res, 'purchases.csv');
+    this.fileSaverService.save(res, 'purchases.csv');
 
     const result = await this.globalEventManager.openMessageModal({
       type: 'general',
@@ -184,7 +195,6 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     if (result !== 'ok') {
       return;
     }
-
   }
 
   onShowPO(event) {

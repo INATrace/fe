@@ -19,6 +19,9 @@ export function ApiStockOrderValidationScheme(orderType: StockOrderType) {
         validators: []
       },
       totalQuantity: {
+        validators: []
+      },
+      totalGrossQuantity: {
         validators: orderType !== 'PROCESSING_ORDER'
           ? [Validators.required]
           : []
