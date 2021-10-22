@@ -96,10 +96,22 @@
           <div class="af-row">
             <div class="af-c12">
               <checkbox-input
-                      [form]="form.get('requiredwomensOnly')"
+                      [form]="form.get('requiredWomensOnly')"
                       style="margin-bottom: 1rem; margin-top: -1rem;">
                 <checkbox-input-rich-label>
                   <span i18n="@@globalOrderEdit.checkbox.womensCoffee.label">Women's only</span>
+                </checkbox-input-rich-label>
+              </checkbox-input>
+            </div>
+          </div>
+
+          <div class="af-row">
+            <div class="af-c12">
+              <checkbox-input
+                      [form]="form.get('requiredOrganic')"
+                      style="margin-bottom: 1rem; margin-top: -1rem;">
+                <checkbox-input-rich-label>
+                  <span i18n="@@globalOrderEdit.checkbox.requiredOrganic.label">Organic only</span>
                 </checkbox-input-rich-label>
               </checkbox-input>
             </div>
