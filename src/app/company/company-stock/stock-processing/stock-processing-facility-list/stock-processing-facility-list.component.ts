@@ -45,8 +45,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
   constructor(
     private globalEventsManager: GlobalEventManagerService,
     private facilityControllerService: FacilityControllerService,
-    private processingActionControllerService: ProcessingActionControllerService,
-    @Inject(LOCALE_ID) public userLocale: string
+    private processingActionControllerService: ProcessingActionControllerService
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
     this.facilities$ = combineLatest([this.reloadPingList$])
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
-        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId, this.userLocale.toUpperCase())),
+        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId)),
         tap((res: ApiPaginatedResponseApiProcessingAction) => {
           if (res) {
             this.processingActions = res.data.items;

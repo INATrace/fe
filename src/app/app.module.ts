@@ -94,6 +94,7 @@ import { CompanyDetailProcessingActionsDetailComponent } from './company/company
 import { CompanyProcessingActionsComponent } from './company/company-detail/company-processing-actions/company-processing-actions.component';
 import { CompanyDetailProcessingActionsListComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
+import { LanguageInterceptor } from './core/language.interceptor';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -221,6 +222,11 @@ export function getConfiguration(): Configuration {
     {
       provide: RouteReuseStrategy,
       useClass: CacheRouteReuseStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LanguageInterceptor,
+      multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,

@@ -187,6 +187,10 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
        * Production date range end
        */
       productionDateEnd?: Date;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -232,7 +236,11 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
       /**
        * Production date range end
        */
-      productionDateEnd = 'productionDateEnd'
+      productionDateEnd = 'productionDateEnd',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -262,6 +270,8 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
       ],
       productionDateEnd: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -274,7 +284,7 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * Facility ID
+       * Quote facility ID
        */
       facilityId: number;
       /**
@@ -305,6 +315,10 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
        * Return only open stock orders
        */
       openOnly?: boolean;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -312,7 +326,7 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
      */
     export enum Parameters {
       /**
-       * Facility ID
+       * Quote facility ID
        */
       facilityId = 'facilityId',
       /**
@@ -342,7 +356,11 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
       /**
        * Return only open stock orders
        */
-      openOnly = 'openOnly'
+      openOnly = 'openOnly',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -366,6 +384,8 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
       semiProductId: [
       ],
       openOnly: [
+      ],
+      language: [
       ],
     };
 }
@@ -446,6 +466,10 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query?: string;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -519,7 +543,11 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
       /**
        * Search by ProducerUserCustomer name
        */
-      query = 'query'
+      query = 'query',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -561,6 +589,8 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
       productionDateEnd: [
       ],
       query: [
+      ],
+      language: [
       ],
     };
 }
@@ -633,6 +663,10 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query?: string;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -698,7 +732,11 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
       /**
        * Search by ProducerUserCustomer name
        */
-      query = 'query'
+      query = 'query',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -737,6 +775,8 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
       ],
       query: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -768,6 +808,10 @@ export namespace GetStockOrderListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -793,7 +837,11 @@ export namespace GetStockOrderListUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -811,6 +859,8 @@ export namespace GetStockOrderListUsingGET {
       ],
       sort: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -826,6 +876,10 @@ export namespace GetStockOrderUsingGET {
        * StockOrder ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -835,7 +889,11 @@ export namespace GetStockOrderUsingGET {
       /**
        * StockOrder ID
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -845,6 +903,8 @@ export namespace GetStockOrderUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -889,6 +949,10 @@ export namespace GetStockOrdersInFacilityForCustomerUsingGET {
        * Return only open stock orders
        */
       openOnly?: boolean;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -926,7 +990,11 @@ export namespace GetStockOrdersInFacilityForCustomerUsingGET {
       /**
        * Return only open stock orders
        */
-      openOnly = 'openOnly'
+      openOnly = 'openOnly',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -950,6 +1018,8 @@ export namespace GetStockOrdersInFacilityForCustomerUsingGET {
       companyCustomerId: [
       ],
       openOnly: [
+      ],
+      language: [
       ],
     };
 }
@@ -1283,6 +1353,7 @@ export class StockOrderControllerService {
       map.isWomenShare,
       map.productionDateStart,
       map.productionDateEnd,
+      map.language,
       observe,
       reportProgress
     );
@@ -1302,13 +1373,14 @@ export class StockOrderControllerService {
      * @param isWomenShare Is women share
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForSemiProductInFacilityUsingGET.');
         }
@@ -1343,6 +1415,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -1411,6 +1486,7 @@ export class StockOrderControllerService {
       map.sort,
       map.semiProductId,
       map.openOnly,
+      map.language,
       observe,
       reportProgress
     );
@@ -1420,7 +1496,7 @@ export class StockOrderControllerService {
     /**
      * getQuoteOrdersInFacility
      * 
-     * @param facilityId Facility ID
+     * @param facilityId Quote facility ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -1428,13 +1504,14 @@ export class StockOrderControllerService {
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param semiProductId Semi-product ID
      * @param openOnly Return only open stock orders
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getQuoteOrdersInFacilityUsingGET.');
         }
@@ -1463,6 +1540,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -1540,6 +1620,7 @@ export class StockOrderControllerService {
       map.productionDateStart,
       map.productionDateEnd,
       map.query,
+      map.language,
       observe,
       reportProgress
     );
@@ -1566,13 +1647,14 @@ export class StockOrderControllerService {
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
      * @param query Search by ProducerUserCustomer name
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'SALES_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling getStockOrderListByCompanyIdUsingGET.');
         }
@@ -1628,6 +1710,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -1703,6 +1788,7 @@ export class StockOrderControllerService {
       map.productionDateStart,
       map.productionDateEnd,
       map.query,
+      map.language,
       observe,
       reportProgress
     );
@@ -1727,13 +1813,14 @@ export class StockOrderControllerService {
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
      * @param query Search by ProducerUserCustomer name
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getStockOrderListByFacilityIdUsingGET.');
         }
@@ -1783,6 +1870,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -1848,6 +1938,7 @@ export class StockOrderControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.language,
       observe,
       reportProgress
     );
@@ -1862,13 +1953,14 @@ export class StockOrderControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -1888,6 +1980,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -1949,6 +2044,7 @@ export class StockOrderControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -1959,18 +2055,22 @@ export class StockOrderControllerService {
      * Get a single stock order with the provided ID.
      * 
      * @param id StockOrder ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
-    public getStockOrderUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
+    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getStockOrderUsingGET.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -2038,6 +2138,7 @@ export class StockOrderControllerService {
       map.sort,
       map.companyCustomerId,
       map.openOnly,
+      map.language,
       observe,
       reportProgress
     );
@@ -2055,13 +2156,14 @@ export class StockOrderControllerService {
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param companyCustomerId Company customer ID
      * @param openOnly Return only open stock orders
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomerUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getStockOrdersInFacilityForCustomerUsingGET.');
         }
@@ -2090,6 +2192,9 @@ export class StockOrderControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

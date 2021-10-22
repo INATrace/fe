@@ -81,7 +81,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
         return {
           ...search,
           ...sorting,
-          language: this.userLocale.toUpperCase(),
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize
         };
@@ -119,8 +118,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       private processingActionControllerService: ProcessingActionControllerService,
       protected globalEventsManager: GlobalEventManagerService,
       private route: ActivatedRoute,
-      private router: Router,
-      @Inject(LOCALE_ID) public userLocale: string
+      private router: Router
   ) { }
 
   ngOnInit(): void {

@@ -844,6 +844,22 @@
       "get": {
         "parameters": [
           {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          },
+          {
             "description": "Only count, only fetch, or return both values (if null)",
             "in": "query",
             "name": "requestType",
@@ -932,6 +948,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           },
           {
@@ -1036,6 +1068,22 @@
             }
           },
           {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          },
+          {
             "description": "Only count, only fetch, or return both values (if null)",
             "in": "query",
             "name": "requestType",
@@ -1134,6 +1182,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           },
           {
@@ -1257,6 +1321,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1276,6 +1356,55 @@
         ],
         "operationId": "getFacilityUsingGET",
         "summary": "Get a single facility with the provided ID."
+      }
+    },
+    "/api/chain/facility/{id}/detail": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Facility ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiFacility_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "facility-controller"
+        ],
+        "operationId": "getFacilityDetailUsingGET",
+        "summary": "Get a single facility with translations for the provided ID."
       }
     },
     "/api/chain/grade-abbreviation": {
@@ -3049,6 +3178,24 @@
     },
     "/api/chain/processing-order": {
       "put": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3139,6 +3286,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3202,6 +3365,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3525,6 +3704,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3734,6 +3929,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3917,6 +4128,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4027,6 +4254,22 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4110,7 +4353,7 @@
             }
           },
           {
-            "description": "Facility ID",
+            "description": "Quote facility ID",
             "in": "path",
             "name": "facilityId",
             "required": true,
@@ -4136,6 +4379,22 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -4267,6 +4526,22 @@
               "format": "date-time",
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4330,6 +4605,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -5771,6 +6062,49 @@
           "$ref": "#/components/requestBodies/ApiUserCustomer"
         },
         "summary": "Update user customer with given ID"
+      }
+    },
+    "/api/company/userCustomers/import/farmers/{companyId}/{documentId}": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Document ID",
+            "in": "path",
+            "name": "documentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "importFarmersSpreadsheetUsingPOST",
+        "summary": "Upload .xls or .xlsx spreadsheet of farmers to import into DB"
       }
     },
     "/api/company/userCustomers/{companyId}/{type}": {
@@ -7239,6 +7573,22 @@
             "name": "name",
             "required": false,
             "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           }
@@ -10093,6 +10443,13 @@
           "name": {
             "description": "Facility name",
             "type": "string"
+          },
+          "translations": {
+            "description": "List of facility translations",
+            "items": {
+              "$ref": "#/components/schemas/ApiFacilityTranslation"
+            },
+            "type": "array"
           }
         },
         "type": "object"
@@ -10124,6 +10481,25 @@
           },
           "publiclyVisible": {
             "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiFacilityTranslation": {
+        "properties": {
+          "language": {
+            "description": "Facility language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Facility name",
+            "type": "string"
           }
         },
         "type": "object"

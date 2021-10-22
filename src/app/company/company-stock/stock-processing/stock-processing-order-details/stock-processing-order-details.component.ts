@@ -154,8 +154,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
-    public actionTypesCodebook: ActionTypesService,
-    @Inject(LOCALE_ID) public userLocale: string
+    public actionTypesCodebook: ActionTypesService
   ) { }
 
   // Create form control for use in activity proofs list manager
@@ -459,7 +458,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         await this.generateCompanyDetailForm();
         this.activeProcessingCodebook =
-          new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations, this.userLocale);
+          new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
 
         if (this.prAction) {
 
@@ -526,7 +525,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       if (actionId !== 'NEW') {
         const respProcAction = await this.procActionController
-          .getProcessingActionUsingGET(actionId, (this.userLocale.toUpperCase() as any)).pipe(take(1)).toPromise();
+          .getProcessingActionUsingGET(actionId).pipe(take(1)).toPromise();
         if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
           this.prAction = respProcAction.data;
           this.processingActionForm.setValue(this.prAction);

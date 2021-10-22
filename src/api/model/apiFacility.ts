@@ -20,6 +20,7 @@
 
 import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacilityLocation } from './apiFacilityLocation';
+import { ApiFacilityTranslation } from './apiFacilityTranslation';
 import { ApiFacilityType } from './apiFacilityType';
 import { ApiSemiProduct } from './apiSemiProduct';
 
@@ -69,6 +70,10 @@ export interface ApiFacility {
      * Facility name
      */
     name?: string;
+    /**
+     * List of facility translations
+     */
+    translations?: Array<ApiFacilityTranslation>;
 }
 
 /**
@@ -121,7 +126,11 @@ export namespace ApiFacility {
         /**
          * Facility name
          */
-        name = 'name'
+        name = 'name',
+        /**
+         * List of facility translations
+         */
+        translations = 'translations'
     }
 
 
@@ -277,6 +286,18 @@ export namespace ApiFacility {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiFacilityTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiFacilityTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiFacilityTranslation'
+                },
             ],
             validators: {
                 company: [
@@ -304,6 +325,8 @@ export namespace ApiFacility {
                 isPublic: [
                 ],
                 name: [
+                ],
+                translations: [
                 ],
             }
         }
@@ -349,6 +372,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //     }
