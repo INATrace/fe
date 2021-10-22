@@ -1189,6 +1189,7 @@
     "productLabel.sideTitle.qrLabels": "QR labels",
     "productLabel.sideTitle.knowledgeBlog": "Knowledge blog",
     "productLabel.sideTitle.stakeholders": "Stakeholders",
+    "productLabel.sideTitle.finalProducts": "Final products",
     "productLabel.sideTitle.farmers": "Farmers",
     "productLabel.sideTitle.collectors": "Collectors",
     "productLabel.sideTitle.customers": "Customers",
@@ -2840,6 +2841,19 @@
     "userHome.customers.title": "My customers",
     "procEvidenceField.fieldName.label": "Field name",
     "procEvidenceField.fieldName.placeholder": "Enter field name",
-    "procEvidenceField.fieldName.error.required": "Field name is required"
+    "procEvidenceField.fieldName.error.required": "Field name is required",
+    "productLabelFinalProduct.title.finalProducts": "Final products",
+    "productLabelFinalProduct.subTitle.listOfFinalProducts": "List of final products",
+    "productLabelFinalProduct.subTitle.showingFinalProducts": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
+    "productLabelFinalProduct.sortOptions.name": "Name",
+    "productLabelFinalProduct.sortOptions.description": "Description",
+    "productLabelFinalProduct.sortOptions.unit.label": "Unit label",
+    "productLabelFinalProduct.sortOptions.actions": "Actions",
+    "productLabelFinalProduct.noFinalProducts": "No final products found",
+    "productLabelFinalProduct.message.warning.remove": "Are you sure you want to remove final product with name '{$FINAL_PRODUCT_NAME}'?",
+    "productLabelFinalProduct.modal.title.new": "Add new final product",
+    "productLabelFinalProduct.modal.title.update": "Edit final product",
+    "productLabelFinalProduct.modal.textInput.name": "Edit final product"
+
   }
 }

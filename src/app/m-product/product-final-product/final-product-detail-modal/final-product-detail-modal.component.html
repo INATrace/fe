@@ -1,0 +1,84 @@
+<div class="modal-container" style="max-width: 500px;">
+
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+        <button class="close"
+                type="button"
+                aria-label="Close"
+                (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <textinput
+                label="Name"
+                placeholder="Enter name"
+                i18n-label="@@semiProductDetail.textinput.name.label"
+                i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
+                style="width: 100%"
+                [form]="form.get('name')"
+                [isInvalid]="submitted && form.get('name').invalid">
+            <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.name.error">
+                        <span>
+                          Name is required
+                        </span>
+                    </div>
+                </div>
+            </ng-container>
+        </textinput>
+
+        <textinput
+                label="Description"
+                helpText="Enter short semi-product description."
+                i18n-label="@@semiProductDetail.textinput.description.label"
+                i18n-helpText="@@semiProductDetail.textinput.description.helpText"
+                style="width: 100%"
+                [form]="form.get('description')"
+                [textarea]="true"
+                [isInvalid]="submitted && form.get('description').invalid">
+            <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.description.error">
+                        <span>
+                          Description is required
+                        </span>
+                    </div>
+                </div>
+            </ng-container>
+        </textinput>
+
+        <single-choice
+                label="Measurement unit type"
+                i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
+                [formControlInput]="form.get('measurementUnitType')"
+                [codebookService]="activeMeasureUnitTypeService"
+                [isInvalidChoice]="submitted && form.get('measurementUnitType').invalid">
+            <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('measurementUnitType').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n="@@semiProductDetail.singleChoice.measurementUnit.error.requred">
+                        Measure unit is required
+                    </div>
+                </div>
+            </ng-container>
+        </single-choice>
+    </div>
+
+    <div class="modal-footer"
+         i18n="@@collectorDetail.modal.footer.buttons">
+        <button class="btn btn-outlined"
+                type="button"
+                data-dismiss="modal"
+                (click)="dismiss()">
+            <span>Cancel</span>
+        </button>
+        <button class="btn"
+                type="button"
+                (click)="save()">
+            <span>Save</span>
+        </button>
+    </div>
+
+</div>
