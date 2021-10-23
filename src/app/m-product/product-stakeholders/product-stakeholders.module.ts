@@ -14,7 +14,6 @@ import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { CompanyCardComponent } from './company-card/company-card.component';
-import { ProducersItemComponent } from './producers-item/producers-item.component';
 import { ProductLabelStakeholdersComponent } from './product-label-stakeholders/product-label-stakeholders.component';
 import { StakeholdersValueChainComponent } from './product-label-stakeholders/stakeholders-value-chain/stakeholders-value-chain.component';
 import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing.module';
@@ -24,11 +23,7 @@ import { ProductCommonModule } from '../product-common/product-common.module';
 declarations: [
     CompanyCardComponent,
     ProductLabelStakeholdersComponent,
-    ProducersItemComponent,
     StakeholdersValueChainComponent
-  ],
-  exports: [
-      ProducersItemComponent
   ],
   imports: [
     CommonModule,

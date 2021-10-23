@@ -7,7 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import {
   ApiUserCustomerCooperativeValidationScheme,
   ChainUserCustomerRoleValidationScheme
-} from '../../../company/company-collectors/company-collectors-details/validation';
+} from '../../company-collectors/company-collectors-details/validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
