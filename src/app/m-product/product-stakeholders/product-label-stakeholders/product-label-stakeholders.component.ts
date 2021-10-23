@@ -1,26 +1,19 @@
-import { Component, Host, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs/operators';
 import { ApiProductCompany } from 'src/api/model/apiProductCompany';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { FormControl } from '@angular/forms';
-import { getPath, dbKey } from 'src/shared/utils';
-import { ProductService } from 'src/api-chain/api/product.service';
 import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
-import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
-import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
-import { ApiProduct } from '../../../../api/model/apiProduct';
 
 @Component({
-  selector: 'app-product-label-stakeholders',
-  templateUrl: './product-label-stakeholders.component.html',
-  styleUrls: ['./product-label-stakeholders.component.scss']
+  template: ''
 })
 export class ProductLabelStakeholdersComponent implements OnInit {
   
@@ -38,10 +31,7 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     protected globalEventsManager: GlobalEventManagerService,
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
-    protected router: Router,
-    public chainOrganizationCodebook: OrganizationsCodebookService,
-    protected chainProductService: ProductService,
-    public chainUserCustomer: UserCustomerService
+    protected router: Router
   ) { }
 
   // TABS ////////////////
@@ -50,17 +40,12 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   selectedTab: Subscription;
 
   tabs = [
-    $localize`:@@productLabelStakeholders.tab0.title:Value chain`,
-    $localize`:@@productLabelStakeholders.tab1.title:Collectors`,
-    $localize`:@@productLabelStakeholders.tab2.title:Farmers`,
-    $localize`:@@productLabelStakeholders.tab3.title:Customers`];
+    $localize`:@@productLabelStakeholders.tab0.title:Value chain`
+  ];
 
   tabNames = [
-    'value-chain',
-    'collectors',
-    'farmers',
-    'customers'
-  ]
+    'value-chain'
+  ];
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null
@@ -239,27 +224,9 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     try {
       this.globalEventsManager.showLoading(true);
       this.currentProduct.associatedCompanies.push({ company: { id: cId }, type: cType });
-      let res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise()
+      const res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
-        let resChain = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-        if (resChain && 'OK' === resChain.status && resChain.data) {
-          let chainObj = resChain.data;
-
-          let organizationRoles = [];
-          if (this.currentProduct.associatedCompanies && this.currentProduct.associatedCompanies.length > 0) {
-            for (let com of this.currentProduct.associatedCompanies) {
-              let assocComp = {
-                companyId: com.company.id,
-                role: com.type
-              }
-              organizationRoles.push(assocComp);
-            }
-          }
-
-          chainObj['organizationRoles'] = organizationRoles;
-          let resPost = await this.chainProductService.postProduct(chainObj).pipe(take(1)).toPromise();
-        }
-        this.reload()
+        this.reload();
       }
     } catch (e) {
     } finally {
@@ -458,37 +425,19 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       options: { centered: true },
       dismissable: false
     });
-    if (result != "ok") return
+    if (result !== 'ok') return;
 
     try {
       this.globalEventsManager.showLoading(true);
       this.currentProduct.associatedCompanies = this.currentProduct.associatedCompanies.filter(c => c !== company);
-      let res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise()
+      const res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
-        let resChain = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise();
-        if (resChain && 'OK' === resChain.status && resChain.data) {
-          let chainObj = resChain.data;
-
-          let organizationRoles = [];
-          if (this.currentProduct.associatedCompanies && this.currentProduct.associatedCompanies.length > 0) {
-            for (let com of this.currentProduct.associatedCompanies) {
-              let assocComp = {
-                companyId: com.company.id,
-                role: com.type
-              }
-              organizationRoles.push(assocComp);
-            }
-          }
-          chainObj['organizationRoles'] = organizationRoles;
-          let resPost = await this.chainProductService.postProduct(chainObj).pipe(take(1)).toPromise();
-        }
         this.reload();
       }
     } catch (e) {
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-
   }
 
   async dialogEmptyOwner() {
@@ -500,23 +449,6 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       },
       dismissable: false
     });
-  }
-
-
-  async collectorDetail(type) {
-    // let resp = await this.chainUserCustomer.listUserCustomers().pipe(take(1)).toPromise();
-    // if(resp && resp.status === 'OK' && resp.data) {
-    //   let collectorId = resp.data.count +1;
-    //   this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
-    // }
-
-    this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new']);
-
-    // console.log(resp);
-    // let collectorId = 0;
-    // if (type === 'farmers') collectorId = this.allFarmers+1;
-    // else collectorId = this.allCollectors+1;
-    // this.router.navigate(['product-labels', this.productId, 'stakeholders', type, 'organization', this.organizationId, 'new', collectorId]);
   }
 
   customerDetail() {
