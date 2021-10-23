@@ -173,7 +173,7 @@
                         style="width: 100%"
                         placeholder="Enter quantity"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.quantityDelievered.placeholder"
-                        [isInvalid]="submitted && stockOrderForm.get('totalGrossQuantity').invalid">
+                        [isInvalid]="(submitted && stockOrderForm.get('totalGrossQuantity').invalid)">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="stockOrderForm.get('totalGrossQuantity').errors as errors" class="sc-invalid-feedback">
                       <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.quantityDelieveredInKG.textinput.quantityDelieveredInKG.error">
@@ -211,7 +211,7 @@
                     style="width: 100%"
                     placeholder="Enter tare"
                     i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.tare.placeholder"
-                    [isInvalid]="submitted && stockOrderForm.get('tare').invalid"
+                    [isInvalid]="(submitted && stockOrderForm.get('tare').invalid) || tareInvalidCheck"
                     [readOnly]="readonlyTare">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="stockOrderForm.get('tare').errors as errors" class="sc-invalid-feedback">
@@ -220,6 +220,11 @@
                       </div>
                     </div>
                   </ng-container>
+                  <div *ngIf="tareInvalidCheck" class="sc-invalid-feedback">
+                    <div i18n="@@productLabelStockPurchaseOrdersModal.textinput.tareGreaterThanQuantity.error">
+                      Tare value is larger than quantity value
+                    </div>
+                  </div>
                 </textinput>
               </div>
               <div class="af-c6">
@@ -229,7 +234,7 @@
                         style="width: 100%"
                         placeholder="Enter damaged price deduction"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder"
-                        [isInvalid]="submitted && stockOrderForm.get('damagedPriceDeduction').invalid"
+                        [isInvalid]="(submitted && stockOrderForm.get('damagedPriceDeduction').invalid) || damagedPriceDeductionInvalidCheck"
                         [readOnly]="readonlyDamagedPriceDeduction">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="stockOrderForm.get('damagedPriceDeduction').errors as errors" class="sc-invalid-feedback">
@@ -238,6 +243,11 @@
                       </div>
                     </div>
                   </ng-container>
+                  <div *ngIf="damagedPriceDeductionInvalidCheck" class="sc-invalid-feedback">
+                    <div i18n="@@productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanPrice.error">
+                      Damaged price deduction is larger than price per unit
+                    </div>
+                  </div>
                 </textinput>
               </div>
             </div>
