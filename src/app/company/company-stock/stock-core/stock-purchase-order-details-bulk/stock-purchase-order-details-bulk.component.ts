@@ -347,8 +347,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
     // call for adding new bulk purchase
     // Set the identifier if we are creating new purchase order
+
+    await this.setIdentifiers();
+
     this.farmersFormArray.controls.forEach((nextFormGroup, index) => {
-      this.setIdentifier(index);
 
       this.setToBePaid(index);
 
@@ -672,15 +674,18 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return (idx > 0) || (idx === 0 && this.farmersFormArray.length > 1);
   }
 
-  private async setIdentifier(idx: number) {
+  private async setIdentifiers() {
 
-    const farmerResponse = await this.companyControllerService
-        .getUserCustomerUsingGET(this.farmersFormArray.at(idx).get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
+    await Promise.all(this.farmersFormArray.controls.map(async (control) => {
+        const farmerResponse = await this.companyControllerService
+          .getUserCustomerUsingGET(control.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
 
-    if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
-      const identifier = 'PT-' + farmerResponse.data.surname + '-' + this.purchaseOrderBulkForm.get('productionDate').value;
-      this.farmersFormArray.at(idx).get('identifier').setValue(identifier);
-    }
+        if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
+          const identifier = 'PT-' + farmerResponse.data.surname + '-' + this.purchaseOrderBulkForm.get('productionDate').value;
+          control.get('identifier').setValue(identifier);
+        }
+    }));
+
   }
 
   private translateName(obj) {
