@@ -151,6 +151,10 @@ export interface ApiStockOrder {
      */
     tare?: number;
     /**
+     * Total gross quantity
+     */
+    totalGrossQuantity?: number;
+    /**
      * Total quantity
      */
     totalQuantity?: number;
@@ -290,6 +294,10 @@ export namespace ApiStockOrder {
          * Tare
          */
         tare = 'tare',
+        /**
+         * Total gross quantity
+         */
+        totalGrossQuantity = 'totalGrossQuantity',
         /**
          * Total quantity
          */
@@ -783,6 +791,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'totalGrossQuantity',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'totalQuantity',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -903,6 +922,8 @@ export namespace ApiStockOrder {
                 semiProduct: [
                 ],
                 tare: [
+                ],
+                totalGrossQuantity: [
                 ],
                 totalQuantity: [
                 ],
@@ -1034,6 +1055,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               tare: {
+  //                   validators: []
+  //               },
+  //               totalGrossQuantity: {
   //                   validators: []
   //               },
   //               totalQuantity: {

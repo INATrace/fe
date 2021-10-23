@@ -3,6 +3,7 @@ import { GlobalEventManagerService } from '../../../../core/global-event-manager
 import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { take } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
@@ -15,6 +16,8 @@ import { FacilitySemiProductsCodebookService } from '../../../../shared-services
 import { map, startWith } from 'rxjs/operators';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -114,7 +117,9 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
-    private codebookTranslations: CodebookTranslations
+    private commonCsvControllerService: CommonCsvControllerService,
+    private codebookTranslations: CodebookTranslations,
+    private fileSaverService: FileSaverService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -160,6 +165,27 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     }
 
     this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
+  }
+
+  newPurchaseOrderBulk() {
+
+    if (!this.facilityForStockOrderForm.value) {
+      const title = $localize`:@@productLabelStock.purchase.warning.title:Missing facility`;
+      const message = $localize`:@@productLabelStock.purchase.warning.message:Please select facility before continuing`;
+      this.showWarning(title, message);
+      return;
+    }
+
+    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new-bulk']).then();
+  }
+
+  async generatePurchasesCsv(){
+
+    const res = await this.commonCsvControllerService.generatePurchasesByCompanyCsvUsingPOST(this.companyId)
+      .pipe(take(1))
+      .toPromise();
+
+    this.fileSaverService.save(res, 'purchases.csv');
   }
 
   onShowPO(event) {

@@ -11,21 +11,6 @@
                 <div class="af-form-block--c6">
                     <h2 i18n="@@productLabelStockFacilityModal.section.basicInfo">Basic information</h2>
                     <div class="af-form-element">
-                        <textinput
-                            [form]="form.get('name')"
-                            label="Facility name"
-                            style="width: 100%"
-                            placeholder="Enter facility name"
-                            i18n-label="@@productLabelStockFacilityModal.textinput.name.label"
-                            i18n-placeholder="@@productLabelStockFacilityModal.textinput.name.placeholder"
-                            [isInvalid]="submitted && form.get('name').invalid">
-                            <ng-container *ngIf="submitted && form.get('name').errors && form.get('name').errors.required">
-                                <div class="sc-invalid-feedback">
-                                    Facility name is required
-                                </div>
-                            </ng-container>
-                        </textinput>
-
                         <single-choice
                             label="Facility type"
                             i18n-label="@@productLabelStockFacilityModal.facilityType.label"
@@ -38,6 +23,77 @@
                                 </div>
                             </ng-container>
                         </single-choice>
+                    </div>
+                </div>
+            </div>
+
+            <div class="af-form-row">
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@companyDetailProcessingActions.section1.translations">Translations</h2>
+                    <div class="af-form-element">
+
+                        <small i18n="@@companyDetailProcessingActions.hint.translations">
+                            Specify name in English and add translations for all used languages.
+                        </small>
+
+                        <div class="spacer-title-section"></div>
+
+                        <div class="af-row">
+                            <div class="af-c12">
+                                <div class="d-flex af-translation-language">
+                                    <div (click)="selectLanguage(languageEnum.EN)"
+                                         [ngClass]="selectedLanguage === 'EN'
+                                            ? 'af-translation-language--selected'
+                                            : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
+                                                ? 'af-translation-language--error'
+                                                : '')">
+                                        <img src="../../../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
+                                        <span>EN</span>
+                                    </div>
+                                    <div (click)="selectLanguage(languageEnum.DE)"
+                                         [ngClass]="selectedLanguage === 'DE' ? 'af-translation-language--selected' : ''">
+                                        <img src="../../../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+                                        <span>DE</span>
+                                    </div>
+                                    <div (click)="selectLanguage(languageEnum.RW)"
+                                         [ngClass]="selectedLanguage === 'RW' ? 'af-translation-language--selected' : ''">
+                                        <img src="../../../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+                                        <span>RW</span>
+                                    </div>
+                                    <div (click)="selectLanguage(languageEnum.ES)"
+                                         [ngClass]="selectedLanguage === 'ES' ? 'af-translation-language--selected' : ''">
+                                        <img src="../../../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
+                                        <span>ES</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="spacer-title-section"></div>
+
+                        <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
+                            <ng-container *ngIf="translation.value.language === selectedLanguage">
+                                <textinput
+                                        label="Name of process"
+                                        placeholder="Enter name"
+                                        i18n-label="@@companyDetailProcessingActions.textInput.name.label"
+                                        i18n-placeholder="@@companyDetailProcessingActions.textInput.name.helpText"
+                                        [form]="this.form.get('translations.' + i + '.name')"
+                                        [isInvalid]="translation.value.language === 'EN' && submitted && !this.form.get('translations.' + i + '.name').value"
+                                        style="width: 100%">
+                                    <ng-container *ngIf="submitted && translation.value.language === 'EN' && !this.form.get('translations.' + i + '.name').value">
+                                        <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required"
+                                                 i18n-label="@@companyDetailProcessingActions.textInput.name.error">
+                                                <span>
+                                                  Name of process is required
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </textinput>
+                            </ng-container>
+                        </ng-container>
                     </div>
                 </div>
             </div>
