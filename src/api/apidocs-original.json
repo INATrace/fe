@@ -188,6 +188,320 @@
         "summary": "Get a single action type with the provided ID."
       }
     },
+    "/api/chain/csv/payments/company/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Preferred way of payment",
+            "in": "query",
+            "name": "preferredWayOfPayment",
+            "required": false,
+            "schema": {
+              "enum": [
+                "CASH",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "CHEQUE",
+                "OFFSETTING",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Payment status",
+            "in": "query",
+            "name": "paymentStatus",
+            "required": false,
+            "schema": {
+              "enum": [
+                "UNCONFIRMED",
+                "CONFIRMED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by farmer name",
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "common-csv-controller"
+        ],
+        "operationId": "generatePaymentsByCompanyCsvUsingPOST",
+        "summary": "Generate a csv file with a list of filtered payments by companyId."
+      }
+    },
+    "/api/chain/csv/purchases/company/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Preferred way of payment",
+            "in": "query",
+            "name": "preferredWayOfPayment",
+            "required": false,
+            "schema": {
+              "enum": [
+                "CASH",
+                "CASH_VIA_COLLECTOR",
+                "BANK_TRANSFER",
+                "CHEQUE",
+                "OFFSETTING",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Search by farmer name",
+            "in": "query",
+            "name": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "common-csv-controller"
+        ],
+        "operationId": "generatePurchasesByCompanyCsvUsingPOST",
+        "summary": "Generate a csv file with a list of filtered purchases by companyId."
+      }
+    },
     "/api/chain/currency-type/list": {
       "get": {
         "parameters": [
@@ -844,12 +1158,18 @@
       "get": {
         "parameters": [
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -945,12 +1265,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1056,12 +1382,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1167,12 +1499,18 @@
             }
           },
           {
-            "description": "Language",
-            "in": "query",
+            "description": "language",
+            "in": "header",
             "name": "language",
             "required": false,
             "schema": {
               "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
               "type": "string"
             }
           },
@@ -1297,6 +1635,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1329,6 +1683,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3122,6 +3492,24 @@
     },
     "/api/chain/processing-order": {
       "put": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3212,6 +3600,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3275,6 +3679,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3340,6 +3760,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3571,6 +4007,38 @@
         "summary": "Create or update stock order. If the ID is provided, then the entity with the provided ID is updated."
       }
     },
+    "/api/chain/stock-order/bulk-purchase": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPurchaseOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "createPurchaseOrderBulkUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiPurchaseOrder"
+              }
+            }
+          },
+          "description": "apiPurchaseOrder",
+          "required": true
+        },
+        "summary": "Creates a list of purchase orders."
+      }
+    },
     "/api/chain/stock-order/list": {
       "get": {
         "parameters": [
@@ -3628,6 +4096,22 @@
               "enum": [
                 "ASC",
                 "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
               ],
               "type": "string"
             }
@@ -3840,6 +4324,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4023,6 +4523,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4133,6 +4649,22 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4242,6 +4774,22 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -4373,6 +4921,22 @@
               "format": "date-time",
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -4436,6 +5000,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -7390,6 +7970,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -7660,7 +8256,7 @@
           "product-controller"
         ],
         "operationId": "deleteFinalProductUsingDELETE",
-        "summary": "Deletes a final product"
+        "summary": "Delete a final product"
       },
       "get": {
         "parameters": [
@@ -8947,9 +9543,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8959,16 +9558,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8978,16 +9580,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -8997,16 +9602,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -9016,16 +9624,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -9035,16 +9646,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -9054,16 +9668,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -9073,8 +9690,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -13655,6 +14272,149 @@
         },
         "type": "object"
       },
+      "ApiPurchaseOrder": {
+        "properties": {
+          "activityProofs": {
+            "description": "Activity proofs",
+            "items": {
+              "$ref": "#/components/schemas/ApiActivityProof"
+            },
+            "type": "array"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has created PurchaseOrder"
+          },
+          "creatorId": {
+            "description": "ID of the user who has created the stock order",
+            "format": "int64",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Currency",
+            "type": "string"
+          },
+          "deliveryTime": {
+            "description": "Delivery date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "facility": {
+            "$ref": "#/components/schemas/ApiFacility",
+            "description": "Facility"
+          },
+          "farmers": {
+            "items": {
+              "$ref": "#/components/schemas/ApiPurchaseOrderFarmer"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "preferredWayOfPayment": {
+            "description": "Preferred way of payment",
+            "enum": [
+              "CASH",
+              "CASH_VIA_COLLECTOR",
+              "BANK_TRANSFER",
+              "CHEQUE",
+              "OFFSETTING",
+              "UNKNOWN"
+            ],
+            "type": "string"
+          },
+          "productionDate": {
+            "description": "Production date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "representativeOfProducerUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Representative of producer user customer. E.g. collector."
+          },
+          "updateTimestamp": {
+            "description": "Timestamp indicates when purchase order have been updated",
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "User that has last updated PurchaseOrder"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPurchaseOrderFarmer": {
+        "properties": {
+          "availableQuantity": {
+            "description": "Available quantity",
+            "type": "number"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "number"
+          },
+          "cost": {
+            "description": "Cost",
+            "type": "number"
+          },
+          "damagedPriceDeduction": {
+            "description": "Damaged price deduction",
+            "type": "number"
+          },
+          "fulfilledQuantity": {
+            "description": "Fulfilled quantity",
+            "type": "number"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "identifier": {
+            "description": "Purchase order identifier",
+            "type": "string"
+          },
+          "organic": {
+            "description": "Organic",
+            "example": false,
+            "type": "boolean"
+          },
+          "pricePerUnit": {
+            "description": "Price per unit",
+            "type": "number"
+          },
+          "producerUserCustomer": {
+            "$ref": "#/components/schemas/ApiUserCustomer",
+            "description": "Id of the person who has produced the entry."
+          },
+          "semiProduct": {
+            "$ref": "#/components/schemas/ApiSemiProduct",
+            "description": "Semi product"
+          },
+          "tare": {
+            "description": "Tare",
+            "type": "number"
+          },
+          "totalGrossQuantity": {
+            "description": "Total gross quantity",
+            "type": "number"
+          },
+          "totalQuantity": {
+            "description": "Total quantity",
+            "type": "number"
+          },
+          "womenShare": {
+            "description": "Women only",
+            "example": false,
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
       "ApiResetPasswordRequest": {
         "properties": {
           "password": {
@@ -14833,6 +15593,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiPurchaseOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPurchaseOrder",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiSemiProduct_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -15356,8 +16159,7 @@
           },
           "availableQuantity": {
             "description": "Available quantity",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           },
           "balance": {
             "description": "Balance",
@@ -15407,8 +16209,7 @@
           },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           },
           "id": {
             "description": "Entity id",
@@ -15534,10 +16335,13 @@
             "description": "Tare",
             "type": "number"
           },
+          "totalGrossQuantity": {
+            "description": "Total gross quantity",
+            "type": "number"
+          },
           "totalQuantity": {
             "description": "Total quantity",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           },
           "updateTimestamp": {
             "description": "Timestamp indicates when stock order have been updated",
@@ -15724,8 +16528,7 @@
           },
           "inputQuantity": {
             "description": "Input quantity",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           },
           "isProcessing": {
             "description": "Is order of type processing",
@@ -15738,8 +16541,7 @@
           },
           "outputQuantity": {
             "description": "Output quantity",
-            "format": "int32",
-            "type": "integer"
+            "type": "number"
           },
           "pricePerUnit": {
             "type": "number"
@@ -16454,6 +17256,10 @@
     {
       "description": "Action Type Controller",
       "name": "action-type-controller"
+    },
+    {
+      "description": "Common Csv Controller",
+      "name": "common-csv-controller"
     }
   ]
 }
