@@ -2859,7 +2859,7 @@
     "companyDetail.farmers.import.button": "Import",
     "companyDetail.farmers.uploadSpreadsheet.label": "Upload an excel spreadsheet of farmers (xls, xlsx)",
     "companyDetail.farmers.uploadSpreadsheet.error": "Upload only file types XLS or XLSX.",
-    "companyDetail.farmers.import.success.label": "Farmers successfully imported. Please check the data on Company > Farmers tab"
+    "companyDetail.farmers.import.success.label": "Farmers successfully imported. Please check the data on Company > Farmers tab",
     "productLabelFinalProduct.title.finalProducts": "Final products",
     "productLabelFinalProduct.subTitle.listOfFinalProducts": "List of final products",
     "productLabelFinalProduct.subTitle.showingFinalProducts": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
