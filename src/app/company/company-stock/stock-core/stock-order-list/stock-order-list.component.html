@@ -18,12 +18,12 @@
           <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{ order.orderType | formatStockOrderType }}</td>
           <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
           <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
-          <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity }} {{ order.measureUnitType.label }}</td>
+          <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity | number : '1.0-2' }} {{ order.measureUnitType.label }}</td>
           <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">
-            {{ order.totalQuantity }} / {{ order.fulfilledQuantity ? order.fulfilledQuantity : 0 }} / {{ order.availableQuantity ? order.availableQuantity : 0 }}
+            {{ order.totalQuantity ? (order.totalQuantity | number : '1.0-2') : 0 }} / {{ order.fulfilledQuantity ? (order.fulfilledQuantity | number : '1.0-2') : 0 }} / {{ order.availableQuantity ? (order.availableQuantity | number : '1.0-2') : 0 }}
           </td>
           <td *ngIf="!sortOptions[8].hide" [attr.data-label]="sortOptions[8].name">{{ order.measureUnitType?.label }}</td>
-          <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost }} / {{ order.balance }}</td>
+          <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost | number : '1.0-2' }} / {{ order.balance | number : '1.0-2' }}</td>
           <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name">{{ formatDate(order.deliveryTime) }}</td>
           <td *ngIf="!sortOptions[11].hide" [attr.data-label]="sortOptions[11].name">{{ order.updateTimestamp | date: 'yyyy-MM-dd hh:mm' }}</td>
           <td *ngIf="!sortOptions[12].hide" [attr.data-label]="sortOptions[12].name">{{ order.isAvailable | formatAvailability }}</td>
@@ -97,7 +97,7 @@
       <tbody>
         <tr *ngFor="let order of aggregatedOrders">
           <td>{{order.semiProduct}}:</td>
-          <td>{{order.amount}} {{order.unit}}</td>
+          <td>{{order.amount ? (order.amount | number : '1.0-2') : 0 }} {{order.unit}}</td>
         </tr>
       </tbody>
     </table>

@@ -13,7 +13,7 @@
                     </checkbox-input>
                 </td>
                 <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>{{ readablePaymentPurpose(payment.paymentPurposeType) }}</span></td>
-                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ payment.amountPaidToTheFarmer }} {{ payment.currency }}</span></td>
+                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ payment.amountPaidToTheFarmer  | number : '1.0-2' }} {{ payment.currency }}</span></td>
                 <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name"><span>{{ payment.recipientUserCustomer ? payment.recipientUserCustomer.name + ' ' + payment.recipientUserCustomer.surname   : '' }}</span></td>
                 <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name"><span>{{ payment.recipientCompany ? payment.recipientCompany.name : '' }}</span></td>
                 <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name"><span>{{ formatDate(payment.productionDate) }}</span></td>
@@ -66,7 +66,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{aggregatedTotalPaid}}</td>
+                    <td>{{aggregatedTotalPaid | number : '1.0-2' }}</td>
                 </tr>
             </tbody>
         </table>
