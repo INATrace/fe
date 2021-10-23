@@ -88,7 +88,7 @@ export interface ApiPayment {
     /**
      * Receipt number
      */
-    receiptNumber?: number;
+    receiptNumber?: string;
     recipientCompany?: ApiCompanyBase;
     recipientCompanyCustomer?: ApiCompanyCustomer;
     /**
@@ -466,7 +466,7 @@ export namespace ApiPayment {
                     required: false,
                     name: 'receiptNumber',
                     classname: 'ApiPayment',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

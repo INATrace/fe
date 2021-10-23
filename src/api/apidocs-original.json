@@ -13114,8 +13114,7 @@
           },
           "receiptNumber": {
             "description": "Receipt number",
-            "format": "int64",
-            "type": "integer"
+            "type": "string"
           },
           "recipientCompany": {
             "$ref": "#/components/schemas/ApiCompanyBase",
