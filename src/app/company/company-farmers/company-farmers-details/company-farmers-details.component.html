@@ -325,36 +325,6 @@
                     </div>
                 </div>
 
-                <ng-container *ngIf="this.update">
-                    <div class="af-form-block--c6">
-                        <h2 i18n="@@collectorDetail.section.balance">Farmer balance</h2>
-                        <div class="af-form-element">
-                            <textinput
-                                    [form]="openBalanceForm"
-                                    label="Open balance (RWF)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.openBalance.label"
-                                    [readOnly]="true">
-                            </textinput>
-
-                            <textinput
-                                    [form]="totalPaidFarmerForm"
-                                    label="Total paid to farmer (RWF)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.totalPaidToFarmer.label"
-                                    [readOnly]="true">
-                            </textinput>
-
-                            <textinput
-                                    [form]="totalBroughtFarmerForm"
-                                    label="Total brought from farmer (kg)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.kgBrought.label"
-                                    [readOnly]="true">
-                            </textinput>
-                        </div>
-                    </div>
-                </ng-container>
             </div>
 
             <div class="af-form-row" *ngIf="this.update">
