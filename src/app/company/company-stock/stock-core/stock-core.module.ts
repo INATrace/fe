@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
 import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-details-bulk/stock-purchase-order-details-bulk.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-d
     StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
-    AdditionalProofItemComponent
+    AdditionalProofItemComponent,
+    OrderHistoryComponent
   ],
   imports: [
     CommonModule,

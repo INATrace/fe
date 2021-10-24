@@ -348,30 +348,26 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
       switch (order.orderType as StockOrderType) {
         case 'PURCHASE_ORDER':
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'purchase-order', 'update', dbKey(order)]);
+          this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
           return;
         case 'GENERAL_ORDER':
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'shipment-order', dbKey(order)]);
+          this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
           return;
         case 'PROCESSING_ORDER':
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'processing-order', dbKey(order)]);
-          return;
-        case 'SALES_ORDER':
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'sales-order', 'update', dbKey(order)]);
+          this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.id]).then();
           return;
         case 'TRANSFER_ORDER':
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'transfer-order', dbKey(order)]);
+          this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.id]).then();
           return;
 
         default:
-          // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'purchase-order', 'update', dbKey(order)]);
-          break;
+          throw new Error('Unsupported Stock order type');
       }
     }
   }
 
   history(item: ApiStockOrder) {
-    this.router.navigate(['stock-orders', 'stock-order', item.id, 'view'],
+    this.router.navigate(['orders', 'stock-order', item.id, 'view'],
       { relativeTo: this.route.parent.parent, queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 
@@ -380,7 +376,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   farmerProfile(id) {
-    this.router.navigate(['my-farmers', 'update', id],
+    this.router.navigate(['my-farmers', 'edit', id],
       { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 

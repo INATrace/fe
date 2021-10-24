@@ -13,6 +13,7 @@ import {
   StockOrderControllerService
 } from '../../../../api/api/stockOrderController.service';
 import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quote-order-list',
@@ -63,6 +64,7 @@ export class QuoteOrderListComponent implements OnInit {
   cbCheckedAll = new FormControl(false);
 
   constructor(
+    private router: Router,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderController: StockOrderControllerService
   ) { }
@@ -93,6 +95,15 @@ export class QuoteOrderListComponent implements OnInit {
   showPagination() {
     return ((this.showedOrders - this.pageSize) === 0 && this.allOrders >= this.pageSize) || this.page > 1;
   }
+
+  edit(order: ApiStockOrder) {
+    this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
+  }
+
+  history(item: ApiStockOrder) {
+    this.router.navigate(['my-stock', 'orders', 'stock-order', item.id, 'view'],
+      { queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
+   }
 
   private async initializeSortOptions() {
 
