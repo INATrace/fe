@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { ApiCompanyGetValidationScheme } from '../../../company-detail/validatio
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ProcessingActionType } from '../../../../../shared/types';
-import { CompanySellingFacilitiesForSemiProductService } from '../../../../shared-services/company-selling-facilities-for-semi-product.service';
+import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
 import {
   GetAvailableStockForSemiProductInFacilityUsingGET,
@@ -88,7 +88,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   inputFacilityFromUrl: ApiFacility = null;
   currentInputFacility: ApiFacility = null;
   inputFacilityForm = new FormControl(null, Validators.required);
-  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | CompanySellingFacilitiesForSemiProductService;
+  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | AvailableSellingFacilitiesForCompany;
 
   // Output facility
   outputFacilityForm = new FormControl(null, Validators.required);
@@ -859,12 +859,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       if (resInSP && resInSP.status === 'OK') {
         this.currentInputSemiProduct = resInSP.data;
       }
-
-      // In case we have TRANSFER order, there is not output semi-product defined because
-      // it's the same as the input (we don't make any processing in this case)
-      if (this.actionType === 'TRANSFER') {
-        this.currentOutputSemiProductNameForm.setValue(this.currentInputSemiProduct.name);
-      }
     }
 
     if (event.outputSemiProduct && event.outputSemiProduct.id) {
@@ -986,6 +980,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.clearOutputFacilityForm();
       return;
     }
+
     if (event) {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
@@ -1259,15 +1254,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private clearInput() {
     this.clearCBAndValues();
     this.clearInputFacilityForm();
-    // this.inputFacilitiesCodebook = new ActiveFacilitiesForOrganizationAndSemiProductIdStandaloneService(this.chainFacilityService,
-    // this.organizationId, 'EMPTY', this.codebookTranslations);
   }
 
   private clearOutput() {
     this.clearOutputFacilityForm();
     this.clearOutputForm();
-    // this.outputFacilitiesCodebook = new ActiveFacilitiesForOrganizationAndSemiProductIdStandaloneService(this.chainFacilityService,
-    // this.organizationId, 'EMPTY', this.codebookTranslations);
   }
 
   private calcInputQuantity(setValue) {
@@ -1311,17 +1302,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // If we have defined input semi-product, set input facility
     if (this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id) {
       if (this.actionType === 'SHIPMENT') {
+
+        // If we have shipment action (quote processing action), get the selling facilities that the current company can order from
         this.inputFacilitiesCodebook =
-          new CompanySellingFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+          new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
-      }
-
-      // If we have TRANSFER and SHIPMENT processing action we don't have defined output
-      // semi-product (use the input semi-product to filter output facilities)
-      if (this.actionType === 'TRANSFER' || this.actionType === 'SHIPMENT') {
-        this.outputFacilitiesCodebook =
           new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
       }
     }
