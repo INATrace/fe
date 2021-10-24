@@ -27,6 +27,8 @@ import { ListEditorManager } from '../../../shared/list-editor/list-editor-manag
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import { CollectorDetailModalComponent } from '../../../m-product/product-stakeholders/collector-detail-modal/collector-detail-modal.component';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import {BehaviorSubject} from 'rxjs';
+import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -75,6 +77,14 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   codebookStatus = EnumSifrant.fromObject(this.roles);
+
+  farmerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
+
+  // purchase table parameters
+  showedPurchaseOrders = 0;
+  allPurchaseOrders = 0;
+  selectedOrders: ApiStockOrder[];
+  //
 
   sortOptionsPay = [
     {
@@ -386,6 +396,19 @@ export class CompanyFarmersDetailsComponent implements OnInit {
       return message + ` (${unit})`;
     }
     return message;
+  }
+
+  selectedIdsChanged(event, type?) {
+    if (type === 'PURCHASE') { this.selectedOrders = event; }
+
+  }
+
+  onShowPO(event) {
+    this.showedPurchaseOrders = event;
+  }
+
+  onCountAllPO(event) {
+    this.allPurchaseOrders = event;
   }
 
 }

@@ -360,48 +360,19 @@
             <div class="af-form-row" *ngIf="this.update">
                 <div class="af-form-block--c12">
                     <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
-                    <div class="af-form-element">
-                        <ng-container *ngIf="purchaseOrders">
-                            <div class="d-flex justify-content-end">
-                                <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
-                                    <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@collectorDetail.filter.openBalanceOnly.filter">Open balance
-                                        <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
-                                            <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
-                                            </fa-icon>
-                                        </div>
-                                    </div>
-
-                                    <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@collectorDetail.filter.placeholder">
-                                        <div class="button-icon">
-                                            <span class="button-icon-shape button-icon-shape--filter"></span>
-                                        </div>
-                                        <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
-                                    </button>
-
-                                    <div class="dropdown-menu" ngbDropdownMenu>
-                                        <button *ngIf="!openBalanceOnly" ngbDropdownItem (click)="setOpenBalanceOnly(true)" i18n="@@collectorDetail.filter.openBalanceOnly.button">Open balance</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <table *ngIf="purchaseOrders && purchaseOrders.length> 0" class="af-table af-checkbox--small">
-                                <thead>
-                                <tr scope="col" result-sorter [sortOptions]="sortOptionsPO" (sortByKey)="changeSort($event)"></tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let order of purchaseOrders; index as i">
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[0].name"><span>{{formatDate(order.productionDate)}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[1].name"><span>{{order.identifier}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[2].name"><span>{{order.totalQuantity}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[3].name"><span>{{order.cost}} / {{order.balance}}</span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div *ngIf="purchaseOrders && purchaseOrders.length == 0" class="no-list-results" i18n="@@collectorDetail.noPurchaseOrders">
-                                No orders found
-                            </div>
-                        </ng-container>
-                    </div>
+                    <ng-container *ngIf="purchaseOrders">
+                        <div class="counting-page content-element--counting"
+                             i18n="@@productLabelStock.subTitle.showingPurchaseOrders">
+                            Showing {{ showedPurchaseOrders }}/{{ allPurchaseOrders }}</div>
+                        <app-stock-order-list
+                          (countAll)="onCountAllPO($event)"
+                          (showing)="onShowPO($event)"
+                          [selectedOrders]="selectedOrders"
+                          (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+                          [companyId]="companyId"
+                          [farmerIdPing$]="farmerIdPing$">
+                        </app-stock-order-list>
+                    </ng-container>
                 </div>
             </div>
 
