@@ -18,7 +18,6 @@ import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-d
 @NgModule({
   declarations: [
     StockCoreTabComponent,
-    StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent
@@ -32,12 +31,10 @@ import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-d
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbPaginationModule,
     NgSelectModule,
     DragDropModule
   ],
   exports: [
-    StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent

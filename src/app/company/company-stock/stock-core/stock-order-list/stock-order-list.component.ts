@@ -53,6 +53,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   companyId: number = null;
 
   @Input()
+  farmerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
 
   @Input()
@@ -129,6 +132,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.paging$,
       this.sortingParams$,
       this.facilityId$,
+      this.farmerIdPing$,
       this.openBalanceOnly$,
       this.purchaseOrderOnly$,
       this.availableOnly$,
@@ -143,6 +147,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
              page,
              sorting,
              facilityId,
+             farmerId,
              isOpenBalanceOnly,
              isPurchaseOrderOnly,
              availableOnly,
@@ -156,6 +161,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           limit: this.pageSize,
           ...sorting,
           facilityId,
+          farmerId,
           isOpenBalanceOnly,
           isPurchaseOrderOnly,
           availableOnly,
