@@ -13,34 +13,17 @@ import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
-import { CollectorDetailModalComponent } from './collector-detail-modal/collector-detail-modal.component';
 import { CompanyCardComponent } from './company-card/company-card.component';
-import { CustomerDetailModalComponent } from './customer-detail-modal/customer-detail-modal.component';
-import { ProducersItemComponent } from './producers-item/producers-item.component';
-import { ProductLabelStakeholdersCustomersComponent } from './product-label-stakeholders-customers/product-label-stakeholders-customers.component';
 import { ProductLabelStakeholdersComponent } from './product-label-stakeholders/product-label-stakeholders.component';
-import { StakeholdersCollectorsComponent } from './product-label-stakeholders/stakeholders-collectors/stakeholders-collectors.component';
-import { StakeholdersCustomersComponent } from './product-label-stakeholders/stakeholders-customers/stakeholders-customers.component';
-import { StakeholdersFarmersComponent } from './product-label-stakeholders/stakeholders-farmers/stakeholders-farmers.component';
 import { StakeholdersValueChainComponent } from './product-label-stakeholders/stakeholders-value-chain/stakeholders-value-chain.component';
 import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing.module';
 import { ProductCommonModule } from '../product-common/product-common.module';
 
 @NgModule({
 declarations: [
-    CollectorDetailModalComponent,
     CompanyCardComponent,
-    CustomerDetailModalComponent,
     ProductLabelStakeholdersComponent,
-    ProductLabelStakeholdersCustomersComponent,
-    ProducersItemComponent,
-    StakeholdersCollectorsComponent,
-    StakeholdersCustomersComponent,
-    StakeholdersFarmersComponent,
     StakeholdersValueChainComponent
-  ],
-  exports: [
-      ProducersItemComponent
   ],
   imports: [
     CommonModule,

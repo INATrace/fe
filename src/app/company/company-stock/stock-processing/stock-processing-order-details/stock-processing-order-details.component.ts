@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +7,12 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import {
+  dateAtMidnightISOString,
+  defaultEmptyObject,
+  deleteNullFields,
+  generateFormFromMetadata
+} from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -15,7 +20,7 @@ import { ApiCompanyGetValidationScheme } from '../../../company-detail/validatio
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ProcessingActionType } from '../../../../../shared/types';
-import { CompanySellingFacilitiesForSemiProductService } from '../../../../shared-services/company-selling-facilities-for-semi-product.service';
+import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
 import {
   GetAvailableStockForSemiProductInFacilityUsingGET,
@@ -32,7 +37,6 @@ import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder'
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
-import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
 import { Location } from '@angular/common';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import _ from 'lodash-es';
@@ -47,6 +51,7 @@ import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
 import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
+import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -77,6 +82,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   submitted = false;
   update = false;
 
+  // Holds the current company profile which executes the processing action
+  companyProfile: ApiCompanyGet;
+
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
 
@@ -88,7 +96,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   inputFacilityFromUrl: ApiFacility = null;
   currentInputFacility: ApiFacility = null;
   inputFacilityForm = new FormControl(null, Validators.required);
-  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | CompanySellingFacilitiesForSemiProductService;
+  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | AvailableSellingFacilitiesForCompany;
 
   // Output facility
   outputFacilityForm = new FormControl(null, Validators.required);
@@ -260,7 +268,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputStockOrders() {
     if (this.update) {
-      if (this.actionType === 'SHIPMENT' && this.outputStockOrderForm) { return this.outputStockOrderForm.get('inputOrders').value; }
       return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
     return [];
@@ -288,7 +295,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get productOrderId() {
     const form = this.outputStockOrderForm.get('productOrder');
     if (form && form.value) {
-      const val = form.value as ChainProductOrder;
+      const val = form.value as ApiProductOrder;
       return val.id;
     }
     return null;
@@ -546,7 +553,42 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.update = true;
       const actionType = this.route.snapshot.data.type;
 
-      // TODO: initialize data for update proc. action
+      const orderId = this.route.snapshot.params.orderId as string;
+      if (!orderId) { throw Error('No order id!'); }
+
+      // TODO: get the stock order from backend
+      // try {
+      //   this.globalEventsManager.showLoading(true);
+      //   resp = await this.chainStockOrderService.getStockOrderByIdWithInputOrders(orderId).pipe(take(1)).toPromise();
+      // } catch (e) {
+      //   throw e;
+      // } finally {
+      //   this.globalEventsManager.showLoading(false);
+      // }
+
+      // Handle the update initialization for Quote orders
+      if (actionType === 'SHIPMENT') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
+
+        // TODO: quote update
+      }
+
+      // Handle the update initialization for Processing orders
+      if (actionType === 'PROCESSING') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
+
+        // TODO: processing update
+      }
+
+      // Handle the update initialization for Transfer orders
+      if (actionType === 'TRANSFER') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+
+        // TODO: transfer update
+      }
 
     } else {
       throw Error('Wrong action.');
@@ -664,7 +706,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
       requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
-      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues()
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
+      otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -722,7 +765,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               availableQuantity: outputStockOrder.totalQuantity,
               productionDate: new Date(),
               sacNumber: outputStockOrder.sacNumber,
-              currency: this.outputStockOrderForm.get('pricePerUnit').value ? 'RWF' : null,
+              currency: this.outputStockOrderForm.get('pricePerUnit').value ? this.companyProfile.currency.code : null,
               orderType: OrderTypeEnum.PROCESSINGORDER
             };
 
@@ -755,7 +798,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
           productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
-          currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? 'RWF' : null)
+          quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
+          currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? this.companyProfile.currency.code : null)
         };
 
         deleteNullFields(newStockOrder);
@@ -858,12 +902,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const resInSP = await this.semiProductsController.getSemiProductUsingGET(event.inputSemiProduct.id).pipe(take(1)).toPromise();
       if (resInSP && resInSP.status === 'OK') {
         this.currentInputSemiProduct = resInSP.data;
-      }
-
-      // In case we have TRANSFER order, there is not output semi-product defined because
-      // it's the same as the input (we don't make any processing in this case)
-      if (this.actionType === 'TRANSFER') {
-        this.currentOutputSemiProductNameForm.setValue(this.currentInputSemiProduct.name);
       }
     }
 
@@ -986,6 +1024,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.clearOutputFacilityForm();
       return;
     }
+
     if (event) {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
@@ -1015,6 +1054,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private async generateCompanyDetailForm() {
     const res = await this.companyController.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
     if (res && 'OK' === res.status && res.data) {
+      this.companyProfile = res.data;
       this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), res.data, ApiCompanyGetValidationScheme);
     }
   }
@@ -1259,15 +1299,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private clearInput() {
     this.clearCBAndValues();
     this.clearInputFacilityForm();
-    // this.inputFacilitiesCodebook = new ActiveFacilitiesForOrganizationAndSemiProductIdStandaloneService(this.chainFacilityService,
-    // this.organizationId, 'EMPTY', this.codebookTranslations);
   }
 
   private clearOutput() {
     this.clearOutputFacilityForm();
     this.clearOutputForm();
-    // this.outputFacilitiesCodebook = new ActiveFacilitiesForOrganizationAndSemiProductIdStandaloneService(this.chainFacilityService,
-    // this.organizationId, 'EMPTY', this.codebookTranslations);
   }
 
   private calcInputQuantity(setValue) {
@@ -1311,17 +1347,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // If we have defined input semi-product, set input facility
     if (this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id) {
       if (this.actionType === 'SHIPMENT') {
+
+        // If we have shipment action (quote processing action), get the selling facilities that the current company can order from
         this.inputFacilitiesCodebook =
-          new CompanySellingFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+          new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
-      }
-
-      // If we have TRANSFER and SHIPMENT processing action we don't have defined output
-      // semi-product (use the input semi-product to filter output facilities)
-      if (this.actionType === 'TRANSFER' || this.actionType === 'SHIPMENT') {
-        this.outputFacilitiesCodebook =
           new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
       }
     }

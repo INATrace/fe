@@ -10,7 +10,7 @@ import { defaultEmptyObject, formatDateWithDots, generateFormFromMetadata } from
 import {
   ApiUserCustomerCooperativeValidationScheme,
   ApiUserCustomerValidationScheme
-} from '../../../m-product/product-stakeholders/collector-detail-modal/validation';
+} from './validation';
 import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
 import { ApiFarmInformation } from '../../../../api/model/apiFarmInformation';
 import { ApiLocation } from '../../../../api/model/apiLocation';
@@ -25,7 +25,6 @@ import { StockOrderService } from '../../../../api-chain/api/stockOrder.service'
 import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
-import { CollectorDetailModalComponent } from '../../../m-product/product-stakeholders/collector-detail-modal/collector-detail-modal.component';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 
 @Component({
@@ -154,6 +153,19 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       private chainPaymentsService: PaymentsService,
       public theme: ThemeService
   ) { }
+
+  static ApiUserCustomerCooperativeCreateEmptyObject(): ApiUserCustomerCooperative {
+    const obj: ApiUserCustomerCooperative = defaultEmptyObject(ApiUserCustomerCooperative.formMetadata());
+    obj.company = defaultEmptyObject(ApiCompany.formMetadata());
+    return obj;
+  }
+
+  static ApiUserCustomerCooperativeEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CompanyCollectorsDetailsComponent.ApiUserCustomerCooperativeCreateEmptyObject(),
+        ApiUserCustomerCooperativeValidationScheme.validators);
+    };
+  }
 
   ngOnInit(): void {
     this.initData().then(() => {
@@ -299,8 +311,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   initializeListManager() {
     this.producersListManager = new ListEditorManager<ApiUserCustomerCooperative>(
         this.collectorForm.get('cooperatives') as FormArray,
-
-        CollectorDetailModalComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(),
+        CompanyCollectorsDetailsComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(),
         ApiUserCustomerCooperativeValidationScheme
     );
   }

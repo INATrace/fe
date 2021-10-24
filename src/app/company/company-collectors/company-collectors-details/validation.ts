@@ -8,8 +8,7 @@ import { BankAccountInfo } from 'src/api-chain/model/bankAccountInfo';
 import { FarmInfo } from 'src/api-chain/model/farmInfo';
 import { ContactInfo } from 'src/api-chain/model/contactInfo';
 import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
-import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
-import { ApiCompanyValidationScheme } from '../../product-label/validation';
+import { ApiCompanyValidationScheme } from '../../../m-product/product-label/validation';
 
 export const ChainLocationValidationScheme = {
   forceExpand: true,

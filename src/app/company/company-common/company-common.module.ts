@@ -4,10 +4,12 @@ import { CompanyLeftPanelComponent } from './company-left-panel/company-left-pan
 import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProducersItemComponent } from './producers-item/producers-item.component';
 
 @NgModule({
   declarations: [
-    CompanyLeftPanelComponent
+    CompanyLeftPanelComponent,
+    ProducersItemComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   exports: [
-    CompanyLeftPanelComponent
+    CompanyLeftPanelComponent,
+    ProducersItemComponent
   ]
 })
 export class CompanyCommonModule { }

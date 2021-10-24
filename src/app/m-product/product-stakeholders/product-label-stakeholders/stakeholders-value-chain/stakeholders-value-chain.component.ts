@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/api-chain/api/product.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
@@ -11,22 +11,24 @@ import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
 @Component({
   selector: 'app-stakeholders-value-chain',
   templateUrl: './stakeholders-value-chain.component.html',
-  styleUrls: ['../product-label-stakeholders.component.scss']
+  styleUrls: ['./stakeholders-value-chain.component.scss']
 })
-export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent {
+export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent implements OnInit {
 
-  rootTab = 0
+  rootTab = 0;
 
   constructor(
     protected productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
-    protected router: Router,
-    public chainOrganizationCodebook: OrganizationsCodebookService,
-    protected chainProductService: ProductService,
-    public chainUserCustomer: UserCustomerService
+    protected router: Router
   ) {
-    super(productController, globalEventsManager, modalService, route, router, chainOrganizationCodebook, chainProductService, chainUserCustomer)
+    super(productController, globalEventsManager, modalService, route, router);
   }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
 }

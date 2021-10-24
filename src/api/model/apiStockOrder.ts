@@ -23,6 +23,7 @@ import { ApiCompany } from './apiCompany';
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiProductOrder } from './apiProductOrder';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderEvidenceFieldValue } from './apiStockOrderEvidenceFieldValue';
 import { ApiStockOrderEvidenceTypeValue } from './apiStockOrderEvidenceTypeValue';
@@ -94,10 +95,6 @@ export interface ApiStockOrder {
      * Is stock available
      */
     isAvailable?: boolean;
-    /**
-     * Is order of type PURCHASE_ORDER
-     */
-    isPurchaseOrder?: boolean;
     measureUnitType?: ApiMeasureUnitType;
     openOrder?: boolean;
     /**
@@ -125,12 +122,14 @@ export interface ApiStockOrder {
      */
     pricePerUnit?: number;
     producerUserCustomer?: ApiUserCustomer;
+    productOrder?: ApiProductOrder;
     /**
      * Production date
      */
     productionDate?: Date;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
+    quoteCompany?: ApiCompany;
     quoteFacility?: ApiFacility;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
@@ -238,10 +237,6 @@ export namespace ApiStockOrder {
          * Is stock available
          */
         isAvailable = 'isAvailable',
-        /**
-         * Is order of type PURCHASE_ORDER
-         */
-        isPurchaseOrder = 'isPurchaseOrder',
         measureUnitType = 'measureUnitType',
         openOrder = 'openOrder',
         /**
@@ -269,12 +264,14 @@ export namespace ApiStockOrder {
          */
         pricePerUnit = 'pricePerUnit',
         producerUserCustomer = 'producerUserCustomer',
+        productOrder = 'productOrder',
         /**
          * Production date
          */
         productionDate = 'productionDate',
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
+        quoteCompany = 'quoteCompany',
         quoteFacility = 'quoteFacility',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         /**
@@ -557,17 +554,6 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isPurchaseOrder',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -672,6 +658,18 @@ export namespace ApiStockOrder {
                     complexType: 'ApiUserCustomer'
                 },
                 {
+                    metadata: ApiProductOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productOrder',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiProductOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProductOrder'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -704,6 +702,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'quoteCompany',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
                 },
                 {
                     metadata: ApiFacility.formMetadata,
@@ -883,8 +893,6 @@ export namespace ApiStockOrder {
                 ],
                 isAvailable: [
                 ],
-                isPurchaseOrder: [
-                ],
                 measureUnitType: [
                 ],
                 openOrder: [
@@ -903,11 +911,15 @@ export namespace ApiStockOrder {
                 ],
                 producerUserCustomer: [
                 ],
+                productOrder: [
+                ],
                 productionDate: [
                 ],
                 productionLocation: [
                 ],
                 purchaseOrder: [
+                ],
+                quoteCompany: [
                 ],
                 quoteFacility: [
                 ],
@@ -997,9 +1009,6 @@ export namespace ApiStockOrder {
   //               isAvailable: {
   //                   validators: []
   //               },
-  //               isPurchaseOrder: {
-  //                   validators: []
-  //               },
   //               measureUnitType: {
   //                   validators: []
   //               },
@@ -1027,6 +1036,9 @@ export namespace ApiStockOrder {
   //               producerUserCustomer: {
   //                   validators: []
   //               },
+  //               productOrder: {
+  //                   validators: []
+  //               },
   //               productionDate: {
   //                   validators: []
   //               },
@@ -1034,6 +1046,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               purchaseOrder: {
+  //                   validators: []
+  //               },
+  //               quoteCompany: {
   //                   validators: []
   //               },
   //               quoteFacility: {

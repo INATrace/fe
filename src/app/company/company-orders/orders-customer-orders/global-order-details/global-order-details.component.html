@@ -96,10 +96,22 @@
           <div class="af-row">
             <div class="af-c12">
               <checkbox-input
-                      [form]="form.get('requiredwomensOnly')"
+                      [form]="form.get('requiredWomensOnly')"
                       style="margin-bottom: 1rem; margin-top: -1rem;">
                 <checkbox-input-rich-label>
                   <span i18n="@@globalOrderEdit.checkbox.womensCoffee.label">Women's only</span>
+                </checkbox-input-rich-label>
+              </checkbox-input>
+            </div>
+          </div>
+
+          <div class="af-row">
+            <div class="af-c12">
+              <checkbox-input
+                      [form]="form.get('requiredOrganic')"
+                      style="margin-bottom: 1rem; margin-top: -1rem;">
+                <checkbox-input-rich-label>
+                  <span i18n="@@globalOrderEdit.checkbox.requiredOrganic.label">Organic only</span>
                 </checkbox-input-rich-label>
               </checkbox-input>
             </div>
@@ -120,6 +132,45 @@
                   </div>
                 </ng-container>
               </app-datepicker>
+            </div>
+          </div>
+
+          <div class="af-row" *ngIf="outputFacilityId">
+            <div class="af-c12">
+              <list-editor *ngIf="stockOrdersListManager"
+                           label="List of order items"
+                           [listEditorManager]="stockOrdersListManager"
+                           addText="Add order item"
+                           [canAdd]="true"
+                           i18n-label="@@globalOrderEdit.list-editor.orderItems.label"
+                           i18n-addText="@@globalOrderEdit.list-editor.orderItems.addText"
+                           [invalid]="submitted && form.get('items')?.invalid">
+                <list-editor-items>
+                  <div *ngFor="let item of orderItemsFormArray.controls; let i=index;">
+                    <app-product-order-item
+                            [title]="null"
+                            [outputFacilityId]="outputFacilityId"
+                            [formControlInput]="item"
+                            [globalOrderId]="form.get('id').value"
+                            [isOpen]="stockOrdersListManager.isOpen(i)"
+                            [listEditorManager]="this.stockOrdersListManager"
+                            [companyId]="companyId"
+                            [listEditorManagerPosition]="i">
+                    </app-product-order-item>
+                  </div>
+                </list-editor-items>
+                <list-editor-errors>
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('items').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.minLengthArray" i18n-title="@@globalOrderEdit.list-editor.stockOrders.error.oneItemRequired">
+                          <span>
+                            At least on item is required.
+                          </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </list-editor-errors>
+              </list-editor>
             </div>
           </div>
 

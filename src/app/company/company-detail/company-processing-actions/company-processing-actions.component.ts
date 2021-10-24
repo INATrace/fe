@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { ProcessingActionControllerService } from '../../../../api/api/processingActionController.service';
-import { take } from 'rxjs/operators';
 import { AuthService } from '../../../core/auth.service';
 
 @Component({
@@ -25,7 +23,6 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
       protected router: Router,
       protected route: ActivatedRoute,
       protected globalEventsManager: GlobalEventManagerService,
-      protected processingActionControllerService: ProcessingActionControllerService,
       protected authService: AuthService
   ) {
     super(router, route, authService);
@@ -34,23 +31,11 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
   ngOnInit(): void {
     super.ngOnInit();
     this.organizationId = +this.route.snapshot.paramMap.get('id');
-    this.setAllProcessingActions().then();
     this.prepared = true;
   }
 
   ngOnDestroy() {
     super.ngOnDestroy();
-  }
-
-  async setAllProcessingActions() {
-    const res = await this.processingActionControllerService
-        .listProcessingActionsByCompanyUsingGET(this.organizationId, 'EN', 'COUNT')
-        .pipe(take(1))
-        .toPromise();
-
-    if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
-      this.allProcessingActions = res.data.count;
-    }
   }
 
   async newProcessingAction() {
