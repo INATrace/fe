@@ -7,7 +7,12 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import {
+  dateAtMidnightISOString,
+  defaultEmptyObject,
+  deleteNullFields,
+  generateFormFromMetadata
+} from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -32,7 +37,6 @@ import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder'
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
-import { ChainProductOrder } from '../../../../../api-chain/model/chainProductOrder';
 import { Location } from '@angular/common';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import _ from 'lodash-es';
@@ -47,6 +51,7 @@ import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
 import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
+import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -76,6 +81,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   submitted = false;
   update = false;
+
+  // Holds the current company profile which executes the processing action
+  companyProfile: ApiCompanyGet;
 
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
@@ -288,7 +296,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get productOrderId() {
     const form = this.outputStockOrderForm.get('productOrder');
     if (form && form.value) {
-      const val = form.value as ChainProductOrder;
+      const val = form.value as ApiProductOrder;
       return val.id;
     }
     return null;
@@ -664,7 +672,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
       womenShare: this.womensOnlyForm.value === 'YES',
       requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
-      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues()
+      requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
+      otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
     };
 
     // In this case we only copy the input stock orders to the destination stock orders
@@ -722,7 +731,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               availableQuantity: outputStockOrder.totalQuantity,
               productionDate: new Date(),
               sacNumber: outputStockOrder.sacNumber,
-              currency: this.outputStockOrderForm.get('pricePerUnit').value ? 'RWF' : null,
+              currency: this.outputStockOrderForm.get('pricePerUnit').value ? this.companyProfile.currency.code : null,
               orderType: OrderTypeEnum.PROCESSINGORDER
             };
 
@@ -755,7 +764,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
           productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
-          currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? 'RWF' : null)
+          quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
+          currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? this.companyProfile.currency.code : null)
         };
 
         deleteNullFields(newStockOrder);
@@ -1010,6 +1020,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private async generateCompanyDetailForm() {
     const res = await this.companyController.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
     if (res && 'OK' === res.status && res.data) {
+      this.companyProfile = res.data;
       this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), res.data, ApiCompanyGetValidationScheme);
     }
   }
