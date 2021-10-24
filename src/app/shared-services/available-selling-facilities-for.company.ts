@@ -25,7 +25,7 @@ export class AvailableSellingFacilitiesForCompany extends GeneralSifrantService<
   }
 
   textRepresentation(el: ApiFacility): string {
-    return `${el.name}`;
+    return `${el.name} (${el.company.name})`;
   }
 
   identifier(el: ApiFacility) {
