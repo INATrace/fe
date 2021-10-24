@@ -268,7 +268,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputStockOrders() {
     if (this.update) {
-      if (this.actionType === 'SHIPMENT' && this.outputStockOrderForm) { return this.outputStockOrderForm.get('inputOrders').value; }
       return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
     return [];
@@ -554,7 +553,42 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.update = true;
       const actionType = this.route.snapshot.data.type;
 
-      // TODO: initialize data for update proc. action
+      const orderId = this.route.snapshot.params.orderId as string;
+      if (!orderId) { throw Error('No order id!'); }
+
+      // TODO: get the stock order from backend
+      // try {
+      //   this.globalEventsManager.showLoading(true);
+      //   resp = await this.chainStockOrderService.getStockOrderByIdWithInputOrders(orderId).pipe(take(1)).toPromise();
+      // } catch (e) {
+      //   throw e;
+      // } finally {
+      //   this.globalEventsManager.showLoading(false);
+      // }
+
+      // Handle the update initialization for Quote orders
+      if (actionType === 'SHIPMENT') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
+
+        // TODO: quote update
+      }
+
+      // Handle the update initialization for Processing orders
+      if (actionType === 'PROCESSING') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
+
+        // TODO: processing update
+      }
+
+      // Handle the update initialization for Transfer orders
+      if (actionType === 'TRANSFER') {
+
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+
+        // TODO: transfer update
+      }
 
     } else {
       throw Error('Wrong action.');

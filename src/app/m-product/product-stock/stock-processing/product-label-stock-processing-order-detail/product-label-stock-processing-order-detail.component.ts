@@ -577,6 +577,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
     } else if (action === 'update') {
       this.update = true;
       const actionType = this.route.snapshot.data.type;
+
       if (actionType === 'SHIPMENT') {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
         const orderId = this.route.snapshot.params.orderId as string;
@@ -614,6 +615,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
           }
         }
       }
+
       if (actionType === 'PROCESSING') {  // FIX
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
         const orderId = this.route.snapshot.params.orderId as string;
@@ -643,6 +645,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
           }
         }
       }
+
       if (actionType === 'TRANSFER') {  // FIX
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
         const orderId = this.route.snapshot.params.orderId as string;
