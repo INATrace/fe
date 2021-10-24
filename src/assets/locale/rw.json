@@ -747,6 +747,7 @@
     "collectorDetail.textinput.email.label": "Imeri",
     "collectorDetail.textinput.email.placeholder": "Shyiramo e-mail",
     "collectorDetail.textinput.name.error": "Izina rirakenewe",
+    "collectorDetail.textinput.areaUnit.required.error": "Area unit is required",
     "productLabelStakeholders.button.newOwner": "{$START_TAG_SPAN}+ Ongeraho nyirayo{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.button.newAssociation": "{$START_TAG_SPAN}+ Ongeraho amashyirahamwe{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.modal.owner.title": "Ongeraho nyirayo",

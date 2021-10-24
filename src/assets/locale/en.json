@@ -1808,6 +1808,7 @@
     "collectorDetail.textinput.fertilizerDescription.helpText": "Enter fertilizer description.",
     "collectorDetail.textinput.additionalInfo.helpText": "Enter additional information.",
     "collectorDetail.textinput.name.error": "Name is required",
+    "collectorDetail.textinput.areaUnit.required.error": "Area unit is required",
     "collectorDetail.textinput.userCustomerId.label": "User ID",
     "collectorDetail.textinput.farmerCompanyInternalId.label": "Company internal farmer ID",
     "collectorDetail.textinput.farmerCompanyInternalId.placeholder": "Enter company internal farmer ID",

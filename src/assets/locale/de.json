@@ -747,6 +747,7 @@
     "collectorDetail.textinput.email.label": "Email",
     "collectorDetail.textinput.email.placeholder": "Emain-Adresse eingeben",
     "collectorDetail.textinput.name.error": "Name wir benötigt",
+    "collectorDetail.textinput.areaUnit.required.error": "Area unit is required",
     "productLabelStakeholders.button.newOwner": "{$START_TAG_SPAN}+ Eigentümer hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.button.newAssociation": "{$START_TAG_SPAN}+ Vereinigung hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.modal.owner.title": "Eigentümer*in hinzufügen",
