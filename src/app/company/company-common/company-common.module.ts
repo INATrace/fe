@@ -6,22 +6,27 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {StockOrderListComponent} from '../company-stock/stock-core/stock-order-list/stock-order-list.component';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {StockPaymentsListComponent} from '../company-stock/stock-payments/stock-payments-list/stock-payments-list.component';
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   declarations: [
     CompanyLeftPanelComponent,
-    StockOrderListComponent
+    StockOrderListComponent,
+    StockPaymentsListComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
+    ComponentsModule,
     FontAwesomeModule,
     NgbPaginationModule
   ],
   exports: [
     CompanyLeftPanelComponent,
-    StockOrderListComponent
+    StockOrderListComponent,
+    StockPaymentsListComponent
   ]
 })
 export class CompanyCommonModule { }
