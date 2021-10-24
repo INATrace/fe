@@ -49,6 +49,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   @Input()
   searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
+  @Input()
+  farmerIdPing$ = new BehaviorSubject<number>(null);
+
   @Output()
   showing = new EventEmitter<number>();
 
@@ -92,10 +95,11 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.paging$,
       this.sortingParams$,
       this.wayOfPaymentPing$,
+      this.farmerIdPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting, wayOfPayment, deliveryDates, query]) => {
+        map(([ping, page, sorting, wayOfPayment, farmerId, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
@@ -103,7 +107,8 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
             preferredWayOfPayment: wayOfPayment,
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
-            query: query ? query : null
+            query: query ? query : null,
+            farmerId
           };
         }),
         tap(() => this.globalEventManager.showLoading(true)),
