@@ -483,7 +483,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   private cannotUpdatePO() {
     this.prepareData();
     return (this.stockOrderForm.invalid || this.searchFarmers.invalid ||
-      this.employeeForm.invalid || !this.modelChoice || this.searchWomenCoffeeForm.invalid);
+      this.employeeForm.invalid || !this.modelChoice || this.searchWomenCoffeeForm.invalid ||
+      this.tareInvalidCheck || this.damagedPriceDeductionInvalidCheck);
   }
 
   onSelectedType(type: StockOrderType) {
@@ -570,8 +571,16 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         netWeight -= this.stockOrderForm.get('tare').value;
       }
 
+      if (netWeight < 0) {
+        netWeight = 0.00;
+      }
+
       if (this.stockOrderForm.get('damagedPriceDeduction').value) {
         finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
+      }
+
+      if (finalPrice < 0) {
+        finalPrice = 0.00;
       }
 
       this.stockOrderForm.get('cost').setValue(Number(netWeight * finalPrice).toFixed(2));
@@ -638,7 +647,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   netWeight() {
     if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value) {
       if (this.stockOrderForm.get('tare').value) {
-        this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
+        if (this.stockOrderForm.get('totalGrossQuantity').value > this.stockOrderForm.get('tare').value) {
+          this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
+        } else {
+          this.netWeightForm.setValue(Number(0).toFixed(2));
+        }
       } else {
         this.netWeightForm.setValue(this.stockOrderForm.get('totalGrossQuantity').value);
       }
@@ -653,6 +666,11 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       if (this.stockOrderForm.get('damagedPriceDeduction').value) {
         finalPrice -= this.stockOrderForm.get('damagedPriceDeduction').value;
       }
+
+      if (finalPrice < 0) {
+        finalPrice = 0.00;
+      }
+
       this.finalPriceForm.setValue(Number(finalPrice).toFixed(2));
     } else {
       this.finalPriceForm.setValue(null);
@@ -690,6 +708,18 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.searchWomenCoffeeForm.updateValueAndValidity();
   }
 
+  get tareInvalidCheck() {
+      const tare: number = Number(this.stockOrderForm.get('tare').value).valueOf();
+      const totalGrossQuantity: number = Number(this.stockOrderForm.get('totalGrossQuantity').value).valueOf();
+      return tare && totalGrossQuantity && (tare > totalGrossQuantity);
+  }
+
+  get damagedPriceDeductionInvalidCheck() {
+    const damagedPriceDeduction: number = Number(this.stockOrderForm.get('damagedPriceDeduction').value).valueOf();
+    const pricePerUnit: number = Number(this.stockOrderForm.get('pricePerUnit').value).valueOf();
+    return damagedPriceDeduction && pricePerUnit && (damagedPriceDeduction > pricePerUnit);
+  }
+
   private setQuantities() {
 
     if (this.stockOrderForm.get('totalGrossQuantity').valid) {
@@ -698,6 +728,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
       if (this.stockOrderForm.get('tare').value) {
         quantity -= this.stockOrderForm.get('tare').value;
+      }
+
+      if (quantity < 0) {
+        quantity = 0.00;
       }
 
       let form = this.stockOrderForm.get('totalQuantity');

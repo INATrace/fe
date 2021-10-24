@@ -388,12 +388,35 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   }
 
   private cannotUpdatePO() {
-    return (this.purchaseOrderBulkForm.invalid || this.employeeForm.invalid || this.checkWomenOnlyForm());
+    return (this.purchaseOrderBulkForm.invalid || this.employeeForm.invalid || this.checkWomenOnlyForm() ||
+      this.checkAllTareInvalid()) || this.checkAllDamagedPriceDeductionInvalid();
   }
 
   private checkWomenOnlyForm(): boolean {
     const invalidExist = this.searchWomenCoffeeForm.find(control => control.invalid);
     return invalidExist !== undefined;
+  }
+
+  private checkAllTareInvalid(): boolean {
+    const invalidExist = this.farmersFormArray.controls.find((control, index) => this.tareInvalidCheck(index));
+    return invalidExist !== undefined;
+  }
+
+  tareInvalidCheck(idx: number) {
+    const tare: number = Number(this.farmersFormArray.at(idx).get('tare').value).valueOf();
+    const totalGrossQuantity: number = Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value).valueOf();
+    return tare && totalGrossQuantity && (tare > totalGrossQuantity);
+  }
+
+  private checkAllDamagedPriceDeductionInvalid(): boolean {
+    const invalidExist = this.farmersFormArray.controls.find((control, index) => this.damagedPriceDeductionInvalidCheck(index));
+    return invalidExist !== undefined;
+  }
+
+  damagedPriceDeductionInvalidCheck(idx: number) {
+    const damagedPriceDeduction: number = Number(this.farmersFormArray.at(idx).get('damagedPriceDeduction').value).valueOf();
+    const pricePerUnit: number = Number(this.farmersFormArray.at(idx).get('pricePerUnit').value).valueOf();
+    return damagedPriceDeduction && pricePerUnit && (damagedPriceDeduction > pricePerUnit);
   }
 
   setFarmer(event: ApiUserCustomer, idx: number) {
@@ -455,8 +478,16 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
         netWeight -= this.farmersFormArray.at(idx).get('tare').value;
       }
 
+      if (netWeight < 0) {
+        netWeight = 0.00;
+      }
+
       if (this.farmersFormArray.at(idx).get('damagedPriceDeduction').value) {
         finalPrice -= this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
+      }
+
+      if (finalPrice < 0) {
+        finalPrice = 0.00;
       }
 
       this.farmersFormArray.at(idx).get('cost').setValue(Number(netWeight * finalPrice).toFixed(2));
@@ -522,7 +553,11 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   netWeight(idx: number) {
     if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalGrossQuantity').value) {
       if (this.farmersFormArray.at(idx).get('tare').value) {
-        this.netWeightFormArray[idx].setValue(Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value - this.farmersFormArray.at(idx).get('tare').value).toFixed(2));
+        if (Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value) > Number(this.farmersFormArray.at(idx).get('tare').value)){
+          this.netWeightFormArray[idx].setValue(Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value - this.farmersFormArray.at(idx).get('tare').value).toFixed(2));
+        } else {
+          this.netWeightFormArray[idx].setValue(Number(0).toFixed(2));
+        }
       } else {
         this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalGrossQuantity').value);
       }
@@ -537,6 +572,11 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
       if (this.farmersFormArray.at(idx).get('damagedPriceDeduction').value) {
         finalPrice -= this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
       }
+
+      if (finalPrice < 0) {
+        finalPrice = 0.00;
+      }
+
       this.finalPriceFormArray[idx].setValue(Number(finalPrice).toFixed(2));
     } else {
       this.finalPriceFormArray[idx].setValue(null);
@@ -598,6 +638,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
         if (nextFormGroup.get('tare').value) {
           quantity -= nextFormGroup.get('tare').value;
+        }
+
+        if (quantity < 0) {
+          quantity = 0.00;
         }
 
         let form = nextFormGroup.get('totalQuantity');

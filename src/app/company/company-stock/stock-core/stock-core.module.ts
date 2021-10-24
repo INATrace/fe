@@ -19,7 +19,6 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 @NgModule({
   declarations: [
     StockCoreTabComponent,
-    StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent,
@@ -34,12 +33,10 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbPaginationModule,
     NgSelectModule,
     DragDropModule
   ],
   exports: [
-    StockOrderListComponent,
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent

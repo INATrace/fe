@@ -378,9 +378,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get invalidOutputQuantityTooLargeValue() {
-    const inputQuantity: number = Number(this.form.get('outputQuantity').value).valueOf();
-    const outputQuantity: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf();
-    return inputQuantity && outputQuantity && (outputQuantity > inputQuantity);
+    const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.apiMeasureUnitType.weight;
+    const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.apiMeasureUnitType.weight;
+    return inputQuantityInKg && outputQuantityInKg && (outputQuantityInKg > inputQuantityInKg);
   }
 
   get invalidOutputQuantityForShipment() {

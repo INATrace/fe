@@ -2473,6 +2473,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "Search by farmer id",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -13135,8 +13145,7 @@
           },
           "receiptNumber": {
             "description": "Receipt number",
-            "format": "int64",
-            "type": "integer"
+            "type": "string"
           },
           "recipientCompany": {
             "$ref": "#/components/schemas/ApiCompanyBase",

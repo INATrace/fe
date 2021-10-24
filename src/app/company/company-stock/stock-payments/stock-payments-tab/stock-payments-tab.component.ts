@@ -14,6 +14,7 @@ import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
+import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -26,6 +27,9 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   showedPayments = 0;
   allPayments = 0;
+
+  // currency code
+  currency: string;
 
   reloadPaymentPingList$ = new BehaviorSubject<boolean>(false);
 
@@ -41,6 +45,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected authService: AuthService,
       protected companyController: CompanyControllerService,
       private paymentControllerService: PaymentControllerService,
+      private companyService: CompanyControllerService,
       private commonCsvControllerService: CommonCsvControllerService,
       private fileSaverService: FileSaverService
   ) {
@@ -49,6 +54,17 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   ngOnInit(): void {
     super.ngOnInit();
+
+    // additional call for reading company's currency
+    this.companyService.getCompanyUsingGET(this.companyId).pipe(
+      take(1)
+    )
+      .subscribe(response => {
+        if (response && response.status === ApiResponseApiCompanyGet.StatusEnum.OK && response.data) {
+          this.currency = response.data.currency.code;
+        }
+      });
+
   }
 
   async newPayment() {

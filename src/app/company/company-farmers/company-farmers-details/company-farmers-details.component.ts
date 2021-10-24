@@ -26,6 +26,8 @@ import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import {BehaviorSubject} from 'rxjs';
+import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -73,7 +75,21 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     return obj;
   }
 
+  // payments table parameters
+  showedPaymentOrders = 0;
+  allPaymentOrders = 0;
+  selectedPayments: ApiStockOrder[];
+  //
+
   codebookStatus = EnumSifrant.fromObject(this.roles);
+
+  farmerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
+
+  // purchase table parameters
+  showedPurchaseOrders = 0;
+  allPurchaseOrders = 0;
+  selectedOrders: ApiStockOrder[];
+  //
 
   sortOptionsPay = [
     {
@@ -397,6 +413,31 @@ export class CompanyFarmersDetailsComponent implements OnInit {
       return message + ` (${unit})`;
     }
     return message;
+  }
+
+  selectedIdsChanged(event, type?) {
+    if (type === 'PURCHASE') {
+      this.selectedOrders = event;
+    }
+    else {
+      this.selectedPayments = event;
+    }
+  }
+
+  onShowPO(event) {
+    this.showedPurchaseOrders = event;
+  }
+
+  onCountAllPO(event) {
+    this.allPurchaseOrders = event;
+  }
+
+  onShowPayments(event) {
+    this.showedPaymentOrders = event;
+  }
+
+  onCountAllPayments(event) {
+    this.allPaymentOrders = event;
   }
 
 }

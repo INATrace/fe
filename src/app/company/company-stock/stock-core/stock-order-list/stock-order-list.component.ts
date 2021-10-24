@@ -53,6 +53,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   companyId: number = null;
 
   @Input()
+  farmerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
 
   @Input()
@@ -129,6 +132,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.paging$,
       this.sortingParams$,
       this.facilityId$,
+      this.farmerIdPing$,
       this.openBalanceOnly$,
       this.purchaseOrderOnly$,
       this.availableOnly$,
@@ -143,6 +147,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
              page,
              sorting,
              facilityId,
+             farmerId,
              isOpenBalanceOnly,
              isPurchaseOrderOnly,
              availableOnly,
@@ -156,6 +161,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           limit: this.pageSize,
           ...sorting,
           facilityId,
+          farmerId,
           isOpenBalanceOnly,
           isPurchaseOrderOnly,
           availableOnly,
@@ -508,15 +514,18 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   
   aggregateOrderItems(items: ApiStockOrder[]): AggregatedStockItem[] {
     const aggregatedMap: Map<number, AggregatedStockItem> = items.reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
+
+      const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+
       if (acc.has(item.semiProduct.id)) {
         const prevElem = acc.get(item.semiProduct.id);
         acc.set(item.semiProduct.id, {
           ...prevElem,
-          amount: item.totalQuantity + prevElem.amount
+          amount: nextTotalQuantity + prevElem.amount
         });
       } else {
         acc.set(item.semiProduct.id, {
-          amount: item.totalQuantity,
+          amount: nextTotalQuantity,
           unit: item.measureUnitType.label,
           semiProduct: item.semiProduct.name
         });
