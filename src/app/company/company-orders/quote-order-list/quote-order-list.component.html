@@ -23,18 +23,18 @@
         <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name"><span>{{ order.updateTimestamp | date: 'yyyy-MM-dd hh:mm' }}</span></td>
         <td [attr.data-label]="sortOptions[11].name">
             <span>
-<!--              <a i18n="@@productLabelPurchaseOrder.tableCol.edit"-->
-<!--                 (click)="edit(order)"-->
-<!--                 class="company-action"-->
-<!--                 [class.enabled-action]="true">-->
-<!--                Edit-->
-<!--              </a>-->
-<!--              <a i18n="@@productLabelPurchaseOrder.tableCol.view"-->
-<!--                 (click)="history(order)"-->
-<!--                 class="company-action"-->
-<!--                 [class.enabled-action]="true">-->
-<!--                View-->
-<!--              </a>-->
+              <a i18n="@@productLabelPurchaseOrder.tableCol.edit"
+                 (click)="edit(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.view"
+                 (click)="history(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                View
+              </a>
 <!--              <a *ngIf="this.mode === 'CUSTOMER'"-->
 <!--                 i18n="@@productLabelPurchaseOrder.tableCol.approveRejectOrder"-->
 <!--                 (click)="approveReject(order)"-->

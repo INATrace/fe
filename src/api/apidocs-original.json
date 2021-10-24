@@ -1475,9 +1475,25 @@
         "summary": "Get a list of facilities by company ID."
       }
     },
-    "/api/chain/facility/list/selling/company/{id}": {
+    "/api/chain/facility/list/company/{id}/available-selling": {
       "get": {
         "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          },
           {
             "description": "Company ID",
             "in": "path",
@@ -1496,22 +1512,6 @@
             "schema": {
               "format": "int64",
               "type": "integer"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
             }
           },
           {
@@ -1588,8 +1588,8 @@
         "tags": [
           "facility-controller"
         ],
-        "operationId": "listSellingFacilitiesByCompanyUsingGET",
-        "summary": "Get a list of selling facilities by company ID."
+        "operationId": "listAvailableSellingFacilitiesForCompanyUsingGET",
+        "summary": "Get a list of public (selling) facilities that the provided company can see"
       }
     },
     "/api/chain/facility/{id}": {
@@ -16238,11 +16238,6 @@
             "example": false,
             "type": "boolean"
           },
-          "isPurchaseOrder": {
-            "description": "Is order of type PURCHASE_ORDER",
-            "example": false,
-            "type": "boolean"
-          },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"
@@ -16297,6 +16292,10 @@
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "Id of the person who has produced the entry."
           },
+          "productOrder": {
+            "$ref": "#/components/schemas/ApiProductOrder",
+            "description": "The produrct order that triggered creation of this stock order"
+          },
           "productionDate": {
             "description": "Production date",
             "format": "date-time",
@@ -16308,6 +16307,10 @@
           },
           "purchaseOrder": {
             "type": "boolean"
+          },
+          "quoteCompany": {
+            "$ref": "#/components/schemas/ApiCompany",
+            "description": "Quote company"
           },
           "quoteFacility": {
             "$ref": "#/components/schemas/ApiFacility",
