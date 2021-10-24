@@ -38,6 +38,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   companyId: number;
 
   @Input()
+  currency: string;
+
+  @Input()
   selectedPayments: ApiPayment[];
 
   @Input()

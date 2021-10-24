@@ -357,6 +357,7 @@
                           [companyId]="companyId"
                           [farmerIdPing$]="farmerIdPing$"
                           [selectedPayments]="selectedPayments"
+                          [currency]="company.currency.code"
                           (selectedPaymentsChanged)="selectedIdsChanged($event)"
                           (showing)="onShowPayments($event)"
                           (countAll)="onCountAllPayments($event)">
