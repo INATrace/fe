@@ -76,6 +76,12 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     return obj;
   }
 
+  // payments table parameters
+  showedPaymentOrders = 0;
+  allPaymentOrders = 0;
+  selectedPayments: ApiStockOrder[];
+  //
+
   codebookStatus = EnumSifrant.fromObject(this.roles);
 
   farmerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
@@ -399,8 +405,12 @@ export class CompanyFarmersDetailsComponent implements OnInit {
   }
 
   selectedIdsChanged(event, type?) {
-    if (type === 'PURCHASE') { this.selectedOrders = event; }
-
+    if (type === 'PURCHASE') {
+      this.selectedOrders = event;
+    }
+    else {
+      this.selectedPayments = event;
+    }
   }
 
   onShowPO(event) {
@@ -409,6 +419,14 @@ export class CompanyFarmersDetailsComponent implements OnInit {
 
   onCountAllPO(event) {
     this.allPurchaseOrders = event;
+  }
+
+  onShowPayments(event) {
+    this.showedPaymentOrders = event;
+  }
+
+  onCountAllPayments(event) {
+    this.allPaymentOrders = event;
   }
 
 }
