@@ -43,7 +43,8 @@
                   (onDelete)="deleteLabel($event)"
                   (onTitleChange)="toggleEditTitleMode()"
                   [currentLabelForm]="labelTitleForm"
-                  [changed]="changed">
+                  [changed]="changed"
+                  [editable]="canEdit()">
                 </app-label-selector>
 
                 <div class="d-flex flex-column flex-md-row align-items-start justify-content-between" *ngIf="currentLabel">
@@ -52,20 +53,20 @@
                     <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="viewLabel()" i18n="@@productLabel.labelActions.viewPage">
                       <fa-icon [icon]="faCompass" class="button-icon2"></fa-icon>View page (only label data are visible)
                     </div>
-                    <div class="tool-button" (click)="togglePublish()" [class.side-menu-item-disabled]="changed">
+                    <div class="tool-button" *ngIf="canEdit()" (click)="togglePublish()" [class.side-menu-item-disabled]="changed">
                       <fa-icon [icon]="faEye" class="button-icon2"></fa-icon>{{publishText}}
                     </div>
                   </div>
 
                   <div style="margin-right: -8px;">
 
-                    <div *ngIf="showBatches" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
+                    <div *ngIf="showBatches && canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
                       <fa-icon [icon]="faCodeBranch" class="button-icon2"></fa-icon>Batches
                     </div>
-                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
+                    <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
                       <fa-icon [icon]="faQrcode" class="button-icon2"></fa-icon>Feedback
                     </div>
-                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="statistics()" i18n="@@productLabel.labelActions.statistics">
+                    <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="statistics()" i18n="@@productLabel.labelActions.statistics">
                       <fa-icon [icon]="faSlidersH" class="button-icon2"></fa-icon>Statistics
                     </div>
                   </div>
