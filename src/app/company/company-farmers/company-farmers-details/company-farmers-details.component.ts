@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
@@ -15,7 +15,7 @@ import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
 import { ApiFarmInformation } from '../../../../api/model/apiFarmInformation';
 import { ApiLocation } from '../../../../api/model/apiLocation';
 import { ApiAddress } from '../../../../api/model/apiAddress';
-import { first, take } from 'rxjs/operators';
+import {debounceTime, delay, first, startWith, take} from 'rxjs/operators';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 import { ThemeService } from '../../../shared-services/theme.service';
 import { environment } from '../../../../environments/environment';
@@ -26,7 +26,7 @@ import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
 
 @Component({
@@ -34,9 +34,11 @@ import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
   templateUrl: './company-farmers-details.component.html',
   styleUrls: ['./company-farmers-details.component.scss']
 })
-export class CompanyFarmersDetailsComponent implements OnInit {
+export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
+
+  subscriptions: Subscription[] = [];
 
   title: string;
   update: boolean;
@@ -191,6 +193,7 @@ export class CompanyFarmersDetailsComponent implements OnInit {
         this.editFarmer();
       }
       this.initializeListManager();
+      this.initValueChangeListeners();
     });
   }
 
@@ -225,6 +228,45 @@ export class CompanyFarmersDetailsComponent implements OnInit {
 
     this.listOfOrgProducer();
     this.listOfOrgAssociation();
+  }
+
+  initValueChangeListeners() {
+    this.subscriptions.push(this.areaUnit.valueChanges.pipe(
+      startWith(null),
+      debounceTime(100)).subscribe(
+      val => {
+        if (val !== null && val !== undefined && val !== '') {
+          this.updateAreaUnitValidators();
+        }
+      }
+    ));
+    this.subscriptions.push(this.totalCultivatedArea.valueChanges.pipe(
+      startWith(null),
+      debounceTime(100)).subscribe(
+      val => {
+        if (val !== null && val !== undefined && val !== '') {
+          this.updateAreaUnitValidators();
+        }
+      }
+    ));
+    this.subscriptions.push(this.coffeeCultivatedArea.valueChanges.pipe(
+      startWith(null),
+      debounceTime(100)).subscribe(
+      val => {
+        if (val !== null && val !== undefined && val !== '') {
+          this.updateAreaUnitValidators();
+        }
+      }
+    ));
+    this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
+      startWith(null),
+      debounceTime(100)).subscribe(
+      val => {
+        if (val !== null && val !== undefined && val !== '') {
+          this.updateAreaUnitValidators();
+        }
+      }
+    ));
   }
 
   newFarmer() {
@@ -305,7 +347,15 @@ export class CompanyFarmersDetailsComponent implements OnInit {
 
   async save() {
     this.submitted = true;
-    if (this.farmerForm.invalid) { return; }
+
+    if (this.farmerForm.invalid) {
+      return;
+    }
+    if (this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired()){
+      this.updateAreaUnitValidators();
+      return;
+    }
+
     const data = this.prepareData();
 
     try {
@@ -404,8 +454,43 @@ export class CompanyFarmersDetailsComponent implements OnInit {
     this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
   }
 
+  updateAreaUnitValidators() {
+    this.areaUnit.clearValidators();
+    this.areaUnit.setValidators(
+      this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired() ?
+        [Validators.required] : []
+    );
+    this.farmerForm.markAllAsTouched();
+    this.farmerForm.updateValueAndValidity();
+  }
+
+  get checkAreaFieldInvalid() {
+    return this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired();
+  }
+
+  checkAreaFieldsRequired() {
+    return (!this.checkNullEmpty(this.totalCultivatedArea) ||
+      !this.checkNullEmpty(this.coffeeCultivatedArea) || !this.checkNullEmpty(this.areaOrganicCertified));
+  }
+
+  checkNullEmpty(control: FormControl){
+    return control.value === null || control.value === undefined || control.value === '';
+  }
+
   public get areaUnit(): FormControl {
     return this.farmerForm.get('farm.areaUnit') as FormControl;
+  }
+
+  public get totalCultivatedArea(): FormControl {
+    return this.farmerForm.get('farm.totalCultivatedArea') as FormControl;
+  }
+
+  public get coffeeCultivatedArea(): FormControl {
+    return this.farmerForm.get('farm.coffeeCultivatedArea') as FormControl;
+  }
+
+  public get areaOrganicCertified(): FormControl {
+    return this.farmerForm.get('farm.areaOrganicCertified') as FormControl;
   }
   
   appendAreaUnit(message: string, unit: string): string {
@@ -438,6 +523,10 @@ export class CompanyFarmersDetailsComponent implements OnInit {
 
   onCountAllPayments(event) {
     this.allPaymentOrders = event;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
 }
