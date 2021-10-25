@@ -137,7 +137,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       tap((data: ApiProduct) => {
         this.currentProduct = data;
 
-        this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === this.organizationId);
+        this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === Number(this.organizationId));
 
         this.buyers = [];
         this.importers = [];
