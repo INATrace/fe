@@ -877,6 +877,10 @@ export namespace GetStockOrderUsingGET {
        */
       id: number;
       /**
+       * Return the processing order base data
+       */
+      withProcessingOrder?: boolean;
+      /**
        * language
        */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
@@ -891,6 +895,10 @@ export namespace GetStockOrderUsingGET {
        */
       id = 'id',
       /**
+       * Return the processing order base data
+       */
+      withProcessingOrder = 'withProcessingOrder',
+      /**
        * language
        */
       language = 'language'
@@ -903,6 +911,8 @@ export namespace GetStockOrderUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      withProcessingOrder: [
       ],
       language: [
       ],
@@ -2044,6 +2054,7 @@ export class StockOrderControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderUsingGET(
       map.id,
+      map.withProcessingOrder,
       map.language,
       observe,
       reportProgress
@@ -2055,16 +2066,22 @@ export class StockOrderControllerService {
      * Get a single stock order with the provided ID.
      * 
      * @param id StockOrder ID
+     * @param withProcessingOrder Return the processing order base data
      * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getStockOrderUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withProcessingOrder !== undefined && withProcessingOrder !== null) {
+            queryParameters = queryParameters.set('withProcessingOrder', <any>withProcessingOrder);
         }
 
         let headers = this.defaultHeaders;
@@ -2093,6 +2110,7 @@ export class StockOrderControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

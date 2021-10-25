@@ -5025,6 +5025,15 @@
             }
           },
           {
+            "description": "Return the processing order base data",
+            "in": "query",
+            "name": "withProcessingOrder",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
