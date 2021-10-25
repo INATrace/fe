@@ -22,6 +22,9 @@ export class FinalProductListComponent implements OnInit, OnChanges {
   @Input()
   listReload: boolean;
 
+  @Input()
+  editable: boolean;
+
   @Output()
   showing = new EventEmitter<number>();
 
