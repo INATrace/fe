@@ -278,10 +278,10 @@
                             style="width: 100%"
                             placeholder="Enter area unit"
                             i18n-placeholder="@@collectorDetail.textinput.areaUnit.placeholder"
-                            [isInvalid]="submitted && farmerForm.get('farm.areaUnit').invalid">
-                            <ng-container *ngIf="submitted">
-                                <div *ngIf="farmerForm.get('farm.areaUnit').errors as errors" class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.areaUnit.error">
+                            [isInvalid]="checkAreaFieldInvalid">
+                            <ng-container>
+                                <div *ngIf="checkAreaFieldInvalid" class="sc-invalid-feedback">
+                                    <div i18n="@@collectorDetail.textinput.areaUnit.error">
                                         Area unit is required
                                     </div>
                                 </div>
