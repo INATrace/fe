@@ -1,4 +1,4 @@
-<div class="af-stakeholder" *ngIf="company?.company" (click)="selectItem(company)">
+<div class="af-stakeholder{{ editable ? '-owner' : '' }}" *ngIf="company?.company" (click)="selectItem(company)">
   <div class="af-stakeholder-section">
 
     <div class="af-stakeholder-aside">
