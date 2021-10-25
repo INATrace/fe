@@ -240,7 +240,7 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
 
-  product$ = combineLatest(this.reloadValueChainPing$, this.productId,
+  product$ = combineLatest(this.reloadValueChainPing$, of(this.productId),
     (ping: any, id: string) => {
       return ping && id != null ? Number(id) : null
     }
