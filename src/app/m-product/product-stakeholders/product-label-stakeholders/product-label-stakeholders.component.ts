@@ -489,6 +489,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
   }
 
-
+  editable() {
+    return this.isOwner;
+  }
 
 }
