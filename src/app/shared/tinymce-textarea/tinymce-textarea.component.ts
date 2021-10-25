@@ -8,41 +8,44 @@ import { FormControl, AbstractControl } from '@angular/forms';
 })
 export class TinymceTextareaComponent implements OnInit {
     @Input()
-    formControlInput: FormControl = null
+    formControlInput: FormControl = null;
 
     @Input()
-    label = null
+    label = null;
 
     @Input()
-    invalid = null
+    invalid = null;
 
     @Input()
-    maxLength = null
+    maxLength = null;
 
     @Input()
-    minLength = null
+    minLength = null;
 
     @Input()
-    counter = false
+    counter = false;
 
     @Input()
-    hideRequired = false
+    hideRequired = false;
+
+    @Input()
+    disabled = false;
 
     constructor() { }
-
-    ngOnInit() {
-    }
 
     init = {
         base_url: '/tinymce', // Root for resources
         suffix: '.min',       // Suffix to use when loading resources
-      plugins: 'lists advlist link',
+        plugins: 'lists advlist link',
         // selector: 'tinymce-textarea',  // change this value according to your HTML
-        content_style: "@import url('https://fonts.googleapis.com/css?family=Signika');.mce-content-body {font-size:1rem;font-family:Signika,Helvetica Neue,sans-serif;color:#495057}",
+        content_style: '@import url("https://fonts.googleapis.com/css?family=Signika");.mce-content-body {font-size:1rem;font-family:Signika,Helvetica Neue,sans-serif;color:#495057}',
         // content_css: "assets/skins/ui/oxide/content.min.css",
         // skin_url: 'assets/skins/ui/oxide',
         menubar: false,
-      toolbar: 'undo redo | bold italic | bullist numlist outdent indent | link'
+        toolbar: 'undo redo | bold italic | bullist numlist outdent indent | link'
+    };
+    
+    ngOnInit() {
     }
 
     isRequired() {
@@ -59,16 +62,16 @@ export class TinymceTextareaComponent implements OnInit {
     getValue() {
         return this.formControlInput
             ? this.formControlInput.value
-            : ''
+            : '';
     }
 
     getSteviloZnakov() {
-        let val = this.getValue()
+        const val = this.getValue();
         if (val) {
-            let strippedVal = val.replace( /(<([^>]+)>)/ig, '').replace(/&nbsp;/g, '')
-            return strippedVal.length
+            const strippedVal = val.replace( /(<([^>]+)>)/ig, '').replace(/&nbsp;/g, '');
+            return strippedVal.length;
         }
-        return 0
+        return 0;
     }
 
     getMaxLength() {
@@ -80,7 +83,7 @@ export class TinymceTextareaComponent implements OnInit {
     }
 
     tooManyCharacters() {
-        return (this.getMaxLength() && this.getSteviloZnakov() > this.getMaxLength()) || (this.getMinLength() && this.getSteviloZnakov() < this.getMinLength())
+        return (this.getMaxLength() && this.getSteviloZnakov() > this.getMaxLength()) || (this.getMinLength() && this.getSteviloZnakov() < this.getMinLength());
     }
 
 }
