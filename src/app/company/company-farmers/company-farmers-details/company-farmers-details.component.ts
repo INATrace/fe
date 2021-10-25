@@ -193,6 +193,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         this.editFarmer();
       }
       this.initializeListManager();
+      this.updateAreaUnitValidators();
       this.initValueChangeListeners();
     });
   }
@@ -235,7 +236,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
-        if (val !== null && val !== undefined && val !== '') {
+        if (val !== null && val !== undefined) {
           this.updateAreaUnitValidators();
         }
       }
@@ -244,7 +245,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
-        if (val !== null && val !== undefined && val !== '') {
+        if (val !== null && val !== undefined) {
           this.updateAreaUnitValidators();
         }
       }
@@ -253,7 +254,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
-        if (val !== null && val !== undefined && val !== '') {
+        if (val !== null && val !== undefined) {
           this.updateAreaUnitValidators();
         }
       }
@@ -262,7 +263,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
-        if (val !== null && val !== undefined && val !== '') {
+        if (val !== null && val !== undefined) {
           this.updateAreaUnitValidators();
         }
       }
@@ -457,7 +458,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   updateAreaUnitValidators() {
     this.areaUnit.clearValidators();
     this.areaUnit.setValidators(
-      this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired() ?
+      this.checkAreaFieldsRequired() ?
         [Validators.required] : []
     );
     this.farmerForm.markAllAsTouched();
