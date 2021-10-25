@@ -1,6 +1,6 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { UndesrcoreAndCapitalsValidator } from 'src/shared/validation';
-import { Validators } from '@angular/forms';
+import { multiFieldValidator, UndesrcoreAndCapitalsValidator } from 'src/shared/validation';
+import { FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import { ApiActionType } from '../../../api/model/apiActionType';
@@ -8,18 +8,22 @@ import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
+import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTranslation';
+import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
 
 export const ApiSemiProductValidationScheme = {
-  validators: [],
+  validators: [
+      multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslationsSemiProduct(group), ['required'])
+  ],
   fields: {
     id: {
       validators: []
     },
     name: {
-      validators: [Validators.required]
+      validators: []
     },
     description: {
-      validators: [Validators.required]
+      validators: []
     },
     apiMeasureUnitType: {
       forceFormControl: true,
@@ -33,6 +37,9 @@ export const ApiSemiProductValidationScheme = {
     },
     buyable: {
       validators: []
+    },
+    translations: {
+      validators: [Validators.required]
     }
   }
 } as SimpleValidationScheme<ApiSemiProduct>;
@@ -156,3 +163,19 @@ export const ApiProcessingEvidenceFieldValidationScheme = {
     }
   }
 } as SimpleValidationScheme<ApiProcessingEvidenceField>;
+
+export function requiredTranslationsSemiProduct(control: FormGroup): ValidationErrors | null {
+  if (!control || !control.value || !control.contains('translations')) {
+    return null;
+  }
+  const translations = control.value['translations'];
+  if (translations.length === 0) {
+    return {required: true};
+  }
+  // English translation is required, other are optional
+  const englishTranslation = translations.find(t => t.language === LanguageEnum.EN);
+  if (!englishTranslation || !englishTranslation.name) {
+    return {required: true};
+  }
+  return null;
+}

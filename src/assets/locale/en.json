@@ -2886,6 +2886,9 @@
     "﻿organization.input.placehoder": "Select organization",
     "settingsTypes.sortOptions.semiProducts.sku:": "SKU",
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.erro": "Net weight is required",
-    "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required"
+    "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required",
+    "semiProductDetail.textinput.name.error": "Name is required",
+    "semiProductDetail.textinput.description.error": "Description is required",
+    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages."
   }
 }

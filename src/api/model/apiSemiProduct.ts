@@ -19,6 +19,7 @@
 
 
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiSemiProductTranslation } from './apiSemiProductTranslation';
 
 
 
@@ -33,6 +34,7 @@ export interface ApiSemiProduct {
     name?: string;
     sku?: boolean;
     skuendCustomer?: boolean;
+    translations?: Array<ApiSemiProductTranslation>;
 }
 
 /**
@@ -52,7 +54,8 @@ export namespace ApiSemiProduct {
         id = 'id',
         name = 'name',
         sku = 'sku',
-        skuendCustomer = 'skuendCustomer'
+        skuendCustomer = 'skuendCustomer',
+        translations = 'translations'
     }
 
 
@@ -139,6 +142,18 @@ export namespace ApiSemiProduct {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiSemiProductTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProductTranslation'
+                },
             ],
             validators: {
                 apiMeasureUnitType: [
@@ -154,6 +169,8 @@ export namespace ApiSemiProduct {
                 sku: [
                 ],
                 skuendCustomer: [
+                ],
+                translations: [
                 ],
             }
         }
@@ -181,6 +198,9 @@ export namespace ApiSemiProduct {
   //                   validators: []
   //               },
   //               skuendCustomer: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //     }

@@ -10,44 +10,85 @@
     <div class="modal-body">
 
       <ng-container *ngIf="type === 'semi-products'">
-        <textinput
-                label="Name"
-                [form]="form.get('name')"
-                style="width: 100%"
-                placeholder="Enter name"
-                i18n-label="@@semiProductDetail.textinput.name.label"
-                i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
-                [isInvalid]="submitted && form.get('name').invalid">
-          <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('name').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.name.error">
-                <span>
-                  Name is required
-                </span>
-              </div>
-            </div>
-          </ng-container>
-        </textinput>
+        <small i18n="@@semiProductDetail.hint.translations">
+          Specify name in English and add translations for all used languages.
+        </small>
 
-        <textinput
-                label="Description"
-                [form]="form.get('description')"
-                style="width: 100%"
-                [textarea]="true"
-                helpText="Enter short semi-product description."
-                i18n-label="@@semiProductDetail.textinput.description.label"
-                i18n-helpText="@@semiProductDetail.textinput.description.helpText"
-                [isInvalid]="submitted && form.get('description').invalid">
-          <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n="@@semiProductDetail.textinput.description.error">
-                <span>
-                  Description is required
-                </span>
-              </div>
-            </div>
+        <div class="d-flex af-translation-language">
+          <div (click)="selectLanguage(languageEnum.EN)"
+               [ngClass]="selectedLanguage === languageEnum.EN
+                                  ? 'af-translation-language--selected'
+                                  : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
+                                      ? 'af-translation-language--error'
+                                      : '')">
+            <img src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Selected EN lang">
+            <span>EN</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.DE)"
+               [ngClass]="selectedLanguage === languageEnum.DE ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+            <span>DE</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.RW)"
+               [ngClass]="selectedLanguage === languageEnum.RW ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+            <span>RW</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.ES)"
+               [ngClass]="selectedLanguage === languageEnum.ES ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
+            <span>ES</span>
+          </div>
+        </div>
+
+        <div class="spacer-title-section"></div>
+
+        <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
+          <ng-container *ngIf="translation.value.language === selectedLanguage">
+            <textinput
+                    label="Name"
+                    placeholder="Enter name"
+                    i18n-label="@@semiProductDetail.textinput.name.label"
+                    i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
+                    [form]="this.form.get('translations.' + i + '.name')"
+                    [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.name').value"
+                    [markRequired]="translation.value.language === languageEnum.EN"
+                    style="width: 100%">
+              <ng-container *ngIf="submitted && translation.value.language === languageEnum.EN && !this.form.get('translations.' + i + '.name').value">
+                <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required"
+                       i18n-label="@@semiProductDetail.textinput.name.error">
+                        <span>
+                          Name is required
+                        </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+
+            <textinput
+                    label="Description"
+                    helpText="Enter short semi-product description."
+                    [textarea]="true"
+                    i18n-label="@@semiProductDetail.textinput.description.label"
+                    i18n-helpText="@@semiProductDetail.textinput.description.helpText"
+                    [form]="this.form.get('translations.' + i + '.description')"
+                    [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.description').value"
+                    [markRequired]="translation.value.language === languageEnum.EN"
+                    style="width: 100%">
+              <ng-container *ngIf="submitted && translation.value.language === languageEnum.EN && !this.form.get('translations.' + i + '.description').value">
+                <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required"
+                       i18n-label="@@semiProductDetail.textinput.description.error">
+                                          <span>
+                                            Description is required
+                                          </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
           </ng-container>
-        </textinput>
+        </ng-container>
 
         <single-choice
                 label="Measurement unit type"
