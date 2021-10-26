@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs/operators';
@@ -11,12 +11,13 @@ import { TabCommunicationService } from 'src/app/shared/tab-communication.servic
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
+import { ApiProduct } from '../../../../api/model/apiProduct';
 
 @Component({
   template: ''
 })
-export class ProductLabelStakeholdersComponent implements OnInit {
-  
+export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, AfterViewInit {
+
   buyers: ApiProductCompany[] = [];
   importers: ApiProductCompany[] = [];
   exporters: ApiProductCompany[] = [];
@@ -25,6 +26,8 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   associations: ApiProductCompany[] = [];
   processors: ApiProductCompany[] = [];
   traders: ApiProductCompany[] = [];
+
+  isOwner = false;
 
   constructor(
     protected productController: ProductControllerService,
@@ -47,8 +50,122 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     'value-chain'
   ];
 
+  buyersSection = {
+    anchor: 'BUYERS',
+    title: $localize`:@@productLabelStakeholders.title.buyers:Buyers`
+  };
+
+  ownersSection = {
+    anchor: 'OWNERS',
+    title: $localize`:@@productLabelStakeholders.title.owners:Owners`
+  };
+
+  producersSection = {
+    anchor: 'PRODUCERS',
+    title: $localize`:@@productLabelStakeholders.title.producers:Producers`
+  };
+
+  roastersSection = {
+    anchor: 'ROASTERS',
+    title: $localize`:@@productLabelStakeholders.title.roasters:Roasters`
+  };
+
+  associationsSection = {
+    anchor: 'ASSOCIATIONS',
+    title: $localize`:@@productLabelStakeholders.title.associations:Associations`
+  };
+
+  toc = [
+    this.buyersSection,
+    this.ownersSection,
+    this.producersSection,
+    this.roastersSection,
+    this.associationsSection,
+  ];
+
+  activeTab = this.getIdForTabName(this.route.snapshot.data.tab);
+  isActivePage = false;
+  unsubsribeList = new UnsubscribeList();
+
+  showedCollectors = 0;
+  showedCustomers = 0;
+  showedFarmers = 0;
+
+  allCollectors = 0;
+  allCustomers = 0;
+  allFarmers = 0;
+
+  searchNameCollectors = new FormControl(null);
+  searchNameCustomers = new FormControl(null);
+  searchNameFarmers = new FormControl(null);
+
+  productId = this.route.snapshot.params.id;
+  unsubscribeList = new UnsubscribeList();
+  currentProduct;
+  organizationId;
+  productOrganizationId;
+
+  public reloadValueChainPing$ = new BehaviorSubject<boolean>(false);
+  public reloadCollectorsPing$ = new BehaviorSubject<boolean>(false);
+  public reloadCustomersPing$ = new BehaviorSubject<boolean>(false);
+  public reloadFarmersPing$ = new BehaviorSubject<boolean>(false);
+
+
+  byCategoryFarmer = 'BY_NAME';
+  byCategoryCollector = 'BY_NAME';
+  public sortingParamsFarmer$ = new BehaviorSubject({ queryBy: this.byCategoryFarmer, sort: 'ASC' });
+  public sortingParamsCollector$ = new BehaviorSubject({ queryBy: this.byCategoryCollector, sort: 'ASC' });
+  items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }];
+
+  tabSub: Subscription;
+
+  product$ = combineLatest(this.reloadValueChainPing$, of(this.productId),
+      (ping: any, id: string) => {
+        return ping && id != null ? Number(id) : null;
+      }
+  ).pipe(
+      filter(val => val != null),
+      tap(val => { this.globalEventsManager.showLoading(true); }),
+      switchMap(id => this.productController.getProductUsingGET(id).pipe(
+          catchError(val => of(null))
+      )),
+      filter(resp => !!resp),
+      map(resp => {
+        return resp.data;
+      }),
+      tap(val => { this.globalEventsManager.showLoading(false); }),
+      tap((data: ApiProduct) => {
+        this.currentProduct = data;
+
+        this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === Number(this.organizationId));
+
+        this.buyers = [];
+        this.importers = [];
+        this.exporters = [];
+        this.owners = [];
+        this.producers = [];
+        this.associations = [];
+        this.processors = [];
+        this.traders = [];
+
+        for (const ac of this.currentProduct.associatedCompanies) {
+          switch (ac.type) {
+            case ApiProductCompany.TypeEnum.BUYER: this.buyers.push(ac); break;
+            case ApiProductCompany.TypeEnum.IMPORTER: this.importers.push(ac); break;
+            case ApiProductCompany.TypeEnum.EXPORTER: this.exporters.push(ac); break;
+            case ApiProductCompany.TypeEnum.OWNER: this.owners.push(ac); break;
+            case ApiProductCompany.TypeEnum.PRODUCER: this.producers.push(ac); break;
+            case ApiProductCompany.TypeEnum.ASSOCIATION: this.associations.push(ac); break;
+            case ApiProductCompany.TypeEnum.PROCESSOR: this.processors.push(ac); break;
+            case ApiProductCompany.TypeEnum.TRADER: this.traders.push(ac); break;
+          }
+        }
+      }),
+      shareReplay(1)
+  );
+
   get tabCommunicationService(): TabCommunicationService {
-    return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null
+    return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
   }
 
   @HostListener('window:popstate', ['$event'])
@@ -57,128 +174,51 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   targetNavigate(segment: string) {
-    // this.router.navigate(['product-labels', this.productId, 'stakeholders', segment])
-    this.router.navigate([segment], { relativeTo: this.route.parent })
+    this.router.navigate([segment], { relativeTo: this.route.parent });
   }
   ngAfterViewInit() {
-    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this))
+    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
   }
-  /////////////////////////
-
-
-  activeTab = this.getIdForTabName(this.route.snapshot.data.tab)
-  isActivePage = false;
-  unsubsribeList = new UnsubscribeList()
-
-  showedCollectors: number = 0;
-  showedCustomers: number = 0;
-  showedFarmers: number = 0;
-
-  allCollectors: number = 0;
-  allCustomers: number = 0;
-  allFarmers: number = 0;
-
-  searchNameCollectors = new FormControl(null);
-  searchNameCustomers = new FormControl(null);
-  searchNameFarmers = new FormControl(null);
-
-  productId = this.route.snapshot.params.id;
-  unsubscribeList = new UnsubscribeList()
-  currentProduct;
-  organizationId;
-  productOrganizationId;
-
-  public reloadValueChainPing$ = new BehaviorSubject<boolean>(false)
-  public reloadCollectorsPing$ = new BehaviorSubject<boolean>(false)
-  public reloadCustomersPing$ = new BehaviorSubject<boolean>(false)
-  public reloadFarmersPing$ = new BehaviorSubject<boolean>(false)
-
-
-  byCategoryFarmer: string = 'BY_NAME';
-  byCategoryCollector: string = 'BY_NAME';
-  public sortingParamsFarmer$ = new BehaviorSubject({ queryBy: this.byCategoryFarmer, sort: 'ASC' })
-  public sortingParamsCollector$ = new BehaviorSubject({ queryBy: this.byCategoryCollector, sort: 'ASC' })
-  items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }]
 
   ngOnInit(): void {
     this.unsubscribeList.add(
       this.product$.subscribe(val => { }),
-    )
+    );
     this.reload();
-
-    // this.isActivePage = true;
-
-    // this.tabCommunicationService.announceTabTitles(this.tabs);
-    // setTimeout(() => {
-    //   this.tabCommunicationService.confirmActiveTab(this.activeTab)
-    // });
-
-    // this.initializeTabs()
-    // this.cachedPageActivation()
 
     this.setAlls();
     this.setOrganizationId();
-
   }
 
   ngOnDestroy(): void {
-    this.tabCommunicationService.announceTabTitles([])
+    this.tabCommunicationService.announceTabTitles([]);
     this.unsubscribeList.cleanup();
-    if (this.tabSub) this.tabSub.unsubscribe()
+    if (this.tabSub) {
+      this.tabSub.unsubscribe();
+    }
   }
 
   async setOrganizationId() {
 
-    this.organizationId = localStorage.getItem("selectedUserCompany");
+    this.organizationId = localStorage.getItem('selectedUserCompany');
 
 
   }
 
-  tabSub: Subscription;
-
-  // initializeTabs() {
-  //   if (this.tabSub) {
-  //     this.tabSub.unsubscribe()
-  //   }
-
-  //   this.tabSub = this.tabCommunicationService.confirmActiveTab$.subscribe(
-  //     tab => {
-  //       if (tab === this.activeTab) return;
-  //       if (this.isActivePage) {
-  //         this.router.navigate(['product-labels', this.productId, 'stakeholders', this.getTabNameForId(tab)])
-  //         this.isActivePage = false;
-  //       }
-  //     })
-  // }
-
   getIdForTabName(name: string) {
-    return this.tabNames.indexOf(name)
+    return this.tabNames.indexOf(name);
   }
 
   getTabNameForId(id: number) {
-    if (id >= this.tabNames.length || id < 0) return null;
-    return this.tabNames[id]
+    if (id >= this.tabNames.length || id < 0) {
+      return null;
+    }
+    return this.tabNames[id];
   }
-
-  // cachedPageActivation() {
-  //   this.unsubsribeList.add(
-  //     this.router.events.subscribe(event => {
-  //       if (event instanceof NavigationEnd) {
-  //         if (event.url + '/' === getPath(this.route.snapshot)) {
-  //           this.isActivePage = true;
-  //           this.initializeTabs();
-  //           this.reloadPage();
-  //         } else {
-  //           this.isActivePage = false;
-  //         }
-  //       }
-  //     })
-  //   );
-  // }
 
   reloadPage() {
 
-    let tabName = this.route.snapshot.data.tab;
+    const tabName = this.route.snapshot.data.tab;
     switch (tabName) {
       case 'value-chain':
         this.reloadValueChainPing$.next(true);
@@ -197,27 +237,18 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     }
   }
 
-  async setAlls() {
-    // let res0 = await this.productController.getUserCustomersListUsingGET(this.productId).pipe(take(1)).toPromise();
-    // if (res0 && res0.status === 'OK' && res0.data && res0.data.count >= 0) {
-    //   this.allCollectors = res0.data.count;
-    // }
-    // let res1 = await this.productController.getCompanyCustomersListUsingGET(this.productId).pipe(take(1)).toPromise();
-    // if (res1 && res1.status === 'OK' && res1.data && res1.data.count >= 0) {
-    //   this.allCustomers = res1.data.count;
-    // }
-  }
+  async setAlls() { }
 
   onShow(event, type) {
-    if (type == 'collectors') this.showedCollectors = event;
-    if (type == 'customers') this.showedCustomers = event;
-    if (type == 'farmers') this.showedFarmers = event;
+    if (type === 'collectors') { this.showedCollectors = event; }
+    if (type === 'customers') { this.showedCustomers = event; }
+    if (type === 'farmers') { this.showedFarmers = event; }
   }
 
   onCountAll(event, type) {
-    if (type === 'collectors') this.allCollectors = event;
-    if (type === 'customers') this.allCustomers = event;
-    if (type == 'farmers') this.allFarmers = event;
+    if (type === 'collectors') { this.allCollectors = event; }
+    if (type === 'customers') { this.allCustomers = event; }
+    if (type === 'farmers') { this.allFarmers = event; }
   }
 
   async addBuyerProducerToProduct(cId, cType) {
@@ -234,54 +265,9 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     }
   }
 
-
   reload() {
-    this.reloadValueChainPing$.next(true)
+    this.reloadValueChainPing$.next(true);
   }
-
-
-  product$ = combineLatest(this.reloadValueChainPing$, of(this.productId),
-    (ping: any, id: string) => {
-      return ping && id != null ? Number(id) : null
-    }
-  ).pipe(
-    filter(val => val != null),
-    tap(val => { this.globalEventsManager.showLoading(true); }),
-    switchMap(id => this.productController.getProductUsingGET(id).pipe(
-      catchError(val => of(null))
-    )),
-    filter(resp => !!resp),
-    map(resp => {
-      return resp.data
-    }),
-    tap(val => { this.globalEventsManager.showLoading(false); }),
-    tap(data => {
-      this.currentProduct = data
-
-      this.buyers = [];
-      this.importers = [];
-      this.exporters = [];
-      this.owners = [];
-      this.producers = [];
-      this.associations = [];
-      this.processors = [];
-      this.traders = [];
-
-      for (const ac of this.currentProduct.associatedCompanies) {
-        switch (ac.type) {
-          case ApiProductCompany.TypeEnum.BUYER: this.buyers.push(ac); break;
-          case ApiProductCompany.TypeEnum.IMPORTER: this.importers.push(ac); break;
-          case ApiProductCompany.TypeEnum.EXPORTER: this.exporters.push(ac); break;
-          case ApiProductCompany.TypeEnum.OWNER: this.owners.push(ac); break;
-          case ApiProductCompany.TypeEnum.PRODUCER: this.producers.push(ac); break;
-          case ApiProductCompany.TypeEnum.ASSOCIATION: this.associations.push(ac); break;
-          case ApiProductCompany.TypeEnum.PROCESSOR: this.processors.push(ac); break;
-          case ApiProductCompany.TypeEnum.TRADER: this.traders.push(ac); break;
-        }
-      }
-    }),
-    shareReplay(1)
-  )
 
   async newBuyer() {
     if (this.owners && this.owners.length === 0) {
@@ -298,7 +284,7 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.BUYER);
     }
   }
-  
+
   async newImporter() {
     if (this.owners && this.owners.length === 0) {
       await this.dialogEmptyOwner();
@@ -408,6 +394,9 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   async remove(company) {
+    if (!this.isOwner) {
+      return;
+    }
     if (company.type === ApiProductCompany.TypeEnum.OWNER && this.owners.length <= 1) {
       await this.globalEventsManager.openMessageModal({
         type: 'error',
@@ -419,13 +408,15 @@ export class ProductLabelStakeholdersComponent implements OnInit {
       });
       return;
     }
-    let result = await this.globalEventsManager.openMessageModal({
+    const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabelStakeholders.remove.warning.message:Are you sure you want to remove ${company.company.name}?`,
       options: { centered: true },
       dismissable: false
     });
-    if (result !== 'ok') return;
+    if (result !== 'ok') {
+      return;
+    }
 
     try {
       this.globalEventsManager.showLoading(true);
@@ -452,24 +443,24 @@ export class ProductLabelStakeholdersComponent implements OnInit {
   }
 
   customerDetail() {
-    let customerId = this.allCustomers+1;
+    const customerId = this.allCustomers + 1;
     this.router.navigate(['product-labels', this.productId, 'stakeholders', 'customers', 'organization', this.organizationId, 'new', customerId]);
   }
 
   serchInput(event, type) {
-    if (type == 'collectors') this.reloadCollectorsPing$.next(true);
-    if (type == 'farmers') this.reloadFarmersPing$.next(true);
-    if (type == 'customer') this.reloadCustomersPing$.next(true);
+    if (type === 'collectors') { this.reloadCollectorsPing$.next(true); }
+    if (type === 'farmers') { this.reloadFarmersPing$.next(true); }
+    if (type === 'customer') { this.reloadCustomersPing$.next(true); }
   }
 
   onCategoryChange(event, type) {
     if (type === 'collectors') {
       this.byCategoryCollector = event;
-      this.sortingParamsCollector$.next({ queryBy: event, sort: event.sortOrder })
+      this.sortingParamsCollector$.next({ queryBy: event, sort: event.sortOrder });
     }
     if (type === 'farmers') {
       this.byCategoryFarmer = event;
-      this.sortingParamsFarmer$.next({ queryBy: event, sort: event.sortOrder })
+      this.sortingParamsFarmer$.next({ queryBy: event, sort: event.sortOrder });
     }
   }
 
@@ -482,42 +473,9 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     }
   }
 
-  buyersSection = {
-    anchor: 'BUYERS',
-    title: $localize`:@@productLabelStakeholders.title.buyers:Buyers`
-  }
-
-  ownersSection = {
-    anchor: 'OWNERS',
-    title: $localize`:@@productLabelStakeholders.title.owners:Owners`
-  }
-
-  producersSection = {
-    anchor: 'PRODUCERS',
-    title: $localize`:@@productLabelStakeholders.title.producers:Producers`
-  }
-
-  roastersSection = {
-    anchor: 'ROASTERS',
-    title: $localize`:@@productLabelStakeholders.title.roasters:Roasters`
-  }
-
-  associationsSection = {
-    anchor: 'ASSOCIATIONS',
-    title: $localize`:@@productLabelStakeholders.title.associations:Associations`
-  }
-
-  toc = [
-    this.buyersSection,
-    this.ownersSection,
-    this.producersSection,
-    this.roastersSection,
-    this.associationsSection,
-  ]
-
 
   showWarning() {
-    let buttonOkText = $localize`:@@productLabelStakeholders.warning.button.ok:OK`
+    const buttonOkText = $localize`:@@productLabelStakeholders.warning.button.ok:OK`;
     this.globalEventsManager.openMessageModal({
       type: 'warning',
       title: $localize`:@@productLabelStakeholders.warning.title:Missing company`,
@@ -529,6 +487,8 @@ export class ProductLabelStakeholdersComponent implements OnInit {
     });
   }
 
-
+  editable() {
+    return this.isOwner;
+  }
 
 }

@@ -11,6 +11,7 @@
             (change)="onClick.next($event.target.checked)"
             [formControl]="form"
             [disabled]="isDisabled()"
+            [attr.disabled]="isDisabled() ? true : null"
             [class.checkbox-disabled]="isDisabled()"
             [class.sc-invalid-feedback-border]="invalid"
             />
@@ -22,6 +23,7 @@
             (click)="onClick.next($event)"
             [checked]="checked"
             [disabled]="isDisabled()"
+            [attr.disabled]="isDisabled() ? true : null"
             [class.checkbox-disabled]="isDisabled()"
             [class.sc-invalid-feedback-border]="invalid"
             />
@@ -29,15 +31,3 @@
     </div>
     <ng-content select="checkbox-input-errors"></ng-content>
 </form>
-
-<!-- <input *ngIf="!form"
-    #inputfield
-    type="checkbox"
-    [id]="id"
-    class="checkbox"
-    [ngModel]=checked
-    (ngModelChange)="onToggle($event)"
-    [disabled]="isDisabled()"
-    [class.checkbox-disabled]="isDisabled()"
-    [class.sc-invalid-feedback-border]="invalid"
-    /> -->

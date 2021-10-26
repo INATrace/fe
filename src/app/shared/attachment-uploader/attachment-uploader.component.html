@@ -174,7 +174,7 @@
             <div class="input-group">
               <div class="custom-file">
                 <input class="custom-file-input" name="fileSimple"
-                  [id]="attachmentUploaderId" #fileSimple type="file" ng2FileSelect
+                  [id]="attachmentUploaderId" #fileSimple type="file" ng2FileSelect [disabled]="readOnly"
                   [uploader]="uploader" />
                 <label class="custom-file-label labelPlaceholder" i18n="attachmentUploader.label.chooseFile"
                   [for]="attachmentUploaderId" ng2FileSelect>Choose file</label>

@@ -69,6 +69,7 @@ import { LanguageForLabelModalComponent } from './language-for-label-modal/langu
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
+import { ApiProductCompany } from '../../../api/model/apiProductCompany';
 
 @Component({
   selector: 'app-product-label',
@@ -153,6 +154,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   valueChainName: string;
 
+  companyId: number;
+  isOwner = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -191,6 +195,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   action = this.route.snapshot.data.action;
   ngOnInit(): void {
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
     this.userProfile = this.authService.currentUserProfile;
     let subUserProfile = this.authService.userProfile$.subscribe(val => {
       this.userProfile = val
@@ -260,7 +265,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       }
     }),
     tap(val => { this.globalEventsManager.showLoading(false); }),
-    tap(data => {
+    tap((data: ApiProduct) => {
       let product = data;
       // console.log("PRODUCT", data);
       this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
@@ -283,6 +288,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.productForm.updateValueAndValidity();
       this.initializeOriginLocations();
       this.initializeMarkers();
+      this.isOwner = product.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === this.companyId);
     }),
     shareReplay(1)
   );
@@ -758,9 +764,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   removeOriginLocation(index: number) {
-    this.originLocations.removeAt(index);
-    this.markers.splice(index, 1);
-    this.productForm.markAsDirty();
+    if (this.isOwner) {
+      this.originLocations.removeAt(index);
+      this.markers.splice(index, 1);
+      this.productForm.markAsDirty();
+    }
   }
 
   updateMarkerLocation(loc, index) {
@@ -785,7 +793,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   dblClick(event: google.maps.MouseEvent) {
-    this.addOriginLocations(event.latLng.toJSON());
+    if (this.isOwner) {
+      this.addOriginLocations(event.latLng.toJSON());
+    }
   }
 
   dragend(event, index) {
@@ -1877,5 +1887,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
+  canEdit() {
+    return this.isOwner;
+  }
 
 }

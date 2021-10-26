@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ActivatedRoute } from '@angular/router';
 import { FinalProductDetailModalComponent } from '../final-product-detail-modal/final-product-detail-modal.component';
+import { ProductControllerService } from '../../../../api/api/productController.service';
+import { take } from 'rxjs/operators';
+import { ApiProductCompany } from '../../../../api/model/apiProductCompany';
 
 @Component({
   selector: 'app-final-product',
@@ -17,13 +20,24 @@ export class FinalProductComponent implements OnInit {
   allFinalProducts = 0;
   showedFinalProducts = 0;
 
+  companyId: number;
+  isBuyer = false;
+
   constructor(
       private route: ActivatedRoute,
       private modalService: NgbModalImproved,
+      private productController: ProductControllerService
   ) { }
 
   ngOnInit(): void {
     this.productId = this.route.snapshot.params.id;
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+
+    this.productController.getProductUsingGET(this.productId).pipe(take(1)).subscribe(product => {
+      if (product && product.data) {
+        this.isBuyer = product.data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.BUYER && value.company.id === this.companyId);
+      }
+    });
   }
 
   newFinalProduct(){

@@ -13,6 +13,9 @@ export class CompanyCardComponent implements OnInit {
   @Input()
   owner = false;
 
+  @Input()
+  editable = false;
+
   @Output() onSelect = new EventEmitter<boolean>();
 
   constructor(
@@ -23,7 +26,7 @@ export class CompanyCardComponent implements OnInit {
 
   selectItem(item, preventEmit = false) {
     if (!preventEmit) {
-      this.onSelect.next(item)
+      this.onSelect.next(item);
     }
   }
 }
