@@ -62,12 +62,13 @@ export class ApproveRejectTransactionModalComponent implements OnInit {
       return;
     }
 
-    // TODO: implement when API is available
     for (const item of this.approveRejectForm.controls) {
       if (item.value.rejectComment) {
-        // await this.chainTransactionService.cancelTransactions(item.value._id, item.value.rejectComment).pipe(take(1)).toPromise();
+        await this.transactionController
+          .rejectTransactionUsingPUT(item.value.id, { id: item.value.id, rejectComment: item.value.rejectComment })
+          .pipe(take(1)).toPromise();
       } else {
-       // await this.chainTransactionService.approveTransactions(item.value._id).pipe(take(1)).toPromise();
+       await this.transactionController.approveTransactionUsingPUT(item.value.id).pipe(take(1)).toPromise();
       }
     }
     this.activeModal.close();
