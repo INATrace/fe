@@ -292,7 +292,7 @@
                         <li *ngIf="agg.stockOrder as oneStockOrder">
                           <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, oneStockOrder)"
                              (click)="goToOrderView(oneStockOrder)">
-                            {{oneStockOrder.created | date: 'yyyy-MM-dd hh:mm'}} @ {{oneStockOrder.facility?.name}} : {{oneStockOrder.internalLotNumber || oneStockOrder.identifier}} - {{oneStockOrder.totalQuantity}} {{oneStockOrder.measurementUnitType?.label}}
+                            {{oneStockOrder.creationTimestamp | date: 'yyyy-MM-dd hh:mm'}} @ {{oneStockOrder.facility?.name}} : {{oneStockOrder.internalLotNumber || oneStockOrder.identifier }} - {{oneStockOrder.totalQuantity}} {{oneStockOrder.measureUnitType?.label}}
                             <span *ngIf="isRoot(stockOrder, oneStockOrder)">&nbsp;(<span i18n="@@orderHistoryView.thisOrder.notice">this order</span>)</span>
                           </a>
 

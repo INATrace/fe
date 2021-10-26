@@ -26,6 +26,10 @@ import { ApiTransaction } from './apiTransaction';
 
 export interface ApiProcessingOrder { 
     /**
+     * Timestamp indicates when processing order have been created
+     */
+    creationTimestamp?: Date;
+    /**
      * Entity id
      */
     id?: number;
@@ -61,6 +65,10 @@ export namespace ApiProcessingOrder {
      */
     export enum Properties {
         /**
+         * Timestamp indicates when processing order have been created
+         */
+        creationTimestamp = 'creationTimestamp',
+        /**
          * Entity id
          */
         id = 'id',
@@ -93,6 +101,17 @@ export namespace ApiProcessingOrder {
             metadata: formMetadata,
             classname: 'ApiProcessingOrder',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiProcessingOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -176,6 +195,8 @@ export namespace ApiProcessingOrder {
                 },
             ],
             validators: {
+                creationTimestamp: [
+                ],
                 id: [
                 ],
                 initiatorUserId: [
@@ -197,6 +218,9 @@ export namespace ApiProcessingOrder {
   // export const ApiProcessingOrderValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               creationTimestamp: {
+  //                   validators: []
+  //               },
   //               id: {
   //                   validators: []
   //               },

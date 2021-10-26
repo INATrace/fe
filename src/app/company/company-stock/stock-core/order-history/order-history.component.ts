@@ -2,11 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModalImproved} from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
-import {ChainStockOrder} from '../../../../../api-chain/model/chainStockOrder';
 import {faCheckCircle, faExclamationCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
-import {dbKey} from '../../../../../shared/utils';
 import {ProcessingOrderControllerService} from '../../../../../api/api/processingOrderController.service';
 import {ApiTransaction} from '../../../../../api/model/apiTransaction';
 import {ApiStockOrder} from '../../../../../api/model/apiStockOrder';
@@ -84,7 +82,7 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   isRoot(root: ApiStockOrder, one: ApiStockOrder) {
-    return dbKey(root) === dbKey(one);
+    return root.id === one.id;
   }
 
 
@@ -104,7 +102,7 @@ export class OrderHistoryComponent implements OnInit {
 
   processingCreationDate(aggregate: ApiStockOrderAggregatedHistory) {
     if (!aggregate.processingOrder) { return null; }
-    return aggregate.processingOrder.processingDate;
+    return aggregate.processingOrder.creationTimestamp;
   }
 
   ngOnInit() {
@@ -129,21 +127,20 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   goToSibiling(order: ApiStockOrder) {
-    this.router.navigate(['stock-order', dbKey(order), 'view'], { relativeTo: this.route.parent });
+    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent });
   }
 
-  goToOrderView(order: ChainStockOrder) {
-    this.router.navigate(['stock-order', dbKey(order), 'view'], { relativeTo: this.route.parent });
+  goToOrderView(order: ApiStockOrder) {
+    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent });
   }
 
 
   isThisOrder(currentOrder: ApiStockOrder, toShowOrder: ApiStockOrder) {
-    return dbKey(currentOrder) === dbKey(toShowOrder);
+    return currentOrder.id === toShowOrder.id;
   }
 
   orderType(stockOrder: ApiStockOrder) {
     const ordType = stockOrder.processingOrder.processingAction.type;
-    console.log('ordType', ordType);
     switch (ordType) {
       case 'PROCESSING': return 'processing-order';
       case 'SHIPMENT': return 'shipment-order';
@@ -154,7 +151,7 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   edit(stockOrder: ApiStockOrder) {
-    this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', this.orderType(stockOrder), dbKey(this.rootStockOrder)]);
+    this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', this.orderType(stockOrder), this.rootStockOrder.id]);
   }
 
 
@@ -162,7 +159,7 @@ export class OrderHistoryComponent implements OnInit {
     if (!stockOrder) {
       return;
     }
-    return dbKey(stockOrder);
+    return stockOrder.id;
   }
 
   copyToClipboard() {

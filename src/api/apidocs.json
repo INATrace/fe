@@ -13664,6 +13664,11 @@
       },
       "ApiProcessingOrder": {
         "properties": {
+          "creationTimestamp": {
+            "description": "Timestamp indicates when processing order have been created",
+            "format": "date-time",
+            "type": "string"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -16614,20 +16619,6 @@
       },
       "ApiStockOrderAggregation": {
         "properties": {
-          "documents": {
-            "description": "List of documents for this aggregation",
-            "items": {
-              "$ref": "#/components/schemas/ApiProcessDocument"
-            },
-            "type": "array"
-          },
-          "fields": {
-            "description": "List of fields for this aggregation",
-            "items": {
-              "$ref": "#/components/schemas/ApiStockOrderAggregationField"
-            },
-            "type": "array"
-          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -16636,50 +16627,6 @@
           "stockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",
             "description": "Stock order related to the aggregation"
-          }
-        },
-        "type": "object"
-      },
-      "ApiStockOrderAggregationField": {
-        "properties": {
-          "fieldID": {
-            "description": "Field ID",
-            "type": "string"
-          },
-          "id": {
-            "description": "Entity id",
-            "format": "int64",
-            "type": "integer"
-          },
-          "identifier": {
-            "description": "Identifier",
-            "type": "string"
-          },
-          "mandatory": {
-            "description": "Mandatory",
-            "example": false,
-            "type": "boolean"
-          },
-          "measurementUnit": {
-            "$ref": "#/components/schemas/MeasureUnitType",
-            "description": "Measurement unit"
-          },
-          "quantity": {
-            "description": "Quantity",
-            "type": "number"
-          },
-          "required": {
-            "description": "Required",
-            "example": false,
-            "type": "boolean"
-          },
-          "stockOrderId": {
-            "description": "Stock order id",
-            "type": "string"
-          },
-          "value": {
-            "description": "Field value",
-            "type": "string"
           }
         },
         "type": "object"
@@ -17372,27 +17319,6 @@
               "DISABLED"
             ],
             "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "MeasureUnitType": {
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "id": {
-            "format": "int64",
-            "type": "integer"
-          },
-          "label": {
-            "type": "string"
-          },
-          "underlyingMeasurementUnitType": {
-            "$ref": "#/components/schemas/MeasureUnitType"
-          },
-          "weight": {
-            "type": "number"
           }
         },
         "type": "object"

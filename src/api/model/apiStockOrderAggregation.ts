@@ -18,21 +18,11 @@
  */
 
 
-import { ApiProcessDocument } from './apiProcessDocument';
 import { ApiStockOrder } from './apiStockOrder';
-import { ApiStockOrderAggregationField } from './apiStockOrderAggregationField';
 
 
 
 export interface ApiStockOrderAggregation { 
-    /**
-     * List of documents for this aggregation
-     */
-    documents?: Array<ApiProcessDocument>;
-    /**
-     * List of fields for this aggregation
-     */
-    fields?: Array<ApiStockOrderAggregationField>;
     /**
      * Entity id
      */
@@ -49,14 +39,6 @@ export namespace ApiStockOrderAggregation {
      */
     export enum Properties {
         /**
-         * List of documents for this aggregation
-         */
-        documents = 'documents',
-        /**
-         * List of fields for this aggregation
-         */
-        fields = 'fields',
-        /**
          * Entity id
          */
         id = 'id',
@@ -69,30 +51,6 @@ export namespace ApiStockOrderAggregation {
             metadata: formMetadata,
             classname: 'ApiStockOrderAggregation',
             vars: [
-                {
-                    metadata: ApiProcessDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'documents',
-                    classname: 'ApiStockOrderAggregation',
-                    dataType: 'Array&lt;ApiProcessDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessDocument'
-                },
-                {
-                    metadata: ApiStockOrderAggregationField.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fields',
-                    classname: 'ApiStockOrderAggregation',
-                    dataType: 'Array&lt;ApiStockOrderAggregationField&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrderAggregationField'
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -118,10 +76,6 @@ export namespace ApiStockOrderAggregation {
                 },
             ],
             validators: {
-                documents: [
-                ],
-                fields: [
-                ],
                 id: [
                 ],
                 stockOrder: [
@@ -133,12 +87,6 @@ export namespace ApiStockOrderAggregation {
   // export const ApiStockOrderAggregationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               documents: {
-  //                   validators: []
-  //               },
-  //               fields: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
