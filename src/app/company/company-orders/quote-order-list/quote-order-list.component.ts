@@ -13,6 +13,8 @@ import {
   StockOrderControllerService
 } from '../../../../api/api/stockOrderController.service';
 import { Router } from '@angular/router';
+import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ApproveRejectTransactionModalComponent } from '../approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 
 @Component({
   selector: 'app-quote-order-list',
@@ -65,7 +67,8 @@ export class QuoteOrderListComponent implements OnInit {
   constructor(
     private router: Router,
     private globalEventsManager: GlobalEventManagerService,
-    private stockOrderController: StockOrderControllerService
+    private stockOrderController: StockOrderControllerService,
+    private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -103,6 +106,15 @@ export class QuoteOrderListComponent implements OnInit {
     this.router.navigate(['my-stock', 'orders', 'stock-order', item.id, 'view'],
       { queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
    }
+
+  approveReject(item: ApiStockOrder) {
+    const modalRef = this.modalService.open(ApproveRejectTransactionModalComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      title: $localize`:@@orderHistoryView.rejectTransaction.modal.title:Approve / reject transactions`,
+      instructionsHtml: $localize`:@@orderHistoryView.rejectTransaction.modal.instructionsHtml:Comment`,
+      stockOrderId: item.id
+    });
+  }
 
   private async initializeSortOptions() {
 

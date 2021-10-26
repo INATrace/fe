@@ -35,13 +35,13 @@
                  [class.enabled-action]="true">
                 View
               </a>
-<!--              <a *ngIf="this.mode === 'CUSTOMER'"-->
-<!--                 i18n="@@productLabelPurchaseOrder.tableCol.approveRejectOrder"-->
-<!--                 (click)="approveReject(order)"-->
-<!--                 class="company-action"-->
-<!--                 [class.enabled-action]="order.fulfilledQuantity >= order.totalQuantity">-->
-<!--                Approve/Reject-->
-<!--              </a>-->
+              <a *ngIf="this.mode === 'CUSTOMER'"
+                 i18n="@@productLabelPurchaseOrder.tableCol.approveRejectOrder"
+                 (click)="approveReject(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Approve/Reject
+              </a>
 <!--              <a i18n="@@productLabelPurchaseOrder.tableCol.payment"-->
 <!--                 *ngIf="this.mode === 'CUSTOMER'"-->
 <!--                 (click)="payment(order)"-->
