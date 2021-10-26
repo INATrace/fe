@@ -19,14 +19,14 @@
             </div>
             <div *ngIf="item.value.approved" (click)="rejectTransaction(item)">
               <fa-icon
-                      class="del-icon cursor-pointer"
-                      [icon]="faTimes">
+                      class="approved cursor-pointer"
+                      [icon]="faCheck">
               </fa-icon>
             </div>
             <div *ngIf="!item.value.approved" (click)="approveTransaction(item)">
               <fa-icon
-                      class="approved cursor-pointer"
-                      [icon]="faCheck">
+                      class="del-icon cursor-pointer"
+                      [icon]="faTimes">
               </fa-icon>
             </div>
 
