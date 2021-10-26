@@ -13,6 +13,7 @@ import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstr
 import { StockPaymentsSelectorForNewPaymentModalComponent } from './stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
 import { StockPaymentsDetailComponent } from './stock-payments-detail/stock-payments-detail.component';
 import { StockPaymentsFormComponent } from './stock-payments-form/stock-payments-form.component';
+import { StockPaymentsBulkDetailComponent } from './stock-payments-bulk-detail/stock-payments-bulk-detail.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { StockPaymentsFormComponent } from './stock-payments-form/stock-payments
       StockPaymentsTabComponent,
       StockPaymentsSelectorForNewPaymentModalComponent,
       StockPaymentsDetailComponent,
-      StockPaymentsFormComponent
+      StockPaymentsFormComponent,
+      StockPaymentsBulkDetailComponent
   ],
     imports: [
         CommonModule,
