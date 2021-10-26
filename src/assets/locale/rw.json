@@ -2884,6 +2884,9 @@
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Ubwoko bw'igipimo burasabwa",
     "stockOrderItem.pricePerUnitForEndCustomer.textinput.error": "Igiciro kirasabwa",
     "productLabelStock.button.export": "Uwohereza ibicuruzwa hanze",
-    "productLabelFinalProduct.modal.textInput.name": "Hindura igicuruzwa cya nyuma"
+    "productLabelFinalProduct.modal.textInput.name": "Hindura igicuruzwa cya nyuma",
+    "companyDetailProcessingActions.textInput.sortOrder.label": "Sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.placeholder": "Enter sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.error": "Sort order is required"
   }
 }

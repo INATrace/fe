@@ -2827,6 +2827,9 @@
     "globalOrderEdit.list-editor.orderItems.addText": "Añadir artículo de pedido",
     "globalOrderEdit.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Guardar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_2}{$START_TAG_SPAN}Guardar & Cerrar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
     "globalOrderEdit.updateTitle": "Actualizar pedido",
-    "globalOrderEdit.newTitle": "Pedido nuevo"
+    "globalOrderEdit.newTitle": "Pedido nuevo",
+    "companyDetailProcessingActions.textInput.sortOrder.label": "Sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.placeholder": "Enter sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.error": "Sort order is required"
   }
 }

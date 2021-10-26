@@ -2883,6 +2883,9 @@
     "productLabelFinalProduct.modal.textInput.description.error": "Description is required",
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.label": "Measurement unit type",
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Measure unit type is required",
-    "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required"
+    "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required",
+    "companyDetailProcessingActions.textInput.sortOrder.label": "Sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.placeholder": "Enter sort order",
+    "companyDetailProcessingActions.textInput.sortOrder.error": "Sort order is required"
   }
 }

@@ -99,6 +99,9 @@ export const ApiProcessingActionValidationScheme = {
               },
               type: {
                   validators: [Validators.required]
+              },
+              sortOrder: {
+                  validators: []
               }
     }
 } as SimpleValidationScheme<ApiProcessingAction>;
