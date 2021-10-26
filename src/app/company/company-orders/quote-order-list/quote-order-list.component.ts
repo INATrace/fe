@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiPaginatedListApiStockOrder } from '../../../../api/model/apiPaginatedListApiStockOrder';
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../api/model/apiPaginatedResponseApiStockOrder';
 import {
@@ -12,7 +12,6 @@ import {
   GetStockOrdersInFacilityForCustomerUsingGET,
   StockOrderControllerService
 } from '../../../../api/api/stockOrderController.service';
-import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { Router } from '@angular/router';
 
 @Component({
@@ -199,6 +198,7 @@ export class QuoteOrderListComponent implements OnInit {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sortingParams,
+          companyId: this.companyId,
           facilityId,
           semiProductId,
           openOnly,
@@ -216,22 +216,13 @@ export class QuoteOrderListComponent implements OnInit {
           return null;
         }
       }),
-      tap(() => this.globalEventsManager.showLoading(false))
+      tap(() => this.globalEventsManager.showLoading(false)),
+      finalize(() => this.globalEventsManager.showLoading(false))
     );
   }
 
   private loadStockOrders(params: GetQuoteOrdersInFacilityUsingGET.PartialParamMap | GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap):
     Observable<ApiPaginatedResponseApiStockOrder> {
-
-    if (!params.facilityId) {
-      return of({
-        data: {
-          items: [],
-          count: 0
-        },
-        status: StatusEnum.OK
-      });
-    }
 
     // If we are in input mode, that means we need stock orders that are quoted to the current company
     if (this.mode === 'INPUT') {
