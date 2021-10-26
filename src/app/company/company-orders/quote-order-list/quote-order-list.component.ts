@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiPaginatedListApiStockOrder } from '../../../../api/model/apiPaginatedListApiStockOrder';
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../api/model/apiPaginatedResponseApiStockOrder';
 import {
@@ -12,8 +12,9 @@ import {
   GetStockOrdersInFacilityForCustomerUsingGET,
   StockOrderControllerService
 } from '../../../../api/api/stockOrderController.service';
-import StatusEnum = ApiPaginatedResponseApiStockOrder.StatusEnum;
 import { Router } from '@angular/router';
+import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ApproveRejectTransactionModalComponent } from '../approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 
 @Component({
   selector: 'app-quote-order-list',
@@ -66,7 +67,8 @@ export class QuoteOrderListComponent implements OnInit {
   constructor(
     private router: Router,
     private globalEventsManager: GlobalEventManagerService,
-    private stockOrderController: StockOrderControllerService
+    private stockOrderController: StockOrderControllerService,
+    private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -104,6 +106,15 @@ export class QuoteOrderListComponent implements OnInit {
     this.router.navigate(['my-stock', 'orders', 'stock-order', item.id, 'view'],
       { queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
    }
+
+  approveReject(item: ApiStockOrder) {
+    const modalRef = this.modalService.open(ApproveRejectTransactionModalComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      title: $localize`:@@orderHistoryView.rejectTransaction.modal.title:Approve / reject transactions`,
+      instructionsHtml: $localize`:@@orderHistoryView.rejectTransaction.modal.instructionsHtml:Comment`,
+      stockOrderId: item.id
+    });
+  }
 
   private async initializeSortOptions() {
 
@@ -199,6 +210,7 @@ export class QuoteOrderListComponent implements OnInit {
           offset: (page - 1) * this.pageSize,
           limit: this.pageSize,
           ...sortingParams,
+          companyId: this.companyId,
           facilityId,
           semiProductId,
           openOnly,
@@ -216,22 +228,13 @@ export class QuoteOrderListComponent implements OnInit {
           return null;
         }
       }),
-      tap(() => this.globalEventsManager.showLoading(false))
+      tap(() => this.globalEventsManager.showLoading(false)),
+      finalize(() => this.globalEventsManager.showLoading(false))
     );
   }
 
   private loadStockOrders(params: GetQuoteOrdersInFacilityUsingGET.PartialParamMap | GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap):
     Observable<ApiPaginatedResponseApiStockOrder> {
-
-    if (!params.facilityId) {
-      return of({
-        data: {
-          items: [],
-          count: 0
-        },
-        status: StatusEnum.OK
-      });
-    }
 
     // If we are in input mode, that means we need stock orders that are quoted to the current company
     if (this.mode === 'INPUT') {

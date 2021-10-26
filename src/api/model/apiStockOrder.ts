@@ -23,6 +23,7 @@ import { ApiCompany } from './apiCompany';
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiProcessingOrder } from './apiProcessingOrder';
 import { ApiProductOrder } from './apiProductOrder';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrderEvidenceFieldValue } from './apiStockOrderEvidenceFieldValue';
@@ -121,6 +122,7 @@ export interface ApiStockOrder {
      * Price per unit
      */
     pricePerUnit?: number;
+    processingOrder?: ApiProcessingOrder;
     producerUserCustomer?: ApiUserCustomer;
     productOrder?: ApiProductOrder;
     /**
@@ -263,6 +265,7 @@ export namespace ApiStockOrder {
          * Price per unit
          */
         pricePerUnit = 'pricePerUnit',
+        processingOrder = 'processingOrder',
         producerUserCustomer = 'producerUserCustomer',
         productOrder = 'productOrder',
         /**
@@ -316,7 +319,6 @@ export namespace ApiStockOrder {
     export enum OrderTypeEnum {
         PURCHASEORDER = 'PURCHASE_ORDER',
         PROCESSINGORDER = 'PROCESSING_ORDER',
-        SALESORDER = 'SALES_ORDER',
         GENERALORDER = 'GENERAL_ORDER',
         TRANSFERORDER = 'TRANSFER_ORDER'
     }
@@ -646,6 +648,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProcessingOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'processingOrder',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiProcessingOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProcessingOrder'
+                },
+                {
                     metadata: ApiUserCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -909,6 +923,8 @@ export namespace ApiStockOrder {
                 ],
                 pricePerUnit: [
                 ],
+                processingOrder: [
+                ],
                 producerUserCustomer: [
                 ],
                 productOrder: [
@@ -1031,6 +1047,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               pricePerUnit: {
+  //                   validators: []
+  //               },
+  //               processingOrder: {
   //                   validators: []
   //               },
   //               producerUserCustomer: {

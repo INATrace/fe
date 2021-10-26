@@ -10,7 +10,7 @@
                      i18n="@@productLabelFinalProduct.title.finalProducts">
                     Final products
                 </div>
-                <button class="btn btn-solid round btn-table-new content-element--btn"
+                <button *ngIf="isBuyer" class="btn btn-solid round btn-table-new content-element--btn"
                         (click)="newFinalProduct()">
                     <span>+ Add</span>
                 </button>
@@ -33,6 +33,7 @@
         <app-final-product-list
                 [productId]="productId"
                 [listReload]="listReload"
+                [editable]="isBuyer"
                 (showing)="onShowFinalProducts($event)"
                 (countAll)="onCountAllFinalProducts($event)">
         </app-final-product-list>

@@ -4,8 +4,8 @@
         [formControl]="formControlInput"
         [init]="init"
         [class.sc-invalid-feedback-border]="invalid"
-        [disabled]="formControlInput.disabled"
-        [ngClass]="{'tmce-disabled': formControlInput.disabled}"
+        [disabled]="formControlInput.disabled || disabled"
+        [ngClass]="{'tmce-disabled': formControlInput.disabled || disabled}"
         ></editor>
     <ng-content></ng-content>
 
