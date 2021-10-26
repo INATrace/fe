@@ -29,10 +29,57 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
+import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiTransaction } from '../model/apiPaginatedResponseApiTransaction';
+import { ApiTransaction } from '../model/apiTransaction';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+
+/**
+ * Namespace for approveTransactionUsingPUT.
+ */
+export namespace ApproveTransactionUsingPUT {
+    /**
+     * Parameter map for approveTransactionUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * Transaction ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for approveTransactionUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * Transaction ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of approveTransactionUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ApproveTransactionUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
 
 /**
  * Namespace for getStockOrderInputTransactionsUsingGET.
@@ -65,6 +112,59 @@ export namespace GetStockOrderInputTransactionsUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderInputTransactionsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       stockOrderId: [
               ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for rejectTransactionUsingPUT.
+ */
+export namespace RejectTransactionUsingPUT {
+    /**
+     * Parameter map for rejectTransactionUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * Transaction ID
+       */
+      id: number;
+      /**
+       * apiTransaction
+       */
+      ApiTransaction: ApiTransaction;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for rejectTransactionUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * Transaction ID
+       */
+      id = 'id',
+      /**
+       * apiTransaction
+       */
+      ApiTransaction = 'ApiTransaction',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of rejectTransactionUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof RejectTransactionUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -104,6 +204,94 @@ export class TransactionControllerService {
         return false;
     }
 
+
+
+  /**
+   * Approves transaction with provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public approveTransactionUsingPUTByMap(
+    map: ApproveTransactionUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public approveTransactionUsingPUTByMap(
+    map: ApproveTransactionUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public approveTransactionUsingPUTByMap(
+    map: ApproveTransactionUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public approveTransactionUsingPUTByMap(
+    map: ApproveTransactionUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.approveTransactionUsingPUT(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Approves transaction with provided ID.
+     * 
+     * @param id Transaction ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public approveTransactionUsingPUT(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public approveTransactionUsingPUT(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public approveTransactionUsingPUT(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public approveTransactionUsingPUT(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling approveTransactionUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/transaction/${encodeURIComponent(String(id))}/approve`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'approveTransactionUsingPUT')));
+        }
+        return handle;
+    }
 
 
   /**
@@ -183,6 +371,104 @@ export class TransactionControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderInputTransactionsUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Rejects transaction with provided ID and reverts it&#39;s quantities. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public rejectTransactionUsingPUTByMap(
+    map: RejectTransactionUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public rejectTransactionUsingPUTByMap(
+    map: RejectTransactionUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public rejectTransactionUsingPUTByMap(
+    map: RejectTransactionUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public rejectTransactionUsingPUTByMap(
+    map: RejectTransactionUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.rejectTransactionUsingPUT(
+      map.id,
+      map.ApiTransaction,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Rejects transaction with provided ID and reverts it&#39;s quantities.
+     * 
+     * @param id Transaction ID
+     * @param ApiTransaction apiTransaction
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public rejectTransactionUsingPUT(id: number, ApiTransaction: ApiTransaction, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public rejectTransactionUsingPUT(id: number, ApiTransaction: ApiTransaction, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public rejectTransactionUsingPUT(id: number, ApiTransaction: ApiTransaction, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public rejectTransactionUsingPUT(id: number, ApiTransaction: ApiTransaction, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling rejectTransactionUsingPUT.');
+        }
+        if (ApiTransaction === null || ApiTransaction === undefined) {
+            throw new Error('Required parameter ApiTransaction was null or undefined when calling rejectTransactionUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/transaction/${encodeURIComponent(String(id))}/reject`,
+            ApiTransaction,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'rejectTransactionUsingPUT')));
         }
         return handle;
     }
