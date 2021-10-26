@@ -372,6 +372,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get invalidOutputQuantityTooLargeValue() {
+
+    if (this.actionType === 'SHIPMENT') {
+      return false;
+    }
+
     const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.apiMeasureUnitType.weight;
     const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.apiMeasureUnitType.weight;
     return inputQuantityInKg && outputQuantityInKg && (outputQuantityInKg > inputQuantityInKg);
@@ -705,11 +710,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   async saveProcessingOrder() {
-
-    // TODO: remove this when fulfillment is done
-    if (this.update) {
-      return;
-    }
 
     if (this.saveProcessingOrderInProgress) {
       return;
