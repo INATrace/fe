@@ -31,6 +31,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   unconfirmedUser = false;
   returnUrl: string;
   changedCompany = false;
+  fromCompany = false;
 
   myCompanies = null;
 
@@ -50,6 +51,11 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    const parsed = this.router.parseUrl(this.returnUrl);
+    if (parsed && parsed.root && parsed.root.children && parsed.root.children.primary && parsed.root.children.primary.segments &&
+        parsed.root.children.primary.segments.some(value => value.path === 'companies')) {
+      this.fromCompany = true;
+    }
     this.title = $localize`:@@userDetail.title.edit:Edit user profile`;
     this.userId = +this.route.snapshot.paramMap.get('id');
     if (this.mode === 'userProfileView') {
@@ -100,7 +106,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   }
 
   goBack(): void {
-    if (this.returnUrl && !this.changedCompany) {
+    if (this.returnUrl && !(this.fromCompany && this.changedCompany)) {
       this.router.navigateByUrl(this.returnUrl).then();
     }
     else {
