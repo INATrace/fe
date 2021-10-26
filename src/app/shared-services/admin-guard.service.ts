@@ -15,7 +15,7 @@ export class AdminGuardService implements CanActivate {
     ) { }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-        const companyId = Number(localStorage.getItem('selectedUserCompany'));
+        const companyId = Number(route.params.id);
 
         const res = await this.authService.userProfile$.pipe(take(1)).toPromise();
         if (res && (res.role === ApiUserGet.RoleEnum.ADMIN || res.companyIdsAdmin.includes(companyId))) {

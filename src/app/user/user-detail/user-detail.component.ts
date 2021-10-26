@@ -30,6 +30,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   title = '';
   unconfirmedUser = false;
   returnUrl: string;
+  changedCompany = false;
 
   myCompanies = null;
 
@@ -99,8 +100,12 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   }
 
   goBack(): void {
-    if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl).then(); }
-    else { this.router.navigate(['home']).then(); }
+    if (this.returnUrl && !this.changedCompany) {
+      this.router.navigateByUrl(this.returnUrl).then();
+    }
+    else {
+      this.router.navigate(['home']).then();
+    }
   }
 
   async prepareMyCompanies(data) {
@@ -132,6 +137,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
         localStorage.setItem('selectedUserCompany', String(res.data.id));
         this.globalEventsManager.selectedUserCompany(res.data.name);
         localStorage.setItem('token', 'user-company-changed');
+        this.changedCompany = true;
       }
     }
   }

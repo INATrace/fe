@@ -119,7 +119,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   tabSub: Subscription;
 
-  product$ = combineLatest(this.reloadValueChainPing$, this.productId,
+  product$ = combineLatest(this.reloadValueChainPing$, of(this.productId),
       (ping: any, id: string) => {
         return ping && id != null ? Number(id) : null;
       }
@@ -188,7 +188,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
     this.setAlls();
     this.setOrganizationId();
-
   }
 
   ngOnDestroy(): void {
@@ -265,7 +264,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       this.globalEventsManager.showLoading(false);
     }
   }
-
 
   reload() {
     this.reloadValueChainPing$.next(true);

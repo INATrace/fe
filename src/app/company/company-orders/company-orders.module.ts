@@ -14,6 +14,7 @@ import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.com
 import { GlobalOrderDetailsComponent } from './orders-customer-orders/global-order-details/global-order-details.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ProductOrderItemComponent } from './orders-customer-orders/global-order-details/product-order-item/product-order-item.component';
+import { ApproveRejectTransactionModalComponent } from './approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ProductOrderItemComponent } from './orders-customer-orders/global-order
     OrdersCustomerOrdersComponent,
     QuoteOrderListComponent,
     GlobalOrderDetailsComponent,
-    ProductOrderItemComponent
+    ProductOrderItemComponent,
+    ApproveRejectTransactionModalComponent
   ],
   imports: [
     CommonModule,

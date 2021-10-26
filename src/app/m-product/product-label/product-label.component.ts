@@ -301,7 +301,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   pId = this.route.snapshot.params.id
 
-  labels$ = combineLatest(this.labelsReload$, this.pId,
+  labels$ = combineLatest(this.labelsReload$, of(this.pId),
     (ping: boolean, pId: number) => {
       if (ping && pId != null) return Number(pId)
       return null
