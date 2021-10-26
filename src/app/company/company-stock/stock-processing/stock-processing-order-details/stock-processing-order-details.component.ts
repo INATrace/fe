@@ -734,7 +734,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         initiatorUserId: this.creatorId,
         processingAction: this.prAction,
         targetStockOrders: outputStockOrderList,
-        inputTransactions: this.actionType === 'SHIPMENT' ? [] : this.inputTransactions,
+        inputTransactions: this.inputTransactions,
         processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
       };
 
