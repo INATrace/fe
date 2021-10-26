@@ -46,26 +46,6 @@ export namespace GetStockOrderInputTransactionsUsingGET {
        * Company ID
        */
       stockOrderId: number;
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType?: 'COUNT' | 'FETCH';
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit?: number;
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset?: number;
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy?: string;
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort?: 'ASC' | 'DESC';
     }
 
     /**
@@ -75,27 +55,7 @@ export namespace GetStockOrderInputTransactionsUsingGET {
       /**
        * Company ID
        */
-      stockOrderId = 'stockOrderId',
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType = 'requestType',
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit = 'limit',
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset = 'offset',
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy = 'sortBy',
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort = 'sort'
+      stockOrderId = 'stockOrderId'
     }
 
     /**
@@ -105,16 +65,6 @@ export namespace GetStockOrderInputTransactionsUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderInputTransactionsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       stockOrderId: [
               ['required', Validators.required],
-      ],
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
       ],
     };
 }
@@ -181,11 +131,6 @@ export class TransactionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderInputTransactionsUsingGET(
       map.stockOrderId,
-      map.requestType,
-      map.limit,
-      map.offset,
-      map.sortBy,
-      map.sort,
       observe,
       reportProgress
     );
@@ -196,37 +141,15 @@ export class TransactionControllerService {
      * Get a paginated list of input transactions for provided stock order ID.
      * 
      * @param stockOrderId Company ID
-     * @param requestType Only count, only fetch, or return both values (if null)
-     * @param limit Number of records to return. Min: 1, default: 100
-     * @param offset Number of records to skip before returning. Default: 0, min: 0
-     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
-     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiTransaction>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiTransaction>>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiTransaction>>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiTransaction>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiTransaction>>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiTransaction>>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (stockOrderId === null || stockOrderId === undefined) {
             throw new Error('Required parameter stockOrderId was null or undefined when calling getStockOrderInputTransactionsUsingGET.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (requestType !== undefined && requestType !== null) {
-            queryParameters = queryParameters.set('requestType', <any>requestType);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-            queryParameters = queryParameters.set('sortBy', <any>sortBy);
-        }
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
         }
 
         let headers = this.defaultHeaders;
@@ -252,7 +175,6 @@ export class TransactionControllerService {
 
         const handle = this.httpClient.get<ApiPaginatedResponseApiTransaction>(`${this.configuration.basePath}/api/chain/transaction/list/input/stock-order/${encodeURIComponent(String(stockOrderId))}`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
