@@ -58,6 +58,9 @@ export interface ApiTransaction {
      * Output quantity
      */
     outputQuantity?: number;
+    /**
+     * Price per unit
+     */
     pricePerUnit?: number;
     /**
      * Reject comment
@@ -115,6 +118,9 @@ export namespace ApiTransaction {
          * Output quantity
          */
         outputQuantity = 'outputQuantity',
+        /**
+         * Price per unit
+         */
         pricePerUnit = 'pricePerUnit',
         /**
          * Reject comment

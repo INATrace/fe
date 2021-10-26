@@ -284,7 +284,7 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * Company ID
+       * Quote company ID
        */
       companyId: number;
       /**
@@ -330,7 +330,7 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
      */
     export enum Parameters {
       /**
-       * Company ID
+       * Quote company ID
        */
       companyId = 'companyId',
       /**
@@ -1527,7 +1527,7 @@ export class StockOrderControllerService {
     /**
      * getQuoteOrdersInFacility
      * 
-     * @param companyId Company ID
+     * @param companyId Quote company ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
