@@ -647,7 +647,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   netWeight() {
     if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value) {
       if (this.stockOrderForm.get('tare').value) {
-        if (this.stockOrderForm.get('totalGrossQuantity').value > this.stockOrderForm.get('tare').value) {
+        if (Number(this.stockOrderForm.get('totalGrossQuantity').value) > Number(this.stockOrderForm.get('tare').value)) {
           this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
         } else {
           this.netWeightForm.setValue(Number(0).toFixed(2));
