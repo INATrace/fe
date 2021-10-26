@@ -4,6 +4,13 @@
             <div class="af-form-row">
                 <div class="af-form-block--c12">
                     <div class="title-page content-element--title" i18n="@@companyDetail.farmers.import.title">Import farmers</div>
+
+                    <h6>Template</h6>
+                    <a href="/assets/farmer-import/Template_list%20of%20farmers_NEW.xlsx"><fa-icon [icon]="faFileExcel"></fa-icon> Click to download Excel template</a>
+
+                    <div class="spacer-title-section"></div>
+
+                    <h6>Upload data</h6>
                     <attachment-uploader
                             allowedMimeType="[application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]"
                             allowedMimeTypeErrorMessage={{mimeError}}

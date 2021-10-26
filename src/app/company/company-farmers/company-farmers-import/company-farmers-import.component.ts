@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { faFileExcel} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-company-farmers-import',
@@ -16,6 +17,8 @@ export class CompanyFarmersImportComponent implements OnInit {
   fileForm = new FormControl();
 
   mimeError = $localize`:@@companyDetail.farmers.uploadSpreadsheet.error:Upload only file types XLS or XLSX.`;
+
+  faFileExcel = faFileExcel;
 
   constructor(
       private companyControllerService: CompanyControllerService,
