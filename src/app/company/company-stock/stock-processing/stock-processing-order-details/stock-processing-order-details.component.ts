@@ -264,7 +264,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.update) {
       return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
-    return [];
+    return [] as ApiStockOrder[];
   }
 
   get isUsingInput(): boolean {
@@ -1713,13 +1713,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.showLeftSide) { return; }
 
-    if (this.actionType === 'SHIPMENT') {
-      (this.outputStockOrderForm.get('inputTransactions') as FormArray).removeAt(i);
-      this.calcInputQuantity(true);
-      return;
-    }
-
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'SHIPMENT') {
       this.processingOrderInputTransactions.splice(i, 1);
       this.calcInputQuantity(true);
       return;
