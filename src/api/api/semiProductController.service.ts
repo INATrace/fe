@@ -106,6 +106,51 @@ export namespace DeleteSemiProductUsingDELETE {
 }
 
 /**
+ * Namespace for getSemiProductDetailsUsingGET.
+ */
+export namespace GetSemiProductDetailsUsingGET {
+    /**
+     * Parameter map for getSemiProductDetailsUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Semi product ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getSemiProductDetailsUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Semi product ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getSemiProductDetailsUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetSemiProductDetailsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for getSemiProductListUsingGET.
  */
 export namespace GetSemiProductListUsingGET {
@@ -133,6 +178,10 @@ export namespace GetSemiProductListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -158,7 +207,11 @@ export namespace GetSemiProductListUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort'
+      sort = 'sort',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -176,6 +229,8 @@ export namespace GetSemiProductListUsingGET {
       ],
       sort: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -191,6 +246,10 @@ export namespace GetSemiProductUsingGET {
        * Semi product ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -200,7 +259,11 @@ export namespace GetSemiProductUsingGET {
       /**
        * Semi product ID
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -210,6 +273,8 @@ export namespace GetSemiProductUsingGET {
     export const ParamValidators: {[K in keyof GetSemiProductUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -422,6 +487,93 @@ export class SemiProductControllerService {
 
 
   /**
+   * Get a single semi product with details with the provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSemiProductDetailsUsingGETByMap(
+    map: GetSemiProductDetailsUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiSemiProduct>;
+  public getSemiProductDetailsUsingGETByMap(
+    map: GetSemiProductDetailsUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
+  public getSemiProductDetailsUsingGETByMap(
+    map: GetSemiProductDetailsUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
+  public getSemiProductDetailsUsingGETByMap(
+    map: GetSemiProductDetailsUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getSemiProductDetailsUsingGET(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single semi product with details with the provided ID.
+     * 
+     * @param id Semi product ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getSemiProductDetailsUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiSemiProduct>;
+    public getSemiProductDetailsUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
+    public getSemiProductDetailsUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
+    public getSemiProductDetailsUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getSemiProductDetailsUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiSemiProduct>(`${this.configuration.basePath}/api/chain/semi-product/${encodeURIComponent(String(id))}/detail`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getSemiProductDetailsUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Get a paginated list of semi products. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -450,6 +602,7 @@ export class SemiProductControllerService {
       map.offset,
       map.sortBy,
       map.sort,
+      map.language,
       observe,
       reportProgress
     );
@@ -464,13 +617,14 @@ export class SemiProductControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiSemiProduct>;
-    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiSemiProduct>>;
-    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiSemiProduct>>;
-    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiSemiProduct>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiSemiProduct>>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiSemiProduct>>;
+    public getSemiProductListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -490,6 +644,9 @@ export class SemiProductControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -551,6 +708,7 @@ export class SemiProductControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getSemiProductUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -561,18 +719,22 @@ export class SemiProductControllerService {
      * Get a single semi product with the provided ID.
      * 
      * @param id Semi product ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSemiProductUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiSemiProduct>;
-    public getSemiProductUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
-    public getSemiProductUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
-    public getSemiProductUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getSemiProductUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiSemiProduct>;
+    public getSemiProductUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiSemiProduct>>;
+    public getSemiProductUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiSemiProduct>>;
+    public getSemiProductUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getSemiProductUsingGET.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
