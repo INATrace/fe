@@ -1,4 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModalImproved} from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
+import {ChainStockOrder} from '../../../../../api-chain/model/chainStockOrder';
+import {faCheckCircle, faExclamationCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
+import {dbKey} from '../../../../../shared/utils';
+import {ProcessingOrderControllerService} from '../../../../../api/api/processingOrderController.service';
+import {ApiTransaction} from '../../../../../api/model/apiTransaction';
+import {ApiStockOrder} from '../../../../../api/model/apiStockOrder';
+import {StockOrderControllerService} from '../../../../../api/api/stockOrderController.service';
+import {ApiStockOrderAggregatedHistory} from '../../../../../api/model/apiStockOrderAggregatedHistory';
 
 @Component({
   selector: 'app-order-history',
@@ -7,9 +20,158 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private stockOrderService: StockOrderControllerService,
+    private processingOrderService: ProcessingOrderControllerService,
+    private modalService: NgbModalImproved,
+    private globalEventsManager: GlobalEventManagerService
+  ) {
+  }
 
-  ngOnInit(): void {
+  qrCodeSize = 150;
+
+  faCheckCircle = faCheckCircle;
+  faExclamationCircle = faExclamationCircle;
+  faTimes = faTimes;
+
+
+  rootHistory: ApiStockOrderAggregatedHistory;
+
+
+  rootStockOrder: ApiStockOrder;
+  reloadPing$ = new BehaviorSubject<boolean>(false);
+
+  productId = this.route.snapshot.params.id;
+
+  history$ = combineLatest(
+    this.reloadPing$,
+    this.route.params,
+    (ping: boolean, params: any ) =>
+    {
+      return params;
+    })
+    .pipe(
+      tap(val => this.globalEventsManager.showLoading(true)),
+      switchMap(val => {
+        return this.stockOrderService.getStockOrderAggregatedHistoryUsingGET(val.stockOrderId);
+      }),
+      map(val => {
+        if (val && val.status === 'OK') {
+          return val.data;
+        }
+        return null;
+      }),
+      tap(val => {
+        this.rootStockOrder = this.readRootStockOrder(val.items);
+      }),
+      tap(val => this.globalEventsManager.showLoading(false)),
+      shareReplay(1)
+    );
+
+
+
+  readRootStockOrder(aggregatedHistoryList: ApiStockOrderAggregatedHistory[]): ApiStockOrder {
+    if (aggregatedHistoryList.length === 0) {
+      return null;
+    }
+    const root = aggregatedHistoryList.find(x => x.depth === 0);
+
+    this.rootHistory = root;
+
+    return root.aggregations[0].stockOrder;
+  }
+
+  isRoot(root: ApiStockOrder, one: ApiStockOrder) {
+    return dbKey(root) === dbKey(one);
+  }
+
+
+  processingOrderName(aggregate: ApiStockOrderAggregatedHistory) {
+    if (aggregate.processingOrder) {
+      if (aggregate.processingOrder.processingAction) {
+        return aggregate.processingOrder.processingAction.name;
+      } else {
+        return $localize`:@@orderHistoryView.processingOrderName.corruptedHistory: Corrupted history - processing action deleted`;
+      }
+    }
+    if (aggregate.aggregations.length === 0) {
+      return $localize`:@@orderHistoryView.processingOrderName.missingHistory:History too big. Only part is loaded. Follow other order links to view the rest.`;
+    }
+    return $localize`:@@orderHistoryView.processingOrderName.purchase:Purchase`;
+  }
+
+  processingCreationDate(aggregate: ApiStockOrderAggregatedHistory) {
+    if (!aggregate.processingOrder) { return null; }
+    return aggregate.processingOrder.processingDate;
+  }
+
+  ngOnInit() {
+  }
+
+  goToInput(tx: ApiTransaction) {
+    this.router.navigate(['stock-order', tx.sourceStockOrder.id, 'view'], { relativeTo: this.route.parent });
+  }
+
+
+  async goToOutput(tx: ApiTransaction) {
+    if (!tx.isProcessing) {
+      this.router.navigate(['stock-order', tx.targetStockOrder.id, 'view'], { relativeTo: this.route.parent });
+    } else {
+      const res = await this.processingOrderService.getProcessingOrder(tx.targetStockOrder.id).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK') {
+        if (res.data.targetStockOrders && res.data.targetStockOrders.length > 0) {
+          this.router.navigate(['stock-order', res.data.targetStockOrders[0], 'view'], { relativeTo: this.route.parent });
+        }
+      }
+    }
+  }
+
+  goToSibiling(order: ApiStockOrder) {
+    this.router.navigate(['stock-order', dbKey(order), 'view'], { relativeTo: this.route.parent });
+  }
+
+  goToOrderView(order: ChainStockOrder) {
+    this.router.navigate(['stock-order', dbKey(order), 'view'], { relativeTo: this.route.parent });
+  }
+
+
+  isThisOrder(currentOrder: ApiStockOrder, toShowOrder: ApiStockOrder) {
+    return dbKey(currentOrder) === dbKey(toShowOrder);
+  }
+
+  orderType(stockOrder: ApiStockOrder) {
+    const ordType = stockOrder.processingOrder.processingAction.type;
+    console.log('ordType', ordType);
+    switch (ordType) {
+      case 'PROCESSING': return 'processing-order';
+      case 'SHIPMENT': return 'shipment-order';
+      case 'TRANSFER': return 'transfer-order';
+      default:
+        throw Error('Wrong processing action type: ' + ordType);
+    }
+  }
+
+  edit(stockOrder: ApiStockOrder) {
+    this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', this.orderType(stockOrder), dbKey(this.rootStockOrder)]);
+  }
+
+
+  qrCodeString(stockOrder: ApiStockOrder) {
+    if (!stockOrder) {
+      return;
+    }
+    return dbKey(stockOrder);
+  }
+
+  copyToClipboard() {
+    document.execCommand('copy');
+  }
+
+  transactionColor(tx) {
+    if (tx.status === 'CANCELED') { return 'ab-edit-link canceled'; }
+    return 'ab-edit-link';
   }
 
 }

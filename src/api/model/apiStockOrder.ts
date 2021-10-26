@@ -60,6 +60,10 @@ export interface ApiStockOrder {
     cost?: number;
     createdBy?: ApiUser;
     /**
+     * Timestamp indicates when stock order have been created
+     */
+    creationTimestamp?: Date;
+    /**
      * ID of the user who has created the stock order
      */
     creatorId?: number;
@@ -202,6 +206,10 @@ export namespace ApiStockOrder {
          */
         cost = 'cost',
         createdBy = 'createdBy',
+        /**
+         * Timestamp indicates when stock order have been created
+         */
+        creationTimestamp = 'creationTimestamp',
         /**
          * ID of the user who has created the stock order
          */
@@ -444,6 +452,17 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -888,6 +907,8 @@ export namespace ApiStockOrder {
                 ],
                 createdBy: [
                 ],
+                creationTimestamp: [
+                ],
                 creatorId: [
                 ],
                 currency: [
@@ -994,6 +1015,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               createdBy: {
+  //                   validators: []
+  //               },
+  //               creationTimestamp: {
   //                   validators: []
   //               },
   //               creatorId: {

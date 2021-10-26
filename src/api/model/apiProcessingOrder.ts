@@ -37,6 +37,10 @@ export interface ApiProcessingOrder {
      * Input transactions
      */
     inputTransactions?: Array<ApiTransaction>;
+    /**
+     * Output transactions
+     */
+    outputTransactions?: Array<ApiTransaction>;
     processingAction?: ApiProcessingAction;
     /**
      * Processing date
@@ -68,6 +72,10 @@ export namespace ApiProcessingOrder {
          * Input transactions
          */
         inputTransactions = 'inputTransactions',
+        /**
+         * Output transactions
+         */
+        outputTransactions = 'outputTransactions',
         processingAction = 'processingAction',
         /**
          * Processing date
@@ -120,6 +128,18 @@ export namespace ApiProcessingOrder {
                     complexType: 'ApiTransaction'
                 },
                 {
+                    metadata: ApiTransaction.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputTransactions',
+                    classname: 'ApiProcessingOrder',
+                    dataType: 'Array&lt;ApiTransaction&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiTransaction'
+                },
+                {
                     metadata: ApiProcessingAction.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -162,6 +182,8 @@ export namespace ApiProcessingOrder {
                 ],
                 inputTransactions: [
                 ],
+                outputTransactions: [
+                ],
                 processingAction: [
                 ],
                 processingDate: [
@@ -182,6 +204,9 @@ export namespace ApiProcessingOrder {
   //                   validators: []
   //               },
   //               inputTransactions: {
+  //                   validators: []
+  //               },
+  //               outputTransactions: {
   //                   validators: []
   //               },
   //               processingAction: {

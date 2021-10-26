@@ -31,6 +31,7 @@ import { catchError }                                        from 'rxjs/operator
 
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiStockOrder } from '../model/apiPaginatedResponseApiStockOrder';
+import { ApiPaginatedResponseApiStockOrderAggregatedHistory } from '../model/apiPaginatedResponseApiStockOrderAggregatedHistory';
 import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiPurchaseOrder } from '../model/apiResponseApiPurchaseOrder';
@@ -384,6 +385,101 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
       semiProductId: [
       ],
       openOnly: [
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getStockOrderAggregatedHistoryUsingGET.
+ */
+export namespace GetStockOrderAggregatedHistoryUsingGET {
+    /**
+     * Parameter map for getStockOrderAggregatedHistoryUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * StockOrder ID
+       */
+      id: number;
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getStockOrderAggregatedHistoryUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * StockOrder ID
+       */
+      id = 'id',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderAggregatedHistoryUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetStockOrderAggregatedHistoryUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
       ],
       language: [
       ],
@@ -877,6 +973,10 @@ export namespace GetStockOrderUsingGET {
        */
       id: number;
       /**
+       * Return the processing order base data
+       */
+      withProcessingOrder?: boolean;
+      /**
        * language
        */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
@@ -891,6 +991,10 @@ export namespace GetStockOrderUsingGET {
        */
       id = 'id',
       /**
+       * Return the processing order base data
+       */
+      withProcessingOrder = 'withProcessingOrder',
+      /**
        * language
        */
       language = 'language'
@@ -903,6 +1007,8 @@ export namespace GetStockOrderUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      withProcessingOrder: [
       ],
       language: [
       ],
@@ -1580,6 +1686,121 @@ export class StockOrderControllerService {
 
 
   /**
+   * getStockOrderAggregatedHistory by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStockOrderAggregatedHistoryUsingGETByMap(
+    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrderAggregatedHistory>;
+  public getStockOrderAggregatedHistoryUsingGETByMap(
+    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrderAggregatedHistory>>;
+  public getStockOrderAggregatedHistoryUsingGETByMap(
+    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrderAggregatedHistory>>;
+  public getStockOrderAggregatedHistoryUsingGETByMap(
+    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getStockOrderAggregatedHistoryUsingGET(
+      map.id,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * getStockOrderAggregatedHistory
+     * 
+     * @param id StockOrder ID
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getStockOrderAggregatedHistoryUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrderAggregatedHistory>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrderAggregatedHistory>>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrderAggregatedHistory>>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getStockOrderAggregatedHistoryUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrderAggregatedHistory>(`${this.configuration.basePath}/api/chain/stock-order/list/aggregated-history/${encodeURIComponent(String(id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderAggregatedHistoryUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Get a paginated list of stock orders by company ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -2044,6 +2265,7 @@ export class StockOrderControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderUsingGET(
       map.id,
+      map.withProcessingOrder,
       map.language,
       observe,
       reportProgress
@@ -2055,16 +2277,22 @@ export class StockOrderControllerService {
      * Get a single stock order with the provided ID.
      * 
      * @param id StockOrder ID
+     * @param withProcessingOrder Return the processing order base data
      * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
+    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getStockOrderUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withProcessingOrder !== undefined && withProcessingOrder !== null) {
+            queryParameters = queryParameters.set('withProcessingOrder', <any>withProcessingOrder);
         }
 
         let headers = this.defaultHeaders;
@@ -2093,6 +2321,7 @@ export class StockOrderControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
