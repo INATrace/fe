@@ -101,8 +101,11 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.title = $localize`:@@productLabelStockFacilityModal.newFacility.editTitle:Edit facility`;
     const facilityId = this.route.snapshot.params.facilityId;
     this.facilityControllerService.getFacilityDetailUsingGET(facilityId).pipe(first()).subscribe(res => {
+
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
+
       this.semiProducts = res.data.facilitySemiProductList;
+      this.finalProducts = res.data.facilityFinalProducts;
 
       const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }
