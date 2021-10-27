@@ -53,7 +53,7 @@ const routes: Routes = [
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock`
             + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
-        route: 'my-stock/purchases/tab'
+        route: 'my-stock/payments/tab'
       }
     }
   },
