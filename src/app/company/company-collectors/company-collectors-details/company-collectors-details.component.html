@@ -340,6 +340,15 @@
                 </ng-container>
             </div>
 
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <div class="af-bottom-buttons" i18n="@@collectorDetail.modal.footer.buttons">
+                        <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+                        <button class="btn" type="button" (click)="save()"><span>Save</span></button>
+                    </div>
+                </div>
+            </div>
+
             <div class="af-form-row" *ngIf="this.update">
                 <div class="af-form-block--c12">
                     <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
@@ -388,7 +397,7 @@
                 </div>
             </div>
 
-            <div class="af-form-row" *ngIf="this.update">
+            <div class="af-form-row mb-5" *ngIf="this.update">
                 <div class="af-form-block--c12">
                     <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
                     <div class="af-form-element">
@@ -413,15 +422,6 @@
                                 No payments found
                             </div>
                         </ng-container>
-                    </div>
-                </div>
-            </div>
-
-            <div class="af-form-row">
-                <div class="af-form-block--c12">
-                    <div class="af-bottom-buttons" i18n="@@collectorDetail.modal.footer.buttons">
-                        <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
-                        <button class="btn" type="button" (click)="save()"><span>Save</span></button>
                     </div>
                 </div>
             </div>
