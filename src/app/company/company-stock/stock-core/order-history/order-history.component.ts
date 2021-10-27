@@ -10,6 +10,7 @@ import {ApiTransaction} from '../../../../../api/model/apiTransaction';
 import {ApiStockOrder} from '../../../../../api/model/apiStockOrder';
 import {StockOrderControllerService} from '../../../../../api/api/stockOrderController.service';
 import {ApiStockOrderAggregatedHistory} from '../../../../../api/model/apiStockOrderAggregatedHistory';
+import {StockOrderType} from '../../../../../shared/types';
 
 @Component({
   selector: 'app-order-history',
@@ -139,21 +140,26 @@ export class OrderHistoryComponent implements OnInit {
     return currentOrder.id === toShowOrder.id;
   }
 
-  orderType(stockOrder: ApiStockOrder) {
-    const ordType = stockOrder.processingOrder.processingAction.type;
-    switch (ordType) {
-      case 'PROCESSING': return 'processing-order';
-      case 'SHIPMENT': return 'shipment-order';
-      case 'TRANSFER': return 'transfer-order';
-      default:
-        throw Error('Wrong processing action type: ' + ordType);
-    }
-  }
+  edit(order: ApiStockOrder) {
 
-  edit(stockOrder: ApiStockOrder) {
-    this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', this.orderType(stockOrder), this.rootStockOrder.id]);
-  }
+      switch (order.orderType as StockOrderType) {
+        case 'PURCHASE_ORDER':
+          this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
+          return;
+        case 'GENERAL_ORDER':
+          this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
+          return;
+        case 'PROCESSING_ORDER':
+          this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.id]).then();
+          return;
+        case 'TRANSFER_ORDER':
+          this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.id]).then();
+          return;
 
+        default:
+          throw new Error('Unsupported Stock order type');
+      }
+  }
 
   qrCodeString(stockOrder: ApiStockOrder) {
     if (!stockOrder) {
