@@ -11297,6 +11297,10 @@
           "name": {
             "description": "Name of final product",
             "type": "string"
+          },
+          "product": {
+            "$ref": "#/components/schemas/ApiProductBase",
+            "description": "The Product that this final product belongs"
           }
         },
         "type": "object"
@@ -13969,6 +13973,48 @@
           "valueChain": {
             "$ref": "#/components/schemas/ApiValueChain",
             "description": "valueChain"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProductBase": {
+        "properties": {
+          "description": {
+            "description": "product description",
+            "type": "string"
+          },
+          "howToUse": {
+            "description": "how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "ingredients": {
+            "description": "ingredients - list the ingredients in the product and describe their properties",
+            "type": "string"
+          },
+          "keyMarketsShare": {
+            "additionalProperties": {
+              "format": "double",
+              "type": "number"
+            },
+            "description": "Key Markets, market name - share number map",
+            "type": "object"
+          },
+          "name": {
+            "description": "product name",
+            "type": "string"
+          },
+          "nutritionalValue": {
+            "description": "nutritional Value - list the nutritional value of the product",
+            "type": "string"
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ApiProductOrigin",
+            "description": "origin - text and location "
           }
         },
         "type": "object"
