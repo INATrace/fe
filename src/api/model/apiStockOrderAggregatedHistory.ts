@@ -19,6 +19,7 @@
 
 
 import { ApiProcessingOrder } from './apiProcessingOrder';
+import { ApiStockOrder } from './apiStockOrder';
 import { ApiStockOrderAggregation } from './apiStockOrderAggregation';
 
 
@@ -37,6 +38,7 @@ export interface ApiStockOrderAggregatedHistory {
      */
     id?: number;
     processingOrder?: ApiProcessingOrder;
+    stockOrder?: ApiStockOrder;
 }
 
 /**
@@ -59,7 +61,8 @@ export namespace ApiStockOrderAggregatedHistory {
          * Entity id
          */
         id = 'id',
-        processingOrder = 'processingOrder'
+        processingOrder = 'processingOrder',
+        stockOrder = 'stockOrder'
     }
 
 
@@ -114,6 +117,18 @@ export namespace ApiStockOrderAggregatedHistory {
                     isListContainer: false,
                     complexType: 'ApiProcessingOrder'
                 },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'stockOrder',
+                    classname: 'ApiStockOrderAggregatedHistory',
+                    dataType: 'ApiStockOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiStockOrder'
+                },
             ],
             validators: {
                 aggregations: [
@@ -123,6 +138,8 @@ export namespace ApiStockOrderAggregatedHistory {
                 id: [
                 ],
                 processingOrder: [
+                ],
+                stockOrder: [
                 ],
             }
         }
@@ -141,6 +158,9 @@ export namespace ApiStockOrderAggregatedHistory {
   //                   validators: []
   //               },
   //               processingOrder: {
+  //                   validators: []
+  //               },
+  //               stockOrder: {
   //                   validators: []
   //               },
   //     }

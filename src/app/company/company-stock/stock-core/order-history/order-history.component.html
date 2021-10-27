@@ -105,16 +105,16 @@
                   <td>{{stockOrder.orderType | formatStockOrderType}}</td>
                 </tr>
 
-                <tr *ngIf="rootHistory.processingOrder.processingAction">
+                <tr *ngIf="rootHistory.processingOrder?.processingAction">
                   <th i18n="@@orderHistoryView.tableCol.processingAction">Processing action</th>
-                  <td>{{rootHistory.processingOrder.processingAction?.name}} ({{rootHistory.processingOrder.processingAction?.type | formatProcessingActionType}})</td>
+                  <td>{{rootHistory.processingOrder?.processingAction?.name}} ({{rootHistory.processingOrder?.processingAction?.type | formatProcessingActionType}})</td>
                 </tr>
 
                 <tr *ngIf="rootHistory.processingOrder && rootHistory.processingOrder.processingAction?.type === 'PROCESSING'">
                   <th i18n="@@orderHistoryView.tableCol.sibilingOrders">Sibling orders</th>
                   <td>
                     <ng-container>
-                      {{rootHistory.processingOrder.processingAction?.outputSemiProduct?.name}}
+                      {{rootHistory.processingOrder?.processingAction?.outputSemiProduct?.name}}
                       <ul style="margin-bottom: 0;">
                         <ng-container *ngFor="let order of rootHistory.processingOrder?.targetStockOrders">
                           <li *ngIf="isThisOrder(stockOrder, order)"><a class="ab-edit-link" (click)="goToSibiling(order)">{{order.totalQuantity}} {{order.measureUnitType?.label}}</a><span> (this order)</span></li>
@@ -180,16 +180,18 @@
                     <tr *ngIf="!stockOrder.purchaseOrder">
                       <th i18n="@@orderHistoryView.tableCol.inputs">Inputs</th>
                       <td>
-                        {{rootHistory.processingOrder.processingAction?.inputSemiProduct?.name}}
-                        <ul *ngIf="rootHistory.processingOrder.inputTransactions && rootHistory.processingOrder.inputTransactions.length> 0" style="margin-bottom: 0;">
-                          <li *ngFor="let tx of rootHistory.processingOrder.inputTransactions"><a [ngClass]="transactionColor(tx)" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a>
+                        {{rootHistory.processingOrder?.processingAction?.inputSemiProduct?.name}}
+                        <ul *ngIf="rootHistory.processingOrder?.inputTransactions && rootHistory.processingOrder?.inputTransactions.length> 0" style="margin-bottom: 0;">
+                          <li *ngFor="let tx of rootHistory.processingOrder?.inputTransactions">
+                            <a [ngClass]="transactionColor(tx)" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a>
                             <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
 
                           </li>
                         </ul>
                         <ng-container *ngIf="rootHistory.processingOrder && rootHistory.processingOrder.processingAction.type === 'PROCESSING'">
                           <ul style="margin-bottom: 0;">
-                            <li *ngFor="let tx of rootHistory.processingOrder.inputTransactions"><a class="ab-edit-link" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a></li>
+                            <li *ngFor="let tx of rootHistory.processingOrder.inputTransactions">
+                              <a class="ab-edit-link" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a></li>
                           </ul>
                         </ng-container>
                       </td>
@@ -204,13 +206,14 @@
                     <tr>
                       <th i18n="@@orderHistoryView.tableCol.outputs">Outputs</th>
                       <td>
-                        {{rootHistory.processingOrder.processingAction?.outputSemiProduct?.name}}
-                        <ul *ngIf="rootHistory.processingOrder.outputTransactions && rootHistory.processingOrder.outputTransactions.length> 0" style="margin-bottom: 0;">
-                          <li *ngFor="let tx of rootHistory.processingOrder.outputTransactions">
+                        {{rootHistory.processingOrder?.processingAction?.outputSemiProduct?.name}}
+                        <ul *ngIf="rootHistory.processingOrder?.outputTransactions && rootHistory.processingOrder?.outputTransactions.length> 0" style="margin-bottom: 0;">
+                          <li *ngFor="let tx of rootHistory.processingOrder?.outputTransactions">
                             <a [ngClass]="transactionColor(tx)" (click)="goToOutput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a>
                             <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
                           </li>
                         </ul>
+
                       </td>
                     </tr>
                     </tbody>
@@ -256,15 +259,15 @@
             </fa-icon>
             required on quote - missing</span>,
           <span i18n="@@orderHistoryView.history.requiredOnQuoteOneOfPresent" class="ml-1">
-            <div
+            <span
               class="quote-required-one-of quote-required-one-of-present ml-1">G1
-            </div>
+            </span>
 
             one of required documents on quote in group G1 present</span>,
           <span i18n="@@orderHistoryView.history.requiredOnQuoteOneOfMissing" class="ml-1">
-            <div
+            <span
               class="quote-required-one-of quote-required-one-of-missing ml-1">G1
-            </div>
+            </span>
 
             all of required documents on quote in group G1 missing</span>
         </div>

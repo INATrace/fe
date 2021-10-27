@@ -78,7 +78,7 @@ export class OrderHistoryComponent implements OnInit {
 
     this.rootHistory = root;
 
-    return root.aggregations[0].stockOrder;
+    return root.stockOrder;
   }
 
   isRoot(root: ApiStockOrder, one: ApiStockOrder) {
