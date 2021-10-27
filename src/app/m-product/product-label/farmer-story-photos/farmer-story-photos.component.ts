@@ -30,40 +30,43 @@ export class FarmerStoryPhotosComponent extends GenericEditableItemComponent<Api
         private commonController: CommonControllerService
 
     ) {
-        super(globalEventsManager)
+        super(globalEventsManager);
     }
 
     @Input()
-    disableDelete = false
+    disableEdit = false;
 
     @Input()
-    title = null
+    disableDelete = false;
+
+    @Input()
+    title = null;
 
     faStamp = faStamp;
 
-    public generateForm(value: any): FormGroup {
-        return generateFormFromMetadata(ApiResponsibilityFarmerPicture.formMetadata(), value, ApiResponsibilityFarmerPictureValidationScheme)
-    }
-
     static createEmptyObject(): ApiResponsibilityFarmerPicture {
-        let market = ApiResponsibilityFarmerPicture.formMetadata();
-        return defaultEmptyObject(market) as ApiResponsibilityFarmerPicture
+        const market = ApiResponsibilityFarmerPicture.formMetadata();
+        return defaultEmptyObject(market) as ApiResponsibilityFarmerPicture;
     }
 
     static emptyObjectFormFactory(): () => FormControl {
         return () => {
-            let f = new FormControl(FarmerStoryPhotosComponent.createEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators)
-            return f
-        }
+            const f = new FormControl(FarmerStoryPhotosComponent.createEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators);
+            return f;
+        };
+    }
+
+    public generateForm(value: any): FormGroup {
+        return generateFormFromMetadata(ApiResponsibilityFarmerPicture.formMetadata(), value, ApiResponsibilityFarmerPictureValidationScheme);
     }
 
     onDownload() {
-      let apiDoc = this.form.get('document').value as ApiDocument
+      const apiDoc = this.form.get('document').value as ApiDocument;
       if (apiDoc && apiDoc.storageKey) {
-        let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+        const sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
           this.fileSaverService.save(res, apiDoc.name);
-          sub.unsubscribe()
-        })
+          sub.unsubscribe();
+        });
       }
     }
 }

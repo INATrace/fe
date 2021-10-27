@@ -2,17 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
-import {debounceTime, take} from 'rxjs/operators';
+import { debounceTime, take } from 'rxjs/operators';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import {
-  dateAtMidnightISOString,
-  defaultEmptyObject,
-  deleteNullFields,
-  generateFormFromMetadata
-} from '../../../../../shared/utils';
+import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -43,15 +38,17 @@ import _ from 'lodash-es';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
-import ApiTransactionStatus = ApiTransaction.StatusEnum;
-import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
-import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
 import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
 import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
+import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
+import { ApiResponseApiProcessingOrder } from '../../../../../api/model/apiResponseApiProcessingOrder';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -115,6 +112,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   cbSelectAllForm = new FormControl(false);
   outputStockOrderForm: FormGroup;
   outputStockOrders = new FormArray([], customValidateArrayGroup());
+  outputStockOrder: ApiStockOrder;
 
   // Processing orders
   editableProcessingOrder: ApiProcessingOrder;
@@ -257,10 +255,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get inputTransactions(): ApiTransaction[] {
 
     if (this.update) {
-      if (this.actionType === 'SHIPMENT' && this.outputStockOrderForm) {
-        return this.outputStockOrderForm.get('inputTransactions').value;
-      }
-
       return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
     }
     return [];
@@ -270,7 +264,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.update) {
       return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
-    return [];
+    return [] as ApiStockOrder[];
   }
 
   get isUsingInput(): boolean {
@@ -365,8 +359,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get showTotalQuantityForm() {
 
     if (this.actionType === 'SHIPMENT') { return true; }
-    if (this.actionType !== 'PROCESSING') { return false; }
-    return true;
+    return this.actionType === 'PROCESSING';
+
   }
 
   get invalidOutputQuantity() {
@@ -378,6 +372,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get invalidOutputQuantityTooLargeValue() {
+
+    if (this.actionType === 'SHIPMENT') {
+      return false;
+    }
+
     const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.apiMeasureUnitType.weight;
     const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.apiMeasureUnitType.weight;
     return inputQuantityInKg && outputQuantityInKg && (outputQuantityInKg > inputQuantityInKg);
@@ -556,38 +555,95 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const orderId = this.route.snapshot.params.orderId as string;
       if (!orderId) { throw Error('No order id!'); }
 
-      // TODO: get the stock order from backend
-      // try {
-      //   this.globalEventsManager.showLoading(true);
-      //   resp = await this.chainStockOrderService.getStockOrderByIdWithInputOrders(orderId).pipe(take(1)).toPromise();
-      // } catch (e) {
-      //   throw e;
-      // } finally {
-      //   this.globalEventsManager.showLoading(false);
-      // }
+      this.globalEventsManager.showLoading(true);
+
+      // Get the stock order with the passed ID
+      let respStockOrder: ApiResponseApiStockOrder;
+      try {
+
+        respStockOrder = await this.stockOrderController
+          .getStockOrderUsingGET(Number(orderId), true).pipe(take(1)).toPromise();
+
+      } catch (e) {
+        this.globalEventsManager.showLoading(false);
+        throw e;
+      }
+
+      // Validate returned status for the Stock order
+      if (!respStockOrder || respStockOrder.status !== 'OK') {
+        throw new Error('Cannot retrieve stock order with passed ID');
+      }
+      this.outputStockOrder = respStockOrder.data;
+
+      // Validate that stock order has processing order
+      if (!this.outputStockOrder.processingOrder || !this.outputStockOrder.processingOrder.id) {
+        throw new Error('Stock order has no processing order set');
+      }
+
+      // Get the processing order
+      let respProcessingOrder: ApiResponseApiProcessingOrder;
+      try {
+
+        respProcessingOrder = await this.processingOrderController
+          .getProcessingOrder(this.outputStockOrder.processingOrder.id).pipe(take(1)).toPromise();
+
+      } catch (e) {
+        throw e;
+      } finally {
+        this.globalEventsManager.showLoading(false);
+      }
+
+      // Validate the returned status for the Processing order
+      if (!respProcessingOrder || respProcessingOrder.status !== 'OK') {
+        throw new Error('Cannot retrieve the processing order');
+      }
+      this.editableProcessingOrder = respProcessingOrder.data;
+
+      // Set the processing action from the processing order and related data
+      this.prAction = this.editableProcessingOrder.processingAction;
+      this.processingActionForm.setValue(this.prAction);
+      this.processingDateForm.setValue(this.editableProcessingOrder.processingDate);
+      this.defineInputAndOutputSemiProduct(this.prAction).then();
+
+      // Set the input transactions and stock orders
+      this.processingOrderInputTransactions = this.editableProcessingOrder.inputTransactions;
+      this.processingOrderInputOrders = this.editableProcessingOrder.inputTransactions.map(value => value.sourceStockOrder);
 
       // Handle the update initialization for Quote orders
       if (actionType === 'SHIPMENT') {
 
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
 
-        // TODO: quote update
+        const respFacility = await this.facilityController
+          .getFacilityUsingGET(this.outputStockOrder.quoteFacility.id).pipe(take(1)).toPromise();
+        if (respFacility && respFacility.status === 'OK' && respFacility.data) {
+          this.inputFacilityFromUrl = respFacility.data;
+        }
       }
 
-      // Handle the update initialization for Processing orders
-      if (actionType === 'PROCESSING') {
-
+      // Set title for Processing orders
+      if (actionType === 'PROCESSING' || actionType === 'TRANSFER') {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
-
-        // TODO: processing update
       }
 
-      // Handle the update initialization for Transfer orders
+      // Set title for Transfer orders
       if (actionType === 'TRANSFER') {
-
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+      }
 
-        // TODO: transfer update
+      // Handle the update initialization (the common code) for order where processing action type is 'PROCESSING' or 'TRANSFER'
+      if (actionType === 'PROCESSING' || actionType === 'TRANSFER') {
+
+        this.initializeOutputStockOrdersForEdit();
+
+        // Set the input facility from the input transactions
+        if (this.processingOrderInputTransactions && this.processingOrderInputTransactions.length > 0) {
+          const respFacility = await this.facilityController
+            .getFacilityUsingGET(this.processingOrderInputTransactions[0].sourceFacility.id).pipe(take(1)).toPromise();
+          if (respFacility && respFacility.status === 'OK' && respFacility.data) {
+            this.inputFacilityFromUrl = respFacility.data;
+          }
+        }
       }
 
     } else {
@@ -621,12 +677,44 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private updateProcessingOrder() {
-    // TODO: implement update of proc. order
+
+    this.form = generateFormFromMetadata(ApiTransaction.formMetadata(), {}, ApiTransactionValidationScheme);
+    this.form.get('outputQuantity').disable();
+    this.outputStockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.outputStockOrder, ApiStockOrderValidationScheme);
+
+    // Inject transaction form for easier validation purposes
+    this.outputStockOrderForm.setControl('form', this.form);
+    this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
+    this.outputStockOrderForm.setControl('processingActionForm', this.processingActionForm);
+    this.outputStockOrderForm.setControl('requiredProcEvidenceFieldsForm', this.requiredProcEvidenceFieldsForm);
+
+    this.prepareDocumentsForEdit().then();
+    this.initializeListManager();
+
+    const inQuantity = this.calcInputQuantity(true);
+
+    if (this.actionType === 'SHIPMENT') {
+      const outQuantity = this.totalQuantity;
+      if (outQuantity >= inQuantity) {
+        this.checkboxClipOrderFrom.setValue(true);
+      }
+    }
+
+    if (this.prAction) {
+      this.setRequiredFields(this.prAction);
+    }
+
+    this.outputFacilityForm.setValue(this.outputStockOrder.facility);
+    this.disableFormsOnUpdate();
+    this.setInputOutputFormSidesVisibility();
   }
 
   async saveProcessingOrder() {
 
-    if (this.saveProcessingOrderInProgress) { return; }
+    if (this.saveProcessingOrderInProgress) {
+      return;
+    }
+
     this.globalEventsManager.showLoading(true);
     this.saveProcessingOrderInProgress = true;
     this.submitted = true;
@@ -646,7 +734,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         initiatorUserId: this.creatorId,
         processingAction: this.prAction,
         targetStockOrders: outputStockOrderList,
-        inputTransactions: this.actionType === 'SHIPMENT' ? [] : this.inputTransactions,
+        inputTransactions: this.inputTransactions,
         processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
       };
 
@@ -893,6 +981,118 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return otherEvidenceDocuments;
+  }
+
+  private async prepareDocumentsForEdit() {
+
+    // TODO: implement
+    // this.otherProcessingEvidenceArray.clear();
+    // let types: ChainProcessingEvidenceType[] = [];
+    // if (this.prAction && this.prAction.requiredDocTypeIds) {
+    //   if (this.prAction.requiredDocTypes) { types = this.prAction.requiredDocTypes; }
+    //   else {
+    //     for (const id of this.prAction.requiredDocTypeIds) {
+    //       const res = await this.actionTypeService.getActionTypeUsingGET(Number(id)).pipe(take(1)).toPromise();
+    //       if (res && res.status === 'OK' && res.data) {
+    //         types.push(res.data as any);
+    //       }
+    //     }
+    //   }
+    //
+    //   const documentRequirements = this.outputStockOrderForm.get('documentRequirements').value as ChainDocumentRequirementList;
+    //   const requirements = (documentRequirements && documentRequirements.requirements) || [];
+    //   // console.log("Reqs:", requirements, this.requiredProcessingEvidenceArray.controls.map(x => x.value))
+    //   for (const item of requirements) {
+    //     const res = this.requiredProcessingEvidenceArray.controls.find(x => x.value.type && x.value.type.id === item.description);
+    //     if (res) {
+    //       const formOfReq = this.formOfRequirementItem(item);
+    //       res.setValue(formOfReq.value);
+    //     } else {
+    //       this.otherProcessingEvidenceArray.push(this.formOfRequirementItem(item, true));
+    //     }
+    //   }
+    // }
+  }
+
+  private disableFormsOnUpdate() {
+
+    this.outputFacilityForm.disable();
+    if (this.inputFacilityForm.value) {
+      this.inputFacilityForm.disable();
+    }
+    this.processingActionForm.disable();
+  }
+
+  private setInputOutputFormSidesVisibility() {
+
+    if (this.update && this.actionType === 'SHIPMENT') {
+      if (this.showLeftSide) {
+        this.setEnabledOnLeftSideForms(true);
+      }
+      else {
+        this.setEnabledOnLeftSideForms(false);
+      }
+
+      if (this.showRightSide) {
+        this.setEnabledOnRightSideForms(true);
+      }
+      else {
+        this.setEnabledOnRightSideForms(false);
+      }
+    }
+  }
+
+  private setEnabledOnLeftSideForms(value: boolean) {
+
+    const leftSideForms = [
+      this.inputFacilityForm,
+      this.filterSemiProduct,
+      this.fromFilterDate,
+      this.toFilterDate,
+      this.cbSelectAllForm
+    ];
+
+    if (value) {
+      leftSideForms.forEach(form => {
+        if (form) { form.enable(); }
+      });
+    } else {
+      leftSideForms.forEach(form => {
+        if (form) { form.disable(); }
+      });
+    }
+
+    if (this.update) {
+      this.disableFormsOnUpdate();
+    }
+  }
+
+  private setEnabledOnRightSideForms(value: boolean) {
+
+    const rightSideForms = [
+      this.outputFacilityForm,
+      this.outputStockOrderForm,
+      this.currentOutputSemiProductNameForm,
+      this.form,
+      this.outputStockOrders,
+      this.requiredProcessingEvidenceArray,
+      this.checkboxUseInputFrom,
+      this.checkboxClipOrderFrom
+    ];
+
+    if (value) {
+      rightSideForms.forEach(form => {
+        if (form) { form.enable(); }
+      });
+    } else {
+      rightSideForms.forEach(form => {
+        if (form) { form.disable(); }
+      });
+    }
+
+    if (this.update) {
+      this.disableFormsOnUpdate();
+    }
   }
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
@@ -1386,12 +1586,30 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           let w = this.prAction.maxOutputWeight;
           if (i === outputStockOrdersSize - 1) { w = availableQua - i * this.prAction.maxOutputWeight; }
           (this.outputStockOrders as FormArray).push(new FormGroup({
-            identifier: new FormControl(null),
             id: new FormControl(null),
             totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
             sacNumber: new FormControl(i + 1, [Validators.required])
           }));
         }
+      }
+    }
+  }
+
+  private initializeOutputStockOrdersForEdit() {
+
+    if (this.prAction && this.actionType === 'PROCESSING') {
+      if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
+        for (const stockOrder of this.editableProcessingOrder.targetStockOrders) {
+
+          this.outputStockOrders.push(new FormGroup({
+            id: new FormControl(stockOrder.id),
+            totalQuantity: new FormControl(stockOrder.totalQuantity,
+              [Validators.min(stockOrder.fulfilledQuantity - stockOrder.availableQuantity),
+                Validators.max(this.prAction.maxOutputWeight)]),
+            sacNumber: new FormControl(stockOrder.sacNumber, [Validators.required])
+          }));
+        }
+        this.outputStockOrders.updateValueAndValidity();
       }
     }
   }
@@ -1495,13 +1713,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.showLeftSide) { return; }
 
-    if (this.actionType === 'SHIPMENT') {
-      (this.outputStockOrderForm.get('inputTransactions') as FormArray).removeAt(i);
-      this.calcInputQuantity(true);
-      return;
-    }
-
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'SHIPMENT') {
       this.processingOrderInputTransactions.splice(i, 1);
       this.calcInputQuantity(true);
       return;
@@ -1551,7 +1763,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     (this.outputStockOrders as FormArray).push(
       new FormGroup({
-        identifier: new FormControl(null),
         id: new FormControl(null),
         totalQuantity: new FormControl(null, Validators.max(this.prAction.maxOutputWeight)),
         sacNumber: new FormControl(sacNumber, [Validators.required])

@@ -79,6 +79,10 @@ export interface ApiProcessingAction {
      */
     requiredEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
+     * Sort order number. Lower number means first
+     */
+    sortOrder?: number;
+    /**
      * Processing action translations
      */
     translations?: Array<ApiProcessingActionTranslation>;
@@ -147,6 +151,10 @@ export namespace ApiProcessingAction {
          * Processing action required evidence fields
          */
         requiredEvidenceFields = 'requiredEvidenceFields',
+        /**
+         * Sort order number. Lower number means first
+         */
+        sortOrder = 'sortOrder',
         /**
          * Processing action translations
          */
@@ -366,6 +374,17 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiProcessingEvidenceField'
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sortOrder',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProcessingActionTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -421,6 +440,8 @@ export namespace ApiProcessingAction {
                 ],
                 requiredEvidenceFields: [
                 ],
+                sortOrder: [
+                ],
                 translations: [
                 ],
                 type: [
@@ -475,6 +496,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               requiredEvidenceFields: {
+  //                   validators: []
+  //               },
+  //               sortOrder: {
   //                   validators: []
   //               },
   //               translations: {

@@ -253,7 +253,7 @@ export const ApiFarmInformationValidationScheme = {
   validators: [],
   fields: {
     areaUnit : {
-      validators: [Validators.required]
+      validators: []
     },
     totalCultivatedArea: {
       validators: []

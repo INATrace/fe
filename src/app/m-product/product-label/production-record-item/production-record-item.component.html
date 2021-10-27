@@ -4,7 +4,9 @@
   (onDelete)="delete()"
   (onEdit)="toggle($event)"
   [formControlInput]="originalFormControl"
-  [disableDelete]="disableDelete">
+  [disableEdit]="disableEdit"
+  [disableDelete]="disableDelete"
+  [viewOnly]="viewOnly">
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
@@ -30,7 +32,8 @@
           [textarea]="true"
           helpText="Describe how this product is produced in few steps."
           i18n-label="@@productionRecordItem.textinput.description.label"
-          [isInvalid]="submitted && form.get('description').invalid">
+          [isInvalid]="submitted && form.get('description').invalid"
+          [readOnly]="viewOnly">
           <ng-container *ngIf="submitted">
             <div *ngIf="form.get('description').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n-label="@@productionRecordItem.textinput.description.error">
@@ -53,7 +56,7 @@
             [form]="form.get('document')"
             [attachmentUploaderId]="'productionRecord'+listEditorManagerPosition"
             [invalid]="submitted && form.get('document').invalid"
-            [readOnly]="form.get('document').disabled">
+            [readOnly]="form.get('document').disabled || viewOnly">
             <attachment-uploader-content i18n="@@productionRecordItem.attachment-uploader.content">
               Upload document
             </attachment-uploader-content>
@@ -81,7 +84,8 @@
         <mini-buttons
           (onSave)="save()"
           (onCancel)="cancel()"
-          [error]="submitted && form.invalid">
+          [error]="submitted && form.invalid"
+          [cancelButtonOnly]="viewOnly">
         </mini-buttons>
       </subform-mini-buttons>
 

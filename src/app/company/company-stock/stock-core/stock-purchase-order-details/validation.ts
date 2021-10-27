@@ -34,18 +34,8 @@ export function ApiStockOrderValidationScheme(orderType: StockOrderType) {
           ? [Validators.required]
           : []
       },
-      salesPricePerUnit: {
-        validators: orderType === 'SALES_ORDER'
-          ? [Validators.required]
-          : []
-      },
       currency: {
         validators: orderType === 'PURCHASE_ORDER'
-          ? [Validators.required]
-          : []
-      },
-      salesCurrency: {
-        validators: orderType === 'SALES_ORDER'
           ? [Validators.required]
           : []
       },

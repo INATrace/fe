@@ -3046,6 +3046,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3912,6 +3928,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3976,6 +4008,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3995,6 +4043,55 @@
         ],
         "operationId": "getSemiProductUsingGET",
         "summary": "Get a single semi product with the provided ID."
+      }
+    },
+    "/api/chain/semi-product/{id}/detail": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Semi product ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiSemiProduct_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "getSemiProductDetailsUsingGET",
+        "summary": "Get a single semi product with details with the provided ID."
       }
     },
     "/api/chain/stock-order": {
@@ -4418,7 +4515,6 @@
               "enum": [
                 "PURCHASE_ORDER",
                 "PROCESSING_ORDER",
-                "SALES_ORDER",
                 "GENERAL_ORDER",
                 "TRANSFER_ORDER"
               ],
@@ -4488,6 +4584,278 @@
         ],
         "operationId": "getStockOrderListByCompanyIdUsingGET",
         "summary": "Get a paginated list of stock orders by company ID."
+      }
+    },
+    "/api/chain/stock-order/list/company/{companyId}/orders-for-customers": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Facility ID",
+            "in": "query",
+            "name": "facilityId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Company customer ID",
+            "in": "query",
+            "name": "companyCustomerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Return only open stock orders",
+            "in": "query",
+            "name": "openOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrdersInFacilityForCustomerUsingGET",
+        "summary": "Get a paginated list of stock orders by facility ID for customers."
+      }
+    },
+    "/api/chain/stock-order/list/company/{companyId}/quote-orders": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Quote company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Quote facility ID",
+            "in": "query",
+            "name": "facilityId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Return only open stock orders",
+            "in": "query",
+            "name": "openOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getQuoteOrdersInFacilityUsingGET",
+        "summary": "getQuoteOrdersInFacility"
       }
     },
     "/api/chain/stock-order/list/facility/{facilityId}": {
@@ -4687,258 +5055,6 @@
         ],
         "operationId": "getStockOrderListByFacilityIdUsingGET",
         "summary": "Get a paginated list of stock orders by facility ID."
-      }
-    },
-    "/api/chain/stock-order/list/facility/{facilityId}/orders-for-customers": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Facility ID",
-            "in": "path",
-            "name": "facilityId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Company customer ID",
-            "in": "query",
-            "name": "companyCustomerId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Return only open stock orders",
-            "in": "query",
-            "name": "openOnly",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "getStockOrdersInFacilityForCustomerUsingGET",
-        "summary": "Get a paginated list of stock orders by facility ID for customers."
-      }
-    },
-    "/api/chain/stock-order/list/facility/{facilityId}/quote-orders": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Quote facility ID",
-            "in": "path",
-            "name": "facilityId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Semi-product ID",
-            "in": "query",
-            "name": "semiProductId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Return only open stock orders",
-            "in": "query",
-            "name": "openOnly",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "getQuoteOrdersInFacilityUsingGET",
-        "summary": "getQuoteOrdersInFacility"
       }
     },
     "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
@@ -5176,6 +5292,148 @@
         "summary": "Get a single stock order with the provided ID."
       }
     },
+    "/api/chain/transaction/list/input/stock-order/{stockOrderId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "stockOrderId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiTransaction_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "transaction-controller"
+        ],
+        "operationId": "getStockOrderInputTransactionsUsingGET",
+        "summary": "Get a paginated list of input transactions for provided stock order ID."
+      }
+    },
+    "/api/chain/transaction/{id}/approve": {
+      "put": {
+        "parameters": [
+          {
+            "description": "Transaction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "transaction-controller"
+        ],
+        "operationId": "approveTransactionUsingPUT",
+        "summary": "Approves transaction with provided ID."
+      }
+    },
+    "/api/chain/transaction/{id}/reject": {
+      "put": {
+        "parameters": [
+          {
+            "description": "Transaction ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "transaction-controller"
+        ],
+        "operationId": "rejectTransactionUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiTransaction"
+              }
+            }
+          },
+          "description": "apiTransaction",
+          "required": true
+        },
+        "summary": "Rejects transaction with provided ID and reverts it's quantities."
+      }
+    },
     "/api/chain/value-chain": {
       "put": {
         "responses": {
@@ -5353,6 +5611,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -12037,6 +12311,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiTransaction_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiTransaction"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiUserBase_": {
         "properties": {
           "count": {
@@ -13107,6 +13408,49 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiTransaction_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiTransaction_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiUserBase_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -13520,6 +13864,11 @@
               "$ref": "#/components/schemas/ApiProcessingEvidenceField"
             },
             "type": "array"
+          },
+          "sortOrder": {
+            "description": "Sort order number. Lower number means first",
+            "format": "int64",
+            "type": "integer"
           },
           "translations": {
             "description": "Processing action translations",
@@ -16360,6 +16709,40 @@
           },
           "skuendCustomer": {
             "type": "boolean"
+          },
+          "translations": {
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProductTranslation"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ApiSemiProductTranslation": {
+        "properties": {
+          "description": {
+            "description": "Semi product description",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "language": {
+            "description": "Semi product language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Semi product name",
+            "type": "string"
           }
         },
         "type": "object"
@@ -16465,7 +16848,6 @@
             "enum": [
               "PURCHASE_ORDER",
               "PROCESSING_ORDER",
-              "SALES_ORDER",
               "GENERAL_ORDER",
               "TRANSFER_ORDER"
             ],
@@ -16815,6 +17197,7 @@
             "type": "number"
           },
           "pricePerUnit": {
+            "description": "Price per unit",
             "type": "number"
           },
           "rejectComment": {
@@ -17503,6 +17886,10 @@
     {
       "description": "Payment Controller",
       "name": "payment-controller"
+    },
+    {
+      "description": "Transaction Controller",
+      "name": "transaction-controller"
     },
     {
       "description": "Currency Controller",

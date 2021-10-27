@@ -102,7 +102,7 @@ $af-icon-shape-bg: $moderate-cyan;
 
 
 
-.af-stakeholder {
+.af-stakeholder, .af-stakeholder-owner {
   background: $white;
   border: 1px solid $af-card-border;
   box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
@@ -113,7 +113,7 @@ $af-icon-shape-bg: $moderate-cyan;
   max-width: 100%;
   min-width: 100%;
 
-  &:hover {
+  &-owner:hover {
     // color: red;
     // This adds basic shape of
     // icon with a background
@@ -208,12 +208,6 @@ $af-icon-shape-bg: $moderate-cyan;
         line-height: $af-card-description-lineheight;
 
         @include ellipsis-2-rows;
-
-        &:hover {
-          color: red;
-          width: calc(100%);
-          background-color: yellow;
-        }
 
       }
       // &-description {

@@ -30,6 +30,9 @@ export class LabelSelectorCardComponent implements OnInit {
   @Input()
   changed: Boolean;
 
+  @Input()
+  editable = false;
+
   @Output() onSelect = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();
   @Output() onMouseOver = new EventEmitter<any>();
@@ -73,6 +76,9 @@ export class LabelSelectorCardComponent implements OnInit {
   }
 
   toogleEditTitle(event){
+    if (!this.editable) {
+      return;
+    }
     if (this.isSelected) {
       event.stopPropagation();
       this.onTitleChange.emit(this.label);

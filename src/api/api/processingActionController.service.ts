@@ -117,6 +117,10 @@ export namespace GetProcessingActionDetailUsingGET {
        * ProcessingAction ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -126,7 +130,11 @@ export namespace GetProcessingActionDetailUsingGET {
       /**
        * ProcessingAction ID
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -136,6 +144,8 @@ export namespace GetProcessingActionDetailUsingGET {
     export const ParamValidators: {[K in keyof GetProcessingActionDetailUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -596,6 +606,7 @@ export class ProcessingActionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getProcessingActionDetailUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -606,18 +617,22 @@ export class ProcessingActionControllerService {
      * Get a single processing action by the provided ID with all translations.
      * 
      * @param id ProcessingAction ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingActionDetailUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
-    public getProcessingActionDetailUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-    public getProcessingActionDetailUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-    public getProcessingActionDetailUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
+    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getProcessingActionDetailUsingGET.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

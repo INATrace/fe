@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { take } from 'rxjs/operators';
 import {
@@ -30,6 +30,8 @@ import { SemiProductControllerService } from '../../../api/api/semiProductContro
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
+import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTranslation';
+import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -62,6 +64,9 @@ export class TypeDetailModalComponent implements OnInit {
 
   codebookProcessingEvidenceTypeType = EnumSifrant.fromObject(this.processingEvidenceTypeType);
   codebookProcessingEvidenceFieldType = EnumSifrant.fromObject(this.processingEvidenceFieldType);
+
+  languages = [LanguageEnum.EN, LanguageEnum.DE, LanguageEnum.RW, LanguageEnum.ES];
+  selectedLanguage = LanguageEnum.EN;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -153,6 +158,7 @@ export class TypeDetailModalComponent implements OnInit {
       } else {
         this.form = generateFormFromMetadata(ApiSemiProduct.formMetadata(), this.typeElement, ApiSemiProductValidationScheme);
       }
+      this.finalizeForm();
     }
   }
 
@@ -221,6 +227,33 @@ export class TypeDetailModalComponent implements OnInit {
     obj['EXCHANGE_RATE'] = $localize`:@@processingEvidenceFieldType.exchange_rate:Exchange rate`;
     obj['TIMESTAMP'] = $localize`:@@processingEvidenceFieldType.timestamp:Timestamp`;
     return obj;
+  }
+
+  selectLanguage(lang: LanguageEnum) {
+    this.selectedLanguage = lang;
+  }
+
+  finalizeForm() {
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        name: new FormControl(translation ? translation.name : ''),
+        description: new FormControl(translation ? translation.description : ''),
+        language: new FormControl(lang)
+      }));
+    }
+  }
+
+  get languageEnum() {
+    return LanguageEnum;
   }
 
 }

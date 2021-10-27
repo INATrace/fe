@@ -327,7 +327,6 @@ export namespace ApiStockOrder {
     export enum OrderTypeEnum {
         PURCHASEORDER = 'PURCHASE_ORDER',
         PROCESSINGORDER = 'PROCESSING_ORDER',
-        SALESORDER = 'SALES_ORDER',
         GENERALORDER = 'GENERAL_ORDER',
         TRANSFERORDER = 'TRANSFER_ORDER'
     }
