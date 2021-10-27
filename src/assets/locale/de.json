@@ -2874,6 +2874,9 @@
     "semiProductDetail.textinput.name.error": "Name is required",
     "semiProductDetail.textinput.description.error": "Description is required",
     "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages.",
-    "productLabelStakeholdersCollectors.sortOptions.municipality.name": "Municipality"
+    "productLabelStakeholdersCollectors.sortOptions.municipality.name": "Municipality",
+    "companyDetailFacilities.textInput.name.label": "Name of facility",
+    "companyDetailFacilities.textInput.name.placeholder": "Enter name",
+    "companyDetailFacilities.textInput.name.error": "Name of facility is required"
   }
 }
