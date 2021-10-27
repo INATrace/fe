@@ -188,12 +188,6 @@
 
                           </li>
                         </ul>
-                        <ng-container *ngIf="rootHistory.processingOrder && rootHistory.processingOrder.processingAction.type === 'PROCESSING'">
-                          <ul style="margin-bottom: 0;">
-                            <li *ngFor="let tx of rootHistory.processingOrder.inputTransactions">
-                              <a class="ab-edit-link" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a></li>
-                          </ul>
-                        </ng-container>
                       </td>
                     </tr>
                     </tbody>

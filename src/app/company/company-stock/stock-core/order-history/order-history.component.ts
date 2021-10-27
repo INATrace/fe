@@ -4,7 +4,7 @@ import {NgbModalImproved} from '../../../../core/ngb-modal-improved/ngb-modal-im
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
 import {faCheckCircle, faExclamationCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {BehaviorSubject, combineLatest} from 'rxjs';
-import {map, shareReplay, switchMap, take, tap} from 'rxjs/operators';
+import {map, shareReplay, switchMap, tap} from 'rxjs/operators';
 import {ProcessingOrderControllerService} from '../../../../../api/api/processingOrderController.service';
 import {ApiTransaction} from '../../../../../api/model/apiTransaction';
 import {ApiStockOrder} from '../../../../../api/model/apiStockOrder';
@@ -110,29 +110,31 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   goToInput(tx: ApiTransaction) {
-    this.router.navigate(['stock-order', tx.sourceStockOrder.id, 'view'], { relativeTo: this.route.parent });
+    this.router.navigate(['stock-order', tx.sourceStockOrder.id, 'view'], { relativeTo: this.route.parent }).then();
   }
 
 
   async goToOutput(tx: ApiTransaction) {
-    if (!tx.isProcessing) {
-      this.router.navigate(['stock-order', tx.targetStockOrder.id, 'view'], { relativeTo: this.route.parent });
-    } else {
-      const res = await this.processingOrderService.getProcessingOrder(tx.targetStockOrder.id).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK') {
-        if (res.data.targetStockOrders && res.data.targetStockOrders.length > 0) {
-          this.router.navigate(['stock-order', res.data.targetStockOrders[0], 'view'], { relativeTo: this.route.parent });
-        }
-      }
-    }
+    this.router.navigate(['stock-order', tx.targetStockOrder.id, 'view'], { relativeTo: this.route.parent }).then();
+    // if (!tx.isProcessing) {
+    //   this.router.navigate(['stock-order', tx.targetStockOrder.id, 'view'], { relativeTo: this.route.parent });
+    // }
+    // else {
+    //   const res = await this.processingOrderService.getProcessingOrder(tx.targetStockOrder.id).pipe(take(1)).toPromise();
+    //   if (res && res.status === 'OK') {
+    //     if (res.data.targetStockOrders && res.data.targetStockOrders.length > 0) {
+    //       this.router.navigate(['stock-order', res.data.targetStockOrders[0], 'view'], { relativeTo: this.route.parent });
+    //     }
+    //   }
+    // }
   }
 
   goToSibiling(order: ApiStockOrder) {
-    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent });
+    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent }).then();
   }
 
   goToOrderView(order: ApiStockOrder) {
-    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent });
+    this.router.navigate(['stock-order', order.id, 'view'], { relativeTo: this.route.parent }).then();
   }
 
 
