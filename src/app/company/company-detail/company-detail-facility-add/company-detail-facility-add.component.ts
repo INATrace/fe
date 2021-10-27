@@ -30,7 +30,7 @@ import { ApiFinalProduct } from '../../../../api/model/apiFinalProduct';
 export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
-  
+
   public edit: boolean;
   public title: string;
   public form: FormGroup;
@@ -72,7 +72,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       this.initializeEdit();
     }
   }
-  
+
   registerValidatorsOnUpdate() {
     this.fLoc.controls.publiclyVisible.valueChanges
         .pipe(takeUntil(this.destroy$))
@@ -138,6 +138,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       facility.company.id = this.route.snapshot.params.id;
     }
     facility.facilitySemiProductList = this.semiProducts;
+    facility.facilityFinalProducts = this.finalProducts;
     this.facilityControllerService.createOrUpdateFacilityUsingPUT(facility).pipe(first()).subscribe(() => {
       this.location.back();
     });
@@ -191,11 +192,11 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   deleteFinalProduct(sp: ApiFinalProduct, idx: number) {
     this.finalProducts.splice(idx, 1);
   }
-  
+
   get fLoc(): FormGroup {
     return this.form.controls.facilityLocation as FormGroup;
   }
-  
+
   ngOnDestroy() {
     this.destroy$.next(true);
   }
@@ -225,5 +226,5 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   get languageEnum() {
     return LanguageEnum;
   }
-  
+
 }
