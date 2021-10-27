@@ -338,15 +338,11 @@
                         <div class="spacer-title-section"></div>
 
                         <div class="search-field">
-                            <textinput
-                                    [form]="evidenceFieldInputForm"
-                                    placeholder="Select evidence field..."
-                                    i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceFields.placeholder"
+                            <single-choice
+                                    [formControlInput]="evidenceFieldInputForm"
                                     [codebookService]="processingEvidenceFieldService"
-                                    [resultFormatter]="fieldFormatter"
-                                    [inputFormatter]="fieldFormatter"
-                                    (itemMatching)="addSelectedEvidenceField($event)">
-                            </textinput>
+                                    (onChange)="addSelectedEvidenceField($event)">
+                            </single-choice>
                         </div>
 
                         <div class="spacer-title-section"></div>
@@ -408,15 +404,11 @@
                         <div class="spacer-title-section"></div>
 
                         <div class="search-field">
-                            <textinput
-                                    [form]="evidenceDocInputForm"
-                                    placeholder="Select document type..."
-                                    i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder"
+                            <single-choice
+                                    [formControlInput]="evidenceDocInputForm"
                                     [codebookService]="processingEvidenceTypeService"
-                                    [resultFormatter]="documentFormatter"
-                                    [inputFormatter]="documentFormatter"
-                                    (itemMatching)="addSelectedEvidenceDoc($event)">
-                            </textinput>
+                                    (onChange)="addSelectedEvidenceDoc($event)">
+                            </single-choice>
                         </div>
 
                         <div class="spacer-title-section"></div>
