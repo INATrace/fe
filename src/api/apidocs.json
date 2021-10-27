@@ -5025,6 +5025,15 @@
             }
           },
           {
+            "description": "Return the processing order base data",
+            "in": "query",
+            "name": "withProcessingOrder",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
@@ -9565,12 +9574,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9580,19 +9586,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9602,19 +9605,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9624,19 +9624,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9646,19 +9643,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9668,19 +9662,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9690,19 +9681,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9712,8 +9700,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -9974,12 +9962,21 @@
             "type": "array"
           },
           "createdBy": {
-            "description": "Bulk payment created by",
-            "format": "int64",
-            "type": "integer"
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "Bulk payment created by"
+          },
+          "creationTimestamp": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
           },
           "currency": {
             "description": "Bulk payment currency",
+            "type": "string"
+          },
+          "formalCreationTime": {
+            "description": "Formal creation date",
+            "format": "date-time",
             "type": "string"
           },
           "id": {
@@ -9988,7 +9985,7 @@
             "type": "integer"
           },
           "payingCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
+            "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that pays for the bulk payment"
           },
           "paymentDescription": {
@@ -10006,18 +10003,16 @@
             ],
             "type": "string"
           },
-          "receiptNumber": {
-            "description": "Bulk payment receipt numbet",
-            "format": "int64",
-            "type": "integer"
-          },
-          "stockOrders": {
-            "description": "Bulk payment stock orders",
+          "payments": {
+            "description": "Bulk payment payments",
             "items": {
-              "format": "int64",
-              "type": "integer"
+              "$ref": "#/components/schemas/ApiPayment"
             },
             "type": "array"
+          },
+          "receiptNumber": {
+            "description": "Bulk payment receipt number",
+            "type": "string"
           },
           "totalAmount": {
             "description": "Bulk payment total amount",

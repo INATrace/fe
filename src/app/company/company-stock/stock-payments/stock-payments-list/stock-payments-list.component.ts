@@ -11,7 +11,7 @@ import { SortOption } from '../../../../shared/result-sorter/result-sorter-types
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
-import {ModeEnum} from '../stock-payments-form/stock-payments-form.component';
+import { ModeEnum } from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginatedListApiPayment';
 
@@ -22,14 +22,6 @@ import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginate
   styleUrls: ['./stock-payments-list.component.scss']
 })
 export class StockPaymentsListComponent implements OnInit, OnDestroy {
-
-  constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      protected globalEventManager: GlobalEventManagerService,
-      private authService: AuthService,
-      private paymentControllerService: PaymentControllerService
-  ) { }
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -82,6 +74,14 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   clearCheckboxesSubscription: Subscription;
   allSelected = false;
   payments$: Observable<ApiPaginatedListApiPayment>;
+
+  constructor(
+      private route: ActivatedRoute,
+      private router: Router,
+      protected globalEventManager: GlobalEventManagerService,
+      private authService: AuthService,
+      private paymentControllerService: PaymentControllerService
+  ) { }
 
   ngOnInit(): void {
 
@@ -263,12 +263,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.reloadPage();
     }
   }
-
-//   totalPaid(preferredWayOfPayment, toFarmer, toCollector) {
-//     if (preferredWayOfPayment === 'CASH_VIA_COLLECTOR') { return toFarmer; }
-//     if (toCollector) { return toFarmer + toCollector; }
-//     return toFarmer;
-//   }
 
   changeSort(event) {
     if (event.key === 'cb') {

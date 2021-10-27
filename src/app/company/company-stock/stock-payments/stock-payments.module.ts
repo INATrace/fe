@@ -14,6 +14,10 @@ import { StockPaymentsSelectorForNewPaymentModalComponent } from './stock-paymen
 import { StockPaymentsDetailComponent } from './stock-payments-detail/stock-payments-detail.component';
 import { StockPaymentsFormComponent } from './stock-payments-form/stock-payments-form.component';
 import { StockPaymentsBulkDetailComponent } from './stock-payments-bulk-detail/stock-payments-bulk-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { StockPaymentsBulkListComponent } from './stock-payments-bulk-list/stock-payments-bulk-list.component';
+import { StockPaymentsItemComponent } from './stock-payments-item/stock-payments-item.component';
 
 
 @NgModule({
@@ -22,7 +26,9 @@ import { StockPaymentsBulkDetailComponent } from './stock-payments-bulk-detail/s
       StockPaymentsSelectorForNewPaymentModalComponent,
       StockPaymentsDetailComponent,
       StockPaymentsFormComponent,
-      StockPaymentsBulkDetailComponent
+      StockPaymentsBulkDetailComponent,
+      StockPaymentsBulkListComponent,
+      StockPaymentsItemComponent
   ],
     imports: [
         CommonModule,
@@ -35,7 +41,9 @@ import { StockPaymentsBulkDetailComponent } from './stock-payments-bulk-detail/s
         StockCoreModule,
         FontAwesomeModule,
         NgbPaginationModule,
-        NgbDropdownModule
+        NgbDropdownModule,
+        ReactiveFormsModule,
+        DragDropModule
     ]
 })
 export class StockPaymentsModule { }

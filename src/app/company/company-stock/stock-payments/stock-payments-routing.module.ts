@@ -45,14 +45,15 @@ const routes: Routes = [
     }
   },
   {
-    path: 'bulk-payment/update/:bulkPaymentId',
+    path: 'purchases/bulk-payment/update/:bulkPaymentId',
     component: StockPaymentsBulkDetailComponent,
     pathMatch: 'full',
     data: {
       action: 'update',
       drobtinice: {
-        title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
-        route: 'product-labels/:id/stock/payments'
+        title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock`
+            + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
+        route: 'my-stock/purchases/tab'
       }
     }
   },
@@ -63,8 +64,9 @@ const routes: Routes = [
     data: {
       action: 'new',
       drobtinice: {
-        title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
-        route: 'product-labels/:id/stock/purchases'
+        title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock`
+            + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
+        route: 'my-stock/purchases/tab'
       }
     }
   }
