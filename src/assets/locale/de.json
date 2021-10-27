@@ -2873,6 +2873,7 @@
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Measure unit type is required",
     "semiProductDetail.textinput.name.error": "Name is required",
     "semiProductDetail.textinput.description.error": "Description is required",
-    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages."
+    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages.",
+    "productLabelStakeholdersCollectors.sortOptions.municipality.name": "Municipality"
   }
 }
