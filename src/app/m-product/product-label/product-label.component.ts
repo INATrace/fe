@@ -469,6 +469,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async newProduct() {
+    this.isOwner = true;
+
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme)
     let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme)
     this.productForm.setControl('keyMarketsShare', marketShareForm)

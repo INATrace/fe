@@ -12,13 +12,15 @@ import { ActiveFacilityTypeService } from '../../../shared-services/active-facil
 import { ApiAddress } from '../../../../api/model/apiAddress';
 import { ApiCompanyBase } from '../../../../api/model/apiCompanyBase';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
-import { SemiProductControllerService } from '../../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs/internal/Subject';
 import { ApiFacilityTranslation } from '../../../../api/model/apiFacilityTranslation';
 import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
+import { FinalProductsForCompanyService } from '../../../shared-services/final-products-for-company.service';
+import { FinalProductControllerService } from '../../../../api/api/finalProductController.service';
+import { ApiFinalProduct } from '../../../../api/model/apiFinalProduct';
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -28,16 +30,20 @@ import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
 export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
-  
+
   public edit: boolean;
   public title: string;
   public form: FormGroup;
   public submitted = false;
   public companyId: string;
-  public semiProducts: Array<ApiSemiProduct> = [];
 
-  public codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
-  public semiProductsForm = new FormControl(null);
+  codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
+  semiProductsForm = new FormControl(null);
+  semiProducts: Array<ApiSemiProduct> = [];
+
+  finalProductsForCompanyCodebook: FinalProductsForCompanyService;
+  finalProductForm = new FormControl(null);
+  finalProducts: Array<ApiFinalProduct> = [];
 
   faTimes = faTimes;
 
@@ -50,20 +56,23 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       private facilityControllerService: FacilityControllerService,
       public activeFacilityTypeService: ActiveFacilityTypeService,
       public activeSemiProductsService: ActiveSemiProductsService,
-      private semiProductControllerService: SemiProductControllerService
+      private finalProductController: FinalProductControllerService
   ) { }
 
   ngOnInit(): void {
+
     this.edit = this.route.snapshot.params.facilityId;
+    this.companyId = this.route.snapshot.params.id;
+
+    this.finalProductsForCompanyCodebook = new FinalProductsForCompanyService(this.finalProductController, Number(this.companyId));
 
     if (!this.edit) {
       this.initializeNew();
     } else {
       this.initializeEdit();
     }
-    this.registerValidatorsOnUpdate();
   }
-  
+
   registerValidatorsOnUpdate() {
     this.fLoc.controls.publiclyVisible.valueChanges
         .pipe(takeUntil(this.destroy$))
@@ -84,16 +93,19 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.title = $localize `:@@productLabelStockFacilityModal.newFacility.newTitle:New facility`;
     this.form = generateFormFromMetadata(ApiFacility.formMetadata(), this.emptyObject(), ApiFacilityValidationScheme);
     this.finalizeForm();
+    this.registerValidatorsOnUpdate();
   }
 
   initializeEdit() {
 
     this.title = $localize`:@@productLabelStockFacilityModal.newFacility.editTitle:Edit facility`;
-    this.companyId = this.route.snapshot.params.id;
     const facilityId = this.route.snapshot.params.facilityId;
     this.facilityControllerService.getFacilityDetailUsingGET(facilityId).pipe(first()).subscribe(res => {
+
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
+
       this.semiProducts = res.data.facilitySemiProductList;
+      this.finalProducts = res.data.facilityFinalProducts;
 
       const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }
@@ -103,8 +115,8 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       if (tmpCollection != null) { this.form.get('isCollectionFacility').setValue(tmpCollection.toString()); }
 
       this.finalizeForm();
+      this.registerValidatorsOnUpdate();
     });
-    this.semiProductControllerService.getSemiProductListUsingGET();
   }
 
   emptyObject() {
@@ -129,7 +141,8 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       facility.company.id = this.route.snapshot.params.id;
     }
     facility.facilitySemiProductList = this.semiProducts;
-    const res = this.facilityControllerService.createOrUpdateFacilityUsingPUT(facility).pipe(first()).subscribe(next => {
+    facility.facilityFinalProducts = this.finalProducts;
+    this.facilityControllerService.createOrUpdateFacilityUsingPUT(facility).pipe(first()).subscribe(() => {
       this.location.back();
     });
   }
@@ -141,8 +154,6 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     return obj;
   }
 
-
-
   spResultFormatter = (value: any) => {
     return this.activeSemiProductsService.textRepresentation(value);
   }
@@ -151,7 +162,15 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     return this.activeSemiProductsService.textRepresentation(value);
   }
 
-  async addSelectedSP(sp: ApiSemiProduct) {
+  fpResultFormatter = (value: any) => {
+    return this.finalProductsForCompanyCodebook.textRepresentation(value);
+  }
+
+  fpInputFormatter = (value: any) => {
+    return this.finalProductsForCompanyCodebook.textRepresentation(value);
+  }
+
+  async addSelectedSemiProduct(sp: ApiSemiProduct) {
     if (!sp || this.semiProducts.some(s => s === sp.id)) {
       setTimeout(() => this.semiProductsForm.setValue(null));
       return;
@@ -160,14 +179,27 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     setTimeout(() => this.semiProductsForm.setValue(null));
   }
 
-  deleteSP(sp: ApiSemiProduct, idx: number) {
+  async addSelectedFinalProduct(finalProduct: ApiFinalProduct) {
+    if (!finalProduct || this.finalProducts.some(fp => fp === fp.id)) {
+      setTimeout(() => this.finalProductForm.setValue(null));
+      return;
+    }
+    this.finalProducts.push(finalProduct);
+    setTimeout(() => this.finalProductForm.setValue(null));
+  }
+
+  deleteSemiProduct(sp: ApiSemiProduct, idx: number) {
     this.semiProducts.splice(idx, 1);
   }
-  
+
+  deleteFinalProduct(sp: ApiFinalProduct, idx: number) {
+    this.finalProducts.splice(idx, 1);
+  }
+
   get fLoc(): FormGroup {
     return this.form.controls.facilityLocation as FormGroup;
   }
-  
+
   ngOnDestroy() {
     this.destroy$.next(true);
   }
@@ -197,5 +229,5 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   get languageEnum() {
     return LanguageEnum;
   }
-  
+
 }

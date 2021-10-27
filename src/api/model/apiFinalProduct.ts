@@ -19,6 +19,7 @@
 
 
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiProductBase } from './apiProductBase';
 
 
 
@@ -36,6 +37,7 @@ export interface ApiFinalProduct {
      * Name of final product
      */
     name?: string;
+    product?: ApiProductBase;
 }
 
 /**
@@ -58,7 +60,8 @@ export namespace ApiFinalProduct {
         /**
          * Name of final product
          */
-        name = 'name'
+        name = 'name',
+        product = 'product'
     }
 
 
@@ -112,6 +115,18 @@ export namespace ApiFinalProduct {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiProductBase.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'product',
+                    classname: 'ApiFinalProduct',
+                    dataType: 'ApiProductBase',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProductBase'
+                },
             ],
             validators: {
                 description: [
@@ -121,6 +136,8 @@ export namespace ApiFinalProduct {
                 measurementUnitType: [
                 ],
                 name: [
+                ],
+                product: [
                 ],
             }
         }
@@ -139,6 +156,9 @@ export namespace ApiFinalProduct {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               product: {
   //                   validators: []
   //               },
   //     }
