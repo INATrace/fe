@@ -31,6 +31,21 @@
                         <div class="spacer-title-section"></div>
 
                         <single-choice
+                                label="Value chain"
+                                i18n-label="@@companyDetailProcessingActions.singleChoice.valueChain.label"
+                                [formControlInput]="form.get('valueChain')"
+                                [codebookService]="valueChainCodebook"
+                                [isInvalidChoice]="submitted && form.get('valueChain').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('valueChain').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.valueChain.error.required">
+                                        Value chain is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </single-choice>
+
+                        <single-choice
                                 label="Action type"
                                 i18n-label="@@companyDetailProcessingActions.singleChoice.type.label"
                                 [formControlInput]="form.get('type')"
@@ -45,7 +60,25 @@
                             </ng-container>
                         </single-choice>
 
-                        <ng-container *ngIf="form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER'">
+                        <single-choice
+                                label="Final product action"
+                                i18n-label="@@companyDetailProcessingActions.singleChoice.finalProductAction.label"
+                                [formControlInput]="form.get('finalProductAction')"
+                                [enumFormatter]="finalProductActionFormatter"
+                                [booleanTrue]="booleanTrue"
+                                [booleanFalse]="booleanFalse"
+                                [isInvalidChoice]="submitted && form.get('finalProductAction').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('finalProductAction').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.finalProductAction.error.required">
+                                        Type is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </single-choice>
+
+                        <!-- If we have Shipment or Transfer proc. action of semi-products (both input and output) -->
+                        <ng-container *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER')">
                             <single-choice
                                     label="Select semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
@@ -56,6 +89,24 @@
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.semiProduct.error.required">
                                             Semi-product is required
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </single-choice>
+                        </ng-container>
+
+                        <!-- If we have Shipment or Transfer prc. action of Final products (both input and output) -->
+                        <ng-container *ngIf="form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER')">
+                            <single-choice
+                                    label="Select final product"
+                                    i18n-label="@@companyDetailProcessingActions.singleChoice.finalProduct.label"
+                                    [formControlInput]="form.get('inputFinalProduct')"
+                                    [codebookService]="finalProductsForCompanyCodebook"
+                                    [isInvalidChoice]="submitted && form.get('inputFinalProduct').invalid">
+                                <ng-container *ngIf="submitted">
+                                    <div *ngIf="form.get('inputFinalProduct').errors as errors" class="sc-invalid-feedback">
+                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.finalProduct.error.required">
+                                            Final product is required
                                         </div>
                                     </div>
                                 </ng-container>
@@ -148,7 +199,6 @@
                             </ng-container>
                         </textinput>
                     </div>
-
                     <!-- END: Basic information -->
 
                 </div>

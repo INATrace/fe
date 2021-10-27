@@ -23,6 +23,11 @@ import { SemiProductControllerService } from '../../../../../api/api/semiProduct
 import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 import { AuthService } from '../../../../core/auth.service';
+import { ActiveValueChainService } from '../../../../shared-services/active-value-chain.service';
+import { FinalProductsForCompanyService } from '../../../../shared-services/final-products-for-company.service';
+import { FinalProductControllerService } from '../../../../../api/api/finalProductController.service';
+import { Subscription } from 'rxjs';
+import { ApiValueChain } from '../../../../../api/model/apiValueChain';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -37,7 +42,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   title: string;
   editMode: boolean;
-  organizationId: number;
+  companyId: number;
   form: FormGroup;
   action: ApiProcessingAction;
 
@@ -49,6 +54,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
   evidenceDocInputForm: FormControl;
   evidenceFieldInputForm: FormControl;
+
+  finalProductsForCompanyCodebook: FinalProductsForCompanyService;
 
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
@@ -64,6 +71,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     value: false,
   };
 
+  private valueChainSubs: Subscription;
+
   constructor(
       protected router: Router,
       protected route: ActivatedRoute,
@@ -73,8 +82,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingEvidenceFieldControllerService: ProcessingEvidenceFieldControllerService,
       private processingActionControllerService: ProcessingActionControllerService,
       private processingActionService: ProcessingActionService,
+      public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
       private semiProductService: SemiProductService,
+      private finalProductController: FinalProductControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
   ) {
@@ -85,41 +96,60 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     super.ngOnInit();
 
+    this.companyId = +this.route.snapshot.paramMap.get('id');
+
     this.globalEventsManager.showLoading(true);
 
-    this.processingEvidenceTypeService =
-        new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT');
-    this.processingEvidenceFieldService =
-        new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, null);
+    // Initialize codebook service for final products for the selected company
+    this.finalProductsForCompanyCodebook = new FinalProductsForCompanyService(this.finalProductController, this.companyId);
+
     this.activeSemiProductService =
         new ActiveSemiProductsService(this.semiProductControllerService, this.codebookTranslations);
-
     this.evidenceDocInputForm = new FormControl(null);
-    this.evidenceFieldInputForm = new FormControl(null);
 
-    this.organizationId = +this.route.snapshot.paramMap.get('id');
+    this.evidenceFieldInputForm = new FormControl(null);
 
     this.initInitialData().then(
         () => {
-
           if (this.editMode) {
             this.editAction();
           } else {
             this.newAction();
           }
           this.finalizeForm();
+
+          this.valueChainSubs = this.form.get('valueChain').valueChanges.subscribe((valueChain: ApiValueChain) => {
+
+            if (valueChain) {
+
+              // Initialize codebook services for proc. evidence types and proc. evidence fields
+              this.processingEvidenceTypeService =
+                new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
+              this.processingEvidenceFieldService =
+                new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+
+            } else {
+
+              this.processingEvidenceTypeService = null;
+              this.processingEvidenceFieldService = null;
+            }
+          });
         }
     );
   }
 
   ngOnDestroy() {
     super.ngOnDestroy();
+    if (this.valueChainSubs) {
+      this.valueChainSubs.unsubscribe();
+    }
   }
 
   emptyObject() {
     const obj = defaultEmptyObject(ApiProcessingAction.formMetadata()) as ApiProcessingAction;
     obj.inputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
     obj.outputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
+    obj.finalProductAction = false;
     return obj;
   }
 
@@ -318,6 +348,12 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
         : $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.no:No`;
   }
 
+  finalProductActionFormatter(x: any) {
+    return x.value
+      ? $localize`:@@companyDetailProcessingActions.singleChoice.finalProductAction.yes:Yes`
+      : $localize`:@@companyDetailProcessingActions.singleChoice.finalProductAction.no:No`;
+  }
+
   repackedOutputsSet(x: any) {
     if (!x || !x.value) {
       this.form.get('maxOutputWeight').setValue(null);
@@ -367,7 +403,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     const data = this.form.value;
     if (!data.company || !data.company.id) {
-      data.company = { id: this.organizationId };
+      data.company = { id: this.companyId };
     }
 
     try {
@@ -386,7 +422,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   goBack() {
-    this.router.navigate(['companies', this.organizationId, 'processingActions']).then();
+    this.router.navigate(['companies', this.companyId, 'processingActions']).then();
   }
 
   canDeactivate(): boolean {

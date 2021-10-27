@@ -1,4 +1,4 @@
-import {FormArray, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import { FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { ApiProcessingAction } from 'src/api/model/apiProcessingAction';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { multiFieldValidator, requiredFieldIfOtherFieldHasValue } from 'src/shared/validation';
@@ -19,18 +19,6 @@ export function requireRepackedOutputs(control: FormGroup): ValidationErrors | n
     return null;
 }
 
-
-export function requireInputSemiProduct(control: FormGroup): ValidationErrors | null {
-    if (!control || !control.value) {
-        return null;
-    }
-    const type = control.value['type'];
-    if (type === 'TRANSFER') {
-        return null;
-    }
-    return {required: true};
-}
-
 export function requiredTranslations(control: FormGroup): ValidationErrors | null {
     if (!control || !control.value || !control.contains('translations')) {
         return null;
@@ -48,57 +36,65 @@ export function requiredTranslations(control: FormGroup): ValidationErrors | nul
 }
 
 export const ApiProcessingActionValidationScheme = {
-    validators: [
-        multiFieldValidator(['outputSemiProduct'], (group: FormGroup) => requiredFieldIfOtherFieldHasValue(group, 'outputSemiProduct', 'type', 'PROCESSING'), ['required']),
-        multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
-        multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required']),
-        // multiFieldValidator(['inputSemiProduct'], (group: FormGroup) => requireInputSemiProduct(group), ['required']),
-    ],
-    fields: {
-              company: {
-                  validators: []
-              },
-              description: {
-                  validators: []
-              },
-              id: {
-                  validators: []
-              },
-              inputSemiProduct: {
-                  validators: [Validators.required]
-              },
-              maxOutputWeight: {
-                  validators: []
-              },
-              name: {
-                  validators: []
-              },
-              outputSemiProduct: {
-                  validators: [Validators.required]
-              },
-              prefix: {
-                  validators: [Validators.required]
-              },
-              publicTimelineIconType: {
-                  validators: []
-              },
-              publicTimelineLabel: {
-                  validators: []
-              },
-              publicTimelineLocation: {
-                  validators: []
-              },
-              repackedOutputs: {
-                  validators: []
-              },
-              requiredDocumentTypes: {
-                  validators: []
-              },
-              translations: {
-                  validators: [Validators.required]
-              },
-              type: {
-                  validators: [Validators.required]
-              }
+  validators: [
+    multiFieldValidator(['outputSemiProduct'], (group: FormGroup) => requiredFieldIfOtherFieldHasValue(group, 'outputSemiProduct', 'type', 'PROCESSING'), ['required']),
+    multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
+    multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required']),
+  ],
+  fields: {
+    company: {
+      validators: []
+    },
+    description: {
+      validators: []
+    },
+    id: {
+      validators: []
+    },
+    inputSemiProduct: {
+      validators: [Validators.required]
+    },
+    maxOutputWeight: {
+      validators: []
+    },
+    name: {
+      validators: []
+    },
+    outputSemiProduct: {
+      validators: [Validators.required]
+    },
+    prefix: {
+      validators: [Validators.required]
+    },
+    publicTimelineIconType: {
+      validators: []
+    },
+    publicTimelineLabel: {
+      validators: []
+    },
+    publicTimelineLocation: {
+      validators: []
+    },
+    repackedOutputs: {
+      validators: []
+    },
+    requiredDocumentTypes: {
+      validators: []
+    },
+    translations: {
+      validators: [Validators.required]
+    },
+    valueChain: {
+      validators: [Validators.required]
+    },
+    type: {
+      validators: [Validators.required]
+    },
+    finalProductAction: {
+      validators: [Validators.required]
+    },
+    inputFinalProduct: {
+      validators: [Validators.required]
     }
+  }
 } as SimpleValidationScheme<ApiProcessingAction>;
