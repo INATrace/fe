@@ -153,7 +153,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     this.globalEventsManager.showLoading(false);
   }
 
-
   newAction() {
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
     this.form.get('inputSemiProduct').setValue(null);
@@ -275,7 +274,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     const lst: ApiProcessingEvidenceType[] = this.form.get('requiredDocumentTypes').value || [];
     const res = lst.map(x => x.requiredOneOfGroupIdForQuote)
         .filter(x => x && /^\+?(0|[1-9]\d*)$/.test(x))
-        .map(x => parseInt(x));
+        .map(x => Number(x));
     if (res.length === 0) {
       doc.requiredOneOfGroupIdForQuote = '' + group;
     } else {
