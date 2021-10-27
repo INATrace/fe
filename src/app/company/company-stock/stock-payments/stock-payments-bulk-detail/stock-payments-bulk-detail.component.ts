@@ -414,15 +414,6 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
     }
 
-
-
-    // TODO: Additional proofs
-    // let data = _.cloneDeep(this.bulkPaymentForm.value);
-    // Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
-    // for (let item of data.additionalProofs) {
-    //   Object.keys(item).forEach((key) => (item[key] == null) && delete item[key]);
-    // }
-
     const bulkPaymentResp = await this.paymentControllerService.createBulkPaymentUsingPOST(this.bulkPayment)
         .pipe(take(1))
         .toPromise();
@@ -433,16 +424,6 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     if (bulkPaymentResp && bulkPaymentResp.status === 'OK' && bulkPaymentResp.data) {
       this.dismiss();
     }
-
-    // Prepare payments
-    // const paymentList: Array<ApiPayment> = [];
-    //
-    //   let resP = await this.chainPaymentsService.postPayment(payment).pipe(take(1)).toPromise();
-    //
-    // this.dismiss();
-    // }
-    // this.updateBulkInProgress = false;
-    // this.globalEventsManager.showLoading(false);
   }
 
   removeItem(index: number) {
@@ -460,6 +441,10 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       sum += Number(purchaseOrder.paid);
     }
     this.bulkPaymentForm.get('totalAmount').setValue(sum);
+  }
+
+  get additionalProofsForm(): FormArray {
+    return this.bulkPaymentForm.get('additionalProofs') as FormArray;
   }
 
   get BulkType(): typeof BulkType {

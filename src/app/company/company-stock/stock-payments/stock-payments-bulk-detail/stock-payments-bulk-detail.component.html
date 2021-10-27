@@ -418,8 +418,6 @@
 
                     </div>
                 </div>
-
-
             </div>
 
             <ng-container>
@@ -440,7 +438,7 @@
                                 <list-editor-items>
                                     <div cdkDropList
                                          (cdkDropListDropped)="additionalProofsListManager.onDrop($event)">
-                                        <div *ngFor="let item of bulkPaymentForm.get('additionalProofs').controls; let i=index;">
+                                        <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
                                             <app-additional-proof-item
                                                     title=null
                                                     [formControlInput]="item"

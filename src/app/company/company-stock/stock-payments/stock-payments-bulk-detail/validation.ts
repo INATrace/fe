@@ -307,16 +307,16 @@ export const ApiActivityProofValidationScheme = {
     validators: [],
     fields: {
               document: {
-                  validators: []
+                  validators: [Validators.required]
               },
               formalCreationDate: {
-                  validators: []
+                  validators: [Validators.required]
               },
               id: {
                   validators: []
               },
               type: {
-                  validators: []
+                  validators: [Validators.required]
               },
               validUntil: {
                   validators: []
