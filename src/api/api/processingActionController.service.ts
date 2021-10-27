@@ -288,7 +288,7 @@ export namespace ListProcessingActionsByCompanyUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * ProcessingAction ID
+       * Company ID
        */
       id: number;
       /**
@@ -322,7 +322,7 @@ export namespace ListProcessingActionsByCompanyUsingGET {
      */
     export enum Parameters {
       /**
-       * ProcessingAction ID
+       * Company ID
        */
       id = 'id',
       /**
@@ -905,7 +905,7 @@ export class ProcessingActionControllerService {
     /**
      * Get a list of processing actions by company ID.
      * 
-     * @param id ProcessingAction ID
+     * @param id Company ID
      * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
