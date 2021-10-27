@@ -125,6 +125,9 @@ export const ApiProcessingEvidenceTypeValidationScheme = {
     type: {
       validators: [Validators.required]
     },
+    mandatory: {
+      validators: []
+    },
     requiredOnQuote: {
       validators: []
     },
