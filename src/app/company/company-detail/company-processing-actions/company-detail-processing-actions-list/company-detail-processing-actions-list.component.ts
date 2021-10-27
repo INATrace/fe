@@ -49,12 +49,12 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
     },
     {
       key: 'inputSemiProduct',
-      name: $localize`:@@processingActionList.sortOptions.inputSemiProduct.name:Input semi-product`,
+      name: $localize`:@@processingActionList.sortOptions.inputSemiProduct.name:Input semi-product/final product`,
       inactive: true
     },
     {
       key: 'outputSemiProduct',
-      name: $localize`:@@processingActionList.sortOptions.outputSemiProduct.name:Output semi-product`,
+      name: $localize`:@@processingActionList.sortOptions.outputSemiProduct.name:Output semi-product/final product`,
       inactive: true
     },
     {
@@ -112,7 +112,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       tap(() => this.globalEventsManager.showLoading(false)),
       shareReplay(1)
   );
-
 
   constructor(
       private processingActionControllerService: ProcessingActionControllerService,
