@@ -22,6 +22,7 @@ import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacilityLocation } from './apiFacilityLocation';
 import { ApiFacilityTranslation } from './apiFacilityTranslation';
 import { ApiFacilityType } from './apiFacilityType';
+import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiSemiProduct } from './apiSemiProduct';
 
 
@@ -48,6 +49,10 @@ export interface ApiFacility {
      * Enable form control 'Women only'
      */
     displayWomenOnly?: boolean;
+    /**
+     * List of final product ID's for this facility
+     */
+    facilityFinalProducts?: Array<ApiFinalProduct>;
     facilityLocation?: ApiFacilityLocation;
     /**
      * List of semi product ID's for this facility
@@ -105,6 +110,10 @@ export namespace ApiFacility {
          * Enable form control 'Women only'
          */
         displayWomenOnly = 'displayWomenOnly',
+        /**
+         * List of final product ID's for this facility
+         */
+        facilityFinalProducts = 'facilityFinalProducts',
         facilityLocation = 'facilityLocation',
         /**
          * List of semi product ID's for this facility
@@ -205,6 +214,18 @@ export namespace ApiFacility {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilityFinalProducts',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiFinalProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     metadata: ApiFacilityLocation.formMetadata,
@@ -312,6 +333,8 @@ export namespace ApiFacility {
                 ],
                 displayWomenOnly: [
                 ],
+                facilityFinalProducts: [
+                ],
                 facilityLocation: [
                 ],
                 facilitySemiProductList: [
@@ -351,6 +374,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               displayWomenOnly: {
+  //                   validators: []
+  //               },
+  //               facilityFinalProducts: {
   //                   validators: []
   //               },
   //               facilityLocation: {

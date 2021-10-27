@@ -11222,6 +11222,13 @@
             "example": false,
             "type": "boolean"
           },
+          "facilityFinalProducts": {
+            "description": "List of final product ID's for this facility",
+            "items": {
+              "$ref": "#/components/schemas/ApiFinalProduct"
+            },
+            "type": "array"
+          },
           "facilityLocation": {
             "$ref": "#/components/schemas/ApiFacilityLocation",
             "description": "Facility location"
