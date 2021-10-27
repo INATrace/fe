@@ -43,6 +43,7 @@ import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
+import { ApiUserCustomerImportResponse } from '../model/apiUserCustomerImportResponse';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -2337,15 +2338,15 @@ export class CompanyControllerService {
   public importFarmersSpreadsheetUsingPOSTByMap(
     map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+    reportProgress?: boolean): Observable<ApiUserCustomerImportResponse>;
   public importFarmersSpreadsheetUsingPOSTByMap(
     map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiUserCustomerImportResponse>>;
   public importFarmersSpreadsheetUsingPOSTByMap(
     map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiUserCustomerImportResponse>>;
   public importFarmersSpreadsheetUsingPOSTByMap(
     map: ImportFarmersSpreadsheetUsingPOST.PartialParamMap,
     observe: any = 'body',
@@ -2367,9 +2368,9 @@ export class CompanyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiUserCustomerImportResponse>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiUserCustomerImportResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiUserCustomerImportResponse>>;
     public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling importFarmersSpreadsheetUsingPOST.');
@@ -2399,7 +2400,7 @@ export class CompanyControllerService {
                 }
             }
 
-        const handle = this.httpClient.post<ApiDefaultResponse>(`${this.configuration.basePath}/api/company/userCustomers/import/farmers/${encodeURIComponent(String(companyId))}/${encodeURIComponent(String(documentId))}`,
+        const handle = this.httpClient.post<ApiUserCustomerImportResponse>(`${this.configuration.basePath}/api/company/userCustomers/import/farmers/${encodeURIComponent(String(companyId))}/${encodeURIComponent(String(documentId))}`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,

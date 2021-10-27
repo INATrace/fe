@@ -2827,6 +2827,15 @@
     "globalOrderEdit.list-editor.orderItems.addText": "Añadir artículo de pedido",
     "globalOrderEdit.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Guardar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_2}{$START_TAG_SPAN}Guardar & Cerrar{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
     "globalOrderEdit.updateTitle": "Actualizar pedido",
-    "globalOrderEdit.newTitle": "Pedido nuevo"
+    "globalOrderEdit.newTitle": "Pedido nuevo",
+    "companyDetail.farmers.import.template": "Click to download Excel template",
+    "companyDetail.farmers.import.template.label": "Template",
+    "companyDetail.farmers.import.data": "Upload data",
+    "companyDetail.farmers.import.duplicates.label": "Duplicates",
+    "companyDetail.farmers.import.duplicates.error": "Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates",
+    "companyDetail.farmers.import.noFarmers.error" : "No farmers imported",
+    "companyDetail.farmers.import.success.single" : "Farmer successfully imported",
+    "companyDetail.farmers.import.accept": "Accept",
+    "companyDetail.farmers.import.reject": "Reject"
   }
 }

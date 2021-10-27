@@ -2884,6 +2884,15 @@
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Ubwoko bw'igipimo burasabwa",
     "stockOrderItem.pricePerUnitForEndCustomer.textinput.error": "Igiciro kirasabwa",
     "productLabelStock.button.export": "Uwohereza ibicuruzwa hanze",
-    "productLabelFinalProduct.modal.textInput.name": "Hindura igicuruzwa cya nyuma"
+    "productLabelFinalProduct.modal.textInput.name": "Hindura igicuruzwa cya nyuma",
+    "companyDetail.farmers.import.template": "Click to download Excel template",
+    "companyDetail.farmers.import.template.label": "Template",
+    "companyDetail.farmers.import.data": "Upload data",
+    "companyDetail.farmers.import.duplicates.label": "Duplicates",
+    "companyDetail.farmers.import.duplicates.error": "Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates",
+    "companyDetail.farmers.import.noFarmers.error" : "No farmers imported",
+    "companyDetail.farmers.import.success.single" : "Farmer successfully imported",
+    "companyDetail.farmers.import.accept": "Accept",
+    "companyDetail.farmers.import.reject": "Reject"
   }
 }
