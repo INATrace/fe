@@ -2886,6 +2886,9 @@
     "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required",
     "semiProductDetail.textinput.name.error": "Name is required",
     "semiProductDetail.textinput.description.error": "Description is required",
-    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages."
+    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages.",
+    "productLabelFacilities.tableCol.activate": "Activate",
+    "productLabelFacilities.tableCol.deactivate": "Deactivate",
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
   }
 }

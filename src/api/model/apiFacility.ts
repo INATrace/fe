@@ -29,6 +29,7 @@ import { ApiSemiProduct } from './apiSemiProduct';
 
 export interface ApiFacility { 
     company?: ApiCompanyBase;
+    deactivated?: boolean;
     /**
      * Enable form control 'May involve collectors'
      */
@@ -90,6 +91,7 @@ export namespace ApiFacility {
      */
     export enum Properties {
         company = 'company',
+        deactivated = 'deactivated',
         /**
          * Enable form control 'May involve collectors'
          */
@@ -159,6 +161,17 @@ export namespace ApiFacility {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompanyBase'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'deactivated',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -323,6 +336,8 @@ export namespace ApiFacility {
             validators: {
                 company: [
                 ],
+                deactivated: [
+                ],
                 displayMayInvolveCollectors: [
                 ],
                 displayOrganic: [
@@ -359,6 +374,9 @@ export namespace ApiFacility {
   //     validators: [],
   //     fields: {
   //               company: {
+  //                   validators: []
+  //               },
+  //               deactivated: {
   //                   validators: []
   //               },
   //               displayMayInvolveCollectors: {

@@ -40,6 +40,20 @@
                        [class.enabled-action]="true">
                       Edit
                     </a>
+                    <a *ngIf="facility.deactivated"
+                       i18n="@@productLabelFacilities.tableCol.activate"
+                       (click)="activateFacility(facility.id)"
+                       class="company-action"
+                       [class.enabled-action]="true">
+                      Activate
+                    </a>
+                    <a *ngIf="!facility.deactivated"
+                       i18n="@@productLabelFacilities.tableCol.deactivate"
+                       (click)="deactivateFacility(facility.id)"
+                       class="company-action"
+                       [class.enabled-action]="true">
+                      Deactivate
+                    </a>
                 </span>
                 </td>
               </tr>

@@ -39,6 +39,41 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
+ * Namespace for activateFacilityUsingPUT.
+ */
+export namespace ActivateFacilityUsingPUT {
+    /**
+     * Parameter map for activateFacilityUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * Facility ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for activateFacilityUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * Facility ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of activateFacilityUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ActivateFacilityUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
  * Namespace for createOrUpdateFacilityUsingPUT.
  */
 export namespace CreateOrUpdateFacilityUsingPUT {
@@ -67,6 +102,41 @@ export namespace CreateOrUpdateFacilityUsingPUT {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof CreateOrUpdateFacilityUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
+ * Namespace for deactivateFacilityUsingPUT.
+ */
+export namespace DeactivateFacilityUsingPUT {
+    /**
+     * Parameter map for deactivateFacilityUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * Facility ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for deactivateFacilityUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * Facility ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deactivateFacilityUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof DeactivateFacilityUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
     };
 }
 
@@ -275,6 +345,111 @@ export namespace GetFacilityUsingGET {
               ['required', Validators.required],
       ],
       language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for listActivatedFacilitiesByCompanyUsingGET.
+ */
+export namespace ListActivatedFacilitiesByCompanyUsingGET {
+    /**
+     * Parameter map for listActivatedFacilitiesByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      id: number;
+      /**
+       * Semi product ID
+       */
+      semiProductId?: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType?: 'COUNT' | 'FETCH';
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit?: number;
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset?: number;
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy?: string;
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for listActivatedFacilitiesByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      id = 'id',
+      /**
+       * Semi product ID
+       */
+      semiProductId = 'semiProductId',
+      /**
+       * language
+       */
+      language = 'language',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listActivatedFacilitiesByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ListActivatedFacilitiesByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      semiProductId: [
+      ],
+      language: [
+      ],
+      requestType: [
+      ],
+      limit: [
+      ],
+      offset: [
+      ],
+      sortBy: [
+      ],
+      sort: [
       ],
     };
 }
@@ -622,6 +797,89 @@ export class FacilityControllerService {
 
 
   /**
+   * Activate a facility by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public activateFacilityUsingPUTByMap(
+    map: ActivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public activateFacilityUsingPUTByMap(
+    map: ActivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public activateFacilityUsingPUTByMap(
+    map: ActivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public activateFacilityUsingPUTByMap(
+    map: ActivateFacilityUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.activateFacilityUsingPUT(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Activate a facility
+     * 
+     * @param id Facility ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public activateFacilityUsingPUT(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public activateFacilityUsingPUT(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public activateFacilityUsingPUT(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public activateFacilityUsingPUT(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling activateFacilityUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/facility/${encodeURIComponent(String(id))}/activate`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'activateFacilityUsingPUT')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Create or update facility. If ID is provided, then the entity with the provided ID is updated. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -704,6 +962,89 @@ export class FacilityControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateFacilityUsingPUT')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Deactivate a facility by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public deactivateFacilityUsingPUTByMap(
+    map: DeactivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public deactivateFacilityUsingPUTByMap(
+    map: DeactivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public deactivateFacilityUsingPUTByMap(
+    map: DeactivateFacilityUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public deactivateFacilityUsingPUTByMap(
+    map: DeactivateFacilityUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.deactivateFacilityUsingPUT(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Deactivate a facility
+     * 
+     * @param id Facility ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deactivateFacilityUsingPUT(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deactivateFacilityUsingPUT(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deactivateFacilityUsingPUT(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deactivateFacilityUsingPUT(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deactivateFacilityUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiDefaultResponse>(`${this.configuration.basePath}/api/chain/facility/${encodeURIComponent(String(id))}/deactivate`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deactivateFacilityUsingPUT')));
         }
         return handle;
     }
@@ -1070,6 +1411,126 @@ export class FacilityControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a list of activated facilities by company ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public listActivatedFacilitiesByCompanyUsingGETByMap(
+    map: ListActivatedFacilitiesByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiPaginatedResponseApiFacility>;
+  public listActivatedFacilitiesByCompanyUsingGETByMap(
+    map: ListActivatedFacilitiesByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
+  public listActivatedFacilitiesByCompanyUsingGETByMap(
+    map: ListActivatedFacilitiesByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
+  public listActivatedFacilitiesByCompanyUsingGETByMap(
+    map: ListActivatedFacilitiesByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.listActivatedFacilitiesByCompanyUsingGET(
+      map.id,
+      map.semiProductId,
+      map.language,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a list of activated facilities by company ID.
+     * 
+     * @param id Company ID
+     * @param semiProductId Semi product ID
+     * @param language language
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listActivatedFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacility>;
+    public listActivatedFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
+    public listActivatedFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
+    public listActivatedFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling listActivatedFacilitiesByCompanyUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (semiProductId !== undefined && semiProductId !== null) {
+            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiPaginatedResponseApiFacility>(`${this.configuration.basePath}/api/chain/facility/list/company/${encodeURIComponent(String(id))}/activated`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listActivatedFacilitiesByCompanyUsingGET')));
         }
         return handle;
     }

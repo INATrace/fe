@@ -83,7 +83,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
   }
 
   loadEntityList(): Observable<ApiPaginatedResponseApiFacility> {
-    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
+    return this.facilityControllerService.listActivatedFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
   }
 
   arrangeFacilities(facilities: ApiFacility[]) {

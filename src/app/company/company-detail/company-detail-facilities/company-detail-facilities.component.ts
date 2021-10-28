@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, O
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
-import { shareReplay, switchMap, tap } from 'rxjs/operators';
+import { shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
@@ -158,7 +158,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   fitBounds() {
     if (!this.gMap || this.gMap == null) { return; }
     this.bounds = new google.maps.LatLngBounds();
-    for (let bound of this.initialBounds) {
+    for (const bound of this.initialBounds) {
       this.bounds.extend(bound);
     }
     if (this.bounds.isEmpty()) {
@@ -166,17 +166,17 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
       this.gMap.googleMap.setZoom(this.defaultZoom);
       return;
     }
-    let center = this.bounds.getCenter();
-    let offset = 0.02;
-    let northEast = new google.maps.LatLng(
+    const center = this.bounds.getCenter();
+    const offset = 0.02;
+    const northEast = new google.maps.LatLng(
         center.lat() + offset,
         center.lng() + offset
     );
-    let southWest = new google.maps.LatLng(
+    const southWest = new google.maps.LatLng(
         center.lat() - offset,
         center.lng() - offset
     );
-    let minBounds = new google.maps.LatLngBounds(southWest, northEast);
+    const minBounds = new google.maps.LatLngBounds(southWest, northEast);
     this.gMap.fitBounds(this.bounds.union(minBounds));
   }
 
@@ -199,7 +199,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
             this.displayedFacilities = 0;
             if (resp.data && resp.data.count && (this.pageSize - resp.data.count > 0)) { this.displayedFacilities = resp.data.count; }
             else if (resp.data && resp.data.count && (this.pageSize - resp.data.count <= 0)) {
-              let temp = resp.data.count - (this.pageSize * (this.page - 1));
+              const temp = resp.data.count - (this.pageSize * (this.page - 1));
               this.displayedFacilities = temp >= this.pageSize ? this.pageSize : temp;
             }
             this.showing.emit(this.displayedFacilities);
@@ -223,23 +223,49 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   intializeMarkers(data: ApiPaginatedListApiFacility) {
-    if (!data) return;
+    if (!data) {
+      return;
+    }
     this.markers = [];
     this.initialBounds = [];
     for (const item of data.items) {
       if (item.facilityLocation && item.facilityLocation.publiclyVisible && item.facilityLocation.latitude && item.facilityLocation.longitude) {
-        let tmp = {
+        const tmp = {
           position: {
             lat: item.facilityLocation.latitude,
             lng: item.facilityLocation.longitude
           },
           infoText: item.name
-        }
+        };
         this.markers.push(tmp);
         this.initialBounds.push(tmp.position);
       }
     }
     this.fitBounds();
+  }
+
+  async activateFacility(facilityId) {
+    const resActivate = await this.facilityControllerService.activateFacilityUsingPUT(facilityId).pipe(take(1)).toPromise();
+    if (resActivate && resActivate.status === 'OK') {
+      this.reloadPingList$.next(null);
+    }
+  }
+
+  async deactivateFacility(facilityId) {
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelFacilities.deactivateFacility.delete:Are you sure you want to deactivate the facility?`,
+      options: {
+        centered: true
+      }
+    });
+    if (result  !== 'ok') {
+      return;
+    }
+    const resDeactivate = await this.facilityControllerService.deactivateFacilityUsingPUT(facilityId).pipe(take(1)).toPromise();
+    if (resDeactivate && resDeactivate.status === 'OK') {
+      this.reloadPingList$.next(null);
+    }
   }
 
 }
