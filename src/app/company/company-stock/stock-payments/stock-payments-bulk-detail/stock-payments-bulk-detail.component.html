@@ -400,19 +400,16 @@
                                      [listEditorManager]="paymentsListManager"
                                      [canAdd]="false">
                             <list-editor-items>
-                                <div cdkDropList
-                                     (cdkDropListDropped)="paymentsListManager.onDrop($event)">
-                                    <div *ngFor="let item of paymentsForm.controls; let i=index;">
-                                        <app-stock-payments-item
-                                                title=null
-                                                [paymentForm]="item"
-                                                [formControlInput]="item"
-                                                [isOpen]="paymentsListManager.isOpen(i)"
-                                                [listEditorManager]="this.paymentsListManager"
-                                                [listEditorManagerPosition]="i"
-                                                [disableDelete]="true">
-                                        </app-stock-payments-item>
-                                    </div>
+                                <div *ngFor="let item of paymentsForm.controls; let i=index;">
+                                    <app-stock-payments-item
+                                            title=null
+                                            [paymentForm]="item"
+                                            [formControlInput]="item"
+                                            [isOpen]="paymentsListManager.isOpen(i)"
+                                            [listEditorManager]="this.paymentsListManager"
+                                            [listEditorManagerPosition]="i"
+                                            [disableDelete]="true">
+                                    </app-stock-payments-item>
                                 </div>
                             </list-editor-items>
                         </list-editor>
@@ -437,21 +434,16 @@
                                          [invalid]="submitted && bulkPaymentForm.get('additionalProofs').invalid"
                                          [disabled]="this.update">
                                 <list-editor-items>
-                                    <div cdkDropList
-                                         (cdkDropListDropped)="additionalProofsListManager.onDrop($event)">
-                                        <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
-                                            <app-additional-proof-item
-                                                    title=null
-                                                    [formControlInput]="item"
-                                                    [isOpen]="additionalProofsListManager.isOpen(i)"
-                                                    [listEditorManager]="this.additionalProofsListManager"
-                                                    [listEditorManagerPosition]="i">
-                                            </app-additional-proof-item>
-                                        </div>
+                                    <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
+                                        <app-additional-proof-item
+                                                title=null
+                                                [formControlInput]="item"
+                                                [isOpen]="additionalProofsListManager.isOpen(i)"
+                                                [listEditorManager]="this.additionalProofsListManager"
+                                                [listEditorManagerPosition]="i">
+                                        </app-additional-proof-item>
                                     </div>
                                 </list-editor-items>
-                                <list-editor-errors>
-                                </list-editor-errors>
                             </list-editor>
                         </div>
 
