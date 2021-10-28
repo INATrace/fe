@@ -118,15 +118,23 @@ export class FacilityCardComponent implements OnInit {
   }
 
   private setMenuOptions() {
+
     for (const action of this.actions) {
-      for (const facilitySemiProd of this.facility.facilitySemiProductList) {
-        if (action.inputSemiProduct.id === facilitySemiProd.id) {
-          this.menuOptions.push({
-            id: action.id,
-            name: action.name
-          });
-          break;
-        }
+
+      const facilitySemiProd = this.facility.facilitySemiProductList.find(f => f.id === action.inputSemiProduct?.id);
+      if (facilitySemiProd) {
+        this.menuOptions.push({
+          id: action.id,
+          name: action.name
+        });
+      }
+
+      const facilityFinalProd = this.facility.facilityFinalProducts.find(f => f.id === action.inputFinalProduct?.id);
+      if (facilityFinalProd) {
+        this.menuOptions.push({
+          id: action.id,
+          name: action.name
+        });
       }
     }
   }
