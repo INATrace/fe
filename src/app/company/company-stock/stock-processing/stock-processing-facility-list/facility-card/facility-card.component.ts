@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SemiProductService } from 'src/api-chain/api/semiProduct.service';
-import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../../api/model/apiFacility';
 import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAction';
 
@@ -26,13 +24,11 @@ export class FacilityCardComponent implements OnInit {
   menuOptions: { id: any; name: string }[] = [];
 
   constructor(
-    private chainSemiProductService: SemiProductService,
-    private router: Router,
-    private codebookTranslations: CodebookTranslations
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.semiProductsIncluded().then();
+    this.semiAndFinalProductsIncluded().then();
     this.setMenuOptions();
   }
 
@@ -106,9 +102,14 @@ export class FacilityCardComponent implements OnInit {
     }
   }
 
-  async semiProductsIncluded() {
+  private async semiAndFinalProductsIncluded() {
+
     for (const item of this.facility.facilitySemiProductList) {
-      this.description += this.translateName(item) + ', ';
+      this.description += item.name + ', ';
+    }
+
+    for (const item of this.facility.facilityFinalProducts) {
+      this.description += `${item.name} (${item.product.name})` + ', ';
     }
 
     if (this.description.length > 0) {
@@ -122,7 +123,7 @@ export class FacilityCardComponent implements OnInit {
         if (action.inputSemiProduct.id === facilitySemiProd.id) {
           this.menuOptions.push({
             id: action.id,
-            name: this.codebookTranslations.translate(action, 'name')
+            name: action.name
           });
           break;
         }
@@ -131,15 +132,7 @@ export class FacilityCardComponent implements OnInit {
   }
 
   goTo(actionId) {
-
-    if (actionId === 'PURCHASE_ORDER') {
-      this.router.navigate(['my-stock', 'purchases', 'facility', this.facility.id, 'processing', 'new']).then();
-      return;
-    }
     this.router.navigate(['my-stock', 'processing', actionId, 'facility', this.facility.id, 'new']).then();
   }
 
-  translateName(obj) {
-    return this.codebookTranslations.translate(obj, 'name');
-  }
 }
