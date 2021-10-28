@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Location} from '@angular/common';
-import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
-import {ActivatedRoute} from '@angular/router';
-import {PaymentControllerService} from '../../../../../api/api/paymentController.service';
-import {StockOrderControllerService} from '../../../../../api/api/stockOrderController.service';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {take} from 'rxjs/operators';
-import {ApiBulkPayment} from '../../../../../api/model/apiBulkPayment';
-import {CompanyControllerService} from '../../../../../api/api/companyController.service';
-import {Subscription} from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
+import { ActivatedRoute } from '@angular/router';
+import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
+import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs/operators';
+import { ApiBulkPayment } from '../../../../../api/model/apiBulkPayment';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { Subscription } from 'rxjs';
 import {
   dateAtMidnightISOString,
   dateAtNoonISOString,
@@ -21,12 +21,12 @@ import {
   ApiPaymentValidationScheme,
   ApiStockOrderValidationScheme
 } from './validation';
-import {ApiPayment} from '../../../../../api/model/apiPayment';
-import {ApiStockOrder} from '../../../../../api/model/apiStockOrder';
-import {EnumSifrant} from '../../../../shared-services/enum-sifrant';
-import {faTrashAlt} from '@fortawesome/free-regular-svg-icons';
-import {ListEditorManager} from '../../../../shared/list-editor/list-editor-manager';
-import {ApiActivityProof} from '../../../../../api/model/apiActivityProof';
+import { ApiPayment } from '../../../../../api/model/apiPayment';
+import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
+import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
 import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
@@ -49,6 +49,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
   title: string;
   createdBy: string;
+  currency: string;
   update: boolean;
   submitted: boolean;
   bulkPaymentUpdateInProgress: boolean;
@@ -70,6 +71,15 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
   payableFromForm: FormControl;
 
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
+
+  stringWithoutUnits = {
+    totalAmountLabel: $localize`:@@productLabelStockBulkPayments.textinput.amount.label:Total amount paid`,
+    additionalCostsLabel: $localize`:@@productLabelStockBulkPayments.textinput.additionalCosts.label:Additional costs`,
+    costLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.amount:Cost`,
+    balanceLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.balance:Balance`,
+    payingLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.paying:Paying`,
+
+  };
 
   static ApiActivityProofItemCreateEmptyObject(): ApiActivityProof {
     return defaultEmptyObject(ApiActivityProof.formMetadata()) as ApiActivityProof;
@@ -104,8 +114,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       private paymentControllerService: PaymentControllerService,
       private stockOrderControllerService: StockOrderControllerService,
       private companyControllerService: CompanyControllerService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -116,6 +125,8 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
           } else {
             this.newBulkPayment();
           }
+
+          this.currency = this.bulkPaymentForm.get('currency').value;
         }
     );
   }
@@ -463,6 +474,13 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     obj['WOMEN_PREMIUM'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.womenPreminum:AF Women premium`;
     obj['INVOICE_PAYMENT'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.invoicePayment:Invoice payment`;
     return obj;
+  }
+
+  getCurrencyString(text: string): string {
+    if (this.currency) {
+      return `${text} (${this.currency})`;
+    }
+    return text;
   }
 
   dismiss() {
