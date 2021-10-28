@@ -2851,7 +2851,7 @@
       "get": {
         "parameters": [
           {
-            "description": "ProcessingAction ID",
+            "description": "Company ID",
             "in": "path",
             "name": "id",
             "required": true,
@@ -3462,6 +3462,97 @@
         ],
         "operationId": "getProcessingEvidenceTypeListUsingGET",
         "summary": "Get a paginated list of processing evidence types."
+      }
+    },
+    "/api/chain/processing-evidence-type/list/value-chain/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "listProcessingEvidenceTypesByValueChainUsingGET",
+        "summary": "Get a list of processing evidence types by value chain ID."
       }
     },
     "/api/chain/processing-evidence-type/{id}": {
@@ -6993,6 +7084,97 @@
         "summary": "Get user customer by id"
       }
     },
+    "/api/final-product/company/{companyId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFinalProduct_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "final-product-controller"
+        ],
+        "operationId": "getFinalProductsForCompanyUsingGET",
+        "summary": "Get a list of final products that the company with the provided ID has access to"
+      }
+    },
     "/api/product/": {
       "put": {
         "responses": {
@@ -9848,12 +10030,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9863,19 +10042,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9885,19 +10061,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9907,19 +10080,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9929,19 +10099,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9951,19 +10118,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9973,19 +10137,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -9995,8 +10156,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -11130,6 +11291,13 @@
             "description": "Enable form control 'Women only'",
             "example": false,
             "type": "boolean"
+          },
+          "facilityFinalProducts": {
+            "description": "List of final product ID's for this facility",
+            "items": {
+              "$ref": "#/components/schemas/ApiFinalProduct"
+            },
+            "type": "array"
           },
           "facilityLocation": {
             "$ref": "#/components/schemas/ApiFacilityLocation",
@@ -13619,10 +13787,19 @@
             "description": "Processing action description",
             "type": "string"
           },
+          "finalProductAction": {
+            "description": "Denoting if this processing action is Transfer or Quote of a Final product",
+            "example": false,
+            "type": "boolean"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "inputFinalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "The input Final product"
           },
           "inputSemiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
@@ -13645,6 +13822,10 @@
           "name": {
             "description": "Processing action name",
             "type": "string"
+          },
+          "outputFinalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "The output final product"
           },
           "outputSemiProduct": {
             "$ref": "#/components/schemas/ApiSemiProduct",
@@ -13708,10 +13889,15 @@
             "description": "Processing action type",
             "enum": [
               "PROCESSING",
+              "FINAL_PROCESSING",
               "SHIPMENT",
               "TRANSFER"
             ],
             "type": "string"
+          },
+          "valueChain": {
+            "$ref": "#/components/schemas/ApiValueChain",
+            "description": "The value chain that this Processing action supports"
           }
         },
         "type": "object"
@@ -17640,16 +17826,8 @@
       "name": "product-controller"
     },
     {
-      "description": "Company Controller",
-      "name": "company-controller"
-    },
-    {
       "description": "Common Controller",
       "name": "common-controller"
-    },
-    {
-      "description": "Processing Evidence Field Controller",
-      "name": "processing-evidence-field-controller"
     },
     {
       "description": "Product Order Controller",
@@ -17660,24 +17838,8 @@
       "name": "measure-unit-type-controller"
     },
     {
-      "description": "Processing Action Controller",
-      "name": "processing-action-controller"
-    },
-    {
-      "description": "Value Chain Controller",
-      "name": "value-chain-controller"
-    },
-    {
       "description": "Basic Error Controller",
       "name": "basic-error-controller"
-    },
-    {
-      "description": "Currency Type Controller",
-      "name": "currency-type-controller"
-    },
-    {
-      "description": "Grade Abbreviation Controller",
-      "name": "grade-abbreviation-controller"
     },
     {
       "description": "Processing Evidence Type Controller",
@@ -17692,16 +17854,8 @@
       "name": "stock-order-controller"
     },
     {
-      "description": "Facility Controller",
-      "name": "facility-controller"
-    },
-    {
       "description": "Payment Controller",
       "name": "payment-controller"
-    },
-    {
-      "description": "Transaction Controller",
-      "name": "transaction-controller"
     },
     {
       "description": "Currency Controller",
@@ -17710,10 +17864,6 @@
     {
       "description": "Processing Order Controller",
       "name": "processing-order-controller"
-    },
-    {
-      "description": "User Controller",
-      "name": "user-controller"
     },
     {
       "description": "Semi Product Controller",
@@ -17726,6 +17876,46 @@
     {
       "description": "Action Type Controller",
       "name": "action-type-controller"
+    },
+    {
+      "description": "Company Controller",
+      "name": "company-controller"
+    },
+    {
+      "description": "Processing Evidence Field Controller",
+      "name": "processing-evidence-field-controller"
+    },
+    {
+      "description": "Processing Action Controller",
+      "name": "processing-action-controller"
+    },
+    {
+      "description": "Value Chain Controller",
+      "name": "value-chain-controller"
+    },
+    {
+      "description": "Currency Type Controller",
+      "name": "currency-type-controller"
+    },
+    {
+      "description": "Grade Abbreviation Controller",
+      "name": "grade-abbreviation-controller"
+    },
+    {
+      "description": "Facility Controller",
+      "name": "facility-controller"
+    },
+    {
+      "description": "Transaction Controller",
+      "name": "transaction-controller"
+    },
+    {
+      "description": "Final Product Controller",
+      "name": "final-product-controller"
+    },
+    {
+      "description": "User Controller",
+      "name": "user-controller"
     },
     {
       "description": "Common Csv Controller",

@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
@@ -16,7 +15,8 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
   constructor(
     private codebookService: ProcessingEvidenceTypeControllerService,
     protected codebookTranslations: CodebookTranslations,
-    private type: string
+    private type: string,
+    private valueChainId?: number
   ) {
     super();
   }
@@ -36,13 +36,12 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
 
   public makeQuery(key: string, params?: any, productId?: string): Observable<PagedSearchResults<ApiProcessingEvidenceType>> {
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqPars = {
-      productId,
+    const reqPars: GetProcessingEvidenceTypeListUsingGET.PartialParamMap = {
       ...this.requestParams
     };
 
     const lkey = key ? key.toLocaleLowerCase() : null;
-    return this.codebookService.getProcessingEvidenceTypeListUsingGETByMap(reqPars).pipe(
+    return this.fetchProcessingEvidenceTypes(reqPars, this.valueChainId).pipe(
         map((res: ApiPaginatedResponseApiProcessingEvidenceType) => {
           let results = res.data.items;
           if (this.type) {
@@ -61,6 +60,14 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
 
   public placeholder(): string {
     return $localize`:@@processingEvidenceType.input.placehoder:Select document type`;
+  }
+
+  private fetchProcessingEvidenceTypes(reqParams, valueChainId?: number): Observable<ApiPaginatedResponseApiProcessingEvidenceType> {
+    if (valueChainId !== null && valueChainId !== undefined) {
+      return this.codebookService.listProcessingEvidenceTypesByValueChainUsingGETByMap({ id: valueChainId, ...reqParams });
+    } else {
+      return this.codebookService.getProcessingEvidenceTypeListUsingGETByMap(reqParams);
+    }
   }
 
 }
