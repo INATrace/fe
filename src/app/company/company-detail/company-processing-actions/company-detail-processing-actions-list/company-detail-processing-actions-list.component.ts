@@ -24,8 +24,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
   @Output()
   countAll = new EventEmitter<number>();
 
-  processingActionToShow: ApiProcessingAction;
-
   searchName = new FormControl(null);
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   pagingParams$ = new BehaviorSubject({});
@@ -168,10 +166,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
   reloadPage() {
     this.reloadPingList$.next(true);
-  }
-
-  view(action: ApiProcessingAction) {
-    this.processingActionToShow = action;
   }
 
 }
