@@ -77,8 +77,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     additionalCostsLabel: $localize`:@@productLabelStockBulkPayments.textinput.additionalCosts.label:Additional costs`,
     costLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.amount:Cost`,
     balanceLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.balance:Balance`,
-    payingLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.paying:Paying`,
-
+    payingLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.paying:Paying`
   };
 
   static ApiActivityProofItemCreateEmptyObject(): ApiActivityProof {
@@ -125,8 +124,6 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
           } else {
             this.newBulkPayment();
           }
-
-          this.currency = this.bulkPaymentForm.get('currency').value;
         }
     );
   }
@@ -178,6 +175,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
       if (bulkPaymentResp && bulkPaymentResp.status === 'OK' && bulkPaymentResp.data) {
         this.bulkPayment = bulkPaymentResp.data;
+        this.currency = this.bulkPayment.payingCompany?.currency?.code;
         this.preparePaymentsForEdit();
       }
 
@@ -209,20 +207,17 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     const today = dateAtMidnightISOString(new Date().toDateString());
     this.bulkPaymentForm.get('formalCreationTime').setValue(today);
 
-    // TODO: Currency -> A bit sketchy, isn't it?
-    if (!this.bulkPaymentForm.get('currency').value) {
-      this.bulkPaymentForm.get('currency').setValue('RWF');
-    }
-
     // Paying company is the company in which the user is currently logged in
-    const userCompanyId = Number(localStorage.getItem('selectedUserCompany'));
-    const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(userCompanyId)
+    const payingCompanyId = Number(localStorage.getItem('selectedUserCompany'));
+    const payingCompanyResp = await this.companyControllerService.getCompanyUsingGET(payingCompanyId)
         .pipe(take(1))
         .toPromise();
 
-    if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
-      this.bulkPaymentForm.get('payingCompany').setValue(userCompanyResp.data);
-      this.payableFromForm.setValue(userCompanyResp.data.name);
+    if (payingCompanyResp && payingCompanyResp.status === 'OK' && payingCompanyResp.data) {
+      const payingCompany = payingCompanyResp.data;
+      this.bulkPaymentForm.get('payingCompany').setValue(payingCompany);
+      this.payableFromForm.setValue(payingCompany.name);
+      this.currency = payingCompany.currency.code;
     }
 
   }
@@ -400,7 +395,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       for (const purchaseOrder of this.purchaseItems.value) {
 
         const payment = {
-          currency: this.bulkPaymentForm.get('currency').value,
+          currency: this.currency,
           formalCreationTime: this.bulkPaymentForm.get('formalCreationTime').value,
           payingCompany: this.bulkPaymentForm.get('payingCompany').value,
           paymentPurposeType: this.bulkPaymentForm.get('paymentPurposeType').value,
