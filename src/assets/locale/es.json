@@ -2834,6 +2834,15 @@
     "companyDetailProcessingActions.textInput.sortOrder.error.pattern": "Sort order must be a number",
     "semiProductDetail.textinput.name.error": "Name is required",
     "semiProductDetail.textinput.description.error": "Description is required",
-    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages."
+    "semiProductDetail.hint.translations": "Specify name in English and add translations for all used languages.",
+    "companyDetail.farmers.import.template": "Click to download Excel template",
+    "companyDetail.farmers.import.template.label": "Template",
+    "companyDetail.farmers.import.data": "Upload data",
+    "companyDetail.farmers.import.duplicates.label": "Duplicates",
+    "companyDetail.farmers.import.duplicates.error": "Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates",
+    "companyDetail.farmers.import.noFarmers.error" : "No farmers imported",
+    "companyDetail.farmers.import.success.single" : "Farmer successfully imported",
+    "companyDetail.farmers.import.accept": "Accept",
+    "companyDetail.farmers.import.reject": "Reject"
   }
 }
