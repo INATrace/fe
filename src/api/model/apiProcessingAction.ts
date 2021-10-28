@@ -207,6 +207,7 @@ export namespace ApiProcessingAction {
      */
     export enum TypeEnum {
         PROCESSING = 'PROCESSING',
+        FINALPROCESSING = 'FINAL_PROCESSING',
         SHIPMENT = 'SHIPMENT',
         TRANSFER = 'TRANSFER'
     }

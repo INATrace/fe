@@ -13889,6 +13889,7 @@
             "description": "Processing action type",
             "enum": [
               "PROCESSING",
+              "FINAL_PROCESSING",
               "SHIPMENT",
               "TRANSFER"
             ],
