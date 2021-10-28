@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
@@ -11,15 +10,12 @@ import {
 import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
 import { ApiProcessingEvidenceField } from '../../api/model/apiProcessingEvidenceField';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiProcessingEvidenceField>{
 
   constructor(
       private codebookService: ProcessingEvidenceFieldControllerService,
       protected codebookTranslations: CodebookTranslations,
-      private type: string
+      private valueChainId?: number
   ) {
     super();
   }
@@ -45,12 +41,9 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
     };
 
     const lkey = key ? key.toLocaleLowerCase() : null;
-    return this.codebookService.getProcessingEvidenceFieldListUsingGETByMap(reqPars).pipe(
+    return this.fetchProcessingEvidenceFields(reqPars, this.valueChainId).pipe(
         map((res: ApiPaginatedResponseApiProcessingEvidenceField) => {
-          let results = res.data.items;
-          if (this.type) {
-            results = res.data.items.filter(c => c.type === this.type);
-          }
+          const results = res.data.items;
 
           return {
             results: results.filter((x: ApiProcessingEvidenceField) => lkey == null || x.label.toLocaleLowerCase().indexOf(lkey) >= 0),
@@ -65,5 +58,13 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
   public placeholder(): string {
     return $localize`:@@processingEvidenceField.input.placeholder:Select evidence field`;
   }
-}
 
+  private fetchProcessingEvidenceFields(reqParams, valueChainId?: number): Observable<ApiPaginatedResponseApiProcessingEvidenceField> {
+    if (valueChainId !== null && valueChainId !== undefined) {
+      return this.codebookService.listProcessingEvidenceFieldsByValueChainUsingGETByMap({ id: valueChainId, ...reqParams });
+    } else {
+      return this.codebookService.getProcessingEvidenceFieldListUsingGETByMap(reqParams);
+    }
+  }
+
+}

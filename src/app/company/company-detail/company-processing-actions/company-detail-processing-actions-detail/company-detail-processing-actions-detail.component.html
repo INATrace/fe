@@ -18,16 +18,32 @@
             </div>
             <!-- END: Top row -->
 
+            <!-- Second row -->
             <div class="af-form-row">
 
+                <!-- Left column -->
                 <div class="af-form-block--c6">
 
                     <!-- Basic information -->
-
                     <h2 i18n="@@companyDetailProcessingActions.section0.translations">Basic information</h2>
                     <div class="af-form-element">
 
                         <div class="spacer-title-section"></div>
+
+                        <single-choice
+                                label="Value chain"
+                                i18n-label="@@companyDetailProcessingActions.singleChoice.valueChain.label"
+                                [formControlInput]="form.get('valueChain')"
+                                [codebookService]="valueChainCodebook"
+                                [isInvalidChoice]="submitted && form.get('valueChain').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('valueChain').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.valueChain.error.required">
+                                        Value chain is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </single-choice>
 
                         <single-choice
                                 label="Action type"
@@ -44,7 +60,27 @@
                             </ng-container>
                         </single-choice>
 
-                        <ng-container *ngIf="form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER'">
+                        <!-- If we have Shipment or Transfer proc. action show dropdown if this action involves Final product -->
+                        <single-choice
+                                *ngIf="form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER'"
+                                label="Final product action"
+                                i18n-label="@@companyDetailProcessingActions.singleChoice.finalProductAction.label"
+                                [formControlInput]="form.get('finalProductAction')"
+                                [enumFormatter]="finalProductActionFormatter"
+                                [booleanTrue]="booleanTrue"
+                                [booleanFalse]="booleanFalse"
+                                [isInvalidChoice]="submitted && form.get('finalProductAction').invalid">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('finalProductAction').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.finalProductAction.error.required">
+                                        Type is required
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </single-choice>
+
+                        <!-- If we have Shipment or Transfer proc. action of semi-products (both input and output) -->
+                        <ng-container *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER')">
                             <single-choice
                                     label="Select semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
@@ -61,7 +97,25 @@
                             </single-choice>
                         </ng-container>
 
-                        <ng-container *ngIf="form.get('type').value === 'PROCESSING'">
+                        <!-- If we have Shipment or Transfer prc. action of Final products (both input and output) -->
+                        <ng-container *ngIf="form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER')">
+                            <single-choice
+                                    label="Select final product"
+                                    i18n-label="@@companyDetailProcessingActions.singleChoice.finalProduct.label"
+                                    [formControlInput]="form.get('inputFinalProduct')"
+                                    [codebookService]="finalProductsForCompanyCodebook"
+                                    [isInvalidChoice]="submitted && form.get('inputFinalProduct').invalid">
+                                <ng-container *ngIf="submitted">
+                                    <div *ngIf="form.get('inputFinalProduct').errors as errors" class="sc-invalid-feedback">
+                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.finalProduct.error.required">
+                                            Final product is required
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </single-choice>
+                        </ng-container>
+
+                        <ng-container *ngIf="form.get('type').value === 'PROCESSING' || form.get('type').value === 'FINAL_PROCESSING'">
                             <single-choice
                                     label="Select input semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.inputSemiProduct.label"
@@ -77,22 +131,41 @@
                                 </ng-container>
                             </single-choice>
 
-                            <single-choice
-                                    label="Select output semi-product"
-                                    i18n-label="@@companyDetailProcessingActions.outputSemiProduct.label"
-                                    [formControlInput]="form.get('outputSemiProduct')"
-                                    [codebookService]="activeSemiProductService"
-                                    [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
-                                <ng-container *ngIf="submitted">
-                                    <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
-                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
-                                            Output semi-product is required
+                            <ng-container *ngIf="form.get('type').value === 'PROCESSING'">
+                                <single-choice
+                                        label="Select output semi-product"
+                                        i18n-label="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.label"
+                                        [formControlInput]="form.get('outputSemiProduct')"
+                                        [codebookService]="activeSemiProductService"
+                                        [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
+                                                Output semi-product is required
+                                            </div>
                                         </div>
-                                    </div>
-                                </ng-container>
-                            </single-choice>
+                                    </ng-container>
+                                </single-choice>
+                            </ng-container>
 
-                            <div class="af-row" *ngIf="form.get('type').value === 'PROCESSING'">
+                            <ng-container *ngIf="form.get('type').value === 'FINAL_PROCESSING'">
+                                <single-choice
+                                        label="Select output final product"
+                                        i18n-label="@@companyDetailProcessingActions.singleChoice.outputFinalProduct.label"
+                                        [formControlInput]="form.get('outputFinalProduct')"
+                                        [codebookService]="finalProductsForCompanyCodebook"
+                                        [isInvalidChoice]="submitted && form.get('outputFinalProduct').invalid">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('outputFinalProduct').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputFinalProduct.error.required">
+                                                Output final product is required
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </single-choice>
+                            </ng-container>
+
+                            <div class="af-row">
                                 <div class="af-c6">
                                     <single-choice
                                             label="Repacked outputs"
@@ -117,9 +190,9 @@
                                         <ng-container *ngIf="submitted">
                                             <div *ngIf="form.get('maxOutputWeight').errors as errors" class="sc-invalid-feedback">
                                                 <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.maxOutputWeight.error">
-                                                    <span>
-                                                      Max output weight is required
-                                                    </span>
+                                                <span>
+                                                  Max output weight is required
+                                                </span>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -146,12 +219,39 @@
                                 </div>
                             </ng-container>
                         </textinput>
+
+                        <textinput
+                            label="Sort order"
+                            placeholder="Enter sort order"
+                            i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.label"
+                            i18n-placeholder="@@companyDetailProcessingActions.textInput.sortOrder.placeholder"
+                            [form]="form.get('sortOrder')"
+                            [isInvalid]="submitted && form.get('sortOrder').invalid"
+                            style="width: 100%">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('sortOrder').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.error.required">
+                                        <span>
+                                            Sort order is required
+                                        </span>
+                                    </div>
+                                    <div *ngIf="errors.pattern" i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.error.pattern">
+                                        <span>
+                                            Sort order must be a number
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
                     </div>
-
-
                     <!-- END: Basic information -->
-                    <!-- Translations -->
 
+                </div>
+
+                <!-- Right column -->
+                <div class="af-form-block--c6">
+
+                    <!-- Translations -->
                     <h2 i18n="@@companyDetailProcessingActions.section1.translations">Translations</h2>
                     <div class="af-form-element">
 
@@ -262,12 +362,17 @@
 
                     </div>
                     <!-- END: Translations -->
-                </div>
 
+                </div>
+            </div>
+
+            <!-- Third row -->
+            <div class="af-form-row">
+
+                <!-- Left column -->
                 <div class="af-form-block--c6">
 
-                     <!-- Processing evidence fields -->
-
+                    <!-- Processing evidence fields -->
                     <h2 i18n="@@companyDetailProcessingActions.section2.translations">Processing Evidence Fields</h2>
                     <div class="af-form-element">
 
@@ -277,16 +382,15 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <div class="search-field">
-                            <textinput
-                                    [form]="evidenceFieldInputForm"
-                                    placeholder="Select evidence field..."
-                                    i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceFields.placeholder"
+                        <div class="search-field" *ngIf="processingEvidenceFieldService">
+                            <single-choice
+                                    [formControlInput]="evidenceFieldInputForm"
                                     [codebookService]="processingEvidenceFieldService"
-                                    [resultFormatter]="fieldFormatter"
-                                    [inputFormatter]="fieldFormatter"
-                                    (itemMatching)="addSelectedEvidenceField($event)">
-                            </textinput>
+                                    (onChange)="addSelectedEvidenceField($event)">
+                            </single-choice>
+                        </div>
+                        <div *ngIf="!processingEvidenceFieldService">
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
@@ -332,8 +436,12 @@
                     </div>
 
                     <!-- END: Processing evidence fields -->
-                    <!-- Processing evidence documents -->
+                </div>
 
+                <!-- Right column -->
+                <div class="af-form-block--c6">
+
+                    <!-- Processing evidence documents -->
                     <h2 i18n="@@companyDetailProcessingActions.section3.translations">Processing Evidence Documents</h2>
                     <div class="af-form-element">
 
@@ -343,16 +451,15 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <div class="search-field">
-                            <textinput
-                                    [form]="evidenceDocInputForm"
-                                    placeholder="Select document type..."
-                                    i18n-placeholder="@@companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder"
+                        <div class="search-field" *ngIf="processingEvidenceTypeService">
+                            <single-choice
+                                    [formControlInput]="evidenceDocInputForm"
                                     [codebookService]="processingEvidenceTypeService"
-                                    [resultFormatter]="documentFormatter"
-                                    [inputFormatter]="documentFormatter"
-                                    (itemMatching)="addSelectedEvidenceDoc($event)">
-                            </textinput>
+                                    (onChange)="addSelectedEvidenceDoc($event)">
+                            </single-choice>
+                        </div>
+                        <div *ngIf="!processingEvidenceTypeService">
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
@@ -428,7 +535,6 @@
                                 type="button"
                                 i18n="@@companyDetailProcessingActions.button.save"
                                 (click)="saveProcessingAction()">
-                                <!--[disabled]="!this.form.valid"-->
                             <span>Save</span>
                         </button>
                     </div>
@@ -439,7 +545,3 @@
         </div>
     </div>
 </app-authorised-layout>
-
-
-
-

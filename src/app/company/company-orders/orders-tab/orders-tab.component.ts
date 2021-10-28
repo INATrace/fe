@@ -44,7 +44,7 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   allOrders = 0;
   showedOrders = 0;
 
-  openOnly = true;
+  openOnly = false;
   openOnly$ = new BehaviorSubject<boolean>(this.openOnly);
 
   // TABS

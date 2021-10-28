@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, shareReplay, switchMap, catchError } from 'rxjs/operators';
 import { UserControllerService } from 'src/api/api/userController.service';
@@ -9,7 +9,7 @@ import { of, Subscription } from 'rxjs';
   templateUrl: './confirm-email.component.html',
   styleUrls: ['./confirm-email.component.scss']
 })
-export class ConfirmEmailComponent implements OnInit {
+export class ConfirmEmailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
@@ -20,31 +20,26 @@ export class ConfirmEmailComponent implements OnInit {
   activationToken$ = this.route.paramMap.pipe(
     map(m => m.get('token')),
     shareReplay(1)
-  )
+  );
 
   sub: Subscription;
   ngOnInit(): void {
     this.sub = this.activationToken$.pipe(
-      switchMap(token => this.userController.confirmEmailUsingPOST({ token: token }).pipe(
-        catchError(val => of('_ERROR_'))
+      switchMap(token => this.userController.confirmEmailUsingPOST({ token }).pipe(
+        catchError(_ => of('_ERROR_'))
       ))
     ).subscribe(resp => {
-      if(resp != '_ERROR_') {
-        this.userController.getProfileForUserUsingGET()
-          .subscribe(val => {
-            localStorage.setItem('userProfile', JSON.stringify(val.data));
-            this.router.navigate(['home']);
-          }, error => {
-            // console.log(error);
-            localStorage.setItem('userProfile', null);
-          })
+      if (resp !== '_ERROR_') {
+        this.router.navigate(['login']);
       } else {
         // console.log("ACCOUNT NOT CONFIRMED!")
       }
-    })
+    });
   }
-  ngOnDestroy(){
-    if(this.sub) this.sub.unsubscribe();
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
 }

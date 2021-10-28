@@ -1518,7 +1518,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       if (txs) {
         for (const tx of txs) {
-          inputQuantity += tx.outputQuantity;
+          if (tx.status !== ApiTransactionStatus.CANCELED) {
+            inputQuantity += tx.outputQuantity;
+          }
         }
       }
 

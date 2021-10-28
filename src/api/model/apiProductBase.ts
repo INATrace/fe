@@ -18,71 +18,94 @@
  */
 
 
-import { ApiMeasureUnitType } from './apiMeasureUnitType';
-import { ApiSemiProductTranslation } from './apiSemiProductTranslation';
+import { ApiProductOrigin } from './apiProductOrigin';
 
 
 
-export interface ApiSemiProduct { 
-    apiMeasureUnitType?: ApiMeasureUnitType;
-    buyable?: boolean;
+export interface ApiProductBase { 
+    /**
+     * product description
+     */
     description?: string;
+    /**
+     * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
+     */
+    howToUse?: string;
     /**
      * Entity id
      */
     id?: number;
+    /**
+     * ingredients - list the ingredients in the product and describe their properties
+     */
+    ingredients?: string;
+    /**
+     * Key Markets, market name - share number map
+     */
+    keyMarketsShare?: { [key: string]: number; };
+    /**
+     * product name
+     */
     name?: string;
-    sku?: boolean;
-    skuendCustomer?: boolean;
-    translations?: Array<ApiSemiProductTranslation>;
+    /**
+     * nutritional Value - list the nutritional value of the product
+     */
+    nutritionalValue?: string;
+    origin?: ApiProductOrigin;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiSemiProduct.
+ * Namespace for property- and property-value-enumerations of ApiProductBase.
  */
-export namespace ApiSemiProduct {
+export namespace ApiProductBase {
     /**
-     * All properties of ApiSemiProduct.
+     * All properties of ApiProductBase.
      */
     export enum Properties {
-        apiMeasureUnitType = 'apiMeasureUnitType',
-        buyable = 'buyable',
+        /**
+         * product description
+         */
         description = 'description',
+        /**
+         * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
+         */
+        howToUse = 'howToUse',
         /**
          * Entity id
          */
         id = 'id',
+        /**
+         * ingredients - list the ingredients in the product and describe their properties
+         */
+        ingredients = 'ingredients',
+        /**
+         * Key Markets, market name - share number map
+         */
+        keyMarketsShare = 'keyMarketsShare',
+        /**
+         * product name
+         */
         name = 'name',
-        sku = 'sku',
-        skuendCustomer = 'skuendCustomer',
-        translations = 'translations'
+        /**
+         * nutritional Value - list the nutritional value of the product
+         */
+        nutritionalValue = 'nutritionalValue',
+        origin = 'origin'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiSemiProduct',
+            classname: 'ApiProductBase',
             vars: [
                 {
-                    metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'apiMeasureUnitType',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'buyable',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'boolean',
+                    name: 'description',
+                    classname: 'ApiProductBase',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -91,8 +114,8 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'description',
-                    classname: 'ApiSemiProduct',
+                    name: 'howToUse',
+                    classname: 'ApiProductBase',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -103,7 +126,7 @@ export namespace ApiSemiProduct {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiSemiProduct',
+                    classname: 'ApiProductBase',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -113,8 +136,8 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
-                    classname: 'ApiSemiProduct',
+                    name: 'ingredients',
+                    classname: 'ApiProductBase',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -124,9 +147,9 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'sku',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'boolean',
+                    name: 'keyMarketsShare',
+                    classname: 'ApiProductBase',
+                    dataType: '{ [key: string]: number; }',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -135,76 +158,87 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'skuendCustomer',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'boolean',
+                    name: 'name',
+                    classname: 'ApiProductBase',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
-                    metadata: ApiSemiProductTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'translations',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
+                    name: 'nutritionalValue',
+                    classname: 'ApiProductBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProductOrigin.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'origin',
+                    classname: 'ApiProductBase',
+                    dataType: 'ApiProductOrigin',
                     isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiSemiProductTranslation'
+                    isListContainer: false,
+                    complexType: 'ApiProductOrigin'
                 },
             ],
             validators: {
-                apiMeasureUnitType: [
-                ],
-                buyable: [
-                ],
                 description: [
+                ],
+                howToUse: [
                 ],
                 id: [
                 ],
+                ingredients: [
+                ],
+                keyMarketsShare: [
+                ],
                 name: [
                 ],
-                sku: [
+                nutritionalValue: [
                 ],
-                skuendCustomer: [
-                ],
-                translations: [
+                origin: [
                 ],
             }
         }
     }
 
-  // export const ApiSemiProductValidationScheme = {
+  // export const ApiProductBaseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               apiMeasureUnitType: {
-  //                   validators: []
-  //               },
-  //               buyable: {
-  //                   validators: []
-  //               },
   //               description: {
+  //                   validators: []
+  //               },
+  //               howToUse: {
   //                   validators: []
   //               },
   //               id: {
   //                   validators: []
   //               },
+  //               ingredients: {
+  //                   validators: []
+  //               },
+  //               keyMarketsShare: {
+  //                   validators: []
+  //               },
   //               name: {
   //                   validators: []
   //               },
-  //               sku: {
+  //               nutritionalValue: {
   //                   validators: []
   //               },
-  //               skuendCustomer: {
-  //                   validators: []
-  //               },
-  //               translations: {
+  //               origin: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiSemiProduct>;
+  // } as SimpleValidationScheme<ApiProductBase>;
 
 
 }

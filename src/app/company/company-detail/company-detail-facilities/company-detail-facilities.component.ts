@@ -138,7 +138,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   locationName(location: ApiFacilityLocation) {
     if (location.address.cell != null && location.address.country) { return location.address.cell + ', ' + location.address.country.name; }
     if (location.address.city != null && location.address.country) { return location.address.city + ', ' + location.address.country.name; }
-    if (location.address.country != null) { location.address.country.name; }
+    if (location.address.country != null) { return location.address.country.name; }
     return '';
   }
 

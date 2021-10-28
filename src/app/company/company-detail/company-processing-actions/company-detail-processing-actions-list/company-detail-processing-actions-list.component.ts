@@ -24,8 +24,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
   @Output()
   countAll = new EventEmitter<number>();
 
-  processingActionToShow: ApiProcessingAction;
-
   searchName = new FormControl(null);
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   pagingParams$ = new BehaviorSubject({});
@@ -49,12 +47,12 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
     },
     {
       key: 'inputSemiProduct',
-      name: $localize`:@@processingActionList.sortOptions.inputSemiProduct.name:Input semi-product`,
+      name: $localize`:@@processingActionList.sortOptions.inputSemiProduct.name:Input semi-product/final product`,
       inactive: true
     },
     {
       key: 'outputSemiProduct',
-      name: $localize`:@@processingActionList.sortOptions.outputSemiProduct.name:Output semi-product`,
+      name: $localize`:@@processingActionList.sortOptions.outputSemiProduct.name:Output semi-product/final product`,
       inactive: true
     },
     {
@@ -113,7 +111,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       shareReplay(1)
   );
 
-
   constructor(
       private processingActionControllerService: ProcessingActionControllerService,
       protected globalEventsManager: GlobalEventManagerService,
@@ -169,10 +166,6 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
   reloadPage() {
     this.reloadPingList$.next(true);
-  }
-
-  view(action: ApiProcessingAction) {
-    this.processingActionToShow = action;
   }
 
 }

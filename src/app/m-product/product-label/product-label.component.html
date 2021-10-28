@@ -43,7 +43,8 @@
                   (onDelete)="deleteLabel($event)"
                   (onTitleChange)="toggleEditTitleMode()"
                   [currentLabelForm]="labelTitleForm"
-                  [changed]="changed">
+                  [changed]="changed"
+                  [editable]="canEdit()">
                 </app-label-selector>
 
                 <div class="d-flex flex-column flex-md-row align-items-start justify-content-between" *ngIf="currentLabel">
@@ -52,20 +53,20 @@
                     <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="viewLabel()" i18n="@@productLabel.labelActions.viewPage">
                       <fa-icon [icon]="faCompass" class="button-icon2"></fa-icon>View page (only label data are visible)
                     </div>
-                    <div class="tool-button" (click)="togglePublish()" [class.side-menu-item-disabled]="changed">
+                    <div class="tool-button" *ngIf="canEdit()" (click)="togglePublish()" [class.side-menu-item-disabled]="changed">
                       <fa-icon [icon]="faEye" class="button-icon2"></fa-icon>{{publishText}}
                     </div>
                   </div>
 
                   <div style="margin-right: -8px;">
 
-                    <div *ngIf="showBatches" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
+                    <div *ngIf="showBatches && canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
                       <fa-icon [icon]="faCodeBranch" class="button-icon2"></fa-icon>Batches
                     </div>
-                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
+                    <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
                       <fa-icon [icon]="faQrcode" class="button-icon2"></fa-icon>Feedback
                     </div>
-                    <div class="tool-button" [class.side-menu-item-disabled]="changed" (click)="statistics()" i18n="@@productLabel.labelActions.statistics">
+                    <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="statistics()" i18n="@@productLabel.labelActions.statistics">
                       <fa-icon [icon]="faSlidersH" class="button-icon2"></fa-icon>Statistics
                     </div>
                   </div>
@@ -178,9 +179,9 @@
               <div class="row">
                 <div class="col-1 px-0"></div>
                 <div class="col-11">
-                  <div class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" (click)="prefillFromOther(true)" i18n="@@productLabel.button.prefillFromOther.resp.prefill">
+                  <button class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" [attr.disabled]="!canEdit() ? true : null" (click)="prefillFromOther(true)" i18n="@@productLabel.button.prefillFromOther.resp.prefill">
                     Prefill
-                  </div>
+                  </button>
                 </div>
               </div>
 
@@ -209,9 +210,9 @@
               <div class="row">
                 <div class="col-1 px-0"></div>
                 <div class="col-11">
-                  <div class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" (click)="prefillFromOther(false)" i18n="@@productLabel.button.prefillFromOther.sust.prefill">
+                  <button class="tool-button tool-button-right prefill-button" style="margin-top: 2px;" [attr.disabled]="!canEdit() ? true : null" (click)="prefillFromOther(false)" i18n="@@productLabel.button.prefillFromOther.sust.prefill">
                     Prefill
-                  </div>
+                  </button>
                 </div>
               </div>
 
@@ -393,6 +394,7 @@
       [placeholder]="this.productNameLabelAndPlaceholder('PLACEHOLDER', 'name')"
       style="width: 100%;"
       hideAsterisk="true"
+      [readOnly]="!canEdit()"
       [isInvalid]="submitted && productForm.get('name').invalid">
       <ng-container *ngIf="submitted">
         <div *ngIf="productForm.get('name').errors as errors" class="sc-invalid-feedback">
@@ -424,7 +426,7 @@
       (onFileInfoLoad)="onFileUpload($event)"
       [form]="productForm.get('photo')"
       [attachmentUploaderId]="'product_image'"
-      [readOnly]="productForm.disabled"
+      [readOnly]="productForm.disabled || !canEdit()"
       comment="Please upload a high-quality photo of your product – make sure the photo is of marketing quality. (72dpi and 1200x2000px recommended)"
       i18n-comment="@@productLabel.attachment-uploader.productPhoto.comment"
       [invalid]="submitted && productForm.get('photo').invalid">
@@ -461,6 +463,7 @@
       style="width: 100%"
       [textarea]="true"
       helpText="Briefly describe the product AND reasons why your product is worth buying. (example: special properties, health benefits, great value, organic production....)"
+      [readOnly]="!canEdit()"
       [isInvalid]="submitted && productForm.get('description').invalid">
       <ng-container *ngIf="submitted">
         <div *ngIf="productForm.get('description').errors as errors" class="sc-invalid-feedback">
@@ -485,7 +488,8 @@
       [textarea]="true"
       helpText="List the ingredients in the product and describe their properties. (example: Organic Shea Butter, Fair Trade Mango....)"
       i18n-label="@@productLabel.textinput.ingredients.label"
-      i18n-helpText="@@productLabel.textinput.ingredients.helpText">
+      i18n-helpText="@@productLabel.textinput.ingredients.helpText"
+      [readOnly]="!canEdit()">
     </textinput>
   </app-closable>
 </ng-template>
@@ -500,7 +504,8 @@
       [textarea]="true"
       helpText="Per 100g serving. Calories, carbohydrates, fats, proteins, minerals, additives, vitamins,..."
       i18n-label="@@productLabel.textinput.nutritionalValue.label"
-      i18n-helpText="@@productLabel.textinput.nutritionalValue.helpText">
+      i18n-helpText="@@productLabel.textinput.nutritionalValue.helpText"
+      [readOnly]="!canEdit()">
     </textinput>
   </app-closable>
 </ng-template>
@@ -515,7 +520,8 @@
       [textarea]="true"
       helpText="Describe the best way to use the product. (e.g. recipes, how to apply the product...)"
       i18n-label="@@productLabel.textinput.recipes.label"
-      i18n-helpText="@@productLabel.textinput.recipes.helpText">
+      i18n-helpText="@@productLabel.textinput.recipes.helpText"
+      [readOnly]="!canEdit()">
     </textinput>
   </app-closable>
 </ng-template>
@@ -535,6 +541,7 @@
       [textarea]="true"
       helpText="Briefly describe where the product or its ingredients are coming from."
       i18n-helpText="@@productLabel.textinput.originText.helpText"
+      [readOnly]="!canEdit()"
       [isInvalid]="submitted && productForm.get('origin.text').invalid">
       <ng-container *ngIf="submitted">
         <div *ngIf="productForm.get('origin.text').errors as errors" class="sc-invalid-feedback">
@@ -558,7 +565,7 @@
         *ngFor="let marker of markers; index as i"
         [position]="marker.position"
         [label]="marker.label"
-        [options]="{draggable:true}"
+        [options]="{draggable: canEdit()}"
         (mapRightclick)="removeOriginLocation(i)"
         (mapDragend)="dragend($event, i)"
         (mapClick)="openInfoWindow(gMarker, marker)">
@@ -579,9 +586,9 @@
     </ng-container>
     <div class="spacer-between-fields"></div>
 
-    <div class="tool-button tool-button-right prefill-button" (click)="resetMap()" i18n="@@productLabel.button.resetMap">
+    <button class="tool-button tool-button-right prefill-button" [attr.disabled]="!canEdit() ? true : null" (click)="resetMap()" i18n="@@productLabel.button.resetMap">
       Reset map
-    </div>
+    </button>
 
     <div *ngFor="let loc of productForm.get('origin.locations')?.controls;
       index as idx">
@@ -590,17 +597,19 @@
           <textinput [form]="loc.get('pinName')"
             i18n-label="@@productLabel.textinput.origin.pinName"
             label="Pin name"
+            [readOnly]="!canEdit()"
             (keyup)="onKey($event, idx)">
           </textinput>
         </div>
         <div class="col-4">
           <textinput [form]="loc.get('numberOfFarmers')"
             label="# of farmers" type="number"
-            i18n-label="@@productLabel.textinput.origin.numberOfFarmers">
+            i18n-label="@@productLabel.textinput.origin.numberOfFarmers"
+            [readOnly]="!canEdit()">
           </textinput>
         </div>
         <div class="col-2 d-flex align-self-center" style="margin-top: 0.5rem">
-          <button class="btn round" (click)="removeOriginLocation(idx)" class="btn-del">
+          <button class="btn round" [attr.disabled]="!canEdit() ? true : null" (click)="removeOriginLocation(idx)" class="btn-del">
             <span><fa-icon
                 class="del-icon"
                 [icon]="faTrashAlt">
@@ -625,6 +634,7 @@
           [form]="productForm.get('keyMarketsShare.yourCountry')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -633,6 +643,7 @@
           [form]="productForm.get('keyMarketsShare.eastAfrica')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -641,6 +652,7 @@
           [form]="productForm.get('keyMarketsShare.restOfAfrica')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -648,6 +660,7 @@
         <textinput [form]="productForm.get('keyMarketsShare.europe')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -655,6 +668,7 @@
         <textinput [form]="productForm.get('keyMarketsShare.usa')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -662,6 +676,7 @@
         <textinput [form]="productForm.get('keyMarketsShare.elsewhere')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -683,7 +698,8 @@
       style="width: 100%"
       [textarea]="true"
       helpText="Speciality of this product in comparison to other products on the market."
-      i18n-label="@@productLabel.textinput.specialityDescription.label">
+      i18n-label="@@productLabel.textinput.specialityDescription.label"
+      [readOnly]="!canEdit()">
     </textinput>
 
     <attachment-uploader
@@ -697,7 +713,7 @@
       (onFileInfoLoad)="onFileUpload($event)"
       [form]="productForm.get('specialityDocument')"
       [attachmentUploaderId]="'speciality_document'"
-      [readOnly]="productForm.disabled">
+      [readOnly]="productForm.disabled || !canEdit()">
       <attachment-uploader-content i18n="@@productLabel.attachment-uploader.specialityDocument.content">
         Upload photo
       </attachment-uploader-content>
@@ -721,6 +737,7 @@
       helpText="Briefly describe your production process. If the ingredients are organic, describe how you achieve that. (e.g. organic seedlings, no chemical fertilizers, etc.)"
       i18n-label="@@productLabel.textinput.production.label"
       i18n-helpText="@@productLabel.textinput.production.helpText"
+      [readOnly]="!canEdit()"
       [isInvalid]="submitted && productForm.get('process.production').invalid">
       <ng-container *ngIf="submitted">
         <div *ngIf="productForm.get('process.production').errors as errors" class="sc-invalid-feedback">
@@ -745,7 +762,8 @@
       [textarea]="true"
       helpText="Briefly describe your storage procedures. (e.g. cold storage at farmer group aggregation centers, warehouse storage at processing site before distribution…)"
       i18n-label="@@productLabel.textinput.storage.label"
-      i18n-helpText="@@productLabel.textinput.storage.helpText">
+      i18n-helpText="@@productLabel.textinput.storage.helpText"
+      [readOnly]="!canEdit()">
     </textinput>
   </app-closable>
 </ng-template>
@@ -758,6 +776,7 @@
       label="Codes of Conduct"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       helpText="Briefly describe your company codes of conduct that your employees, suppliers and farmers have to adhere to. Also briefly describe the general sanitary / hygiene protocols and specific measures you put in place due coronavirus crises."
       i18n-label="@@productLabel.textinput.codesOfConduct.label"
       i18n-helpText="@@productLabel.textinput.codesOfConduct.helpText">
@@ -773,15 +792,15 @@
       label="Certifications and Standards"
       [listEditorManager]="standardsListManager"
       addText="Add new"
-      [canAdd]="true"
+      [canAdd]="canEdit()"
       i18n-label="@@productLabel.list-editor.certificationsAndStandards.label"
       i18n-addText="@@productLabel.list-editor.certificationsAndStandards.addText"
       [invalid]="submitted &&
       productForm.get('process.standards')?.invalid">
       <list-editor-items>
-        <div class="tool-button tool-button-right prefill-button" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.certs.prefill">
+        <button class="tool-button tool-button-right prefill-button" [attr.disabled]="!canEdit() ? true : null" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.certs.prefill">
           Prefill
-        </div>
+        </button>
         <div cdkDropList
           (cdkDropListDropped)="standardsListManager.onDrop($event)">
           <div *ngFor="let item of
@@ -791,6 +810,9 @@
               title="Certification, Standard"
               i18n-title="@@productLabel.list-editor.certificationsAndStandards.title"
               [formControlInput]="item"
+              [disableEdit]="!canEdit()"
+              [disableDelete]="!canEdit()"
+              [viewOnly]="!canEdit()"
               [isOpen]="standardsListManager.isOpen(i)"
               [listEditorManager]="this.standardsListManager"
               [listEditorManagerPosition]="i">
@@ -823,7 +845,7 @@
       addText="Add new"
       i18n-label="@@productLabel.list-editor.productionRecords.label"
       i18n-addText="@@productLabel.list-editor.productionRecords.addText"
-      [canAdd]="true"
+      [canAdd]="canEdit()"
       [invalid]="submitted && productForm.get('process.records')?.invalid">
       <list-editor-items>
         <!-- <div class="tool-button tool-button-right prefill-button" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.recs.prefill">
@@ -839,6 +861,9 @@
               i18n-title="@@productLabel.list-editor.productionRecords.title"
               [formControlInput]="item"
               [isOpen]="recordsListManager.isOpen(i)"
+              [disableEdit]="!canEdit()"
+              [disableDelete]="!canEdit()"
+              [viewOnly]="!canEdit()"
               [listEditorManager]="this.recordsListManager"
               [listEditorManagerPosition]="i">
             </app-production-record-item>
@@ -870,6 +895,7 @@
       helpText="Briefly describe labor policies you have in place in your company and activities you pursue to make them happen. (example: women inclusion, no child labor, etc.)"
       i18n-label="@@productLabel.textinput.laborPolicies.label"
       i18n-helpText="@@productLabel.textinput.laborPolicies.helpText"
+      [readOnly]="!canEdit()"
       [isInvalid]="submitted && productForm.get('responsibility.laborPolicies').invalid">
       <ng-container *ngIf="submitted">
         <div *ngIf="productForm.get('responsibility.laborPolicies').errors as errors" class="sc-invalid-feedback">
@@ -894,7 +920,8 @@
       [textarea]="true"
       helpText="Describe your working relationship with your farmers and suppliers. Do you support farmers’ livelihoods in any special way? (e.g. trainings, Inputs, agriculture extensions, education for their kids, employment of women etc.)"
       i18n-label="@@productLabel.textinput.relationshipWithFarmersSuppliers.label"
-      i18n-helpText="@@productLabel.textinput.relationshipWithFarmersSuppliers.helpText">
+      i18n-helpText="@@productLabel.textinput.relationshipWithFarmersSuppliers.helpText"
+      [readOnly]="!canEdit()">
     </textinput>
   </app-closable>
 </ng-template>
@@ -911,6 +938,7 @@
       label="Farmer or Community Name"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       helpText="Provide a name of a farmer or a farmer group you work with that best represents your company/brand."
       i18n-label="@@productLabel.textinput.farmerResponsibility.label"
       i18n-helpText="@@productLabel.textinput.farmerResponsibility.helpText">
@@ -920,7 +948,7 @@
       label="Farmer or Farmer Group Pictures"
       [listEditorManager]="farmerPhotosListManager"
       addText="Add new"
-      [canAdd]="true"
+      [canAdd]="canEdit()"
       i18n-label="@@productLabel.list-editor.farmerPics.label"
       i18n-addText="@@productLabel.list-editor.farmerPics.addText"
       [invalid]="submitted && productForm.get('responsibility.pictures')?.invalid">
@@ -933,6 +961,8 @@
               i18n-title="@@productLabel.list-editor.farmerPics.title"
               [formControlInput]="item"
               [isOpen]="farmerPhotosListManager.isOpen(i)"
+              [disableEdit]="!canEdit()"
+              [disableDelete]="!canEdit()"
               [listEditorManager]="this.farmerPhotosListManager"
               [listEditorManagerPosition]="i">
             </app-farmer-story-photos>
@@ -949,6 +979,7 @@
       label="Short story"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       helpText="Write about one selected farmer or a group of farmers that best represent your company/brand."
       i18n-label="@@productLabel.textinput.responsibility.label"
       i18n-helpText="@@productLabel.textinput.responsibility.helpText">
@@ -967,6 +998,7 @@
       label="Environmentally Friendly Production"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       hideAsterisk="true"
       helpText="Describe how your production impacts the environment and how you mitigate the pollution, how you utilize your waste, if you practice circular production... (max 1000 characters)"
       i18n-label="@@productLabel.textinput.environmentalyFriendlyProduction.label"
@@ -999,6 +1031,7 @@
       label="Sustainable Packaging"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       helpText="Describe the environmental sustainability of your packaging – do you use recycled packing, is your packing recyclable, do you collect the packaging and reuse it? (max 1000 characters)"
       i18n-label="@@productLabel.textinput.sustainablePackaging.label"
       i18n-helpText="@@productLabel.textinput.sustainablePackaging.helpText"
@@ -1025,6 +1058,7 @@
       label="CO2 Footprint"
       style="width: 100%"
       [textarea]="true"
+      [readOnly]="!canEdit()"
       helpText="If you have calculated your company CO2 footprint, please add this information. Make sure to include your annual CO2 footprint."
       i18n-label="@@productLabel.textinput.co2Footprint.label"
       i18n-helpText="@@productLabel.textinput.co2Footprint.helpText">
@@ -1056,7 +1090,8 @@
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-    [form]="productForm.get('knowledgeBlog')">
+    [form]="productForm.get('knowledgeBlog')"
+    [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
         i18n="@@productLabel.knowledgeBlog.label">
@@ -1076,7 +1111,8 @@
     class="af-form-element--nolabel"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.checkAuthenticity')">
+      [form]="productForm.get('settings.checkAuthenticity')"
+      [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
         i18n="@@productLabel.checkbox.checkAuthenticity.label">
@@ -1094,7 +1130,8 @@
     class="af-form-element--nolabel"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.traceOrigin')">
+      [form]="productForm.get('settings.traceOrigin')"
+      [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
         i18n="@@productLabel.checkbox.traceOrigin.label">
@@ -1112,7 +1149,8 @@
     class="af-form-element--last"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.giveFeedback')">
+      [form]="productForm.get('settings.giveFeedback')"
+      [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
         i18n="@@productLabel.checkbox.giveFeedback.label">
@@ -1132,6 +1170,7 @@
 
     <tinymce-textarea
       [formControlInput]="productForm.get('settings.gdprText')"
+      [disabled]="!canEdit()"
       label="GDPR text"
       style="width: 100%;"
       hideRequired="true"
@@ -1150,6 +1189,7 @@
 
     <tinymce-textarea
       [formControlInput]="productForm.get('settings.privacyPolicyText')"
+      [disabled]="!canEdit()"
       label="Privacy policy text"
       style="width: 100%;"
       hideRequired="true"
@@ -1169,6 +1209,7 @@
 
     <tinymce-textarea
       [formControlInput]="productForm.get('settings.termsOfUseText')"
+      [disabled]="!canEdit()"
       label="Terms of use text"
       style="width: 100%;"
       hideRequired="true"
@@ -1190,6 +1231,7 @@
 
       <textinput
         [form]="productForm.get('settings.increaseOfCoffee')"
+        [readOnly]="!canEdit()"
         label="Increase per kg of coffee cherries sold (%)"
         style="width: 100%"
         i18n-label="@@productLabel.textinput.increaseOfCoffee.label">
@@ -1206,7 +1248,7 @@
         (onFileInfoLoad)="onFileUpload($event)"
         [form]="productForm.get('settings.incomeIncreaseDocument')"
         [attachmentUploaderId]="'income_increase_document'"
-        [readOnly]="productForm.disabled">
+        [readOnly]="productForm.disabled || !canEdit()">
         <attachment-uploader-content i18n="@@productLabel.attachment-uploader.incomeIncreaseDocument.content">
           Upload photo
         </attachment-uploader-content>
@@ -1227,6 +1269,7 @@
 
     <tinymce-textarea
       [formControlInput]="productForm.get('settings.incomeIncreaseDescription')"
+      [disabled]="!canEdit()"
       style="width: 100%;">
     </tinymce-textarea>
 
@@ -1246,6 +1289,7 @@
 
     <tinymce-textarea
       [formControlInput]="productForm.get('comparisonOfPrice.description')"
+      [disabled]="!canEdit()"
       style="width: 100%;">
     </tinymce-textarea>
 
@@ -1265,6 +1309,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.worldMarket')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1273,6 +1318,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.fairTrade')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1281,6 +1327,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.EURtoRWF')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1289,6 +1336,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.EURtoUSD')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1297,6 +1345,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.poundToKg')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1305,6 +1354,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.containerSize')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>
@@ -1313,6 +1363,7 @@
           [form]="productForm.get('comparisonOfPrice.prices.estimatedAdditionalPrice')"
           [label]="null"
           [noBottomMargin]="true"
+          [readOnly]="!canEdit()"
           style="width: 100%">
         </textinput>
       </app-number-row>

@@ -13,7 +13,7 @@
                     <td [attr.data-label]="sortOptions[1].name"><span>{{ finalProduct.description }}</span></td>
                     <td [attr.data-label]="sortOptions[2].name"><span>{{ finalProduct.measurementUnitType.label }}</span></td>
                     <td [attr.data-label]="sortOptions[3].name">
-                        <span>
+                        <span *ngIf="editable">
                             <a class="final-product-action"
                                i18n="@@settingsTypes.tableCol.edit"
                                [class.enabled-action]="true"

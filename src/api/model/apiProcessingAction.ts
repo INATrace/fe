@@ -19,10 +19,12 @@
 
 
 import { ApiCompanyBase } from './apiCompanyBase';
+import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiProcessingActionTranslation } from './apiProcessingActionTranslation';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
 import { ApiSemiProduct } from './apiSemiProduct';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -33,9 +35,14 @@ export interface ApiProcessingAction {
      */
     description?: string;
     /**
+     * Denoting if this processing action is Transfer or Quote of a Final product
+     */
+    finalProductAction?: boolean;
+    /**
      * Entity id
      */
     id?: number;
+    inputFinalProduct?: ApiFinalProduct;
     inputSemiProduct?: ApiSemiProduct;
     /**
      * Processing action language
@@ -49,6 +56,7 @@ export interface ApiProcessingAction {
      * Processing action name
      */
     name?: string;
+    outputFinalProduct?: ApiFinalProduct;
     outputSemiProduct?: ApiSemiProduct;
     /**
      * Processing action prefix
@@ -79,6 +87,10 @@ export interface ApiProcessingAction {
      */
     requiredEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
+     * Sort order number. Lower number means first
+     */
+    sortOrder?: number;
+    /**
      * Processing action translations
      */
     translations?: Array<ApiProcessingActionTranslation>;
@@ -86,6 +98,7 @@ export interface ApiProcessingAction {
      * Processing action type
      */
     type?: ApiProcessingAction.TypeEnum;
+    valueChain?: ApiValueChain;
 }
 
 /**
@@ -102,9 +115,14 @@ export namespace ApiProcessingAction {
          */
         description = 'description',
         /**
+         * Denoting if this processing action is Transfer or Quote of a Final product
+         */
+        finalProductAction = 'finalProductAction',
+        /**
          * Entity id
          */
         id = 'id',
+        inputFinalProduct = 'inputFinalProduct',
         inputSemiProduct = 'inputSemiProduct',
         /**
          * Processing action language
@@ -118,6 +136,7 @@ export namespace ApiProcessingAction {
          * Processing action name
          */
         name = 'name',
+        outputFinalProduct = 'outputFinalProduct',
         outputSemiProduct = 'outputSemiProduct',
         /**
          * Processing action prefix
@@ -148,13 +167,18 @@ export namespace ApiProcessingAction {
          */
         requiredEvidenceFields = 'requiredEvidenceFields',
         /**
+         * Sort order number. Lower number means first
+         */
+        sortOrder = 'sortOrder',
+        /**
          * Processing action translations
          */
         translations = 'translations',
         /**
          * Processing action type
          */
-        type = 'type'
+        type = 'type',
+        valueChain = 'valueChain'
     }
 
     /**
@@ -183,6 +207,7 @@ export namespace ApiProcessingAction {
      */
     export enum TypeEnum {
         PROCESSING = 'PROCESSING',
+        FINALPROCESSING = 'FINAL_PROCESSING',
         SHIPMENT = 'SHIPMENT',
         TRANSFER = 'TRANSFER'
     }
@@ -220,12 +245,35 @@ export namespace ApiProcessingAction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'finalProductAction',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'id',
                     classname: 'ApiProcessingAction',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'inputFinalProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     metadata: ApiSemiProduct.formMetadata,
@@ -272,6 +320,18 @@ export namespace ApiProcessingAction {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputFinalProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     metadata: ApiSemiProduct.formMetadata,
@@ -366,6 +426,17 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiProcessingEvidenceField'
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sortOrder',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProcessingActionTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -389,13 +460,29 @@ export namespace ApiProcessingAction {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChain',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiValueChain',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiValueChain'
+                },
             ],
             validators: {
                 company: [
                 ],
                 description: [
                 ],
+                finalProductAction: [
+                ],
                 id: [
+                ],
+                inputFinalProduct: [
                 ],
                 inputSemiProduct: [
                 ],
@@ -404,6 +491,8 @@ export namespace ApiProcessingAction {
                 maxOutputWeight: [
                 ],
                 name: [
+                ],
+                outputFinalProduct: [
                 ],
                 outputSemiProduct: [
                 ],
@@ -421,9 +510,13 @@ export namespace ApiProcessingAction {
                 ],
                 requiredEvidenceFields: [
                 ],
+                sortOrder: [
+                ],
                 translations: [
                 ],
                 type: [
+                ],
+                valueChain: [
                 ],
             }
         }
@@ -438,7 +531,13 @@ export namespace ApiProcessingAction {
   //               description: {
   //                   validators: []
   //               },
+  //               finalProductAction: {
+  //                   validators: []
+  //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               inputFinalProduct: {
   //                   validators: []
   //               },
   //               inputSemiProduct: {
@@ -451,6 +550,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               outputFinalProduct: {
   //                   validators: []
   //               },
   //               outputSemiProduct: {
@@ -477,10 +579,16 @@ export namespace ApiProcessingAction {
   //               requiredEvidenceFields: {
   //                   validators: []
   //               },
+  //               sortOrder: {
+  //                   validators: []
+  //               },
   //               translations: {
   //                   validators: []
   //               },
   //               type: {
+  //                   validators: []
+  //               },
+  //               valueChain: {
   //                   validators: []
   //               },
   //     }
