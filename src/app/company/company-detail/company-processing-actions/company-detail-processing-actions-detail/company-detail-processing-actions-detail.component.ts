@@ -47,7 +47,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   action: ApiProcessingAction;
 
   codebookRepackedOutputs = EnumSifrant.fromObject(this.repackedOutputs);
-  codebookProcessingTransaction = EnumSifrant.fromObject(this.processingTransactionType);
+  codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   activeSemiProductService: ActiveSemiProductsService;
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
@@ -370,10 +370,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     return obj;
   }
 
-  get processingTransactionType() {
+  get processingActionType() {
     const obj = {};
     obj['SHIPMENT'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.quote:Quote`;
     obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
+    obj['FINAL_PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.finalProcessing:Final processing`;
     obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
     return obj;
   }

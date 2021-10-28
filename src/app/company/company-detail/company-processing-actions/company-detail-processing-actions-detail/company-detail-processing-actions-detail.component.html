@@ -61,6 +61,7 @@
                         </single-choice>
 
                         <single-choice
+                                *ngIf="form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER'"
                                 label="Final product action"
                                 i18n-label="@@companyDetailProcessingActions.singleChoice.finalProductAction.label"
                                 [formControlInput]="form.get('finalProductAction')"
@@ -337,12 +338,15 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <div class="search-field">
+                        <div class="search-field" *ngIf="processingEvidenceFieldService">
                             <single-choice
                                     [formControlInput]="evidenceFieldInputForm"
                                     [codebookService]="processingEvidenceFieldService"
                                     (onChange)="addSelectedEvidenceField($event)">
                             </single-choice>
+                        </div>
+                        <div *ngIf="!processingEvidenceFieldService">
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
@@ -403,12 +407,15 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <div class="search-field">
+                        <div class="search-field" *ngIf="processingEvidenceTypeService">
                             <single-choice
                                     [formControlInput]="evidenceDocInputForm"
                                     [codebookService]="processingEvidenceTypeService"
                                     (onChange)="addSelectedEvidenceDoc($event)">
                             </single-choice>
+                        </div>
+                        <div *ngIf="!processingEvidenceTypeService">
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
