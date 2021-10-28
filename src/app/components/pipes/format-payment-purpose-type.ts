@@ -18,9 +18,8 @@ export class FormatPaymentPurposeTypePipe implements PipeTransform {
       case 'INVOICE_PAYMENT':
         return $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
       default:
-        return "-"
+        return '-';
     }
   }
 
 }
-
