@@ -4346,6 +4346,113 @@
         "summary": "Get a paginated list of stock orders."
       }
     },
+    "/api/chain/stock-order/list/aggregated-history/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrderAggregatedHistory_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderAggregatedHistoryUsingGET",
+        "summary": "getStockOrderAggregatedHistory"
+      }
+    },
     "/api/chain/stock-order/list/company/{companyId}": {
       "get": {
         "parameters": [
@@ -12322,6 +12429,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiStockOrderAggregatedHistory_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderAggregatedHistory"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiStockOrder_": {
         "properties": {
           "count": {
@@ -13360,6 +13494,49 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiStockOrderAggregatedHistory_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiStockOrderAggregatedHistory_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiStockOrder_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -14026,6 +14203,11 @@
       },
       "ApiProcessingOrder": {
         "properties": {
+          "creationTimestamp": {
+            "description": "Timestamp indicates when processing order have been created",
+            "format": "date-time",
+            "type": "string"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -14038,6 +14220,13 @@
           },
           "inputTransactions": {
             "description": "Input transactions",
+            "items": {
+              "$ref": "#/components/schemas/ApiTransaction"
+            },
+            "type": "array"
+          },
+          "outputTransactions": {
+            "description": "Output transactions",
             "items": {
               "$ref": "#/components/schemas/ApiTransaction"
             },
@@ -16830,6 +17019,11 @@
             "$ref": "#/components/schemas/ApiUser",
             "description": "User that has created StockOrder"
           },
+          "creationTimestamp": {
+            "description": "Timestamp indicates when stock order have been created",
+            "format": "date-time",
+            "type": "string"
+          },
           "creatorId": {
             "description": "ID of the user who has created the stock order",
             "format": "int64",
@@ -17007,6 +17201,50 @@
             "description": "Is women share",
             "example": false,
             "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderAggregatedHistory": {
+        "properties": {
+          "aggregations": {
+            "description": "List of fields for this aggregation history",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderAggregation"
+            },
+            "type": "array"
+          },
+          "depth": {
+            "description": "Depth of aggregation history",
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "processingOrder": {
+            "$ref": "#/components/schemas/ApiProcessingOrder",
+            "description": "Processing order for this aggregation history"
+          },
+          "stockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Stock order for this aggregation history"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderAggregation": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "stockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Stock order related to the aggregation"
           }
         },
         "type": "object"
