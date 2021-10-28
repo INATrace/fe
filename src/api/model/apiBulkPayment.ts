@@ -19,7 +19,9 @@
 
 
 import { ApiActivityProof } from './apiActivityProof';
-import { ApiCompanyBase } from './apiCompanyBase';
+import { ApiCompany } from './apiCompany';
+import { ApiPayment } from './apiPayment';
+import { ApiUser } from './apiUser';
 
 
 
@@ -36,19 +38,24 @@ export interface ApiBulkPayment {
      * Bulk payment additional proofs
      */
     additionalProofs?: Array<ApiActivityProof>;
+    createdBy?: ApiUser;
     /**
-     * Bulk payment created by
+     * Creation timestamp
      */
-    createdBy?: number;
+    creationTimestamp?: Date;
     /**
      * Bulk payment currency
      */
     currency?: string;
     /**
+     * Formal creation date
+     */
+    formalCreationTime?: Date;
+    /**
      * Entity id
      */
     id?: number;
-    payingCompany?: ApiCompanyBase;
+    payingCompany?: ApiCompany;
     /**
      * Bulk payment drescription
      */
@@ -58,13 +65,13 @@ export interface ApiBulkPayment {
      */
     paymentPurposeType?: ApiBulkPayment.PaymentPurposeTypeEnum;
     /**
-     * Bulk payment receipt numbet
+     * Bulk payment payments
      */
-    receiptNumber?: number;
+    payments?: Array<ApiPayment>;
     /**
-     * Bulk payment stock orders
+     * Bulk payment receipt number
      */
-    stockOrders?: Array<number>;
+    receiptNumber?: string;
     /**
      * Bulk payment total amount
      */
@@ -91,14 +98,19 @@ export namespace ApiBulkPayment {
          * Bulk payment additional proofs
          */
         additionalProofs = 'additionalProofs',
-        /**
-         * Bulk payment created by
-         */
         createdBy = 'createdBy',
+        /**
+         * Creation timestamp
+         */
+        creationTimestamp = 'creationTimestamp',
         /**
          * Bulk payment currency
          */
         currency = 'currency',
+        /**
+         * Formal creation date
+         */
+        formalCreationTime = 'formalCreationTime',
         /**
          * Entity id
          */
@@ -113,13 +125,13 @@ export namespace ApiBulkPayment {
          */
         paymentPurposeType = 'paymentPurposeType',
         /**
-         * Bulk payment receipt numbet
+         * Bulk payment payments
+         */
+        payments = 'payments',
+        /**
+         * Bulk payment receipt number
          */
         receiptNumber = 'receiptNumber',
-        /**
-         * Bulk payment stock orders
-         */
-        stockOrders = 'stockOrders',
         /**
          * Bulk payment total amount
          */
@@ -178,12 +190,24 @@ export namespace ApiBulkPayment {
                     complexType: 'ApiActivityProof'
                 },
                 {
+                    metadata: ApiUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'createdBy',
                     classname: 'ApiBulkPayment',
-                    dataType: 'number',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiBulkPayment',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -203,6 +227,17 @@ export namespace ApiBulkPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'formalCreationTime',
+                    classname: 'ApiBulkPayment',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'id',
                     classname: 'ApiBulkPayment',
                     dataType: 'number',
@@ -211,16 +246,16 @@ export namespace ApiBulkPayment {
                     complexType: ''
                 },
                 {
-                    metadata: ApiCompanyBase.formMetadata,
+                    metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'payingCompany',
                     classname: 'ApiBulkPayment',
-                    dataType: 'ApiCompanyBase',
+                    dataType: 'ApiCompany',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiCompanyBase'
+                    complexType: 'ApiCompany'
                 },
                 {
                     isReadOnly: false,
@@ -246,25 +281,26 @@ export namespace ApiBulkPayment {
                     complexType: ''
                 },
                 {
+                    metadata: ApiPayment.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'receiptNumber',
+                    name: 'payments',
                     classname: 'ApiBulkPayment',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
+                    dataType: 'Array&lt;ApiPayment&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPayment'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'stockOrders',
+                    name: 'receiptNumber',
                     classname: 'ApiBulkPayment',
-                    dataType: 'Array&lt;number&gt;',
+                    dataType: 'string',
                     isPrimitiveType: true,
-                    isListContainer: true,
+                    isListContainer: false,
                     complexType: ''
                 },
                 {
@@ -288,7 +324,11 @@ export namespace ApiBulkPayment {
                 ],
                 createdBy: [
                 ],
+                creationTimestamp: [
+                ],
                 currency: [
+                ],
+                formalCreationTime: [
                 ],
                 id: [
                 ],
@@ -298,9 +338,9 @@ export namespace ApiBulkPayment {
                 ],
                 paymentPurposeType: [
                 ],
-                receiptNumber: [
+                payments: [
                 ],
-                stockOrders: [
+                receiptNumber: [
                 ],
                 totalAmount: [
                 ],
@@ -323,7 +363,13 @@ export namespace ApiBulkPayment {
   //               createdBy: {
   //                   validators: []
   //               },
+  //               creationTimestamp: {
+  //                   validators: []
+  //               },
   //               currency: {
+  //                   validators: []
+  //               },
+  //               formalCreationTime: {
   //                   validators: []
   //               },
   //               id: {
@@ -338,10 +384,10 @@ export namespace ApiBulkPayment {
   //               paymentPurposeType: {
   //                   validators: []
   //               },
-  //               receiptNumber: {
+  //               payments: {
   //                   validators: []
   //               },
-  //               stockOrders: {
+  //               receiptNumber: {
   //                   validators: []
   //               },
   //               totalAmount: {

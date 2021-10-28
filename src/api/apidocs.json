@@ -10525,12 +10525,21 @@
             "type": "array"
           },
           "createdBy": {
-            "description": "Bulk payment created by",
-            "format": "int64",
-            "type": "integer"
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "Bulk payment created by"
+          },
+          "creationTimestamp": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
           },
           "currency": {
             "description": "Bulk payment currency",
+            "type": "string"
+          },
+          "formalCreationTime": {
+            "description": "Formal creation date",
+            "format": "date-time",
             "type": "string"
           },
           "id": {
@@ -10539,7 +10548,7 @@
             "type": "integer"
           },
           "payingCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
+            "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that pays for the bulk payment"
           },
           "paymentDescription": {
@@ -10557,18 +10566,16 @@
             ],
             "type": "string"
           },
-          "receiptNumber": {
-            "description": "Bulk payment receipt numbet",
-            "format": "int64",
-            "type": "integer"
-          },
-          "stockOrders": {
-            "description": "Bulk payment stock orders",
+          "payments": {
+            "description": "Bulk payment payments",
             "items": {
-              "format": "int64",
-              "type": "integer"
+              "$ref": "#/components/schemas/ApiPayment"
             },
             "type": "array"
+          },
+          "receiptNumber": {
+            "description": "Bulk payment receipt number",
+            "type": "string"
           },
           "totalAmount": {
             "description": "Bulk payment total amount",

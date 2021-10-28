@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { FormControl, FormGroup } from '@angular/forms';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
@@ -8,100 +8,96 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 })
 export class GenericEditableItemComponent<T> implements OnInit {
 
-    originalFormControl: FormControl = null;
-    tmpFormGroup: FormGroup = null;
-
-    public submitted: boolean = false;
-
     @Input()
-    title = null
-
-    @Input() set formControlInput(value: FormControl) {
+    title = null;
+    @Input()
+    rawObjectData?: any;
+    @Input()
+    isOpen = false;
+    @Input()
+    listEditorManager = null;
+    @Input()
+    listEditorManagerPosition = null;
+    @Input()
+    set formControlInput(value: FormControl) {
         if (!value || value.value == null) {
-            throw Error("Možnost, da je Editable componenta null ni podprta.")
+            throw Error('It\'s possible that \'null\' Editable component is not supported.');
         }
         this.originalFormControl = value;
         this.submitted = false;
-        this.tmpFormGroup = this.generateForm(value.value)
-        this.onFormChanged()
+        this.tmpFormGroup = this.generateForm(value.value);
+        this.onFormChanged();
     }
+
+    @Output()
+    onSave = new EventEmitter<boolean>();
+    @Output()
+    onCancel = new EventEmitter<any>();
+    @Output()
+    onDelete = new EventEmitter<any>();
+    @Output()
+    onToggle = new EventEmitter<boolean>();
+
+    originalFormControl: FormControl = null;
+    tmpFormGroup: FormGroup = null;
+
+    validationScheme: SimpleValidationScheme<T> = null;
+
+    submitted = false;
 
     onFormChanged() { }
 
     get formControlInput(): FormControl {
-        return this.originalFormControl
+        return this.originalFormControl;
     }
 
     get form(): FormGroup {
-        return this.tmpFormGroup
+        return this.tmpFormGroup;
     }
 
-    @Input()
-    rawObjectData?: any;
-
-    @Input()
-    listEditorManager = null;
-
-    @Input()
-    listEditorManagerPosition = null;
-
-    @Output() onSave = new EventEmitter<boolean>();
-
-    @Output() onCancel = new EventEmitter<any>();
-
-    @Output() onDelete = new EventEmitter<any>();
-
-    // _isOpen: boolean = false;
-
-    @Input() isOpen: boolean = false
-
-    @Output() onToggle = new EventEmitter<boolean>();
-
-
-    constructor(protected globalEventsManager: GlobalEventManagerService) { }
+    constructor(
+        protected globalEventsManager: GlobalEventManagerService
+    ) { }
 
     // should be set in the constructor of the extended class
-    validationScheme: SimpleValidationScheme<T> = null;
 
     public stripResult(obj: any) {
-        return obj
+        return obj;
     }
 
     save() {
-        if (this.form.invalid) {  // handlanje tudi prazne forme
-            this.form.markAsTouched()
-            this.form.markAsDirty()
-            this.submitted = true
-            this.globalEventsManager.push(
-                {
-                    action: 'error',
-                    notificationType: 'error',
-                    title: $localize`:@@genericEditableItem.save.error.title:Errors or incomplete entries!`,
-                    message: $localize`:@@genericEditableItem.save.error.message:Check and correct data.`
-                }
-            )
-            return
+        if (this.form.invalid) {
+            this.form.markAsTouched();
+            this.form.markAsDirty();
+            this.submitted = true;
+            this.globalEventsManager.push({
+                action: 'error',
+                notificationType: 'error',
+                title: $localize`:@@genericEditableItem.save.error.title:Errors or incomplete entries!`,
+                message: $localize`:@@genericEditableItem.save.error.message:Check and correct data.`
+            });
+            return;
         }
         if (this.form.dirty) {   // predpostavka: če generiramo prazen objekt, ga moramo vsaj malo dopolniti (ni defaultov)
-            let tmpval = this.stripResult(this.form.getRawValue())
-            this.formControlInput.setValue(tmpval)
-            this.formControlInput.markAsTouched()
-            this.formControlInput.markAsDirty()
-            this.formControlInput.updateValueAndValidity()
-            this.onSave.next(true)
+            const tmpVal = this.stripResult(this.form.getRawValue());
+            this.formControlInput.setValue(tmpVal);
+            this.formControlInput.markAsTouched();
+            this.formControlInput.markAsDirty();
+            this.formControlInput.updateValueAndValidity();
+            this.onSave.next(true);
         } else {
-            this.onSave.next(false)
+            this.onSave.next(false);
         }
         if (this.listEditorManager && this.listEditorManagerPosition != null) {
-            this.listEditorManager.save(this.listEditorManagerPosition)
+            this.listEditorManager.save(this.listEditorManagerPosition);
         }
     }
 
     async cancel() {
-        let okButtonText = $localize`:@@genericEditableItem.cancel.warning.okButtonText:Discard change`;
-        let cancelButtonText = $localize`:@@genericEditableItem.cancel.warning.cancelButtonText:Go back`;
+        const okButtonText = $localize`:@@genericEditableItem.cancel.warning.okButtonText:Discard change`;
+        const cancelButtonText = $localize`:@@genericEditableItem.cancel.warning.cancelButtonText:Go back`;
         if (this.form && this.form.dirty) {
-            let result = await this.globalEventsManager.openMessageModal({
+            const result = await this.globalEventsManager.openMessageModal({
                 type: 'warning',
                 title: $localize`:@@genericEditableItem.cancel.warning.title:Changes not saved!`,
                 message: $localize`:@@genericEditableItem.cancel.warning.title:The form contains unsaved changes that will be discarded.`,
@@ -109,59 +105,67 @@ export class GenericEditableItemComponent<T> implements OnInit {
                 dismissable: false,
                 buttonTitles: { ok: okButtonText, cancel: cancelButtonText}
             });
-            if (result !== "ok") return;
+            if (result !== 'ok') {
+                return;
+            }
         }
 
         this.submitted = false;
-        this.tmpFormGroup = this.generateForm(this.originalFormControl.value)
+        this.tmpFormGroup = this.generateForm(this.originalFormControl.value);
+
         if (this.listEditorManager && this.listEditorManagerPosition != null) {
-            this.listEditorManager.cancel(this.listEditorManagerPosition)
+            this.listEditorManager.cancel(this.listEditorManagerPosition);
         }
+
         this.onCancel.next(true);
     }
 
     delete() {
         if (this.listEditorManager && this.listEditorManagerPosition != null) {
-            this.listEditorManager.delete(this.listEditorManagerPosition)
+            this.listEditorManager.delete(this.listEditorManagerPosition);
         }
-        this.onDelete.next(true)
+        this.onDelete.next(true);
     }
 
     toggle(returnFocusElement) {
         if (this.listEditorManager && this.listEditorManagerPosition != null) {
-            this.listEditorManager.toggle(this.listEditorManagerPosition, returnFocusElement)
+            this.listEditorManager.toggle(this.listEditorManagerPosition, returnFocusElement);
         }
-        this.onToggle.next(true)
+        this.onToggle.next(true);
         // tukaj racunamo, da cancel resetira formo
-        this.form.markAsPristine()
+        this.form.markAsPristine();
     }
 
     // should be overriden, takes care of
     public generateForm(value: any): FormGroup {
-        throw Error("Not yet implemented")
+        throw Error('Not yet implemented');
     }
 
     public updateCustomFormControl(key: string, value: any) {
-        if (!this.tmpFormGroup) throw Error("Cannot update custom form control '" + key + "'. FormGroup null.")
-        if (!this.tmpFormGroup.controls[key]) throw Error("Missing custom form control '" + key + "'.")
-        let fk = this.tmpFormGroup.controls[key]
+        if (!this.tmpFormGroup) {
+            throw Error('Cannot update custom form control \'' + key + '\'. FormGroup null.');
+        }
+        if (!this.tmpFormGroup.controls[key]) {
+            throw Error('Missing custom form control \'' + key + '\'.');
+        }
+
+        const fk = this.tmpFormGroup.controls[key];
         fk.setValue(value);
         // do not signal the change!
     }
 
     get contentObject() {
         if (this.formControlInput && this.rawObjectData) {
-            throw Error("Ne smeš hkrati uporabljati inputa formControlInput in rawObjectData")
+            throw Error('FormControlInput and rawObjectData cannot be used together!');
         }
         if (this.formControlInput) {
-            return this.formControlInput.value
+            return this.formControlInput.value;
         }
         if (this.rawObjectData) {
-            return this.rawObjectData
+            return this.rawObjectData;
         }
     }
 
     ngOnInit() {
     }
-
 }
