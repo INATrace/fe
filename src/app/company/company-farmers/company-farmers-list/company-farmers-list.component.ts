@@ -31,6 +31,8 @@ export class CompanyFarmersListComponent implements OnInit {
   search$ = new BehaviorSubject('BY_NAME');
   ping$ = new BehaviorSubject(null);
 
+  showHonduras = false;
+
   items = [
     { name: $localize`:@@productLabelStakeholders.search.name:name`,
       category: 'BY_NAME'
@@ -68,6 +70,43 @@ export class CompanyFarmersListComponent implements OnInit {
     {
       key: 'cell',
       name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.cell.name:Cell`,
+      inactive: true
+    },
+    {
+      key: 'actions',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.actions.name:Actions`,
+      inactive: true
+    }
+  ];
+
+  sortOptionsHonduras: SortOption[] = [
+    {
+      key: 'name',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.name.name:First name`,
+      defaultSortOrder: 'ASC'
+    },
+    {
+      key: 'surname',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.surname.name:Last name`,
+      defaultSortOrder: 'ASC'
+    },
+    {
+      key: 'gender',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.gender.name:Gender`,
+      inactive: true
+    },
+    {
+      key: 'id',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.id.name:Id`,
+    },
+    {
+      key: 'municipality',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.municipality.name:Municipality`,
+      inactive: true
+    },
+    {
+      key: 'village',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.village.name:Village`,
       inactive: true
     },
     {
@@ -117,6 +156,11 @@ export class CompanyFarmersListComponent implements OnInit {
             tap(() => this.globalEventsManager.showLoading(false)),
             shareReplay(1)
         );
+
+    this.companyController.getCompanyUsingGET(this.organizationId).pipe(take(1)).subscribe(value => {
+      this.showHonduras = value && value.data && value.data.headquarters && value.data.headquarters.country &&
+          value.data.headquarters.country.code && value.data.headquarters.country.code === 'HN';
+    });
   }
 
   addFarmer() {
@@ -172,6 +216,10 @@ export class CompanyFarmersListComponent implements OnInit {
           return location.address.cell ? location.address.cell : '-';
         case 'village':
           return location.address.village ? location.address.village : '-';
+        case 'hondurasMunicipality':
+          return location.address.hondurasMunicipality ? location.address.hondurasMunicipality : '-';
+        case 'hondurasVillage':
+          return location.address.hondurasVillage ? location.address.hondurasVillage : '-';
       }
     }
   }
