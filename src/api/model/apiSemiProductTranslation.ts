@@ -18,64 +18,76 @@
  */
 
 
-import { ApiMeasureUnitType } from './apiMeasureUnitType';
-import { ApiProductBase } from './apiProductBase';
 
 
 
-export interface ApiFinalProduct { 
+export interface ApiSemiProductTranslation { 
     /**
-     * Description of final product
+     * Semi product description
      */
     description?: string;
     /**
      * Entity id
      */
     id?: number;
-    measurementUnitType?: ApiMeasureUnitType;
     /**
-     * Name of final product
+     * Semi product language
+     */
+    language?: ApiSemiProductTranslation.LanguageEnum;
+    /**
+     * Semi product name
      */
     name?: string;
-    product?: ApiProductBase;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiFinalProduct.
+ * Namespace for property- and property-value-enumerations of ApiSemiProductTranslation.
  */
-export namespace ApiFinalProduct {
+export namespace ApiSemiProductTranslation {
     /**
-     * All properties of ApiFinalProduct.
+     * All properties of ApiSemiProductTranslation.
      */
     export enum Properties {
         /**
-         * Description of final product
+         * Semi product description
          */
         description = 'description',
         /**
          * Entity id
          */
         id = 'id',
-        measurementUnitType = 'measurementUnitType',
         /**
-         * Name of final product
+         * Semi product language
          */
-        name = 'name',
-        product = 'product'
+        language = 'language',
+        /**
+         * Semi product name
+         */
+        name = 'name'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiFinalProduct',
+            classname: 'ApiSemiProductTranslation',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'description',
-                    classname: 'ApiFinalProduct',
+                    classname: 'ApiSemiProductTranslation',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -86,46 +98,34 @@ export namespace ApiFinalProduct {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiFinalProduct',
+                    classname: 'ApiSemiProductTranslation',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
-                    metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiSemiProductTranslation.LanguageEnum',
                     required: false,
-                    name: 'measurementUnitType',
-                    classname: 'ApiFinalProduct',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiFinalProduct',
+                    name: 'language',
+                    classname: 'ApiSemiProductTranslation',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
-                    metadata: ApiProductBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'product',
-                    classname: 'ApiFinalProduct',
-                    dataType: 'ApiProductBase',
-                    isPrimitiveType: false,
+                    name: 'name',
+                    classname: 'ApiSemiProductTranslation',
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiProductBase'
+                    complexType: ''
                 },
             ],
             validators: {
@@ -133,17 +133,15 @@ export namespace ApiFinalProduct {
                 ],
                 id: [
                 ],
-                measurementUnitType: [
+                language: [
                 ],
                 name: [
-                ],
-                product: [
                 ],
             }
         }
     }
 
-  // export const ApiFinalProductValidationScheme = {
+  // export const ApiSemiProductTranslationValidationScheme = {
   //     validators: [],
   //     fields: {
   //               description: {
@@ -152,17 +150,14 @@ export namespace ApiFinalProduct {
   //               id: {
   //                   validators: []
   //               },
-  //               measurementUnitType: {
+  //               language: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               product: {
-  //                   validators: []
-  //               },
   //     }
-  // } as SimpleValidationScheme<ApiFinalProduct>;
+  // } as SimpleValidationScheme<ApiSemiProductTranslation>;
 
 
 }

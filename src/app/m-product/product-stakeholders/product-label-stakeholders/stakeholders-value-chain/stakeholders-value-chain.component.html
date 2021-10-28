@@ -14,7 +14,7 @@
 
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.buyers">Buyers</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newBuyer()" i18n="@@productLabelStakeholders.button.newBuyer">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newBuyer()" i18n="@@productLabelStakeholders.button.newBuyer">
               <span>+ Add buyer</span>
             </button>
           </div>
@@ -25,7 +25,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="buyer">
+                  [company]="buyer"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -38,7 +39,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.importers">Importers</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newImporter()" i18n="@@productLabelStakeholders.button.newImporter">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newImporter()" i18n="@@productLabelStakeholders.button.newImporter">
               <span>+ Add importer</span>
             </button>
           </div>
@@ -48,7 +49,8 @@
               <div class="col-md-6 col-lg-4 col--bare" *ngFor="let importer of this.importers">
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="importer">
+                  [company]="importer"
+                  [editable]="editable()">
                 </app-company-card>
               </div>
             </div>
@@ -58,7 +60,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.exporters">Exporters</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newExporter()" i18n="@@productLabelStakeholders.button.newExporter">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newExporter()" i18n="@@productLabelStakeholders.button.newExporter">
               <span>+ Add exporter</span>
             </button>
           </div>
@@ -68,7 +70,8 @@
               <div class="col-md-6 col-lg-4 col--bare" *ngFor="let exporter of this.exporters">
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="exporter">
+                  [company]="exporter"
+                  [editable]="editable()">
                 </app-company-card>
               </div>
             </div>
@@ -79,7 +82,7 @@
 
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.producers">Producers</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProducer()" i18n="@@productLabelStakeholders.button.newProducer">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newProducer()" i18n="@@productLabelStakeholders.button.newProducer">
               <span>+ Add producer</span>
             </button>
           </div>
@@ -90,7 +93,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="producer">
+                  [company]="producer"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -102,7 +106,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.associations">Associations</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newAssociation()" i18n="@@productLabelStakeholders.button.newAssociation">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newAssociation()" i18n="@@productLabelStakeholders.button.newAssociation">
               <span>+ Add association</span>
             </button>
           </div>
@@ -113,7 +117,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="association">
+                  [company]="association"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -126,7 +131,7 @@
 
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.processors">Processors</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessor()" i18n="@@productLabelStakeholders.button.newProcessor">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessor()" i18n="@@productLabelStakeholders.button.newProcessor">
               <span>+ Add processor</span>
             </button>
           </div>
@@ -137,7 +142,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="processor">
+                  [company]="processor"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -149,7 +155,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.traders">Traders</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newTrader()" i18n="@@productLabelStakeholders.button.newTrader">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newTrader()" i18n="@@productLabelStakeholders.button.newTrader">
               <span>+ Add trader</span>
             </button>
           </div>
@@ -159,7 +165,8 @@
               <div class="col-md-6 col-lg-4 col--bare" *ngFor="let trader of this.traders">
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="trader">
+                  [company]="trader"
+                  [editable]="editable()">
                 </app-company-card>
               </div>
             </div>
@@ -171,7 +178,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
               <span>+ Add owner</span>
             </button>
           </div>
@@ -182,7 +189,8 @@
                 <app-company-card
                   (onSelect)="remove($event)"
                   [company]="owner"
-                  [owner]="true">
+                  [owner]="true"
+                  [editable]="editable()">
                 </app-company-card>
               </div>
             </div>

@@ -100,13 +100,13 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
       }
 
       if (this.configItemType === 'processing-evidence-types') {
-        this.form.setValue({...$event,
+        this.form.setValue({ ...$event,
           fairness: null,
           provenance: null,
           quality: null,
-          required: null,
+          mandatory: null,
           requiredOnQuote: null,
-          requiredOneOfGroupIdForQuote: null});
+          requiredOneOfGroupIdForQuote: null } as ApiProcessingEvidenceType);
       }
 
       if (this.configItemType === 'semi-products') {

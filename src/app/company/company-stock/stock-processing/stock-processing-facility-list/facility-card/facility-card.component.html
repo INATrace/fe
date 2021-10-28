@@ -11,7 +11,7 @@
     <div class="af-card-section">
       <div [ngClass]="facilityTypeColor()">
         <span class="af-card-indicator">&nbsp;</span>
-        <span class="af-card-title">{{ translateName(facility) }}</span>
+        <span class="af-card-title">{{ facility.name }}</span>
         <span class="af-card-subtitle">{{ whereIsIt(facility) }}</span>
         <div class="af-card-icon">
           <span [ngClass]="facilityType()"></span>

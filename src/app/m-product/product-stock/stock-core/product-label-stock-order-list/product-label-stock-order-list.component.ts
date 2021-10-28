@@ -355,9 +355,6 @@ export class ProductLabelStockOrderListComponent implements OnInit {
         case 'PROCESSING_ORDER':
           this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'processing-order', dbKey(order)]);
           return;
-        case 'SALES_ORDER':
-          this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'sales-order', 'update', dbKey(order)]);
-          return;
         case 'TRANSFER_ORDER':
           this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'transfer-order', dbKey(order)]);
           return;

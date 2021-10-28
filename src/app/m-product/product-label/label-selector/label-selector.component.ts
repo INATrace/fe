@@ -43,6 +43,9 @@ export class LabelSelectorComponent implements OnInit {
   @Input()
   changed: Boolean;
 
+  @Input()
+  editable = false;
+
   faPlus = faPlus
   faPlusSquare = faPlusSquare
   faChevronLeft = faChevronLeft

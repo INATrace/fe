@@ -21,7 +21,7 @@ import { FormPositionBoxComponent } from './form-position-box/form-position-box.
 import { LastSeenTagComponent } from './last-seen-tag/last-seen-tag.component';
 import { OrderCardComponent } from './order-card/order-card.component';
 import { FormatAvailabilityPipe } from './pipes/format-availability.pipe';
-import { FormatProcesingActionTypePipe } from './pipes/format-processing-action-type.pipe';
+import { FormatProcessingActionTypePipe } from './pipes/format-processing-action-type.pipe';
 import { FormatProcessingEvidenceTypeTypePipe } from './pipes/format-processing-evidence-type-type.pipe';
 import { FormatStockOrderTypePipe } from './pipes/format-stock-order-type.pipe';
 import { FormatTransactionStatusPipe } from './pipes/format-transaction-status.pipe';
@@ -51,7 +51,7 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     DocumentCardComponent,
     FormatTransactionTypePipe,
     FormatTransactionStatusPipe,
-    FormatProcesingActionTypePipe,
+    FormatProcessingActionTypePipe,
     FormatProcessingEvidenceTypeTypePipe,
     FormatWayOfPaymentPipe,
     TranslateCodebookPipe,
@@ -94,7 +94,7 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     RedirectClearCacheComponent,
     FormatTransactionTypePipe,
     FormatTransactionStatusPipe,
-    FormatProcesingActionTypePipe,
+    FormatProcessingActionTypePipe,
     FormatProcessingEvidenceTypeTypePipe,
     FormatWayOfPaymentPipe,
     TranslateCodebookPipe,

@@ -11,9 +11,10 @@
          [label]="label"
          [currentLabelForm]="currentLabelForm"
          [changed]="changed"
+         [editable]="editable"
         ></app-label-selector-card>
       </ng-container>
-      <div class="label-card-wrapper">
+      <div *ngIf="editable" class="label-card-wrapper">
         <div class="label-card new-label-card" (click)="createNew()" (mouseover)="showInView($event)">
           <fa-icon [icon]="faPlusSquare" class="plus-icon"></fa-icon>
           <div class="add-text" i18n="@@productLabel.labelSelector.addLabel">Add {{appName}} label</div>

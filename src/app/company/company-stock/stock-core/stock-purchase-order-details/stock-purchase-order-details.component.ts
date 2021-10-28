@@ -135,7 +135,6 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     obj['GENERAL_ORDER'] = $localize`:@@orderType.codebook.generalOrder:General order`;
     obj['PROCESSING_ORDER'] = $localize`:@@orderType.codebook.processingOrder:Processing order`;
     obj['PURCHASE_ORDER'] = $localize`:@@orderType.codebook.purchaseOrder:Purchase order`;
-    obj['SALES_ORDER'] = $localize`:@@orderType.codebook.salesOrder:Sales order`;
     return obj;
   }
 
@@ -245,8 +244,6 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         return $localize`:@@productLabelStockPurchaseOrdersModal.newProcessingOrderTitle:New processing order`;
       case 'PURCHASE_ORDER':
         return $localize`:@@productLabelStockPurchaseOrdersModal.newPurchaseOrderTitle:New purchase order`;
-      case 'SALES_ORDER':
-        return $localize`:@@productLabelStockPurchaseOrdersModal.newSalesOrderTitle:New sales order`;
       default:
         return null;
     }
@@ -260,8 +257,6 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         return $localize`:@@productLabelStockPurchaseOrdersModal.updateProcessingOrderTitle:Update processing order`;
       case 'PURCHASE_ORDER':
         return $localize`:@@productLabelStockPurchaseOrdersModal.updatePurchaseOrderTitle:Update purchase order`;
-      case 'SALES_ORDER':
-        return $localize`:@@productLabelStockPurchaseOrdersModal.updateSalesOrderTitle:Update sales order`;
       default:
         return null;
     }
@@ -497,9 +492,6 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         return;
       case 'PROCESSING_ORDER':
         // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'processing-order', 'update', this.purchaseOrderId]);
-        return;
-      case 'SALES_ORDER':
-        // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'sales-order', 'update', this.purchaseOrderId]);
         return;
       default:
         throw Error('Wrong order type: ' + type);

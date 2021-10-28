@@ -174,7 +174,9 @@
                           </div>
                           <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
 
-                          <div class="af-c1 text-right" (click)="deleteTransaction(i)">
+                          <div class="af-c1 text-right"
+                               [hidden]="tx.status !== 'PENDING'"
+                               (click)="deleteTransaction(i)">
                             <fa-icon
                                     class="del-icon cursor-pointer"
                                     [icon]="faTimes"></fa-icon>
