@@ -1,6 +1,6 @@
 {
   "name": "inatrace-fe",
-  "version": "2.0.32-SNAPSHOT",
+  "version": "2.0.33-SNAPSHOT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -23,16 +23,6 @@
           (click)="closeModalAndRedirect('user-profile', null)" i18n="@@welcomeScreen.modal.button.profile">
           <span>Complete your profile</span>
         </button>
-        <button *ngIf="!companyId" class="btn btn-solid round"
-          style="width: 255px; margin-bottom: 2rem; margin-left: 10px;"
-          (click)="closeModalAndRedirect('companies/new', null)" i18n="@@welcomeScreen.modal.button.addCompany">
-          <span>Add company</span>
-        </button>
-        <button *ngIf="companyId" class="btn btn-solid round"
-          style="width: 255px; margin-bottom: 2rem; margin-left: 10px;"
-          (click)="closeModalAndRedirect('companies/',companyId)" i18n="@@welcomeScreen.modal.button.editCompany">
-          <span>Edit company</span>
-        </button>
         <button class="btn btn-solid round"
           style="width: 255px; margin-left: 10px;"
           (click)="logout()" i18n="@@welcomeScreen.modal.button.logout">
