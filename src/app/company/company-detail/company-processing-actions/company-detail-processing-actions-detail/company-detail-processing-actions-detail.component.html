@@ -219,6 +219,30 @@
                                 </div>
                             </ng-container>
                         </textinput>
+
+                        <textinput
+                            label="Sort order"
+                            placeholder="Enter sort order"
+                            i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.label"
+                            i18n-placeholder="@@companyDetailProcessingActions.textInput.sortOrder.placeholder"
+                            [form]="form.get('sortOrder')"
+                            [isInvalid]="submitted && form.get('sortOrder').invalid"
+                            style="width: 100%">
+                            <ng-container *ngIf="submitted">
+                                <div *ngIf="form.get('sortOrder').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.error.required">
+                                        <span>
+                                            Sort order is required
+                                        </span>
+                                    </div>
+                                    <div *ngIf="errors.pattern" i18n-label="@@companyDetailProcessingActions.textInput.sortOrder.error.pattern">
+                                        <span>
+                                            Sort order must be a number
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </textinput>
                     </div>
                     <!-- END: Basic information -->
 

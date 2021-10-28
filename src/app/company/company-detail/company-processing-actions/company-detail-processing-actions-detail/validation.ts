@@ -167,6 +167,9 @@ export const ApiProcessingActionValidationScheme = {
     },
     outputFinalProduct: {
       validators: [Validators.required]
+    },
+    sortOrder: {
+      validators: [Validators.pattern('[0-9]*')]
     }
   }
 } as SimpleValidationScheme<ApiProcessingAction>;
