@@ -95,6 +95,9 @@ export const ApiProcessingActionValidationScheme = {
     },
     inputFinalProduct: {
       validators: [Validators.required]
+    },
+    outputFinalProduct: {
+      validators: [Validators.required]
     }
   }
 } as SimpleValidationScheme<ApiProcessingAction>;

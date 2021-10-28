@@ -60,6 +60,7 @@
                             </ng-container>
                         </single-choice>
 
+                        <!-- If we have Shipment or Transfer proc. action show dropdown if this action involves Final product -->
                         <single-choice
                                 *ngIf="form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER'"
                                 label="Final product action"
@@ -114,7 +115,7 @@
                             </single-choice>
                         </ng-container>
 
-                        <ng-container *ngIf="form.get('type').value === 'PROCESSING'">
+                        <ng-container *ngIf="form.get('type').value === 'PROCESSING' || form.get('type').value === 'FINAL_PROCESSING'">
                             <single-choice
                                     label="Select input semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.inputSemiProduct.label"
@@ -130,22 +131,41 @@
                                 </ng-container>
                             </single-choice>
 
-                            <single-choice
-                                    label="Select output semi-product"
-                                    i18n-label="@@companyDetailProcessingActions.outputSemiProduct.label"
-                                    [formControlInput]="form.get('outputSemiProduct')"
-                                    [codebookService]="activeSemiProductService"
-                                    [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
-                                <ng-container *ngIf="submitted">
-                                    <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
-                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
-                                            Output semi-product is required
+                            <ng-container *ngIf="form.get('type').value === 'PROCESSING'">
+                                <single-choice
+                                        label="Select output semi-product"
+                                        i18n-label="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.label"
+                                        [formControlInput]="form.get('outputSemiProduct')"
+                                        [codebookService]="activeSemiProductService"
+                                        [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
+                                                Output semi-product is required
+                                            </div>
                                         </div>
-                                    </div>
-                                </ng-container>
-                            </single-choice>
+                                    </ng-container>
+                                </single-choice>
+                            </ng-container>
 
-                            <div class="af-row" *ngIf="form.get('type').value === 'PROCESSING'">
+                            <ng-container *ngIf="form.get('type').value === 'FINAL_PROCESSING'">
+                                <single-choice
+                                        label="Select output final product"
+                                        i18n-label="@@companyDetailProcessingActions.singleChoice.outputFinalProduct.label"
+                                        [formControlInput]="form.get('outputFinalProduct')"
+                                        [codebookService]="finalProductsForCompanyCodebook"
+                                        [isInvalidChoice]="submitted && form.get('outputFinalProduct').invalid">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('outputFinalProduct').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputFinalProduct.error.required">
+                                                Output final product is required
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </single-choice>
+                            </ng-container>
+
+                            <div class="af-row">
                                 <div class="af-c6">
                                     <single-choice
                                             label="Repacked outputs"
@@ -170,9 +190,9 @@
                                         <ng-container *ngIf="submitted">
                                             <div *ngIf="form.get('maxOutputWeight').errors as errors" class="sc-invalid-feedback">
                                                 <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.maxOutputWeight.error">
-                                                    <span>
-                                                      Max output weight is required
-                                                    </span>
+                                                <span>
+                                                  Max output weight is required
+                                                </span>
                                                 </div>
                                             </div>
                                         </ng-container>
