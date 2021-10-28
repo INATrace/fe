@@ -202,6 +202,17 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (!this.form.get('type').value) {
       this.form.get('type').setValue('PROCESSING');
     }
+
+    if (this.form.get('valueChain').value) {
+
+      const valueChain = this.form.get('valueChain').value as ApiValueChain;
+
+      // Initialize codebook services for proc. evidence types and proc. evidence fields
+      this.processingEvidenceTypeService =
+        new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
+      this.processingEvidenceFieldService =
+        new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+    }
   }
 
   async initInitialData(){
