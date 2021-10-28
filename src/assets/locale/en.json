@@ -1167,6 +1167,7 @@
     "customerDetail.tasteCodes.same": "Same",
     "customerDetail.tasteCodes.worse": "Worse",
     "formatProcessingActionType.processing": "Processing",
+    "formatProcessingActionType.finalProcessing": "Final processing",
     "formatProcessingActionType.quote": "Quote",
     "formatProcessingActionType.transfer": "Transfer",
     "version.appVersion": "App version: {$INTERPOLATION}",
