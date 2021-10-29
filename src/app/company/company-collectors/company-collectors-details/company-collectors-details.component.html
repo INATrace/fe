@@ -80,7 +80,7 @@
                             <div class="name-sector">{{collectorForm.get('name').value}} {{collectorForm.get('surname').value}}</div>
                             <div class="location-sector">{{collectorForm.get('location.address.village').value}}, {{collectorForm.get('location.address.cell').value}}, {{collectorForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
-                                <qr-code [value]="collectorForm.get('type') + '_' + collectorForm.get('id').value"
+                                <qr-code [value]="collectorForm.get('id').value.toString()"
                                          [foreground]="theme.primary"
                                          [size]="qrCodeSize"></qr-code>
                             </div>
