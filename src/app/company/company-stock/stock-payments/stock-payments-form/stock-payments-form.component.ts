@@ -223,7 +223,8 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.associatedCompaniesService = new AssociatedCompaniesService(this.productControllerService, this.route.snapshot.params.id, null);
+    // TODO: Associated companies can no longer be obtained via product, as payments are now bound to company.
+    this.associatedCompaniesService = null; // new AssociatedCompaniesService(this.productControllerService, this.route.snapshot.params.id, null);
   }
 
   async setConfirmed() {

@@ -474,6 +474,10 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   private refreshCBs(){
 
+    if (!this.selectedOrders){
+      return;
+    }
+
     let selectedCount = 0;
 
     for (const item of this.currentData) {

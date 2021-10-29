@@ -83,6 +83,9 @@ export class ValueChainListComponent implements OnInit {
     switchMap(requestParams => this.valueChainService.getValueChainListUsingGETByMap(requestParams)),
     map((response: ApiPaginatedResponseApiValueChain) => {
       if (response) {
+        if (response.data?.count) {
+          this.allValueChains = response.data.count;
+        }
         if (response.data?.count && (this.pageSize - response.data.count > 0)) {
           this.showedValueChains = response.data.count;
         } else {
