@@ -463,11 +463,15 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
   get paymentPurposeTypes() {
     const obj = {};
-    obj['ADVANCE_PAYMENT'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.advancedPayment:Advanced payment`;
-    obj['FIRST_INSTALLMENT'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.firstInstallment:Cherry payment`;
-    obj['SECOND_INSTALLMENT'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.secondInstallment:Member bonus`;
-    obj['WOMEN_PREMIUM'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.womenPreminum:AF Women premium`;
-    obj['INVOICE_PAYMENT'] = $localize`:@@productLabelStockBulkPayments.paymentPurposeTypes.invoicePayment:Invoice payment`;
+    obj['ADVANCE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.advancedPayment:Advanced payment`;
+    obj['FIRST_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.firstInstallment:Base payment`;
+    obj['SECOND_INSTALLMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.secondInstallment:Member bonus`;
+    obj['WOMEN_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.womenPreminum:Women premium`;
+    obj['INVOICE_PAYMENT'] = $localize`:@@paymentForm.paymentPurposeTypes.invoicePayment:Invoice payment`;
+    obj['ORGANIC_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.organicBonus:Organic bonus`;
+    obj['FT_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.ftBonus:FT bonus`;
+    obj['FT_PREMIUM'] = $localize`:@@paymentForm.paymentPurposeTypes.ftPremium:FT premium`;
+    obj['OTHER_BONUS'] = $localize`:@@paymentForm.paymentPurposeTypes.otherBonus:Other bonus`;
     return obj;
   }
 
