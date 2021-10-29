@@ -49,6 +49,7 @@ import { ApiResponseApiProcessingOrder } from '../../../../../api/model/apiRespo
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
+import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -102,8 +103,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Semi-products
   filterSemiProduct = new FormControl(null);
   semiProductsInFacility: FacilitySemiProductsCodebookService = null;
-  currentInputSemiProduct: ApiSemiProduct;
-  currentOutputSemiProduct: ApiSemiProduct;
+  currentInputSemiProduct: ApiSemiProduct | ApiFinalProduct;
+  currentOutputSemiProduct: ApiSemiProduct | ApiFinalProduct;
   currentOutputSemiProductNameForm = new FormControl(null);
 
   // Stock orders
@@ -179,12 +180,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get actionType(): ProcessingActionType {
     if (!this.prAction) { return null; }
     return this.prAction.type;
-  }
-
-  get showFilterSemiProduct() {
-    return this.actionType === 'TRANSFER' &&
-      !(this.prAction && this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id) &&
-      this.semiProductsInFacility;
   }
 
   get showInputTransactions() {
@@ -301,17 +296,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputQuantityLabel() {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ 
-      this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.apiMeasureUnitType, 'label') : '' 
+      this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' 
     }`;
   }
 
   get outputQuantityLabel() {
     if (this.actionType === 'SHIPMENT') {
       return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+        this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' }`;
     } else {
       return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.apiMeasureUnitType, 'label') : '' }`;
+        this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.measurementUnitType, 'label') : '' }`;
     }
   }
 
@@ -328,8 +323,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'PROCESSING') {
 
-      const inputMeasurementUnit = this.prAction.inputSemiProduct.apiMeasureUnitType;
-      const outputMeasurementUnit = this.prAction.outputSemiProduct.apiMeasureUnitType;
+      const inputMeasurementUnit = this.prAction.inputSemiProduct.measurementUnitType;
+      const outputMeasurementUnit = this.prAction.outputSemiProduct.measurementUnitType;
 
       if (inputMeasurementUnit.id === outputMeasurementUnit.id) { return inputMeasurementUnit; }
 
@@ -377,8 +372,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.apiMeasureUnitType.weight;
-    const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.apiMeasureUnitType.weight;
+    const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.measurementUnitType.weight;
+    const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.measurementUnitType.weight;
     return inputQuantityInKg && outputQuantityInKg && (outputQuantityInKg > inputQuantityInKg);
   }
 
@@ -401,7 +396,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get sacNetWLabel() {
     if (this.prAction) {
       const unit = this.underlyingMeasurementUnit ?
-        this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.apiMeasureUnitType.label;
+        this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.measurementUnitType.label;
 
       return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.prAction.maxOutputWeight } ${ unit })`;
     }
@@ -514,7 +509,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }));
 
   }
-
 
   private async initInitialData() {
 
@@ -1229,7 +1223,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
       if (this.currentOutputSemiProduct) {
-        this.currentOutputSemiProductNameForm.setValue(this.translateName(this.currentOutputSemiProduct));
+        this.currentOutputSemiProductNameForm.setValue(this.currentOutputSemiProduct.name);
       }
     }
   }

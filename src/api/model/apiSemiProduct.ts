@@ -24,13 +24,13 @@ import { ApiSemiProductTranslation } from './apiSemiProductTranslation';
 
 
 export interface ApiSemiProduct { 
-    apiMeasureUnitType?: ApiMeasureUnitType;
     buyable?: boolean;
     description?: string;
     /**
      * Entity id
      */
     id?: number;
+    measurementUnitType?: ApiMeasureUnitType;
     name?: string;
     sku?: boolean;
     skuendCustomer?: boolean;
@@ -45,13 +45,13 @@ export namespace ApiSemiProduct {
      * All properties of ApiSemiProduct.
      */
     export enum Properties {
-        apiMeasureUnitType = 'apiMeasureUnitType',
         buyable = 'buyable',
         description = 'description',
         /**
          * Entity id
          */
         id = 'id',
+        measurementUnitType = 'measurementUnitType',
         name = 'name',
         sku = 'sku',
         skuendCustomer = 'skuendCustomer',
@@ -64,18 +64,6 @@ export namespace ApiSemiProduct {
             metadata: formMetadata,
             classname: 'ApiSemiProduct',
             vars: [
-                {
-                    metadata: ApiMeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'apiMeasureUnitType',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -108,6 +96,18 @@ export namespace ApiSemiProduct {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measurementUnitType',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
                 },
                 {
                     isReadOnly: false,
@@ -156,13 +156,13 @@ export namespace ApiSemiProduct {
                 },
             ],
             validators: {
-                apiMeasureUnitType: [
-                ],
                 buyable: [
                 ],
                 description: [
                 ],
                 id: [
+                ],
+                measurementUnitType: [
                 ],
                 name: [
                 ],
@@ -179,9 +179,6 @@ export namespace ApiSemiProduct {
   // export const ApiSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               apiMeasureUnitType: {
-  //                   validators: []
-  //               },
   //               buyable: {
   //                   validators: []
   //               },
@@ -189,6 +186,9 @@ export namespace ApiSemiProduct {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               measurementUnitType: {
   //                   validators: []
   //               },
   //               name: {

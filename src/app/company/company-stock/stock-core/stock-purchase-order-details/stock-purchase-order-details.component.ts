@@ -547,7 +547,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
     if (res && res.status === StatusEnum.OK && res.data) {
-      this.measureUnit = res.data.apiMeasureUnitType.label;
+      this.measureUnit = res.data.measurementUnitType.label;
     } else {
       this.measureUnit = '-';
     }

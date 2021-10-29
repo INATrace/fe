@@ -403,7 +403,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       return;
     }
     const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
-    return semi && semi.apiMeasureUnitType;
+    return semi && semi.measurementUnitType;
   }
 
   async saveProcessingAction() {

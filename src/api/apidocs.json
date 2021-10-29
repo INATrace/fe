@@ -6991,7 +6991,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                  "$ref": "#/components/schemas/ApiUserCustomerImportResponse"
                 }
               }
             },
@@ -10137,9 +10137,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10149,16 +10152,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10168,16 +10174,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10187,16 +10196,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10206,16 +10218,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10225,16 +10240,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10244,16 +10262,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10263,8 +10284,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -16926,9 +16947,6 @@
       },
       "ApiSemiProduct": {
         "properties": {
-          "apiMeasureUnitType": {
-            "$ref": "#/components/schemas/ApiMeasureUnitType"
-          },
           "buyable": {
             "type": "boolean"
           },
@@ -16939,6 +16957,9 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "measurementUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
           },
           "name": {
             "type": "string"
@@ -17215,7 +17236,7 @@
       "ApiStockOrderAggregatedHistory": {
         "properties": {
           "aggregations": {
-            "description": "List of fields for this aggregation history",
+            "description": "List of aggregations, that represent stock order siblings for this aggregation history",
             "items": {
               "$ref": "#/components/schemas/ApiStockOrderAggregation"
             },
@@ -17237,7 +17258,7 @@
           },
           "stockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",
-            "description": "Stock order for this aggregation history"
+            "description": "Stock order for that aggregation history is calculated"
           }
         },
         "type": "object"
@@ -17710,6 +17731,21 @@
               "FARMER"
             ],
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserCustomerImportResponse": {
+        "properties": {
+          "duplicates": {
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomer"
+            },
+            "type": "array"
+          },
+          "successful": {
+            "format": "int32",
+            "type": "integer"
           }
         },
         "type": "object"

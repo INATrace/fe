@@ -93,11 +93,11 @@
         <single-choice
                 label="Measurement unit type"
                 i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
-                [formControlInput]="form.get('apiMeasureUnitType')"
+                [formControlInput]="form.get('measurementUnitType')"
                 [codebookService]="activeMeasureUnitTypeService"
-                [isInvalidChoice]="submitted && form.get('apiMeasureUnitType').invalid">
+                [isInvalidChoice]="submitted && form.get('measurementUnitType').invalid">
           <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('apiMeasureUnitType').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="form.get('measurementUnitType').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@semiProductDetail.singleChoice.measurementUnit.error.requred">
                 Measure unit is required
               </div>

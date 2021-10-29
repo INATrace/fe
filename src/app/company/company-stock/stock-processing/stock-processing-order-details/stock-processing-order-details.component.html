@@ -77,19 +77,6 @@
                 </div>
               </div>
 
-              <!-- SEMI-RPDOCUT SELECTION DROPDOWN -->
-              <div class="af-row" *ngIf="showFilterSemiProduct">
-                <div class="af-c12">
-                  <single-choice
-                          label="Select semi-product"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.filterSemiProduct.label"
-                          [formControlInput]="filterSemiProduct"
-                          [codebookService]="semiProductsInFacility"
-                          (onChange)="selectedSemiProductChange($event)">
-                  </single-choice>
-                </div>
-              </div>
-
               <!-- FILTERS FOR AVAILABLE STOCK AT SELECTED FACILITY FOR THE SELECTED SEMI-PRODUCT -->
               <div *ngIf="showInputTransactions" class="d-flex justify-content-between"
                    style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
@@ -193,7 +180,7 @@
                   <div class="af-c12" style="margin-top: -1rem;">
                     <checkbox-input (onClick)="selectAll()" [form]="cbSelectAllForm" [disabled]="disabledLeftFields" style="margin-bottom: 1rem; margin-top: -1rem;">
                       <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
-                        Select all ({{ this.translateName(currentInputSemiProduct) }})
+                        Select all ({{ currentInputSemiProduct.name }})
                       </checkbox-input-rich-label>
                     </checkbox-input>
                   </div>
@@ -219,7 +206,7 @@
                       </ng-container>
                     </div>
                     <div class="af-c3 text-right">
-                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputSemiProduct.apiMeasureUnitType.label }}
+                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputSemiProduct.measurementUnitType.label }}
                     </div>
                   </div>
                 </ng-container>

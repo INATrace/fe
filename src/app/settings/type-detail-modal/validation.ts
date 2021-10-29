@@ -25,7 +25,7 @@ export const ApiSemiProductValidationScheme = {
     description: {
       validators: []
     },
-    apiMeasureUnitType: {
+    measurementUnitType: {
       forceFormControl: true,
       validators: [Validators.required]
     },

@@ -26,7 +26,7 @@ import { ApiStockOrderAggregation } from './apiStockOrderAggregation';
 
 export interface ApiStockOrderAggregatedHistory { 
     /**
-     * List of fields for this aggregation history
+     * List of aggregations, that represent stock order siblings for this aggregation history
      */
     aggregations?: Array<ApiStockOrderAggregation>;
     /**
@@ -50,7 +50,7 @@ export namespace ApiStockOrderAggregatedHistory {
      */
     export enum Properties {
         /**
-         * List of fields for this aggregation history
+         * List of aggregations, that represent stock order siblings for this aggregation history
          */
         aggregations = 'aggregations',
         /**
