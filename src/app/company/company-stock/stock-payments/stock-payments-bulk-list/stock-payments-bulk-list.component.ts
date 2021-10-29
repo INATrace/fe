@@ -18,6 +18,9 @@ export class StockPaymentsBulkListComponent implements OnInit {
   @Input()
   companyId: number;
 
+  @Input()
+  readOnly = false;
+
   @Output()
   showing = new EventEmitter<number>();
 

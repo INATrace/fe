@@ -47,6 +47,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   @Input()
   farmerIdPing$ = new BehaviorSubject<number>(null);
 
+  @Input()
+  readOnly = false;
+
   @Output()
   showing = new EventEmitter<number>();
 

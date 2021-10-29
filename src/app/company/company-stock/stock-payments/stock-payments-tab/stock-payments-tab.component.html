@@ -2,7 +2,7 @@
 
     <app-company-left-panel></app-company-left-panel>
 
-    <div class="main" *ngIf="this.isAuthRoleToSeeProcessing">
+    <div class="main" *ngIf="this.isAuthRoleToSeePayments">
 
         <div class="main-inside-top content-element">
 
@@ -11,7 +11,7 @@
             <div class="d-flex justify-content-between content-element--row1">
                 <div class="title-page content-element--title"
                      i18n="@@productLabelStock.title.payments">Payments</div>
-                <button class="btn btn-solid round btn-table-new content-element--btn"
+                <button *ngIf="this.isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
                         (click)="newPayment()"
                         i18n="@@productLabelStock.button.newPayment">
                     <span>+ Add payment</span>
@@ -110,7 +110,8 @@
                     [selectedPayments]="selectedPayments"
                     (selectedPaymentsChanged)="selectedIdsChanged($event)"
                     (showing)="onShowPayments($event)"
-                    (countAll)="onCountAllPayments($event)">
+                    (countAll)="onCountAllPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
             </app-stock-payments-list>
 
 
@@ -141,7 +142,8 @@
             <app-stock-payments-bulk-list
                     [companyId]="companyId"
                     (showing)="onShowBulkPayments($event)"
-                    (countAll)="onCountAllBulkPayments($event)">
+                    (countAll)="onCountAllBulkPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
             </app-stock-payments-bulk-list>
 
         </div>
