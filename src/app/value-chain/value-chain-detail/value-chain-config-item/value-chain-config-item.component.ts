@@ -7,12 +7,12 @@ import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme, ApiProcessingEvidenceFieldValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
+  ApiProcessingEvidenceTypeValidationScheme
 } from '../../../settings/type-detail-modal/validation';
 import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
 import { ApiMeasureUnitType } from '../../../../api/model/apiMeasureUnitType';
 import { ActiveMeasureUnitTypeService } from '../../../shared-services/active-measure-unit-types.service';
-import { ApiVCMeasureUnitTypeValidationScheme } from '../validation';
+import { ApiSemiProductValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from '../validation';
 import { ApiGradeAbbreviation } from '../../../../api/model/apiGradeAbbreviation';
 import { GradeAbbreviationCodebook } from '../../../shared-services/grade-abbreviation-codebook';
 import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
@@ -125,7 +125,13 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
       }
 
       if (this.configItemType === 'semi-products') {
-        this.form.setValue({...$event, skuendCustomer: null, sku: null, buyable: null});
+        this.form.setValue({
+          ...$event,
+          skuendCustomer: null,
+          sku: null,
+          buyable: null,
+          translations: []
+        } as ApiSemiProduct);
       }
 
       this.form.markAsDirty();

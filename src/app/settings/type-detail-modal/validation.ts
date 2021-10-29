@@ -173,8 +173,9 @@ export function requiredTranslationsSemiProduct(control: FormGroup): ValidationE
   }
   const translations = control.value['translations'];
   if (translations.length === 0) {
-    return {required: true};
+    return { required: true };
   }
+
   // English translation is required, other are optional
   const englishTranslation = translations.find(t => t.language === LanguageEnum.EN);
   if (!englishTranslation || !englishTranslation.name) {

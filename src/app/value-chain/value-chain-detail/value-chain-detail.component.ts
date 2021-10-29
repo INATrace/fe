@@ -6,15 +6,14 @@ import { finalize } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';
+import { ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
   ApiGradeAbbreviationValidationScheme, ApiProcessingEvidenceFieldValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme,
-  ApiSemiProductValidationScheme
+  ApiProcessingEvidenceTypeValidationScheme
 } from '../../settings/type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';

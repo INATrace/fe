@@ -2,6 +2,7 @@ import { SimpleValidationScheme } from '../../../interfaces/Validation';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { Validators } from '@angular/forms';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 
 export const ApiValueChainValidationScheme = {
   validators: [],
@@ -30,6 +31,9 @@ export const ApiValueChainValidationScheme = {
     processingEvidenceTypes: {
       validators: []
     },
+    processingEvidenceFields: {
+      validators: []
+    },
     semiProducts: {
       validators: []
     }
@@ -50,3 +54,18 @@ export const ApiVCMeasureUnitTypeValidationScheme = {
     }
   }
 } as SimpleValidationScheme<ApiMeasureUnitType>;
+
+export const ApiSemiProductValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: [Validators.required]
+    },
+    name: {
+      validators: [Validators.required]
+    },
+    translations: {
+      validators: []
+    }
+  }
+} as SimpleValidationScheme<ApiSemiProduct>;
