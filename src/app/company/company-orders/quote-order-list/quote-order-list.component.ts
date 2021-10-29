@@ -114,6 +114,11 @@ export class QuoteOrderListComponent implements OnInit {
       instructionsHtml: $localize`:@@orderHistoryView.rejectTransaction.modal.instructionsHtml:Comment`,
       stockOrderId: item.id
     });
+    modalRef.result.then(confirmed => {
+      if (confirmed) {
+        this.reloadPingList$.next(true);
+      }
+    });
   }
 
   private async initializeSortOptions() {
