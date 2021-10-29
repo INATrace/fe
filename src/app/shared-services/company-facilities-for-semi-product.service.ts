@@ -16,7 +16,8 @@ export class CompanyFacilitiesForSemiProductService extends GeneralSifrantServic
   constructor(
     private facilityControllerService: FacilityControllerService,
     private companyId: number,
-    private semiProductId: number
+    private semiProductId?: number,
+    private finalProductId?: number
   ) {
     super();
   }
@@ -39,6 +40,7 @@ export class CompanyFacilitiesForSemiProductService extends GeneralSifrantServic
     const reqParams: ListFacilitiesByCompanyUsingGET.PartialParamMap = {
       id: this.companyId,
       semiProductId: this.semiProductId,
+      finalProductId: this.finalProductId,
       ...this.requestParams
     };
 

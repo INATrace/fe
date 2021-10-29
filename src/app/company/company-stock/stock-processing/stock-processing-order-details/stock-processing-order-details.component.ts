@@ -101,7 +101,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   outputFacilityForm = new FormControl(null, Validators.required);
   outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService;
 
-  // Semi-products
+  // Semi-products and Final products
   filterSemiProduct = new FormControl(null);
   semiProductsInFacility: FacilitySemiProductsCodebookService = null;
   currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
@@ -727,6 +727,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async saveProcessingOrder() {
 
+    // TODO: remove this (it's temporary)
+    if (this.actionType === 'FINAL_PROCESSING' || this.prAction.finalProductAction) {
+      return;
+    }
+
     if (this.saveProcessingOrderInProgress) {
       return;
     }
@@ -1157,7 +1162,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         this.currentInputStockUnitProduct = inputSemiProduct;
         this.currentOutputStockUnitProduct = outputFinalProduct;
-        this.currentOutputStockUnitNameForm.setValue(outputFinalProduct ? outputFinalProduct.name : null);
+        this.currentOutputStockUnitNameForm
+          .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
         break;
 
       case ApiProcessingAction.TypeEnum.TRANSFER:
@@ -1168,7 +1174,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
           this.currentInputStockUnitProduct = inputFinalProduct;
           this.currentOutputStockUnitProduct = outputFinalProduct;
-          this.currentOutputStockUnitNameForm.setValue(outputFinalProduct ? outputFinalProduct.name : null);
+          this.currentOutputStockUnitNameForm
+            .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
 
         } else {
 
@@ -1611,24 +1618,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private initializeFacilitiesCodebooks() {
 
-    // If we have defined input semi-product, set input facility
-    if (this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id) {
+    const inputSemiProductId = this.prAction.inputSemiProduct?.id;
+    const inputFinalProductId = this.prAction.inputFinalProduct?.id;
+
+    const outputSemiProductId = this.prAction.outputSemiProduct?.id;
+    const outputFinalProductId = this.prAction.outputFinalProduct?.id;
+
+    // If there is input semi-product or input final product set, initialize input facility codebook
+    if (inputSemiProductId || inputFinalProductId) {
+
+      // If we have shipment action (quote processing action), get the selling facilities that the current company can order from
       if (this.actionType === 'SHIPMENT') {
-
-        // If we have shipment action (quote processing action), get the selling facilities that the current company can order from
         this.inputFacilitiesCodebook =
-          new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
-
+          new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.inputSemiProduct.id);
+          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       }
     }
 
-    // If we have defined output semi-product, set output facility
-    if (this.prAction.outputSemiProduct && this.prAction.outputSemiProduct.id) {
+    // If there is output semi-product or output final product set, initialize output facility codebook
+    if (outputSemiProductId || outputFinalProductId) {
       this.outputFacilitiesCodebook =
-        new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, this.prAction.outputSemiProduct.id);
+        new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
     }
   }
 
