@@ -1382,6 +1382,16 @@
             }
           },
           {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
@@ -1508,6 +1518,16 @@
             "description": "Semi product ID",
             "in": "query",
             "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
             "required": false,
             "schema": {
               "format": "int64",
