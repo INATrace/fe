@@ -180,7 +180,7 @@
                   <div class="af-c12" style="margin-top: -1rem;">
                     <checkbox-input (onClick)="selectAll()" [form]="cbSelectAllForm" [disabled]="disabledLeftFields" style="margin-bottom: 1rem; margin-top: -1rem;">
                       <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
-                        Select all ({{ currentInputSemiProduct.name }})
+                        Select all ({{ currentInputStockUnitProduct.name }})
                       </checkbox-input-rich-label>
                     </checkbox-input>
                   </div>
@@ -206,7 +206,7 @@
                       </ng-container>
                     </div>
                     <div class="af-c3 text-right">
-                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputSemiProduct.measurementUnitType.label }}
+                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnitProduct.measurementUnitType.label }}
                     </div>
                   </div>
                 </ng-container>
@@ -325,14 +325,13 @@
                 </div>
               </div>
 
-              <!-- THE OUTPUT SEMI-PRODUCT -->
+              <!-- THE OUTPUT STOCK UNIT -->
               <div class="af-row">
                 <div class="af-c12">
                   <textinput
-                          [form]="currentOutputSemiProductNameForm"
-                          label="Semi-product type"
+                          [form]="currentOutputStockUnitNameForm"
+                          [label]="outputStockUnitLabel"
                           style="width: 100%"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.semiProductType.label"
                           [readOnly]="true">
                   </textinput>
                 </div>

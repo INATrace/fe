@@ -50,6 +50,7 @@ import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
+import { ProductControllerService } from '../../../../../api/api/productController.service';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -103,9 +104,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Semi-products
   filterSemiProduct = new FormControl(null);
   semiProductsInFacility: FacilitySemiProductsCodebookService = null;
-  currentInputSemiProduct: ApiSemiProduct | ApiFinalProduct;
-  currentOutputSemiProduct: ApiSemiProduct | ApiFinalProduct;
-  currentOutputSemiProductNameForm = new FormControl(null);
+  currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
+  currentOutputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
+  currentOutputStockUnitNameForm = new FormControl(null);
 
   // Stock orders
   availableStockOrders: ApiStockOrderSelectable[] = [];
@@ -158,6 +159,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private procActionController: ProcessingActionControllerService,
     private facilityController: FacilityControllerService,
     private semiProductsController: SemiProductControllerService,
+    private productController: ProductControllerService,
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
@@ -294,6 +296,26 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.actionType !== 'TRANSFER';
   }
 
+  get outputStockUnitLabel() {
+
+    switch (this.actionType) {
+      case 'FINAL_PROCESSING':
+        return $localize`:@@productLabelStockProcessingOrderDetail.textinput.finalProductType.label:Final product type`;
+
+      case 'SHIPMENT':
+      case 'TRANSFER':
+        if (this.prAction.finalProductAction) {
+          return $localize`:@@productLabelStockProcessingOrderDetail.textinput.finalProductType.label:Final product type`;
+        }
+        else {
+          return $localize`:@@productLabelStockProcessingOrderDetail.textinput.semiProductType.label:Semi-product type`;
+        }
+
+      default:
+        return $localize`:@@productLabelStockProcessingOrderDetail.textinput.semiProductType.label:Semi-product type`;
+    }
+  }
+
   get inputQuantityLabel() {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ 
       this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' 
@@ -372,8 +394,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputSemiProduct.measurementUnitType.weight;
-    const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputSemiProduct.measurementUnitType.weight;
+    const inputQuantityInKg: number = Number(this.form.get('outputQuantity').value).valueOf() / this.currentOutputStockUnitProduct.measurementUnitType.weight;
+    const outputQuantityInKg: number = Number(this.outputStockOrderForm.get('totalQuantity').value).valueOf() / this.currentInputStockUnitProduct.measurementUnitType.weight;
     return inputQuantityInKg && outputQuantityInKg && (outputQuantityInKg > inputQuantityInKg);
   }
 
@@ -840,7 +862,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               id: outputStockOrder.id,
               internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
               creatorId: this.creatorId,
-              semiProduct: this.currentOutputSemiProduct,
+              semiProduct: this.currentOutputStockUnitProduct,
               facility: this.outputFacilityForm.value,
               totalQuantity: outputStockOrder.totalQuantity,
               fulfilledQuantity: outputStockOrder.totalQuantity,
@@ -873,7 +895,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           ...outputStockOrder,
           ...sharedFields,
           creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
-          semiProduct: this.currentOutputSemiProduct,
+          semiProduct: this.currentOutputStockUnitProduct,
           facility: this.outputFacilityForm.value,
           totalQuantity: parseFloat(this.totalQuantity),
           fulfilledQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
@@ -1066,7 +1088,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const rightSideForms = [
       this.outputFacilityForm,
       this.outputStockOrderForm,
-      this.currentOutputSemiProductNameForm,
+      this.currentOutputStockUnitNameForm,
       this.form,
       this.outputStockOrders,
       this.requiredProcessingEvidenceArray,
@@ -1091,20 +1113,69 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async defineInputAndOutputSemiProduct(event: ApiProcessingAction) {
 
-    // If we have defined input semi-product, get its definition
+    let inputSemiProduct: ApiSemiProduct;
+    let outputSemiProduct: ApiSemiProduct;
+
+    let inputFinalProduct: ApiFinalProduct;
+    let outputFinalProduct: ApiFinalProduct;
+
+    // If input semi-product is set, get its definition
     if (event.inputSemiProduct && event.inputSemiProduct.id) {
       const resInSP = await this.semiProductsController.getSemiProductUsingGET(event.inputSemiProduct.id).pipe(take(1)).toPromise();
-      if (resInSP && resInSP.status === 'OK') {
-        this.currentInputSemiProduct = resInSP.data;
-      }
+      inputSemiProduct = resInSP && resInSP.status === 'OK' ? resInSP.data : null;
     }
 
+    // If we have defined input semi-product, get its definition
     if (event.outputSemiProduct && event.outputSemiProduct.id) {
       const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
-      if (resOutSP && resOutSP.status === 'OK') {
-        this.currentOutputSemiProduct = resOutSP.data;
-        this.currentOutputSemiProductNameForm.setValue(this.currentOutputSemiProduct.name);
-      }
+      outputSemiProduct = resOutSP && resOutSP.status === 'OK' ? resOutSP.data : null;
+    }
+
+    // If input final product is provided get its definition
+    if (event.inputFinalProduct && event.inputFinalProduct.id) {
+      const resInFP = await this.productController
+        .getFinalProductUsingGET(event.inputFinalProduct.product.id, event.inputFinalProduct.id).pipe(take(1)).toPromise();
+      inputFinalProduct = resInFP && resInFP.status === 'OK' ? resInFP.data : null;
+    }
+
+    // If output final product is provided get its definition
+    if (event.outputFinalProduct && event.outputFinalProduct.id) {
+      const resOutFP = await this.productController
+        .getFinalProductUsingGET(event.outputFinalProduct.product.id, event.outputFinalProduct.id).pipe(take(1)).toPromise();
+      outputFinalProduct = resOutFP && resOutFP.status === 'OK' ? resOutFP.data : null;
+    }
+
+    switch (event.type) {
+      case ApiProcessingAction.TypeEnum.PROCESSING:
+
+        this.currentInputStockUnitProduct = inputSemiProduct;
+        this.currentOutputStockUnitProduct = outputSemiProduct;
+        this.currentOutputStockUnitNameForm.setValue(outputSemiProduct ? outputSemiProduct.name : null);
+        break;
+
+      case ApiProcessingAction.TypeEnum.FINALPROCESSING:
+
+        this.currentInputStockUnitProduct = inputSemiProduct;
+        this.currentOutputStockUnitProduct = outputFinalProduct;
+        this.currentOutputStockUnitNameForm.setValue(outputFinalProduct ? outputFinalProduct.name : null);
+        break;
+
+      case ApiProcessingAction.TypeEnum.TRANSFER:
+      case ApiProcessingAction.TypeEnum.SHIPMENT:
+
+        // Is it a final product only involvement
+        if (event.finalProductAction) {
+
+          this.currentInputStockUnitProduct = inputFinalProduct;
+          this.currentOutputStockUnitProduct = outputFinalProduct;
+          this.currentOutputStockUnitNameForm.setValue(outputFinalProduct ? outputFinalProduct.name : null);
+
+        } else {
+
+          this.currentInputStockUnitProduct = inputSemiProduct;
+          this.currentOutputStockUnitProduct = outputSemiProduct;
+          this.currentOutputStockUnitNameForm.setValue(outputSemiProduct ? outputSemiProduct.name : null);
+        }
     }
   }
 
@@ -1222,15 +1293,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (event) {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
-      if (this.currentOutputSemiProduct) {
-        this.currentOutputSemiProductNameForm.setValue(this.currentOutputSemiProduct.name);
+      if (this.currentOutputStockUnitProduct) {
+        this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
       }
     }
   }
 
   async selectedSemiProductChange(event) {
 
-    this.currentInputSemiProduct = event;
+    this.currentInputStockUnitProduct = event;
     const res = await this.stockOrderController
       .getAvailableStockForSemiProductInFacilityUsingGET(this.inputFacilityForm.value.id, event.id).pipe(take(1)).toPromise();
 
@@ -1477,7 +1548,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.checkboxUseInputFrom.setValue(false);
     this.checkboxClipOrderFrom.setValue(false);
 
-    this.currentOutputSemiProductNameForm.setValue(null);
+    this.currentOutputStockUnitNameForm.setValue(null);
   }
 
   private clearInputFacilityForm() {
