@@ -97,7 +97,9 @@
                             <div class="name-sector">{{farmerForm.get('name').value}} {{farmerForm.get('surname').value}}</div>
                             <div class="location-sector">{{farmerForm.get('location.address.village').value}}, {{farmerForm.get('location.address.cell').value}}, {{farmerForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
-                                <qr-code [value]="farmerForm.get('id').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
+                                <qr-code [value]="farmerForm.get('type') + '_' + farmerForm.get('id').value"
+                                         [foreground]="theme.primary"
+                                         [size]="qrCodeSize"></qr-code>
                             </div>
                             <div style="flex: 1 1 0"></div>
                             <div class="trademark-title">
