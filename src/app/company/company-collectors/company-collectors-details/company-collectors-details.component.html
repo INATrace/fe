@@ -190,20 +190,17 @@
                                      i18n-addText="@@collectorDetail.list-editor.cooperatives.addText"
                                      [invalid]="submitted && collectorForm.get('cooperatives')?.invalid">
                             <list-editor-items>
-                                <div cdkDropList
-                                     (cdkDropListDropped)="producersListManager.onDrop($event)">
-                                    <div *ngFor="let item of collectorForm.get('cooperatives').controls; let i=index;">
-                                        <app-producers-item *ngIf="codebookCoop"
-                                                            [codebookCoop]="codebookCoop"
-                                                            [assocCoop]="assocCoop"
-                                                            title=null
-                                                            [formControlInput]="item"
-                                                            [type]="'COLLECTOR'"
-                                                            [isOpen]="producersListManager.isOpen(i)"
-                                                            [listEditorManager]="this.producersListManager"
-                                                            [listEditorManagerPosition]="i">
-                                        </app-producers-item>
-                                    </div>
+                                <div *ngFor="let item of collectorForm.get('cooperatives').controls; let i=index;">
+                                    <app-producers-item *ngIf="codebookCoop"
+                                                        [codebookCoop]="codebookCoop"
+                                                        [assocCoop]="assocCoop"
+                                                        title=null
+                                                        [formControlInput]="item"
+                                                        [type]="'COLLECTOR'"
+                                                        [isOpen]="producersListManager.isOpen(i)"
+                                                        [listEditorManager]="this.producersListManager"
+                                                        [listEditorManagerPosition]="i">
+                                    </app-producers-item>
                                 </div>
                             </list-editor-items>
                             <list-editor-errors>

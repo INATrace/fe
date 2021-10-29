@@ -15,19 +15,17 @@ import { ApiBankInformation } from '../../../../api/model/apiBankInformation';
 import { ApiFarmInformation } from '../../../../api/model/apiFarmInformation';
 import { ApiLocation } from '../../../../api/model/apiLocation';
 import { ApiAddress } from '../../../../api/model/apiAddress';
-import {debounceTime, delay, first, startWith, take} from 'rxjs/operators';
+import { debounceTime, first, startWith, take } from 'rxjs/operators';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 import { ThemeService } from '../../../shared-services/theme.service';
 import { environment } from '../../../../environments/environment';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiCompany } from '../../../../api/model/apiCompany';
-import { StockOrderService } from '../../../../api-chain/api/stockOrder.service';
-import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
-import {BehaviorSubject, Subscription} from 'rxjs';
-import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -52,12 +50,8 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   openBalanceOnly = false;
   sortPay = null;
-  sortPO = null;
   purchaseOrders = [];
   payments = [];
-  openBalanceForm: FormControl = new FormControl(0);
-  totalPaidFarmerForm: FormControl = new FormControl(0);
-  totalBroughtFarmerForm: FormControl = new FormControl(0);
 
   producersListManager;
   codebookAssoc;
@@ -81,7 +75,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   showedPaymentOrders = 0;
   allPaymentOrders = 0;
   selectedPayments: ApiStockOrder[];
-  //
 
   codebookStatus = EnumSifrant.fromObject(this.roles);
 
@@ -91,7 +84,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   showedPurchaseOrders = 0;
   allPurchaseOrders = 0;
   selectedOrders: ApiStockOrder[];
-  //
 
   sortOptionsPay = [
     {
@@ -167,8 +159,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
-      private chainStockOrderService: StockOrderService,
-      private chainPaymentsService: PaymentsService,
       public theme: ThemeService
   ) { }
 
@@ -220,15 +210,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
         }
-        this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
-        this.listPayments(this.sortPay);
         break;
       default:
         throw Error('Wrong action!');
     }
 
-    this.listOfOrgProducer();
-    this.listOfOrgAssociation();
+    this.listOfOrgProducer().then();
+    this.listOfOrgAssociation().then();
   }
 
   initValueChangeListeners() {
@@ -317,29 +305,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
 
     return data;
-  }
-
-  async listPurchaseOrders(openBalance, sort) {
-    let openB = 0;
-    let totalBrought = 0;
-    const res = await this.chainStockOrderService.listPurchaseOrderForUserCustomer(this.farmer.id.toString(), openBalance, sort).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) { this.purchaseOrders = res.data.items; }
-    for (const item of this.purchaseOrders) {
-      if (item.balance) { openB += item.balance; }
-      if (item.totalQuantity) { totalBrought += item.totalQuantity; }
-    }
-    this.openBalanceForm.setValue(openB);
-    this.totalBroughtFarmerForm.setValue(totalBrought);
-  }
-
-  async listPayments(sort) {
-    let totalF = 0;
-    const res = await this.chainPaymentsService.listPaymentsForRecipientUserCustomer(this.farmer.id.toString(), sort).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) { this.payments = res.data.items; }
-    for (const item of this.payments) {
-      if (item.amount) { totalF += item.amount; }
-    }
-    this.totalPaidFarmerForm.setValue(totalF);
   }
 
   dismiss() {
@@ -438,21 +403,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   formatDate(productionDate) {
     if (productionDate) { return formatDateWithDots(productionDate); }
     return '';
-  }
-
-  changeSort(event, type) {
-    if (type === 'PAYMENT') {
-      this.sortPay = event.sortOrder;
-      this.listPayments(event.sortOrder);
-      return;
-    }
-    this.sortPO = event.sortOrder;
-    this.listPurchaseOrders(this.openBalanceOnly, event.sortOrder);
-  }
-
-  setOpenBalanceOnly(action) {
-    this.openBalanceOnly = action;
-    this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
   }
 
   updateAreaUnitValidators() {
