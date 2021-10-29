@@ -192,6 +192,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           this.aggregatedOrders = this.aggregateOrderItems(data.items);
         }
       }),
+      tap(() => this.refreshCBs()),
       tap(() => this.globalEventsManager.showLoading(false))
     );
   }
@@ -207,9 +208,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       {
         key: 'cb',
         name: '',
-        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
-        hide: false,
-        inactive: true
+        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0
       },
       {
         key: 'date',
@@ -438,27 +437,10 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   changeSort(event) {
     if (event.key === 'cb') {
-      this.selectAll(event.checked);
+      this.selectAllOnPage(event.checked);
       return;
     }
     this.sortingParams$.next({ sortBy: event.key, sort: event.sortOrder });
-  }
-
-  private selectAll(checked) {
-    if (checked) {
-      this.selectedOrders = [];
-      for (const item of this.currentData) {
-        this.selectedOrders.push(item);
-      }
-      this.currentData.map(item => { (item as any).selected = true; return item; });
-      this.allSelected = true;
-      this.selectedIdsChanged.emit(this.selectedOrders);
-    } else {
-      this.selectedOrders = [];
-      this.allSelected = false;
-      this.currentData.map(item => { (item as any).selected = false; return item; });
-      this.selectedIdsChanged.emit(this.selectedOrders);
-    }
   }
 
   showPagination() {
@@ -470,10 +452,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   cbSelected(order: ApiStockOrder, index: number) {
-    if (this.allSelected) {
-      this.allSelected = false;
-      this.cbCheckedAll.setValue(false);
-    }
 
     (this.currentData[index] as any).selected = !(this.currentData[index] as any).selected;
 
@@ -485,6 +463,87 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.selectedOrders.push(order);
     }
     this.selectedIdsChanged.emit(this.selectedOrders);
+
+    if (this.allSelected) {
+      this.allSelected = false;
+      this.cbCheckedAll.setValue(false);
+    } else {
+      this.refreshCBs();
+    }
+  }
+
+  private refreshCBs(){
+
+    let selectedCount = 0;
+
+    for (const item of this.currentData) {
+      for (const order of this.selectedOrders) {
+
+        if (order.id === item.id) {
+
+          (item as any).selected = true;
+          selectedCount += 1;
+
+          // Prevents having selected multiple same items
+          const replaceIndex = this.selectedOrders.indexOf(order);
+          if (replaceIndex !== -1) {
+            this.selectedOrders.splice(replaceIndex, 1);
+            this.selectedOrders.push(item);
+          }
+          break;
+        }
+
+      }
+    }
+
+    this.allSelected = selectedCount === this.showedOrders;
+    this.cbCheckedAll.setValue(this.allSelected);
+  }
+
+  private selectAllOnPage(checked) {
+
+    if (checked) {
+
+      for (const item of this.currentData) {
+
+        // Remove existing item (if exists)
+        for (const order of this.selectedOrders) {
+          if (order.id === item.id) {
+            const replaceIndex = this.selectedOrders.indexOf(order);
+            if (replaceIndex !== -1) {
+              this.selectedOrders.splice(replaceIndex, 1);
+            }
+            break;
+          }
+        }
+
+        // Select and add item
+        (item as any).selected = true;
+        this.selectedOrders.push(item);
+      }
+
+      this.allSelected = true;
+      this.selectedIdsChanged.emit(this.selectedOrders);
+
+    } else {
+
+      // Unselect and remove items (from selectedOrders)
+      for (const item of this.currentData) {
+        for (const order of this.selectedOrders) {
+          if (order.id === item.id) {
+            (item as any).selected = false;
+            const removeIndex = this.selectedOrders.indexOf(order);
+            if (removeIndex !== -1) {
+              this.selectedOrders.splice(removeIndex, 1);
+            }
+            break;
+          }
+        }
+      }
+
+      this.allSelected = false;
+      this.selectedIdsChanged.emit(this.selectedOrders);
+    }
   }
 
   private clearCBs() {
