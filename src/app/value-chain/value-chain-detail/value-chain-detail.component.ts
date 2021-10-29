@@ -12,7 +12,7 @@ import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme,
+  ApiGradeAbbreviationValidationScheme, ApiProcessingEvidenceFieldValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme
 } from '../../settings/type-detail-modal/validation';
@@ -22,6 +22,7 @@ import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseEntity';
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
+import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -40,6 +41,7 @@ export class ValueChainDetailComponent implements OnInit {
   measureUnitTypeListManager: ListEditorManager<ApiMeasureUnitType>;
   gradeAbbreviationTypeListManager: ListEditorManager<ApiGradeAbbreviation>;
   processingEvidenceTypeListManger: ListEditorManager<ApiProcessingEvidenceType>;
+  processingEvidenceFieldListManger: ListEditorManager<ApiProcessingEvidenceField>;
   semiProductsListManager: ListEditorManager<ApiSemiProduct>;
 
   constructor(
@@ -101,6 +103,19 @@ export class ValueChainDetailComponent implements OnInit {
     };
   }
 
+  // Processing evidence field form factory methods (used when creating ListEditorManager)
+  static ApiVCProcEvidenceFieldCreateEmptyObject(): ApiProcessingEvidenceField {
+    const obj = ApiProcessingEvidenceField.formMetadata();
+    return defaultEmptyObject(obj) as ApiProcessingEvidenceField;
+  }
+
+  static ApiVCProcEvidenceFieldEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceFieldCreateEmptyObject(),
+        ApiProcessingEvidenceFieldValidationScheme.validators);
+    };
+  }
+
   // Semi-products form factory methods (used when creating ListEditorManager)
   static ApiVCSemiProductsCreateEmptyObject(): ApiSemiProduct {
     const obj = ApiSemiProduct.formMetadata();
@@ -137,6 +152,10 @@ export class ValueChainDetailComponent implements OnInit {
 
   get vcProcEvidenceTypes(): FormControl[] {
     return (this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray).controls as FormControl[];
+  }
+
+  get vcProcEvidenceFields(): FormControl[] {
+    return (this.valueChainDetailForm.get('processingEvidenceFields') as FormArray).controls as FormControl[];
   }
 
   get vcSemiProducts(): FormControl[] {
@@ -258,6 +277,11 @@ export class ValueChainDetailComponent implements OnInit {
       this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray,
       ValueChainDetailComponent.ApiVCProcEvidenceTypeEmptyObjectFormFactory(),
       ApiProcessingEvidenceTypeValidationScheme);
+
+    this.processingEvidenceFieldListManger = new ListEditorManager<ApiProcessingEvidenceType>(
+      this.valueChainDetailForm.get('processingEvidenceFields') as FormArray,
+      ValueChainDetailComponent.ApiVCProcEvidenceFieldEmptyObjectFormFactory(),
+      ApiProcessingEvidenceFieldValidationScheme);
 
     this.semiProductsListManager = new ListEditorManager<ApiSemiProduct>(
       this.valueChainDetailForm.get('semiProducts') as FormArray,
