@@ -21,6 +21,7 @@
 import { ApiFacilityType } from './apiFacilityType';
 import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
 import { ApiSemiProduct } from './apiSemiProduct';
 
@@ -51,6 +52,10 @@ export interface ApiValueChain {
      * name of the value chain
      */
     name?: string;
+    /**
+     * list of supported processing evidence fields
+     */
+    processingEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
      * list of supported processing evidence types
      */
@@ -97,6 +102,10 @@ export namespace ApiValueChain {
          * name of the value chain
          */
         name = 'name',
+        /**
+         * list of supported processing evidence fields
+         */
+        processingEvidenceFields = 'processingEvidenceFields',
         /**
          * list of supported processing evidence types
          */
@@ -195,6 +204,18 @@ export namespace ApiValueChain {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProcessingEvidenceField.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'processingEvidenceFields',
+                    classname: 'ApiValueChain',
+                    dataType: 'Array&lt;ApiProcessingEvidenceField&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceField'
+                },
+                {
                     metadata: ApiProcessingEvidenceType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -244,6 +265,8 @@ export namespace ApiValueChain {
                 ],
                 name: [
                 ],
+                processingEvidenceFields: [
+                ],
                 processingEvidenceTypes: [
                 ],
                 semiProducts: [
@@ -273,6 +296,9 @@ export namespace ApiValueChain {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               processingEvidenceFields: {
   //                   validators: []
   //               },
   //               processingEvidenceTypes: {

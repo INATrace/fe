@@ -17980,6 +17980,13 @@
             "description": "name of the value chain",
             "type": "string"
           },
+          "processingEvidenceFields": {
+            "description": "list of supported processing evidence fields",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+            },
+            "type": "array"
+          },
           "processingEvidenceTypes": {
             "description": "list of supported processing evidence types",
             "items": {
