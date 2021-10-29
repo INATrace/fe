@@ -167,7 +167,7 @@ export class OrderHistoryComponent implements OnInit {
     if (!stockOrder) {
       return;
     }
-    return stockOrder.id;
+    return 'STOCK_ORDER_' + stockOrder.id;
   }
 
   copyToClipboard() {
