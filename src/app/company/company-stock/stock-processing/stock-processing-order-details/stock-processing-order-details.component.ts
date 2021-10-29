@@ -727,6 +727,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async saveProcessingOrder() {
 
+    // TODO: remove this (it's temporary)
+    if (this.actionType === 'FINAL_PROCESSING' || this.prAction.finalProductAction) {
+      return;
+    }
+
     if (this.saveProcessingOrderInProgress) {
       return;
     }
