@@ -5320,7 +5320,7 @@
         "tags": [
           "stock-order-controller"
         ],
-        "operationId": "getAvailableStockForSemiProductInFacilityUsingGET",
+        "operationId": "getAvailableStockForStockUnitInFacilityUsingGET",
         "summary": "Get a paginated list of stock orders for provided facility ID and semi-product or final product ID."
       }
     },

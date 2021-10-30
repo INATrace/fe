@@ -141,11 +141,11 @@ export namespace DeleteStockOrderUsingDELETE {
 }
 
 /**
- * Namespace for getAvailableStockForSemiProductInFacilityUsingGET.
+ * Namespace for getAvailableStockForStockUnitInFacilityUsingGET.
  */
-export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
+export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
     /**
-     * Parameter map for getAvailableStockForSemiProductInFacilityUsingGET.
+     * Parameter map for getAvailableStockForStockUnitInFacilityUsingGET.
      */
     export interface PartialParamMap {
       /**
@@ -199,7 +199,7 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getAvailableStockForSemiProductInFacilityUsingGET.
+     * Enumeration of all parameters for getAvailableStockForStockUnitInFacilityUsingGET.
      */
     export enum Parameters {
       /**
@@ -253,10 +253,10 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getAvailableStockForSemiProductInFacilityUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getAvailableStockForStockUnitInFacilityUsingGET
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       facilityId: [
               ['required', Validators.required],
       ],
@@ -1461,23 +1461,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getAvailableStockForSemiProductInFacilityUsingGETByMap(
-    map: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
+    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getAvailableStockForSemiProductInFacilityUsingGETByMap(
-    map: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
+    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getAvailableStockForSemiProductInFacilityUsingGETByMap(
-    map: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
+    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getAvailableStockForSemiProductInFacilityUsingGETByMap(
-    map: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
+    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getAvailableStockForSemiProductInFacilityUsingGET(
+    return this.getAvailableStockForStockUnitInFacilityUsingGET(
       map.facilityId,
       map.requestType,
       map.limit,
@@ -1514,12 +1514,12 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
-            throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForSemiProductInFacilityUsingGET.');
+            throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForStockUnitInFacilityUsingGET.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1588,7 +1588,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableStockForSemiProductInFacilityUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableStockForStockUnitInFacilityUsingGET')));
         }
         return handle;
     }
