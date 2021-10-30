@@ -214,14 +214,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return !this.inputFacility || this.inputFacility.company?.id !== this.companyId;
   }
 
-  get nonOutputSemiProductsInputSemiProductsLength() {
+  get nonOutputStockOrdersInputStockOrdersLength() {
 
     if (!this.outputStockOrderForm) { return 0; }
     if (!this.update) { return this.availableStockOrders.length; }
 
     const allSet = new Set(this.availableStockOrders.map(x => x.id));
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'TRANSFER') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'TRANSFER') {
       this.editableProcessingOrder.targetStockOrders.forEach(x => {
         allSet.delete(x.id);
       });
@@ -321,7 +321,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showRemainingForm() {
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       return !!this.underlyingMeasurementUnit;
     }
     return this.actionType === 'SHIPMENT';
@@ -331,10 +331,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.prAction) { return null; }
 
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
 
-      const inputMeasurementUnit = this.prAction.inputSemiProduct.measurementUnitType;
-      const outputMeasurementUnit = this.prAction.outputSemiProduct.measurementUnitType;
+      const inputMeasurementUnit = this.currentInputStockUnitProduct?.measurementUnitType;
+      const outputMeasurementUnit = this.currentOutputStockUnitProduct?.measurementUnitType;
 
       if (inputMeasurementUnit.id === outputMeasurementUnit.id) { return inputMeasurementUnit; }
 
@@ -364,7 +364,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get showTotalQuantityForm() {
 
     if (this.actionType === 'SHIPMENT') { return true; }
-    return this.actionType === 'PROCESSING';
+    return this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING';
   }
 
   get invalidOutputQuantity() {
@@ -391,7 +391,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showUseInput() {
-    return this.actionType === 'PROCESSING' && this.underlyingMeasurementUnit;
+    return (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && this.underlyingMeasurementUnit;
   }
 
   get showClipOrder() {
@@ -405,7 +405,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get sacNetWLabel() {
     if (this.prAction) {
       const unit = this.underlyingMeasurementUnit ?
-        this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.measurementUnitType.label;
+        this.underlyingMeasurementUnit.label : this.currentOutputStockUnitProduct?.measurementUnitType.label;
 
       return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.prAction.maxOutputWeight } ${ unit })`;
     }
@@ -635,7 +635,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
 
       // Handle the update initialization (the common code) for order where processing action type is 'PROCESSING' or 'TRANSFER'
-      if (actionType === 'PROCESSING' || actionType === 'TRANSFER') {
+      if (actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING' || actionType === 'TRANSFER') {
 
         this.initializeOutputStockOrdersForEdit();
 
@@ -1467,7 +1467,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.controls.pricePerUnit.updateValueAndValidity();
 
     // Set validator on total quantity
-    if (this.actionType === 'PROCESSING' && !this.prAction.repackedOutputs) {
+    if ((this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && !this.prAction.repackedOutputs) {
       setTimeout(() => this.outputStockOrderForm.get('totalQuantity').setValidators([Validators.required]));
     }
 
@@ -1590,7 +1590,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (setValue) {
-      if (this.actionType === 'PROCESSING') {
+      if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
         this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
         if (this.isUsingInput) {
           this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
@@ -1643,7 +1643,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     (this.outputStockOrders as FormArray).clear();
 
-    if (this.prAction && this.actionType === 'PROCESSING') {
+    if (this.prAction && (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING')) {
 
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
 
@@ -1663,7 +1663,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private initializeOutputStockOrdersForEdit() {
 
-    if (this.prAction && this.actionType === 'PROCESSING') {
+    if (this.prAction && (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING')) {
+
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
         for (const stockOrder of this.editableProcessingOrder.targetStockOrders) {
 
@@ -1756,7 +1757,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.showLeftSide) { return; }
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'SHIPMENT') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT') {
       this.processingOrderInputTransactions.splice(i, 1);
       this.calcInputQuantity(true);
       return;
@@ -1771,7 +1772,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   setRemaining() {
 
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
     }
     if (this.actionType === 'SHIPMENT') {

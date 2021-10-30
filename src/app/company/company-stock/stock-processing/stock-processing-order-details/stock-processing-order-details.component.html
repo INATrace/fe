@@ -175,7 +175,7 @@
                 </div>
 
                 <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputSemiProductsInputSemiProductsLength > 0">
+                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength > 0">
                   <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
                   <div class="af-c12" style="margin-top: -1rem;">
                     <checkbox-input (onClick)="selectAll()" [form]="cbSelectAllForm" [disabled]="disabledLeftFields" style="margin-bottom: 1rem; margin-top: -1rem;">
@@ -186,7 +186,7 @@
                   </div>
                 </div>
 
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputSemiProductsInputSemiProductsLength == 0">
+                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength == 0">
                   <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
                 </div>
 
