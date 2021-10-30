@@ -48,10 +48,8 @@ const routes: Routes = [
     }
   },
   { path: ':id/knowledge-blog', loadChildren: () => import('./knowledge-blog/knowledge-block.module').then(m => m.KnowledgeBlockModule) },
-  { path: ':id/orders', loadChildren: () => import('./product-orders/product-orders.module').then(m => m.ProductOrdersModule) },
   { path: ':id/stakeholders', loadChildren: () => import('./product-stakeholders/product-stakeholders.module').then(m => m.ProductStakeholdersModule)},
   { path: ':id/final-products', loadChildren: () => import('./product-final-product/product-final-product.module').then(m => m.ProductFinalProductModule)},
-  { path: ':id/stock', loadChildren: () => import('./product-stock/product-stock.module').then(m => m.ProductStockModule) },
   {
     path: ':id/labels/:labelId',
     component: LabelRedirectToProductPageComponent   // NO
