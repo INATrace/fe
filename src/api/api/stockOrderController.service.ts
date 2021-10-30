@@ -1455,7 +1455,7 @@ export class StockOrderControllerService {
 
 
   /**
-   * Get a paginated list of stock orders for provided semi product ID and facility ID. by map.
+   * Get a paginated list of stock orders for provided facility ID and semi-product or final product ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1497,7 +1497,7 @@ export class StockOrderControllerService {
 
 
     /**
-     * Get a paginated list of stock orders for provided semi product ID and facility ID.
+     * Get a paginated list of stock orders for provided facility ID and semi-product or final product ID.
      * 
      * @param facilityId Facility ID
      * @param requestType Only count, only fetch, or return both values (if null)
