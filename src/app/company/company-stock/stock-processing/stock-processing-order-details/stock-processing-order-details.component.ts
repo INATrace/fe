@@ -18,7 +18,7 @@ import { ProcessingActionType } from '../../../../../shared/types';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
 import {
-  GetAvailableStockForSemiProductInFacilityUsingGET,
+  GetAvailableStockForStockUnitInFacilityUsingGET,
   StockOrderControllerService
 } from '../../../../../api/api/stockOrderController.service';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
@@ -29,7 +29,6 @@ import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
-import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
 import { Location } from '@angular/common';
@@ -101,9 +100,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   outputFacilityForm = new FormControl(null, Validators.required);
   outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService;
 
-  // Semi-products and Final products
-  filterSemiProduct = new FormControl(null);
-  semiProductsInFacility: FacilitySemiProductsCodebookService = null;
+  // Input and output stock units (Semi-products and Final products)
   currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
   currentOutputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
   currentOutputStockUnitNameForm = new FormControl(null);
@@ -241,10 +238,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return !!this.checkboxClipOrderFrom.value;
   }
 
-  get isSemiProductDefined() {
-    return !(this.actionType === 'TRANSFER' && !(this.prAction && this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id));
-  }
-
   get totalQuantity() {
     return this.outputStockOrderForm.getRawValue().totalQuantity;
   }
@@ -317,19 +310,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get inputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ 
-      this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' 
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
+      this.currentInputStockUnitProduct ? this.codebookTranslations.translate(this.currentInputStockUnitProduct.measurementUnitType, 'label') : '' 
     }`;
   }
 
   get outputQuantityLabel() {
-    if (this.actionType === 'SHIPMENT') {
-      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' }`;
-    } else {
-      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.measurementUnitType, 'label') : '' }`;
-    }
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
+      this.currentOutputStockUnitProduct ? this.codebookTranslations.translate(this.currentOutputStockUnitProduct.measurementUnitType, 'label') : '' }`;
   }
 
   get showRemainingForm() {
@@ -377,7 +365,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'SHIPMENT') { return true; }
     return this.actionType === 'PROCESSING';
-
   }
 
   get invalidOutputQuantity() {
@@ -1067,7 +1054,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     const leftSideForms = [
       this.inputFacilityForm,
-      this.filterSemiProduct,
       this.fromFilterDate,
       this.toFilterDate,
       this.cbSelectAllForm
@@ -1257,24 +1243,27 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.clearInputFacilityForm();
       if (clearOutputForm) { this.clearOutputForm(); }
       this.currentInputFacility = null;
-      this.semiProductsInFacility = null;
       return;
     }
 
     if (event) {
       this.currentInputFacility = event;
-      if (this.isSemiProductDefined) {
 
-        const res = await this.stockOrderController
-          .getAvailableStockForSemiProductInFacilityUsingGET(event.id, this.processingActionForm.value.inputSemiProduct.id)
-          .pipe(take(1)).toPromise();
+      const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+        limit: 500,
+        offset: 0,
+        facilityId: event.id,
+        semiProductId: this.prAction.inputSemiProduct?.id,
+        finalProductId: this.prAction.inputFinalProduct?.id
+      };
 
-        if (res && res.status === 'OK' && res.data) {
-          this.availableStockOrders = res.data.items;
-          this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
-        }
-      } else {
-        this.semiProductsInFacility = new FacilitySemiProductsCodebookService(this.facilityController, event.id, this.codebookTranslations);
+      const res = await this.stockOrderController
+        .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams)
+        .pipe(take(1)).toPromise();
+
+      if (res && res.status === 'OK' && res.data) {
+        this.availableStockOrders = res.data.items;
+        this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
       }
     }
 
@@ -1300,21 +1289,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (event) {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
+
       if (this.currentOutputStockUnitProduct) {
-        this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
+
+        // If defined semi-product set the semi-product name (if defined final product, set the final product and product name)
+        if (this.prAction.outputSemiProduct?.id) {
+          this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
+
+        } else if (this.prAction.outputFinalProduct?.id) {
+
+          const outputFinalProduct = this.prAction.outputFinalProduct as ApiFinalProduct;
+          this.currentOutputStockUnitNameForm.setValue(`${ outputFinalProduct.name } (${ outputFinalProduct.product.name })`);
+        }
       }
-    }
-  }
-
-  async selectedSemiProductChange(event) {
-
-    this.currentInputStockUnitProduct = event;
-    const res = await this.stockOrderController
-      .getAvailableStockForSemiProductInFacilityUsingGET(this.inputFacilityForm.value.id, event.id).pipe(take(1)).toPromise();
-
-    if (res && res.status === 'OK' && res.data) {
-      this.availableStockOrders = res.data.items;
-      this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
     }
   }
 
@@ -1703,37 +1690,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private prefillOutputFacility() {
 
-    // TODO: complete the implementation
-    const prefillOutputFacility = false;
-
-    // if (this.prAction && this.prAction.requiredFields) {
-    //   for (const item of this.prAction.requiredFields) {
-    //     if (item.label === 'PREFILL_OUTPUT_FACILITY') {
-    //       if (this.inputFacilityForm && this.inputFacilityForm.value) {
-    //         this.subs.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-    //           if (val) {
-    //             for (const item of val) {
-    //               if (item._id === this.inputFacilityForm.value._id && !this.update) {
-    //                 this.outputFacilityForm.setValue(this.inputFacilityForm.value);
-    //                 prefillOutputFacility = true;
-    //                 break;
-    //               }
-    //             }
-    //           }
-    //         }));
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
-
-    if (!prefillOutputFacility) {
-      this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-        if (val && val.length === 1 && !this.update) {
-          this.outputFacilityForm.setValue(val[0]);
-        }
-      }));
-    }
+    this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+      if (val && val.length === 1 && !this.update) {
+        this.outputFacilityForm.setValue(val[0]);
+      }
+    }));
   }
 
   async dateSearch() {
@@ -1744,9 +1705,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (!this.currentInputFacility) { return; }
 
     // Prepare initial request params
-    const requestParams: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap = {
+    const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+      limit: 500,
+      offset: 0,
       facilityId: this.currentInputFacility.id,
-      semiProductId: this.processingActionForm.value.inputSemiProduct.id,
+      semiProductId: this.prAction.inputSemiProduct?.id,
+      finalProductId: this.prAction.inputFinalProduct?.id,
       isWomenShare: this.womensOnlyStatus.value
     };
 
@@ -1768,7 +1732,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Get the available stock in the provided facility for the provided semi-product
     const res = await this.stockOrderController
-      .getAvailableStockForSemiProductInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
+      .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
       this.availableStockOrders = res.data.items;
     }
