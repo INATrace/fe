@@ -2503,6 +2503,16 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "Search by representative of farmer id",
+            "in": "query",
+            "name": "representativeOfRecepientUserCustomerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -4548,6 +4558,16 @@
             "description": "Farmer (UserCustomer) ID",
             "in": "query",
             "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Representative of farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "representativeOfProducerUserCustomerId",
             "required": false,
             "schema": {
               "format": "int64",
