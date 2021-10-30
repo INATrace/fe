@@ -153,10 +153,6 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
        */
       facilityId: number;
       /**
-       * SemiProduct ID
-       */
-      semiProductId: number;
-      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType?: 'COUNT' | 'FETCH';
@@ -176,6 +172,14 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
+      /**
+       * Semi-product ID
+       */
+      semiProductId?: number;
+      /**
+       * Final product ID
+       */
+      finalProductId?: number;
       /**
        * Is women share
        */
@@ -203,10 +207,6 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
        */
       facilityId = 'facilityId',
       /**
-       * SemiProduct ID
-       */
-      semiProductId = 'semiProductId',
-      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType = 'requestType',
@@ -226,6 +226,14 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort = 'sort',
+      /**
+       * Semi-product ID
+       */
+      semiProductId = 'semiProductId',
+      /**
+       * Final product ID
+       */
+      finalProductId = 'finalProductId',
       /**
        * Is women share
        */
@@ -252,9 +260,6 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
       facilityId: [
               ['required', Validators.required],
       ],
-      semiProductId: [
-              ['required', Validators.required],
-      ],
       requestType: [
       ],
       limit: [
@@ -264,6 +269,10 @@ export namespace GetAvailableStockForSemiProductInFacilityUsingGET {
       sortBy: [
       ],
       sort: [
+      ],
+      semiProductId: [
+      ],
+      finalProductId: [
       ],
       isWomenShare: [
       ],
@@ -1470,12 +1479,13 @@ export class StockOrderControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getAvailableStockForSemiProductInFacilityUsingGET(
       map.facilityId,
-      map.semiProductId,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
+      map.semiProductId,
+      map.finalProductId,
       map.isWomenShare,
       map.productionDateStart,
       map.productionDateEnd,
@@ -1490,12 +1500,13 @@ export class StockOrderControllerService {
      * Get a paginated list of stock orders for provided semi product ID and facility ID.
      * 
      * @param facilityId Facility ID
-     * @param semiProductId SemiProduct ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
+     * @param semiProductId Semi-product ID
+     * @param finalProductId Final product ID
      * @param isWomenShare Is women share
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
@@ -1503,15 +1514,12 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, semiProductId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForSemiProductInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForSemiProductInFacilityUsingGET.');
-        }
-        if (semiProductId === null || semiProductId === undefined) {
-            throw new Error('Required parameter semiProductId was null or undefined when calling getAvailableStockForSemiProductInFacilityUsingGET.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1529,6 +1537,12 @@ export class StockOrderControllerService {
         }
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
+        }
+        if (semiProductId !== undefined && semiProductId !== null) {
+            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (finalProductId !== undefined && finalProductId !== null) {
+            queryParameters = queryParameters.set('finalProductId', <any>finalProductId);
         }
         if (isWomenShare !== undefined && isWomenShare !== null) {
             queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
@@ -1564,7 +1578,7 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/list/facility/${encodeURIComponent(String(facilityId))}/semi-product/${encodeURIComponent(String(semiProductId))}/available`,
+        const handle = this.httpClient.get<ApiPaginatedResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/list/facility/${encodeURIComponent(String(facilityId))}/available`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

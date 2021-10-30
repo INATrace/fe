@@ -5168,7 +5168,7 @@
         "summary": "Get a paginated list of stock orders by facility ID."
       }
     },
-    "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
+    "/api/chain/stock-order/list/facility/{facilityId}/available": {
       "get": {
         "parameters": [
           {
@@ -5240,10 +5240,20 @@
             }
           },
           {
-            "description": "SemiProduct ID",
-            "in": "path",
+            "description": "Semi-product ID",
+            "in": "query",
             "name": "semiProductId",
-            "required": true,
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
+            "required": false,
             "schema": {
               "format": "int64",
               "type": "integer"
@@ -17093,6 +17103,10 @@
           "facility": {
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
+          },
+          "finalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "Final product"
           },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
