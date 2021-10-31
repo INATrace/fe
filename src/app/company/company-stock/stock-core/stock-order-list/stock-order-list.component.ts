@@ -56,6 +56,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   farmerIdPing$ = new BehaviorSubject<number>(null);
 
   @Input()
+  representativeOfProducerUserCustomerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
 
   @Input()
@@ -133,6 +136,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.facilityId$,
       this.farmerIdPing$,
+      this.representativeOfProducerUserCustomerIdPing$,
       this.openBalanceOnly$,
       this.purchaseOrderOnly$,
       this.availableOnly$,
@@ -148,6 +152,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
              sorting,
              facilityId,
              farmerId,
+             representativeOfProducerUserCustomerId,
              isOpenBalanceOnly,
              isPurchaseOrderOnly,
              availableOnly,
@@ -162,6 +167,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           ...sorting,
           facilityId,
           farmerId,
+          representativeOfProducerUserCustomerId,
           isOpenBalanceOnly,
           isPurchaseOrderOnly,
           availableOnly,

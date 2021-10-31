@@ -542,6 +542,10 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        */
       farmerId?: number;
       /**
+       * Representative of farmer (UserCustomer) ID
+       */
+      representativeOfProducerUserCustomerId?: number;
+      /**
        * Is open balance only
        */
       isOpenBalanceOnly?: boolean;
@@ -620,6 +624,10 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        */
       farmerId = 'farmerId',
       /**
+       * Representative of farmer (UserCustomer) ID
+       */
+      representativeOfProducerUserCustomerId = 'representativeOfProducerUserCustomerId',
+      /**
        * Is open balance only
        */
       isOpenBalanceOnly = 'isOpenBalanceOnly',
@@ -684,6 +692,8 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
       sort: [
       ],
       farmerId: [
+      ],
+      representativeOfProducerUserCustomerId: [
       ],
       isOpenBalanceOnly: [
       ],
@@ -1870,6 +1880,7 @@ export class StockOrderControllerService {
       map.sortBy,
       map.sort,
       map.farmerId,
+      map.representativeOfProducerUserCustomerId,
       map.isOpenBalanceOnly,
       map.isPurchaseOrderOnly,
       map.availableOnly,
@@ -1897,6 +1908,7 @@ export class StockOrderControllerService {
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param farmerId Farmer (UserCustomer) ID
+     * @param representativeOfProducerUserCustomerId Representative of farmer (UserCustomer) ID
      * @param isOpenBalanceOnly Is open balance only
      * @param isPurchaseOrderOnly Is purchase orders only
      * @param availableOnly Available orders only
@@ -1911,10 +1923,10 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: Date, productionDateEnd?: Date, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling getStockOrderListByCompanyIdUsingGET.');
         }
@@ -1937,6 +1949,9 @@ export class StockOrderControllerService {
         }
         if (farmerId !== undefined && farmerId !== null) {
             queryParameters = queryParameters.set('farmerId', <any>farmerId);
+        }
+        if (representativeOfProducerUserCustomerId !== undefined && representativeOfProducerUserCustomerId !== null) {
+            queryParameters = queryParameters.set('representativeOfProducerUserCustomerId', <any>representativeOfProducerUserCustomerId);
         }
         if (isOpenBalanceOnly !== undefined && isOpenBalanceOnly !== null) {
             queryParameters = queryParameters.set('isOpenBalanceOnly', <any>isOpenBalanceOnly);

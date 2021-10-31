@@ -425,6 +425,10 @@ export namespace ListPaymentsByCompanyUsingGET {
        * Search by farmer id
        */
       farmerId?: number;
+      /**
+       * Search by representative of farmer id
+       */
+      representativeOfRecepientUserCustomerId?: number;
     }
 
     /**
@@ -478,7 +482,11 @@ export namespace ListPaymentsByCompanyUsingGET {
       /**
        * Search by farmer id
        */
-      farmerId = 'farmerId'
+      farmerId = 'farmerId',
+      /**
+       * Search by representative of farmer id
+       */
+      representativeOfRecepientUserCustomerId = 'representativeOfRecepientUserCustomerId'
     }
 
     /**
@@ -510,6 +518,8 @@ export namespace ListPaymentsByCompanyUsingGET {
       query: [
       ],
       farmerId: [
+      ],
+      representativeOfRecepientUserCustomerId: [
       ],
     };
 }
@@ -1359,6 +1369,7 @@ export class PaymentControllerService {
       map.productionDateEnd,
       map.query,
       map.farmerId,
+      map.representativeOfRecepientUserCustomerId,
       observe,
       reportProgress
     );
@@ -1380,13 +1391,14 @@ export class PaymentControllerService {
      * @param productionDateEnd Production date range end
      * @param query Search by farmer name
      * @param farmerId Search by farmer id
+     * @param representativeOfRecepientUserCustomerId Search by representative of farmer id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiPayment>;
-    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiPayment>>;
-    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiPayment>>;
-    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, representativeOfRecepientUserCustomerId?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiPayment>;
+    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, representativeOfRecepientUserCustomerId?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiPayment>>;
+    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, representativeOfRecepientUserCustomerId?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiPayment>>;
+    public listPaymentsByCompanyUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: Date, productionDateEnd?: Date, query?: string, farmerId?: number, representativeOfRecepientUserCustomerId?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listPaymentsByCompanyUsingGET.');
         }
@@ -1424,6 +1436,9 @@ export class PaymentControllerService {
         }
         if (farmerId !== undefined && farmerId !== null) {
             queryParameters = queryParameters.set('farmerId', <any>farmerId);
+        }
+        if (representativeOfRecepientUserCustomerId !== undefined && representativeOfRecepientUserCustomerId !== null) {
+            queryParameters = queryParameters.set('representativeOfRecepientUserCustomerId', <any>representativeOfRecepientUserCustomerId);
         }
 
         let headers = this.defaultHeaders;

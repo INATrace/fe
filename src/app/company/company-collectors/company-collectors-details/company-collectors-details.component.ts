@@ -24,6 +24,8 @@ import { ApiCompany } from '../../../../api/model/apiCompany';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-company-collectors-details',
@@ -49,9 +51,18 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   sortPO = null;
   purchaseOrders = [];
   payments = [];
-  openBalanceForm: FormControl = new FormControl(0);
-  totalPaidCollectorForm: FormControl = new FormControl(0);
-  totalBroughtCollectorForm: FormControl = new FormControl(0);
+
+  // payments table parameters
+  showedPaymentOrders = 0;
+  allPaymentOrders = 0;
+  selectedPayments: ApiStockOrder[];
+
+  representativeOfUserCustomerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
+
+  // purchase table parameters
+  showedPurchaseOrders = 0;
+  allPurchaseOrders = 0;
+  selectedOrders: ApiStockOrder[];
 
   producersListManager;
   codebookAssoc;
@@ -366,4 +377,27 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     }
     return message;
   }
+
+  selectedIdsChanged(event, type?) {
+    if (type === 'PURCHASE') {
+      this.selectedOrders = event;
+    }
+  }
+
+  onShowPO(event) {
+    this.showedPurchaseOrders = event;
+  }
+
+  onCountAllPO(event) {
+    this.allPurchaseOrders = event;
+  }
+
+  onShowPayments(event) {
+    this.showedPaymentOrders = event;
+  }
+
+  onCountAllPayments(event) {
+    this.allPaymentOrders = event;
+  }
+
 }
