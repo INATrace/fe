@@ -63,6 +63,8 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   deliveryDatesPingPayments$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
 
   isAuthRoleToSeeProcessing = true;
+  isAuthRoleToSeePayments = true;
+  isAuthRoleToEditPayments = true;
   isAuthRoleToSeeMyStock = true;
 
   // TABS
@@ -223,6 +225,9 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
         if (user.companyRole === CompanyRoleEnum.ACCOUNTANT) {
           this.isAuthRoleToSeeProcessing = false;
           this.isAuthRoleToSeeMyStock = false;
+        }
+        if (user.companyRole === CompanyRoleEnum.MANAGER) {
+          this.isAuthRoleToEditPayments = false;
         }
         return;
       }
