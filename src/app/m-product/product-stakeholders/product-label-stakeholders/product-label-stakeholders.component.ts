@@ -12,6 +12,8 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { ApiProduct } from '../../../../api/model/apiProduct';
+import { AuthService } from '../../../core/auth.service';
+import { ApiUserGet } from '../../../../api/model/apiUserGet';
 
 @Component({
   template: ''
@@ -28,13 +30,15 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   traders: ApiProductCompany[] = [];
 
   isOwner = false;
+  isSystemAdmin = false;
 
   constructor(
     protected productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) { }
 
   // TABS ////////////////
@@ -185,6 +189,12 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       this.product$.subscribe(val => { }),
     );
     this.reload();
+
+    this.authService.userProfile$.subscribe(value => {
+      if (value && value.role === ApiUserGet.RoleEnum.ADMIN) {
+        this.isSystemAdmin = true;
+      }
+    });
 
     this.setAlls();
     this.setOrganizationId();
@@ -488,7 +498,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   }
 
   editable() {
-    return this.isOwner;
+    return this.isSystemAdmin;
   }
 
 }
