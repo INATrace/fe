@@ -18,9 +18,9 @@
  */
 
 
-import { ApiActionType } from './apiActionType';
 import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
+import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
@@ -29,12 +29,12 @@ import { ApiStockOrder } from './apiStockOrder';
 
 
 export interface ApiTransaction { 
-    actionType?: ApiActionType;
     company?: ApiCompany;
     /**
      * Currency
      */
     currency?: string;
+    finalProduct?: ApiFinalProduct;
     gradeAbbreviation?: ApiGradeAbbreviation;
     /**
      * Entity id
@@ -89,12 +89,12 @@ export namespace ApiTransaction {
      * All properties of ApiTransaction.
      */
     export enum Properties {
-        actionType = 'actionType',
         company = 'company',
         /**
          * Currency
          */
         currency = 'currency',
+        finalProduct = 'finalProduct',
         gradeAbbreviation = 'gradeAbbreviation',
         /**
          * Entity id
@@ -157,18 +157,6 @@ export namespace ApiTransaction {
             classname: 'ApiTransaction',
             vars: [
                 {
-                    metadata: ApiActionType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'actionType',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiActionType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiActionType'
-                },
-                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -190,6 +178,18 @@ export namespace ApiTransaction {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'finalProduct',
+                    classname: 'ApiTransaction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     metadata: ApiGradeAbbreviation.formMetadata,
@@ -389,11 +389,11 @@ export namespace ApiTransaction {
                 },
             ],
             validators: {
-                actionType: [
-                ],
                 company: [
                 ],
                 currency: [
+                ],
+                finalProduct: [
                 ],
                 gradeAbbreviation: [
                 ],
@@ -436,13 +436,13 @@ export namespace ApiTransaction {
   // export const ApiTransactionValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               actionType: {
-  //                   validators: []
-  //               },
   //               company: {
   //                   validators: []
   //               },
   //               currency: {
+  //                   validators: []
+  //               },
+  //               finalProduct: {
   //                   validators: []
   //               },
   //               gradeAbbreviation: {
