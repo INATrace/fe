@@ -382,7 +382,8 @@
                             Quantity is too small. The sum of input transactions is {{inputQuantity}}.
                           </div>
                         </div>
-                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)" i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
+                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)"
+                             i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
                           Quantity is required
                         </div>
                       </ng-container>
