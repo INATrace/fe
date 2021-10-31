@@ -2509,6 +2509,7 @@
     "orderHistoryView.tableCol.facilityName": "Facility",
     "orderHistoryView.tableCol.product": "Product",
     "orderHistoryView.tableCol.semiProduct": "Semi-product",
+    "orderHistoryView.tableCol.finalProduct": "Final product",
     "orderHistoryView.tableCol.created": "Created",
     "orderHistoryView.tableCol.formalCreationTime": "Formal creation date",
     "orderHistoryView.tableCol.lastChange": "Last change",
