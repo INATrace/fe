@@ -11,7 +11,14 @@
       <tbody>
       <tr *ngFor="let order of orders.items; index as i">
         <td *ngIf="!sortOptions[0].hide" [attr.data-label]="sortOptions[0].name"><span>{{ order.deliveryTime | date: 'yyyy-MM-dd' }}</span></td>
-        <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>{{ order.semiProduct?.name }}</span></td>
+        <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>
+          <ng-container *ngIf="order.semiProduct">
+            {{ order.semiProduct.name }}
+          </ng-container>
+          <ng-container *ngIf="order.finalProduct">
+            {{ order.finalProduct.name }} ({{ order.finalProduct.product.name }})
+          </ng-container>
+        </span></td>
         <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ order.facility?.company?.name }}</span></td>
         <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name"><span>{{ order.consumerCompanyCustomer?.name }}</span></td>
         <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name"><span>{{ order.productOrder?.id }}</span></td>
