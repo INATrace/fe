@@ -18,7 +18,7 @@ import { ProcessingActionType } from '../../../../../shared/types';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
 import {
-  GetAvailableStockForSemiProductInFacilityUsingGET,
+  GetAvailableStockForStockUnitInFacilityUsingGET,
   StockOrderControllerService
 } from '../../../../../api/api/stockOrderController.service';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
@@ -29,7 +29,6 @@ import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
-import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrderValidationScheme, ApiTransactionValidationScheme, customValidateArrayGroup } from './validation';
 import { Location } from '@angular/common';
@@ -46,11 +45,11 @@ import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessin
 import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
 import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseApiStockOrder';
 import { ApiResponseApiProcessingOrder } from '../../../../../api/model/apiResponseApiProcessingOrder';
+import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
+import { ProductControllerService } from '../../../../../api/api/productController.service';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
-import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
-import { ProductControllerService } from '../../../../../api/api/productController.service';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -101,9 +100,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   outputFacilityForm = new FormControl(null, Validators.required);
   outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService;
 
-  // Semi-products and Final products
-  filterSemiProduct = new FormControl(null);
-  semiProductsInFacility: FacilitySemiProductsCodebookService = null;
+  // Input and output stock units (Semi-products and Final products)
   currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
   currentOutputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
   currentOutputStockUnitNameForm = new FormControl(null);
@@ -217,14 +214,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return !this.inputFacility || this.inputFacility.company?.id !== this.companyId;
   }
 
-  get nonOutputSemiProductsInputSemiProductsLength() {
+  get nonOutputStockOrdersInputStockOrdersLength() {
 
     if (!this.outputStockOrderForm) { return 0; }
     if (!this.update) { return this.availableStockOrders.length; }
 
     const allSet = new Set(this.availableStockOrders.map(x => x.id));
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'TRANSFER') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'TRANSFER') {
       this.editableProcessingOrder.targetStockOrders.forEach(x => {
         allSet.delete(x.id);
       });
@@ -239,10 +236,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get isClipOrder(): boolean {
     return !!this.checkboxClipOrderFrom.value;
-  }
-
-  get isSemiProductDefined() {
-    return !(this.actionType === 'TRANSFER' && !(this.prAction && this.prAction.inputSemiProduct && this.prAction.inputSemiProduct.id));
   }
 
   get totalQuantity() {
@@ -317,23 +310,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get inputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${ 
-      this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' 
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
+      this.currentInputStockUnitProduct ? this.codebookTranslations.translate(this.currentInputStockUnitProduct.measurementUnitType, 'label') : '' 
     }`;
   }
 
   get outputQuantityLabel() {
-    if (this.actionType === 'SHIPMENT') {
-      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.inputSemiProduct.measurementUnitType, 'label') : '' }`;
-    } else {
-      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
-        this.prAction ? this.codebookTranslations.translate(this.prAction.outputSemiProduct.measurementUnitType, 'label') : '' }`;
-    }
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in ${
+      this.currentOutputStockUnitProduct ? this.codebookTranslations.translate(this.currentOutputStockUnitProduct.measurementUnitType, 'label') : '' }`;
   }
 
   get showRemainingForm() {
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       return !!this.underlyingMeasurementUnit;
     }
     return this.actionType === 'SHIPMENT';
@@ -343,10 +331,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.prAction) { return null; }
 
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
 
-      const inputMeasurementUnit = this.prAction.inputSemiProduct.measurementUnitType;
-      const outputMeasurementUnit = this.prAction.outputSemiProduct.measurementUnitType;
+      const inputMeasurementUnit = this.currentInputStockUnitProduct?.measurementUnitType;
+      const outputMeasurementUnit = this.currentOutputStockUnitProduct?.measurementUnitType;
 
       if (inputMeasurementUnit.id === outputMeasurementUnit.id) { return inputMeasurementUnit; }
 
@@ -376,8 +364,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get showTotalQuantityForm() {
 
     if (this.actionType === 'SHIPMENT') { return true; }
-    return this.actionType === 'PROCESSING';
-
+    return this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING';
   }
 
   get invalidOutputQuantity() {
@@ -404,7 +391,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showUseInput() {
-    return this.actionType === 'PROCESSING' && this.underlyingMeasurementUnit;
+    return (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && this.underlyingMeasurementUnit;
   }
 
   get showClipOrder() {
@@ -418,7 +405,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get sacNetWLabel() {
     if (this.prAction) {
       const unit = this.underlyingMeasurementUnit ?
-        this.underlyingMeasurementUnit.label : this.prAction.outputSemiProduct.measurementUnitType.label;
+        this.underlyingMeasurementUnit.label : this.currentOutputStockUnitProduct?.measurementUnitType.label;
 
       return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.prAction.maxOutputWeight } ${ unit })`;
     }
@@ -477,7 +464,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.initInitialData().then(
-      async (resp: any) => {
+      async () => {
 
         await this.generateCompanyDetailForm();
         this.activeProcessingCodebook =
@@ -628,7 +615,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Handle the update initialization for Quote orders
       if (actionType === 'SHIPMENT') {
 
-        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
 
         const respFacility = await this.facilityController
           .getFacilityUsingGET(this.outputStockOrder.quoteFacility.id).pipe(take(1)).toPromise();
@@ -637,18 +624,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         }
       }
 
+      // Set title for Transfer orders
+      if (actionType === 'TRANSFER') {
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateTransferTitle:Update transfer action`;
+      }
+
       // Set title for Processing orders
-      if (actionType === 'PROCESSING' || actionType === 'TRANSFER') {
+      if (actionType === 'PROCESSING') {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
       }
 
-      // Set title for Transfer orders
-      if (actionType === 'TRANSFER') {
-        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+      // Set title for Final processing orders
+      if (actionType === 'FINAL_PROCESSING') {
+        this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateFinalProcessingTitle:Update final processing action`;
       }
 
       // Handle the update initialization (the common code) for order where processing action type is 'PROCESSING' or 'TRANSFER'
-      if (actionType === 'PROCESSING' || actionType === 'TRANSFER') {
+      if (actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING' || actionType === 'TRANSFER') {
 
         this.initializeOutputStockOrdersForEdit();
 
@@ -727,11 +719,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async saveProcessingOrder() {
 
-    // TODO: remove this (it's temporary)
-    if (this.actionType === 'FINAL_PROCESSING' || this.prAction.finalProductAction) {
-      return;
-    }
-
     if (this.saveProcessingOrderInProgress) {
       return;
     }
@@ -768,7 +755,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         // Create transaction for current stock order from the list of selected stock orders
         const transaction: ApiTransaction = {
-          isProcessing: this.actionType === 'PROCESSING',
+          isProcessing: this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING',
           company: { id: this.companyId },
           initiationUserId: this.creatorId,
           sourceStockOrder: stockOrder,
@@ -839,6 +826,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           ...sharedFields,
           facility: this.outputFacilityForm.value,
           semiProduct: inputStockOrder.semiProduct,
+          finalProduct: inputStockOrder.finalProduct,
           internalLotNumber: inputStockOrder.internalLotNumber,
           creatorId: this.creatorId,
           productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
@@ -856,8 +844,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     } else {
 
+      const semiProduct: ApiSemiProduct = this.prAction.outputSemiProduct?.id ? this.prAction.outputSemiProduct : null;
+      const finalProduct: ApiFinalProduct = this.prAction.outputFinalProduct?.id ? this.prAction.outputFinalProduct : null;
+
       // In this case we have multiple destination stock orders because we are repacking outputs
-      if (this.actionType === 'PROCESSING' && this.outputStockOrders.value.length > 0) {
+      if ((this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && this.outputStockOrders.value.length > 0) {
 
         for (const item of this.outputStockOrders.value) {
           const outputStockOrder = item as ApiStockOrder;
@@ -867,7 +858,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               id: outputStockOrder.id,
               internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
               creatorId: this.creatorId,
-              semiProduct: this.currentOutputStockUnitProduct,
+              semiProduct,
+              finalProduct,
               facility: this.outputFacilityForm.value,
               totalQuantity: outputStockOrder.totalQuantity,
               fulfilledQuantity: outputStockOrder.totalQuantity,
@@ -887,7 +879,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       } else {
 
-        // In this case we are dealing with ordinary processing or shipmen (Quote) order
+        // In this case we are dealing with ordinary processing (without repacking) or shipmen (Quote) order
         const outputStockOrder: ApiStockOrder = this.outputStockOrderForm.getRawValue();
 
         // Delete injected sub-forms used for easier validation
@@ -900,11 +892,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           ...outputStockOrder,
           ...sharedFields,
           creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
-          semiProduct: this.currentOutputStockUnitProduct,
+          semiProduct,
+          finalProduct,
           facility: this.outputFacilityForm.value,
           totalQuantity: parseFloat(this.totalQuantity),
-          fulfilledQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
-          availableQuantity: this.actionType === 'PROCESSING' ? parseFloat(this.totalQuantity) : 0,
+          fulfilledQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') ? parseFloat(this.totalQuantity) : 0,
+          availableQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') ? parseFloat(this.totalQuantity) : 0,
           productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
           quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
@@ -1067,7 +1060,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     const leftSideForms = [
       this.inputFacilityForm,
-      this.filterSemiProduct,
       this.fromFilterDate,
       this.toFilterDate,
       this.cbSelectAllForm
@@ -1237,8 +1229,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       if (!this.update) {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
-        if (this.prAction.type === 'TRANSFER') { this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`; }
+        if (this.prAction.type === 'SHIPMENT') { this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`; }
+        if (this.prAction.type === 'TRANSFER') { this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTransferTitle:Add transfer action`; }
         if (this.prAction.type === 'PROCESSING') { this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add processing action`; }
+        if (this.prAction.type === 'FINAL_PROCESSING') { this.title = $localize`:@@productLabelStockProcessingOrderDetail.newFinalProcessingTitle:Add final processing action`; }
       }
     } else {
       this.clearInput();
@@ -1257,24 +1251,27 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.clearInputFacilityForm();
       if (clearOutputForm) { this.clearOutputForm(); }
       this.currentInputFacility = null;
-      this.semiProductsInFacility = null;
       return;
     }
 
     if (event) {
       this.currentInputFacility = event;
-      if (this.isSemiProductDefined) {
 
-        const res = await this.stockOrderController
-          .getAvailableStockForSemiProductInFacilityUsingGET(event.id, this.processingActionForm.value.inputSemiProduct.id)
-          .pipe(take(1)).toPromise();
+      const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+        limit: 500,
+        offset: 0,
+        facilityId: event.id,
+        semiProductId: this.prAction.inputSemiProduct?.id,
+        finalProductId: this.prAction.inputFinalProduct?.id
+      };
 
-        if (res && res.status === 'OK' && res.data) {
-          this.availableStockOrders = res.data.items;
-          this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
-        }
-      } else {
-        this.semiProductsInFacility = new FacilitySemiProductsCodebookService(this.facilityController, event.id, this.codebookTranslations);
+      const res = await this.stockOrderController
+        .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams)
+        .pipe(take(1)).toPromise();
+
+      if (res && res.status === 'OK' && res.data) {
+        this.availableStockOrders = res.data.items;
+        this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
       }
     }
 
@@ -1300,21 +1297,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (event) {
       if (clearOutputForm) { this.clearOutputForm(); }
       this.calcInputQuantity(true);
+
       if (this.currentOutputStockUnitProduct) {
-        this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
+
+        // If defined semi-product set the semi-product name (if defined final product, set the final product and product name)
+        if (this.prAction.outputSemiProduct?.id) {
+          this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
+
+        } else if (this.prAction.outputFinalProduct?.id) {
+
+          const outputFinalProduct = this.prAction.outputFinalProduct as ApiFinalProduct;
+          this.currentOutputStockUnitNameForm.setValue(`${ outputFinalProduct.name } (${ outputFinalProduct.product.name })`);
+        }
       }
-    }
-  }
-
-  async selectedSemiProductChange(event) {
-
-    this.currentInputStockUnitProduct = event;
-    const res = await this.stockOrderController
-      .getAvailableStockForSemiProductInFacilityUsingGET(this.inputFacilityForm.value.id, event.id).pipe(take(1)).toPromise();
-
-    if (res && res.status === 'OK' && res.data) {
-      this.availableStockOrders = res.data.items;
-      this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
     }
   }
 
@@ -1402,18 +1397,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private select(semiProduct) {
-    const index = this.selectedInputStockOrders.indexOf(semiProduct);
+  private select(stockOrder) {
+    const index = this.selectedInputStockOrders.indexOf(stockOrder);
     if (index !== -1) {
       this.selectedInputStockOrders.splice(index, 1);
     } else {
-      this.selectedInputStockOrders.push(semiProduct);
+      this.selectedInputStockOrders.push(stockOrder);
     }
     this.calcInputQuantity(true);
     this.setWomensOnly();
   }
 
-  cbSelected(semiProduct, index: number) {
+  cbSelected(stockOrder, index: number) {
 
     if (!this.showLeftSide) { return; }
 
@@ -1449,7 +1444,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.availableStockOrders[index].selectedQuantity = 0;
     }
 
-    this.select(semiProduct);
+    this.select(stockOrder);
   }
 
   isOutputStockOrder(order: ApiStockOrder) {
@@ -1480,7 +1475,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.outputStockOrderForm.controls.pricePerUnit.updateValueAndValidity();
 
     // Set validator on total quantity
-    if (this.actionType === 'PROCESSING' && !this.prAction.repackedOutputs) {
+    if ((this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && !this.prAction.repackedOutputs) {
       setTimeout(() => this.outputStockOrderForm.get('totalQuantity').setValidators([Validators.required]));
     }
 
@@ -1603,7 +1598,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (setValue) {
-      if (this.actionType === 'PROCESSING') {
+      if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
         this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
         if (this.isUsingInput) {
           this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
@@ -1656,7 +1651,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     (this.outputStockOrders as FormArray).clear();
 
-    if (this.prAction && this.actionType === 'PROCESSING') {
+    if (this.prAction && (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING')) {
 
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
 
@@ -1676,7 +1671,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private initializeOutputStockOrdersForEdit() {
 
-    if (this.prAction && this.actionType === 'PROCESSING') {
+    if (this.prAction && (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING')) {
+
       if (this.prAction.repackedOutputs && this.prAction.maxOutputWeight > 0) {
         for (const stockOrder of this.editableProcessingOrder.targetStockOrders) {
 
@@ -1703,37 +1699,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private prefillOutputFacility() {
 
-    // TODO: complete the implementation
-    const prefillOutputFacility = false;
-
-    // if (this.prAction && this.prAction.requiredFields) {
-    //   for (const item of this.prAction.requiredFields) {
-    //     if (item.label === 'PREFILL_OUTPUT_FACILITY') {
-    //       if (this.inputFacilityForm && this.inputFacilityForm.value) {
-    //         this.subs.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-    //           if (val) {
-    //             for (const item of val) {
-    //               if (item._id === this.inputFacilityForm.value._id && !this.update) {
-    //                 this.outputFacilityForm.setValue(this.inputFacilityForm.value);
-    //                 prefillOutputFacility = true;
-    //                 break;
-    //               }
-    //             }
-    //           }
-    //         }));
-    //       }
-    //       break;
-    //     }
-    //   }
-    // }
-
-    if (!prefillOutputFacility) {
-      this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-        if (val && val.length === 1 && !this.update) {
-          this.outputFacilityForm.setValue(val[0]);
-        }
-      }));
-    }
+    this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+      if (val && val.length === 1 && !this.update) {
+        this.outputFacilityForm.setValue(val[0]);
+      }
+    }));
   }
 
   async dateSearch() {
@@ -1744,9 +1714,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (!this.currentInputFacility) { return; }
 
     // Prepare initial request params
-    const requestParams: GetAvailableStockForSemiProductInFacilityUsingGET.PartialParamMap = {
+    const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+      limit: 500,
+      offset: 0,
       facilityId: this.currentInputFacility.id,
-      semiProductId: this.processingActionForm.value.inputSemiProduct.id,
+      semiProductId: this.prAction.inputSemiProduct?.id,
+      finalProductId: this.prAction.inputFinalProduct?.id,
       isWomenShare: this.womensOnlyStatus.value
     };
 
@@ -1768,7 +1741,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Get the available stock in the provided facility for the provided semi-product
     const res = await this.stockOrderController
-      .getAvailableStockForSemiProductInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
+      .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
       this.availableStockOrders = res.data.items;
     }
@@ -1792,7 +1765,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.showLeftSide) { return; }
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'SHIPMENT') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT') {
       this.processingOrderInputTransactions.splice(i, 1);
       this.calcInputQuantity(true);
       return;
@@ -1807,7 +1780,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   setRemaining() {
 
-    if (this.actionType === 'PROCESSING') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
     }
     if (this.actionType === 'SHIPMENT') {

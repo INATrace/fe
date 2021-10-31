@@ -11,10 +11,10 @@ import { CompanyControllerService } from '../../../../api/api/companyController.
 
 @Component({
   selector: 'app-orders-customer-orders',
-  templateUrl: './orders-customer-orders.component.html',
-  styleUrls: ['./orders-customer-orders.component.scss']
+  templateUrl: './orders-my-orders.component.html',
+  styleUrls: ['./orders-my-orders.component.scss']
 })
-export class OrdersCustomerOrdersComponent extends OrdersTabComponent implements OnInit {
+export class OrdersMyOrdersComponent extends OrdersTabComponent implements OnInit {
 
   rootTab = 2;
 

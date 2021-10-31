@@ -85,15 +85,14 @@
           </checkbox-input-errors>
         </checkbox-input>
 
-        <!-- TODO: Links should route to /s/privacy-policy once privacy policy is added -->
         <div *ngIf="!(submitted && registerForm.get('condition').errors && registerForm.get('condition').errors.conditionsNotConfirmed)" style="margin-top:-2.5rem; margin-left: 2.2rem">
           <span i18n="@@register.checkbox-input.conditions.pretext">Yes, I agree with
-          </span>&nbsp;<a target="_blank"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
+          </span>&nbsp;<a target="_blank" href="https://www.nachhaltige-agrarlieferketten.org/en/privacy/"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
         </div>
 
         <div *ngIf="submitted && registerForm.get('condition').errors && registerForm.get('condition').errors.conditionsNotConfirmed" style="margin-top:-6.7rem; margin-left: 2.2rem">
           <span i18n="@@register.checkbox-input.conditions.pretext">Yes, I agree with
-          </span>&nbsp;<a target="_blank"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
+          </span>&nbsp;<a target="_blank" href="https://www.nachhaltige-agrarlieferketten.org/en/privacy/"><span i18n="@@register.checkbox-input.conditions.link">your conditions</span></a>
         </div>
 
         <div class="login-medium-spacer"></div>

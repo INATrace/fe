@@ -50,6 +50,9 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   @Input()
   representativeOfRecepientUserCustomerIdPing$ = new BehaviorSubject<number>(null);
 
+  @Input()
+  readOnly = false;
+
   @Output()
   showing = new EventEmitter<number>();
 

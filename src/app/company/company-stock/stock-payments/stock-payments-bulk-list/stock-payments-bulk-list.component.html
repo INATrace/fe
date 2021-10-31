@@ -19,7 +19,8 @@
                     </td>
                     <td [attr.data-label]="sortOptions[3].name">
                         <span>
-                            <a i18n="@@productLabelBulkPayments.tableCol.view"
+                            <a *ngIf="!readOnly"
+                               i18n="@@productLabelBulkPayments.tableCol.view"
                                class="company-action"
                                [class.enabled-action]="true"
                                (click)="editBulkPayment(bulkPayment)">

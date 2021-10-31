@@ -582,27 +582,54 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
   
   aggregateOrderItems(items: ApiStockOrder[]): AggregatedStockItem[] {
-    const aggregatedMap: Map<number, AggregatedStockItem> = items.reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
 
-      const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+    // Aggregate semi-products
+    const aggregatedSemiProductsMap: Map<number, AggregatedStockItem> = items
+      .filter(stockOrder => stockOrder.semiProduct && stockOrder.semiProduct.id)
+      .reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
 
-      if (acc.has(item.semiProduct.id)) {
-        const prevElem = acc.get(item.semiProduct.id);
-        acc.set(item.semiProduct.id, {
-          ...prevElem,
-          amount: nextTotalQuantity + prevElem.amount
-        });
-      } else {
-        acc.set(item.semiProduct.id, {
-          amount: nextTotalQuantity,
-          unit: item.measureUnitType.label,
-          semiProduct: item.semiProduct.name
-        });
-      }
-      return acc;
-    }, new Map<number, AggregatedStockItem>());
+        const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+
+        if (acc.has(item.semiProduct.id)) {
+          const prevElem = acc.get(item.semiProduct.id);
+          acc.set(item.semiProduct.id, {
+            ...prevElem,
+            amount: nextTotalQuantity + prevElem.amount
+          });
+        } else {
+          acc.set(item.semiProduct.id, {
+            amount: nextTotalQuantity,
+            measureUnit: item.measureUnitType.label,
+            stockUnitName: item.semiProduct.name
+          });
+        }
+        return acc;
+      }, new Map<number, AggregatedStockItem>());
+
+    // Aggregate final products
+    const aggregatedFinalProducts: Map<number, AggregatedStockItem> = items
+      .filter(stockOrder => stockOrder.finalProduct && stockOrder.finalProduct.id)
+      .reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
+
+        const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+
+        if (acc.has(item.finalProduct.id)) {
+          const prevElem = acc.get(item.finalProduct.id);
+          acc.set(item.finalProduct.id, {
+            ...prevElem,
+            amount: nextTotalQuantity + prevElem.amount
+          });
+        } else {
+          acc.set(item.finalProduct.id, {
+            amount: nextTotalQuantity,
+            measureUnit: item.measureUnitType.label,
+            stockUnitName: `${item.finalProduct.name} (${item.finalProduct.product.name})`
+          });
+        }
+        return acc;
+      }, new Map<number, AggregatedStockItem>());
     
-    return Array.from(aggregatedMap.values());
+    return [...Array.from(aggregatedSemiProductsMap.values()), ...Array.from(aggregatedFinalProducts.values())];
   }
 
   orderIdentifier(order: ApiStockOrder) {

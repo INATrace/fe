@@ -33,15 +33,21 @@
 
                 <tr>
                   <th i18n="@@orderHistoryView.tableCol.internalLotNumber">Internal lot name</th>
-                  <td>{{stockOrder.internalLotNumber}}</td>
+                  <td>{{ stockOrder.internalLotNumber }}</td>
                 </tr>
                 <tr>
                   <th i18n="@@orderHistoryView.tableCol.facilityName">Facility</th>
-                  <td>{{stockOrder.facility?.name}} ({{stockOrder.company?.name}})</td>
+                  <td>{{ stockOrder.facility?.name }} ({{ stockOrder.company?.name }})</td>
                 </tr>
                 <tr>
-                  <th i18n="@@orderHistoryView.tableCol.semiProduct">Semi-product</th>
-                  <td>{{stockOrder.semiProduct?.name}}</td>
+                  <ng-container *ngIf="stockOrder.semiProduct">
+                    <th i18n="@@orderHistoryView.tableCol.semiProduct">Semi-product</th>
+                    <td>{{ stockOrder.semiProduct.name }}</td>
+                  </ng-container>
+                  <ng-container *ngIf="stockOrder.finalProduct">
+                    <th i18n="@@orderHistoryView.tableCol.finalProduct">Final product</th>
+                    <td>{{ stockOrder.finalProduct.name }} ({{ stockOrder.finalProduct.product.name}})</td>
+                  </ng-container>
                 </tr>
                 </tbody>
               </table>
@@ -170,8 +176,6 @@
                 </tbody>
               </table>
 
-
-
               <div class="af-row af-table--divider">
 
                 <div class="af-c6">
@@ -180,12 +184,16 @@
                     <tr *ngIf="!stockOrder.purchaseOrder">
                       <th i18n="@@orderHistoryView.tableCol.inputs">Inputs</th>
                       <td>
-                        {{rootHistory.processingOrder?.processingAction?.inputSemiProduct?.name}}
+                        <ng-container *ngIf="rootHistory.processingOrder?.processingAction?.inputSemiProduct">
+                          {{ rootHistory.processingOrder.processingAction.inputSemiProduct.name }}
+                        </ng-container>
+                        <ng-container *ngIf="rootHistory.processingOrder?.processingAction?.inputFinalProduct">
+                          {{ rootHistory.processingOrder.processingAction.inputFinalProduct.name }} ({{ rootHistory.processingOrder.processingAction.inputFinalProduct.product.name }})
+                        </ng-container>
                         <ul *ngIf="rootHistory.processingOrder?.inputTransactions && rootHistory.processingOrder?.inputTransactions.length> 0" style="margin-bottom: 0;">
                           <li *ngFor="let tx of rootHistory.processingOrder?.inputTransactions">
-                            <a [ngClass]="transactionColor(tx)" (click)="goToInput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a>
-                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
-
+                            <a [ngClass]="transactionColor(tx)" (click)="goToInput(tx)">{{ tx.inputQuantity }} {{ tx.inputMeasureUnitType?.label }}</a>
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
                           </li>
                         </ul>
                       </td>
@@ -200,14 +208,18 @@
                     <tr>
                       <th i18n="@@orderHistoryView.tableCol.outputs">Outputs</th>
                       <td>
-                        {{rootHistory.processingOrder?.processingAction?.outputSemiProduct?.name}}
+                        <ng-container *ngIf="rootHistory.processingOrder?.processingAction?.outputSemiProduct">
+                          {{ rootHistory.processingOrder.processingAction.outputSemiProduct.name }}
+                        </ng-container>
+                        <ng-container *ngIf="rootHistory.processingOrder?.processingAction?.outputFinalProduct">
+                          {{ rootHistory.processingOrder.processingAction.outputFinalProduct.name }} ({{ rootHistory.processingOrder.processingAction.outputFinalProduct.product.name }})
+                        </ng-container>
                         <ul *ngIf="rootHistory.processingOrder?.outputTransactions && rootHistory.processingOrder?.outputTransactions.length> 0" style="margin-bottom: 0;">
                           <li *ngFor="let tx of rootHistory.processingOrder?.outputTransactions">
-                            <a [ngClass]="transactionColor(tx)" (click)="goToOutput(tx)">{{tx.inputQuantity}} {{tx.inputMeasureUnitType?.label}}</a>
-                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
+                            <a [ngClass]="transactionColor(tx)" (click)="goToOutput(tx)">{{ tx.inputQuantity }} {{ tx.inputMeasureUnitType?.label }}</a>
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
                           </li>
                         </ul>
-
                       </td>
                     </tr>
                     </tbody>
@@ -222,12 +234,11 @@
                       <div class="ml-3" (click)="code.select(); copyToClipboard();">
                         <qr-code [value]="qrCodeString(stockOrder)" [size]="qrCodeSize"></qr-code>
                       </div>
-                      <input #code value="{{qrCodeString(stockOrder)}}" class="offscreen">
+                      <input #code value="{{ qrCodeString(stockOrder) }}" class="offscreen">
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
 
           </div>

@@ -20,7 +20,6 @@
 
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
-import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiStockOrder } from './apiStockOrder';
 
 
@@ -40,7 +39,6 @@ export interface ApiProductOrder {
      * The ordered items(final products) of this order
      */
     items?: Array<ApiStockOrder>;
-    requiredGrade?: ApiGradeAbbreviation;
     /**
      * Require organic coffee
      */
@@ -77,7 +75,6 @@ export namespace ApiProductOrder {
          * The ordered items(final products) of this order
          */
         items = 'items',
-        requiredGrade = 'requiredGrade',
         /**
          * Require organic coffee
          */
@@ -157,18 +154,6 @@ export namespace ApiProductOrder {
                     complexType: 'ApiStockOrder'
                 },
                 {
-                    metadata: ApiGradeAbbreviation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'requiredGrade',
-                    classname: 'ApiProductOrder',
-                    dataType: 'ApiGradeAbbreviation',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiGradeAbbreviation'
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -213,8 +198,6 @@ export namespace ApiProductOrder {
                 ],
                 items: [
                 ],
-                requiredGrade: [
-                ],
                 requiredOrganic: [
                 ],
                 requiredWomensOnly: [
@@ -241,9 +224,6 @@ export namespace ApiProductOrder {
   //                   validators: []
   //               },
   //               items: {
-  //                   validators: []
-  //               },
-  //               requiredGrade: {
   //                   validators: []
   //               },
   //               requiredOrganic: {

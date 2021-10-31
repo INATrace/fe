@@ -22,6 +22,7 @@ import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
+import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingOrder } from './apiProcessingOrder';
 import { ApiProductOrder } from './apiProductOrder';
@@ -80,6 +81,7 @@ export interface ApiStockOrder {
      */
     deliveryTime?: Date;
     facility?: ApiFacility;
+    finalProduct?: ApiFinalProduct;
     /**
      * Fulfilled quantity
      */
@@ -227,6 +229,7 @@ export namespace ApiStockOrder {
          */
         deliveryTime = 'deliveryTime',
         facility = 'facility',
+        finalProduct = 'finalProduct',
         /**
          * Fulfilled quantity
          */
@@ -518,6 +521,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiFacility'
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'finalProduct',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     isReadOnly: false,
@@ -918,6 +933,8 @@ export namespace ApiStockOrder {
                 ],
                 facility: [
                 ],
+                finalProduct: [
+                ],
                 fulfilledQuantity: [
                 ],
                 id: [
@@ -1032,6 +1049,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               facility: {
+  //                   validators: []
+  //               },
+  //               finalProduct: {
   //                   validators: []
   //               },
   //               fulfilledQuantity: {

@@ -2891,6 +2891,30 @@
             }
           },
           {
+            "description": "Processing action type",
+            "in": "query",
+            "name": "actionType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "PROCESSING",
+                "FINAL_PROCESSING",
+                "SHIPMENT",
+                "TRANSFER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only final product actions",
+            "in": "query",
+            "name": "onlyFinalProducts",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
@@ -5188,7 +5212,7 @@
         "summary": "Get a paginated list of stock orders by facility ID."
       }
     },
-    "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
+    "/api/chain/stock-order/list/facility/{facilityId}/available": {
       "get": {
         "parameters": [
           {
@@ -5260,10 +5284,20 @@
             }
           },
           {
-            "description": "SemiProduct ID",
-            "in": "path",
+            "description": "Semi-product ID",
+            "in": "query",
             "name": "semiProductId",
-            "required": true,
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
+            "required": false,
             "schema": {
               "format": "int64",
               "type": "integer"
@@ -5330,8 +5364,8 @@
         "tags": [
           "stock-order-controller"
         ],
-        "operationId": "getAvailableStockForSemiProductInFacilityUsingGET",
-        "summary": "Get a paginated list of stock orders for provided semi product ID and facility ID."
+        "operationId": "getAvailableStockForStockUnitInFacilityUsingGET",
+        "summary": "Get a paginated list of stock orders for provided facility ID and semi-product or final product ID."
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -15034,10 +15068,6 @@
             },
             "type": "array"
           },
-          "requiredGrade": {
-            "$ref": "#/components/schemas/ApiGradeAbbreviation",
-            "description": "The grade required"
-          },
           "requiredOrganic": {
             "description": "Require organic coffee",
             "example": false,
@@ -17114,6 +17144,10 @@
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
           },
+          "finalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "Final product"
+          },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
             "type": "number"
@@ -17453,10 +17487,6 @@
       },
       "ApiTransaction": {
         "properties": {
-          "actionType": {
-            "$ref": "#/components/schemas/ApiActionType",
-            "description": "Action type"
-          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that is part of the transaction"
@@ -17464,6 +17494,10 @@
           "currency": {
             "description": "Currency",
             "type": "string"
+          },
+          "finalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "Final product"
           },
           "gradeAbbreviation": {
             "$ref": "#/components/schemas/ApiGradeAbbreviation",
