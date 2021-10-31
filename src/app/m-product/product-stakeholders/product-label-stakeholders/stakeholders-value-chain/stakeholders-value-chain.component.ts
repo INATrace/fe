@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/api-chain/api/product.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProductLabelStakeholdersComponent } from '../product-label-stakeholders.component';
-import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
+import { AuthService } from '../../../../core/auth.service';
 
 @Component({
   selector: 'app-stakeholders-value-chain',
@@ -22,9 +20,10 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
     protected globalEventsManager: GlobalEventManagerService,
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) {
-    super(productController, globalEventsManager, modalService, route, router);
+    super(productController, globalEventsManager, modalService, route, router, authService);
   }
 
   ngOnInit() {
