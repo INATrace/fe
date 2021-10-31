@@ -4,10 +4,6 @@
     <div class="af-form-row">
       <div class="af-form-block--c12 d-flex justify-content-between">
         <div class="title-page content-element--title">{{ title }} <span>{{ form.get('id').value }}</span></div>
-        <app-last-seen-tag *ngIf="this.update"
-                           [dateFormat]="form.get('lastChange').value"
-                           [identifier]="userLastChanged">
-        </app-last-seen-tag>
       </div>
     </div>
 
@@ -69,24 +65,6 @@
                 <ng-container *ngIf="submitted">
                   <div *ngIf="outputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@stockOrderItem.outputFacilityForm.error.required">
                     Output facility is required
-                  </div>
-                </ng-container>
-              </single-choice>
-            </div>
-          </div>
-
-          <div class="af-row">
-            <div class="af-c12">
-              <single-choice
-                      label="Required grade"
-                      i18n-label="@@globalOrderEdit.singleChoice.quality.label"
-                      [formControlInput]="form.get('requiredGrade')"
-                      [codebookService]="gradeAbbreviationCodebook"
-                      style="min-width: 150px;"
-                      [isInvalidChoice]="submitted && form.get('requiredGrade').invalid">
-                <ng-container *ngIf="submitted">
-                  <div *ngIf="form.get('requiredGrade').errors as errors" class="sc-invalid-feedback" i18n="@@globalOrderEdit.singleChoice.quality.error">
-                    Required grade is required
                   </div>
                 </ng-container>
               </single-choice>
@@ -173,9 +151,15 @@
               </list-editor>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <!-- TODO -->
-
+    <div class="af-form-row">
+      <div class="af-form-block--c6">
+        <div class="af-bottom-buttons" i18n="@@globalOrderEdit.footer.buttons">
+          <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+          <button class="btn mr-2" type="button" (click)="saveProductOrder()"><span>Save</span></button>
         </div>
       </div>
     </div>

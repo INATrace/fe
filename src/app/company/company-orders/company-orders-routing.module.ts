@@ -39,19 +39,6 @@ const routes: Routes = [
     component: GlobalOrderDetailsComponent,
     pathMatch: 'full',
     data: {
-      action: 'new',
-      drobtinice: {
-        title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:Orders` + ' / ' + $localize`:@@breadCrumb.orders.globalOrder:Order`,
-        route: 'my-orders/customer-orders'
-      }
-    }
-  },
-  {
-    path: 'global-order/create',
-    component: GlobalOrderDetailsComponent,
-    pathMatch: 'full',
-    data: {
-      action: 'update',
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:Orders` + ' / ' + $localize`:@@breadCrumb.orders.globalOrder:Order`,
         route: 'my-orders/customer-orders'

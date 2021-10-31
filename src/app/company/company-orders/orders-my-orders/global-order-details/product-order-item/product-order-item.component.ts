@@ -3,6 +3,16 @@ import { GenericEditableItemComponent } from '../../../../../shared/generic-edit
 import { ApiStockOrder } from '../../../../../../api/model/apiStockOrder';
 import { GlobalEventManagerService } from '../../../../../core/global-event-manager.service';
 import { BehaviorSubject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { generateFormFromMetadata } from '../../../../../../shared/utils';
+import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
+import { CompanyFinalProductQuoteOrderActionsService } from '../../../../../shared-services/company-final-product-quote-order-actions.service';
+import { ProcessingActionControllerService } from '../../../../../../api/api/processingActionController.service';
+import { AvailableSellingFacilitiesForCompany } from '../../../../../shared-services/available-selling-facilities-for.company';
+import { FacilityControllerService } from '../../../../../../api/api/facilityController.service';
+import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAction';
+import { ApiMeasureUnitType } from '../../../../../../api/model/apiMeasureUnitType';
+import { ApiProcessingOrder } from '../../../../../../api/model/apiProcessingOrder';
 
 @Component({
   selector: 'app-product-order-item',
@@ -31,9 +41,6 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   @Input()
   set companyId(value: number) {
     this.companyIdLocal = value;
-    if (value) {
-      this.initialize();
-    }
   }
 
   get companyId(): number {
@@ -49,50 +56,90 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
 
   globalOrderId$ = new BehaviorSubject<string>('-');
 
+  codebookOrderingProcessingActions: CompanyFinalProductQuoteOrderActionsService;
+
+  inputFacilitiesCodebook: AvailableSellingFacilitiesForCompany;
+  inputFacilityForm = new FormControl(null, Validators.required);
+
   constructor(
-    protected globalEventsManager: GlobalEventManagerService
+    protected globalEventsManager: GlobalEventManagerService,
+    private processingActionController: ProcessingActionControllerService,
+    private facilityController: FacilityControllerService
   ) {
     super(globalEventsManager);
   }
 
   get name() {
 
-    // TODO: correct this
-    // if (this.contentObject) {
-    //
-    //   const content = this.contentObject as ApiStockOrder;
-    //
-    //   if (!content.processingAction) {
-    //     return null;
-    //   }
-    //
-    //   let res = `${ content.processingAction.inputSemiProduct.name }: ${ content.totalQuantity } ${ content.processingAction.inputSemiProduct.measurementUnitType.label }`;
-    //
-    //   if (content.pricePerUnitForEndCustomer) {
-    //     res += `, ${ content.pricePerUnitForEndCustomer } EUR/per ${ content.processingAction.inputSemiProduct.measurementUnitType.label }`;
-    //   }
-    //
-    //   const kgFactor = (content.processingAction.inputSemiProduct.measurementUnitType as ApiMeasureUnitType).weight;
-    //
-    //   if (kgFactor) {
-    //     res += ` (${ content.totalQuantity * kgFactor } kg)`;
-    //   }
-    //
-    //   return res;
-    // }
+    // TODO: finish this
+    if (this.contentObject) {
+
+      const content = this.contentObject as ApiStockOrder;
+
+      if (!content.processingOrder?.processingAction) {
+        return null;
+      }
+
+      const procAction = content.processingOrder.processingAction;
+
+      let res = `${ procAction.inputFinalProduct.name }: ${ content.totalQuantity } ${ procAction.inputFinalProduct.measurementUnitType.label }`;
+
+      // if (content.pricePerUnitForEndCustomer) {
+      //   res += `, ${ content.pricePerUnitForEndCustomer } EUR/per ${ content.processingAction.inputSemiProduct.measurementUnitType.label }`;
+      // }
+
+      const kgFactor = (procAction.inputFinalProduct.measurementUnitType as ApiMeasureUnitType).weight;
+
+      if (kgFactor) {
+        res += ` (${ content.totalQuantity * kgFactor } kg)`;
+      }
+
+      return res;
+    }
 
     return '';
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  private get processingAction(): ApiProcessingAction {
+    if (this.form.get('processingOrder.processingAction')) {
+      return this.form.get('processingOrder.processingAction').value as ApiProcessingAction;
+    }
+    return null;
   }
 
-  async initialize() {
-    if (this.companyId) {
-      // TODO: correct this
-      // this.codebookOrderingProcessingActions = new
-      // OrderProcessiongActionsForProductAndOrganizationStandaloneService(this.chainProcessingActionService, this.productId, this.organizationId, this.codebookTranslations)
+  private get measurementUnit(): string {
+    const prAction = this.processingAction;
+    if (prAction) {
+      return prAction.outputFinalProduct.measurementUnitType.label;
+    }
+    return null;
+  }
+
+  get outputQuantityLabel() {
+    if (this.measurementUnit) {
+      return $localize`:@@stockOrderItem.textinput.quantityLabelWithUnits.label:Quantity in` + ' ' + this.measurementUnit;
+    }
+    return $localize`:@@stockOrderItem.textinput.quantity.label:Quantity`;
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+    this.codebookOrderingProcessingActions = new CompanyFinalProductQuoteOrderActionsService(this.processingActionController, this.companyId);
+  }
+
+  public generateForm(value: any): FormGroup {
+    const form = generateFormFromMetadata(ApiStockOrder.formMetadata(), value, ApiStockOrderValidationScheme);
+    form.setControl('inputFacilityForm', this.inputFacilityForm);
+    form.setControl('processingOrder', generateFormFromMetadata(ApiProcessingOrder.formMetadata(), {}, ApiProcessingOrderValidationScheme));
+    form.updateValueAndValidity();
+    return form;
+  }
+
+  setProcessingAction(event: ApiProcessingAction) {
+    if (event) {
+      this.inputFacilitiesCodebook = new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, null, event.inputFinalProduct.id);
+    } else {
+      this.inputFacilitiesCodebook = null;
     }
   }
 
