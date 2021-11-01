@@ -221,7 +221,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     const allSet = new Set(this.availableStockOrders.map(x => x.id));
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'TRANSFER') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'TRANSFER' || this.actionType === 'GENERATE_QR_CODE') {
       this.editableProcessingOrder.targetStockOrders.forEach(x => {
         allSet.delete(x.id);
       });
@@ -483,6 +483,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             this.outputFacilityForm.setValue(this.inputFacilityFromUrl);
             this.setOutputFacility(this.inputFacilityFromUrl);
 
+          } else if (this.actionType === 'GENERATE_QR_CODE') {
+
+            // IN case we are generating QR code, set the output facility to be the same with the input and set it as disabled
+            this.inputFacilityForm.setValue(this.inputFacilityFromUrl);
+            this.setInputFacility(this.inputFacilityFromUrl, !this.update).then();
+
+            this.outputFacilityForm.setValue(this.inputFacilityFromUrl);
+            this.outputFacilityForm.disable();
+            this.setOutputFacility(this.inputFacilityFromUrl);
+
           } else {
 
             this.inputFacilityForm.setValue(this.inputFacilityFromUrl);
@@ -516,7 +526,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           this.setInputOutputFormAccordinglyToTransaction(val);
         }
       }));
-
   }
 
   private async initInitialData() {
@@ -640,7 +649,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
 
       // Handle the update initialization (the common code) for order where processing action type is 'PROCESSING' or 'TRANSFER'
-      if (actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING' || actionType === 'TRANSFER') {
+      if (actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING' || actionType === 'TRANSFER' || actionType === 'GENERATE_QR_CODE') {
 
         this.initializeOutputStockOrdersForEdit();
 
@@ -755,7 +764,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         // Create transaction for current stock order from the list of selected stock orders
         const transaction: ApiTransaction = {
-          isProcessing: this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING',
+          isProcessing: this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE',
           company: { id: this.companyId },
           initiationUserId: this.creatorId,
           sourceStockOrder: stockOrder,
@@ -896,8 +905,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           finalProduct,
           facility: this.outputFacilityForm.value,
           totalQuantity: parseFloat(this.totalQuantity),
-          fulfilledQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') ? parseFloat(this.totalQuantity) : 0,
-          availableQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') ? parseFloat(this.totalQuantity) : 0,
+          fulfilledQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE') ?
+            parseFloat(this.totalQuantity) : 0,
+          availableQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE') ?
+            parseFloat(this.totalQuantity) : 0,
           productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
           quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
@@ -1144,6 +1155,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     switch (event.type) {
       case ApiProcessingAction.TypeEnum.PROCESSING:
+      case ApiProcessingAction.TypeEnum.GENERATEQRCODE:
 
         this.currentInputStockUnitProduct = inputSemiProduct;
         this.currentOutputStockUnitProduct = outputSemiProduct;
@@ -1599,12 +1611,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (setValue) {
       if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
+
         this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
         if (this.isUsingInput) {
           this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
         }
+
+      } else if (this.actionType === 'GENERATE_QR_CODE') {
+
+        if (this.form) {
+          this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
+          this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
+        }
       } else {
-        if (this.form) { this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2)); }
+
+        if (this.form) {
+          this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
+        }
       }
     }
 
@@ -1765,7 +1788,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.showLeftSide) { return; }
 
-    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT') {
+    if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT' || this.actionType === 'GENERATE_QR_CODE') {
       this.processingOrderInputTransactions.splice(i, 1);
       this.calcInputQuantity(true);
       return;
