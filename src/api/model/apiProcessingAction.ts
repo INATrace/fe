@@ -209,7 +209,8 @@ export namespace ApiProcessingAction {
         PROCESSING = 'PROCESSING',
         FINALPROCESSING = 'FINAL_PROCESSING',
         SHIPMENT = 'SHIPMENT',
-        TRANSFER = 'TRANSFER'
+        TRANSFER = 'TRANSFER',
+        GENERATEQRCODE = 'GENERATE_QR_CODE'
     }
 
 

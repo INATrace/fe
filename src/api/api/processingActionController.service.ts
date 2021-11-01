@@ -294,7 +294,7 @@ export namespace ListProcessingActionsByCompanyUsingGET {
       /**
        * Processing action type
        */
-      actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER';
+      actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE';
       /**
        * Only final product actions
        */
@@ -939,10 +939,10 @@ export class ProcessingActionControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listProcessingActionsByCompanyUsingGET.');
         }
