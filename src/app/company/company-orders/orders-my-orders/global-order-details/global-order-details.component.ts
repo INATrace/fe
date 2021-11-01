@@ -17,6 +17,7 @@ import { ListEditorManager } from '../../../../shared/list-editor/list-editor-ma
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiStockOrderValidationScheme } from './product-order-item/validation';
 import { Location } from '@angular/common';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
 
 @Component({
   selector: 'app-global-order-details',
@@ -70,9 +71,9 @@ export class GlobalOrderDetailsComponent implements OnInit {
     return this.form.get('items') as FormArray;
   }
 
-  get outputFacilityId() {
+  get outputFacility() {
     if (this.outputFacilityForm.value) {
-      return this.outputFacilityForm.value.id;
+      return this.outputFacilityForm.value as ApiFacility;
     }
     return null;
   }

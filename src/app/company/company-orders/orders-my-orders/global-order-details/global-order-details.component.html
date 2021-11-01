@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <div class="af-row" *ngIf="outputFacilityId">
+          <div class="af-row" *ngIf="outputFacility">
             <div class="af-c12">
               <list-editor *ngIf="stockOrdersListManager"
                            label="List of order items"
@@ -127,7 +127,7 @@
                   <div *ngFor="let item of orderItemsFormArray.controls; let i=index;">
                     <app-product-order-item
                             [title]="null"
-                            [outputFacilityId]="outputFacilityId"
+                            [outputFacility]="outputFacility"
                             [formControlInput]="item"
                             [globalOrderId]="form.get('id').value"
                             [isOpen]="stockOrdersListManager.isOpen(i)"

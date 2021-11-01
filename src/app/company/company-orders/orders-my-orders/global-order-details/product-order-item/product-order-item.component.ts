@@ -13,6 +13,7 @@ import { FacilityControllerService } from '../../../../../../api/api/facilityCon
 import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAction';
 import { ApiMeasureUnitType } from '../../../../../../api/model/apiMeasureUnitType';
 import { ApiProcessingOrder } from '../../../../../../api/model/apiProcessingOrder';
+import { ApiFacility } from '../../../../../../api/model/apiFacility';
 
 @Component({
   selector: 'app-product-order-item',
@@ -51,7 +52,7 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   private companyCurrency;
 
   @Input()
-  outputFacilityId: number;
+  outputFacility: ApiFacility;
 
   globalOrderIdLocal = '-';
 
@@ -135,7 +136,8 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   ngOnInit(): void {
 
     super.ngOnInit();
-    this.codebookOrderingProcessingActions = new CompanyFinalProductQuoteOrderActionsService(this.processingActionController, this.companyId);
+    this.codebookOrderingProcessingActions =
+      new CompanyFinalProductQuoteOrderActionsService(this.processingActionController, this.companyId,  this.outputFacility);
 
     if (this.form) {
       this.form.get('currencyForEndCustomer').setValue(this.companyCurrency);

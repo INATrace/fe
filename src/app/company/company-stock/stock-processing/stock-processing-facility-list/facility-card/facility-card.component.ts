@@ -121,7 +121,7 @@ export class FacilityCardComponent implements OnInit {
 
     for (const action of this.actions) {
 
-      const facilitySemiProd = this.facility.facilitySemiProductList.find(f => f.id === action.inputSemiProduct?.id);
+      const facilitySemiProd = this.facility.facilitySemiProductList.find(fsp => fsp.id === action.inputSemiProduct?.id);
       if (facilitySemiProd) {
         this.menuOptions.push({
           id: action.id,
@@ -129,7 +129,7 @@ export class FacilityCardComponent implements OnInit {
         });
       }
 
-      const facilityFinalProd = this.facility.facilityFinalProducts.find(f => f.id === action.inputFinalProduct?.id);
+      const facilityFinalProd = this.facility.facilityFinalProducts.find(ffp => ffp.id === action.inputFinalProduct?.id);
       if (facilityFinalProd) {
         this.menuOptions.push({
           id: action.id,

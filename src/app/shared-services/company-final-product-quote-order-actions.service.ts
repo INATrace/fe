@@ -7,6 +7,7 @@ import {
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+import { ApiFacility } from '../../api/model/apiFacility';
 
 export class CompanyFinalProductQuoteOrderActionsService extends GeneralSifrantService<ApiProcessingAction> {
 
@@ -17,7 +18,8 @@ export class CompanyFinalProductQuoteOrderActionsService extends GeneralSifrantS
 
   constructor(
     private processingActionController: ProcessingActionControllerService,
-    private companyId: number
+    private companyId: number,
+    private facility: ApiFacility
   ) {
     super();
     this.initializeCodebook();
@@ -53,7 +55,8 @@ export class CompanyFinalProductQuoteOrderActionsService extends GeneralSifrantS
     this.sifrant$ = this.sifrant$ || this.processingActionController
       .listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams, id: this.companyId, actionType: 'SHIPMENT', onlyFinalProducts: true })
       .pipe(
-        map(x => this.pack(x.data.items))
+        map(resp => resp.data.items.filter(procAction => this.facility.facilityFinalProducts.some(ffp => ffp.id === procAction.inputFinalProduct?.id))),
+        map(filteredProcActions => this.pack(filteredProcActions))
       );
   }
 
