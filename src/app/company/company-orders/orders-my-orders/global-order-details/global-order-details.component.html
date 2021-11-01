@@ -16,13 +16,13 @@
               <textinput
                       label="Order ID"
                       i18n-label="@@globalOrderEdit.textinput.orderID.label"
-                      [form]="form.get('id')"
+                      [form]="form.get('orderId')"
                       style="width: 100%"
                       placeholder="Enter id"
                       i18n-placeholder="@@globalOrderEdit.textinput.orderID.placeholder"
-                      [isInvalid]="submitted && form.get('id').invalid">
+                      [isInvalid]="submitted && form.get('orderId').invalid">
                 <ng-container *ngIf="submitted">
-                  <div *ngIf="form.get('id').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="form.get('orderId').errors as errors" class="sc-invalid-feedback">
                     <div *ngIf="errors.required" i18n="@@globalOrderEdit.textinput.orderID.error.required">
                       Order ID is required
                     </div>
@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <div class="af-row" *ngIf="outputFacility">
+          <div class="af-row" *ngIf="outputFacility && form.get('orderId').value">
             <div class="af-c12">
               <list-editor *ngIf="stockOrdersListManager"
                            label="List of order items"
@@ -129,7 +129,7 @@
                             [title]="null"
                             [outputFacility]="outputFacility"
                             [formControlInput]="item"
-                            [globalOrderId]="form.get('id').value"
+                            [globalOrderId]="form.get('orderId').value"
                             [isOpen]="stockOrdersListManager.isOpen(i)"
                             [listEditorManager]="this.stockOrdersListManager"
                             [companyId]="companyId"

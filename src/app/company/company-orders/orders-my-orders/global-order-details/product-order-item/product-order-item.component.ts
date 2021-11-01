@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenericEditableItemComponent } from '../../../../../shared/generic-editable-item/generic-editable-item.component';
 import { ApiStockOrder } from '../../../../../../api/model/apiStockOrder';
 import { GlobalEventManagerService } from '../../../../../core/global-event-manager.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { generateFormFromMetadata } from '../../../../../../shared/utils';
 import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
@@ -14,13 +14,14 @@ import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAc
 import { ApiMeasureUnitType } from '../../../../../../api/model/apiMeasureUnitType';
 import { ApiProcessingOrder } from '../../../../../../api/model/apiProcessingOrder';
 import { ApiFacility } from '../../../../../../api/model/apiFacility';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-order-item',
   templateUrl: './product-order-item.component.html',
   styleUrls: ['./product-order-item.component.scss']
 })
-export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiStockOrder> implements OnInit {
+export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiStockOrder> implements OnInit, OnDestroy {
 
   @Input()
   disableDelete = false;
@@ -64,6 +65,8 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
 
   inputFacilitiesCodebook: AvailableSellingFacilitiesForCompany;
   inputFacilityForm = new FormControl(null, Validators.required);
+
+  internalLotSubs: Subscription;
 
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
@@ -141,6 +144,29 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
 
     if (this.form) {
       this.form.get('currencyForEndCustomer').setValue(this.companyCurrency);
+    }
+
+    // Set the internal LOT number (name) automatically from the other fields
+    this.internalLotSubs = combineLatest([
+      this.form.get('totalQuantity').valueChanges.pipe(startWith(0)),
+      this.form.get('processingOrder.processingAction').valueChanges.pipe(startWith(null)),
+      this.globalOrderId$
+    ]).pipe(
+      map(([totalQuantity, processingAction, globalOrderId]) => {
+        if (totalQuantity && processingAction && globalOrderId) {
+          return `${ globalOrderId } (${ processingAction.inputFinalProduct.name }, ${ totalQuantity } ${ processingAction.inputFinalProduct.measurementUnitType.label })`;
+        }
+        return '-';
+      })
+    ).subscribe(internalLotName => {
+      this.form.get('internalLotNumber').setValue(internalLotName);
+      this.form.updateValueAndValidity();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.internalLotSubs) {
+      this.internalLotSubs.unsubscribe();
     }
   }
 

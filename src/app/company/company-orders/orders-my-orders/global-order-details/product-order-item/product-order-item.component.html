@@ -59,7 +59,7 @@
         <div class="af-row">
           <div class="af-c6">
             <textinput
-                    *ngIf="form.get('processingOrder.processingAction')"
+                    *ngIf="form.get('processingOrder.processingAction').value"
                     [form]="form.get('totalQuantity')"
                     [label]="outputQuantityLabel"
                     style="width: 100%"
