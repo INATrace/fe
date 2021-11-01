@@ -121,6 +121,11 @@ export class QuoteOrderListComponent implements OnInit {
     });
   }
 
+  payment(order: ApiStockOrder) {
+    this.router.navigate(['my-stock', 'payments', 'customer-order', order.id, 'new'],
+      { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
+  }
+
   private async initializeSortOptions() {
 
     this.sortOptions = [

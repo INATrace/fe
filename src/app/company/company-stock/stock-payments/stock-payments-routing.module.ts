@@ -4,7 +4,6 @@ import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-t
 import { StockPaymentsDetailComponent } from './stock-payments-detail/stock-payments-detail.component';
 import { StockPaymentsBulkDetailComponent } from './stock-payments-bulk-detail/stock-payments-bulk-detail.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -27,6 +26,18 @@ const routes: Routes = [
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.payments.myStock:My stock`
             + ' / ' + $localize`:@@breadCrumb.payments.payment:Balance payment`,
+        goBack: true
+      }
+    }
+  },
+  {
+    path: 'customer-order/:customerOrderId/new',
+    component: StockPaymentsDetailComponent,
+    pathMatch: 'full',
+    data: {
+      action: 'new',
+      drobtinice: {
+        title: ' / ' + $localize`:@@breadCrumb.payments.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.payments.payment:Balance payment`,
         goBack: true
       }
     }

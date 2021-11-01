@@ -49,13 +49,13 @@
                  [class.enabled-action]="true">
                 Approve/Reject
               </a>
-<!--              <a i18n="@@productLabelPurchaseOrder.tableCol.payment"-->
-<!--                 *ngIf="this.mode === 'CUSTOMER'"-->
-<!--                 (click)="payment(order)"-->
-<!--                 class="company-action"-->
-<!--                 [class.enabled-action]="true">-->
-<!--                Add payment-->
-<!--              </a>-->
+              <a i18n="@@productLabelPurchaseOrder.tableCol.payment"
+                 *ngIf="this.mode === 'CUSTOMER'"
+                 (click)="payment(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Add payment
+              </a>
 <!--              <a *ngIf="canDelete(order)"-->
 <!--                 i18n="@@productLabelPurchaseOrder.tableCol.delete"-->
 <!--                 (click)="delete(order)"-->
