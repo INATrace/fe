@@ -31,6 +31,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
   title: string = null;
 
   companyId: number;
+  companyCurrency: string;
 
   userLastChanged = null;
   creatorId: number;
@@ -49,6 +50,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
     private companyCustomerController: CompanyControllerService,
     private gradeAbbreviationController: GradeAbbreviationControllerService,
     private facilityController: FacilityControllerService,
+    private companyController: CompanyControllerService,
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService
   ) { }
@@ -109,8 +111,11 @@ export class GlobalOrderDetailsComponent implements OnInit {
   private async initInitialData() {
 
     this.title = this.newTitle();
-
     this.creatorId = await this.getCreatorId();
+    const companyRes = await this.companyController.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
+    if (companyRes && companyRes.status === 'OK') {
+      this.companyCurrency = companyRes.data?.currency?.code;
+    }
   }
 
   private newOrder() {

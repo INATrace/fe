@@ -48,6 +48,9 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   }
 
   @Input()
+  private companyCurrency;
+
+  @Input()
   outputFacilityId: number;
 
   globalOrderIdLocal = '-';
@@ -71,27 +74,26 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
 
   get name() {
 
-    // TODO: finish this
     if (this.contentObject) {
 
-      const content = this.contentObject as ApiStockOrder;
+      const stockOrder = this.contentObject as ApiStockOrder;
 
-      if (!content.processingOrder?.processingAction) {
+      if (!stockOrder.processingOrder?.processingAction) {
         return null;
       }
 
-      const procAction = content.processingOrder.processingAction;
+      const procAction = stockOrder.processingOrder.processingAction;
 
-      let res = `${ procAction.inputFinalProduct.name }: ${ content.totalQuantity } ${ procAction.inputFinalProduct.measurementUnitType.label }`;
+      let res = `${ procAction.inputFinalProduct.name }: ${ stockOrder.totalQuantity } ${ procAction.inputFinalProduct.measurementUnitType.label }`;
 
-      // if (content.pricePerUnitForEndCustomer) {
-      //   res += `, ${ content.pricePerUnitForEndCustomer } EUR/per ${ content.processingAction.inputSemiProduct.measurementUnitType.label }`;
-      // }
+      if (stockOrder.pricePerUnitForEndCustomer) {
+        res += `, ${ stockOrder.pricePerUnitForEndCustomer } ${stockOrder.currencyForEndCustomer}/per ${ procAction.inputFinalProduct.measurementUnitType.label }`;
+      }
 
       const kgFactor = (procAction.inputFinalProduct.measurementUnitType as ApiMeasureUnitType).weight;
 
       if (kgFactor) {
-        res += ` (${ content.totalQuantity * kgFactor } kg)`;
+        res += ` (${ stockOrder.totalQuantity * kgFactor } kg)`;
       }
 
       return res;
@@ -122,16 +124,31 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
     return $localize`:@@stockOrderItem.textinput.quantity.label:Quantity`;
   }
 
+  get pricePerUnitLabel() {
+    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label:Price per item at end customer` + ` (${this.companyCurrency})`;
+  }
+
+  get pricePerUnitPlaceholder() {
+    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder:Enter price in` + ` ${this.companyCurrency}`;
+  }
+
   ngOnInit(): void {
+
     super.ngOnInit();
     this.codebookOrderingProcessingActions = new CompanyFinalProductQuoteOrderActionsService(this.processingActionController, this.companyId);
+
+    if (this.form) {
+      this.form.get('currencyForEndCustomer').setValue(this.companyCurrency);
+    }
   }
 
   public generateForm(value: any): FormGroup {
+
     const form = generateFormFromMetadata(ApiStockOrder.formMetadata(), value, ApiStockOrderValidationScheme);
     form.setControl('inputFacilityForm', this.inputFacilityForm);
     form.setControl('processingOrder', generateFormFromMetadata(ApiProcessingOrder.formMetadata(), {}, ApiProcessingOrderValidationScheme));
     form.updateValueAndValidity();
+
     return form;
   }
 

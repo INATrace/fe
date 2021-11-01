@@ -9,7 +9,10 @@ export const ApiStockOrderValidationScheme = {
     totalQuantity: {
       validators: [Validators.required]
     },
-    processingAction: {
+    pricePerUnitForEndCustomer: {
+      validators: [Validators.required]
+    },
+    currencyForEndCustomer: {
       validators: [Validators.required]
     }
   }

@@ -90,28 +90,25 @@
           </div>
         </div>
 
-<!--        <div class="af-row">-->
-<!--          <div class="af-c6">-->
-<!--            <textinput-->
-<!--                    [form]="form.get('pricePerUnitForEndCustomer')"-->
-<!--                    label="Price per item at end customer (EUR)"-->
-<!--                    i18n-label="@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label"-->
-<!--                    style="width: 100%"-->
-<!--                    type="number"-->
-<!--                    placeholder="Enter price in EUR"-->
-<!--                    i18n-placeholder="@@stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder"-->
-<!--                    [readOnly]="isUsingInput"-->
-<!--                    [isInvalid]="submitted && form.get('pricePerUnitForEndCustomer').invalid">-->
-<!--              <ng-container *ngIf="submitted">-->
-<!--                <div *ngIf="form.get('pricePerUnitForEndCustomer').errors as errors" class="sc-invalid-feedback">-->
-<!--                  <div *ngIf="errors.required" i18n="@@stockOrderItem.pricePerUnitForEndCustomer.textinput.error">-->
-<!--                    Price is required-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </ng-container>-->
-<!--            </textinput>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="af-row">
+          <div class="af-c6">
+            <textinput
+                    [form]="form.get('pricePerUnitForEndCustomer')"
+                    [label]="pricePerUnitLabel"
+                    style="width: 100%"
+                    type="number"
+                    [placeholder]="pricePerUnitPlaceholder"
+                    [isInvalid]="submitted && form.get('pricePerUnitForEndCustomer').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('pricePerUnitForEndCustomer').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@stockOrderItem.pricePerUnitForEndCustomer.textinput.error">
+                    Price is required
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+          </div>
+        </div>
 
       </subform-form>
 
