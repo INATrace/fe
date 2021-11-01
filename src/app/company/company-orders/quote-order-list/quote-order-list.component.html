@@ -63,13 +63,13 @@
 <!--                 [class.enabled-action]="true">-->
 <!--                Delete-->
 <!--              </a>-->
-<!--              <a i18n="@@productLabelPurchaseOrder.tableCol.qr"-->
-<!--                 *ngIf="mode == 'CUSTOMER'"-->
-<!--                 (click)="generateQRCodes(order)"-->
-<!--                 class="company-action"-->
-<!--                 [class.enabled-action]="true">-->
-<!--                QR-->
-<!--              </a>-->
+              <a i18n="@@productLabelPurchaseOrder.tableCol.qr"
+                 *ngIf="mode == 'CUSTOMER' && order.qrCodeTag"
+                 (click)="generateQRCodes(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                QR
+              </a>
             </span>
         </td>
       </tr>

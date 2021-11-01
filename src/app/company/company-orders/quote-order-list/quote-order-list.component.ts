@@ -15,6 +15,7 @@ import {
 import { Router } from '@angular/router';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ApproveRejectTransactionModalComponent } from '../approve-reject-transaction-modal/approve-reject-transaction-modal.component';
+import { GenerateQRCodeModalComponent } from '../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 
 @Component({
   selector: 'app-quote-order-list',
@@ -124,6 +125,22 @@ export class QuoteOrderListComponent implements OnInit {
   payment(order: ApiStockOrder) {
     this.router.navigate(['my-stock', 'payments', 'customer-order', order.id, 'new'],
       { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
+  }
+
+  generateQRCodes(order: ApiStockOrder) {
+
+    if (!order.qrCodeTag) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(GenerateQRCodeModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+    Object.assign(modalRef.componentInstance, {
+      qrCodeTag: order.qrCodeTag
+    });
   }
 
   private async initializeSortOptions() {
