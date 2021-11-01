@@ -145,6 +145,10 @@ export interface ApiStockOrder {
     productionDate?: Date;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
+    /**
+     * Generated UUID tag for this stock order QR code
+     */
+    qrCodeTag?: string;
     quoteCompany?: ApiCompany;
     quoteFacility?: ApiFacility;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
@@ -301,6 +305,10 @@ export namespace ApiStockOrder {
         productionDate = 'productionDate',
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
+        /**
+         * Generated UUID tag for this stock order QR code
+         */
+        qrCodeTag = 'qrCodeTag',
         quoteCompany = 'quoteCompany',
         quoteFacility = 'quoteFacility',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
@@ -790,6 +798,17 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qrCodeTag',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -1015,6 +1034,8 @@ export namespace ApiStockOrder {
                 ],
                 purchaseOrder: [
                 ],
+                qrCodeTag: [
+                ],
                 quoteCompany: [
                 ],
                 quoteFacility: [
@@ -1157,6 +1178,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               purchaseOrder: {
+  //                   validators: []
+  //               },
+  //               qrCodeTag: {
   //                   validators: []
   //               },
   //               quoteCompany: {

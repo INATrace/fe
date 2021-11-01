@@ -40,7 +40,7 @@ export interface ApiProductOrder {
      */
     items?: Array<ApiStockOrder>;
     /**
-     * The order ID enter by the user
+     * The order ID entered by the user
      */
     orderId?: string;
     /**
@@ -80,7 +80,7 @@ export namespace ApiProductOrder {
          */
         items = 'items',
         /**
-         * The order ID enter by the user
+         * The order ID entered by the user
          */
         orderId = 'orderId',
         /**
