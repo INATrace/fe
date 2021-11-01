@@ -15047,6 +15047,10 @@
             },
             "type": "array"
           },
+          "orderId": {
+            "description": "The order ID enter by the user",
+            "type": "string"
+          },
           "requiredOrganic": {
             "description": "Require organic coffee",
             "example": false,

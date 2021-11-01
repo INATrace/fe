@@ -40,6 +40,10 @@ export interface ApiProductOrder {
      */
     items?: Array<ApiStockOrder>;
     /**
+     * The order ID enter by the user
+     */
+    orderId?: string;
+    /**
      * Require organic coffee
      */
     requiredOrganic?: boolean;
@@ -75,6 +79,10 @@ export namespace ApiProductOrder {
          * The ordered items(final products) of this order
          */
         items = 'items',
+        /**
+         * The order ID enter by the user
+         */
+        orderId = 'orderId',
         /**
          * Require organic coffee
          */
@@ -157,6 +165,17 @@ export namespace ApiProductOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'orderId',
+                    classname: 'ApiProductOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'requiredOrganic',
                     classname: 'ApiProductOrder',
                     dataType: 'boolean',
@@ -198,6 +217,8 @@ export namespace ApiProductOrder {
                 ],
                 items: [
                 ],
+                orderId: [
+                ],
                 requiredOrganic: [
                 ],
                 requiredWomensOnly: [
@@ -224,6 +245,9 @@ export namespace ApiProductOrder {
   //                   validators: []
   //               },
   //               items: {
+  //                   validators: []
+  //               },
+  //               orderId: {
   //                   validators: []
   //               },
   //               requiredOrganic: {
