@@ -62,6 +62,13 @@
                  [class.enabled-action]="true">
                 Farmer profile
               </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.qr"
+                 *ngIf="this.pageListingMode !== 'PURCHASE_ORDERS' && order.qrCodeTag"
+                 (click)="openQRCodes(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                QR
+              </a>
               <a *ngIf="canDelete(order)"
                  i18n="@@productLabelPurchaseOrder.tableCol.delete"
                  (click)="delete(order)"

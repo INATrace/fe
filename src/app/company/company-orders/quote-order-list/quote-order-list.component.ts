@@ -127,7 +127,7 @@ export class QuoteOrderListComponent implements OnInit {
       { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 
-  generateQRCodes(order: ApiStockOrder) {
+  openQRCodes(order: ApiStockOrder) {
 
     if (!order.qrCodeTag) {
       return;

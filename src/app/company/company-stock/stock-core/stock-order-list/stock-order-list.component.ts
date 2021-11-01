@@ -17,6 +17,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
 import StatusEnum = ApiDefaultResponse.StatusEnum;
 import { AggregatedStockItem } from './models';
+import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
+import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -111,7 +113,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
-    private stockOrderControllerService: StockOrderControllerService
+    private stockOrderControllerService: StockOrderControllerService,
+    private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -389,6 +392,22 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   farmerProfile(id) {
     this.router.navigate(['my-farmers', 'edit', id],
       { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
+  }
+
+  openQRCodes(order: ApiStockOrder) {
+
+    if (!order.qrCodeTag) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(GenerateQRCodeModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+    Object.assign(modalRef.componentInstance, {
+      qrCodeTag: order.qrCodeTag
+    });
   }
 
   canDelete(order: ApiStockOrder) {
