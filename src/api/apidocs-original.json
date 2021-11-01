@@ -17110,6 +17110,10 @@
             "description": "Currency",
             "type": "string"
           },
+          "currencyForEndCustomer": {
+            "description": "Currency for price per unit for end customer",
+            "type": "string"
+          },
           "damagedPriceDeduction": {
             "description": "Damaged price deduction",
             "type": "number"
@@ -17196,6 +17200,10 @@
           },
           "pricePerUnit": {
             "description": "Price per unit",
+            "type": "number"
+          },
+          "pricePerUnitForEndCustomer": {
+            "description": "Price per unit for end customer",
             "type": "number"
           },
           "processingOrder": {

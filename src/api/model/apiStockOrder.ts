@@ -73,6 +73,10 @@ export interface ApiStockOrder {
      */
     currency?: string;
     /**
+     * Currency for price per unit for end customer
+     */
+    currencyForEndCustomer?: string;
+    /**
      * Damaged price deduction
      */
     damagedPriceDeduction?: number;
@@ -128,6 +132,10 @@ export interface ApiStockOrder {
      * Price per unit
      */
     pricePerUnit?: number;
+    /**
+     * Price per unit for end customer
+     */
+    pricePerUnitForEndCustomer?: number;
     processingOrder?: ApiProcessingOrder;
     producerUserCustomer?: ApiUserCustomer;
     productOrder?: ApiProductOrder;
@@ -221,6 +229,10 @@ export namespace ApiStockOrder {
          */
         currency = 'currency',
         /**
+         * Currency for price per unit for end customer
+         */
+        currencyForEndCustomer = 'currencyForEndCustomer',
+        /**
          * Damaged price deduction
          */
         damagedPriceDeduction = 'damagedPriceDeduction',
@@ -276,6 +288,10 @@ export namespace ApiStockOrder {
          * Price per unit
          */
         pricePerUnit = 'pricePerUnit',
+        /**
+         * Price per unit for end customer
+         */
+        pricePerUnitForEndCustomer = 'pricePerUnitForEndCustomer',
         processingOrder = 'processingOrder',
         producerUserCustomer = 'producerUserCustomer',
         productOrder = 'productOrder',
@@ -492,6 +508,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'currencyForEndCustomer',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'damagedPriceDeduction',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -675,6 +702,17 @@ export namespace ApiStockOrder {
                     isEnum: false,
                     required: false,
                     name: 'pricePerUnit',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'pricePerUnitForEndCustomer',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -927,6 +965,8 @@ export namespace ApiStockOrder {
                 ],
                 currency: [
                 ],
+                currencyForEndCustomer: [
+                ],
                 damagedPriceDeduction: [
                 ],
                 deliveryTime: [
@@ -960,6 +1000,8 @@ export namespace ApiStockOrder {
                 preferredWayOfPayment: [
                 ],
                 pricePerUnit: [
+                ],
+                pricePerUnitForEndCustomer: [
                 ],
                 processingOrder: [
                 ],
@@ -1042,6 +1084,9 @@ export namespace ApiStockOrder {
   //               currency: {
   //                   validators: []
   //               },
+  //               currencyForEndCustomer: {
+  //                   validators: []
+  //               },
   //               damagedPriceDeduction: {
   //                   validators: []
   //               },
@@ -1091,6 +1136,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               pricePerUnit: {
+  //                   validators: []
+  //               },
+  //               pricePerUnitForEndCustomer: {
   //                   validators: []
   //               },
   //               processingOrder: {
