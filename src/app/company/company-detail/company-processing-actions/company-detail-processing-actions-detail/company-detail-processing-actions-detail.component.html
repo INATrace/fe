@@ -80,7 +80,8 @@
                         </single-choice>
 
                         <!-- If we have Shipment or Transfer proc. action of semi-products (both input and output) -->
-                        <ng-container *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER')">
+                        <ng-container
+                                *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER' || form.get('type').value === 'GENERATE_QR_CODE')">
                             <single-choice
                                     label="Select semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"

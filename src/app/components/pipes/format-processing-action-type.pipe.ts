@@ -15,6 +15,8 @@ export class FormatProcessingActionTypePipe implements PipeTransform {
         return $localize`:@@formatProcessingActionType.quote:Quote`;
       case 'TRANSFER':
         return $localize`:@@formatProcessingActionType.transfer:Transfer`;
+      case 'GENERATE_QR_CODE':
+        return $localize`:@@formatProcessingActionType.generateQrCode:Generate QR code`;
       default:
         return '-';
     }

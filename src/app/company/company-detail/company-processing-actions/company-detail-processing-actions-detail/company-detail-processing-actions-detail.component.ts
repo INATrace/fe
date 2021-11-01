@@ -387,6 +387,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
     obj['FINAL_PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.finalProcessing:Final processing`;
     obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
+    obj['GENERATE_QR_CODE'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.generateQrCode:Generate QR code`;
     return obj;
   }
 
