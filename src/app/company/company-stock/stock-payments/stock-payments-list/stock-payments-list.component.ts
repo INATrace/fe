@@ -231,8 +231,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  editPayment(payment) {
-    this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
+  editPayment(payment: ApiPayment) {
+    if (payment.recipientType === 'USER_CUSTOMER') {
+      this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
+    } else {
+      this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.CUSTOMER]).then();
+    }
   }
 
   async deletePayment(entity) {
