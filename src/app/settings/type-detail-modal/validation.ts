@@ -111,7 +111,9 @@ export const ApiGradeAbbreviationValidationScheme = {
 } as SimpleValidationScheme<ApiGradeAbbreviation>;
 
 export const ApiProcessingEvidenceTypeValidationScheme = {
-  validators: [],
+  validators: [
+    multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslationsProcessingTypeField(group), ['required'])
+  ],
   fields: {
     id: {
       validators: []
@@ -139,6 +141,9 @@ export const ApiProcessingEvidenceTypeValidationScheme = {
     },
     quality: {
       validators: []
+    },
+    translations: {
+      validators: [Validators.required]
     }
   }
 } as SimpleValidationScheme<ApiProcessingEvidenceType>;
@@ -190,6 +195,23 @@ export function requiredTranslationsSemiProduct(control: FormGroup): ValidationE
 }
 
 export function requiredTranslationsProcessingEvidenceField(control: FormGroup): ValidationErrors | null {
+  if (!control || !control.value || !control.contains('translations')) {
+    return null;
+  }
+  const translations = control.value['translations'];
+  if (translations.length === 0) {
+    return { required: true };
+  }
+
+  // English translation is required, other are optional
+  const englishTranslation = translations.find(t => t.language === LanguageEnum.EN);
+  if (!englishTranslation || !englishTranslation.label) {
+    return {required: true};
+  }
+  return null;
+}
+
+export function requiredTranslationsProcessingTypeField(control: FormGroup): ValidationErrors | null {
   if (!control || !control.value || !control.contains('translations')) {
     return null;
   }
