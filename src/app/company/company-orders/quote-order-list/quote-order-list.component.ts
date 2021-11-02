@@ -111,7 +111,7 @@ export class QuoteOrderListComponent implements OnInit {
   approveReject(item: ApiStockOrder) {
     const modalRef = this.modalService.open(ApproveRejectTransactionModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@orderHistoryView.rejectTransaction.modal.title:Approve / reject transactions`,
+      title: $localize`:@@orderHistoryView.rejectTransaction.modal.title:Approve / reject transaction`,
       instructionsHtml: $localize`:@@orderHistoryView.rejectTransaction.modal.instructionsHtml:Comment`,
       stockOrderId: item.id
     });

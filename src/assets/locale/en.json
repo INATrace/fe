@@ -1745,7 +1745,7 @@
     "orderList.deleteProcessingOrder.gettingProcessingOrder.error.message": " Error occured while deleting.",
     "orderList.deleteProcessingOrder.error.message": "Are you sure you want to delete the order? This will delete processing transaction and possibly all orders generated from it.",
     "orderList.delete.error.message": "Are you sure you want to delete the order?",
-    "orderHistoryView.rejectTransaction.modal.title": "Reject transaction",
+    "orderHistoryView.rejectTransaction.modal.title": "Approve / reject transactions",
     "orderHistoryView.rejectTransaction.modal.instructionsHtml": "Comment",
     "ordersAllOrders.title.allOrders": "Orders for me",
     "ordersAllOrders.subTitle.listOfOrders": "List of orders",
