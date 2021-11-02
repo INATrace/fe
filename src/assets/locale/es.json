@@ -2508,7 +2508,7 @@
     "customerOrderDetails.lineLabel.product": "Producto",
     "rejectTransaction.modal.button.cancel": "{$START_TAG_SPAN}Cancelar{$CLOSE_TAG_SPAN}",
     "rejectTransaction.modal.button.confirm": "{$START_TAG_SPAN}Confirmar{$CLOSE_TAG_SPAN}",
-    "orderHistoryView.rejectTransaction.modal.title": "Rechazar la transacción",
+    "orderHistoryView.rejectTransaction.modal.title": "Aprobar / rechazar transacción",
     "orderHistoryView.rejectTransaction.modal.instructionsHtml": "Comentario",
     "productLabel.title.qrLabels": "Etiquetas QR",
     "customerOrderDetails.lineLabel.womenShare": "Cuota de mujeres",
