@@ -16,6 +16,7 @@ import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
 import { Subject } from 'rxjs/internal/Subject';
 import { ConnectedCompaniesForCompanyService } from '../../../../shared-services/connected-companies-for-company.service';
+import { PaymentCurrencyCodesService } from '../../../../shared-services/payment-currency-codes.service';
 
 export enum ModeEnum {
   PURCHASE = 'PURCHASE',
@@ -101,14 +102,14 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
   codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
   codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
-  codebookCurrencyCodes = EnumSifrant.fromObject(this.currencyCodes);
   
   private destroy$ = new Subject<boolean>();
 
   constructor(
       private route: ActivatedRoute,
       private companyControllerService: CompanyControllerService,
-      private companyController: CompanyControllerService
+      private companyController: CompanyControllerService,
+      public codebookCurrencyCodes: PaymentCurrencyCodesService
   ) { }
 
   ngOnInit(): void {
@@ -369,14 +370,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     obj['CASH_VIA_COLLECTOR'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.cashViaCollector:Cash via collector`;
     obj['BANK_TRANSFER'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.bankTransfer:Bank transfer`;
     obj['UNKNOWN'] = $localize`:@@productLabelStockPurchaseOrdersModal.preferredWayOfPayment.unknown:Unknown`;
-    return obj;
-  }
-
-  get currencyCodes() {
-    const obj = {};
-    obj['EUR'] = $localize`:@@customerDetail.currencyCodes.eur:EUR`;
-    obj['USD'] = $localize`:@@customerDetail.currencyCodes.usd:USD`;
-    obj['RWF'] = $localize`:@@customerDetail.currencyCodes.rwf:RWF`;
     return obj;
   }
 
