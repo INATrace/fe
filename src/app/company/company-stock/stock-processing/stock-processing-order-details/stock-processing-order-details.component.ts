@@ -1466,7 +1466,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   isOutputStockOrder(order: ApiStockOrder) {
     if (!this.update) { return false; }
-    return this.editableProcessingOrder.targetStockOrders.some(x => x === order.id);
+    return this.editableProcessingOrder.targetStockOrders.some(x => x.id === order.id);
   }
 
   private setWomensOnly() {
