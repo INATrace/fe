@@ -18,6 +18,7 @@
  */
 
 
+import { ApiProcessingEvidenceFieldTranslation } from './apiProcessingEvidenceFieldTranslation';
 
 
 
@@ -42,6 +43,10 @@ export interface ApiProcessingEvidenceField {
      * Processing evidence field required on quote
      */
     requiredOnQuote?: boolean;
+    /**
+     * Processing evidence field translations
+     */
+    translations?: Array<ApiProcessingEvidenceFieldTranslation>;
     /**
      * Processing evidence field type
      */
@@ -76,6 +81,10 @@ export namespace ApiProcessingEvidenceField {
          * Processing evidence field required on quote
          */
         requiredOnQuote = 'requiredOnQuote',
+        /**
+         * Processing evidence field translations
+         */
+        translations = 'translations',
         /**
          * Processing evidence field type
          */
@@ -159,6 +168,18 @@ export namespace ApiProcessingEvidenceField {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProcessingEvidenceFieldTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiProcessingEvidenceField',
+                    dataType: 'Array&lt;ApiProcessingEvidenceFieldTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceFieldTranslation'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingEvidenceField.TypeEnum',
@@ -182,6 +203,8 @@ export namespace ApiProcessingEvidenceField {
                 ],
                 requiredOnQuote: [
                 ],
+                translations: [
+                ],
                 type: [
                 ],
             }
@@ -204,6 +227,9 @@ export namespace ApiProcessingEvidenceField {
   //                   validators: []
   //               },
   //               requiredOnQuote: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //               type: {

@@ -149,6 +149,7 @@ export class TypeDetailModalComponent implements OnInit {
         this.form = generateFormFromMetadata(
             ApiProcessingEvidenceField.formMetadata(), this.typeElement, ApiProcessingEvidenceFieldValidationScheme);
       }
+      this.updateProcessingEvidenceFieldTranslations();
     }
 
     if (this.type === 'semi-products') {
@@ -254,6 +255,24 @@ export class TypeDetailModalComponent implements OnInit {
 
   get languageEnum() {
     return LanguageEnum;
+  }
+
+  updateProcessingEvidenceFieldTranslations() {
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        label: new FormControl(translation ? translation.label : ''),
+        language: new FormControl(lang)
+      }));
+    }
   }
 
 }
