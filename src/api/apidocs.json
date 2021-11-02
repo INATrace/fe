@@ -13968,15 +13968,10 @@
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Company that receives the payment"
           },
-          "recipientCompanyCustomer": {
-            "$ref": "#/components/schemas/ApiCompanyCustomer",
-            "description": "Company customer that receives the payment"
-          },
           "recipientType": {
             "description": "Recipient type",
             "enum": [
-              "ORGANIZATION",
-              "COMPANY_CUSTOMER",
+              "COMPANY",
               "USER_CUSTOMER"
             ],
             "type": "string"
@@ -13984,10 +13979,6 @@
           "recipientUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "User customer that receives the payment (farmer)"
-          },
-          "representativeOfRecipientCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
-            "description": "Representative of the company that receives the payment"
           },
           "representativeOfRecipientUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
