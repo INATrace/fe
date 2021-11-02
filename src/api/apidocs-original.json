@@ -13927,12 +13927,12 @@
       },
       "ApiPayment": {
         "properties": {
-          "amountPaidToTheCollector": {
-            "description": "Payment amount paid to the collector",
+          "amount": {
+            "description": "Payment amount paid (to a farmer or recipient company)",
             "type": "number"
           },
-          "amountPaidToTheFarmer": {
-            "description": "Payment amount paid to the farmer",
+          "amountPaidToTheCollector": {
+            "description": "Payment amount paid to the collector",
             "type": "number"
           },
           "createdBy": {

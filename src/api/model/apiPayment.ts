@@ -29,13 +29,13 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 export interface ApiPayment { 
     /**
+     * Payment amount paid (to a farmer or recipient company)
+     */
+    amount?: number;
+    /**
      * Payment amount paid to the collector
      */
     amountPaidToTheCollector?: number;
-    /**
-     * Payment amount paid to the farmer
-     */
-    amountPaidToTheFarmer?: number;
     createdBy?: ApiUser;
     /**
      * Payment's currency
@@ -116,13 +116,13 @@ export namespace ApiPayment {
      */
     export enum Properties {
         /**
+         * Payment amount paid (to a farmer or recipient company)
+         */
+        amount = 'amount',
+        /**
          * Payment amount paid to the collector
          */
         amountPaidToTheCollector = 'amountPaidToTheCollector',
-        /**
-         * Payment amount paid to the farmer
-         */
-        amountPaidToTheFarmer = 'amountPaidToTheFarmer',
         createdBy = 'createdBy',
         /**
          * Payment's currency
@@ -262,7 +262,7 @@ export namespace ApiPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'amountPaidToTheCollector',
+                    name: 'amount',
                     classname: 'ApiPayment',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -273,7 +273,7 @@ export namespace ApiPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'amountPaidToTheFarmer',
+                    name: 'amountPaidToTheCollector',
                     classname: 'ApiPayment',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -561,9 +561,9 @@ export namespace ApiPayment {
                 },
             ],
             validators: {
-                amountPaidToTheCollector: [
+                amount: [
                 ],
-                amountPaidToTheFarmer: [
+                amountPaidToTheCollector: [
                 ],
                 createdBy: [
                 ],
@@ -620,10 +620,10 @@ export namespace ApiPayment {
   // export const ApiPaymentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               amountPaidToTheCollector: {
+  //               amount: {
   //                   validators: []
   //               },
-  //               amountPaidToTheFarmer: {
+  //               amountPaidToTheCollector: {
   //                   validators: []
   //               },
   //               createdBy: {
