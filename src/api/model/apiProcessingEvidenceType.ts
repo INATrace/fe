@@ -18,6 +18,7 @@
  */
 
 
+import { ApiProcessingEvidenceTypeTranslation } from './apiProcessingEvidenceTypeTranslation';
 
 
 
@@ -58,6 +59,10 @@ export interface ApiProcessingEvidenceType {
      * a group in which at least one document has to be provided
      */
     requiredOneOfGroupIdForQuote?: string;
+    /**
+     * Translations for processing evidence type
+     */
+    translations?: Array<ApiProcessingEvidenceTypeTranslation>;
     /**
      * type of evidence
      */
@@ -108,6 +113,10 @@ export namespace ApiProcessingEvidenceType {
          * a group in which at least one document has to be provided
          */
         requiredOneOfGroupIdForQuote = 'requiredOneOfGroupIdForQuote',
+        /**
+         * Translations for processing evidence type
+         */
+        translations = 'translations',
         /**
          * type of evidence
          */
@@ -229,6 +238,18 @@ export namespace ApiProcessingEvidenceType {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProcessingEvidenceTypeTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiProcessingEvidenceType',
+                    dataType: 'Array&lt;ApiProcessingEvidenceTypeTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceTypeTranslation'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingEvidenceType.TypeEnum',
@@ -259,6 +280,8 @@ export namespace ApiProcessingEvidenceType {
                 requiredOnQuote: [
                 ],
                 requiredOneOfGroupIdForQuote: [
+                ],
+                translations: [
                 ],
                 type: [
                 ],
@@ -294,6 +317,9 @@ export namespace ApiProcessingEvidenceType {
   //                   validators: []
   //               },
   //               requiredOneOfGroupIdForQuote: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //               type: {

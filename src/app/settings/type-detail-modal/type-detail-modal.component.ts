@@ -137,6 +137,7 @@ export class TypeDetailModalComponent implements OnInit {
         this.form = generateFormFromMetadata(
           ApiProcessingEvidenceType.formMetadata(), this.typeElement, ApiProcessingEvidenceTypeValidationScheme);
       }
+      this.updateProcessingEvidenceTypeTranslations();
     }
 
     if (this.type === 'processing-evidence-fields') {
@@ -149,6 +150,7 @@ export class TypeDetailModalComponent implements OnInit {
         this.form = generateFormFromMetadata(
             ApiProcessingEvidenceField.formMetadata(), this.typeElement, ApiProcessingEvidenceFieldValidationScheme);
       }
+      this.updateProcessingEvidenceFieldTranslations();
     }
 
     if (this.type === 'semi-products') {
@@ -163,6 +165,9 @@ export class TypeDetailModalComponent implements OnInit {
   }
 
   async save() {
+    if (this.type === 'processing-evidence-types' || this.type === 'processing-evidence-fields') {
+      this.form.get('label').setValue(this.form.get('translations.0.label').value);
+    }
     this.submitted = true;
     if (this.form.invalid) { return; }
     if (this.type === 'measurement-unit-types' && (!this.form.value.weight || this.form.value.weight.toString().trim() === '')) {
@@ -254,6 +259,42 @@ export class TypeDetailModalComponent implements OnInit {
 
   get languageEnum() {
     return LanguageEnum;
+  }
+
+  updateProcessingEvidenceFieldTranslations() {
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        label: new FormControl(translation ? translation.label : ''),
+        language: new FormControl(lang)
+      }));
+    }
+  }
+
+  updateProcessingEvidenceTypeTranslations() {
+    if (!this.form.contains('translations')) {
+      this.form.addControl('translations', new FormArray([]));
+    }
+
+    const translations = this.form.get('translations').value;
+    this.form.removeControl('translations');
+    this.form.addControl('translations', new FormArray([]));
+
+    for (const lang of this.languages) {
+      const translation = translations.find(t => t.language === lang);
+      (this.form.get('translations') as FormArray).push(new FormGroup({
+        label: new FormControl(translation ? translation.label : ''),
+        language: new FormControl(lang)
+      }));
+    }
   }
 
 }
