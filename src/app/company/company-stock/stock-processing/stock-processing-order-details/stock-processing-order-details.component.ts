@@ -27,6 +27,7 @@ import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { CompanyFacilitiesForSemiProductService } from '../../../../shared-services/company-facilities-for-semi-product.service';
 import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -50,6 +51,8 @@ import { ProductControllerService } from '../../../../../api/api/productControll
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
+import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
+import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -66,6 +69,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // FontAwesome icons
   faTimes = faTimes;
   faTrashAlt = faTrashAlt;
+  faQrcode = faQrcode;
 
   title: string;
 
@@ -160,7 +164,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
-    public actionTypesCodebook: ActionTypesService
+    public actionTypesCodebook: ActionTypesService,
+    private modalService: NgbModalImproved
   ) { }
 
   // Create form control for use in activity proofs list manager
@@ -1850,6 +1855,22 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   dismiss() {
     this.location.back();
+  }
+
+  openInputStockOrderQRCode(order: ApiStockOrder) {
+
+    if (!order.qrCodeTag) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(GenerateQRCodeModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+    Object.assign(modalRef.componentInstance, {
+      qrCodeTag: order.qrCodeTag
+    });
   }
 
 }

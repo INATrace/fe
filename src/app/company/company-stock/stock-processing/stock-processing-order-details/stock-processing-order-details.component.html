@@ -156,8 +156,16 @@
                       <label class="ml-1">Existing transactions</label>
                       <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
                         <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
-                          <div class="af-c9 pl-3">{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})
-                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
+                          <div class="af-c9 pl-3">
+                            <div>
+                              <span>{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
+                              <span *ngIf="inputStockOrder.qrCodeTag"
+                                    (click)="openInputStockOrderQRCode(inputStockOrder)"
+                                    class="cursor-pointer">
+                                <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                              </span>
+                            </div>
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
                           </div>
                           <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
 
@@ -202,7 +210,12 @@
                         {{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})
                       </ng-container>
                       <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
-                        {{ item.identifier }} {{ item.internalLotNumber }}
+                        <span>{{ item.identifier }} {{ item.internalLotNumber }}</span>
+                        <span *ngIf="item.qrCodeTag"
+                              (click)="openInputStockOrderQRCode(item)"
+                              class="cursor-pointer">
+                          <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                        </span>
                       </ng-container>
                     </div>
                     <div class="af-c3 text-right">
