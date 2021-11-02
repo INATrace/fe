@@ -132,7 +132,7 @@ export class StockPaymentsItemComponent extends GenericEditableItemComponent<Api
 
   get name(): string {
     return this.contentObject
-        ? this.contentObject.receiptNumber + ' (' + this.contentObject.amountPaidToTheFarmer + ' ' + this.contentObject.currency + ')'
+        ? this.contentObject.receiptNumber + ' (' + this.contentObject.amount + ' ' + this.contentObject.currency + ')'
         : '';
   }
 

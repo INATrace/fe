@@ -183,7 +183,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
         inactive: true
       },
       {
-        key: 'amountPaidToTheFarmer',
+        key: 'amount',
         name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer`,
         inactive: true,
         hide: false
@@ -380,7 +380,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   
   calculateAggregatedTotalPaid(items: ApiPayment[]): number {
     return items.reduce((acc: number, item: ApiPayment) => {
-      return item.amountPaidToTheFarmer + acc;
+      return item.amount + acc;
     }, 0);
   }
 

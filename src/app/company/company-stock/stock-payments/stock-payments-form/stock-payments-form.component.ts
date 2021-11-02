@@ -146,6 +146,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
         this.paymentForm.get('formalCreationTime').disable();
         this.paymentForm.get('receiptDocumentType').disable();
         this.paymentForm.get('receiptDocument').disable();
+        this.paymentForm.get('currency').disable();
 
         this.searchCompaniesForm.disable();
 
@@ -173,7 +174,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
             if (this.searchPreferredWayOfPayment.value === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR) {
               this.paymentForm.get('amountPaidToTheCollector').setValue(this.openBalance);
             } else {
-              this.paymentForm.get('amountPaidToTheFarmer').setValue(this.openBalance);
+              this.paymentForm.get('amount').setValue(this.openBalance);
             }
           }
         }
@@ -296,8 +297,8 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
     let totalPaid = 0;
 
-    if (this.paymentForm && this.paymentForm.get('amountPaidToTheFarmer') && this.paymentForm.get('amountPaidToTheFarmer').value) {
-      totalPaid += Number(this.paymentForm.get('amountPaidToTheFarmer').value);
+    if (this.paymentForm && this.paymentForm.get('amount') && this.paymentForm.get('amount').value) {
+      totalPaid += Number(this.paymentForm.get('amount').value);
     }
 
     if (this.paymentForm

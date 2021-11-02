@@ -402,7 +402,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
           receiptNumber: this.bulkPaymentForm.get('receiptNumber').value,
           stockOrder: purchaseOrder,
           orderId: purchaseOrder.orderId,
-          amountPaidToTheFarmer: purchaseOrder.paid,
+          amount: purchaseOrder.paid,
           recipientUserCustomer: purchaseOrder.recipientUserCustomer,
           preferredWayOfPayment: purchaseOrder.preferredWayOfPayment,
           representativeOfRecipientUserCustomer: purchaseOrder.representativeOfRecipientUserCustomer,
@@ -417,7 +417,6 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
         this.bulkPayment.payments.push(payment);
       }
-
     }
 
     const bulkPaymentResp = await this.paymentControllerService.createBulkPaymentUsingPOST(this.bulkPayment)
