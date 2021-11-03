@@ -191,9 +191,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     this.reload();
 
     this.authService.userProfile$.subscribe(value => {
-      if (value && value.role === ApiUserGet.RoleEnum.ADMIN) {
-        this.isSystemAdmin = true;
-      }
+      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.ADMIN;
     });
 
     this.setAlls();
