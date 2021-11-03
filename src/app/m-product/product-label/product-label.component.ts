@@ -766,7 +766,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   removeOriginLocation(index: number) {
-    if (this.isOwner) {
+    if (this.canEdit()) {
       this.originLocations.removeAt(index);
       this.markers.splice(index, 1);
       this.productForm.markAsDirty();
@@ -795,7 +795,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   dblClick(event: google.maps.MouseEvent) {
-    if (this.isOwner) {
+    if (this.canEdit()) {
       this.addOriginLocations(event.latLng.toJSON());
     }
   }
