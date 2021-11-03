@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { ApiPaginatedListApiStockOrder } from '../../../../api/model/apiPaginatedListApiStockOrder';
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ApproveRejectTransactionModalComponent } from '../approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 import { GenerateQRCodeModalComponent } from '../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
+import { ProcessingOrderControllerService } from '../../../../api/api/processingOrderController.service';
 
 @Component({
   selector: 'app-quote-order-list',
@@ -69,6 +70,7 @@ export class QuoteOrderListComponent implements OnInit {
     private router: Router,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderController: StockOrderControllerService,
+    private processingOrderController: ProcessingOrderControllerService,
     private modalService: NgbModalImproved
   ) { }
 
@@ -290,6 +292,41 @@ export class QuoteOrderListComponent implements OnInit {
 
     this.showing.emit(this.showedOrders);
     this.countAll.emit(this.allOrders);
+  }
+
+  canDelete(order: ApiStockOrder) {
+    return this.mode !== 'INPUT' && Math.abs(order.fulfilledQuantity - order.availableQuantity) < 0.0000000001;
+  }
+
+  async delete(order: ApiStockOrder) {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@orderList.delete.error.message:Are you sure you want to delete the order?`,
+      options: { centered: true }
+    });
+
+    if (result !== 'ok') {
+      return;
+    }
+
+    this.stockOrderController.getStockOrderUsingGET(order.id, true)
+      .pipe(
+        tap(() => this.globalEventsManager.showLoading(true)),
+        switchMap(orderResp => {
+          if (orderResp && orderResp.status === 'OK' && orderResp.data) {
+            return this.processingOrderController.deleteProcessingOrderUsingDELETE(orderResp.data.processingOrder.id);
+          }
+          return of(null);
+        })
+      )
+      .subscribe(
+        resp => {
+          if (resp && resp.status === 'OK') {
+            this.reloadPingList$.next(true);
+          }
+        }
+      );
   }
 
 }

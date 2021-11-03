@@ -160,6 +160,8 @@ export class GlobalOrderDetailsComponent implements OnInit {
 
       // Set the required Stock order fields
       order.creatorId = this.creatorId;
+      order.deliveryTime = productOrder.deliveryDeadline;
+      order.consumerCompanyCustomer = productOrder.customer;
       order.finalProduct = order.processingOrder.processingAction.inputFinalProduct;
       order.facility = this.outputFacilityForm.value;
       order.fulfilledQuantity = 0;
