@@ -6,13 +6,13 @@ import { generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import {
   ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme, ApiProcessingEvidenceFieldValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme
+  ApiGradeAbbreviationValidationScheme
 } from '../../../settings/type-detail-modal/validation';
 import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
 import { ApiMeasureUnitType } from '../../../../api/model/apiMeasureUnitType';
 import { ActiveMeasureUnitTypeService } from '../../../shared-services/active-measure-unit-types.service';
-import { ApiSemiProductValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from '../validation';
+import { ApiSemiProductValidationScheme, ApiVCMeasureUnitTypeValidationScheme, ApiVCProcessingEvidenceFieldValidationScheme,
+  ApiVCProcessingEvidenceTypeValidationScheme, } from '../validation';
 import { ApiGradeAbbreviation } from '../../../../api/model/apiGradeAbbreviation';
 import { GradeAbbreviationCodebook } from '../../../shared-services/grade-abbreviation-codebook';
 import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
@@ -79,11 +79,11 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
     }
 
     if (this.configItemType === 'processing-evidence-types') {
-      return generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), value, ApiProcessingEvidenceTypeValidationScheme);
+      return generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), value, ApiVCProcessingEvidenceTypeValidationScheme);
     }
 
     if (this.configItemType === 'processing-evidence-fields') {
-      return generateFormFromMetadata(ApiProcessingEvidenceField.formMetadata(), value, ApiProcessingEvidenceFieldValidationScheme);
+      return generateFormFromMetadata(ApiProcessingEvidenceField.formMetadata(), value, ApiVCProcessingEvidenceFieldValidationScheme);
     }
 
     if (this.configItemType === 'semi-products') {
@@ -115,13 +115,15 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
           quality: null,
           mandatory: null,
           requiredOnQuote: null,
-          requiredOneOfGroupIdForQuote: null } as ApiProcessingEvidenceType);
+          requiredOneOfGroupIdForQuote: null,
+          translations: [] } as ApiProcessingEvidenceType);
       }
 
       if (this.configItemType === 'processing-evidence-fields') {
         this.form.setValue({ ...$event,
           mandatory: null,
-          requiredOnQuote: null } as ApiProcessingEvidenceField);
+          requiredOnQuote: null,
+          translations: [] } as ApiProcessingEvidenceField);
       }
 
       if (this.configItemType === 'semi-products') {

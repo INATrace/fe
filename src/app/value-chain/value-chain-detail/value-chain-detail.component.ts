@@ -6,14 +6,14 @@ import { finalize } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';
+import { ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme,
+  ApiVCProcessingEvidenceFieldValidationScheme, ApiVCProcessingEvidenceTypeValidationScheme} from './validation';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme, ApiProcessingEvidenceFieldValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme
+  ApiGradeAbbreviationValidationScheme
 } from '../../settings/type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
@@ -98,7 +98,7 @@ export class ValueChainDetailComponent implements OnInit {
   static ApiVCProcEvidenceTypeEmptyObjectFormFactory(): () => FormControl {
     return () => {
       return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceTypeCreateEmptyObject(),
-        ApiProcessingEvidenceTypeValidationScheme.validators);
+        ApiVCProcessingEvidenceTypeValidationScheme.validators);
     };
   }
 
@@ -111,7 +111,7 @@ export class ValueChainDetailComponent implements OnInit {
   static ApiVCProcEvidenceFieldEmptyObjectFormFactory(): () => FormControl {
     return () => {
       return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceFieldCreateEmptyObject(),
-        ApiProcessingEvidenceFieldValidationScheme.validators);
+        ApiVCProcessingEvidenceFieldValidationScheme.validators);
     };
   }
 
@@ -275,12 +275,12 @@ export class ValueChainDetailComponent implements OnInit {
     this.processingEvidenceTypeListManger = new ListEditorManager<ApiProcessingEvidenceType>(
       this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray,
       ValueChainDetailComponent.ApiVCProcEvidenceTypeEmptyObjectFormFactory(),
-      ApiProcessingEvidenceTypeValidationScheme);
+      ApiVCProcessingEvidenceTypeValidationScheme);
 
     this.processingEvidenceFieldListManger = new ListEditorManager<ApiProcessingEvidenceType>(
       this.valueChainDetailForm.get('processingEvidenceFields') as FormArray,
       ValueChainDetailComponent.ApiVCProcEvidenceFieldEmptyObjectFormFactory(),
-      ApiProcessingEvidenceFieldValidationScheme);
+      ApiVCProcessingEvidenceFieldValidationScheme);
 
     this.semiProductsListManager = new ListEditorManager<ApiSemiProduct>(
       this.valueChainDetailForm.get('semiProducts') as FormArray,
