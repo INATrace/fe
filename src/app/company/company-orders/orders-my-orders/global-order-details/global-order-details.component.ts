@@ -178,7 +178,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
     });
 
     // Create new Product order
-    this.productOrderController.createOrUpdateProductOrderUsingPUT(productOrder)
+    this.productOrderController.createProductOrderUsingPOST(productOrder)
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
         finalize(() => this.globalEventsManager.showLoading(false))
