@@ -6,8 +6,8 @@ import { GlobalEventManagerService } from '../../../../core/global-event-manager
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import { take } from 'rxjs/operators';
-import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
+import { finalize, take, tap } from 'rxjs/operators';
+import { defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ActivatedRoute } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { AuthService } from '../../../../core/auth.service';
@@ -18,6 +18,9 @@ import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiStockOrderValidationScheme } from './product-order-item/validation';
 import { Location } from '@angular/common';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
+import _ from 'lodash-es';
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import { ProductOrderControllerService } from '../../../../../api/api/productOrderController.service';
 
 @Component({
   selector: 'app-global-order-details',
@@ -53,6 +56,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
     private facilityController: FacilityControllerService,
     private companyController: CompanyControllerService,
     private codebookTranslations: CodebookTranslations,
+    private productOrderController: ProductOrderControllerService,
     private authService: AuthService
   ) { }
 
@@ -141,7 +145,51 @@ export class GlobalOrderDetailsComponent implements OnInit {
   }
 
   async saveProductOrder() {
-    // TODO: implement
+
+    this.submitted = true;
+    if (this.form.invalid || this.outputFacilityForm.invalid) {
+      return;
+    }
+
+    // Set other Product order fields
+    const productOrder = _.cloneDeep(this.form.value) as ApiProductOrder;
+    productOrder.facility = this.outputFacilityForm.value;
+
+    // Fill the missing data from the stock orders
+    productOrder.items.forEach(order => {
+
+      // Set the required Stock order fields
+      order.creatorId = this.creatorId;
+      order.finalProduct = order.processingOrder.processingAction.inputFinalProduct;
+      order.facility = this.outputFacilityForm.value;
+      order.fulfilledQuantity = 0;
+      order.availableQuantity = 0;
+      order.productionDate = new Date();
+      order.orderType = OrderTypeEnum.GENERALORDER;
+      order.currency = order.currencyForEndCustomer;
+      order.internalLotNumber = `${productOrder.orderId} (${order.finalProduct.name}, ${order.totalQuantity} ${order.finalProduct.measurementUnitType.label})`;
+
+      // Set the contained processing order data
+      const procOrder = order.processingOrder;
+      procOrder.initiatorUserId = this.creatorId;
+      procOrder.inputTransactions = [];
+
+      deleteNullFields(order);
+    });
+
+    // Create new Product order
+    this.productOrderController.createOrUpdateProductOrderUsingPUT(productOrder)
+      .pipe(
+        tap(() => this.globalEventsManager.showLoading(true)),
+        finalize(() => this.globalEventsManager.showLoading(false))
+      )
+      .subscribe(
+        resp => {
+          if (resp && resp.status === 'OK') {
+            this.dismiss();
+          }
+        }
+      );
   }
 
 }

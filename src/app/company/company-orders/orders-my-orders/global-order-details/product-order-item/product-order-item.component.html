@@ -43,12 +43,12 @@
                     *ngIf="inputFacilitiesCodebook"
                     label="Order from"
                     i18n-label="@@stockOrderItem.inputFacilityForm.label"
-                    [formControlInput]="form.get('inputFacilityForm')"
+                    [formControlInput]="form.get('quoteFacility')"
                     [codebookService]="inputFacilitiesCodebook"
                     style="min-width: 150px;"
-                    [isInvalidChoice]="submitted && inputFacilityForm.invalid">
+                    [isInvalidChoice]="submitted && form.get('quoteFacility').invalid">
               <ng-container *ngIf="submitted">
-                <div *ngIf="inputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@stockOrderItem.inputFacilityForm.error.required">
+                <div *ngIf="form.get('quoteFacility').errors as errors" class="sc-invalid-feedback" i18n="@@stockOrderItem.inputFacilityForm.error.required">
                   Input facility is required
                 </div>
               </ng-container>

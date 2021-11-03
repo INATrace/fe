@@ -64,7 +64,6 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   codebookOrderingProcessingActions: CompanyFinalProductQuoteOrderActionsService;
 
   inputFacilitiesCodebook: AvailableSellingFacilitiesForCompany;
-  inputFacilityForm = new FormControl(null, Validators.required);
 
   internalLotSubs: Subscription;
 
@@ -173,7 +172,6 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   public generateForm(value: any): FormGroup {
 
     const form = generateFormFromMetadata(ApiStockOrder.formMetadata(), value, ApiStockOrderValidationScheme);
-    form.setControl('inputFacilityForm', this.inputFacilityForm);
     form.setControl('processingOrder', generateFormFromMetadata(ApiProcessingOrder.formMetadata(), {}, ApiProcessingOrderValidationScheme));
     form.updateValueAndValidity();
 
