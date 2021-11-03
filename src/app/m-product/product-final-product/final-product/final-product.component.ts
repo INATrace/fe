@@ -21,7 +21,7 @@ export class FinalProductComponent implements OnInit {
   showedFinalProducts = 0;
 
   companyId: number;
-  isBuyer = false;
+  isProductAdmin = false;
 
   constructor(
       private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class FinalProductComponent implements OnInit {
 
     this.productController.getProductUsingGET(this.productId).pipe(take(1)).subscribe(product => {
       if (product && product.data) {
-        this.isBuyer = product.data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.BUYER && value.company.id === this.companyId);
+        this.isProductAdmin = product.data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === this.companyId);
       }
     });
   }
