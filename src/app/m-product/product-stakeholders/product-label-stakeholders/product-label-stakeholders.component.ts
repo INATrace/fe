@@ -404,7 +404,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   }
 
   async remove(company) {
-    if (!this.isOwner) {
+    if (!this.editable()) {
       return;
     }
     if (company.type === ApiProductCompany.TypeEnum.OWNER && this.owners.length <= 1) {

@@ -26,7 +26,7 @@ export class CompanyCardComponent implements OnInit {
   }
 
   selectItem(item, preventEmit = false) {
-    if (!preventEmit) {
+    if (!preventEmit && this.editable) {
       this.onSelect.next(item);
     }
   }
