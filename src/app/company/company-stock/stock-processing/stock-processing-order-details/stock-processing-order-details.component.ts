@@ -87,8 +87,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Holds the current company profile which executes the processing action
   companyProfile: ApiCompanyGet;
 
+  // Processing action controls
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
+  qrCodeForFinalProductForm = new FormControl(null);
 
   // Checkboxes form controls
   checkboxClipOrderFrom = new FormControl(false);
@@ -468,6 +470,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.registerProcActionValueChangeListener();
+
     this.initInitialData().then(
       async () => {
 
@@ -514,6 +518,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         }
 
         this.registerOutputValueChangeListener();
+      },
+      reason => {
+        this.globalEventsManager.showLoading(false);
+        throw reason;
       }
     );
   }
@@ -522,7 +530,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  private registerOutputValueChangeListener(){
+  private registerOutputValueChangeListener() {
 
     this.subscriptions.push(this.outputStockOrderForm.get('totalQuantity').valueChanges
       .pipe(debounceTime(300))
@@ -531,6 +539,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           this.setInputOutputFormAccordinglyToTransaction(val);
         }
       }));
+  }
+
+  private registerProcActionValueChangeListener() {
+
+    this.subscriptions.push(this.processingActionForm.valueChanges.subscribe(procAction => {
+      if (procAction && procAction.type === 'GENERATE_QR_CODE' && procAction.qrCodeForFinalProduct) {
+        this.qrCodeForFinalProductForm
+          .setValue(`${ procAction.qrCodeForFinalProduct.name } (${ procAction.qrCodeForFinalProduct.product.name })`);
+      }
+    }));
   }
 
   private async initInitialData() {

@@ -17,6 +17,7 @@
         <div class="af-form-block--c6">
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
           <div class="af-form-element">
+
             <div class="af-row">
               <div class="af-c12">
                 <single-choice
@@ -36,6 +37,18 @@
                 </single-choice>
               </div>
             </div>
+
+            <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
+              <div class="af-c12">
+                <textinput
+                        [form]="qrCodeForFinalProductForm"
+                        label="QR code for final product"
+                        style="width: 100%"
+                        [readOnly]="true">
+                </textinput>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
