@@ -14330,6 +14330,10 @@
             "description": "Processing action public timeline location",
             "type": "string"
           },
+          "qrCodeForFinalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "The Final product for which the QR code tag will be generated (used with action type GENERATE_QR_CODE)"
+          },
           "repackedOutputs": {
             "description": "Processing action repacked outputs",
             "example": false,

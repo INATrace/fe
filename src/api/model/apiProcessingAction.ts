@@ -74,6 +74,7 @@ export interface ApiProcessingAction {
      * Processing action public timeline location
      */
     publicTimelineLocation?: string;
+    qrCodeForFinalProduct?: ApiFinalProduct;
     /**
      * Processing action repacked outputs
      */
@@ -154,6 +155,7 @@ export namespace ApiProcessingAction {
          * Processing action public timeline location
          */
         publicTimelineLocation = 'publicTimelineLocation',
+        qrCodeForFinalProduct = 'qrCodeForFinalProduct',
         /**
          * Processing action repacked outputs
          */
@@ -392,6 +394,18 @@ export namespace ApiProcessingAction {
                     complexType: ''
                 },
                 {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qrCodeForFinalProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -505,6 +519,8 @@ export namespace ApiProcessingAction {
                 ],
                 publicTimelineLocation: [
                 ],
+                qrCodeForFinalProduct: [
+                ],
                 repackedOutputs: [
                 ],
                 requiredDocumentTypes: [
@@ -569,6 +585,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               publicTimelineLocation: {
+  //                   validators: []
+  //               },
+  //               qrCodeForFinalProduct: {
   //                   validators: []
   //               },
   //               repackedOutputs: {
