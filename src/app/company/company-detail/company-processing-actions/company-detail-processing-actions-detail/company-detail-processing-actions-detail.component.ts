@@ -341,14 +341,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     sp.requiredOneOfGroupIdForQuote = event;
   }
 
-  documentFormatter = (value: any) => {
-    return this.processingEvidenceTypeService.textRepresentation(value);
-  }
-
-  fieldFormatter = (value: any) => {
-    return this.processingEvidenceFieldService.textRepresentation(value);
-  }
-
   selectLanguage(lang: string) {
     this.selectedLanguage = lang;
   }

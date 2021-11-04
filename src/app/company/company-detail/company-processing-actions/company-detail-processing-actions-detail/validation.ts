@@ -100,15 +100,32 @@ export function requiredOutputFinalProduct(group: FormGroup): ValidationErrors |
   return null;
 }
 
+export function requiredQRCodeForFinalProduct(group: FormGroup): ValidationErrors | null {
+
+  if (!group || !group.value || !group.contains('qrCodeForFinalProduct')) {
+    return null;
+  }
+
+  const type = group.value['type'];
+  const qrCodeForFinalProduct = group.value['qrCodeForFinalProduct'];
+
+  if (type === 'GENERATE_QR_CODE' && qrCodeForFinalProduct == null) {
+    return { required: true };
+  }
+
+  return null;
+}
+
 export const ApiProcessingActionValidationScheme = {
   validators: [
     multiFieldValidator(['finalProductAction'], (group: FormGroup) => requiredFinalProductActionField(group), ['required']),
     multiFieldValidator(['inputSemiProduct'], (group: FormGroup) => requiredInputSemiProduct(group), ['required']),
     multiFieldValidator(['inputFinalProduct'], (group: FormGroup) => requiredInputFinalProduct(group), ['required']),
     multiFieldValidator(['outputFinalProduct'], (group: FormGroup) => requiredOutputFinalProduct(group), ['required']),
+    multiFieldValidator(['qrCodeForFinalProduct'], (group: FormGroup) => requiredQRCodeForFinalProduct(group), ['required']),
     multiFieldValidator(['outputSemiProduct'], (group: FormGroup) => requiredFieldIfOtherFieldHasValue(group, 'outputSemiProduct', 'type', 'PROCESSING'), ['required']),
     multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
-    multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required']),
+    multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required'])
   ],
   fields: {
     company: {
@@ -166,6 +183,9 @@ export const ApiProcessingActionValidationScheme = {
       validators: [Validators.required]
     },
     outputFinalProduct: {
+      validators: [Validators.required]
+    },
+    qrCodeForFinalProduct: {
       validators: [Validators.required]
     },
     sortOrder: {
