@@ -1492,6 +1492,7 @@
     "processingEvidenceItem.attachment-uploader.error": "{$START_TAG_SPAN} Document is required {$CLOSE_TAG_SPAN}",
     "productLabelStockProcessingOrderDetail.section.processing": "Choose activity that you want to record",
     "productLabelStockProcessingOrderDetail.processingActionForm.label": "Processing",
+    "productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label": "QR code for final product",
     "productLabelStockProcessingOrderDetail.section.input": "Material to be recorded",
     "productLabelStockProcessingOrderDetail.section.output": "Results of recording",
     "productLabelStockProcessingOrderDetail.section.processingEvidence": "Processing evidence",

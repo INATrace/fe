@@ -343,6 +343,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const inputMeasurementUnit = this.currentInputStockUnitProduct?.measurementUnitType;
       const outputMeasurementUnit = this.currentOutputStockUnitProduct?.measurementUnitType;
 
+      if (!inputMeasurementUnit || !outputMeasurementUnit) {
+        return null;
+      }
+
       if (inputMeasurementUnit.id === outputMeasurementUnit.id) { return inputMeasurementUnit; }
 
       const underlyingOutputMesUnit = outputMeasurementUnit.underlyingMeasurementUnitType;
@@ -385,6 +389,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get invalidOutputQuantityTooLargeValue() {
 
     if (this.actionType === 'SHIPMENT') {
+      return false;
+    }
+
+    if (!this.currentInputStockUnitProduct || !this.currentOutputStockUnitProduct) {
       return false;
     }
 
