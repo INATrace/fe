@@ -2934,6 +2934,9 @@
     "productLabelStakeholdersCollectors.sortOptions.municipality.name": "Municipality",
     "companyDetailFacilities.textInput.name.label": "Name of facility",
     "companyDetailFacilities.textInput.name.placeholder": "Enter name",
-    "companyDetailFacilities.textInput.name.error": "Name of facility is required"
+    "companyDetailFacilities.textInput.name.error": "Name of facility is required",
+    "productLabelFacilities.tableCol.activate": "Activate",
+    "productLabelFacilities.tableCol.deactivate": "Deactivate",
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
   }
 }

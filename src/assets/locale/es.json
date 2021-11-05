@@ -2876,6 +2876,9 @@
     "productLabelStockProcessingOrderDetail.newFinalProcessingTitle": "Añadir acción de procesamiento final",
     "orderHistoryView.tableCol.finalProduct": "Producto final",
     "companyDetailProcessingActions.singleChoice.type.generateQrCode": "Generar código QR",
-    "formatProcessingActionType.generateQrCode": "Generar código QR"
+    "formatProcessingActionType.generateQrCode": "Generar código QR",
+    "productLabelFacilities.tableCol.activate": "Activate",
+    "productLabelFacilities.tableCol.deactivate": "Deactivate",
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
   }
 }

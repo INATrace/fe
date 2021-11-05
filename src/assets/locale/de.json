@@ -2933,6 +2933,9 @@
     "productLabelStockProcessingOrderDetail.updateTransferTitle": "Transferaktion aktualisieren",
     "productLabelStockProcessingOrderDetail.updateFinalProcessingTitle": "Endgültige Verarbeitungsaktion aktualisieren",
     "productLabelStockProcessingOrderDetail.newTransferTitle": "Transfersaktion hinzufügen",
-    "productLabelStockProcessingOrderDetail.newFinalProcessingTitle": "Endverarbeitungsvorgang hinzufügen"
+    "productLabelStockProcessingOrderDetail.newFinalProcessingTitle": "Endverarbeitungsvorgang hinzufügen",
+    "productLabelFacilities.tableCol.activate": "Activate",
+    "productLabelFacilities.tableCol.deactivate": "Deactivate",
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
   }
 }
