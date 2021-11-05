@@ -23,6 +23,7 @@ import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductCompany } from './apiProductCompany';
+import { ApiProductDataSharingAgreement } from './apiProductDataSharingAgreement';
 import { ApiProductLabelValues } from './apiProductLabelValues';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
@@ -39,6 +40,10 @@ export interface ApiProduct {
     associatedCompanies?: Array<ApiProductCompany>;
     company?: ApiCompany;
     comparisonOfPrice?: ApiComparisonOfPrice;
+    /**
+     * Data sharing agreements
+     */
+    dataSharingAgreements?: Array<ApiProductDataSharingAgreement>;
     /**
      * product description
      */
@@ -103,6 +108,10 @@ export namespace ApiProduct {
         associatedCompanies = 'associatedCompanies',
         company = 'company',
         comparisonOfPrice = 'comparisonOfPrice',
+        /**
+         * Data sharing agreements
+         */
+        dataSharingAgreements = 'dataSharingAgreements',
         /**
          * product description
          */
@@ -194,6 +203,18 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiComparisonOfPrice'
+                },
+                {
+                    metadata: ApiProductDataSharingAgreement.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dataSharingAgreements',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductDataSharingAgreement&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductDataSharingAgreement'
                 },
                 {
                     isReadOnly: false,
@@ -410,6 +431,8 @@ export namespace ApiProduct {
                 ],
                 comparisonOfPrice: [
                 ],
+                dataSharingAgreements: [
+                ],
                 description: [
                 ],
                 howToUse: [
@@ -460,6 +483,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               comparisonOfPrice: {
+  //                   validators: []
+  //               },
+  //               dataSharingAgreements: {
   //                   validators: []
   //               },
   //               description: {
