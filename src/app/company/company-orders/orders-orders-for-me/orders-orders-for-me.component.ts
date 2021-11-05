@@ -11,10 +11,10 @@ import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 
 @Component({
   selector: 'app-orders-all-orders',
-  templateUrl: './orders-all-orders.component.html',
-  styleUrls: ['./orders-all-orders.component.scss']
+  templateUrl: './orders-orders-for-me.component.html',
+  styleUrls: ['./orders-orders-for-me.component.scss']
 })
-export class OrdersAllOrdersComponent extends OrdersTabComponent implements OnInit, OnDestroy {
+export class OrdersOrdersForMeComponent extends OrdersTabComponent implements OnInit, OnDestroy {
 
   rootTab = 1;
 

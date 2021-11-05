@@ -4,10 +4,6 @@
     <div class="af-form-row">
       <div class="af-form-block--c12 d-flex justify-content-between">
         <div class="title-page content-element--title">{{ title }} <span>{{ form.get('id').value }}</span></div>
-        <app-last-seen-tag *ngIf="this.update"
-                           [dateFormat]="form.get('lastChange').value"
-                           [identifier]="userLastChanged">
-        </app-last-seen-tag>
       </div>
     </div>
 
@@ -20,13 +16,13 @@
               <textinput
                       label="Order ID"
                       i18n-label="@@globalOrderEdit.textinput.orderID.label"
-                      [form]="form.get('id')"
+                      [form]="form.get('orderId')"
                       style="width: 100%"
                       placeholder="Enter id"
                       i18n-placeholder="@@globalOrderEdit.textinput.orderID.placeholder"
-                      [isInvalid]="submitted && form.get('id').invalid">
+                      [isInvalid]="submitted && form.get('orderId').invalid">
                 <ng-container *ngIf="submitted">
-                  <div *ngIf="form.get('id').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="form.get('orderId').errors as errors" class="sc-invalid-feedback">
                     <div *ngIf="errors.required" i18n="@@globalOrderEdit.textinput.orderID.error.required">
                       Order ID is required
                     </div>
@@ -77,24 +73,6 @@
 
           <div class="af-row">
             <div class="af-c12">
-              <single-choice
-                      label="Required grade"
-                      i18n-label="@@globalOrderEdit.singleChoice.quality.label"
-                      [formControlInput]="form.get('requiredGrade')"
-                      [codebookService]="gradeAbbreviationCodebook"
-                      style="min-width: 150px;"
-                      [isInvalidChoice]="submitted && form.get('requiredGrade').invalid">
-                <ng-container *ngIf="submitted">
-                  <div *ngIf="form.get('requiredGrade').errors as errors" class="sc-invalid-feedback" i18n="@@globalOrderEdit.singleChoice.quality.error">
-                    Required grade is required
-                  </div>
-                </ng-container>
-              </single-choice>
-            </div>
-          </div>
-
-          <div class="af-row">
-            <div class="af-c12">
               <checkbox-input
                       [form]="form.get('requiredWomensOnly')"
                       style="margin-bottom: 1rem; margin-top: -1rem;">
@@ -135,7 +113,7 @@
             </div>
           </div>
 
-          <div class="af-row" *ngIf="outputFacilityId">
+          <div class="af-row" *ngIf="outputFacility && form.get('orderId').value">
             <div class="af-c12">
               <list-editor *ngIf="stockOrdersListManager"
                            label="List of order items"
@@ -149,12 +127,13 @@
                   <div *ngFor="let item of orderItemsFormArray.controls; let i=index;">
                     <app-product-order-item
                             [title]="null"
-                            [outputFacilityId]="outputFacilityId"
+                            [outputFacility]="outputFacility"
                             [formControlInput]="item"
-                            [globalOrderId]="form.get('id').value"
+                            [globalOrderId]="form.get('orderId').value"
                             [isOpen]="stockOrdersListManager.isOpen(i)"
                             [listEditorManager]="this.stockOrdersListManager"
                             [companyId]="companyId"
+                            [companyCurrency]="companyCurrency"
                             [listEditorManagerPosition]="i">
                     </app-product-order-item>
                   </div>
@@ -173,9 +152,15 @@
               </list-editor>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <!-- TODO -->
-
+    <div class="af-form-row">
+      <div class="af-form-block--c6">
+        <div class="af-bottom-buttons" i18n="@@globalOrderEdit.footer.buttons">
+          <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+          <button class="btn mr-2" type="button" (click)="saveProductOrder()"><span>Save</span></button>
         </div>
       </div>
     </div>

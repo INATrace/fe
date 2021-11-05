@@ -12,6 +12,8 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
 import { ApiProduct } from '../../../../api/model/apiProduct';
+import { AuthService } from '../../../core/auth.service';
+import { ApiUserGet } from '../../../../api/model/apiUserGet';
 
 @Component({
   template: ''
@@ -28,13 +30,15 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   traders: ApiProductCompany[] = [];
 
   isOwner = false;
+  isSystemAdmin = false;
 
   constructor(
     protected productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) { }
 
   // TABS ////////////////
@@ -57,7 +61,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   ownersSection = {
     anchor: 'OWNERS',
-    title: $localize`:@@productLabelStakeholders.title.owners:Owners`
+    title: $localize`:@@productLabelStakeholders.title.owners:Product admins`
   };
 
   producersSection = {
@@ -186,6 +190,12 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     );
     this.reload();
 
+    this.authService.userProfile$.subscribe(value => {
+      if (value && value.role === ApiUserGet.RoleEnum.ADMIN) {
+        this.isSystemAdmin = true;
+      }
+    });
+
     this.setAlls();
     this.setOrganizationId();
   }
@@ -251,7 +261,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     if (type === 'farmers') { this.allFarmers = event; }
   }
 
-  async addBuyerProducerToProduct(cId, cType) {
+  async addStakeholderToProduct(cId, cType) {
     try {
       this.globalEventsManager.showLoading(true);
       this.currentProduct.associatedCompanies.push({ company: { id: cId }, type: cType });
@@ -281,7 +291,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.BUYER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.BUYER);
     }
   }
 
@@ -297,7 +307,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.IMPORTER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.IMPORTER);
     }
   }
 
@@ -313,7 +323,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.EXPORTER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.EXPORTER);
     }
   }
 
@@ -329,19 +339,19 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.PRODUCER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PRODUCER);
     }
   }
 
   async newOwner() {
     const modalRef = this.modalService.open(CompanySelectModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@productLabelStakeholders.modal.owner.title:Add owner`,
-      instructionsHtml: $localize`:@@productLabelStakeholders.modal.owner.instructionsHtml:Select owner company`
+      title: $localize`:@@productLabelStakeholders.modal.owner.title:Add product admin`,
+      instructionsHtml: $localize`:@@productLabelStakeholders.modal.owner.instructionsHtml:Select product admin company`
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.OWNER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.OWNER);
     }
   }
 
@@ -357,7 +367,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.ASSOCIATION);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.ASSOCIATION);
     }
   }
 
@@ -373,7 +383,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.PROCESSOR);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PROCESSOR);
     }
   }
 
@@ -389,12 +399,12 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addBuyerProducerToProduct(company.id, ApiProductCompany.TypeEnum.TRADER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.TRADER);
     }
   }
 
   async remove(company) {
-    if (!this.isOwner) {
+    if (!this.editable()) {
       return;
     }
     if (company.type === ApiProductCompany.TypeEnum.OWNER && this.owners.length <= 1) {
@@ -488,7 +498,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   }
 
   editable() {
-    return this.isOwner;
+    return this.isSystemAdmin;
   }
 
 }

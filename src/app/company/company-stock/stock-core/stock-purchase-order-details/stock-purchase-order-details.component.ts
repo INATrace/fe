@@ -547,7 +547,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
     const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
     if (res && res.status === StatusEnum.OK && res.data) {
-      this.measureUnit = res.data.apiMeasureUnitType.label;
+      this.measureUnit = res.data.measurementUnitType.label;
     } else {
       this.measureUnit = '-';
     }
@@ -639,7 +639,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   netWeight() {
     if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value) {
       if (this.stockOrderForm.get('tare').value) {
-        if (this.stockOrderForm.get('totalGrossQuantity').value > this.stockOrderForm.get('tare').value) {
+        if (Number(this.stockOrderForm.get('totalGrossQuantity').value) > Number(this.stockOrderForm.get('tare').value)) {
           this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
         } else {
           this.netWeightForm.setValue(Number(0).toFixed(2));

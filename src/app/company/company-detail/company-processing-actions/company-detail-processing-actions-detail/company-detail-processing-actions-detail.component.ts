@@ -202,6 +202,17 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (!this.form.get('type').value) {
       this.form.get('type').setValue('PROCESSING');
     }
+
+    if (this.form.get('valueChain').value) {
+
+      const valueChain = this.form.get('valueChain').value as ApiValueChain;
+
+      // Initialize codebook services for proc. evidence types and proc. evidence fields
+      this.processingEvidenceTypeService =
+        new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
+      this.processingEvidenceFieldService =
+        new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+    }
   }
 
   async initInitialData(){
@@ -330,14 +341,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     sp.requiredOneOfGroupIdForQuote = event;
   }
 
-  documentFormatter = (value: any) => {
-    return this.processingEvidenceTypeService.textRepresentation(value);
-  }
-
-  fieldFormatter = (value: any) => {
-    return this.processingEvidenceFieldService.textRepresentation(value);
-  }
-
   selectLanguage(lang: string) {
     this.selectedLanguage = lang;
   }
@@ -376,6 +379,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
     obj['FINAL_PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.finalProcessing:Final processing`;
     obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
+    obj['GENERATE_QR_CODE'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.generateQrCode:Generate QR code`;
     return obj;
   }
 
@@ -392,7 +396,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       return;
     }
     const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
-    return semi && semi.apiMeasureUnitType;
+    return semi && semi.measurementUnitType;
   }
 
   async saveProcessingAction() {

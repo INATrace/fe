@@ -19,7 +19,8 @@ export class AvailableSellingFacilitiesForCompany extends GeneralSifrantService<
   constructor(
     private facilityControllerService: FacilityControllerService,
     private companyId: number,
-    private semiProductId: number
+    private semiProductId?: number,
+    private finalProductId?: number
   ) {
     super();
   }
@@ -42,6 +43,7 @@ export class AvailableSellingFacilitiesForCompany extends GeneralSifrantService<
     const reqParams: ListAvailableSellingFacilitiesForCompanyUsingGET.PartialParamMap = {
       id: this.companyId,
       semiProductId: this.semiProductId,
+      finalProductId: this.finalProductId,
       ...this.requestParams
     };
 

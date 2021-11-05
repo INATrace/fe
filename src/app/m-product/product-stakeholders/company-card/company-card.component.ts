@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { ApiProductCompany } from '../../../../api/model/apiProductCompany';
 
 @Component({
   selector: 'app-company-card',
@@ -8,7 +9,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export class CompanyCardComponent implements OnInit {
 
   @Input()
-  company;
+  company: ApiProductCompany;
 
   @Input()
   owner = false;
@@ -25,7 +26,7 @@ export class CompanyCardComponent implements OnInit {
   }
 
   selectItem(item, preventEmit = false) {
-    if (!preventEmit) {
+    if (!preventEmit && this.editable) {
       this.onSelect.next(item);
     }
   }

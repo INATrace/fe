@@ -17,7 +17,14 @@
           <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name">{{ orderIdentifier(order) }}</td>
           <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">{{ order.orderType | formatStockOrderType }}</td>
           <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name">{{ farmerName(order.producerUserCustomer) }}</td>
-          <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">{{ order.semiProduct?.name }}</td>
+          <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name">
+            <ng-container *ngIf="order.semiProduct">
+              {{ order.semiProduct.name }}
+            </ng-container>
+            <ng-container *ngIf="order.finalProduct">
+              {{ order.finalProduct.name }} ({{ order.finalProduct.product.name }})
+            </ng-container>
+          </td>
           <td *ngIf="!sortOptions[6].hide" [attr.data-label]="sortOptions[6].name">{{ order.totalQuantity | number : '1.0-2' }} {{ order.measureUnitType.label }}</td>
           <td *ngIf="!sortOptions[7].hide" [attr.data-label]="sortOptions[7].name">
             {{ order.totalQuantity ? (order.totalQuantity | number : '1.0-2') : 0 }} / {{ order.fulfilledQuantity ? (order.fulfilledQuantity | number : '1.0-2') : 0 }} / {{ order.availableQuantity ? (order.availableQuantity | number : '1.0-2') : 0 }}
@@ -55,6 +62,13 @@
                  [class.enabled-action]="true">
                 Farmer profile
               </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.qr"
+                 *ngIf="this.pageListingMode !== 'PURCHASE_ORDERS' && order.qrCodeTag"
+                 (click)="openQRCodes(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                QR
+              </a>
               <a *ngIf="canDelete(order)"
                  i18n="@@productLabelPurchaseOrder.tableCol.delete"
                  (click)="delete(order)"
@@ -84,21 +98,21 @@
   </div>
 
   <div class="sub-title-page content-element--subtitle mb-2"
-      i18n="@@productLabelPurchaseOrder.aggregated.title"
-  >Summed up quantities</div>
+       i18n="@@productLabelPurchaseOrder.aggregated.title">Summed up quantities
+  </div>
   <div class="aggregated-orders">
     <table class="aggregated-orders-table">
       <thead>
-        <tr>
-          <th i18n="@@productLabelPurchaseOrder.sortOptions.semiProduct.name">Semi-product</th>
-          <th i18n="@@productLabelPurchaseOrder.aggregated.totalQuantity">Total quantity</th>
-        </tr>
+      <tr>
+        <th i18n="@@productLabelPurchaseOrder.sortOptions.semiProduct.name">Semi-product</th>
+        <th i18n="@@productLabelPurchaseOrder.aggregated.totalQuantity">Total quantity</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of aggregatedOrders">
-          <td>{{order.semiProduct}}:</td>
-          <td>{{order.amount ? (order.amount | number : '1.0-2') : 0 }} {{order.unit}}</td>
-        </tr>
+      <tr *ngFor="let order of aggregatedOrders">
+        <td>{{ order.stockUnitName }}:</td>
+        <td>{{ order.amount ? (order.amount | number : '1.0-2') : 0 }} {{ order.measureUnit }}</td>
+      </tr>
       </tbody>
     </table>
   </div>

@@ -13,7 +13,7 @@
                     </checkbox-input>
                 </td>
                 <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name"><span>{{ readablePaymentPurpose(payment.paymentPurposeType) }}</span></td>
-                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ payment.amountPaidToTheFarmer  | number : '1.0-2' }} {{ payment.currency }}</span></td>
+                <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name"><span>{{ payment.amount  | number : '1.0-2' }} {{ payment.currency }}</span></td>
                 <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name"><span>{{ payment.recipientUserCustomer ? payment.recipientUserCustomer.name + ' ' + payment.recipientUserCustomer.surname   : '' }}</span></td>
                 <td *ngIf="!sortOptions[4].hide" [attr.data-label]="sortOptions[4].name"><span>{{ payment.recipientCompany ? payment.recipientCompany.name : '' }}</span></td>
                 <td *ngIf="!sortOptions[5].hide" [attr.data-label]="sortOptions[5].name"><span>{{ formatDate(payment.productionDate) }}</span></td>
@@ -27,7 +27,7 @@
                            (click)="editPayment(payment)">
                             View
                         </a>
-                        <a class="company-action"
+                        <a *ngIf="!readOnly" class="company-action"
                            i18n="@@productLabelPayments.tableCol.delete"
                            (click)="deletePayment(payment)"
                            [class.enabled-action]="true">
@@ -55,8 +55,10 @@
     </div>
 
     <div class="sub-title-page content-element--subtitle mb-2"
-        i18n="@@productLabelPurchaseOrder.aggregated.title"
-    >Summed up quantities</div>
+         i18n="@@productLabelPurchaseOrder.aggregated.title">
+        Summed up quantities
+    </div>
+
     <div class="aggregated-orders">
         <table class="aggregated-orders-table">
             <thead>

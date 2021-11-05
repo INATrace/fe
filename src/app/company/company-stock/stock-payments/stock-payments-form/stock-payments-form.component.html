@@ -233,11 +233,11 @@
                                     placeholder="Enter amount already paid"
                                     i18n-placeholder="@@paymentForm.textinput.amountAlready.placeholder"
                                     style="width: 100%"
-                                    [form]="paymentForm.get('amountPaidToTheFarmer')"
-                                    [isInvalid]="submitted && paymentForm.get('amountPaidToTheFarmer').invalid"
+                                    [form]="paymentForm.get('amount')"
+                                    [isInvalid]="submitted && paymentForm.get('amount').invalid"
                                     [readOnly]="viewOnly">
                                 <ng-container *ngIf="submitted">
-                                    <div *ngIf="paymentForm.get('amountPaidToTheFarmer').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="paymentForm.get('amount').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@paymentForm.textinput.amountAlready.error">
                                             Amount already paid is required
                                         </div>
@@ -255,11 +255,11 @@
                                     placeholder="Enter paid amount"
                                     i18n-placeholder="@@paymentForm.textinput.amount.placeholder"
                                     style="width: 100%"
-                                    [form]="paymentForm.get('amountPaidToTheFarmer')"
-                                    [isInvalid]="submitted && paymentForm.get('amountPaidToTheFarmer').invalid"
+                                    [form]="paymentForm.get('amount')"
+                                    [isInvalid]="submitted && paymentForm.get('amount').invalid"
                                     [readOnly]="viewOnly">
                                 <ng-container *ngIf="submitted">
-                                    <div *ngIf="paymentForm.get('amountPaidToTheFarmer').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="paymentForm.get('amount').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@paymentForm.textinput.amount.error">
                                             Amount is required
                                         </div>
@@ -281,11 +281,11 @@
                                     i18n-label="@@paymentForm.textinput.amount.company.label"
                                     i18n-placeholder="@@paymentForm.textinput.amount.company.placeholder"
                                     style="width: 100%"
-                                    [form]="paymentForm.get('amountPaidToTheFarmer')"
-                                    [isInvalid]="submitted && paymentForm.get('amountPaidToTheFarmer').invalid"
+                                    [form]="paymentForm.get('amount')"
+                                    [isInvalid]="submitted && paymentForm.get('amount').invalid"
                                     [readOnly]="viewOnly">
                                 <ng-container *ngIf="submitted">
-                                    <div *ngIf="paymentForm.get('amountPaidToTheFarmer').errors as errors" class="sc-invalid-feedback">
+                                    <div *ngIf="paymentForm.get('amount').errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required" i18n="@@paymentForm.textinput.amount.company.error">
                                             Amount is required
                                         </div>

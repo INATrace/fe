@@ -80,7 +80,9 @@
                             <div class="name-sector">{{collectorForm.get('name').value}} {{collectorForm.get('surname').value}}</div>
                             <div class="location-sector">{{collectorForm.get('location.address.village').value}}, {{collectorForm.get('location.address.cell').value}}, {{collectorForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
-                                <qr-code [value]="collectorForm.get('id').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
+                                <qr-code [value]="collectorForm.get('id').value.toString()"
+                                         [foreground]="theme.primary"
+                                         [size]="qrCodeSize"></qr-code>
                             </div>
                             <div style="flex: 1 1 0"></div>
                             <div class="trademark-title">
@@ -188,20 +190,17 @@
                                      i18n-addText="@@collectorDetail.list-editor.cooperatives.addText"
                                      [invalid]="submitted && collectorForm.get('cooperatives')?.invalid">
                             <list-editor-items>
-                                <div cdkDropList
-                                     (cdkDropListDropped)="producersListManager.onDrop($event)">
-                                    <div *ngFor="let item of collectorForm.get('cooperatives').controls; let i=index;">
-                                        <app-producers-item *ngIf="codebookCoop"
-                                                            [codebookCoop]="codebookCoop"
-                                                            [assocCoop]="assocCoop"
-                                                            title=null
-                                                            [formControlInput]="item"
-                                                            [type]="'COLLECTOR'"
-                                                            [isOpen]="producersListManager.isOpen(i)"
-                                                            [listEditorManager]="this.producersListManager"
-                                                            [listEditorManagerPosition]="i">
-                                        </app-producers-item>
-                                    </div>
+                                <div *ngFor="let item of collectorForm.get('cooperatives').controls; let i=index;">
+                                    <app-producers-item *ngIf="codebookCoop"
+                                                        [codebookCoop]="codebookCoop"
+                                                        [assocCoop]="assocCoop"
+                                                        title=null
+                                                        [formControlInput]="item"
+                                                        [type]="'COLLECTOR'"
+                                                        [isOpen]="producersListManager.isOpen(i)"
+                                                        [listEditorManager]="this.producersListManager"
+                                                        [listEditorManagerPosition]="i">
+                                    </app-producers-item>
                                 </div>
                             </list-editor-items>
                             <list-editor-errors>
@@ -307,114 +306,6 @@
                         </app-datepicker>
                     </div>
                 </div>
-
-                <ng-container *ngIf="this.update">
-                    <div class="af-form-block--c6">
-                        <h2 i18n="@@collectorDetail.section.balance">Collector balance</h2>
-                        <div class="af-form-element">
-                            <textinput
-                                    [form]="openBalanceForm"
-                                    label="Open balance (RWF)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.openBalance.label"
-                                    [readOnly]="true">
-                            </textinput>
-
-                            <textinput
-                                    [form]="totalPaidCollectorForm"
-                                    label="Total paid to collector (RWF)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.totalPaidToCollector.label"
-                                    [readOnly]="true">
-                            </textinput>
-
-                            <textinput
-                                    [form]="totalBroughtCollectorForm"
-                                    label="Total brought from collector (kg)"
-                                    style="width: 100%"
-                                    i18n-label="@@collectorDetail.textinput.kgBrought.label"
-                                    [readOnly]="true">
-                            </textinput>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-
-            <div class="af-form-row" *ngIf="this.update">
-                <div class="af-form-block--c12">
-                    <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
-                    <div class="af-form-element">
-                        <ng-container *ngIf="purchaseOrders">
-                            <div class="d-flex justify-content-end">
-                                <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
-                                    <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@collectorDetail.filter.openBalanceOnly.filter">Open balance
-                                        <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
-                                            <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
-                                            </fa-icon>
-                                        </div>
-                                    </div>
-
-                                    <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@collectorDetail.filter.placeholder">
-                                        <div class="button-icon">
-                                            <span class="button-icon-shape button-icon-shape--filter"></span>
-                                        </div>
-                                        <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
-                                    </button>
-
-                                    <div class="dropdown-menu" ngbDropdownMenu>
-                                        <button *ngIf="!openBalanceOnly" ngbDropdownItem (click)="setOpenBalanceOnly(true)" i18n="@@collectorDetail.filter.openBalanceOnly.button">Open balance</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <table *ngIf="purchaseOrders && purchaseOrders.length> 0" class="af-table af-checkbox--small">
-                                <thead>
-                                <tr scope="col" result-sorter [sortOptions]="sortOptionsPO" (sortByKey)="changeSort($event)"></tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let order of purchaseOrders; index as i">
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[0].name"><span>{{formatDate(order.productionDate)}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[1].name"><span>{{order.identifier}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[2].name"><span>{{order.totalQuantity}}</span></td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPO[3].name"><span>{{order.cost}} / {{order.balance}}</span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div *ngIf="purchaseOrders && purchaseOrders.length == 0" class="no-list-results" i18n="@@collectorDetail.noPurchaseOrders">
-                                No orders found
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-            </div>
-
-            <div class="af-form-row" *ngIf="this.update">
-                <div class="af-form-block--c12">
-                    <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
-                    <div class="af-form-element">
-                        <ng-container *ngIf="payments">
-                            <table *ngIf="payments && payments.length> 0" class="af-table af-checkbox--small">
-                                <thead>
-                                <tr scope="col" result-sorter [sortOptions]="sortOptionsPay" (sortByKey)="changeSort($event, 'PAYMENT')"></tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let payment of payments; index as i">
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[0].name">{{formatDate(payment.formalCreationTime)}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[1].name">{{payment.receiptNumber}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[2].name">{{payment.paymentPurposeType}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[3].name">{{payment.amount}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[4].name">{{payment.amountPaidToTheCollector ? payment.amountPaidToTheCollector : 0}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[5].name">{{payment.queryPurchaseOrderName}}</td>
-                                    <td scope="row" [attr.data-label]="sortOptionsPay[6].name">{{payment.paymentStatus}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div *ngIf="payments && payments.length == 0" class="no-list-results" i18n="@@collectorDetail.noPayments">
-                                No payments found
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
             </div>
 
             <div class="af-form-row">
@@ -423,6 +314,45 @@
                         <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
                         <button class="btn" type="button" (click)="save()"><span>Save</span></button>
                     </div>
+                </div>
+            </div>
+
+            <div class="af-form-row" *ngIf="this.update">
+                <div class="af-form-block--c12">
+                    <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
+                        <ng-container *ngIf="purchaseOrders">
+                            <div class="counting-page content-element--counting"
+                                 i18n="@@productLabelStock.subTitle.showingPurchaseOrders">
+                                Showing {{ showedPurchaseOrders }}/{{ allPurchaseOrders }}</div>
+                            <app-stock-order-list
+                              (countAll)="onCountAllPO($event)"
+                              (showing)="onShowPO($event)"
+                              [selectedOrders]="selectedOrders"
+                              (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+                              [companyId]="companyId"
+                              [representativeOfProducerUserCustomerIdPing$]="representativeOfUserCustomerIdPing$">
+                            </app-stock-order-list>
+                        </ng-container>
+                </div>
+            </div>
+
+            <div class="af-form-row mb-5" *ngIf="this.update">
+                <div class="af-form-block--c12">
+                    <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
+                        <ng-container *ngIf="payments">
+                            <div class="counting-page content-element--counting"
+                                 i18n="@@productLabelStock.subTitle.showingPurchaseOrders">
+                                Showing {{ showedPaymentOrders }}/{{ allPaymentOrders }}</div>
+                            <app-stock-payments-list
+                              [companyId]="companyId"
+                              [representativeOfRecepientUserCustomerIdPing$]="representativeOfUserCustomerIdPing$"
+                              [selectedPayments]="selectedPayments"
+                              [currency]="company.currency.code"
+                              (selectedPaymentsChanged)="selectedIdsChanged($event)"
+                              (showing)="onShowPayments($event)"
+                              (countAll)="onCountAllPayments($event)">
+                            </app-stock-payments-list>
+                        </ng-container>
                 </div>
             </div>
         </div>

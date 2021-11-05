@@ -17,7 +17,6 @@ import { Angulartics2Module } from 'angulartics2';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ToastrModule } from 'ngx-toastr';
-import { ApiModule as ApiChainModule } from 'src/api-chain/api.module';
 import { ApiModule } from 'src/api/api.module';
 import { Configuration } from 'src/api/configuration';
 import { environment } from 'src/environments/environment';
@@ -184,7 +183,6 @@ export function getConfiguration(): Configuration {
   ],
   imports: [
     ApiModule.forRoot(getConfiguration),
-    ApiChainModule.forRoot(getConfiguration),
     BrowserModule,
     AppRoutingModule,
     ToastrModule.forRoot({

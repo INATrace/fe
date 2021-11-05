@@ -2,23 +2,21 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
-import { ProductControllerService } from 'src/api/api/productController.service';
-import { AssociatedCompaniesService } from 'src/app/shared-services/associated-companies.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { formatDateWithDotsAtHour } from 'src/shared/utils';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
-import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
-import { UserControllerService } from '../../../../../api/api/userController.service';
 import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
 import PreferredWayOfPaymentEnum = ApiStockOrder.PreferredWayOfPaymentEnum;
 import PaymentPurposeTypeEnum = ApiPayment.PaymentPurposeTypeEnum;
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
 import { Subject } from 'rxjs/internal/Subject';
+import { ConnectedCompaniesForCompanyService } from '../../../../shared-services/connected-companies-for-company.service';
+import { PaymentCurrencyCodesService } from '../../../../shared-services/payment-currency-codes.service';
 
 export enum ModeEnum {
   PURCHASE = 'PURCHASE',
@@ -74,6 +72,8 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   @Input()
   mode: ModeEnum = ModeEnum.PURCHASE;
 
+  companyId: number;
+
   readonlyPaymentType: boolean;
   uploaderLabel: string;
   confirmedAt: string;
@@ -81,7 +81,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   currency: string;
   unitLabel: string;
 
-  associatedCompaniesService: AssociatedCompaniesService;
+  associatedCompaniesService: ConnectedCompaniesForCompanyService;
   searchPreferredWayOfPayment = new FormControl(null);
 
   uploaderLabelStr = $localize`:@@paymentForm.attachment-uploader.receipt.label:Signed receipt (PDF/PNG/JPG)`;
@@ -102,19 +102,19 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   paymentPurposeTypesCodebook = EnumSifrant.fromObject(this.paymentPurposeTypes);
   codebookAdditionalProofs = EnumSifrant.fromObject(this.addProofs);
   codebookPreferredWayOfPayment = EnumSifrant.fromObject(this.preferredWayOfPaymentList);
-  codebookCurrencyCodes = EnumSifrant.fromObject(this.currencyCodes);
   
   private destroy$ = new Subject<boolean>();
 
   constructor(
       private route: ActivatedRoute,
       private companyControllerService: CompanyControllerService,
-      private stockOrderControllerService: StockOrderControllerService,
-      private productControllerService: ProductControllerService,
-      private userControllerService: UserControllerService
+      private companyController: CompanyControllerService,
+      public codebookCurrencyCodes: PaymentCurrencyCodesService
   ) { }
 
   ngOnInit(): void {
+
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
 
     this.initInitialData().then(() => {
 
@@ -138,7 +138,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
         if (this.paymentForm.get('paymentPurposeType').value === PaymentPurposeTypeEnum.FIRSTINSTALLMENT) {
           this.uploaderLabel = this.uploaderLabelRequiredStr;
         }
-
       }
 
       if (this.viewOnly) {
@@ -147,6 +146,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
         this.paymentForm.get('formalCreationTime').disable();
         this.paymentForm.get('receiptDocumentType').disable();
         this.paymentForm.get('receiptDocument').disable();
+        this.paymentForm.get('currency').disable();
 
         this.searchCompaniesForm.disable();
 
@@ -174,11 +174,10 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
             if (this.searchPreferredWayOfPayment.value === PreferredWayOfPaymentEnum.CASHVIACOLLECTOR) {
               this.paymentForm.get('amountPaidToTheCollector').setValue(this.openBalance);
             } else {
-              this.paymentForm.get('amountPaidToTheFarmer').setValue(this.openBalance);
+              this.paymentForm.get('amount').setValue(this.openBalance);
             }
           }
         }
-
       }
     });
     
@@ -195,7 +194,11 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  async initInitialData() {
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
+
+  private async initInitialData() {
 
     if (this.stockOrder) {
 
@@ -223,10 +226,11 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.associatedCompaniesService = new AssociatedCompaniesService(this.productControllerService, this.route.snapshot.params.id, null);
+    // Initialize the associated companies of the paying company (connected though the products where the paying company is a stakeholder)
+    this.associatedCompaniesService = new ConnectedCompaniesForCompanyService(this.companyController, this.companyId);
   }
 
-  async setConfirmed() {
+  private async setConfirmed() {
 
     this.confirmedAt = formatDateWithDotsAtHour(this.paymentForm.get('paymentConfirmedAtTime').value);
 
@@ -234,15 +238,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       const paymentConfirmedByUser = this.paymentForm.get('paymentConfirmedByUser').value;
       this.confirmedByUser = paymentConfirmedByUser.name + ' ' + paymentConfirmedByUser.surname;
     }
-
-    // TODO: Confirmed by company (if it is still present)
-    // const userCompanyResp = await this.companyControllerService.getCompanyUsingGET(this.paymentForm.get('paymentConfirmedByOrganization').value)
-    //     .pipe(take(1))
-    //     .toPromise();
-    //
-    // if (userCompanyResp && userCompanyResp.status === 'OK' && userCompanyResp.data) {
-    //   this.confirmedByUser += ', ' + userCompanyResp.data.name;
-    // }
   }
 
   setFarmer(event: ApiUserCustomer) {
@@ -299,10 +294,11 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
   }
 
   get totalPaid() {
+
     let totalPaid = 0;
 
-    if (this.paymentForm && this.paymentForm.get('amountPaidToTheFarmer') && this.paymentForm.get('amountPaidToTheFarmer').value) {
-      totalPaid += Number(this.paymentForm.get('amountPaidToTheFarmer').value);
+    if (this.paymentForm && this.paymentForm.get('amount') && this.paymentForm.get('amount').value) {
+      totalPaid += Number(this.paymentForm.get('amount').value);
     }
 
     if (this.paymentForm
@@ -313,6 +309,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
       totalPaid += Number(this.paymentForm.get('amountPaidToTheCollector').value);
     }
+
     return totalPaid;
   }
   
@@ -377,14 +374,6 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     return obj;
   }
 
-  get currencyCodes() {
-    const obj = {};
-    obj['EUR'] = $localize`:@@customerDetail.currencyCodes.eur:EUR`;
-    obj['USD'] = $localize`:@@customerDetail.currencyCodes.usd:USD`;
-    obj['RWF'] = $localize`:@@customerDetail.currencyCodes.rwf:RWF`;
-    return obj;
-  }
-
   get modeEnum(): typeof ModeEnum {
     return ModeEnum;
   }
@@ -393,7 +382,4 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
     return PreferredWayOfPaymentEnum;
   }
 
-  ngOnDestroy() {
-    this.destroy$.next(true);
-  }
 }

@@ -71,7 +71,7 @@ export class ApproveRejectTransactionModalComponent implements OnInit {
        await this.transactionController.approveTransactionUsingPUT(item.value.id).pipe(take(1)).toPromise();
       }
     }
-    this.activeModal.close();
+    this.activeModal.close({confirmed: true});
   }
 
   rejectTransaction(tx) {

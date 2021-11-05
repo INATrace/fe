@@ -6,8 +6,9 @@
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
-        <span *ngIf="configItemType !== 'semi-products'">{{ contentObject.code }} - {{ contentObject.label }}</span>
+        <span *ngIf="configItemType !== 'semi-products' && configItemType !== 'processing-evidence-fields'">{{ contentObject.code }} - {{ contentObject.label }}</span>
         <span *ngIf="configItemType === 'semi-products'">{{ contentObject.name }}</span>
+        <span *ngIf="configItemType === 'processing-evidence-fields'">{{ contentObject.fieldName }} - {{ contentObject.label }}</span>
       </div>
     </div>
   </tag-closed>
@@ -92,7 +93,25 @@
                 </div>
               </div>
             </ng-container>
+          </single-choice>
+        </ng-container>
 
+        <ng-container *ngIf="configItemType === 'processing-evidence-fields'">
+          <single-choice
+                  label="Processing evidence field"
+                  i18n-label="@@valueChainDetail.section.processingEvidenceFields.add.label"
+                  [formControlInput]="configItemForm"
+                  [codebookService]="procEvidenceFieldsCodebook"
+                  [isInvalidChoice]="submitted && configItemForm.invalid"
+                  [readonly]="readOnly"
+                  (onChange)="setSelectedValue($event)">
+            <ng-container *ngIf="submitted">
+              <div *ngIf="configItemForm.errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@valueChainDetail.section.processingEvidenceFields.add.error">
+                  Processing evidence field is required
+                </div>
+              </div>
+            </ng-container>
           </single-choice>
         </ng-container>
 

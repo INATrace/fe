@@ -93,11 +93,11 @@
         <single-choice
                 label="Measurement unit type"
                 i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
-                [formControlInput]="form.get('apiMeasureUnitType')"
+                [formControlInput]="form.get('measurementUnitType')"
                 [codebookService]="activeMeasureUnitTypeService"
-                [isInvalidChoice]="submitted && form.get('apiMeasureUnitType').invalid">
+                [isInvalidChoice]="submitted && form.get('measurementUnitType').invalid">
           <ng-container *ngIf="submitted">
-            <div *ngIf="form.get('apiMeasureUnitType').errors as errors" class="sc-invalid-feedback">
+            <div *ngIf="form.get('measurementUnitType').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@semiProductDetail.singleChoice.measurementUnit.error.requred">
                 Measure unit is required
               </div>
@@ -149,6 +149,7 @@
         </textinput>
 
         <textinput
+                *ngIf="this.type !== 'processing-evidence-fields' && this.type !== 'processing-evidence-types'"
                 hideAsterisk="true"
                 [form]="form.get('label')"
                 label="Label"
@@ -189,6 +190,63 @@
       </ng-container>
 
       <ng-container *ngIf="this.type === 'processing-evidence-types'">
+        <small i18n="@@semiProductDetail.hint.translations">
+          Specify name in English and add translations for all used languages.
+        </small>
+
+        <div class="d-flex af-translation-language">
+          <div (click)="selectLanguage(languageEnum.EN)"
+               [ngClass]="selectedLanguage === languageEnum.EN
+                                  ? 'af-translation-language--selected'
+                                  : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
+                                      ? 'af-translation-language--error'
+                                      : '')">
+            <img src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Selected EN lang">
+            <span>EN</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.DE)"
+               [ngClass]="selectedLanguage === languageEnum.DE ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+            <span>DE</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.RW)"
+               [ngClass]="selectedLanguage === languageEnum.RW ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+            <span>RW</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.ES)"
+               [ngClass]="selectedLanguage === languageEnum.ES ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
+            <span>ES</span>
+          </div>
+        </div>
+
+        <div class="spacer-title-section"></div>
+
+        <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
+          <ng-container *ngIf="translation.value.language === selectedLanguage">
+            <textinput
+                    label="Label"
+                    placeholder="Enter label"
+                    i18n-label="@@facilityTypeDetail.textinput.label.label"
+                    i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
+                    [form]="this.form.get('translations.' + i + '.label')"
+                    [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.label').value"
+                    [markRequired]="translation.value.language === languageEnum.EN"
+                    style="width: 100%">
+              <ng-container *ngIf="submitted && translation.value.language === languageEnum.EN && !this.form.get('translations.' + i + '.label').value">
+                <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                        <span i18n="@@facilityTypeDetail.textinput.label.error">
+                          Label is required
+                        </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+          </ng-container>
+        </ng-container>
+
         <single-choice
           label="Type"
           i18n-label="@@productLabelProcessingAction.transactionType.label"
@@ -227,6 +285,62 @@
       </ng-container>
 
       <ng-container *ngIf="this.type === 'processing-evidence-fields'">
+        <small i18n="@@semiProductDetail.hint.translations">
+          Specify name in English and add translations for all used languages.
+        </small>
+
+        <div class="d-flex af-translation-language">
+          <div (click)="selectLanguage(languageEnum.EN)"
+               [ngClass]="selectedLanguage === languageEnum.EN
+                                  ? 'af-translation-language--selected'
+                                  : (submitted && this.form.get('translations').errors && this.form.get('translations').errors.required
+                                      ? 'af-translation-language--error'
+                                      : '')">
+            <img src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Selected EN lang">
+            <span>EN</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.DE)"
+               [ngClass]="selectedLanguage === languageEnum.DE ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
+            <span>DE</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.RW)"
+               [ngClass]="selectedLanguage === languageEnum.RW ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
+            <span>RW</span>
+          </div>
+          <div (click)="selectLanguage(languageEnum.ES)"
+               [ngClass]="selectedLanguage === languageEnum.ES ? 'af-translation-language--selected' : ''">
+            <img src="../../../assets/icons/icon-flag--spain.svg" alt="Select ES lang">
+            <span>ES</span>
+          </div>
+        </div>
+
+        <div class="spacer-title-section"></div>
+
+        <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
+          <ng-container *ngIf="translation.value.language === selectedLanguage">
+            <textinput
+                    label="Label"
+                    placeholder="Enter label"
+                    i18n-label="@@facilityTypeDetail.textinput.label.label"
+                    i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
+                    [form]="this.form.get('translations.' + i + '.label')"
+                    [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.label').value"
+                    [markRequired]="translation.value.language === languageEnum.EN"
+                    style="width: 100%">
+              <ng-container *ngIf="submitted && translation.value.language === languageEnum.EN && !this.form.get('translations.' + i + '.label').value">
+                <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required">
+                        <span i18n="@@facilityTypeDetail.textinput.label.error">
+                          Label is required
+                        </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+          </ng-container>
+        </ng-container>
 
         <textinput
                 [form]="form.get('fieldName')"

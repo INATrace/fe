@@ -7,6 +7,9 @@ export const ApiProductOrderValidationScheme = {
   validators: [],
   fields: {
     id: {
+      validators: []
+    },
+    orderId: {
       validators: [Validators.required]
     },
     deliveryDeadline: {
@@ -27,9 +30,6 @@ export const ApiProductOrderValidationScheme = {
       validators: []
     },
     customer: {
-      validators: [Validators.required]
-    },
-    requiredGrade: {
       validators: [Validators.required]
     },
   }

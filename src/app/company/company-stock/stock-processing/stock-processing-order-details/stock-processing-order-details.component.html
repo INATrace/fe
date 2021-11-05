@@ -17,6 +17,7 @@
         <div class="af-form-block--c6">
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
           <div class="af-form-element">
+
             <div class="af-row">
               <div class="af-c12">
                 <single-choice
@@ -36,6 +37,19 @@
                 </single-choice>
               </div>
             </div>
+
+            <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
+              <div class="af-c12">
+                <textinput
+                        [form]="qrCodeForFinalProductForm"
+                        label="QR code for final product"
+                        i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
+                        style="width: 100%"
+                        [readOnly]="true">
+                </textinput>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -73,19 +87,6 @@
                         Input facility is required
                       </div>
                     </ng-container>
-                  </single-choice>
-                </div>
-              </div>
-
-              <!-- SEMI-RPDOCUT SELECTION DROPDOWN -->
-              <div class="af-row" *ngIf="showFilterSemiProduct">
-                <div class="af-c12">
-                  <single-choice
-                          label="Select semi-product"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.filterSemiProduct.label"
-                          [formControlInput]="filterSemiProduct"
-                          [codebookService]="semiProductsInFacility"
-                          (onChange)="selectedSemiProductChange($event)">
                   </single-choice>
                 </div>
               </div>
@@ -169,8 +170,16 @@
                       <label class="ml-1">Existing transactions</label>
                       <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
                         <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
-                          <div class="af-c9 pl-3">{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})
-                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{tx.rejectComment}}</div>
+                          <div class="af-c9 pl-3">
+                            <div>
+                              <span>{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
+                              <span *ngIf="inputStockOrder.qrCodeTag"
+                                    (click)="openInputStockOrderQRCode(inputStockOrder)"
+                                    class="cursor-pointer">
+                                <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                              </span>
+                            </div>
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
                           </div>
                           <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
 
@@ -188,18 +197,18 @@
                 </div>
 
                 <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputSemiProductsInputSemiProductsLength > 0">
+                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength > 0">
                   <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
                   <div class="af-c12" style="margin-top: -1rem;">
                     <checkbox-input (onClick)="selectAll()" [form]="cbSelectAllForm" [disabled]="disabledLeftFields" style="margin-bottom: 1rem; margin-top: -1rem;">
                       <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
-                        Select all ({{ this.translateName(currentInputSemiProduct) }})
+                        Select all ({{ currentInputStockUnitProduct.name }})
                       </checkbox-input-rich-label>
                     </checkbox-input>
                   </div>
                 </div>
 
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputSemiProductsInputSemiProductsLength == 0">
+                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength == 0">
                   <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
                 </div>
 
@@ -215,11 +224,16 @@
                         {{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})
                       </ng-container>
                       <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
-                        {{ item.identifier }} {{ item.internalLotNumber }}
+                        <span>{{ item.identifier }} {{ item.internalLotNumber }}</span>
+                        <span *ngIf="item.qrCodeTag"
+                              (click)="openInputStockOrderQRCode(item)"
+                              class="cursor-pointer">
+                          <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                        </span>
                       </ng-container>
                     </div>
                     <div class="af-c3 text-right">
-                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputSemiProduct.apiMeasureUnitType.label }}
+                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnitProduct.measurementUnitType.label }}
                     </div>
                   </div>
                 </ng-container>
@@ -338,14 +352,13 @@
                 </div>
               </div>
 
-              <!-- THE OUTPUT SEMI-PRODUCT -->
+              <!-- THE OUTPUT STOCK UNIT -->
               <div class="af-row">
                 <div class="af-c12">
                   <textinput
-                          [form]="currentOutputSemiProductNameForm"
-                          label="Semi-product type"
+                          [form]="currentOutputStockUnitNameForm"
+                          [label]="outputStockUnitLabel"
                           style="width: 100%"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.semiProductType.label"
                           [readOnly]="true">
                   </textinput>
                 </div>
@@ -396,7 +409,8 @@
                             Quantity is too small. The sum of input transactions is {{inputQuantity}}.
                           </div>
                         </div>
-                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)" i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
+                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)"
+                             i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
                           Quantity is required
                         </div>
                       </ng-container>

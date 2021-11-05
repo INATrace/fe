@@ -11,7 +11,7 @@ import { SortOption } from '../../../../shared/result-sorter/result-sorter-types
 import { ApiPaginatedResponseApiPayment } from '../../../../../api/model/apiPaginatedResponseApiPayment';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { DeliveryDates } from '../../stock-core/stock-core-tab/stock-core-tab.component';
-import {ModeEnum} from '../stock-payments-form/stock-payments-form.component';
+import { ModeEnum } from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginatedListApiPayment';
 
@@ -22,14 +22,6 @@ import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginate
   styleUrls: ['./stock-payments-list.component.scss']
 })
 export class StockPaymentsListComponent implements OnInit, OnDestroy {
-
-  constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      protected globalEventManager: GlobalEventManagerService,
-      private authService: AuthService,
-      private paymentControllerService: PaymentControllerService
-  ) { }
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -54,6 +46,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
 
   @Input()
   farmerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
+  representativeOfRecepientUserCustomerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
+  readOnly = false;
 
   @Output()
   showing = new EventEmitter<number>();
@@ -83,6 +81,14 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   allSelected = false;
   payments$: Observable<ApiPaginatedListApiPayment>;
 
+  constructor(
+      private route: ActivatedRoute,
+      private router: Router,
+      protected globalEventManager: GlobalEventManagerService,
+      private authService: AuthService,
+      private paymentControllerService: PaymentControllerService
+  ) { }
+
   ngOnInit(): void {
 
     this.clearCheckboxesSubscription = this.clickClearCheckboxesPing$.subscribe(val => {
@@ -99,10 +105,11 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.wayOfPaymentPing$,
       this.farmerIdPing$,
+      this.representativeOfRecepientUserCustomerIdPing$,
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting, wayOfPayment, farmerId, deliveryDates, query]) => {
+        map(([ping, page, sorting, wayOfPayment, farmerId, representativeOfRecepientUserCustomerId, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
@@ -111,7 +118,8 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
             query: query ? query : null,
-            farmerId
+            farmerId,
+            representativeOfRecepientUserCustomerId
           };
         }),
         tap(() => this.globalEventManager.showLoading(true)),
@@ -175,7 +183,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
         inactive: true
       },
       {
-        key: 'amountPaidToTheFarmer',
+        key: 'amount',
         name: $localize`:@@productLabelPayments.sortOptions.amount.name:Amount paid to the farmer`,
         inactive: true,
         hide: false
@@ -223,8 +231,12 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  editPayment(payment) {
-    this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
+  editPayment(payment: ApiPayment) {
+    if (payment.recipientType === 'USER_CUSTOMER') {
+      this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.PURCHASE]).then();
+    } else {
+      this.router.navigate(['my-stock', 'payments', payment.id, 'update', ModeEnum.CUSTOMER]).then();
+    }
   }
 
   async deletePayment(entity) {
@@ -263,12 +275,6 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.reloadPage();
     }
   }
-
-//   totalPaid(preferredWayOfPayment, toFarmer, toCollector) {
-//     if (preferredWayOfPayment === 'CASH_VIA_COLLECTOR') { return toFarmer; }
-//     if (toCollector) { return toFarmer + toCollector; }
-//     return toFarmer;
-//   }
 
   changeSort(event) {
     if (event.key === 'cb') {
@@ -374,7 +380,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   
   calculateAggregatedTotalPaid(items: ApiPayment[]): number {
     return items.reduce((acc: number, item: ApiPayment) => {
-      return item.amountPaidToTheFarmer + acc;
+      return item.amount + acc;
     }, 0);
   }
 

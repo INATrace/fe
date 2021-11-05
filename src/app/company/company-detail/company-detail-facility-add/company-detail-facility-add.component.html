@@ -74,19 +74,18 @@
                         <ng-container *ngFor="let translation of this.form.get('translations')['controls']; index as i">
                             <ng-container *ngIf="translation.value.language === selectedLanguage">
                                 <textinput
-                                        label="Name of process"
+                                        label="Name of facility"
                                         placeholder="Enter name"
-                                        i18n-label="@@companyDetailProcessingActions.textInput.name.label"
-                                        i18n-placeholder="@@companyDetailProcessingActions.textInput.name.helpText"
+                                        i18n-label="@@companyDetailFacilities.textInput.name.label"
+                                        i18n-placeholder="@@companyDetailFacilities.textInput.name.placeholder"
                                         [form]="this.form.get('translations.' + i + '.name')"
                                         [isInvalid]="translation.value.language === 'EN' && submitted && !this.form.get('translations.' + i + '.name').value"
                                         style="width: 100%">
                                     <ng-container *ngIf="submitted && translation.value.language === 'EN' && !this.form.get('translations.' + i + '.name').value">
                                         <div *ngIf="this.form.get('translations').errors as errors" class="sc-invalid-feedback">
-                                            <div *ngIf="errors.required"
-                                                 i18n-label="@@companyDetailProcessingActions.textInput.name.error">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailFacilities.textInput.name.error">
                                                 <span>
-                                                  Name of process is required
+                                                  Name of facility is required
                                                 </span>
                                             </div>
                                         </div>

@@ -13,10 +13,12 @@
                         <span>{{ pa?.type | formatProcessingActionType }}</span>
                     </td>
                     <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name">
-                        <span>{{ pa.inputSemiProduct.name }}</span>
+                        <span *ngIf="pa.inputSemiProduct">{{ pa.inputSemiProduct.name }}</span>
+                        <span *ngIf="pa.inputFinalProduct">{{ pa.inputFinalProduct.name }} ({{ pa.inputFinalProduct.product.name }})</span>
                     </td>
                     <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">
-                        <span>{{ pa.outputSemiProduct ? pa.outputSemiProduct.name : '/' }}</span>
+                        <span *ngIf="pa.outputSemiProduct">{{ pa.outputSemiProduct.name }}</span>
+                        <span *ngIf="pa.outputFinalProduct">{{ pa.outputFinalProduct.name }} ({{ pa.outputFinalProduct.product.name }})</span>
                     </td>
                     <td [attr.data-label]="sortOptions[4].name">
                         <span>
@@ -53,5 +55,4 @@
                 [rotate]="true">
         </ngb-pagination>
     </div>
-    <pre *ngIf="processingActionToShow">{{processingActionToShow | json}}</pre>
 </ng-container>

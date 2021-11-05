@@ -1,6 +1,4 @@
-
 $card-bg: white;
-
 
 // moving stuff from tmp.css
 
@@ -8,7 +6,7 @@ $card-bg: white;
   &-box {
     background: $card-bg;
     width: 100%;
-    max-height:18rem;
+    height: 15rem;
     margin-bottom: 2rem;
   }
 
@@ -23,7 +21,7 @@ $card-bg: white;
 
   &-img-top {
     width: 100%;
-    max-height: 28vh;
+    height: 12rem;
     object-fit: cover;
   }
 
@@ -31,6 +29,7 @@ $card-bg: white;
     flex: 1 1 auto;
     padding: 1rem;
   }
+
   &-text {
     h5 {
       font-size: 14px;

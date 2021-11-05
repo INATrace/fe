@@ -1,5 +1,5 @@
 export interface AggregatedStockItem {
-    semiProduct: string;
+    stockUnitName: string;
     amount: number;
-    unit: string;
+    measureUnit: string;
 }

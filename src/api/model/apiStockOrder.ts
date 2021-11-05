@@ -22,6 +22,7 @@ import { ApiActivityProof } from './apiActivityProof';
 import { ApiCompany } from './apiCompany';
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
+import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingOrder } from './apiProcessingOrder';
 import { ApiProductOrder } from './apiProductOrder';
@@ -60,6 +61,10 @@ export interface ApiStockOrder {
     cost?: number;
     createdBy?: ApiUser;
     /**
+     * Timestamp indicates when stock order have been created
+     */
+    creationTimestamp?: Date;
+    /**
      * ID of the user who has created the stock order
      */
     creatorId?: number;
@@ -67,6 +72,10 @@ export interface ApiStockOrder {
      * Currency
      */
     currency?: string;
+    /**
+     * Currency for price per unit for end customer
+     */
+    currencyForEndCustomer?: string;
     /**
      * Damaged price deduction
      */
@@ -76,6 +85,7 @@ export interface ApiStockOrder {
      */
     deliveryTime?: Date;
     facility?: ApiFacility;
+    finalProduct?: ApiFinalProduct;
     /**
      * Fulfilled quantity
      */
@@ -122,6 +132,10 @@ export interface ApiStockOrder {
      * Price per unit
      */
     pricePerUnit?: number;
+    /**
+     * Price per unit for end customer
+     */
+    pricePerUnitForEndCustomer?: number;
     processingOrder?: ApiProcessingOrder;
     producerUserCustomer?: ApiUserCustomer;
     productOrder?: ApiProductOrder;
@@ -131,6 +145,10 @@ export interface ApiStockOrder {
     productionDate?: Date;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
+    /**
+     * Generated UUID tag for this stock order QR code
+     */
+    qrCodeTag?: string;
     quoteCompany?: ApiCompany;
     quoteFacility?: ApiFacility;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
@@ -203,6 +221,10 @@ export namespace ApiStockOrder {
         cost = 'cost',
         createdBy = 'createdBy',
         /**
+         * Timestamp indicates when stock order have been created
+         */
+        creationTimestamp = 'creationTimestamp',
+        /**
          * ID of the user who has created the stock order
          */
         creatorId = 'creatorId',
@@ -210,6 +232,10 @@ export namespace ApiStockOrder {
          * Currency
          */
         currency = 'currency',
+        /**
+         * Currency for price per unit for end customer
+         */
+        currencyForEndCustomer = 'currencyForEndCustomer',
         /**
          * Damaged price deduction
          */
@@ -219,6 +245,7 @@ export namespace ApiStockOrder {
          */
         deliveryTime = 'deliveryTime',
         facility = 'facility',
+        finalProduct = 'finalProduct',
         /**
          * Fulfilled quantity
          */
@@ -265,6 +292,10 @@ export namespace ApiStockOrder {
          * Price per unit
          */
         pricePerUnit = 'pricePerUnit',
+        /**
+         * Price per unit for end customer
+         */
+        pricePerUnitForEndCustomer = 'pricePerUnitForEndCustomer',
         processingOrder = 'processingOrder',
         producerUserCustomer = 'producerUserCustomer',
         productOrder = 'productOrder',
@@ -274,6 +305,10 @@ export namespace ApiStockOrder {
         productionDate = 'productionDate',
         productionLocation = 'productionLocation',
         purchaseOrder = 'purchaseOrder',
+        /**
+         * Generated UUID tag for this stock order QR code
+         */
+        qrCodeTag = 'qrCodeTag',
         quoteCompany = 'quoteCompany',
         quoteFacility = 'quoteFacility',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
@@ -448,6 +483,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'creatorId',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -460,6 +506,17 @@ export namespace ApiStockOrder {
                     isEnum: false,
                     required: false,
                     name: 'currency',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currencyForEndCustomer',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -499,6 +556,18 @@ export namespace ApiStockOrder {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiFacility'
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'finalProduct',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
                 },
                 {
                     isReadOnly: false,
@@ -648,6 +717,17 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'pricePerUnitForEndCustomer',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProcessingOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -713,6 +793,17 @@ export namespace ApiStockOrder {
                     name: 'purchaseOrder',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qrCodeTag',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -887,15 +978,21 @@ export namespace ApiStockOrder {
                 ],
                 createdBy: [
                 ],
+                creationTimestamp: [
+                ],
                 creatorId: [
                 ],
                 currency: [
+                ],
+                currencyForEndCustomer: [
                 ],
                 damagedPriceDeduction: [
                 ],
                 deliveryTime: [
                 ],
                 facility: [
+                ],
+                finalProduct: [
                 ],
                 fulfilledQuantity: [
                 ],
@@ -923,6 +1020,8 @@ export namespace ApiStockOrder {
                 ],
                 pricePerUnit: [
                 ],
+                pricePerUnitForEndCustomer: [
+                ],
                 processingOrder: [
                 ],
                 producerUserCustomer: [
@@ -934,6 +1033,8 @@ export namespace ApiStockOrder {
                 productionLocation: [
                 ],
                 purchaseOrder: [
+                ],
+                qrCodeTag: [
                 ],
                 quoteCompany: [
                 ],
@@ -995,10 +1096,16 @@ export namespace ApiStockOrder {
   //               createdBy: {
   //                   validators: []
   //               },
+  //               creationTimestamp: {
+  //                   validators: []
+  //               },
   //               creatorId: {
   //                   validators: []
   //               },
   //               currency: {
+  //                   validators: []
+  //               },
+  //               currencyForEndCustomer: {
   //                   validators: []
   //               },
   //               damagedPriceDeduction: {
@@ -1008,6 +1115,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               facility: {
+  //                   validators: []
+  //               },
+  //               finalProduct: {
   //                   validators: []
   //               },
   //               fulfilledQuantity: {
@@ -1049,6 +1159,9 @@ export namespace ApiStockOrder {
   //               pricePerUnit: {
   //                   validators: []
   //               },
+  //               pricePerUnitForEndCustomer: {
+  //                   validators: []
+  //               },
   //               processingOrder: {
   //                   validators: []
   //               },
@@ -1065,6 +1178,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               purchaseOrder: {
+  //                   validators: []
+  //               },
+  //               qrCodeTag: {
   //                   validators: []
   //               },
   //               quoteCompany: {

@@ -2,14 +2,16 @@
 
     <app-company-left-panel></app-company-left-panel>
 
-    <div class="main" *ngIf="this.isAuthRoleToSeeProcessing">
+    <div class="main" *ngIf="this.isAuthRoleToSeePayments">
 
         <div class="main-inside-top content-element">
+
+            <!-- PAYMENTS -->
 
             <div class="d-flex justify-content-between content-element--row1">
                 <div class="title-page content-element--title"
                      i18n="@@productLabelStock.title.payments">Payments</div>
-                <button class="btn btn-solid round btn-table-new content-element--btn"
+                <button *ngIf="this.isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
                         (click)="newPayment()"
                         i18n="@@productLabelStock.button.newPayment">
                     <span>+ Add payment</span>
@@ -19,8 +21,14 @@
             <div class="d-flex justify-content-between main-inside-top--row2">
 
                 <div>
-                    <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfPayments">List of payments</div>
-                    <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingPayments">Showing {{ showedPayments }}/{{ allPayments }}</div>
+                    <div class="sub-title-page content-element--subtitle"
+                         i18n="@@productLabelStock.subTitle.listOfPayments">
+                        List of payments
+                    </div>
+                    <div class="counting-page content-element--counting"
+                         i18n="@@productLabelStock.subTitle.showingPayments">
+                        Showing {{ showedPayments }}/{{ allPayments }}
+                    </div>
                 </div>
 
                 <div class="d-flex align-items-top">
@@ -90,13 +98,6 @@
                         (onChange)="onFilterDateRangeChange()"
                         style="width: 130px">
                 </app-datepicker>
-
-<!--                <button style="margin-top: 1.7rem"-->
-<!--                        class="af-actions-btn"-->
-<!--                        [class.af-actions-btn&#45;&#45;disabled]="selectedOrders.length === 0"-->
-<!--                        (click)="selectedOrders.length > 0 && clickClearCheckboxesPing$.next(true)">-->
-<!--                    <span class="af-actions-btn-label" i18n="@@productLabelStock.button.clearCheckbox">Clear checkboxes</span>-->
-<!--                </button>-->
             </div>
 
             <app-stock-payments-list
@@ -109,8 +110,41 @@
                     [selectedPayments]="selectedPayments"
                     (selectedPaymentsChanged)="selectedIdsChanged($event)"
                     (showing)="onShowPayments($event)"
-                    (countAll)="onCountAllPayments($event)">
+                    (countAll)="onCountAllPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
             </app-stock-payments-list>
+
+
+            <!-- BULK PAYMENTS -->
+
+            <div class="spacer-between-sections"></div>
+
+            <div class="d-flex justify-content-between content-element--row1">
+                <div class="title-page content-element--title"
+                     i18n="@@productLabelStock.title.bulkPayments">
+                    Bulk payments
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between main-inside-top--row2">
+                <div>
+                    <div class="sub-title-page content-element--subtitle"
+                         i18n="@@productLabelStock.subTitle.listOfBulkPayments">
+                        List of bulk payments
+                    </div>
+                    <div class="counting-page content-element--counting"
+                         i18n="@@productLabelStock.subTitle.showingBulkPayments">
+                        Showing {{showedBulkPayments}}/{{allBulkPayments}}
+                    </div>
+                </div>
+            </div>
+
+            <app-stock-payments-bulk-list
+                    [companyId]="companyId"
+                    (showing)="onShowBulkPayments($event)"
+                    (countAll)="onCountAllBulkPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
+            </app-stock-payments-bulk-list>
 
         </div>
     </div>

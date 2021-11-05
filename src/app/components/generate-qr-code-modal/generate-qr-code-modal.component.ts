@@ -16,77 +16,50 @@ import { environment } from 'src/environments/environment';
 export class GenerateQRCodeModalComponent implements OnInit {
 
   @Input()
-  stockOrderId: string
-
-  @Input()
-  productId
-  chainProduct: ChainProduct;
+  qrCodeTag: string;
 
   title = $localize`:@@generateQRCode.title.orderItemQRCode:Order item QR code`;
-  // instructionsHtml = $localize`:@@generateQRCode.instructionsHtml:Select a company you would like to continue with:`;
+
+  languageCode;
+  qrCodeLanguage = null;
+
+  qrCodeSize = 200;
 
   constructor(
-    public activeModal: NgbActiveModal,
-    private route: ActivatedRoute,
-    private productService: ProductControllerService,
-    private chainProductService: ProductService
+    public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
-    this.initProduct()
+    this.initProduct().then();
   }
 
-  languageCode;
-  labelEntry;
-  uuid;
-  qrCodeLanguage = null
-
   async initProduct() {
-    let resp = await this.chainProductService.getProductByAFId(this.productId).pipe(take(1)).toPromise()
-    if (resp && resp.status === 'OK') {
-      this.chainProduct = resp.data
-    }
-    // this.languageCode = LanguageCodeHelper.getCurrentLocale().toLowerCase();
-    this.languageCode = "de"; // set de as defualt
-    this.labelEntry = this.chainProduct.labels.find(label => {
-      return !!label.fields.find(x => x.name === 'settings.language' && ((x as any).value as string).toLowerCase() === this.languageCode)
-    })
-    if (this.labelEntry) {
-      this.uuid = this.labelEntry.uuid
-    }
-    this.qrCodeLanguage = this.languageCode
+
+    this.languageCode = 'en';
+    this.qrCodeLanguage = this.languageCode;
   }
 
   cancel() {
-    this.activeModal.close()
+    this.activeModal.close();
   }
 
   onConfirm() {
-    this.activeModal.close()
+    this.activeModal.close();
   }
 
   get qrCodeString() {
-    if (!this.uuid || !this.qrCodeLanguage || !this.stockOrderId) return null
-    if (this.qrCodeLanguage === 'de') return environment.qrCodeBaseUrlDE + this.uuid + '/' + this.stockOrderId
-    if (this.qrCodeLanguage === 'en') return environment.qrCodeBaseUrlEN + this.uuid + '/' + this.stockOrderId
+
+    if (!this.qrCodeLanguage || !this.qrCodeTag) {
+      return null;
+    }
+
+    if (this.qrCodeLanguage === 'de') { return environment.qrCodeBaseUrlDE + '/' + this.qrCodeTag; }
+    if (this.qrCodeLanguage === 'en') { return environment.qrCodeBaseUrlEN + '/' + this.qrCodeTag; }
   }
 
   setQRCodeLanguage(lang: string) {
-    this.qrCodeLanguage = lang
-    this.labelEntry = this.chainProduct.labels.find(label => {
-      return !!label.fields.find(x => x.name === 'settings.language' && ((x as any).value as string).toLowerCase() === this.qrCodeLanguage)
-    })
-    if (this.labelEntry) {
-      this.uuid = this.labelEntry.uuid
-    }
-
-    // let labelEntries = this.chainProduct.labels.filter(label => {
-    //   return !!label.fields.find(x => x.name === 'settings.language' && ((x as any).value as string).toLowerCase() === this.qrCodeLanguage)
-    // })
-    // this.uuid = labelEntries[0].uuid
+    this.qrCodeLanguage = lang;
   }
-
-  qrCodeSize = 210;
 
   copyToClipboard() {
     document.execCommand('copy');

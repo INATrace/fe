@@ -1382,6 +1382,16 @@
             }
           },
           {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
@@ -1508,6 +1518,16 @@
             "description": "Semi product ID",
             "in": "query",
             "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
             "required": false,
             "schema": {
               "format": "int64",
@@ -2483,6 +2503,16 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "Search by representative of farmer id",
+            "in": "query",
+            "name": "representativeOfRecepientUserCustomerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -2861,6 +2891,31 @@
             }
           },
           {
+            "description": "Processing action type",
+            "in": "query",
+            "name": "actionType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "PROCESSING",
+                "FINAL_PROCESSING",
+                "SHIPMENT",
+                "TRANSFER",
+                "GENERATE_QR_CODE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only final product actions",
+            "in": "query",
+            "name": "onlyFinalProducts",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
             "description": "language",
             "in": "header",
             "name": "language",
@@ -3175,6 +3230,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3266,6 +3337,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3329,6 +3416,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3443,6 +3546,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3534,6 +3653,22 @@
               ],
               "type": "string"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -3597,6 +3732,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -3847,7 +3998,25 @@
       }
     },
     "/api/chain/product-order": {
-      "put": {
+      "post": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -3863,7 +4032,7 @@
         "tags": [
           "product-order-controller"
         ],
-        "operationId": "createOrUpdateProductOrderUsingPUT",
+        "operationId": "createProductOrderUsingPOST",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3875,7 +4044,7 @@
           "description": "apiProductOrder",
           "required": true
         },
-        "summary": "Create or update product order. If the ID is provided, then the entity with the provided ID is updated."
+        "summary": "Create product order."
       }
     },
     "/api/chain/product-order/{id}": {
@@ -4346,6 +4515,113 @@
         "summary": "Get a paginated list of stock orders."
       }
     },
+    "/api/chain/stock-order/list/aggregated-history/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrderAggregatedHistory_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderAggregatedHistoryUsingGET",
+        "summary": "getStockOrderAggregatedHistory"
+      }
+    },
     "/api/chain/stock-order/list/company/{companyId}": {
       "get": {
         "parameters": [
@@ -4421,6 +4697,16 @@
             "description": "Farmer (UserCustomer) ID",
             "in": "query",
             "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Representative of farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "representativeOfProducerUserCustomerId",
             "required": false,
             "schema": {
               "format": "int64",
@@ -5041,7 +5327,7 @@
         "summary": "Get a paginated list of stock orders by facility ID."
       }
     },
-    "/api/chain/stock-order/list/facility/{facilityId}/semi-product/{semiProductId}/available": {
+    "/api/chain/stock-order/list/facility/{facilityId}/available": {
       "get": {
         "parameters": [
           {
@@ -5113,10 +5399,20 @@
             }
           },
           {
-            "description": "SemiProduct ID",
-            "in": "path",
+            "description": "Semi-product ID",
+            "in": "query",
             "name": "semiProductId",
-            "required": true,
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "query",
+            "name": "finalProductId",
+            "required": false,
             "schema": {
               "format": "int64",
               "type": "integer"
@@ -5183,8 +5479,8 @@
         "tags": [
           "stock-order-controller"
         ],
-        "operationId": "getAvailableStockForSemiProductInFacilityUsingGET",
-        "summary": "Get a paginated list of stock orders for provided semi product ID and facility ID."
+        "operationId": "getAvailableStockForStockUnitInFacilityUsingGET",
+        "summary": "Get a paginated list of stock orders for provided facility ID and semi-product or final product ID."
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -6884,7 +7180,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                  "$ref": "#/components/schemas/ApiUserCustomerImportResponse"
                 }
               }
             },
@@ -7082,6 +7378,97 @@
         ],
         "operationId": "getUserCustomerUsingGET",
         "summary": "Get user customer by id"
+      }
+    },
+    "/api/company/{id}/connected-companies": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiCompanyListResponse_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getConnectedCompaniesUsingGET",
+        "summary": "Get list of conneccted companies for the company with the given ID"
       }
     },
     "/api/final-product/company/{companyId}": {
@@ -10030,9 +10417,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10042,16 +10432,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10061,16 +10454,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10080,16 +10476,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10099,16 +10498,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10118,16 +10520,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10137,16 +10542,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10156,8 +10564,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -10418,12 +10826,21 @@
             "type": "array"
           },
           "createdBy": {
-            "description": "Bulk payment created by",
-            "format": "int64",
-            "type": "integer"
+            "$ref": "#/components/schemas/ApiUser",
+            "description": "Bulk payment created by"
+          },
+          "creationTimestamp": {
+            "description": "Creation timestamp",
+            "format": "date-time",
+            "type": "string"
           },
           "currency": {
             "description": "Bulk payment currency",
+            "type": "string"
+          },
+          "formalCreationTime": {
+            "description": "Formal creation date",
+            "format": "date-time",
             "type": "string"
           },
           "id": {
@@ -10432,7 +10849,7 @@
             "type": "integer"
           },
           "payingCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
+            "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that pays for the bulk payment"
           },
           "paymentDescription": {
@@ -10450,18 +10867,16 @@
             ],
             "type": "string"
           },
-          "receiptNumber": {
-            "description": "Bulk payment receipt numbet",
-            "format": "int64",
-            "type": "integer"
-          },
-          "stockOrders": {
-            "description": "Bulk payment stock orders",
+          "payments": {
+            "description": "Bulk payment payments",
             "items": {
-              "format": "int64",
-              "type": "integer"
+              "$ref": "#/components/schemas/ApiPayment"
             },
             "type": "array"
+          },
+          "receiptNumber": {
+            "description": "Bulk payment receipt number",
+            "type": "string"
           },
           "totalAmount": {
             "description": "Bulk payment total amount",
@@ -12322,6 +12737,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiStockOrderAggregatedHistory_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderAggregatedHistory"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiStockOrder_": {
         "properties": {
           "count": {
@@ -13360,6 +13802,49 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiStockOrderAggregatedHistory_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiStockOrderAggregatedHistory_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiStockOrder_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -13577,12 +14062,12 @@
       },
       "ApiPayment": {
         "properties": {
-          "amountPaidToTheCollector": {
-            "description": "Payment amount paid to the collector",
+          "amount": {
+            "description": "Payment amount paid (to a farmer or recipient company)",
             "type": "number"
           },
-          "amountPaidToTheFarmer": {
-            "description": "Payment amount paid to the farmer",
+          "amountPaidToTheCollector": {
+            "description": "Payment amount paid to the collector",
             "type": "number"
           },
           "createdBy": {
@@ -13688,15 +14173,10 @@
             "$ref": "#/components/schemas/ApiCompanyBase",
             "description": "Company that receives the payment"
           },
-          "recipientCompanyCustomer": {
-            "$ref": "#/components/schemas/ApiCompanyCustomer",
-            "description": "Company customer that receives the payment"
-          },
           "recipientType": {
             "description": "Recipient type",
             "enum": [
-              "ORGANIZATION",
-              "COMPANY_CUSTOMER",
+              "COMPANY",
               "USER_CUSTOMER"
             ],
             "type": "string"
@@ -13704,10 +14184,6 @@
           "recipientUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
             "description": "User customer that receives the payment (farmer)"
-          },
-          "representativeOfRecipientCompany": {
-            "$ref": "#/components/schemas/ApiCompanyBase",
-            "description": "Representative of the company that receives the payment"
           },
           "representativeOfRecipientUserCustomer": {
             "$ref": "#/components/schemas/ApiUserCustomer",
@@ -13854,6 +14330,10 @@
             "description": "Processing action public timeline location",
             "type": "string"
           },
+          "qrCodeForFinalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "The Final product for which the QR code tag will be generated (used with action type GENERATE_QR_CODE)"
+          },
           "repackedOutputs": {
             "description": "Processing action repacked outputs",
             "example": false,
@@ -13891,7 +14371,8 @@
               "PROCESSING",
               "FINAL_PROCESSING",
               "SHIPMENT",
-              "TRANSFER"
+              "TRANSFER",
+              "GENERATE_QR_CODE"
             ],
             "type": "string"
           },
@@ -13950,6 +14431,13 @@
             "example": false,
             "type": "boolean"
           },
+          "translations": {
+            "description": "Processing evidence field translations",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceFieldTranslation"
+            },
+            "type": "array"
+          },
           "type": {
             "description": "Processing evidence field type",
             "enum": [
@@ -13962,6 +14450,29 @@
               "PRICE",
               "EXCHANGE_RATE",
               "TIMESTAMP"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingEvidenceFieldTranslation": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "Processing evidence field label",
+            "type": "string"
+          },
+          "language": {
+            "description": "Processing evidence field language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
             ],
             "type": "string"
           }
@@ -14012,6 +14523,13 @@
             "description": "a group in which at least one document has to be provided",
             "type": "string"
           },
+          "translations": {
+            "description": "Translations for processing evidence type",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceTypeTranslation"
+            },
+            "type": "array"
+          },
           "type": {
             "description": "type of evidence",
             "enum": [
@@ -14024,8 +14542,37 @@
         },
         "type": "object"
       },
+      "ApiProcessingEvidenceTypeTranslation": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "label": {
+            "description": "Processing evidence type label",
+            "type": "string"
+          },
+          "language": {
+            "description": "Processing evidence type language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiProcessingOrder": {
         "properties": {
+          "creationTimestamp": {
+            "description": "Timestamp indicates when processing order have been created",
+            "format": "date-time",
+            "type": "string"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -14038,6 +14585,13 @@
           },
           "inputTransactions": {
             "description": "Input transactions",
+            "items": {
+              "$ref": "#/components/schemas/ApiTransaction"
+            },
+            "type": "array"
+          },
+          "outputTransactions": {
+            "description": "Output transactions",
             "items": {
               "$ref": "#/components/schemas/ApiTransaction"
             },
@@ -14777,9 +15331,9 @@
             },
             "type": "array"
           },
-          "requiredGrade": {
-            "$ref": "#/components/schemas/ApiGradeAbbreviation",
-            "description": "The grade required"
+          "orderId": {
+            "description": "The order ID entered by the user",
+            "type": "string"
           },
           "requiredOrganic": {
             "description": "Require organic coffee",
@@ -16730,9 +17284,6 @@
       },
       "ApiSemiProduct": {
         "properties": {
-          "apiMeasureUnitType": {
-            "$ref": "#/components/schemas/ApiMeasureUnitType"
-          },
           "buyable": {
             "type": "boolean"
           },
@@ -16743,6 +17294,9 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "measurementUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
           },
           "name": {
             "type": "string"
@@ -16830,6 +17384,11 @@
             "$ref": "#/components/schemas/ApiUser",
             "description": "User that has created StockOrder"
           },
+          "creationTimestamp": {
+            "description": "Timestamp indicates when stock order have been created",
+            "format": "date-time",
+            "type": "string"
+          },
           "creatorId": {
             "description": "ID of the user who has created the stock order",
             "format": "int64",
@@ -16837,6 +17396,10 @@
           },
           "currency": {
             "description": "Currency",
+            "type": "string"
+          },
+          "currencyForEndCustomer": {
+            "description": "Currency for price per unit for end customer",
             "type": "string"
           },
           "damagedPriceDeduction": {
@@ -16851,6 +17414,10 @@
           "facility": {
             "$ref": "#/components/schemas/ApiFacility",
             "description": "Facility"
+          },
+          "finalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "Final product"
           },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
@@ -16923,6 +17490,10 @@
             "description": "Price per unit",
             "type": "number"
           },
+          "pricePerUnitForEndCustomer": {
+            "description": "Price per unit for end customer",
+            "type": "number"
+          },
           "processingOrder": {
             "$ref": "#/components/schemas/ApiProcessingOrder",
             "description": "The processing order that created this stock order"
@@ -16946,6 +17517,10 @@
           },
           "purchaseOrder": {
             "type": "boolean"
+          },
+          "qrCodeTag": {
+            "description": "Generated UUID tag for this stock order QR code",
+            "type": "string"
           },
           "quoteCompany": {
             "$ref": "#/components/schemas/ApiCompany",
@@ -17007,6 +17582,50 @@
             "description": "Is women share",
             "example": false,
             "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderAggregatedHistory": {
+        "properties": {
+          "aggregations": {
+            "description": "List of aggregations, that represent stock order siblings for this aggregation history",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrderAggregation"
+            },
+            "type": "array"
+          },
+          "depth": {
+            "description": "Depth of aggregation history",
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "processingOrder": {
+            "$ref": "#/components/schemas/ApiProcessingOrder",
+            "description": "Processing order for this aggregation history"
+          },
+          "stockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Stock order for that aggregation history is calculated"
+          }
+        },
+        "type": "object"
+      },
+      "ApiStockOrderAggregation": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "stockOrder": {
+            "$ref": "#/components/schemas/ApiStockOrder",
+            "description": "Stock order related to the aggregation"
           }
         },
         "type": "object"
@@ -17147,10 +17766,6 @@
       },
       "ApiTransaction": {
         "properties": {
-          "actionType": {
-            "$ref": "#/components/schemas/ApiActionType",
-            "description": "Action type"
-          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "Company that is part of the transaction"
@@ -17158,6 +17773,10 @@
           "currency": {
             "description": "Currency",
             "type": "string"
+          },
+          "finalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "Final product"
           },
           "gradeAbbreviation": {
             "$ref": "#/components/schemas/ApiGradeAbbreviation",
@@ -17469,6 +18088,21 @@
         },
         "type": "object"
       },
+      "ApiUserCustomerImportResponse": {
+        "properties": {
+          "duplicates": {
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomer"
+            },
+            "type": "array"
+          },
+          "successful": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiUserCustomerLocation": {
         "properties": {
           "address": {
@@ -17678,6 +18312,13 @@
           "name": {
             "description": "name of the value chain",
             "type": "string"
+          },
+          "processingEvidenceFields": {
+            "description": "list of supported processing evidence fields",
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+            },
+            "type": "array"
           },
           "processingEvidenceTypes": {
             "description": "list of supported processing evidence types",

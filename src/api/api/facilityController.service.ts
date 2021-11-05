@@ -475,6 +475,10 @@ export namespace ListAvailableSellingFacilitiesForCompanyUsingGET {
        */
       semiProductId?: number;
       /**
+       * Final product ID
+       */
+      finalProductId?: number;
+      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType?: 'COUNT' | 'FETCH';
@@ -513,6 +517,10 @@ export namespace ListAvailableSellingFacilitiesForCompanyUsingGET {
        */
       semiProductId = 'semiProductId',
       /**
+       * Final product ID
+       */
+      finalProductId = 'finalProductId',
+      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType = 'requestType',
@@ -545,6 +553,8 @@ export namespace ListAvailableSellingFacilitiesForCompanyUsingGET {
       language: [
       ],
       semiProductId: [
+      ],
+      finalProductId: [
       ],
       requestType: [
       ],
@@ -671,6 +681,10 @@ export namespace ListFacilitiesByCompanyUsingGET {
        */
       semiProductId?: number;
       /**
+       * Final product ID
+       */
+      finalProductId?: number;
+      /**
        * language
        */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
@@ -709,6 +723,10 @@ export namespace ListFacilitiesByCompanyUsingGET {
        */
       semiProductId = 'semiProductId',
       /**
+       * Final product ID
+       */
+      finalProductId = 'finalProductId',
+      /**
        * language
        */
       language = 'language',
@@ -743,6 +761,8 @@ export namespace ListFacilitiesByCompanyUsingGET {
               ['required', Validators.required],
       ],
       semiProductId: [
+      ],
+      finalProductId: [
       ],
       language: [
       ],
@@ -1563,6 +1583,7 @@ export class FacilityControllerService {
       map.id,
       map.language,
       map.semiProductId,
+      map.finalProductId,
       map.requestType,
       map.limit,
       map.offset,
@@ -1580,6 +1601,7 @@ export class FacilityControllerService {
      * @param id Company ID
      * @param language language
      * @param semiProductId Semi product ID
+     * @param finalProductId Final product ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -1588,10 +1610,10 @@ export class FacilityControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacility>;
-    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
-    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
-    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, finalProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacility>;
+    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, finalProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
+    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, finalProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
+    public listAvailableSellingFacilitiesForCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', semiProductId?: number, finalProductId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listAvailableSellingFacilitiesForCompanyUsingGET.');
         }
@@ -1599,6 +1621,9 @@ export class FacilityControllerService {
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (semiProductId !== undefined && semiProductId !== null) {
             queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (finalProductId !== undefined && finalProductId !== null) {
+            queryParameters = queryParameters.set('finalProductId', <any>finalProductId);
         }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
@@ -1797,6 +1822,7 @@ export class FacilityControllerService {
     return this.listFacilitiesByCompanyUsingGET(
       map.id,
       map.semiProductId,
+      map.finalProductId,
       map.language,
       map.requestType,
       map.limit,
@@ -1814,6 +1840,7 @@ export class FacilityControllerService {
      * 
      * @param id Company ID
      * @param semiProductId Semi product ID
+     * @param finalProductId Final product ID
      * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
@@ -1823,10 +1850,10 @@ export class FacilityControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacility>;
-    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
-    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
-    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, finalProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacility>;
+    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, finalProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacility>>;
+    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, finalProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacility>>;
+    public listFacilitiesByCompanyUsingGET(id: number, semiProductId?: number, finalProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listFacilitiesByCompanyUsingGET.');
         }
@@ -1834,6 +1861,9 @@ export class FacilityControllerService {
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (semiProductId !== undefined && semiProductId !== null) {
             queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (finalProductId !== undefined && finalProductId !== null) {
+            queryParameters = queryParameters.set('finalProductId', <any>finalProductId);
         }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);

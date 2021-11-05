@@ -37,34 +37,44 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateProductOrderUsingPUT.
+ * Namespace for createProductOrderUsingPOST.
  */
-export namespace CreateOrUpdateProductOrderUsingPUT {
+export namespace CreateProductOrderUsingPOST {
     /**
-     * Parameter map for createOrUpdateProductOrderUsingPUT.
+     * Parameter map for createProductOrderUsingPOST.
      */
     export interface PartialParamMap {
       /**
        * apiProductOrder
        */
       ApiProductOrder: ApiProductOrder;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateProductOrderUsingPUT.
+     * Enumeration of all parameters for createProductOrderUsingPOST.
      */
     export enum Parameters {
       /**
        * apiProductOrder
        */
-      ApiProductOrder = 'ApiProductOrder'
+      ApiProductOrder = 'ApiProductOrder',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProductOrderUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createProductOrderUsingPOST
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateProductOrderUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateProductOrderUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      language: [
+      ],
     };
 }
 
@@ -151,30 +161,31 @@ export class ProductOrderControllerService {
 
 
   /**
-   * Create or update product order. If the ID is provided, then the entity with the provided ID is updated. by map.
+   * Create product order. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateProductOrderUsingPUTByMap(
-    map: CreateOrUpdateProductOrderUsingPUT.PartialParamMap,
+  public createProductOrderUsingPOSTByMap(
+    map: CreateProductOrderUsingPOST.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateProductOrderUsingPUTByMap(
-    map: CreateOrUpdateProductOrderUsingPUT.PartialParamMap,
+  public createProductOrderUsingPOSTByMap(
+    map: CreateProductOrderUsingPOST.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProductOrderUsingPUTByMap(
-    map: CreateOrUpdateProductOrderUsingPUT.PartialParamMap,
+  public createProductOrderUsingPOSTByMap(
+    map: CreateProductOrderUsingPOST.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProductOrderUsingPUTByMap(
-    map: CreateOrUpdateProductOrderUsingPUT.PartialParamMap,
+  public createProductOrderUsingPOSTByMap(
+    map: CreateProductOrderUsingPOST.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateProductOrderUsingPUT(
+    return this.createProductOrderUsingPOST(
       map.ApiProductOrder,
+      map.language,
       observe,
       reportProgress
     );
@@ -182,21 +193,25 @@ export class ProductOrderControllerService {
 
 
     /**
-     * Create or update product order. If the ID is provided, then the entity with the provided ID is updated.
+     * Create product order.
      * 
      * @param ApiProductOrder apiProductOrder
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateProductOrderUsingPUT(ApiProductOrder: ApiProductOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateProductOrderUsingPUT(ApiProductOrder: ApiProductOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProductOrderUsingPUT(ApiProductOrder: ApiProductOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProductOrderUsingPUT(ApiProductOrder: ApiProductOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProductOrder === null || ApiProductOrder === undefined) {
-            throw new Error('Required parameter ApiProductOrder was null or undefined when calling createOrUpdateProductOrderUsingPUT.');
+            throw new Error('Required parameter ApiProductOrder was null or undefined when calling createProductOrderUsingPOST.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -222,7 +237,7 @@ export class ProductOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/product-order`,
+        const handle = this.httpClient.post<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/product-order`,
             ApiProductOrder,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -232,7 +247,7 @@ export class ProductOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProductOrderUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createProductOrderUsingPOST')));
         }
         return handle;
     }

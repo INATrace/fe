@@ -38,7 +38,7 @@ export const ApiPaymentValidationScheme = {
               amountPaidToTheCollector: {
                   validators: []
               },
-              amountPaidToTheFarmer: {
+              amount: {
                   validators: [Validators.required, Validators.min(0)]
               },
               createdBy: {

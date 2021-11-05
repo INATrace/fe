@@ -17,6 +17,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
 import StatusEnum = ApiDefaultResponse.StatusEnum;
 import { AggregatedStockItem } from './models';
+import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
+import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -54,6 +56,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   @Input()
   farmerIdPing$ = new BehaviorSubject<number>(null);
+
+  @Input()
+  representativeOfProducerUserCustomerIdPing$ = new BehaviorSubject<number>(null);
 
   @Input()
   wayOfPaymentPing$ = new BehaviorSubject<string>('');
@@ -108,7 +113,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
-    private stockOrderControllerService: StockOrderControllerService
+    private stockOrderControllerService: StockOrderControllerService,
+    private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -133,6 +139,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.sortingParams$,
       this.facilityId$,
       this.farmerIdPing$,
+      this.representativeOfProducerUserCustomerIdPing$,
       this.openBalanceOnly$,
       this.purchaseOrderOnly$,
       this.availableOnly$,
@@ -148,6 +155,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
              sorting,
              facilityId,
              farmerId,
+             representativeOfProducerUserCustomerId,
              isOpenBalanceOnly,
              isPurchaseOrderOnly,
              availableOnly,
@@ -162,6 +170,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           ...sorting,
           facilityId,
           farmerId,
+          representativeOfProducerUserCustomerId,
           isOpenBalanceOnly,
           isPurchaseOrderOnly,
           availableOnly,
@@ -192,6 +201,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           this.aggregatedOrders = this.aggregateOrderItems(data.items);
         }
       }),
+      tap(() => this.refreshCBs()),
       tap(() => this.globalEventsManager.showLoading(false))
     );
   }
@@ -207,9 +217,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       {
         key: 'cb',
         name: '',
-        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
-        hide: false,
-        inactive: true
+        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0
       },
       {
         key: 'date',
@@ -386,6 +394,22 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       { queryParams: {returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 
+  openQRCodes(order: ApiStockOrder) {
+
+    if (!order.qrCodeTag) {
+      return;
+    }
+
+    const modalRef = this.modalService.open(GenerateQRCodeModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false
+    });
+    Object.assign(modalRef.componentInstance, {
+      qrCodeTag: order.qrCodeTag
+    });
+  }
+
   canDelete(order: ApiStockOrder) {
     if (order.orderType === 'PROCESSING_ORDER') { return true; }
     if (order.orderType === 'TRANSFER_ORDER') { return true; }
@@ -438,27 +462,10 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   changeSort(event) {
     if (event.key === 'cb') {
-      this.selectAll(event.checked);
+      this.selectAllOnPage(event.checked);
       return;
     }
     this.sortingParams$.next({ sortBy: event.key, sort: event.sortOrder });
-  }
-
-  private selectAll(checked) {
-    if (checked) {
-      this.selectedOrders = [];
-      for (const item of this.currentData) {
-        this.selectedOrders.push(item);
-      }
-      this.currentData.map(item => { (item as any).selected = true; return item; });
-      this.allSelected = true;
-      this.selectedIdsChanged.emit(this.selectedOrders);
-    } else {
-      this.selectedOrders = [];
-      this.allSelected = false;
-      this.currentData.map(item => { (item as any).selected = false; return item; });
-      this.selectedIdsChanged.emit(this.selectedOrders);
-    }
   }
 
   showPagination() {
@@ -470,10 +477,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   cbSelected(order: ApiStockOrder, index: number) {
-    if (this.allSelected) {
-      this.allSelected = false;
-      this.cbCheckedAll.setValue(false);
-    }
 
     (this.currentData[index] as any).selected = !(this.currentData[index] as any).selected;
 
@@ -485,6 +488,91 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.selectedOrders.push(order);
     }
     this.selectedIdsChanged.emit(this.selectedOrders);
+
+    if (this.allSelected) {
+      this.allSelected = false;
+      this.cbCheckedAll.setValue(false);
+    } else {
+      this.refreshCBs();
+    }
+  }
+
+  private refreshCBs(){
+
+    if (!this.selectedOrders){
+      return;
+    }
+
+    let selectedCount = 0;
+
+    for (const item of this.currentData) {
+      for (const order of this.selectedOrders) {
+
+        if (order.id === item.id) {
+
+          (item as any).selected = true;
+          selectedCount += 1;
+
+          // Prevents having selected multiple same items
+          const replaceIndex = this.selectedOrders.indexOf(order);
+          if (replaceIndex !== -1) {
+            this.selectedOrders.splice(replaceIndex, 1);
+            this.selectedOrders.push(item);
+          }
+          break;
+        }
+
+      }
+    }
+
+    this.allSelected = selectedCount === this.showedOrders;
+    this.cbCheckedAll.setValue(this.allSelected);
+  }
+
+  private selectAllOnPage(checked) {
+
+    if (checked) {
+
+      for (const item of this.currentData) {
+
+        // Remove existing item (if exists)
+        for (const order of this.selectedOrders) {
+          if (order.id === item.id) {
+            const replaceIndex = this.selectedOrders.indexOf(order);
+            if (replaceIndex !== -1) {
+              this.selectedOrders.splice(replaceIndex, 1);
+            }
+            break;
+          }
+        }
+
+        // Select and add item
+        (item as any).selected = true;
+        this.selectedOrders.push(item);
+      }
+
+      this.allSelected = true;
+      this.selectedIdsChanged.emit(this.selectedOrders);
+
+    } else {
+
+      // Unselect and remove items (from selectedOrders)
+      for (const item of this.currentData) {
+        for (const order of this.selectedOrders) {
+          if (order.id === item.id) {
+            (item as any).selected = false;
+            const removeIndex = this.selectedOrders.indexOf(order);
+            if (removeIndex !== -1) {
+              this.selectedOrders.splice(removeIndex, 1);
+            }
+            break;
+          }
+        }
+      }
+
+      this.allSelected = false;
+      this.selectedIdsChanged.emit(this.selectedOrders);
+    }
   }
 
   private clearCBs() {
@@ -513,27 +601,54 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
   
   aggregateOrderItems(items: ApiStockOrder[]): AggregatedStockItem[] {
-    const aggregatedMap: Map<number, AggregatedStockItem> = items.reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
 
-      const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+    // Aggregate semi-products
+    const aggregatedSemiProductsMap: Map<number, AggregatedStockItem> = items
+      .filter(stockOrder => stockOrder.semiProduct && stockOrder.semiProduct.id)
+      .reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
 
-      if (acc.has(item.semiProduct.id)) {
-        const prevElem = acc.get(item.semiProduct.id);
-        acc.set(item.semiProduct.id, {
-          ...prevElem,
-          amount: nextTotalQuantity + prevElem.amount
-        });
-      } else {
-        acc.set(item.semiProduct.id, {
-          amount: nextTotalQuantity,
-          unit: item.measureUnitType.label,
-          semiProduct: item.semiProduct.name
-        });
-      }
-      return acc;
-    }, new Map<number, AggregatedStockItem>());
+        const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+
+        if (acc.has(item.semiProduct.id)) {
+          const prevElem = acc.get(item.semiProduct.id);
+          acc.set(item.semiProduct.id, {
+            ...prevElem,
+            amount: nextTotalQuantity + prevElem.amount
+          });
+        } else {
+          acc.set(item.semiProduct.id, {
+            amount: nextTotalQuantity,
+            measureUnit: item.measureUnitType.label,
+            stockUnitName: item.semiProduct.name
+          });
+        }
+        return acc;
+      }, new Map<number, AggregatedStockItem>());
+
+    // Aggregate final products
+    const aggregatedFinalProducts: Map<number, AggregatedStockItem> = items
+      .filter(stockOrder => stockOrder.finalProduct && stockOrder.finalProduct.id)
+      .reduce((acc: Map<number, AggregatedStockItem>, item: ApiStockOrder) => {
+
+        const nextTotalQuantity = item.totalQuantity ? item.totalQuantity : 0;
+
+        if (acc.has(item.finalProduct.id)) {
+          const prevElem = acc.get(item.finalProduct.id);
+          acc.set(item.finalProduct.id, {
+            ...prevElem,
+            amount: nextTotalQuantity + prevElem.amount
+          });
+        } else {
+          acc.set(item.finalProduct.id, {
+            amount: nextTotalQuantity,
+            measureUnit: item.measureUnitType.label,
+            stockUnitName: `${item.finalProduct.name} (${item.finalProduct.product.name})`
+          });
+        }
+        return acc;
+      }, new Map<number, AggregatedStockItem>());
     
-    return Array.from(aggregatedMap.values());
+    return [...Array.from(aggregatedSemiProductsMap.values()), ...Array.from(aggregatedFinalProducts.values())];
   }
 
   orderIdentifier(order: ApiStockOrder) {

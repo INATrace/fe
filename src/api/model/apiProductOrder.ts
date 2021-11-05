@@ -20,7 +20,6 @@
 
 import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
-import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiStockOrder } from './apiStockOrder';
 
 
@@ -40,7 +39,10 @@ export interface ApiProductOrder {
      * The ordered items(final products) of this order
      */
     items?: Array<ApiStockOrder>;
-    requiredGrade?: ApiGradeAbbreviation;
+    /**
+     * The order ID entered by the user
+     */
+    orderId?: string;
     /**
      * Require organic coffee
      */
@@ -77,7 +79,10 @@ export namespace ApiProductOrder {
          * The ordered items(final products) of this order
          */
         items = 'items',
-        requiredGrade = 'requiredGrade',
+        /**
+         * The order ID entered by the user
+         */
+        orderId = 'orderId',
         /**
          * Require organic coffee
          */
@@ -157,16 +162,15 @@ export namespace ApiProductOrder {
                     complexType: 'ApiStockOrder'
                 },
                 {
-                    metadata: ApiGradeAbbreviation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'requiredGrade',
+                    name: 'orderId',
                     classname: 'ApiProductOrder',
-                    dataType: 'ApiGradeAbbreviation',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiGradeAbbreviation'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -213,7 +217,7 @@ export namespace ApiProductOrder {
                 ],
                 items: [
                 ],
-                requiredGrade: [
+                orderId: [
                 ],
                 requiredOrganic: [
                 ],
@@ -243,7 +247,7 @@ export namespace ApiProductOrder {
   //               items: {
   //                   validators: []
   //               },
-  //               requiredGrade: {
+  //               orderId: {
   //                   validators: []
   //               },
   //               requiredOrganic: {

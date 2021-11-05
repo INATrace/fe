@@ -97,7 +97,9 @@
                             <div class="name-sector">{{farmerForm.get('name').value}} {{farmerForm.get('surname').value}}</div>
                             <div class="location-sector">{{farmerForm.get('location.address.village').value}}, {{farmerForm.get('location.address.cell').value}}, {{farmerForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
-                                <qr-code [value]="farmerForm.get('id').value" [foreground]="theme.primary" [size]="qrCodeSize"></qr-code>
+                                <qr-code [value]="farmerForm.get('id').value.toString()"
+                                         [foreground]="theme.primary"
+                                         [size]="qrCodeSize"></qr-code>
                             </div>
                             <div style="flex: 1 1 0"></div>
                             <div class="trademark-title">
@@ -205,20 +207,17 @@
                                      i18n-addText="@@collectorDetail.list-editor.cooperatives.addText"
                                      [invalid]="submitted && farmerForm.get('cooperatives')?.invalid">
                             <list-editor-items>
-                                <div cdkDropList
-                                     (cdkDropListDropped)="producersListManager.onDrop($event)">
-                                    <div *ngFor="let item of farmerForm.get('cooperatives').controls; let i=index;">
-                                        <app-producers-item *ngIf="codebookCoop"
-                                                [codebookCoop]="codebookCoop"
-                                                [assocCoop]="assocCoop"
-                                                title=null
-                                                [formControlInput]="item"
-                                                [type]="'FARMER'"
-                                                [isOpen]="producersListManager.isOpen(i)"
-                                                [listEditorManager]="this.producersListManager"
-                                                [listEditorManagerPosition]="i">
-                                        </app-producers-item>
-                                    </div>
+                                <div *ngFor="let item of farmerForm.get('cooperatives').controls; let i=index;">
+                                    <app-producers-item *ngIf="codebookCoop"
+                                            [codebookCoop]="codebookCoop"
+                                            [assocCoop]="assocCoop"
+                                            title=null
+                                            [formControlInput]="item"
+                                            [type]="'FARMER'"
+                                            [isOpen]="producersListManager.isOpen(i)"
+                                            [listEditorManager]="this.producersListManager"
+                                            [listEditorManagerPosition]="i">
+                                    </app-producers-item>
                                 </div>
                             </list-editor-items>
                             <list-editor-errors>
@@ -335,6 +334,15 @@
 
             </div>
 
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <div class="af-bottom-buttons" i18n="@@collectorDetail.modal.footer.buttons">
+                        <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+                        <button class="btn" type="button" (click)="save()"><span>Save</span></button>
+                    </div>
+                </div>
+            </div>
+
             <div class="af-form-row" *ngIf="this.update">
                 <div class="af-form-block--c12">
                     <h2 i18n="@@collectorDetail.section.purchaseOrders">Purchase orders</h2>
@@ -354,7 +362,7 @@
                 </div>
             </div>
 
-            <div class="af-form-row" *ngIf="this.update">
+            <div class="af-form-row mb-5" *ngIf="this.update">
                 <div class="af-form-block--c12">
                     <h2 i18n="@@collectorDetail.section.payments">Payments</h2>
                     <ng-container *ngIf="payments">
@@ -371,15 +379,6 @@
                           (countAll)="onCountAllPayments($event)">
                         </app-stock-payments-list>
                     </ng-container>
-                </div>
-            </div>
-
-            <div class="af-form-row">
-                <div class="af-form-block--c12">
-                    <div class="af-bottom-buttons" i18n="@@collectorDetail.modal.footer.buttons">
-                        <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
-                        <button class="btn" type="button" (click)="save()"><span>Save</span></button>
-                    </div>
                 </div>
             </div>
         </div>

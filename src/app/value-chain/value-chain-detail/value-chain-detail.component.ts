@@ -6,15 +6,14 @@ import { finalize } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme } from './validation';
+import { ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme,
+  ApiVCProcessingEvidenceFieldValidationScheme, ApiVCProcessingEvidenceTypeValidationScheme} from './validation';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
   ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme,
-  ApiSemiProductValidationScheme
+  ApiGradeAbbreviationValidationScheme
 } from '../../settings/type-detail-modal/validation';
 import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
@@ -22,6 +21,7 @@ import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseEntity';
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
+import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -40,6 +40,7 @@ export class ValueChainDetailComponent implements OnInit {
   measureUnitTypeListManager: ListEditorManager<ApiMeasureUnitType>;
   gradeAbbreviationTypeListManager: ListEditorManager<ApiGradeAbbreviation>;
   processingEvidenceTypeListManger: ListEditorManager<ApiProcessingEvidenceType>;
+  processingEvidenceFieldListManger: ListEditorManager<ApiProcessingEvidenceField>;
   semiProductsListManager: ListEditorManager<ApiSemiProduct>;
 
   constructor(
@@ -97,7 +98,20 @@ export class ValueChainDetailComponent implements OnInit {
   static ApiVCProcEvidenceTypeEmptyObjectFormFactory(): () => FormControl {
     return () => {
       return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceTypeCreateEmptyObject(),
-        ApiProcessingEvidenceTypeValidationScheme.validators);
+        ApiVCProcessingEvidenceTypeValidationScheme.validators);
+    };
+  }
+
+  // Processing evidence field form factory methods (used when creating ListEditorManager)
+  static ApiVCProcEvidenceFieldCreateEmptyObject(): ApiProcessingEvidenceField {
+    const obj = ApiProcessingEvidenceField.formMetadata();
+    return defaultEmptyObject(obj) as ApiProcessingEvidenceField;
+  }
+
+  static ApiVCProcEvidenceFieldEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ValueChainDetailComponent.ApiVCProcEvidenceFieldCreateEmptyObject(),
+        ApiVCProcessingEvidenceFieldValidationScheme.validators);
     };
   }
 
@@ -137,6 +151,10 @@ export class ValueChainDetailComponent implements OnInit {
 
   get vcProcEvidenceTypes(): FormControl[] {
     return (this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray).controls as FormControl[];
+  }
+
+  get vcProcEvidenceFields(): FormControl[] {
+    return (this.valueChainDetailForm.get('processingEvidenceFields') as FormArray).controls as FormControl[];
   }
 
   get vcSemiProducts(): FormControl[] {
@@ -257,7 +275,12 @@ export class ValueChainDetailComponent implements OnInit {
     this.processingEvidenceTypeListManger = new ListEditorManager<ApiProcessingEvidenceType>(
       this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray,
       ValueChainDetailComponent.ApiVCProcEvidenceTypeEmptyObjectFormFactory(),
-      ApiProcessingEvidenceTypeValidationScheme);
+      ApiVCProcessingEvidenceTypeValidationScheme);
+
+    this.processingEvidenceFieldListManger = new ListEditorManager<ApiProcessingEvidenceType>(
+      this.valueChainDetailForm.get('processingEvidenceFields') as FormArray,
+      ValueChainDetailComponent.ApiVCProcEvidenceFieldEmptyObjectFormFactory(),
+      ApiVCProcessingEvidenceFieldValidationScheme);
 
     this.semiProductsListManager = new ListEditorManager<ApiSemiProduct>(
       this.valueChainDetailForm.get('semiProducts') as FormArray,

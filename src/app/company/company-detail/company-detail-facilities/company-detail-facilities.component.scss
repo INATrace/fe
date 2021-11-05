@@ -3,7 +3,6 @@
 @import "../../../../../node_modules/bootstrap/scss/variables";
 @import "../../../../../node_modules/bootstrap/scss/mixins";
 
-
 .company-action {
   margin: 0.25rem;
   cursor: pointer;
@@ -21,8 +20,7 @@
   color: $gray;
 }
 
-
-.limit-chars{
+.limit-chars {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

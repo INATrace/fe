@@ -20,7 +20,6 @@
 
 import { ApiCompany } from './apiCompany';
 import { ApiCompanyBase } from './apiCompanyBase';
-import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiDocument } from './apiDocument';
 import { ApiStockOrder } from './apiStockOrder';
 import { ApiUser } from './apiUser';
@@ -30,13 +29,13 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 export interface ApiPayment { 
     /**
+     * Payment amount paid (to a farmer or recipient company)
+     */
+    amount?: number;
+    /**
      * Payment amount paid to the collector
      */
     amountPaidToTheCollector?: number;
-    /**
-     * Payment amount paid to the farmer
-     */
-    amountPaidToTheFarmer?: number;
     createdBy?: ApiUser;
     /**
      * Payment's currency
@@ -90,13 +89,11 @@ export interface ApiPayment {
      */
     receiptNumber?: string;
     recipientCompany?: ApiCompanyBase;
-    recipientCompanyCustomer?: ApiCompanyCustomer;
     /**
      * Recipient type
      */
     recipientType?: ApiPayment.RecipientTypeEnum;
     recipientUserCustomer?: ApiUserCustomer;
-    representativeOfRecipientCompany?: ApiCompanyBase;
     representativeOfRecipientUserCustomer?: ApiUserCustomer;
     stockOrder?: ApiStockOrder;
     /**
@@ -119,13 +116,13 @@ export namespace ApiPayment {
      */
     export enum Properties {
         /**
+         * Payment amount paid (to a farmer or recipient company)
+         */
+        amount = 'amount',
+        /**
          * Payment amount paid to the collector
          */
         amountPaidToTheCollector = 'amountPaidToTheCollector',
-        /**
-         * Payment amount paid to the farmer
-         */
-        amountPaidToTheFarmer = 'amountPaidToTheFarmer',
         createdBy = 'createdBy',
         /**
          * Payment's currency
@@ -179,13 +176,11 @@ export namespace ApiPayment {
          */
         receiptNumber = 'receiptNumber',
         recipientCompany = 'recipientCompany',
-        recipientCompanyCustomer = 'recipientCompanyCustomer',
         /**
          * Recipient type
          */
         recipientType = 'recipientType',
         recipientUserCustomer = 'recipientUserCustomer',
-        representativeOfRecipientCompany = 'representativeOfRecipientCompany',
         representativeOfRecipientUserCustomer = 'representativeOfRecipientUserCustomer',
         stockOrder = 'stockOrder',
         /**
@@ -253,8 +248,7 @@ export namespace ApiPayment {
      * All possible values of recipientType.
      */
     export enum RecipientTypeEnum {
-        ORGANIZATION = 'ORGANIZATION',
-        COMPANYCUSTOMER = 'COMPANY_CUSTOMER',
+        COMPANY = 'COMPANY',
         USERCUSTOMER = 'USER_CUSTOMER'
     }
 
@@ -268,7 +262,7 @@ export namespace ApiPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'amountPaidToTheCollector',
+                    name: 'amount',
                     classname: 'ApiPayment',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -279,7 +273,7 @@ export namespace ApiPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'amountPaidToTheFarmer',
+                    name: 'amountPaidToTheCollector',
                     classname: 'ApiPayment',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -484,18 +478,6 @@ export namespace ApiPayment {
                     complexType: 'ApiCompanyBase'
                 },
                 {
-                    metadata: ApiCompanyCustomer.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'recipientCompanyCustomer',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiCompanyCustomer',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompanyCustomer'
-                },
-                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiPayment.RecipientTypeEnum',
@@ -518,18 +500,6 @@ export namespace ApiPayment {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiUserCustomer'
-                },
-                {
-                    metadata: ApiCompanyBase.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'representativeOfRecipientCompany',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiCompanyBase',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompanyBase'
                 },
                 {
                     metadata: ApiUserCustomer.formMetadata,
@@ -591,9 +561,9 @@ export namespace ApiPayment {
                 },
             ],
             validators: {
-                amountPaidToTheCollector: [
+                amount: [
                 ],
-                amountPaidToTheFarmer: [
+                amountPaidToTheCollector: [
                 ],
                 createdBy: [
                 ],
@@ -629,13 +599,9 @@ export namespace ApiPayment {
                 ],
                 recipientCompany: [
                 ],
-                recipientCompanyCustomer: [
-                ],
                 recipientType: [
                 ],
                 recipientUserCustomer: [
-                ],
-                representativeOfRecipientCompany: [
                 ],
                 representativeOfRecipientUserCustomer: [
                 ],
@@ -654,10 +620,10 @@ export namespace ApiPayment {
   // export const ApiPaymentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               amountPaidToTheCollector: {
+  //               amount: {
   //                   validators: []
   //               },
-  //               amountPaidToTheFarmer: {
+  //               amountPaidToTheCollector: {
   //                   validators: []
   //               },
   //               createdBy: {
@@ -711,16 +677,10 @@ export namespace ApiPayment {
   //               recipientCompany: {
   //                   validators: []
   //               },
-  //               recipientCompanyCustomer: {
-  //                   validators: []
-  //               },
   //               recipientType: {
   //                   validators: []
   //               },
   //               recipientUserCustomer: {
-  //                   validators: []
-  //               },
-  //               representativeOfRecipientCompany: {
   //                   validators: []
   //               },
   //               representativeOfRecipientUserCustomer: {

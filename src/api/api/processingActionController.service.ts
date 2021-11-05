@@ -292,6 +292,14 @@ export namespace ListProcessingActionsByCompanyUsingGET {
        */
       id: number;
       /**
+       * Processing action type
+       */
+      actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE';
+      /**
+       * Only final product actions
+       */
+      onlyFinalProducts?: boolean;
+      /**
        * language
        */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
@@ -326,6 +334,14 @@ export namespace ListProcessingActionsByCompanyUsingGET {
        */
       id = 'id',
       /**
+       * Processing action type
+       */
+      actionType = 'actionType',
+      /**
+       * Only final product actions
+       */
+      onlyFinalProducts = 'onlyFinalProducts',
+      /**
        * language
        */
       language = 'language',
@@ -358,6 +374,10 @@ export namespace ListProcessingActionsByCompanyUsingGET {
     export const ParamValidators: {[K in keyof ListProcessingActionsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      actionType: [
+      ],
+      onlyFinalProducts: [
       ],
       language: [
       ],
@@ -890,6 +910,8 @@ export class ProcessingActionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.listProcessingActionsByCompanyUsingGET(
       map.id,
+      map.actionType,
+      map.onlyFinalProducts,
       map.language,
       map.requestType,
       map.limit,
@@ -906,6 +928,8 @@ export class ProcessingActionControllerService {
      * Get a list of processing actions by company ID.
      * 
      * @param id Company ID
+     * @param actionType Processing action type
+     * @param onlyFinalProducts Only final product actions
      * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
@@ -915,15 +939,21 @@ export class ProcessingActionControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingActionsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
-    public listProcessingActionsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling listProcessingActionsByCompanyUsingGET.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (actionType !== undefined && actionType !== null) {
+            queryParameters = queryParameters.set('actionType', <any>actionType);
+        }
+        if (onlyFinalProducts !== undefined && onlyFinalProducts !== null) {
+            queryParameters = queryParameters.set('onlyFinalProducts', <any>onlyFinalProducts);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }

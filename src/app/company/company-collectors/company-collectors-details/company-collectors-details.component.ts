@@ -21,11 +21,11 @@ import { ThemeService } from '../../../shared-services/theme.service';
 import { environment } from '../../../../environments/environment';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiCompany } from '../../../../api/model/apiCompany';
-import { StockOrderService } from '../../../../api-chain/api/stockOrder.service';
-import { PaymentsService } from '../../../../api-chain/api/payments.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-company-collectors-details',
@@ -51,9 +51,18 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   sortPO = null;
   purchaseOrders = [];
   payments = [];
-  openBalanceForm: FormControl = new FormControl(0);
-  totalPaidCollectorForm: FormControl = new FormControl(0);
-  totalBroughtCollectorForm: FormControl = new FormControl(0);
+
+  // payments table parameters
+  showedPaymentOrders = 0;
+  allPaymentOrders = 0;
+  selectedPayments: ApiStockOrder[];
+
+  representativeOfUserCustomerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
+
+  // purchase table parameters
+  showedPurchaseOrders = 0;
+  allPurchaseOrders = 0;
+  selectedOrders: ApiStockOrder[];
 
   producersListManager;
   codebookAssoc;
@@ -149,8 +158,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
-      private chainStockOrderService: StockOrderService,
-      private chainPaymentsService: PaymentsService,
       public theme: ThemeService
   ) { }
 
@@ -200,15 +207,13 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
         if (uc && uc.status === 'OK') {
           this.collector = uc.data;
         }
-        this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
-        this.listPayments(this.sortPay);
         break;
       default:
         throw Error('Wrong action!');
     }
 
-    this.listOfOrgProducer();
-    this.listOfOrgAssociation();
+    this.listOfOrgProducer().then();
+    this.listOfOrgAssociation().then();
   }
 
   newCollector() {
@@ -258,29 +263,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     Object.keys(data).forEach((key) => (data[key] == null) && delete data[key]);
 
     return data;
-  }
-
-  async listPurchaseOrders(openBalance, sort) {
-    let openB = 0;
-    let totalBrought = 0;
-    const res = await this.chainStockOrderService.listPurchaseOrderForUserCustomer(this.collector.id.toString(), openBalance, sort).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) { this.purchaseOrders = res.data.items; }
-    for (const item of this.purchaseOrders) {
-      if (item.balance) { openB += item.balance; }
-      if (item.totalQuantity) { totalBrought += item.totalQuantity; }
-    }
-    this.openBalanceForm.setValue(openB);
-    this.totalBroughtCollectorForm.setValue(totalBrought);
-  }
-
-  async listPayments(sort) {
-    let totalF = 0;
-    const res = await this.chainPaymentsService.listPaymentsForRecipientUserCustomer(this.collector.id.toString(), sort).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) { this.payments = res.data.items; }
-    for (const item of this.payments) {
-      if (item.amount) { totalF += item.amount; }
-    }
-    this.totalPaidCollectorForm.setValue(totalF);
   }
 
   dismiss() {
@@ -376,16 +358,13 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   changeSort(event, type) {
     if (type === 'PAYMENT') {
       this.sortPay = event.sortOrder;
-      this.listPayments(event.sortOrder);
       return;
     }
     this.sortPO = event.sortOrder;
-    this.listPurchaseOrders(this.openBalanceOnly, event.sortOrder);
   }
 
   setOpenBalanceOnly(action) {
     this.openBalanceOnly = action;
-    this.listPurchaseOrders(this.openBalanceOnly, this.sortPO);
   }
   
   public get areaUnit(): FormControl {
@@ -398,4 +377,27 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     }
     return message;
   }
+
+  selectedIdsChanged(event, type?) {
+    if (type === 'PURCHASE') {
+      this.selectedOrders = event;
+    }
+  }
+
+  onShowPO(event) {
+    this.showedPurchaseOrders = event;
+  }
+
+  onCountAllPO(event) {
+    this.allPurchaseOrders = event;
+  }
+
+  onShowPayments(event) {
+    this.showedPaymentOrders = event;
+  }
+
+  onCountAllPayments(event) {
+    this.allPaymentOrders = event;
+  }
+
 }

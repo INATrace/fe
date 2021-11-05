@@ -5,7 +5,6 @@ import { take } from 'rxjs/operators';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
 import { ApiPayment } from '../../../../../api/model/apiPayment';
-import { ApiProduct } from '../../../../../api/model/apiProduct';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
 import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
@@ -33,26 +32,25 @@ export class StockPaymentsDetailComponent implements OnInit {
 
   lastUpdatedByUser: string;
   companyId: number;
-  userCompanyId: number;
+
   purchaseOrderId: number;
   customerOrderId: number;
-  productId: number;
-  stockOrderId: number;
-  isOwner: boolean;
+
   submitted: boolean;
   paymentUpdateInProgress: boolean;
 
   stockOrder: ApiStockOrder;
   payment: ApiPayment;
-  product: ApiProduct;
 
   farmersCodebook: CompanyUserCustomersByRoleService;
   collectorsCodebook: CompanyUserCustomersByRoleService;
 
   paymentForm: FormGroup;
+
   searchFarmersForm = new FormControl(null);
   searchCollectorsForm = new FormControl(null);
   searchCompaniesForm = new FormControl(null);
+
   payableFromForm = new FormControl(null);
   orderReferenceForm = new FormControl(null);
 
@@ -140,17 +138,11 @@ export class StockPaymentsDetailComponent implements OnInit {
       throw Error('Unrecognized action "' + action + '".');
     }
 
-    // TODO: Probably redundant as company is no longer bound to a product
-    // Check if current user is owner.
-    // Owner is if product's company ID matches user's company ID
-    this.userCompanyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.companyId = this.userCompanyId;
-    this.isOwner = this.userCompanyId
-        ? this.companyId === this.userCompanyId
-        : false;
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
   }
 
-  async newPayment() {
+  private async newPayment() {
+
     this.submitted = false;
 
     this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), {}, ApiPaymentValidationScheme);
@@ -184,9 +176,34 @@ export class StockPaymentsDetailComponent implements OnInit {
       this.paymentForm.get('recipientUserCustomer').setValue(this.stockOrder.producerUserCustomer);
     }
 
-    // Paying company (a company which has created a purchase (StockOrder) should be paying for it)
+    // Set the recipient company
+    if (this.stockOrder.quoteCompany) {
+      this.searchCompaniesForm.setValue(this.stockOrder.quoteCompany);
+      this.paymentForm.get('recipientCompany').setValue(this.stockOrder.quoteCompany);
+    }
+
+    // Paying company (a company which has created the stock order (Purchase or Quote) should be paying for it)
     this.payableFromForm.setValue(this.stockOrder.company?.name);
     this.paymentForm.get('payingCompany').setValue(this.stockOrder.company);
+  }
+
+  private async editPayment() {
+
+    this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), this.payment, ApiPaymentValidationScheme);
+
+    this.searchCompaniesForm.setValue(this.paymentForm.get('recipientCompany').value);
+    this.searchCollectorsForm.setValue(this.paymentForm.get('representativeOfRecipientUserCustomer').value);
+    this.searchFarmersForm.setValue(this.paymentForm.get('recipientUserCustomer').value);
+
+    this.payableFromForm.setValue(this.payment.payingCompany?.name);
+
+    this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE
+        ? this.stockOrder.identifier
+        : this.stockOrder.internalLotNumber);
+
+    if (this.payment.updatedBy) {
+      this.lastUpdatedByUser = this.payment.updatedBy.name + ' ' + this.payment.updatedBy.surname;
+    }
   }
 
   async updatePayment() {
@@ -200,9 +217,11 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     // Set recipientType
     if (this.paymentForm.get('recipientCompany').value?.id) {
-      this.paymentForm.get('recipientType').setValue(RecipientTypeEnum.ORGANIZATION);
+
+      this.paymentForm.get('recipientType').setValue(RecipientTypeEnum.COMPANY);
 
     } else if (this.paymentForm.get('recipientUserCustomer').value?.id) {
+
       this.paymentForm.get('recipientType').setValue(RecipientTypeEnum.USERCUSTOMER);
 
     } else {
@@ -222,9 +241,10 @@ export class StockPaymentsDetailComponent implements OnInit {
     }
 
     try {
+
       const paymentResp = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(this.paymentForm.getRawValue())
-          .pipe(take(1))
-          .toPromise();
+        .pipe(take(1))
+        .toPromise();
 
       if (paymentResp && paymentResp.status === 'OK') {
         this.dismiss();
@@ -233,25 +253,6 @@ export class StockPaymentsDetailComponent implements OnInit {
     } finally {
       this.paymentUpdateInProgress = false;
       this.globalEventsManager.showLoading(false);
-    }
-  }
-
-  async editPayment() {
-
-    this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), this.payment, ApiPaymentValidationScheme);
-
-    this.searchCompaniesForm.setValue(this.paymentForm.get('recipientCompany').value);
-    this.searchCollectorsForm.setValue(this.paymentForm.get('representativeOfRecipientUserCustomer').value);
-    this.searchFarmersForm.setValue(this.paymentForm.get('recipientUserCustomer').value);
-
-    this.payableFromForm.setValue(this.payment.payingCompany?.name);
-
-    this.orderReferenceForm.setValue(this.mode === ModeEnum.PURCHASE
-        ? this.stockOrder.identifier
-        : this.stockOrder.internalLotNumber);
-
-    if (this.payment.updatedBy) {
-      this.lastUpdatedByUser = this.payment.updatedBy.name + ' ' + this.payment.updatedBy.surname;
     }
   }
 

@@ -6,13 +6,13 @@ import { generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import {
   ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme,
-  ApiProcessingEvidenceTypeValidationScheme, ApiSemiProductValidationScheme
+  ApiGradeAbbreviationValidationScheme
 } from '../../../settings/type-detail-modal/validation';
 import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
 import { ApiMeasureUnitType } from '../../../../api/model/apiMeasureUnitType';
 import { ActiveMeasureUnitTypeService } from '../../../shared-services/active-measure-unit-types.service';
-import { ApiVCMeasureUnitTypeValidationScheme } from '../validation';
+import { ApiSemiProductValidationScheme, ApiVCMeasureUnitTypeValidationScheme, ApiVCProcessingEvidenceFieldValidationScheme,
+  ApiVCProcessingEvidenceTypeValidationScheme, } from '../validation';
 import { ApiGradeAbbreviation } from '../../../../api/model/apiGradeAbbreviation';
 import { GradeAbbreviationCodebook } from '../../../shared-services/grade-abbreviation-codebook';
 import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
@@ -22,6 +22,9 @@ import { CodebookTranslations } from '../../../shared-services/codebook-translat
 import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 import { ActiveSemiProductsService } from '../../../shared-services/active-semi-products.service';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
+import { ProcessingEvidenceFieldControllerService } from '../../../../api/api/processingEvidenceFieldController.service';
+import { ProcessingEvidenceFieldsService } from '../../../shared-services/processing-evidence-fields.service';
+import { ApiProcessingEvidenceField } from '../../../../api/model/apiProcessingEvidenceField';
 
 @Component({
   selector: 'app-value-chain-config-item',
@@ -39,12 +42,14 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
   configItemForm = new FormControl(null, Validators.required);
 
   procEvidenceTypesCodebook: ProcessingEvidenceTypeService;
+  procEvidenceFieldsCodebook: ProcessingEvidenceFieldsService;
 
   private selectedExistingValue = false;
 
   constructor(
     private codebookTranslations: CodebookTranslations,
     private procEvidenceTypeController: ProcessingEvidenceTypeControllerService,
+    private procEvidenceFieldController: ProcessingEvidenceFieldControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public facilityTypesCodebook: ActiveFacilityTypeService,
     public measureUnitTypesCodebook: ActiveMeasureUnitTypeService,
@@ -56,6 +61,7 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
 
   ngOnInit(): void {
     this.procEvidenceTypesCodebook = new ProcessingEvidenceTypeService(this.procEvidenceTypeController, this.codebookTranslations, null);
+    this.procEvidenceFieldsCodebook = new ProcessingEvidenceFieldsService(this.procEvidenceFieldController, this.codebookTranslations);
   }
 
   public generateForm(value: any): FormGroup {
@@ -73,13 +79,16 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
     }
 
     if (this.configItemType === 'processing-evidence-types') {
-      return generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), value, ApiProcessingEvidenceTypeValidationScheme);
+      return generateFormFromMetadata(ApiProcessingEvidenceType.formMetadata(), value, ApiVCProcessingEvidenceTypeValidationScheme);
+    }
+
+    if (this.configItemType === 'processing-evidence-fields') {
+      return generateFormFromMetadata(ApiProcessingEvidenceField.formMetadata(), value, ApiVCProcessingEvidenceFieldValidationScheme);
     }
 
     if (this.configItemType === 'semi-products') {
       return generateFormFromMetadata(ApiSemiProduct.formMetadata(), value, ApiSemiProductValidationScheme);
     }
-
   }
 
   setSelectedValue($event) {
@@ -106,11 +115,25 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
           quality: null,
           mandatory: null,
           requiredOnQuote: null,
-          requiredOneOfGroupIdForQuote: null } as ApiProcessingEvidenceType);
+          requiredOneOfGroupIdForQuote: null,
+          translations: [] } as ApiProcessingEvidenceType);
+      }
+
+      if (this.configItemType === 'processing-evidence-fields') {
+        this.form.setValue({ ...$event,
+          mandatory: null,
+          requiredOnQuote: null,
+          translations: [] } as ApiProcessingEvidenceField);
       }
 
       if (this.configItemType === 'semi-products') {
-        this.form.setValue({...$event, skuendCustomer: null, sku: null, buyable: null});
+        this.form.setValue({
+          ...$event,
+          skuendCustomer: null,
+          sku: null,
+          buyable: null,
+          translations: []
+        } as ApiSemiProduct);
       }
 
       this.form.markAsDirty();

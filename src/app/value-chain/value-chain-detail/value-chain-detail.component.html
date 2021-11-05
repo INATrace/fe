@@ -171,6 +171,32 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.processingEvidenceFields.title">Processing evidence fields</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain processing evidence fields"
+                         i18n-label="@@valueChainDetail.section.processingEvidenceFields.add.title"
+                         addText="Add new"
+                         [listEditorManager]="processingEvidenceFieldListManger"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcProcEvidenceFields; let i=index;">
+                  <app-value-chain-config-item configItemType="processing-evidence-fields"
+                                               title="Value chain processing evidence fields"
+                                               i18n-title="@@valueChainDetail.section.processingEvidenceFields.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="processingEvidenceFieldListManger"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="processingEvidenceFieldListManger.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@valueChainDetail.section.semiProducts.title">Semi-products</h2>
           <div class="af-form-element">
             <list-editor label="Value chain semi-products"

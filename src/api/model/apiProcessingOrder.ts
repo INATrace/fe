@@ -26,6 +26,10 @@ import { ApiTransaction } from './apiTransaction';
 
 export interface ApiProcessingOrder { 
     /**
+     * Timestamp indicates when processing order have been created
+     */
+    creationTimestamp?: Date;
+    /**
      * Entity id
      */
     id?: number;
@@ -37,6 +41,10 @@ export interface ApiProcessingOrder {
      * Input transactions
      */
     inputTransactions?: Array<ApiTransaction>;
+    /**
+     * Output transactions
+     */
+    outputTransactions?: Array<ApiTransaction>;
     processingAction?: ApiProcessingAction;
     /**
      * Processing date
@@ -57,6 +65,10 @@ export namespace ApiProcessingOrder {
      */
     export enum Properties {
         /**
+         * Timestamp indicates when processing order have been created
+         */
+        creationTimestamp = 'creationTimestamp',
+        /**
          * Entity id
          */
         id = 'id',
@@ -68,6 +80,10 @@ export namespace ApiProcessingOrder {
          * Input transactions
          */
         inputTransactions = 'inputTransactions',
+        /**
+         * Output transactions
+         */
+        outputTransactions = 'outputTransactions',
         processingAction = 'processingAction',
         /**
          * Processing date
@@ -85,6 +101,17 @@ export namespace ApiProcessingOrder {
             metadata: formMetadata,
             classname: 'ApiProcessingOrder',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiProcessingOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -113,6 +140,18 @@ export namespace ApiProcessingOrder {
                     isEnum: false,
                     required: false,
                     name: 'inputTransactions',
+                    classname: 'ApiProcessingOrder',
+                    dataType: 'Array&lt;ApiTransaction&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiTransaction'
+                },
+                {
+                    metadata: ApiTransaction.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputTransactions',
                     classname: 'ApiProcessingOrder',
                     dataType: 'Array&lt;ApiTransaction&gt;',
                     isPrimitiveType: false,
@@ -156,11 +195,15 @@ export namespace ApiProcessingOrder {
                 },
             ],
             validators: {
+                creationTimestamp: [
+                ],
                 id: [
                 ],
                 initiatorUserId: [
                 ],
                 inputTransactions: [
+                ],
+                outputTransactions: [
                 ],
                 processingAction: [
                 ],
@@ -175,6 +218,9 @@ export namespace ApiProcessingOrder {
   // export const ApiProcessingOrderValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               creationTimestamp: {
+  //                   validators: []
+  //               },
   //               id: {
   //                   validators: []
   //               },
@@ -182,6 +228,9 @@ export namespace ApiProcessingOrder {
   //                   validators: []
   //               },
   //               inputTransactions: {
+  //                   validators: []
+  //               },
+  //               outputTransactions: {
   //                   validators: []
   //               },
   //               processingAction: {

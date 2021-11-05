@@ -14,7 +14,7 @@ import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
-import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
+import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -27,6 +27,8 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   showedPayments = 0;
   allPayments = 0;
+  showedBulkPayments = 0;
+  allBulkPayments = 0;
 
   // currency code
   currency: string;
@@ -126,6 +128,14 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   onCountAllPayments(event) {
     this.allPayments = event;
+  }
+
+  onShowBulkPayments(event) {
+    this.showedBulkPayments = event;
+  }
+
+  onCountAllBulkPayments(event) {
+    this.allBulkPayments = event;
   }
 
   reloadPage() {
