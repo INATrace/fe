@@ -5,7 +5,7 @@ import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs
 import { ApiProductCompany } from 'src/api/model/apiProductCompany';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { UnsubscribeList } from 'src/shared/rxutils';
-import { FormControl } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
@@ -14,6 +14,10 @@ import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-
 import { ApiProduct } from '../../../../api/model/apiProduct';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
+import { ApiProductDataSharingAgreementValidationScheme, ApiProductValidationScheme } from './stakeholders-value-chain/validation';
+import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
+import { ApiProductDataSharingAgreement } from '../../../../api/model/apiProductDataSharingAgreement';
 
 @Component({
   template: ''
@@ -31,15 +35,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   isOwner = false;
   isSystemAdmin = false;
-
-  constructor(
-    protected productController: ProductControllerService,
-    protected globalEventsManager: GlobalEventManagerService,
-    protected modalService: NgbModalImproved,
-    protected route: ActivatedRoute,
-    protected router: Router,
-    protected authService: AuthService
-  ) { }
 
   // TABS ////////////////
   @ViewChild(AuthorisedLayoutComponent) authorizedLayout;
@@ -87,7 +82,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     this.associationsSection,
   ];
 
-  activeTab = this.getIdForTabName(this.route.snapshot.data.tab);
   isActivePage = false;
   unsubsribeList = new UnsubscribeList();
 
@@ -99,13 +93,10 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   allCustomers = 0;
   allFarmers = 0;
 
-  searchNameCollectors = new FormControl(null);
-  searchNameCustomers = new FormControl(null);
-  searchNameFarmers = new FormControl(null);
-
   productId = this.route.snapshot.params.id;
   unsubscribeList = new UnsubscribeList();
   currentProduct;
+  productForm: FormGroup;
   organizationId;
   productOrganizationId;
 
@@ -113,7 +104,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   public reloadCollectorsPing$ = new BehaviorSubject<boolean>(false);
   public reloadCustomersPing$ = new BehaviorSubject<boolean>(false);
   public reloadFarmersPing$ = new BehaviorSubject<boolean>(false);
-
 
   byCategoryFarmer = 'BY_NAME';
   byCategoryCollector = 'BY_NAME';
@@ -123,6 +113,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   tabSub: Subscription;
 
+  dataSharingAgreementListManager: ListEditorManager<ApiProductDataSharingAgreement>;
+
   product$ = combineLatest(this.reloadValueChainPing$, of(this.productId),
       (ping: any, id: string) => {
         return ping && id != null ? Number(id) : null;
@@ -131,7 +123,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       filter(val => val != null),
       tap(val => { this.globalEventsManager.showLoading(true); }),
       switchMap(id => this.productController.getProductUsingGET(id).pipe(
-          catchError(val => of(null))
+          catchError(() => of(null))
       )),
       filter(resp => !!resp),
       map(resp => {
@@ -139,7 +131,10 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       }),
       tap(val => { this.globalEventsManager.showLoading(false); }),
       tap((data: ApiProduct) => {
+
         this.currentProduct = data;
+        this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.currentProduct, ApiProductValidationScheme);
+        this.initListManagers();
 
         this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === Number(this.organizationId));
 
@@ -168,6 +163,27 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       shareReplay(1)
   );
 
+  constructor(
+    protected productController: ProductControllerService,
+    protected globalEventsManager: GlobalEventManagerService,
+    protected modalService: NgbModalImproved,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected authService: AuthService
+  ) { }
+
+  static ApiProductDataSharingAgreementCreateEmptyObject(): ApiProductDataSharingAgreement {
+    const obj = ApiProductDataSharingAgreement.formMetadata();
+    return defaultEmptyObject(obj) as ApiProductDataSharingAgreement;
+  }
+
+  static ApiProductDataSharingAgreementEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ProductLabelStakeholdersComponent.ApiProductDataSharingAgreementCreateEmptyObject(),
+        ApiProductDataSharingAgreementValidationScheme.validators);
+    };
+  }
+
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
   }
@@ -186,7 +202,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   ngOnInit(): void {
     this.unsubscribeList.add(
-      this.product$.subscribe(val => { }),
+      this.product$.subscribe(() => { }),
     );
     this.reload();
 
@@ -196,8 +212,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       }
     });
 
-    this.setAlls();
-    this.setOrganizationId();
+    this.setAlls().then();
+    this.setOrganizationId().then();
   }
 
   ngOnDestroy(): void {
@@ -208,22 +224,17 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     }
   }
 
+  initListManagers() {
+    this.dataSharingAgreementListManager = new ListEditorManager<ApiProductDataSharingAgreement>(
+      (this.productForm.get('dataSharingAgreements')) as FormArray,
+      ProductLabelStakeholdersComponent.ApiProductDataSharingAgreementEmptyObjectFormFactory(),
+      ApiProductDataSharingAgreementValidationScheme
+    );
+  }
+
   async setOrganizationId() {
 
     this.organizationId = localStorage.getItem('selectedUserCompany');
-
-
-  }
-
-  getIdForTabName(name: string) {
-    return this.tabNames.indexOf(name);
-  }
-
-  getTabNameForId(id: number) {
-    if (id >= this.tabNames.length || id < 0) {
-      return null;
-    }
-    return this.tabNames[id];
   }
 
   reloadPage() {
@@ -291,7 +302,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.BUYER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.BUYER).then();
     }
   }
 
@@ -307,7 +318,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.IMPORTER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.IMPORTER).then();
     }
   }
 
@@ -323,7 +334,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.EXPORTER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.EXPORTER).then();
     }
   }
 
@@ -339,7 +350,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PRODUCER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PRODUCER).then();
     }
   }
 
@@ -351,7 +362,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.OWNER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.OWNER).then();
     }
   }
 
@@ -367,7 +378,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.ASSOCIATION);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.ASSOCIATION).then();
     }
   }
 
@@ -383,7 +394,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PROCESSOR);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.PROCESSOR).then();
     }
   }
 
@@ -399,7 +410,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     });
     const company = await modalRef.result;
     if (company) {
-      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.TRADER);
+      this.addStakeholderToProduct(company.id, ApiProductCompany.TypeEnum.TRADER).then();
     }
   }
 
@@ -463,17 +474,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     if (type === 'customer') { this.reloadCustomersPing$.next(true); }
   }
 
-  onCategoryChange(event, type) {
-    if (type === 'collectors') {
-      this.byCategoryCollector = event;
-      this.sortingParamsCollector$.next({ queryBy: event, sort: event.sortOrder });
-    }
-    if (type === 'farmers') {
-      this.byCategoryFarmer = event;
-      this.sortingParamsFarmer$.next({ queryBy: event, sort: event.sortOrder });
-    }
-  }
-
   onSortChanged(event, type) {
     if (type === 'collectors') {
       this.byCategoryCollector = event;
@@ -482,7 +482,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       this.byCategoryFarmer = event;
     }
   }
-
 
   showWarning() {
     const buttonOkText = $localize`:@@productLabelStakeholders.warning.button.ok:OK`;

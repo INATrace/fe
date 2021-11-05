@@ -5,6 +5,9 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProductLabelStakeholdersComponent } from '../product-label-stakeholders.component';
 import { AuthService } from '../../../../core/auth.service';
+import { AbstractControl, FormArray } from '@angular/forms';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiProductDataSharingAgreement } from '../../../../../api/model/apiProductDataSharingAgreement';
 
 @Component({
   selector: 'app-stakeholders-value-chain',
@@ -15,6 +18,8 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
 
   rootTab = 0;
 
+  dataSharingAgreementListManager: ListEditorManager<ApiProductDataSharingAgreement>;
+
   constructor(
     protected productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
@@ -24,6 +29,10 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
     protected authService: AuthService
   ) {
     super(productController, globalEventsManager, modalService, route, router, authService);
+  }
+
+  get dataSharingAgreementsControls(): AbstractControl[] {
+    return (this.productForm.get('dataSharingAgreements') as FormArray).controls;
   }
 
   ngOnInit() {

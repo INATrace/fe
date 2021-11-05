@@ -18,12 +18,14 @@ import { ProductLabelStakeholdersComponent } from './product-label-stakeholders/
 import { StakeholdersValueChainComponent } from './product-label-stakeholders/stakeholders-value-chain/stakeholders-value-chain.component';
 import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing.module';
 import { ProductCommonModule } from '../product-common/product-common.module';
+import { DataSharingAgreementItemComponent } from './product-label-stakeholders/stakeholders-value-chain/data-sharing-agreement-item/data-sharing-agreement-item.component';
 
 @NgModule({
 declarations: [
     CompanyCardComponent,
     ProductLabelStakeholdersComponent,
-    StakeholdersValueChainComponent
+    StakeholdersValueChainComponent,
+    DataSharingAgreementItemComponent
   ],
   imports: [
     CommonModule,
