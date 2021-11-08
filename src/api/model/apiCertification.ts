@@ -29,6 +29,10 @@ export interface ApiCertification {
      */
     description?: string;
     /**
+     * Entity id
+     */
+    id?: number;
+    /**
      * certification type
      */
     type?: string;
@@ -51,6 +55,10 @@ export namespace ApiCertification {
          * description of this standard and certification
          */
         description = 'description',
+        /**
+         * Entity id
+         */
+        id = 'id',
         /**
          * certification type
          */
@@ -94,6 +102,17 @@ export namespace ApiCertification {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiCertification',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'type',
                     classname: 'ApiCertification',
                     dataType: 'string',
@@ -118,6 +137,8 @@ export namespace ApiCertification {
                 ],
                 description: [
                 ],
+                id: [
+                ],
                 type: [
                 ],
                 validity: [
@@ -133,6 +154,9 @@ export namespace ApiCertification {
   //                   validators: []
   //               },
   //               description: {
+  //                   validators: []
+  //               },
+  //               id: {
   //                   validators: []
   //               },
   //               type: {
