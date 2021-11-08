@@ -18165,6 +18165,13 @@
             "$ref": "#/components/schemas/ApiBankInformation",
             "description": "Bank information"
           },
+          "certifications": {
+            "description": "User customer certifications",
+            "items": {
+              "$ref": "#/components/schemas/ApiCertification"
+            },
+            "type": "array"
+          },
           "companyId": {
             "description": "Company id",
             "format": "int64",

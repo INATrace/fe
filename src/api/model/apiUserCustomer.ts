@@ -19,6 +19,7 @@
 
 
 import { ApiBankInformation } from './apiBankInformation';
+import { ApiCertification } from './apiCertification';
 import { ApiFarmInformation } from './apiFarmInformation';
 import { ApiUserCustomerAssociation } from './apiUserCustomerAssociation';
 import { ApiUserCustomerCooperative } from './apiUserCustomerCooperative';
@@ -32,6 +33,10 @@ export interface ApiUserCustomer {
      */
     associations?: Array<ApiUserCustomerAssociation>;
     bank?: ApiBankInformation;
+    /**
+     * User customer certifications
+     */
+    certifications?: Array<ApiCertification>;
     /**
      * Company id
      */
@@ -93,6 +98,10 @@ export namespace ApiUserCustomer {
          */
         associations = 'associations',
         bank = 'bank',
+        /**
+         * User customer certifications
+         */
+        certifications = 'certifications',
         /**
          * Company id
          */
@@ -186,6 +195,18 @@ export namespace ApiUserCustomer {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiBankInformation'
+                },
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certifications',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
                 },
                 {
                     isReadOnly: false,
@@ -341,6 +362,8 @@ export namespace ApiUserCustomer {
                 ],
                 bank: [
                 ],
+                certifications: [
+                ],
                 companyId: [
                 ],
                 cooperatives: [
@@ -378,6 +401,9 @@ export namespace ApiUserCustomer {
   //                   validators: []
   //               },
   //               bank: {
+  //                   validators: []
+  //               },
+  //               certifications: {
   //                   validators: []
   //               },
   //               companyId: {
