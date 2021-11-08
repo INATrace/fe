@@ -28,6 +28,10 @@ export interface ApiProductDataSharingAgreement {
      */
     description?: string;
     document?: ApiDocument;
+    /**
+     * Entity id
+     */
+    id?: number;
 }
 
 /**
@@ -42,7 +46,11 @@ export namespace ApiProductDataSharingAgreement {
          * Description of this document
          */
         description = 'description',
-        document = 'document'
+        document = 'document',
+        /**
+         * Entity id
+         */
+        id = 'id'
     }
 
 
@@ -74,11 +82,24 @@ export namespace ApiProductDataSharingAgreement {
                     isListContainer: false,
                     complexType: 'ApiDocument'
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiProductDataSharingAgreement',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 description: [
                 ],
                 document: [
+                ],
+                id: [
                 ],
             }
         }
@@ -91,6 +112,9 @@ export namespace ApiProductDataSharingAgreement {
   //                   validators: []
   //               },
   //               document: {
+  //                   validators: []
+  //               },
+  //               id: {
   //                   validators: []
   //               },
   //     }
