@@ -332,6 +332,42 @@
                     </div>
                 </div>
 
+                <div class="af-form-block--c6">
+                    <h2 i18n="@@companyDetail.section.certification">Certification</h2>
+                    <div class="af-form-element">
+                        <list-editor
+                                label="Certification"
+                                [listEditorManager]="certificationListManager"
+                                addText="Add new"
+                                [canAdd]="true"
+                                i18n-label="@@companyDetail.list-editor.certificationsAndStandards.label"
+                                i18n-addText="@@companyDetail.list-editor.certificationsAndStandards.addText"
+                                [invalid]="submitted && farmerForm.get('certifications')?.invalid">
+                            <list-editor-items>
+                                <div *ngFor="let item of certifications; let i = index;">
+                                    <app-certification-and-standard-item
+                                            title="Certification"
+                                            i18n-title="@@companyDetail.list-editor.certificationsAndStandards.title"
+                                            [formControlInput]="item"
+                                            [isOpen]="certificationListManager.isOpen(i)"
+                                            [listEditorManager]="this.certificationListManager"
+                                            [listEditorManagerPosition]="i">
+                                    </app-certification-and-standard-item>
+                                </div>
+                            </list-editor-items>
+                            <list-editor-errors>
+                                <ng-container *ngIf="submitted">
+                                    <div *ngIf="farmerForm.get('certifications').errors as errors" class="sc-invalid-feedback">
+                                        <div *ngIf="errors.required" i18n-title="@@companyDetail.list-editor.certificationsAndStandards.error">
+                                            <span>Certifications are required</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </list-editor-errors>
+                        </list-editor>
+                    </div>
+                </div>
+
             </div>
 
             <div class="af-form-row">

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
@@ -26,6 +26,8 @@ import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustome
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
+import { ApiCertification } from '../../../../api/model/apiCertification';
+import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -84,6 +86,8 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   showedPurchaseOrders = 0;
   allPurchaseOrders = 0;
   selectedOrders: ApiStockOrder[];
+
+  certificationListManager = null;
 
   sortOptionsPay = [
     {
@@ -173,6 +177,21 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       return new FormControl(CompanyFarmersDetailsComponent.ApiUserCustomerCooperativeCreateEmptyObject(),
         ApiUserCustomerCooperativeValidationScheme.validators);
     };
+  }
+
+  static ApiCertificationCreateEmptyObject(): ApiCertification {
+    const obj = ApiCertification.formMetadata();
+    return defaultEmptyObject(obj) as ApiCertification;
+  }
+
+  static ApiCertificationEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CompanyFarmersDetailsComponent.ApiCertificationCreateEmptyObject(), ApiCertificationValidationScheme.validators);
+    };
+  }
+
+  get certifications(): AbstractControl[] {
+    return (this.farmerForm.get('certifications') as FormArray).controls;
   }
 
   ngOnInit(): void {
@@ -341,10 +360,17 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   initializeListManager() {
+
     this.producersListManager = new ListEditorManager<ApiUserCustomerCooperative>(
         this.farmerForm.get('cooperatives') as FormArray,
         CompanyFarmersDetailsComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(),
         ApiUserCustomerCooperativeValidationScheme
+    );
+
+    this.certificationListManager = new ListEditorManager<ApiCertification>(
+      (this.farmerForm.get('certifications')) as FormArray,
+      CompanyFarmersDetailsComponent.ApiCertificationEmptyObjectFormFactory(),
+      ApiCertificationValidationScheme
     );
   }
 
