@@ -17,10 +17,12 @@ export const ApiProductValidationScheme = {
 
 export const ApiProductDataSharingAgreementValidationScheme = {
   validators: [],
-  description: {
-    validators: [Validators.required]
-  },
-  document: {
-    validators: [Validators.required]
+  fields: {
+    description: {
+      validators: [Validators.required]
+    },
+    document: {
+      validators: [Validators.required]
+    }
   }
 } as SimpleValidationScheme<ApiProductDataSharingAgreement>;

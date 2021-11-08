@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GenericEditableItemComponent } from '../../../../../shared/generic-editable-item/generic-editable-item.component';
 import { GlobalEventManagerService } from '../../../../../core/global-event-manager.service';
 import { ApiProductDataSharingAgreement } from '../../../../../../api/model/apiProductDataSharingAgreement';
+import { FormGroup } from '@angular/forms';
+import { generateFormFromMetadata } from '../../../../../../shared/utils';
+import { ApiProductDataSharingAgreementValidationScheme } from '../validation';
 
 @Component({
   selector: 'app-data-sharing-agreement-item',
@@ -10,6 +13,12 @@ import { ApiProductDataSharingAgreement } from '../../../../../../api/model/apiP
 })
 export class DataSharingAgreementItemComponent extends GenericEditableItemComponent<ApiProductDataSharingAgreement> implements OnInit {
 
+  @Input()
+  disableDelete = false;
+
+  @Input()
+  readOnly = false;
+
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
   ) {
@@ -17,6 +26,10 @@ export class DataSharingAgreementItemComponent extends GenericEditableItemCompon
   }
 
   ngOnInit(): void {
+  }
+
+  public generateForm(value: any): FormGroup {
+    return generateFormFromMetadata(ApiProductDataSharingAgreement.formMetadata(), value, ApiProductDataSharingAgreementValidationScheme);
   }
 
 }

@@ -216,6 +216,8 @@
                         <app-data-sharing-agreement-item
                                 title="Data sharing agreement"
                                 i18n-title="@@productLabelStakeholders.dataSharingAgreements.listEditor.title"
+                                [readOnly]="!isOwner"
+                                [disableDelete]="!isOwner"
                                 [formControlInput]="item"
                                 [isOpen]="dataSharingAgreementListManager.isOpen(i)"
                                 [listEditorManager]="dataSharingAgreementListManager"
