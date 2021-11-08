@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
@@ -14,7 +14,7 @@ import { ApiProductDataSharingAgreement } from '../../../../../api/model/apiProd
   templateUrl: './stakeholders-value-chain.component.html',
   styleUrls: ['./stakeholders-value-chain.component.scss']
 })
-export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent implements OnInit {
+export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent implements OnInit, OnDestroy {
 
   rootTab = 0;
 
@@ -37,6 +37,10 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
 
   ngOnInit() {
     super.ngOnInit();
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
 }

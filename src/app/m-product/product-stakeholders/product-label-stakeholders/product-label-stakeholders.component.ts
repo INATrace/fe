@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take, filter, tap, switchMap, catchError, map, shareReplay } from 'rxjs/operators';
+import { take, filter, tap, switchMap, catchError, map } from 'rxjs/operators';
 import { ApiProductCompany } from 'src/api/model/apiProductCompany';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { UnsubscribeList } from 'src/shared/rxutils';
@@ -85,14 +85,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   isActivePage = false;
   unsubsribeList = new UnsubscribeList();
 
-  showedCollectors = 0;
-  showedCustomers = 0;
-  showedFarmers = 0;
-
-  allCollectors = 0;
-  allCustomers = 0;
-  allFarmers = 0;
-
   productId = this.route.snapshot.params.id;
   unsubscribeList = new UnsubscribeList();
   currentProduct;
@@ -101,15 +93,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   productOrganizationId;
 
   public reloadValueChainPing$ = new BehaviorSubject<boolean>(false);
-  public reloadCollectorsPing$ = new BehaviorSubject<boolean>(false);
-  public reloadCustomersPing$ = new BehaviorSubject<boolean>(false);
-  public reloadFarmersPing$ = new BehaviorSubject<boolean>(false);
-
-  byCategoryFarmer = 'BY_NAME';
-  byCategoryCollector = 'BY_NAME';
-  public sortingParamsFarmer$ = new BehaviorSubject({ queryBy: this.byCategoryFarmer, sort: 'ASC' });
-  public sortingParamsCollector$ = new BehaviorSubject({ queryBy: this.byCategoryCollector, sort: 'ASC' });
-  items = [{ name: $localize`:@@productLabelStakeholders.search.name:name`, category: 'BY_NAME' }, { name: $localize`:@@productLabelStakeholders.search.surname:surname`, category: 'BY_SURNAME' }];
 
   tabSub: Subscription;
 
@@ -121,7 +104,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       }
   ).pipe(
       filter(val => val != null),
-      tap(val => { this.globalEventsManager.showLoading(true); }),
+      tap(() => { this.globalEventsManager.showLoading(true); }),
       switchMap(id => this.productController.getProductUsingGET(id).pipe(
           catchError(() => of(null))
       )),
@@ -129,7 +112,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       map(resp => {
         return resp.data;
       }),
-      tap(val => { this.globalEventsManager.showLoading(false); }),
+      tap(() => { this.globalEventsManager.showLoading(false); }),
       tap((data: ApiProduct) => {
 
         this.currentProduct = data;
@@ -159,8 +142,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
             case ApiProductCompany.TypeEnum.TRADER: this.traders.push(ac); break;
           }
         }
-      }),
-      shareReplay(1)
+      })
   );
 
   constructor(
@@ -190,28 +172,25 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
-    this.reloadPage();
+    this.reload();
   }
 
   targetNavigate(segment: string) {
-    this.router.navigate([segment], { relativeTo: this.route.parent });
-  }
-  ngAfterViewInit() {
-    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
+    this.router.navigate([segment], { relativeTo: this.route.parent }).then();
   }
 
   ngOnInit(): void {
-    this.unsubscribeList.add(
-      this.product$.subscribe(() => { }),
-    );
+
+    this.setOrganizationId();
     this.reload();
 
     this.authService.userProfile$.subscribe(value => {
       this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.ADMIN;
     });
+  }
 
-    this.setAlls().then();
-    this.setOrganizationId().then();
+  ngAfterViewInit() {
+    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -230,44 +209,12 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     );
   }
 
-  async setOrganizationId() {
-
+  setOrganizationId() {
     this.organizationId = localStorage.getItem('selectedUserCompany');
   }
 
-  reloadPage() {
-
-    const tabName = this.route.snapshot.data.tab;
-    switch (tabName) {
-      case 'value-chain':
-        this.reloadValueChainPing$.next(true);
-        return;
-      case 'collectors':
-        this.reloadCollectorsPing$.next(true);
-        return;
-      case 'customers':
-        this.reloadCustomersPing$.next(true);
-        return;
-      case 'farmers':
-        this.reloadFarmersPing$.next(true);
-        return;
-      default:
-        return;
-    }
-  }
-
-  async setAlls() { }
-
-  onShow(event, type) {
-    if (type === 'collectors') { this.showedCollectors = event; }
-    if (type === 'customers') { this.showedCustomers = event; }
-    if (type === 'farmers') { this.showedFarmers = event; }
-  }
-
-  onCountAll(event, type) {
-    if (type === 'collectors') { this.allCollectors = event; }
-    if (type === 'customers') { this.allCustomers = event; }
-    if (type === 'farmers') { this.allFarmers = event; }
+  reload() {
+    this.reloadValueChainPing$.next(true);
   }
 
   async addStakeholderToProduct(cId, cType) {
@@ -282,10 +229,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-  }
-
-  reload() {
-    this.reloadValueChainPing$.next(true);
   }
 
   async newBuyer() {
@@ -459,26 +402,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
       },
       dismissable: false
     });
-  }
-
-  customerDetail() {
-    const customerId = this.allCustomers + 1;
-    this.router.navigate(['product-labels', this.productId, 'stakeholders', 'customers', 'organization', this.organizationId, 'new', customerId]);
-  }
-
-  serchInput(event, type) {
-    if (type === 'collectors') { this.reloadCollectorsPing$.next(true); }
-    if (type === 'farmers') { this.reloadFarmersPing$.next(true); }
-    if (type === 'customer') { this.reloadCustomersPing$.next(true); }
-  }
-
-  onSortChanged(event, type) {
-    if (type === 'collectors') {
-      this.byCategoryCollector = event;
-    }
-    if (type === 'farmers') {
-      this.byCategoryFarmer = event;
-    }
   }
 
   showWarning() {

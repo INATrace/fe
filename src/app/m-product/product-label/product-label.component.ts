@@ -282,7 +282,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
-      console.log(product);
+
       const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
       this.productForm.updateValueAndValidity();
