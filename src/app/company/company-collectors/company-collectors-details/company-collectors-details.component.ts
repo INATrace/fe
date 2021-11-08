@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
@@ -26,6 +26,8 @@ import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustome
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { ApiCertification } from '../../../../api/model/apiCertification';
+import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
 
 @Component({
   selector: 'app-company-collectors-details',
@@ -84,14 +86,9 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     FEMALE: $localize`:@@collectorDetail.gender.female:Female`
   });
 
-  get roles() {
-    const obj = {};
-    obj['FARMER'] = $localize`:@@collectorDetail.roles.collector:Collector`;
-    obj['COLLECTOR'] = $localize`:@@collectorDetail.roles.collector:Collector`;
-    return obj;
-  }
-
   codebookStatus = EnumSifrant.fromObject(this.roles);
+
+  certificationListManager = null;
 
   sortOptionsPay = [
     {
@@ -172,6 +169,28 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       return new FormControl(CompanyCollectorsDetailsComponent.ApiUserCustomerCooperativeCreateEmptyObject(),
         ApiUserCustomerCooperativeValidationScheme.validators);
     };
+  }
+
+  static ApiCertificationCreateEmptyObject(): ApiCertification {
+    const obj = ApiCertification.formMetadata();
+    return defaultEmptyObject(obj) as ApiCertification;
+  }
+
+  static ApiCertificationEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(CompanyCollectorsDetailsComponent.ApiCertificationCreateEmptyObject(), ApiCertificationValidationScheme.validators);
+    };
+  }
+
+  get roles() {
+    const obj = {};
+    obj['FARMER'] = $localize`:@@collectorDetail.roles.collector:Collector`;
+    obj['COLLECTOR'] = $localize`:@@collectorDetail.roles.collector:Collector`;
+    return obj;
+  }
+
+  get certifications(): AbstractControl[] {
+    return (this.collectorForm.get('certifications') as FormArray).controls;
   }
 
   ngOnInit(): void {
@@ -291,10 +310,17 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   }
 
   initializeListManager() {
+
     this.producersListManager = new ListEditorManager<ApiUserCustomerCooperative>(
         this.collectorForm.get('cooperatives') as FormArray,
         CompanyCollectorsDetailsComponent.ApiUserCustomerCooperativeEmptyObjectFormFactory(),
         ApiUserCustomerCooperativeValidationScheme
+    );
+
+    this.certificationListManager = new ListEditorManager<ApiCertification>(
+      (this.collectorForm.get('certifications')) as FormArray,
+      CompanyCollectorsDetailsComponent.ApiCertificationEmptyObjectFormFactory(),
+      ApiCertificationValidationScheme
     );
   }
 
