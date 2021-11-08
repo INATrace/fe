@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, filter, tap, switchMap, catchError, map } from 'rxjs/operators';
@@ -22,7 +22,7 @@ import { ApiProductDataSharingAgreement } from '../../../../api/model/apiProduct
 @Component({
   template: ''
 })
-export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit {
 
   buyers: ApiProductCompany[] = [];
   importers: ApiProductCompany[] = [];
@@ -37,7 +37,9 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   isSystemAdmin = false;
 
   // TABS ////////////////
-  @ViewChild(AuthorisedLayoutComponent) authorizedLayout;
+  @ViewChild(AuthorisedLayoutComponent)
+  authorizedLayout;
+
   rootTab = 0;
   selectedTab: Subscription;
 
@@ -93,8 +95,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
   productOrganizationId;
 
   public reloadValueChainPing$ = new BehaviorSubject<boolean>(false);
-
-  tabSub: Subscription;
 
   dataSharingAgreementListManager: ListEditorManager<ApiProductDataSharingAgreement>;
 
@@ -191,14 +191,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, OnDestroy, Aft
 
   ngAfterViewInit() {
     this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
-  }
-
-  ngOnDestroy(): void {
-    this.tabCommunicationService.announceTabTitles([]);
-    this.unsubscribeList.cleanup();
-    if (this.tabSub) {
-      this.tabSub.unsubscribe();
-    }
   }
 
   initListManagers() {

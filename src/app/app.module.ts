@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouteReuseStrategy } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule, NgbPaginationModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angular2-qrcode';
@@ -22,7 +21,6 @@ import { Configuration } from 'src/api/configuration';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CacheRouteReuseStrategy } from './cache-route-reuse.strategy';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { CompanyListComponent } from './company/company-list/company-list.component';
 import { CompanySelectModalComponent } from './company/company-list/company-select-modal/company-select-modal.component';
@@ -217,10 +215,6 @@ export function getConfiguration(): Configuration {
     ChartsModule
   ],
   providers: [
-    {
-      provide: RouteReuseStrategy,
-      useClass: CacheRouteReuseStrategy
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LanguageInterceptor,
