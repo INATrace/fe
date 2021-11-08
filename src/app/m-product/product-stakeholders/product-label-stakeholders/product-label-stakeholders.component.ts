@@ -91,6 +91,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
   unsubscribeList = new UnsubscribeList();
   currentProduct;
   productForm: FormGroup;
+  submitted = false;
   organizationId;
   productOrganizationId;
 
@@ -411,6 +412,28 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
 
   editable() {
     return this.isSystemAdmin;
+  }
+
+  async saveDataSharingAgreements() {
+
+    this.submitted = true;
+    if (!this.productForm.dirty) {
+      return;
+    }
+
+    // Update the product
+    try {
+      this.globalEventsManager.showLoading(true);
+      const data = this.productForm.value;
+      const res = await this.productController.updateProductUsingPUT(data).pipe(take(1)).toPromise();
+      if (res && res.status === 'OK') {
+        this.productForm.markAsPristine();
+        this.reload();
+      }
+    } catch (e) {
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
 }

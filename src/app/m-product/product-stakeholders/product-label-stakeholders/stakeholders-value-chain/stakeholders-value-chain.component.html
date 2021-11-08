@@ -196,10 +196,10 @@
         <ng-container *ngIf="product$ | async">
           <hr>
 
-          <div class="af-form-wrapper mb-5">
+          <div class="af-form-wrapper">
             <div class="af-form-row">
               <div class="af-form-block--c12">
-                <div class="title-page content-element--title mb-3"
+                <div class="title-page content-element--title"
                      i18n="@@productLabelStakeholders.dataSharingAgreements.title">Data sharing agreements</div>
                 <div class="af-form-element">
 
@@ -230,6 +230,22 @@
                 </div>
               </div>
             </div>
+
+            <div class="af-form-row">
+              <div class="af-form-block--c12">
+                <div class="af-bottom-buttons">
+                  <bottom-buttons
+                          [changed]="productForm.dirty"
+                          [invalid]="submitted && productForm.invalid"
+                          (onSave)="saveDataSharingAgreements()"
+                          [floatingValidate]="true"
+                          [error]="submitted && productForm.invalid"
+                          [success]="submitted && !productForm.invalid">
+                  </bottom-buttons>
+                </div>
+              </div>
+            </div>
+
           </div>
         </ng-container>
 
