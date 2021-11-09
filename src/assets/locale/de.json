@@ -1776,7 +1776,7 @@
     "companyDetailProcessingActions.singleChoice.repackedOutputs.no": "Nein",
     "companyDetailProcessingActions.field.maxOutputQuantity.label": "Maximale Output-Menge in {$PH}",
     "companyDetailProcessingActions.textInput.maxOutputWeight.label": "Maximales Gewicht des Outputs in kg",
-    "companyDetailProcessingActions.textInput.maxOutputWeight.helpText": "Maximale Output-Menge eingeben",
+    "companyDetailProcessingActions.textInput.maxOutputWeight.placeholder": "Maximale Output-Menge eingeben",
     "companyDetailProcessingActions.textInput.maxOutputWeight.error": "Falsches maximales Ausgabegewicht.",
     "companyDetailProcessingActions.textInput.prefix.label": "Interne Lot-Bezeichnung Präfix",
     "companyDetailProcessingActions.textInput.prefix.helpText": "Präfix eingeben",

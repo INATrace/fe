@@ -1777,7 +1777,7 @@
     "companyDetailProcessingActions.singleChoice.repackedOutputs.no": "Oya",
     "companyDetailProcessingActions.field.maxOutputQuantity.label": "Ingano ntarengwa y'ibisohoka mu {$PH}",
     "companyDetailProcessingActions.textInput.maxOutputWeight.label": "Uburemere ntarengwa bw'ibisohoka muri kg",
-    "companyDetailProcessingActions.textInput.maxOutputWeight.helpText": "Injiza ingano ntarengwa y'ibisohoka",
+    "companyDetailProcessingActions.textInput.maxOutputWeight.placeholder": "Injiza ingano ntarengwa y'ibisohoka",
     "companyDetailProcessingActions.textInput.maxOutputWeight.error": "Ingano ntarengwa y'ibisohoka siyo.",
     "companyDetailProcessingActions.textInput.prefix.label": "Inyuguti zibanza kuri nomero ya loti",
     "companyDetailProcessingActions.textInput.prefix.helpText": "Shyiramo inyuguti zibanza",

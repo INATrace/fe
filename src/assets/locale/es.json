@@ -1813,7 +1813,7 @@
     "companyDetailProcessingActions.singleChoice.repackedOutputs.no": "No",
     "companyDetailProcessingActions.field.maxOutputQuantity.label": "Cantidad máxima de salida en {$PH}",
     "companyDetailProcessingActions.textInput.maxOutputWeight.label": "Peso máximo de salida en kg",
-    "companyDetailProcessingActions.textInput.maxOutputWeight.helpText": "Introduzca la cantidad máxima de salida",
+    "companyDetailProcessingActions.textInput.maxOutputWeight.placeholder": "Introduzca la cantidad máxima de salida",
     "companyDetailProcessingActions.textInput.maxOutputWeight.error": "Peso máximo de salida incorrecto",
     "companyDetailProcessingActions.textInput.prefix.label": "Prefijo del nombre de lote interno",
     "companyDetailProcessingActions.textInput.prefix.helpText": "Introduzca el prefijo",

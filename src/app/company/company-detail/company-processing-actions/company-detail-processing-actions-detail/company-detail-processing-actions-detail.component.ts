@@ -383,6 +383,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     return obj;
   }
 
+  get outputMeasurementUnit() {
+    if (!this.form || !this.form.get('outputSemiProduct')) {
+      return;
+    }
+    const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
+    return semi && semi.measurementUnitType;
+  }
+
   get maxOutputQuantityLabel() {
     if (!this.outputMeasurementUnit) {
       return ' ';
@@ -391,12 +399,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     return $localize`:@@companyDetailProcessingActions.field.maxOutputQuantity.label:Max output quantity in ${this.outputMeasurementUnit.label}`;
   }
 
-  get outputMeasurementUnit() {
-    if (!this.form || !this.form.get('outputSemiProduct')) {
-      return;
-    }
-    const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
-    return semi && semi.measurementUnitType;
+  get estimatedOutputQuantityLabel() {
+    const outputMeasureUnitLabel = this.outputMeasurementUnit?.label;
+    return $localize`:@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.label:Estimated output quantity per` +
+      ` ${outputMeasureUnitLabel ? outputMeasureUnitLabel : '-'}`;
   }
 
   async saveProcessingAction() {

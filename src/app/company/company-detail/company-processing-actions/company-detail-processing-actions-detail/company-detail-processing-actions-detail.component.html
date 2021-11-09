@@ -184,7 +184,7 @@
                                 </single-choice>
                             </ng-container>
 
-                            <div class="af-row">
+                            <div class="d-flex">
                                 <div class="af-c6">
                                     <single-choice
                                             label="Repacked outputs"
@@ -218,6 +218,16 @@
                                     </textinput>
                                 </div>
                             </div>
+
+                            <textinput
+                                    *ngIf="form.get('type').value === 'PROCESSING' && !form.get('repackedOutputs').value"
+                                    [label]="estimatedOutputQuantityLabel"
+                                    placeholder="Enter estimated output quantity"
+                                    i18n-placeholder="@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.placeholder"
+                                    type="number"
+                                    step="0.01"
+                                    [form]="form.get('estimatedOutputQuantityPerUnit')">
+                            </textinput>
                         </ng-container>
 
                         <textinput
