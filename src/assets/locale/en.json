@@ -2947,6 +2947,11 @@
     "companyDetailFacilities.textInput.name.error": "Name of facility is required",
     "productLabelFacilities.tableCol.activate": "Activate",
     "productLabelFacilities.tableCol.deactivate": "Deactivate",
-    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?",
+    "productLabelStockProcessingOrderDetail.clipInputModal.title": "Clip input quantity",
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.label": "Enter the quantity to be used from this transaction",
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.helpText": "Available quantity",
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.required": "Quantity is required",
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.max": "Selected quantity cannot be greater than the available"
   }
 }

@@ -28,6 +28,7 @@ import { CompanyFacilitiesForSemiProductService } from '../../../../shared-servi
 import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faCut } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -53,6 +54,8 @@ import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ClipInputTransactionModalComponent } from './clip-input-transaction-modal/clip-input-transaction-modal.component';
+import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -70,6 +73,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
   faTrashAlt = faTrashAlt;
   faQrcode = faQrcode;
+  faCut = faCut;
 
   title: string;
 
@@ -1373,31 +1377,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.codebookTranslations.translate(obj, 'name');
   }
 
-  selectAll() {
-
-    if (!this.showLeftSide) { return; }
-    if (this.disabledLeftFields) { return; }
-
-    if (this.cbSelectAllForm.value) {
-
-      this.selectedInputStockOrders = [];
-      for (const item of this.availableStockOrders) {
-        this.selectedInputStockOrders.push(item);
-      }
-
-      this.availableStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
-
-      if (this.isClipOrder) {
-        this.clipOrder(true);
-      }
-    } else {
-      this.selectedInputStockOrders = [];
-      this.availableStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
-    }
-    this.calcInputQuantity(true);
-    this.setWomensOnly();
-  }
-
   clipOrder(value: boolean) {
 
     if (value) {
@@ -1433,22 +1412,42 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  useInput(value: boolean) {
-    if (!this.showRightSide) { return; }
-    if (value) {
-      this.outputStockOrderForm.get('totalQuantity').setValue(this.form.get('outputQuantity').value);
-    }
-  }
+  async clipInputTransaction(item: ApiStockOrderSelectable, index: number) {
 
-  private select(stockOrder) {
-    const index = this.selectedInputStockOrders.indexOf(stockOrder);
-    if (index !== -1) {
-      this.selectedInputStockOrders.splice(index, 1);
-    } else {
-      this.selectedInputStockOrders.push(stockOrder);
+    if (!this.showLeftSide) { return; }
+
+    const modalRef = this.modalService.open(ClipInputTransactionModalComponent, { centered: true, keyboard: false, backdrop: 'static' });
+    Object.assign(modalRef.componentInstance, {
+      stockOrder: item,
+      currentSelectedQuantity: this.availableStockOrders[index].selectedQuantity
+    });
+
+    const result: ClipInputTransactionModalResult = await modalRef.result;
+    if (!result) {
+      return;
     }
+
+    if (result.selectedQuantity > 0) {
+
+      // If this transaction was not selected, trigger selection
+      if (!this.availableStockOrders[index].selected) {
+        this.select(item);
+      }
+
+      this.availableStockOrders[index].selected = true;
+      this.availableStockOrders[index].selectedQuantity = result.selectedQuantity;
+    } else {
+
+      // If this transaction was selected, trigger unselect
+      if (this.availableStockOrders[index].selected) {
+        this.select(item);
+      }
+
+      this.availableStockOrders[index].selected = false;
+      this.availableStockOrders[index].selectedQuantity = 0;
+    }
+
     this.calcInputQuantity(true);
-    this.setWomensOnly();
   }
 
   cbSelected(stockOrder, index: number) {
@@ -1488,6 +1487,52 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.select(stockOrder);
+  }
+
+  private select(stockOrder) {
+    const index = this.selectedInputStockOrders.indexOf(stockOrder);
+    if (index !== -1) {
+      this.selectedInputStockOrders.splice(index, 1);
+    } else {
+      this.selectedInputStockOrders.push(stockOrder);
+    }
+    this.calcInputQuantity(true);
+    this.setWomensOnly();
+  }
+
+  selectAll() {
+
+    if (!this.showLeftSide) { return; }
+    if (this.disabledLeftFields) { return; }
+
+    if (this.cbSelectAllForm.value) {
+
+      this.selectedInputStockOrders = [];
+      for (const item of this.availableStockOrders) {
+        this.selectedInputStockOrders.push(item);
+      }
+
+      this.availableStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
+
+      if (this.isClipOrder) {
+        this.clipOrder(true);
+      }
+
+    } else {
+
+      this.selectedInputStockOrders = [];
+      this.availableStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
+    }
+
+    this.calcInputQuantity(true);
+    this.setWomensOnly();
+  }
+
+  useInput(value: boolean) {
+    if (!this.showRightSide) { return; }
+    if (value) {
+      this.outputStockOrderForm.get('totalQuantity').setValue(this.form.get('outputQuantity').value);
+    }
   }
 
   isOutputStockOrder(order: ApiStockOrder) {
