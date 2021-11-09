@@ -331,6 +331,37 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.currentOutputStockUnitProduct ? this.codebookTranslations.translate(this.currentOutputStockUnitProduct.measurementUnitType, 'label') : '' }`;
   }
 
+  get expectedOutputQuantityHelpText() {
+
+    if (this.actionType !== 'PROCESSING' || !this.prAction?.estimatedOutputQuantityPerUnit) {
+      return null;
+    }
+
+    let quantityFrom = '/';
+    let quantityTo = '/';
+
+    const currentInputQuantity = Number(this.form.get('outputQuantity').value);
+    if (currentInputQuantity) {
+
+      let expectedOutputQuantity;
+      let normalizedInputQuantity;
+      if (!!this.underlyingMeasurementUnit) {
+        expectedOutputQuantity = currentInputQuantity * this.prAction.estimatedOutputQuantityPerUnit;
+      } else {
+
+        normalizedInputQuantity =
+          currentInputQuantity / this.currentInputStockUnitProduct.measurementUnitType.weight / this.currentOutputStockUnitProduct.measurementUnitType.weight;
+        expectedOutputQuantity = normalizedInputQuantity * this.prAction.estimatedOutputQuantityPerUnit;
+      }
+
+      quantityFrom = Number(expectedOutputQuantity * 0.8).toFixed(2);
+      quantityTo = Math.min(Number(expectedOutputQuantity * 1.2), normalizedInputQuantity ? normalizedInputQuantity : currentInputQuantity).toFixed(2);
+    }
+
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.expectedOutputHelpText:Expected output quantity range:` +
+      ` ${quantityFrom} ~ ${quantityTo} (${this.currentOutputStockUnitProduct.measurementUnitType.label})`;
+  }
+
   get showRemainingForm() {
     if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       return !!this.underlyingMeasurementUnit;

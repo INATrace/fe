@@ -398,6 +398,7 @@
                   <textinput
                           [form]="outputStockOrderForm.get('totalQuantity')"
                           [label]="outputQuantityLabel"
+                          [helpText]="expectedOutputQuantityHelpText"
                           style="width: 100%"
                           placeholder="Enter quantity"
                           i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder"
@@ -418,6 +419,11 @@
                           Quantity is required
                         </div>
                       </ng-container>
+                      <!-- TODO: implement warning -->
+                      <div i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
+                           class="sc-warning-feedback">
+                        Output quantity not in expected range
+                      </div>
                       <div *ngIf="invalidOutputQuantityForShipment" i18n="@@productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error" class="sc-invalid-feedback">
                         Enter the desired output quantity first
                       </div>

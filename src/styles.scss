@@ -696,9 +696,14 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     font-size: 80%;
 
     color: $danger;
-    // @include themify {
-    //     color: $color-danger;
-    // }
+}
+
+.sc-warning-feedback {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+
+  color: $warning;
 }
 
 // .ab-invalid-feedback {
