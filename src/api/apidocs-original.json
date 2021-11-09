@@ -14454,6 +14454,10 @@
             "description": "Processing action description",
             "type": "string"
           },
+          "estimatedOutputQuantityPerUnit": {
+            "description": "The estimated output quantity per unit for this processing action",
+            "type": "number"
+          },
           "finalProductAction": {
             "description": "Denoting if this processing action is Transfer or Quote of a Final product",
             "example": false,

@@ -35,6 +35,10 @@ export interface ApiProcessingAction {
      */
     description?: string;
     /**
+     * The estimated output quantity per unit for this processing action
+     */
+    estimatedOutputQuantityPerUnit?: number;
+    /**
      * Denoting if this processing action is Transfer or Quote of a Final product
      */
     finalProductAction?: boolean;
@@ -115,6 +119,10 @@ export namespace ApiProcessingAction {
          * Processing action description
          */
         description = 'description',
+        /**
+         * The estimated output quantity per unit for this processing action
+         */
+        estimatedOutputQuantityPerUnit = 'estimatedOutputQuantityPerUnit',
         /**
          * Denoting if this processing action is Transfer or Quote of a Final product
          */
@@ -240,6 +248,17 @@ export namespace ApiProcessingAction {
                     name: 'description',
                     classname: 'ApiProcessingAction',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'estimatedOutputQuantityPerUnit',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -493,6 +512,8 @@ export namespace ApiProcessingAction {
                 ],
                 description: [
                 ],
+                estimatedOutputQuantityPerUnit: [
+                ],
                 finalProductAction: [
                 ],
                 id: [
@@ -546,6 +567,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               description: {
+  //                   validators: []
+  //               },
+  //               estimatedOutputQuantityPerUnit: {
   //                   validators: []
   //               },
   //               finalProductAction: {
