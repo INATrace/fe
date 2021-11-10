@@ -157,6 +157,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   saveProcessingOrderInProgress = false;
 
+  // Output quantity expected range
+  private outQuantityRangeLow: number = null;
+  private outQuantityRangeHigh: number = null;
+
   constructor(
     private location: Location,
     private route: ActivatedRoute,
@@ -354,8 +358,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         expectedOutputQuantity = normalizedInputQuantity * this.prAction.estimatedOutputQuantityPerUnit;
       }
 
-      quantityFrom = Number(expectedOutputQuantity * 0.8).toFixed(2);
-      quantityTo = Math.min(Number(expectedOutputQuantity * 1.2), normalizedInputQuantity ? normalizedInputQuantity : currentInputQuantity).toFixed(2);
+      this.outQuantityRangeLow = Number(expectedOutputQuantity * 0.8);
+      this.outQuantityRangeHigh = Math.min(Number(expectedOutputQuantity * 1.2), normalizedInputQuantity ? normalizedInputQuantity : currentInputQuantity);
+
+      quantityFrom = this.outQuantityRangeLow.toFixed(2);
+      quantityTo = this.outQuantityRangeHigh.toFixed(2);
+    } else {
+
+      this.outQuantityRangeLow = null;
+      this.outQuantityRangeHigh = null;
     }
 
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.expectedOutputHelpText:Expected output quantity range:` +
@@ -411,6 +422,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'SHIPMENT') { return true; }
     return this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING';
+  }
+
+  get outputQuantityNotInRange() {
+
+    if (this.actionType !== 'PROCESSING' || !this.prAction?.estimatedOutputQuantityPerUnit ||
+      !this.outQuantityRangeLow || !this.outQuantityRangeHigh) {
+      return false;
+    }
+
+    const outputQuantity = Number(this.outputStockOrderForm.get('totalQuantity').value);
+    if (!outputQuantity) {
+      return false;
+    }
+
+    if (!(outputQuantity >= this.outQuantityRangeLow && outputQuantity <= this.outQuantityRangeHigh)) {
+      return true;
+    }
   }
 
   get invalidOutputQuantity() {

@@ -419,8 +419,8 @@
                           Quantity is required
                         </div>
                       </ng-container>
-                      <!-- TODO: implement warning -->
-                      <div i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
+                      <div *ngIf="outputQuantityNotInRange"
+                           i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
                            class="sc-warning-feedback">
                         Output quantity not in expected range
                       </div>
