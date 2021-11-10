@@ -121,6 +121,10 @@ export interface ApiStockOrder {
      */
     otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
     /**
+     * Total quantity of this stock order is not within the expected range
+     */
+    outQuantityNotInRange?: boolean;
+    /**
      * Paid
      */
     paid?: number;
@@ -280,6 +284,10 @@ export namespace ApiStockOrder {
          * Other processing evidence documents - evidence types that can be provided but are not mandatory
          */
         otherEvidenceDocuments = 'otherEvidenceDocuments',
+        /**
+         * Total quantity of this stock order is not within the expected range
+         */
+        outQuantityNotInRange = 'outQuantityNotInRange',
         /**
          * Paid
          */
@@ -686,6 +694,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'outQuantityNotInRange',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'paid',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -1014,6 +1033,8 @@ export namespace ApiStockOrder {
                 ],
                 otherEvidenceDocuments: [
                 ],
+                outQuantityNotInRange: [
+                ],
                 paid: [
                 ],
                 preferredWayOfPayment: [
@@ -1148,6 +1169,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               otherEvidenceDocuments: {
+  //                   validators: []
+  //               },
+  //               outQuantityNotInRange: {
   //                   validators: []
   //               },
   //               paid: {
