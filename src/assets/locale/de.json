@@ -2440,7 +2440,7 @@
     "frontPage.fair-prices.barChart.label2Farmers": "Durchschnittpreis wenn nicht als Angelique's Finest verkauft",
     "ordersDashboard.filter.openOnly.filter": "Nur offene {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "ordersDashboard.filter.openOnly.button": "Nur offene",
-    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Interner Lot-Name*",
+    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Interner Lot-Name",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder": "Internen Lot-Namen eingeben",
     "productLabelStockProcessingOrderDetail.internalLotNumber.textinput.error": "Interner Lot-Name wird benötigt",
     "orderLeftPanel.lineLabel.quantityValue": "Qualität",

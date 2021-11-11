@@ -1524,7 +1524,7 @@
     "productLabelStockProcessingOrderDetail.outputFacilityForm.label": "Facility",
     "productLabelStockProcessingOrderDetail.outputFacilityForm.error": "Output facility is required",
     "productLabelStockProcessingOrderDetail.textinput.lotPrefix.label": "Prefix",
-    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Internal lot name*",
+    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Internal lot name",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder": "Enter internal lot name",
     "productLabelStockProcessingOrderDetail.internalLotNumber.textinput.error": "Internal lot name is required",
     "productLabelStockProcessingOrderDetail.datepicker.processingDate.error": "Processing date is required",

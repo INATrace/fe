@@ -315,8 +315,8 @@
                 </div>
               </div>
 
-              <!-- THE INTERNAL LOT NUMBER - USED FOR ALL ORDERS EXCEPT TRANSFER -->
-              <div class="af-row" *ngIf="showInternalLotNumberField">
+              <!-- THE INTERNAL LOT NUMBER -->
+              <div class="af-row">
                 <div class="af-c2">
                   <textinput
                           [form]="processingActionLotPrefixForm"
@@ -328,7 +328,7 @@
                 <div class="af-c10">
                   <textinput
                           [form]="outputStockOrderForm.get('internalLotNumber')"
-                          label="Internal lot name*"
+                          label="Internal lot name"
                           style="width: 100%"
                           placeholder="Enter internal lot name"
                           i18n-label="@@productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label"

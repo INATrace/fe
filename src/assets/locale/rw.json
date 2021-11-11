@@ -2438,7 +2438,7 @@
     "frontPage.fair-prices.barChart.label2Farmers": "Durchschnittpreis wenn nicht als Angelique's Finest verkauft",
     "ordersDashboard.filter.openOnly.filter": "Izigifunguye zonyine {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "ordersDashboard.filter.openOnly.button": "Izigifunguye zonyine",
-    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Izina rya loti rikoreshwa hagati y'abakozi mu kigo*",
+    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Izina rya loti rikoreshwa hagati y'abakozi mu kigo",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder": "Injiza izina rya loti rikoreshwa hagati y'abakozi mu kigo",
     "productLabelStockProcessingOrderDetail.internalLotNumber.textinput.error": "Izina rya loti rikoreshwa hagati y'abakozi mu kigo rirasabwa",
     "orderLeftPanel.lineLabel.quantityValue": "Ubwiza",

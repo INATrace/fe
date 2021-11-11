@@ -301,10 +301,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  get showInternalLotNumberField() {
-    return this.actionType !== 'TRANSFER';
-  }
-
   get outputStockUnitLabel() {
 
     switch (this.actionType) {
@@ -927,13 +923,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         }
       }
 
-      for (const inputStockOrder of this.selectedInputStockOrders) {
+      const existingTargetStockOrdersCount =
+        this.editableProcessingOrder && this.editableProcessingOrder.targetStockOrders ? this.editableProcessingOrder.targetStockOrders.length : 0;
+
+      for (const [index, inputStockOrder] of this.selectedInputStockOrders.entries()) {
         const newStockOrder: ApiStockOrder = {
           ...sharedFields,
           facility: this.outputFacilityForm.value,
           semiProduct: inputStockOrder.semiProduct,
           finalProduct: inputStockOrder.finalProduct,
-          internalLotNumber: inputStockOrder.internalLotNumber,
+          internalLotNumber: `${this.outputStockOrderForm.get('internalLotNumber').value}/${index + 1 + existingTargetStockOrdersCount}`,
           creatorId: this.creatorId,
           productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
           orderType: OrderTypeEnum.TRANSFERORDER,

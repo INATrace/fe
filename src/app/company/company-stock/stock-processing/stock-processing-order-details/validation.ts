@@ -1,5 +1,5 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { FormArray, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormArray, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { multiFieldValidator } from 'src/shared/validation';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -32,22 +32,10 @@ function deliveryTimeRequired(control: FormGroup): ValidationErrors | null {
   return null;
 }
 
-function internalLotNumberRequired(control: FormGroup): ValidationErrors | null {
-
-  if (!control) { return null; }
-  if (!control.value) { return null; }
-
-  const action = control.getRawValue().processingActionForm as ApiProcessingAction;
-  if (!action) { return null; }
-  if (action.type !== 'TRANSFER' && !control.value.internalLotNumber) { return { required: true }; }
-  return null;
-}
-
 export const ApiStockOrderValidationScheme = {
   validators: [
     multiFieldValidator(['form.outputQuantity'], tooSmallOutputQuantity, ['tooSmall']),
-    multiFieldValidator(['deliveryTime'], deliveryTimeRequired, ['required']),
-    multiFieldValidator(['internalLotNumber'], internalLotNumberRequired, ['required'])
+    multiFieldValidator(['deliveryTime'], deliveryTimeRequired, ['required'])
   ],
   fields: {
     created: {
@@ -71,12 +59,6 @@ export const ApiStockOrderValidationScheme = {
     creatorId: {
       validators: []
     },
-    representativeOfProducerUserCustomerId: {
-      validators: []
-    },
-    producerUserCustomerId: {
-      validators: []
-    },
     productionLocation: {
       validators: []
     },
@@ -84,12 +66,6 @@ export const ApiStockOrderValidationScheme = {
       validators: []
     },
     consumerCompanyCustomer: {
-      validators: []
-    },
-    semiProductId: {
-      validators: []
-    },
-    facilityId: {
       validators: []
     },
     measurementUnitType: {
@@ -150,7 +126,7 @@ export const ApiStockOrderValidationScheme = {
       validators: []
     },
     internalLotNumber: {
-      validators: []
+      validators: [Validators.required]
     },
     lotNumber: {
       validators: []
@@ -230,13 +206,7 @@ export const ApiStockOrderValidationScheme = {
     sacNumber: {
       validators: []
     },
-    triggerOrderId: {
-      validators: []
-    },
     isOpenOrder: {
-      validators: []
-    },
-    quoteFacilityId: {
       validators: []
     },
     inputOrders: {

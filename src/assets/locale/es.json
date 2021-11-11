@@ -861,7 +861,7 @@
     "productLabelStockProcessingOrderDetail.processingActionForm.label": "Procesamiento",
     "productLabelStockProcessingOrderDetail.section.input": "Material a registrar",
     "productLabelStockProcessingOrderDetail.section.output": "Resultados de registración",
-    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Nombre del lote interno *",
+    "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Nombre del lote interno",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder": "Ingrese el nombre de lote interno",
     "productLabelStockProcessingOrderDetail.textinput.semiProductType.label": "Tipo de semiproducto",
     "productLabelStockProcessingOrderDetail.textinput.inputQuantity.label": "Cantidad de entrada en kg",
