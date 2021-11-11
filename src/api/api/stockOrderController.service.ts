@@ -185,6 +185,10 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
        */
       isWomenShare?: boolean;
       /**
+       * Organic only
+       */
+      organicOnly?: boolean;
+      /**
        * Production date range start
        */
       productionDateStart?: Date;
@@ -239,6 +243,10 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
        */
       isWomenShare = 'isWomenShare',
       /**
+       * Organic only
+       */
+      organicOnly = 'organicOnly',
+      /**
        * Production date range start
        */
       productionDateStart = 'productionDateStart',
@@ -275,6 +283,8 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
       finalProductId: [
       ],
       isWomenShare: [
+      ],
+      organicOnly: [
       ],
       productionDateStart: [
       ],
@@ -1497,6 +1507,7 @@ export class StockOrderControllerService {
       map.semiProductId,
       map.finalProductId,
       map.isWomenShare,
+      map.organicOnly,
       map.productionDateStart,
       map.productionDateEnd,
       map.language,
@@ -1518,16 +1529,17 @@ export class StockOrderControllerService {
      * @param semiProductId Semi-product ID
      * @param finalProductId Final product ID
      * @param isWomenShare Is women share
+     * @param organicOnly Organic only
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
      * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, productionDateStart?: Date, productionDateEnd?: Date, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForStockUnitInFacilityUsingGET.');
         }
@@ -1556,6 +1568,9 @@ export class StockOrderControllerService {
         }
         if (isWomenShare !== undefined && isWomenShare !== null) {
             queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
+        }
+        if (organicOnly !== undefined && organicOnly !== null) {
+            queryParameters = queryParameters.set('organicOnly', <any>organicOnly);
         }
         if (productionDateStart !== undefined && productionDateStart !== null) {
             queryParameters = queryParameters.set('productionDateStart', <any>productionDateStart.toISOString());
