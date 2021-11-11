@@ -134,11 +134,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   processingOrderInputOrders: ApiStockOrder[];
 
   // Input stock orders filters
-  showWomensFilter = false;
-  womensOnlyForm = new FormControl(null);
+  womenOnlyForm = new FormControl(null);
+  womenOnlyStatus = new FormControl(null);
+  organicOnlyForm = new FormControl(null);
+  organicOnlyStatus = new FormControl(null);
   fromFilterDate = new FormControl(null);
   toFilterDate = new FormControl(null);
-  womensOnlyStatus = new FormControl(null);
 
   activeProcessingCodebook: CompanyProcessingActionsService;
 
@@ -205,12 +206,22 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.inputFacilityForm.value;
   }
 
-  get womensOnlyStatusValue() {
-    if (this.womensOnlyStatus.value != null) {
-      if (this.womensOnlyStatus.value) { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.womenCoffee:Women coffee`; }
+  get womenOnlyStatusValue() {
+    if (this.womenOnlyStatus.value != null) {
+      if (this.womenOnlyStatus.value) { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.womenCoffee:Women coffee`; }
       else { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.nonWomenCoffee:Non-women coffee`; }
     }
     return null;
+  }
+
+  get organicOnlyStatusValue() {
+    if (this.organicOnlyStatus.value != null) {
+      if (this.organicOnlyStatus.value) {
+        return $localize`:@@productLabelStockProcessingOrderDetail.organicOnlyStatus.organicCoffee:Organic coffee`;
+      } else {
+        return $localize`:@@productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee:Non-organic coffee`;
+      }
+    }
   }
 
   get inputFacility(): ApiFacility {
@@ -906,7 +917,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const sharedFields: ApiStockOrder = {
       pricePerUnit: this.outputStockOrderForm.get('pricePerUnit').value ? this.outputStockOrderForm.get('pricePerUnit').value : null,
       comments: this.outputStockOrderForm.get('comments').value ? this.outputStockOrderForm.get('comments').value : null,
-      womenShare: this.womensOnlyForm.value === 'YES',
+      womenShare: this.womenOnlyForm.value === 'YES',
       requiredEvidenceFieldValues: this.prepareRequiredEvidenceFieldValues(),
       requiredEvidenceTypeValues: this.prepareRequiredEvidenceTypeValues(),
       otherEvidenceDocuments: this.prepareOtherEvidenceDocuments()
@@ -1383,7 +1394,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       if (res && res.status === 'OK' && res.data) {
         this.availableStockOrders = res.data.items;
-        this.showWomensFilter = this.availableStockOrders.length > 0 && this.availableStockOrders[0].orderType === 'PURCHASE_ORDER';
       }
     }
 
@@ -1562,7 +1572,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.selectedInputStockOrders.push(stockOrder);
     }
     this.calcInputQuantity(true);
-    this.setWomensOnly();
+    this.setWomenOnly();
   }
 
   selectAll() {
@@ -1590,7 +1600,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.calcInputQuantity(true);
-    this.setWomensOnly();
+    this.setWomenOnly();
   }
 
   useInput(value: boolean) {
@@ -1605,7 +1615,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.editableProcessingOrder.targetStockOrders.some(x => x.id === order.id);
   }
 
-  private setWomensOnly() {
+  private setWomenOnly() {
 
     let count = 0;
     let all = 0;
@@ -1616,9 +1626,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
       all += item.availableQuantity;
     }
-    if (count === all && all > 0) { this.womensOnlyForm.setValue('YES'); }
-    else if (count < all && all > 0) { this.womensOnlyForm.setValue('NO'); }
-    else { this.womensOnlyForm.setValue(null); }
+    if (count === all && all > 0) { this.womenOnlyForm.setValue('YES'); }
+    else if (count < all && all > 0) { this.womenOnlyForm.setValue('NO'); }
+    else { this.womenOnlyForm.setValue(null); }
   }
 
   private setRequiredFields(action: ApiProcessingAction) {
@@ -1694,8 +1704,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.remainingForm.setValue(null);
 
-    this.womensOnlyForm.setValue(null);
-    this.womensOnlyStatus.setValue(null);
+    this.womenOnlyForm.setValue(null);
+    this.womenOnlyStatus.setValue(null);
 
     this.fromFilterDate.setValue(null);
     this.toFilterDate.setValue(null);
@@ -1853,9 +1863,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async setWomensOnlyStatus(status: boolean) {
-    if (!this.showLeftSide) { return; }
-    this.womensOnlyStatus.setValue(status);
+  async setWomenOnlyStatus(status: boolean) {
+    if (!this.showLeftSide) {
+      return;
+    }
+
+    this.womenOnlyStatus.setValue(status);
+    if (this.currentInputFacility) {
+      this.dateSearch().then();
+    }
+  }
+
+  async setOrganicOnlyStatus(organicOnly: boolean) {
+    if (!this.showLeftSide) {
+      return;
+    }
+
+    this.organicOnlyStatus.setValue(organicOnly);
     if (this.currentInputFacility) {
       this.dateSearch().then();
     }
@@ -1884,7 +1908,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       facilityId: this.currentInputFacility.id,
       semiProductId: this.prAction.inputSemiProduct?.id,
       finalProductId: this.prAction.inputFinalProduct?.id,
-      isWomenShare: this.womensOnlyStatus.value
+      isWomenShare: this.womenOnlyStatus.value,
+      organicOnly: this.organicOnlyStatus.value
     };
 
     // Prepare date filters

@@ -135,11 +135,15 @@
                   </div>
                 </div>
 
-                <div class="d-flex" *ngIf="showWomensFilter">
-                  <div *ngIf="womensOnlyStatus.value != null" class="d-flex filter-text" style="margin-left: 0.25rem; margin-top: 2rem"> {{ womensOnlyStatusValue }}
-                    <div (click)="setWomensOnlyStatus(null)" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
-                      </fa-icon>
+                <div class="d-flex">
+                  <div *ngIf="womenOnlyStatus.value != null" class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2rem"> {{ womenOnlyStatusValue }}
+                    <div (click)="setWomenOnlyStatus(null)" style="margin-left: 0.5rem;">
+                      <fa-icon [icon]="faTimes" size="xs"></fa-icon>
+                    </div>
+                  </div>
+                  <div *ngIf="organicOnlyStatus.value != null" class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2rem"> {{ organicOnlyStatusValue }}
+                    <div (click)="setOrganicOnlyStatus(null)" style="margin-left: 0.5rem;">
+                      <fa-icon [icon]="faTimes" size="xs"></fa-icon>
                     </div>
                   </div>
 
@@ -151,8 +155,11 @@
                   </button>
 
                   <div class="dropdown-menu" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="setWomensOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.womensOnlyCoffee">Womens only coffee</button>
-                    <button ngbDropdownItem (click)="setWomensOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee">Non-womens only coffee</button>
+                    <button ngbDropdownItem (click)="setWomenOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.womensOnlyCoffee">Women's only coffee</button>
+                    <button ngbDropdownItem (click)="setWomenOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee">Non-women's only coffee</button>
+                    <div class="line"></div>
+                    <button ngbDropdownItem (click)="setOrganicOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.organicOnlyCoffee">Organic only coffee</button>
+                    <button ngbDropdownItem (click)="setOrganicOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonOrganicOnlyCoffee">Non-organic only coffee</button>
                   </div>
                 </div>
 
