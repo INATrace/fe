@@ -94,6 +94,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Processing action controls
   prAction: ApiProcessingAction;
   processingActionForm = new FormControl(null, Validators.required);
+  processingActionLotPrefixForm = new FormControl({ value: null, disabled: true });
   qrCodeForFinalProductForm = new FormControl(null);
 
   // Checkboxes form controls
@@ -641,6 +642,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
           this.prAction = respProcAction.data;
           this.processingActionForm.setValue(this.prAction);
+          this.processingActionLotPrefixForm.setValue(this.prAction.prefix);
           this.defineInputAndOutputSemiProduct(this.prAction).then();
         }
 
@@ -708,6 +710,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Set the processing action from the processing order and related data
       this.prAction = this.editableProcessingOrder.processingAction;
       this.processingActionForm.setValue(this.prAction);
+      this.processingActionLotPrefixForm.setValue(this.prAction.prefix);
       this.processingDateForm.setValue(this.editableProcessingOrder.processingDate);
       this.defineInputAndOutputSemiProduct(this.prAction).then();
 

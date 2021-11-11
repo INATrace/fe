@@ -172,7 +172,7 @@
                         <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
                           <div class="af-c9 pl-3">
                             <div>
-                              <span>{{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
+                              <span>{{ inputStockOrder.lotPrefix }} {{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
                               <span *ngIf="inputStockOrder.qrCodeTag"
                                     (click)="openInputStockOrderQRCode(inputStockOrder)"
                                     class="cursor-pointer">
@@ -224,7 +224,7 @@
                         {{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})
                       </ng-container>
                       <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
-                        <span>{{ item.identifier }} {{ item.internalLotNumber }}</span>
+                        <span>{{ item.lotPrefix }} {{ item.identifier }} {{ item.internalLotNumber }}</span>
                         <span *ngIf="item.qrCodeTag"
                               (click)="openInputStockOrderQRCode(item)"
                               class="cursor-pointer">
@@ -317,7 +317,15 @@
 
               <!-- THE INTERNAL LOT NUMBER - USED FOR ALL ORDERS EXCEPT TRANSFER -->
               <div class="af-row" *ngIf="showInternalLotNumberField">
-                <div class="af-c12">
+                <div class="af-c2">
+                  <textinput
+                          [form]="processingActionLotPrefixForm"
+                          label="Prefix"
+                          style="width: 100%"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.lotPrefix.label">
+                  </textinput>
+                </div>
+                <div class="af-c10">
                   <textinput
                           [form]="outputStockOrderForm.get('internalLotNumber')"
                           label="Internal lot name*"
