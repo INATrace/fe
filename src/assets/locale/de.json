@@ -1340,7 +1340,7 @@
     "settingsPage.newProcessingEvidenceField.addTitle": "Verarbeitungsnachweisfeld hinzufügen",
     "productLabelStockProcessingOrderDetail.datepicker.date.from": "Von",
     "productLabelStockProcessingOrderDetail.datepicker.date.to": "Bis",
-    "productLabelStockProcessingOrderDetail.filter": "{$START_TAG_DIV}{$START_TAG_SPAN}{$CLOSE_TAG_SPAN}{$CLOSE_TAG_DIV}{$START_TAG_SPAN_1}Filtern{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.filter": "Filtern",
     "productLabelStockProcessingOrderDetail.datepicker.date.error": "Lieferdatum wird benötigt",
     "processingEvidenceType.input.placehoder": "Dokumentenart auswählen",
     "productLabelProcessingAction.section.settings": "Einstellungen",

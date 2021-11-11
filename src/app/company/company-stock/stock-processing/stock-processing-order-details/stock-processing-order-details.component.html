@@ -94,6 +94,7 @@
               <!-- FILTERS FOR AVAILABLE STOCK AT SELECTED FACILITY FOR THE SELECTED SEMI-PRODUCT -->
               <div *ngIf="showInputTransactions" class="d-flex justify-content-between"
                    style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+
                 <div class="af-row">
                   <div class="af-c12">
                     <div class="d-flex">
@@ -142,11 +143,11 @@
                     </div>
                   </div>
 
-                  <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem; margin-top: 1.75rem; border-width: 1px;" i18n="@@productLabelStockProcessingOrderDetail.filter">
-                    <div class="button-icon">
+                  <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem; margin-top: 1.75rem; border-width: 1px;">
+                    <span class="button-icon">
                       <span class="button-icon-shape button-icon-shape--filter"></span>
-                    </div>
-                    <span class="button-icon-label">Filter</span>
+                    </span>
+                    <span i18n="@@productLabelStockProcessingOrderDetail.filter" class="button-icon-label">Filter</span>
                   </button>
 
                   <div class="dropdown-menu" ngbDropdownMenu>
@@ -154,8 +155,10 @@
                     <button ngbDropdownItem (click)="setWomensOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee">Non-womens only coffee</button>
                   </div>
                 </div>
+
               </div>
 
+              <!-- EXISTING INPUT TRANSACTIONS AND AVAIALBLE STOCK ORDERS THAT CAN BE ADDED TO THIS PROECSSING ORDER -->
               <div *ngIf="showInputTransactions" style="position: relative;">
 
                 <div class="af-row">
@@ -215,7 +218,7 @@
                     </div>
                     <div class="af-c8">
                       <ng-container *ngIf="item.orderType === 'PURCHASE_ORDER'">
-                        {{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})
+                        <span>{{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})</span>
                       </ng-container>
                       <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
                         <span>{{ item.lotPrefix }} {{ item.identifier }} {{ item.internalLotNumber }}</span>
@@ -225,6 +228,14 @@
                           <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
                         </span>
                       </ng-container>
+                      <span *ngIf="item.organic">
+                        <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
+                                 i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
+                      </span>
+                      <span *ngIf="item.womenShare">
+                        <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
+                                 i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
+                      </span>
                     </div>
                     <div class="af-c3 text-right">
                       <span *ngIf="actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING'"

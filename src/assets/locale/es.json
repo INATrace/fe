@@ -875,7 +875,7 @@
     "productLabelStockProcessingOrderDetail.inputFacilityForm.error": "Se requiere la planta de entrada",
     "productLabelStockProcessingOrderDetail.datepicker.date.from": "Desde",
     "productLabelStockProcessingOrderDetail.datepicker.date.to": "Hasta",
-    "productLabelStockProcessingOrderDetail.filter": "{$START_TAG_DIV}{$START_TAG_SPAN}{$CLOSE_TAG_SPAN}{$CLOSE_TAG_DIV}{$START_TAG_SPAN_1}Filtro{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.filter": "Filtro",
     "productLabelStockProcessingOrderDetail.filter.womensOnlyCoffee": "Café sólo de mujeres",
     "productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee": "Café no sólo de mujeres",
     "productLabelStockProcessingOrderDetail.datepicker.date.error": "Se requiere la fecha de entrega",

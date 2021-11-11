@@ -1341,7 +1341,7 @@
     "settingsPage.newProcessingEvidenceField.addTitle": "Ongeraho imyanya y'ibyemeza itunganya",
     "productLabelStockProcessingOrderDetail.datepicker.date.from": "Kuva",
     "productLabelStockProcessingOrderDetail.datepicker.date.to": "Kujya",
-    "productLabelStockProcessingOrderDetail.filter": "{$START_TAG_DIV}{$START_TAG_SPAN}{$CLOSE_TAG_SPAN}{$CLOSE_TAG_DIV}{$START_TAG_SPAN_1}Muyunguruzi{$CLOSE_TAG_SPAN}",
+    "productLabelStockProcessingOrderDetail.filter": "Muyunguruzi",
     "productLabelStockProcessingOrderDetail.datepicker.date.error": "Itariki yo kugemura irakenewe",
     "processingEvidenceType.input.placehoder": "Hitamo ubwoko bwa dosiye",
     "productLabelProcessingAction.section.settings": "Igenamiterere",

@@ -29,6 +29,8 @@ import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { faCut } from '@fortawesome/free-solid-svg-icons';
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
+import { faFemale } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -74,6 +76,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   faTrashAlt = faTrashAlt;
   faQrcode = faQrcode;
   faCut = faCut;
+  faLeaf = faLeaf;
+  faFemale = faFemale;
 
   title: string;
 
