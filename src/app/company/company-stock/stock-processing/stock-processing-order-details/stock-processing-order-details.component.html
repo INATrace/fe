@@ -103,7 +103,8 @@
                               i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.from"
                               [form]="fromFilterDate"
                               [invalid]="submitted && fromFilterDate.invalid"
-                              style="width: 130px; margin-right: 1rem;">
+                              style="width: 130px; margin-right: 1rem;"
+                              (onChange)="dateSearch()">
                         <ng-container>
                           <div *ngIf="fromFilterDate.errors as errors" class="sc-invalid-feedback">
                             <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
@@ -118,7 +119,8 @@
                               i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.to"
                               [form]="toFilterDate"
                               [invalid]="submitted && toFilterDate.invalid"
-                              style="width: 130px">
+                              style="width: 130px"
+                              (onChange)="dateSearch()">
                         <ng-container>
                           <div *ngIf="toFilterDate.errors as errors" class="sc-invalid-feedback">
                             <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
@@ -127,14 +129,6 @@
                           </div>
                         </ng-container>
                       </app-datepicker>
-
-                      <button class="btn btn-search" (click)="dateSearch()" style="margin-left: 1rem; margin-top: 1.75rem; border-width: 1px"
-                              i18n-placeholder="@@productLabelStockProcessingOrderDetail.button.search">
-                        <div class="button-icon">
-                          <span class="button-icon-shape button-icon-shape--search"></span>
-                        </div>
-                        <span i18n="@@productLabelStockProcessingOrderDetail.button.search" class="button-icon-label">Search</span>
-                      </button>
 
                     </div>
                   </div>
