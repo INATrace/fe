@@ -136,13 +136,15 @@
                 </div>
 
                 <div class="d-flex">
-                  <div *ngIf="womenOnlyStatus.value != null" class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2rem"> {{ womenOnlyStatusValue }}
-                    <div (click)="setWomenOnlyStatus(null)" style="margin-left: 0.5rem;">
+                  <div *ngIf="womenOnlyStatus.value != null" (click)="setWomenOnlyStatus(null)"
+                       class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2.3rem"> {{ womenOnlyStatusValue }}
+                    <div style="margin-left: 0.5rem;">
                       <fa-icon [icon]="faTimes" size="xs"></fa-icon>
                     </div>
                   </div>
-                  <div *ngIf="organicOnlyStatus.value != null" class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2rem"> {{ organicOnlyStatusValue }}
-                    <div (click)="setOrganicOnlyStatus(null)" style="margin-left: 0.5rem;">
+                  <div *ngIf="organicOnlyStatus.value != null" (click)="setOrganicOnlyStatus(null)"
+                       class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2.3rem"> {{ organicOnlyStatusValue }}
+                    <div style="margin-left: 0.5rem;">
                       <fa-icon [icon]="faTimes" size="xs"></fa-icon>
                     </div>
                   </div>
