@@ -106,6 +106,10 @@ export interface ApiStockOrder {
      * Is stock available
      */
     isAvailable?: boolean;
+    /**
+     * The prefix for the LOT name - retrieved from the Processing action
+     */
+    lotPrefix?: string;
     measureUnitType?: ApiMeasureUnitType;
     openOrder?: boolean;
     /**
@@ -270,6 +274,10 @@ export namespace ApiStockOrder {
          * Is stock available
          */
         isAvailable = 'isAvailable',
+        /**
+         * The prefix for the LOT name - retrieved from the Processing action
+         */
+        lotPrefix = 'lotPrefix',
         measureUnitType = 'measureUnitType',
         openOrder = 'openOrder',
         /**
@@ -628,6 +636,17 @@ export namespace ApiStockOrder {
                     name: 'isAvailable',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lotPrefix',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1023,6 +1042,8 @@ export namespace ApiStockOrder {
                 ],
                 isAvailable: [
                 ],
+                lotPrefix: [
+                ],
                 measureUnitType: [
                 ],
                 openOrder: [
@@ -1154,6 +1175,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               isAvailable: {
+  //                   validators: []
+  //               },
+  //               lotPrefix: {
   //                   validators: []
   //               },
   //               measureUnitType: {

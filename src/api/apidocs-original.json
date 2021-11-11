@@ -17640,6 +17640,10 @@
             "example": false,
             "type": "boolean"
           },
+          "lotPrefix": {
+            "description": "The prefix for the LOT name - retrieved from the Processing action",
+            "type": "string"
+          },
           "measureUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit"
