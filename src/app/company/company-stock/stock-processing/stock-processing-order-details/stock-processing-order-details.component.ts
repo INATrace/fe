@@ -627,9 +627,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private registerProcActionValueChangeListener() {
 
     this.subscriptions.push(this.processingActionForm.valueChanges.subscribe(procAction => {
+
+      // If we have Processing action for generating QR code, set the final product form
       if (procAction && procAction.type === 'GENERATE_QR_CODE' && procAction.qrCodeForFinalProduct) {
         this.qrCodeForFinalProductForm
           .setValue(`${ procAction.qrCodeForFinalProduct.name } (${ procAction.qrCodeForFinalProduct.product.name })`);
+      }
+
+      // Set the prefix of the selected Processing action
+      if (procAction) {
+        this.processingActionLotPrefixForm.setValue(procAction.prefix);
       }
     }));
   }
