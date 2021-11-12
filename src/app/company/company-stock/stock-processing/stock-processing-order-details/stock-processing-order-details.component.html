@@ -137,13 +137,13 @@
 
                 <div class="d-flex">
                   <div *ngIf="womenOnlyStatus.value != null" (click)="setWomenOnlyStatus(null)"
-                       class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2.3rem"> {{ womenOnlyStatusValue }}
+                       class="d-flex filter-text cursor-pointer" style="margin-top: 2.3rem"> {{ womenOnlyStatusValue }}
                     <div style="margin-left: 0.5rem;">
                       <fa-icon [icon]="faTimes" size="xs"></fa-icon>
                     </div>
                   </div>
                   <div *ngIf="organicOnlyStatus.value != null" (click)="setOrganicOnlyStatus(null)"
-                       class="d-flex filter-text cursor-pointer" style="margin-left: 0.25rem; margin-top: 2.3rem"> {{ organicOnlyStatusValue }}
+                       class="d-flex filter-text cursor-pointer" style="margin-left: 1rem; margin-top: 2.3rem"> {{ organicOnlyStatusValue }}
                     <div style="margin-left: 0.5rem;">
                       <fa-icon [icon]="faTimes" size="xs"></fa-icon>
                     </div>
@@ -183,6 +183,14 @@
                                     (click)="openInputStockOrderQRCode(inputStockOrder)"
                                     class="cursor-pointer">
                                 <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                              </span>
+                              <span *ngIf="inputStockOrder.organic">
+                                <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
+                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
+                              </span>
+                                      <span *ngIf="inputStockOrder.womenShare">
+                                <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
+                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
                               </span>
                             </div>
                             <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
