@@ -21,7 +21,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       })),
       transition(
         'closed=>open',
-        animate("150ms")
+        animate('150ms')
       ),
       transition(
         'open=>closed',
@@ -38,7 +38,7 @@ export class SearchTextinputComponent implements OnInit {
   form: FormControl;
 
   @Input()
-  byCategory: boolean = false;
+  byCategory = false;
 
   @Input()
   items;
@@ -46,7 +46,7 @@ export class SearchTextinputComponent implements OnInit {
   @Output() valueChange = new EventEmitter<any>();
   @Output() categoryChange = new EventEmitter<any>();
 
-  showSearch: boolean = false;
+  showSearch = false;
 
   @Input()
   searchCategory: string;
@@ -70,8 +70,8 @@ export class SearchTextinputComponent implements OnInit {
   }
 
   labelCategory(searchCategory) {
-    for (let item of this.items) {
-      if (item.category === searchCategory) return item.name;
+    for (const item of this.items) {
+      if (item.category === searchCategory) { return item.name; }
     }
   }
 }

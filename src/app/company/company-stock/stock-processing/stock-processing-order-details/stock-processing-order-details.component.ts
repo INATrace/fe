@@ -163,6 +163,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   saveProcessingOrderInProgress = false;
 
+  searchInternalLotName = new FormControl(null);
+
   // Output quantity expected range
   private outQuantityRangeLow: number = null;
   private outQuantityRangeHigh: number = null;
@@ -553,6 +555,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.registerInternalLotSearchValueChangeListener();
     this.registerProcActionValueChangeListener();
 
     this.initInitialData().then(
@@ -611,6 +614,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  private registerInternalLotSearchValueChangeListener() {
+    this.subscriptions.push(this.searchInternalLotName.valueChanges.pipe(debounceTime(350)).subscribe(() => this.dateSearch()));
   }
 
   private registerOutputValueChangeListener() {
@@ -1933,7 +1940,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       semiProductId: this.prAction.inputSemiProduct?.id,
       finalProductId: this.prAction.inputFinalProduct?.id,
       isWomenShare: this.womenOnlyStatus.value,
-      organicOnly: this.organicOnlyStatus.value
+      organicOnly: this.organicOnlyStatus.value,
+      internalLotName: this.searchInternalLotName.value
     };
 
     // Prepare date filters
