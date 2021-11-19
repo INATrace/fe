@@ -5620,6 +5620,15 @@
             }
           },
           {
+            "description": "Internal LOT name",
+            "in": "query",
+            "name": "internalLotName",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "description": "Production date range start",
             "in": "query",
             "name": "productionDateStart",
