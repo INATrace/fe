@@ -821,6 +821,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.form.get('outputQuantity').disable();
     this.outputStockOrderForm = generateFormFromMetadata(ApiStockOrder.formMetadata(), this.outputStockOrder, ApiStockOrderValidationScheme);
 
+    // If conditions are met, set the output stock order form total quantity and internal LOT name
+    this.resetDataForRepackingOrder();
+
     // Inject transaction form for easier validation purposes
     this.outputStockOrderForm.setControl('form', this.form);
     this.outputStockOrderForm.setControl('remainingForm', this.remainingForm);
@@ -1854,6 +1857,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private setInputOutputFormAccordinglyToTransaction(availableQua: number) {
 
+    // If we are updating a processing order, do not regenerate the output stock orders
+    if (this.update) {
+      return;
+    }
+
     (this.outputStockOrders as FormArray).clear();
 
     if (this.prAction && (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING')) {
@@ -2064,6 +2072,33 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     Object.assign(modalRef.componentInstance, {
       qrCodeTag: order.qrCodeTag
     });
+  }
+
+  /**
+   * If we are editing processing order with repacking output, set the total quantity (sum of all stock orders
+   * total quantities) - initially is set to the total quantity of the selected stock order.
+   *
+   * Also reset the internal LOT name so that it will not contain the SAC number.
+   */
+  private resetDataForRepackingOrder() {
+
+    if ((this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && this.prAction.repackedOutputs) {
+
+      // Set the total output quantity
+      this.outputStockOrderForm.get('totalQuantity').setValue(this.calculateOutputQuantity);
+
+      // Set the internal LOT name to the internal LOT name common part (without the /<SAC number>)
+      const internalLotName: string = this.outputStockOrderForm.get('internalLotNumber').value;
+      const internalLotNameTokens: string[] = internalLotName.split('/');
+      if (internalLotNameTokens.length > 1) {
+        let resultingInternalLotName = '';
+        for (let i = 0; i < internalLotNameTokens.length - 1; i++) {
+          resultingInternalLotName += internalLotNameTokens[i];
+        }
+
+        this.outputStockOrderForm.get('internalLotNumber').setValue(resultingInternalLotName);
+      }
+    }
   }
 
 }
