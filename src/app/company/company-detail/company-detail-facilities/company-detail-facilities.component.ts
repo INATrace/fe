@@ -10,6 +10,7 @@ import { GlobalEventManagerService } from '../../../core/global-event-manager.se
 import { ApiPaginatedResponseApiFacility } from '../../../../api/model/apiPaginatedResponseApiFacility';
 import { ApiPaginatedListApiFacility } from '../../../../api/model/apiPaginatedListApiFacility';
 import { AuthService } from '../../../core/auth.service';
+import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 
 @Component({
   selector: 'app-company-detail-facilities',
@@ -61,7 +62,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
 
   @ViewChild(MapInfoWindow, { static: false }) gInfoWindow: MapInfoWindow;
 
-  sortOptions = [
+  sortOptions: SortOption[] = [
     {
       key: 'name',
       name: $localize`:@@productLabelFacilities.sortOptions.name.name:Name`,
@@ -74,7 +75,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     },
     {
       key: 'sellabaleSemiProducts',
-      name: $localize`:@@productLabelFacilities.sortOptions.sellabaleSemiProducts.name:Sellable semi-products`,
+      name: $localize`:@@productLabelFacilities.sortOptions.sellabaleSemiProducts.name:Sellable semi-products or final products`,
       inactive: true
     },
     {
