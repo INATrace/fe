@@ -21,6 +21,7 @@ import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
 import { FinalProductsForCompanyService } from '../../../shared-services/final-products-for-company.service';
 import { FinalProductControllerService } from '../../../../api/api/finalProductController.service';
 import { ApiFinalProduct } from '../../../../api/model/apiFinalProduct';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -53,6 +54,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute,
       private location: Location,
+      private globalEventsManager: GlobalEventManagerService,
       private facilityControllerService: FacilityControllerService,
       public activeFacilityTypeService: ActiveFacilityTypeService,
       public activeSemiProductsService: ActiveSemiProductsService,
@@ -189,11 +191,32 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   }
 
   deleteSemiProduct(sp: ApiSemiProduct, idx: number) {
-    this.semiProducts.splice(idx, 1);
+    this.confirmSemiOrFinalProductRemove().then(confirmed => {
+      if (confirmed) {
+        this.semiProducts.splice(idx, 1);
+      }
+    });
   }
 
   deleteFinalProduct(sp: ApiFinalProduct, idx: number) {
-    this.finalProducts.splice(idx, 1);
+    this.confirmSemiOrFinalProductRemove().then(confirmed => {
+      if (confirmed) {
+        this.finalProducts.splice(idx, 1);
+      }
+    });
+  }
+
+  private async confirmSemiOrFinalProductRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelStockFacilityModal.removeSemiOrFinalProduct.confirm.message:Are you sure you want to remove the final product / semi-product? Processing on these products will not work anymore.`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
   }
 
   get fLoc(): FormGroup {

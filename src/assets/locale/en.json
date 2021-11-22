@@ -1669,6 +1669,7 @@
     "productLabelFacilities.sortOptions.location.name": "Location",
     "productLabelFacilities.sortOptions.actions.name": "Actions",
     "productLabelStockFacilityModal.deleteFacility.error.message": "Are you sure you want to delete the facility?",
+    "productLabelStockFacilityModal.removeSemiOrFinalProduct.confirm.message": "Are you sure you want to remove the final product / semi-product? Processing on these products will not work anymore.",
     "semiProductListing.tableCol.edit": "Edit",
     "semiProductListing.tableCol.delete": "Delete",
     "semiProductListing.noSemiProducts": "No semi-products found",
