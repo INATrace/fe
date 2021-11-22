@@ -200,7 +200,6 @@
                                     <textinput
                                             [label]="maxOutputQuantityLabel"
                                             placeholder="Enter max output quantity"
-                                            i18n-label="@@companyDetailProcessingActions.textInput.maxOutputWeight.label"
                                             i18n-placeholder="@@companyDetailProcessingActions.textInput.maxOutputWeight.placeholder"
                                             type="number"
                                             step="0.01"
@@ -220,7 +219,7 @@
                             </div>
 
                             <textinput
-                                    *ngIf="form.get('type').value === 'PROCESSING' && !form.get('repackedOutputs').value"
+                                    *ngIf="form.get('type').value === 'PROCESSING'"
                                     [label]="estimatedOutputQuantityLabel"
                                     placeholder="Enter estimated output quantity"
                                     i18n-placeholder="@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.placeholder"
