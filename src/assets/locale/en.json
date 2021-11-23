@@ -1712,7 +1712,7 @@
     "orderProcessingActionsForProductAndOrganization.input.placehoder": "Select SKU",
     "stockOrderItem.textinput.quantity.placeholder": "Enter quantity",
     "stockOrderItem.textinput.internalLotName.label": "Internal lot name",
-    "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Price per item at end customer",
+    "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Gross price per item at end customer",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder": "Enter price in",
     "stockOrderItem.processingAction.label": "Final product",
     "stockOrderItem.singleChoice.finalProduct.error": "Final product is required",

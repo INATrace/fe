@@ -128,7 +128,7 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   }
 
   get pricePerUnitLabel() {
-    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label:Price per item at end customer` + ` (${this.companyCurrency})`;
+    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label:Gross price per item at end customer` + ` (${this.companyCurrency})`;
   }
 
   get pricePerUnitPlaceholder() {
