@@ -35,7 +35,6 @@ export class GlobalOrderDetailsComponent implements OnInit {
   title: string = null;
 
   companyId: number;
-  companyCurrency: string;
 
   userLastChanged = null;
   creatorId: number;
@@ -117,10 +116,6 @@ export class GlobalOrderDetailsComponent implements OnInit {
 
     this.title = this.newTitle();
     this.creatorId = await this.getCreatorId();
-    const companyRes = await this.companyController.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-    if (companyRes && companyRes.status === 'OK') {
-      this.companyCurrency = companyRes.data?.currency?.code;
-    }
   }
 
   private newOrder() {
@@ -168,7 +163,6 @@ export class GlobalOrderDetailsComponent implements OnInit {
       order.availableQuantity = 0;
       order.productionDate = new Date();
       order.orderType = OrderTypeEnum.GENERALORDER;
-      order.currency = order.currencyForEndCustomer;
       order.internalLotNumber = `${productOrder.orderId} (${order.finalProduct.name}, ${order.totalQuantity} ${order.finalProduct.measurementUnitType.label})`;
 
       // Set the contained processing order data

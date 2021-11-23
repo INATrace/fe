@@ -1714,6 +1714,8 @@
     "stockOrderItem.textinput.internalLotName.label": "Internal lot name",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Gross price per item at end customer",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder": "Enter price in",
+    "stockOrderItem.textinput.currencyForEndCustomer.label": "Currency for end-customer",
+    "stockOrderItem.textinput.currencyForEndCustomer.error.required": "Currency for end-customer is required",
     "stockOrderItem.processingAction.label": "Final product",
     "stockOrderItem.singleChoice.finalProduct.error": "Final product is required",
     "stockOrderItem.inputFacilityForm.label": "Order from",

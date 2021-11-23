@@ -16,7 +16,7 @@ import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import ReceiptDocumentTypeEnum = ApiPayment.ReceiptDocumentTypeEnum;
 import { Subject } from 'rxjs/internal/Subject';
 import { ConnectedCompaniesForCompanyService } from '../../../../shared-services/connected-companies-for-company.service';
-import { PaymentCurrencyCodesService } from '../../../../shared-services/payment-currency-codes.service';
+import { CurrencyCodesService } from '../../../../shared-services/currency-codes.service';
 
 export enum ModeEnum {
   PURCHASE = 'PURCHASE',
@@ -109,7 +109,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private companyControllerService: CompanyControllerService,
       private companyController: CompanyControllerService,
-      public codebookCurrencyCodes: PaymentCurrencyCodesService
+      public codebookCurrencyCodes: CurrencyCodesService
   ) { }
 
   ngOnInit(): void {

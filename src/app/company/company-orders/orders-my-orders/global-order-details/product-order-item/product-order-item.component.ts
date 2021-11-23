@@ -3,7 +3,7 @@ import { GenericEditableItemComponent } from '../../../../../shared/generic-edit
 import { ApiStockOrder } from '../../../../../../api/model/apiStockOrder';
 import { GlobalEventManagerService } from '../../../../../core/global-event-manager.service';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { generateFormFromMetadata } from '../../../../../../shared/utils';
 import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
 import { CompanyFinalProductQuoteOrderActionsService } from '../../../../../shared-services/company-final-product-quote-order-actions.service';
@@ -15,6 +15,7 @@ import { ApiMeasureUnitType } from '../../../../../../api/model/apiMeasureUnitTy
 import { ApiProcessingOrder } from '../../../../../../api/model/apiProcessingOrder';
 import { ApiFacility } from '../../../../../../api/model/apiFacility';
 import { map, startWith } from 'rxjs/operators';
+import { CurrencyCodesService } from '../../../../../shared-services/currency-codes.service';
 
 @Component({
   selector: 'app-product-order-item',
@@ -50,9 +51,6 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   }
 
   @Input()
-  private companyCurrency;
-
-  @Input()
   outputFacility: ApiFacility;
 
   globalOrderIdLocal = '-';
@@ -70,7 +68,8 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
     private processingActionController: ProcessingActionControllerService,
-    private facilityController: FacilityControllerService
+    private facilityController: FacilityControllerService,
+    public currencyCodesService: CurrencyCodesService
   ) {
     super(globalEventsManager);
   }
@@ -127,12 +126,20 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
     return $localize`:@@stockOrderItem.textinput.quantity.label:Quantity`;
   }
 
+  get selectedCurrency() {
+    return this.form.get('currencyForEndCustomer').value;
+  }
+
+  get selectedCurrencyLabel() {
+    return this.selectedCurrency ? this.selectedCurrency : '-';
+  }
+
   get pricePerUnitLabel() {
-    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label:Gross price per item at end customer` + ` (${this.companyCurrency})`;
+    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.label:Gross price per item at end customer` + ` (${this.selectedCurrencyLabel})`;
   }
 
   get pricePerUnitPlaceholder() {
-    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder:Enter price in` + ` ${this.companyCurrency}`;
+    return $localize`:@@stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder:Enter price in` + ` ${this.selectedCurrencyLabel}`;
   }
 
   ngOnInit(): void {
@@ -140,10 +147,6 @@ export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiS
     super.ngOnInit();
     this.codebookOrderingProcessingActions =
       new CompanyFinalProductQuoteOrderActionsService(this.processingActionController, this.companyId,  this.outputFacility);
-
-    if (this.form) {
-      this.form.get('currencyForEndCustomer').setValue(this.companyCurrency);
-    }
 
     // Set the internal LOT number (name) automatically from the other fields
     this.internalLotSubs = combineLatest([

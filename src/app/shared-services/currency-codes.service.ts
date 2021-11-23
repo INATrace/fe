@@ -8,7 +8,7 @@ import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 @Injectable({
     providedIn: 'root'
 })
-export class PaymentCurrencyCodesService extends GeneralCodesService<string> {
+export class CurrencyCodesService extends GeneralCodesService<string> {
     
     constructor(private currencyService: CurrencyTypeControllerService) {
         super();

@@ -18,7 +18,7 @@
       <subform-form>
 
         <div class="af-row">
-          <div class="af-c8">
+          <div class="af-c12">
             <single-choice *ngIf="codebookOrderingProcessingActions"
                            label="Final product"
                            i18n-label="@@stockOrderItem.processingAction.label"
@@ -57,16 +57,16 @@
         </div>
 
         <div class="af-row">
-          <div class="af-c6">
+          <div class="af-c12">
             <textinput
-                    *ngIf="form.get('processingOrder.processingAction').value"
                     [form]="form.get('totalQuantity')"
                     [label]="outputQuantityLabel"
                     style="width: 100%"
                     type="number"
                     placeholder="Enter quantity"
                     i18n-placeholder="@@stockOrderItem.textinput.quantity.placeholder"
-                    [isInvalid]="submitted && form.get('totalQuantity').invalid">
+                    [isInvalid]="submitted && form.get('totalQuantity').invalid"
+                    [readOnly]="!form.get('processingOrder.processingAction').value">
               <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
                   <div *ngIf="errors.required" i18n="@@stockOrderItem.quantity.textinput.error">
@@ -79,7 +79,7 @@
         </div>
 
         <div class="af-row">
-          <div class="af-c6">
+          <div class="af-c12">
             <textinput
                     [form]="form.get('internalLotNumber')"
                     label="Internal lot name"
@@ -91,14 +91,34 @@
         </div>
 
         <div class="af-row">
-          <div class="af-c6">
+          <div class="af-c12">
+            <single-choice
+                    label="Currency for end-customer"
+                    i18n-label="@@stockOrderItem.textinput.currencyForEndCustomer.label"
+                    [formControlInput]="form.get('currencyForEndCustomer')"
+                    [codebookService]="currencyCodesService"
+                    style="min-width: 150px;"
+                    [isInvalidChoice]="submitted && form.get('currencyForEndCustomer').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('currencyForEndCustomer').errors as errors"
+                     class="sc-invalid-feedback" i18n="@@stockOrderItem.textinput.currencyForEndCustomer.error.required">
+                  Currency for end-customer is required
+                </div>
+              </ng-container>
+            </single-choice>
+          </div>
+        </div>
+
+        <div class="af-row">
+          <div class="af-c12">
             <textinput
                     [form]="form.get('pricePerUnitForEndCustomer')"
                     [label]="pricePerUnitLabel"
                     style="width: 100%"
                     type="number"
                     [placeholder]="pricePerUnitPlaceholder"
-                    [isInvalid]="submitted && form.get('pricePerUnitForEndCustomer').invalid">
+                    [isInvalid]="submitted && form.get('pricePerUnitForEndCustomer').invalid"
+                    [readOnly]="!form.get('currencyForEndCustomer').value">
               <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('pricePerUnitForEndCustomer').errors as errors" class="sc-invalid-feedback">
                   <div *ngIf="errors.required" i18n="@@stockOrderItem.pricePerUnitForEndCustomer.textinput.error">
