@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
@@ -116,8 +116,8 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     super.ngOnDestroy();
   }
 
-  loadEntityList(params: any) {
-    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
+  loadEntityList() {
+    return this.facilityControllerService.listAllFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
   }
 
   canDeactivate(): boolean {
@@ -125,7 +125,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   newFacility() {
-    this.router.navigate(['companies', this.cId, 'facilities', 'add']);
+    this.router.navigate(['companies', this.cId, 'facilities', 'add']).then();
   }
 
   changeSort(event) {
@@ -191,8 +191,8 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
           };
         }).pipe(
         tap(val => this.globalEventsManager.showLoading(true)),
-        switchMap(params => {
-          return this.loadEntityList(params);
+        switchMap(() => {
+          return this.loadEntityList();
         }),
         tap((resp: ApiPaginatedResponseApiFacility) => {
           if (resp) {
