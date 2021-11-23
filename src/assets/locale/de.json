@@ -2272,7 +2272,7 @@
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Preis pro Artikel beim Endkunden",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder": "Preis eingeben in",
     "stockOrderItem.processingAction.label": "Halberzeugnis",
-    "stockOrderItem.singleChoice.semiProduct.error": "Halberzeugnis ist erforderlich",
+    "stockOrderItem.singleChoice.finalProduct.error": "Halberzeugnis ist erforderlich",
     "stockOrderItem.inputFacilityForm.label": "Bestellung von",
     "stockOrderItem.inputFacilityForm.error.required": "Eingabemöglichkeit ist erforderlich",
     "stockOrderItem.quantity.textinput.error": "Menge ist erforderlich",

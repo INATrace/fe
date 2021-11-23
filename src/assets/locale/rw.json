@@ -2271,7 +2271,7 @@
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Igiciro ku gicuruzwa kimwe ku muguzi wanyuma",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder": "Shyiramo igiciro mu",
     "stockOrderItem.processingAction.label": "Igicuruzwa kigitunganywa",
-    "stockOrderItem.singleChoice.semiProduct.error": "Igicuruzwa kigitunganywa kirasabwa",
+    "stockOrderItem.singleChoice.finalProduct.error": "Igicuruzwa kigitunganywa kirasabwa",
     "stockOrderItem.inputFacilityForm.label": "Kwaka igicuruzwa kiva",
     "stockOrderItem.inputFacilityForm.error.required": "Ahifashishwa ku byinjira harasabwa",
     "stockOrderItem.quantity.textinput.error": "Ingano irasabwa",

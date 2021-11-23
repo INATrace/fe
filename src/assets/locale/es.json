@@ -2803,7 +2803,7 @@
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.label": "Precio por unidad al cliente final",
     "stockOrderItem.textinput.pricePerUnitForEndCustomer.placeholder": "Ingrese precio en",
     "stockOrderItem.processingAction.label": "Semiproducto",
-    "stockOrderItem.singleChoice.semiProduct.error": "Se requiere semiproducto",
+    "stockOrderItem.singleChoice.finalProduct.error": "Se requiere semiproducto",
     "stockOrderItem.inputFacilityForm.label": "Pedido de",
     "stockOrderItem.inputFacilityForm.error.required": "Se requiere planta de entrada",
     "stockOrderItem.quantity.textinput.error": "Se requiere Cantidad",

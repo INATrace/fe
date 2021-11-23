@@ -20,7 +20,7 @@
         <div class="af-row">
           <div class="af-c8">
             <single-choice *ngIf="codebookOrderingProcessingActions"
-                           label="Semi product"
+                           label="Final product"
                            i18n-label="@@stockOrderItem.processingAction.label"
                            [formControlInput]="form.get('processingOrder.processingAction')"
                            [codebookService]="codebookOrderingProcessingActions"
@@ -28,8 +28,8 @@
                            [isInvalidChoice]="submitted && form.get('processingOrder.processingAction').invalid">
               <ng-container *ngIf="submitted">
                 <div *ngIf="form.get('processingOrder.processingAction').errors as errors" class="sc-invalid-feedback">
-                  <div *ngIf="errors.required" i18n="@@stockOrderItem.singleChoice.semiProduct.error">
-                    Semi product is required
+                  <div *ngIf="errors.required" i18n="@@stockOrderItem.singleChoice.finalProduct.error">
+                    Final product is required
                   </div>
                 </div>
               </ng-container>
