@@ -16,7 +16,6 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ProcessingActionType } from '../../../../../shared/types';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
-import { FacilitiesCodebookService } from '../../../../shared-services/facilities-codebook.service';
 import {
   GetAvailableStockForStockUnitInFacilityUsingGET,
   StockOrderControllerService
@@ -109,11 +108,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   inputFacilityFromUrl: ApiFacility = null;
   currentInputFacility: ApiFacility = null;
   inputFacilityForm = new FormControl(null, Validators.required);
-  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForStockUnitProductService | AvailableSellingFacilitiesForCompany;
+  inputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService | AvailableSellingFacilitiesForCompany;
 
   // Output facility
   outputFacilityForm = new FormControl(null, Validators.required);
-  outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForStockUnitProductService;
+  outputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
 
   // Input and output stock units (Semi-products and Final products)
   currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
