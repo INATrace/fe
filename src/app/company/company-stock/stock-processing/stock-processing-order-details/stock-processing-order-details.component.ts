@@ -1841,10 +1841,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // If there is output semi-product or output final product set, initialize output facility codebook
     if (outputSemiProductId || outputFinalProductId) {
-
-      console.log('Semi-product: ', outputSemiProductId);
-      console.log('Final product: ', outputFinalProductId);
-
       this.outputFacilitiesCodebook =
         new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
     }
