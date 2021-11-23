@@ -40,7 +40,7 @@ export class CompanyFacilitiesService extends GeneralSifrantService<ApiFacility>
       ...this.requestParams
     };
 
-    return this.facilityControllerService.listActivatedFacilitiesByCompanyUsingGETByMap(reqParams)
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
           return {

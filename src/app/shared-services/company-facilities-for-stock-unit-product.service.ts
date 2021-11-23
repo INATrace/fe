@@ -6,7 +6,7 @@ import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
 import { ApiPaginatedResponseApiFacility } from '../../api/model/apiPaginatedResponseApiFacility';
 
-export class CompanyFacilitiesForSemiProductService extends GeneralSifrantService<ApiFacility> {
+export class CompanyFacilitiesForStockUnitProductService extends GeneralSifrantService<ApiFacility> {
 
   requestParams = {
     limit: 1000,
@@ -44,7 +44,7 @@ export class CompanyFacilitiesForSemiProductService extends GeneralSifrantServic
       ...this.requestParams
     };
 
-    return this.facilityControllerService.listActivatedFacilitiesByCompanyUsingGETByMap(reqParams)
+    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
           return {

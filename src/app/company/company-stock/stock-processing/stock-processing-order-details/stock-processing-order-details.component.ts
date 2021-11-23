@@ -24,7 +24,7 @@ import {
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
-import { CompanyFacilitiesForSemiProductService } from '../../../../shared-services/company-facilities-for-semi-product.service';
+import { CompanyFacilitiesForStockUnitProductService } from '../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
@@ -109,11 +109,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   inputFacilityFromUrl: ApiFacility = null;
   currentInputFacility: ApiFacility = null;
   inputFacilityForm = new FormControl(null, Validators.required);
-  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService | AvailableSellingFacilitiesForCompany;
+  inputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForStockUnitProductService | AvailableSellingFacilitiesForCompany;
 
   // Output facility
   outputFacilityForm = new FormControl(null, Validators.required);
-  outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForSemiProductService;
+  outputFacilitiesCodebook: FacilitiesCodebookService | CompanyFacilitiesForStockUnitProductService;
 
   // Input and output stock units (Semi-products and Final products)
   currentInputStockUnitProduct: ApiSemiProduct | ApiFinalProduct;
@@ -1836,14 +1836,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
+          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       }
     }
 
     // If there is output semi-product or output final product set, initialize output facility codebook
     if (outputSemiProductId || outputFinalProductId) {
+
+      console.log('Semi-product: ', outputSemiProductId);
+      console.log('Final product: ', outputFinalProductId);
+
       this.outputFacilitiesCodebook =
-        new CompanyFacilitiesForSemiProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+        new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
     }
   }
 
