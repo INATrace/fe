@@ -19,6 +19,7 @@ import StatusEnum = ApiDefaultResponse.StatusEnum;
 import { AggregatedStockItem } from './models';
 import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -114,6 +115,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderControllerService: StockOrderControllerService,
+    private processingOrderController: ProcessingOrderControllerService,
     private modalService: NgbModalImproved
   ) { }
 
@@ -444,7 +446,15 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.globalEventsManager.showLoading(true);
 
       if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER' || order.orderType === 'GENERAL_ORDER') {
-        // TODO: implement remove for other types of orders
+
+        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(order.id, true).pipe(take(1)).toPromise();
+        if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
+          const procOrderResp = await this.processingOrderController.deleteProcessingOrderUsingDELETE(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
+          if (procOrderResp && procOrderResp.status === 'OK') {
+            this.reloadPingList$.next(true);
+          }
+        }
+
         return;
       }
 
