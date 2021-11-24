@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ActivatedRoute } from '@angular/router';
-import { debounceTime, take } from 'rxjs/operators';
+import { debounceTime, map, take } from 'rxjs/operators';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
@@ -25,11 +25,7 @@ import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { CompanyFacilitiesForStockUnitProductService } from '../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { Subscription } from 'rxjs';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { faCut } from '@fortawesome/free-solid-svg-icons';
-import { faLeaf } from '@fortawesome/free-solid-svg-icons';
-import { faFemale } from '@fortawesome/free-solid-svg-icons';
+import { faCut, faFemale, faLeaf, faQrcode, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
@@ -50,13 +46,13 @@ import { ApiResponseApiStockOrder } from '../../../../../api/model/apiResponseAp
 import { ApiResponseApiProcessingOrder } from '../../../../../api/model/apiResponseApiProcessingOrder';
 import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
 import { ProductControllerService } from '../../../../../api/api/productController.service';
-import ApiTransactionStatus = ApiTransaction.StatusEnum;
-import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
-import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ClipInputTransactionModalComponent } from './clip-input-transaction-modal/clip-input-transaction-modal.component';
 import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import TypeEnum = ApiProcessingEvidenceField.TypeEnum;
 
 export interface ApiStockOrderSelectable extends ApiStockOrder {
   selected?: boolean;
@@ -1405,13 +1401,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         finalProductId: this.prAction.inputFinalProduct?.id
       };
 
-      const res = await this.stockOrderController
-        .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams)
-        .pipe(take(1)).toPromise();
-
-      if (res && res.status === 'OK' && res.data) {
-        this.availableStockOrders = res.data.items;
-      }
+      this.availableStockOrders = await this.fetchAvailableStockOrders(requestParams);
     }
 
     if (!this.update) {
@@ -1968,11 +1958,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     // Get the available stock in the provided facility for the provided semi-product
-    const res = await this.stockOrderController
-      .getAvailableStockForStockUnitInFacilityUsingGETByMap(requestParams).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) {
-      this.availableStockOrders = res.data.items;
-    }
+    this.availableStockOrders = await this.fetchAvailableStockOrders(requestParams);
 
     // Reinitialize selections
     const tmpSelected = [];
@@ -1987,6 +1973,25 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
     this.selectedInputStockOrders = tmpSelected;
     this.calcInputQuantity(true);
+  }
+
+  private async fetchAvailableStockOrders(params: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap): Promise<ApiStockOrder[]> {
+
+    return this.stockOrderController
+      .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
+      .pipe(
+        take(1),
+        map(res => {
+          if (res && res.status === 'OK' && res.data) {
+            if (this.prAction.type === 'GENERATE_QR_CODE') {
+              return res.data.items.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
+            }
+          } else {
+            return [];
+          }
+        })
+      )
+      .toPromise();
   }
 
   deleteTransaction(i: number) {
