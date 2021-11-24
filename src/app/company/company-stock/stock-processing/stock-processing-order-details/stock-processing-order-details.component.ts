@@ -1977,14 +1977,25 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async fetchAvailableStockOrders(params: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap): Promise<ApiStockOrder[]> {
 
+    // Final product is defined for 'FINAL_PROCESSING' and Quote or Transfer for a final product
+    const finalProduct = this.prAction.outputFinalProduct;
+
     return this.stockOrderController
       .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
       .pipe(
         take(1),
         map(res => {
           if (res && res.status === 'OK' && res.data) {
+
+            // If generating QR code, filter all the stock orders that have already generated QR code tag
             if (this.prAction.type === 'GENERATE_QR_CODE') {
               return res.data.items.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
+            } else if (finalProduct) {
+
+              // If final product action (final processing or Quote or Transfer for a final product)
+              // filter the stock orders that have QR code tag for different final products than the selected one (from the Proc. action)
+              return res.data.items.filter(apiStockOrder => !apiStockOrder.qrCodeTag || apiStockOrder.qrCodeTagFinalProduct.id === finalProduct.id);
+
             } else {
               return res.data.items;
             }
