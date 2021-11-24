@@ -1985,6 +1985,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           if (res && res.status === 'OK' && res.data) {
             if (this.prAction.type === 'GENERATE_QR_CODE') {
               return res.data.items.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
+            } else {
+              return res.data.items;
             }
           } else {
             return [];
