@@ -211,7 +211,7 @@
                             </div>
                             <div *ngFor="let fp of this.finalProducts; index as idx">
                                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                                    <div>{{ fp.name }}</div>
+                                    <div>{{ fp.name }} ({{ fp.product.name }})</div>
                                     <div (click)="deleteFinalProduct(fp, idx)" style="cursor: pointer;">
                                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                     </div>
