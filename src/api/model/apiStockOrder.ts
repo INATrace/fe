@@ -157,6 +157,7 @@ export interface ApiStockOrder {
      * Generated UUID tag for this stock order QR code
      */
     qrCodeTag?: string;
+    qrCodeTagFinalProduct?: ApiFinalProduct;
     quoteCompany?: ApiCompany;
     quoteFacility?: ApiFacility;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
@@ -325,6 +326,7 @@ export namespace ApiStockOrder {
          * Generated UUID tag for this stock order QR code
          */
         qrCodeTag = 'qrCodeTag',
+        qrCodeTagFinalProduct = 'qrCodeTagFinalProduct',
         quoteCompany = 'quoteCompany',
         quoteFacility = 'quoteFacility',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
@@ -847,6 +849,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qrCodeTagFinalProduct',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -1078,6 +1092,8 @@ export namespace ApiStockOrder {
                 ],
                 qrCodeTag: [
                 ],
+                qrCodeTagFinalProduct: [
+                ],
                 quoteCompany: [
                 ],
                 quoteFacility: [
@@ -1229,6 +1245,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               qrCodeTag: {
+  //                   validators: []
+  //               },
+  //               qrCodeTagFinalProduct: {
   //                   validators: []
   //               },
   //               quoteCompany: {

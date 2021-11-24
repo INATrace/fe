@@ -17759,6 +17759,10 @@
             "description": "Generated UUID tag for this stock order QR code",
             "type": "string"
           },
+          "qrCodeTagFinalProduct": {
+            "$ref": "#/components/schemas/ApiFinalProduct",
+            "description": "The final product for which the QR code tag is generated"
+          },
           "quoteCompany": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "Quote company"
