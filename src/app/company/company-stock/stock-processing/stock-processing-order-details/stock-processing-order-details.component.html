@@ -342,6 +342,20 @@
                 </div>
               </div>
 
+              <!-- THE USER ENTERED ORDER ID - RELEVANT FOR QUOTE ORDER AND CAN BE SET ONLY WHEN NO PRODUCT ORDER IS PRESENT -->
+              <div class="af-row" *ngIf="actionType === 'SHIPMENT' && !productOrderId">
+                <div class="af-c12">
+                  <textinput
+                          [form]="outputStockOrderForm.get('orderId')"
+                          label="Order ID"
+                          placeholder="Enter the order ID"
+                          style="width: 100%"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.orderId.label"
+                          i18n-placeholder="productLabelStockProcessingOrderDetail.textinput.orderId.placeholder">
+                  </textinput>
+                </div>
+              </div>
+
               <!-- THE INTERNAL LOT NUMBER -->
               <div class="af-row">
                 <div class="af-c2">
