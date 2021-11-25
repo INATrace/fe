@@ -308,7 +308,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const form = this.outputStockOrderForm.get('productOrder');
     if (form && form.value) {
       const val = form.value as ApiProductOrder;
-      return val.id;
+      return val.orderId;
     }
     return null;
   }
