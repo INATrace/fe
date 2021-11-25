@@ -17680,6 +17680,10 @@
           "openOrder": {
             "type": "boolean"
           },
+          "orderId": {
+            "description": "User entered Order ID when placing Quote order",
+            "type": "string"
+          },
           "orderType": {
             "description": "Order type",
             "enum": [

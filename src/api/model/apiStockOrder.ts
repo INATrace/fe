@@ -113,6 +113,10 @@ export interface ApiStockOrder {
     measureUnitType?: ApiMeasureUnitType;
     openOrder?: boolean;
     /**
+     * User entered Order ID when placing Quote order
+     */
+    orderId?: string;
+    /**
      * Order type
      */
     orderType?: ApiStockOrder.OrderTypeEnum;
@@ -281,6 +285,10 @@ export namespace ApiStockOrder {
         lotPrefix = 'lotPrefix',
         measureUnitType = 'measureUnitType',
         openOrder = 'openOrder',
+        /**
+         * User entered Order ID when placing Quote order
+         */
+        orderId = 'orderId',
         /**
          * Order type
          */
@@ -678,6 +686,17 @@ export namespace ApiStockOrder {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderId',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
                     required: false,
@@ -1062,6 +1081,8 @@ export namespace ApiStockOrder {
                 ],
                 openOrder: [
                 ],
+                orderId: [
+                ],
                 orderType: [
                 ],
                 organic: [
@@ -1200,6 +1221,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               openOrder: {
+  //                   validators: []
+  //               },
+  //               orderId: {
   //                   validators: []
   //               },
   //               orderType: {
