@@ -30,7 +30,8 @@ $chevron-offset: 80px;
 }
 
 .label-card:hover {
-  border-width: 3px;
+  outline: 3px solid;
+  outline-offset: -3px;
 }
 
 .new-label-card {
