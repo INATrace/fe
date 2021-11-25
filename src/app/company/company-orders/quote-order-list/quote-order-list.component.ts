@@ -202,7 +202,7 @@ export class QuoteOrderListComponent implements OnInit {
         inactive: true,
       },
       {
-        key: 'lastChange',
+        key: 'updateTimestamp',
         name: $localize`:@@orderList.sortOptions.lastChange.name:Time of last change`,
         defaultSortOrder: 'DESC',
       },
