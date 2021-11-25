@@ -871,7 +871,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         initiatorUserId: this.creatorId,
         processingAction: this.prAction,
         targetStockOrders: outputStockOrderList,
-        inputTransactions: this.inputTransactions,
+        inputTransactions: [...this.inputTransactions],
         processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
       };
 
@@ -2029,6 +2029,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
       this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
     }
+
     if (this.actionType === 'SHIPMENT') {
       this.remainingForm.setValue((this.totalQuantity - this.calcInputQuantity(false)).toFixed(2));
     }
