@@ -8,8 +8,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../shared/shared.module';
 import { FinalProductDetailModalComponent } from './final-product-detail-modal/final-product-detail-modal.component';
 import { ProductCommonModule } from '../product-common/product-common.module';
-
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -17,13 +16,14 @@ import { ProductCommonModule } from '../product-common/product-common.module';
       FinalProductComponent,
       FinalProductDetailModalComponent
     ],
-    imports: [
-        CommonModule,
-        ProductCommonModule,
-        ProductFinalProductRoutingModule,
-        LayoutModule,
-        NgbPaginationModule,
-        SharedModule
-    ]
+  imports: [
+    CommonModule,
+    ProductCommonModule,
+    ProductFinalProductRoutingModule,
+    LayoutModule,
+    NgbPaginationModule,
+    SharedModule,
+    FontAwesomeModule
+  ]
 })
 export class ProductFinalProductModule { }

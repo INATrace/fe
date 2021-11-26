@@ -2943,6 +2943,7 @@
     "productLabelFinalProduct.modal.textInput.description.error": "Description is required",
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.label": "Measurement unit type",
     "productLabelFinalProduct.modal.singleChoice.measurementUnitType.error": "Measure unit type is required",
+    "productLabelFinalProduct.modal.singleChoice.productLabels.label": "Product labels",
     "stockOrderItem.pricePerUnitForEndCustomer.textinput.error ": "Price is required",
     "semiProductDetail.textinput.name.error": "Name is required",
     "semiProductDetail.textinput.description.error": "Description is required",

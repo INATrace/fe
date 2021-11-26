@@ -64,6 +64,25 @@
                 </div>
             </ng-container>
         </single-choice>
+
+        <div>
+            <single-choice
+                    label="Product labels"
+                    i18n-label="@@productLabelFinalProduct.modal.singleChoice.productLabels.label"
+                    [formControlInput]="productLabelForm"
+                    [codebookService]="productLabelsCodebook"
+                    (onChange)="addSelectedProductLabel($event)">
+            </single-choice>
+            <div *ngFor="let pl of this.productLabels; index as idx">
+                <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                    <div>{{ pl.title }}</div>
+                    <div (click)="removeSelectedProductLabel(idx)" style="cursor: pointer;">
+                        <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="modal-footer"
