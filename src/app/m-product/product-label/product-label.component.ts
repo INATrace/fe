@@ -1,22 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import {
-  faArrowsAlt,
-  faCodeBranch,
-  faCog,
-  faEye,
-  faListOl,
-  faPen,
-  faQrcode,
-  faSlidersH,
-  faTimes
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { CommonControllerService } from 'src/api/api/commonController.service';
@@ -70,6 +60,7 @@ import { ValueChainControllerService } from '../../../api/api/valueChainControll
 import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 import { ApiProductCompany } from '../../../api/model/apiProductCompany';
+import { LanguageForLabelModalResult } from './language-for-label-modal/model';
 
 @Component({
   selector: 'app-product-label',
@@ -89,7 +80,7 @@ import { ApiProductCompany } from '../../../api/model/apiProductCompany';
       })),
       transition(
         'closed=>open',
-        animate("150ms")
+        animate('150ms')
       ),
       transition(
         'open=>closed',
@@ -99,63 +90,18 @@ import { ApiProductCompany } from '../../../api/model/apiProductCompany';
   ]
 
 })
-export class ProductLabelComponent extends ComponentCanDeactivate implements OnInit {
+export class ProductLabelComponent extends ComponentCanDeactivate implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) {
-      this.gMap = map;
+  @ViewChild(GoogleMap) set map(gMap: GoogleMap) {
+    if (gMap) {
+      this.gMap = gMap;
       this.googleMapsIsLoaded();
     }
-  };
-
-  @ViewChild(MapInfoWindow) set infoWindow(infoWindow: MapInfoWindow) {
-    if (infoWindow) this.gInfoWindow = infoWindow;
-  };
-
-  public canDeactivate(): boolean {
-    return !this.productForm || !(this.changed)
   }
 
-  gMap = null;
-  gInfoWindow = null;
-  gInfoWindowText: string = "";
-  productForm: FormGroup;
-  countries: any = [];
-  markers: any = [];
-  defaultCenter = {
-    lat: 5.274054,
-    lng: 21.514503
-  };
-  defaultZoom = 3;
-  zoomForOnePin = 10;
-  bounds: any;
-  initialBounds: any = [];
-
-  faTimes = faTimes;
-  faArrowsAlt = faArrowsAlt
-  faTrashAlt = faTrashAlt;
-  faCog = faCog;
-  faCodeBranch = faCodeBranch;
-  faPen = faPen
-  faEye = faEye
-  faArrowAltCircleDown = faArrowAltCircleDown
-  faListOl = faListOl
-  faCompass = faCompass
-  faSlidersH = faSlidersH
-  faQrcode = faQrcode
-
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
-  submitted = false;
-
-  redirectToCertainLabel = null;
-  initialReload = false;
-
-  editInfoLabelLink: string = "";
-
-  valueChainName: string;
-
-  companyId: number;
-  isOwner = false;
+  @ViewChild(MapInfoWindow) set infoWindow(infoWindow: MapInfoWindow) {
+    if (infoWindow) { this.gInfoWindow = infoWindow; }
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -178,72 +124,135 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
-  unsubscribeList = new UnsubscribeList()
-
-  currentLabel: ApiProductLabel = null
-
-  userProfile = null
-  showLabelInfoLink: boolean = false;
-  reloadProductNoLabel: boolean = true;
-
   get currentLabelName() {
     // if(this.currentLabel && this.currentLabel.title) return this.currentLabel.title
-    let noName = $localize`:@@productLabel.qrLabels.untitled:NO NAME`
-    if (!this.currentLabel) return noName;
-    return this.labelTitleForm.value || noName
-  }
-
-  action = this.route.snapshot.data.action;
-  ngOnInit(): void {
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.userProfile = this.authService.currentUserProfile;
-    let subUserProfile = this.authService.userProfile$.subscribe(val => {
-      this.userProfile = val
-      if (this.userProfile) this.showLabelInfoLink = "ADMIN" == this.userProfile.role;
-    })
-    this.unsubscribeList.add(subUserProfile);
-    this.initializeLabelsHelperLink();
-
-    if (this.mode === 'update') {
-      // this.getProduct();
-      this.unsubscribeList.add(
-        this.product$.subscribe(val => { }),
-      )
-      this.unsubscribeList.add(
-        this.currentLabel$.subscribe(label => {
-          this.currentLabel = label;
-        })
-      )
-      this.reload();
-    } else {
-      this.newProduct();
-    }
-  }
-
-  ngOnDestroy() {
-    this.unsubscribeList.cleanup();
+    const noName = $localize`:@@productLabel.qrLabels.untitled:NO NAME`;
+    if (!this.currentLabel) { return noName; }
+    return this.labelTitleForm.value || noName;
   }
 
   get mode() {
-    let id = this.route.snapshot.params.id
-    return id == null ? 'create' : 'update'
+    const id = this.route.snapshot.params.id;
+    return id == null ? 'create' : 'update';
   }
 
-  reloadPing$ = new BehaviorSubject(false)
 
-  reload() {
-    this.reloadPing$.next(true)
+  // origin location helper methods
+  get originLocations(): FormArray {
+    return this.productForm.get('origin.locations') as FormArray;
   }
+
+  get isGoogleMapsLoaded() {  // fix of a google maps glitch
+    return !!window.google;
+  }
+
+  get moved() {
+    return this._itemMoved;
+  }
+
+  get labelChanged() {
+    return this.moved || (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty;
+  }
+
+  get productChanged() {
+    return this.productForm.dirty;
+  }
+
+  get changed(): boolean {
+    // console.log("CHG:", this.productChanged, this.labelChanged)
+    return this.productChanged || this.labelChanged;
+  }
+
+  get invalid() {
+    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid);
+  }
+  get publishText() {
+    if (!this.currentLabel) { return this.publishString; }
+    if (this.currentLabel.status === ApiProductLabel.StatusEnum.PUBLISHED) { return this.unpublishString; }
+    if (this.currentLabel.status === ApiProductLabel.StatusEnum.UNPUBLISHED) { return this.publishString; }
+    return this.publishString;
+  }
+
+  get showBatches() {
+    if (this.productForm && this.productForm.get('settings')) {
+      return this.productForm.get('settings.traceOrigin').value;
+    }
+  }
+
+  get downloadFileName() {
+    const productName = this.productForm.get('name').value;
+    const LabelName = this.currentLabelName;
+    return productName + '-' + LabelName + '-' + 'instructions.pdf';
+  }
+
+  get languageCodes() {
+    const obj = {};
+    obj['EN'] = $localize`:@@productLabel.languageCodes.en:EN`;
+    obj['DE'] = $localize`:@@productLabel.languageCodes.de:DE`;
+    return obj;
+  }
+
+  gMap = null;
+  gInfoWindow = null;
+  gInfoWindowText = '';
+  productForm: FormGroup;
+  countries: any = [];
+  markers: any = [];
+  defaultCenter = {
+    lat: 5.274054,
+    lng: 21.514503
+  };
+  defaultZoom = 3;
+  zoomForOnePin = 10;
+  bounds: any;
+  initialBounds: any = [];
+
+  faTimes = faTimes;
+  faArrowsAlt = faArrowsAlt;
+  faTrashAlt = faTrashAlt;
+  faCog = faCog;
+  faCodeBranch = faCodeBranch;
+  faPen = faPen;
+  faEye = faEye;
+  faArrowAltCircleDown = faArrowAltCircleDown;
+  faListOl = faListOl;
+  faCompass = faCompass;
+  faSlidersH = faSlidersH;
+  faQrcode = faQrcode;
+
+  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  submitted = false;
+
+  redirectToCertainLabel = null;
+  initialReload = false;
+
+  editInfoLabelLink = '';
+
+  valueChainName: string;
+
+  companyId: number;
+  isOwner = false;
+
+  unsubscribeList = new UnsubscribeList();
+
+  currentLabel: ApiProductLabel = null;
+
+  userProfile = null;
+  showLabelInfoLink = false;
+  reloadProductNoLabel = true;
+
+  action = this.route.snapshot.data.action;
+
+  reloadPing$ = new BehaviorSubject(false);
 
   id$ = this.route.paramMap.pipe(
     map(m => m.get('id')),
     shareReplay(1)
-  )
-
+  );
 
   product$ = combineLatest(this.reloadPing$, this.id$,
     (ping: any, id: string) => {
-      return ping && id != null ? Number(id) : null
+      return ping && id != null ? Number(id) : null;
     }
   ).pipe(
     filter(val => val != null),
@@ -253,33 +262,32 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     )),
     filter(resp => !!resp),
     map(resp => {
-      return resp.data
+      return resp.data;
     }),
     tap(val => {
       this.reloadLabels();
       if (this.action === 'labels') {
         this.reloadLabel();
       } else {
-        if (this.currentLabel) this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true, selected: false });
+        if (this.currentLabel) { this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true, selected: false }); }
         this.currentLabel = null;
       }
     }),
     tap(val => { this.globalEventsManager.showLoading(false); }),
     tap((data: ApiProduct) => {
-      let product = data;
-      // console.log("PRODUCT", data);
+      const product = data;
       this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
-      let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
+      const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
       this.productForm.setControl('keyMarketsShare', marketShareForm);
-      let pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
+      const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
-      let comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
+      const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
       this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-      let priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
+      const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
       (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
       this.initializeListManagers();
-      let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
-      let oldMediaLinks = this.productForm.get('company.mediaLinks').value;
+      const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
+      const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
 
@@ -293,18 +301,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     shareReplay(1)
   );
 
-  reloadLabels() {
-    this.labelsReload$.next(true)
-  }
-
   labelsReload$ = new BehaviorSubject<boolean>(false);
 
-  pId = this.route.snapshot.params.id
+  pId = this.route.snapshot.params.id;
 
   labels$ = combineLatest(this.labelsReload$, of(this.pId),
     (ping: boolean, pId: number) => {
-      if (ping && pId != null) return Number(pId)
-      return null
+      if (ping && pId != null) { return Number(pId); }
+      return null;
     }
   ).pipe(
     filter(val => val != null),
@@ -313,46 +317,13 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     )),
     filter(val => val != null),
     map(resp => {
-      return resp.data
+      return resp.data;
     }),
     // tap(val => console.log("LAB:", val)),
     shareReplay(1)
-  )
+  );
 
-  reloadLabel$ = new BehaviorSubject<number>(null)
-
-  reloadLabel() {
-    if (this.currentLabel) {
-      this.reloadLabel$.next(this.currentLabel.id)
-    }
-  }
-
-  loadLabel(label) {
-    // console.log("LOAD: X", label, this.currentLabel)
-    if (this.changed) {
-      this.globalEventsManager.push({
-        action: 'error',
-        notificationType: 'warning',
-        title: $localize`:@@productLabel.loadLabel.warning.title:Error`,
-        message: $localize`:@@productLabel.loadLabel.warning.message:Unsaved data. Please save changes before creating a new label.`
-      })
-      if (this.currentLabel) {
-        this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true })
-      }
-      return;
-    }
-
-    if (this.initialReload) {
-      this.initialReload = false;
-      this.labelSelect$.next({ id: this.redirectToCertainLabel, preventEmit: true })
-      this.reloadLabel$.next(this.redirectToCertainLabel)
-      this.reload();
-    }
-    else {
-      this.reloadLabel$.next(label.id)
-      this.labelTitleForm.setValue(null);
-    }
-  }
+  reloadLabel$ = new BehaviorSubject<number>(null);
 
   initialized$ = new BehaviorSubject<boolean>(false);
 
@@ -366,15 +337,372 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       )),
       filter(x => x != null),
       tap(resp => {
-        this.fadeInProductOnRefresh()
+        this.fadeInProductOnRefresh();
       }),
       map(resp => {
-        return resp.data
+        return resp.data;
       }),
       tap(label => this.initializeByLabel(label)),
       shareReplay(1)
-    )
+    );
 
+  standardsListManager = null;
+  recordsListManager = null;
+  farmerPhotosListManager = null;
+
+  formProductionRecord = new FormControl(null);
+
+  userForm = new FormControl(null);
+
+  labelsSection = {
+    anchor: 'PRODUCT_LABELS',
+    title: $localize`:@@productLabel.labelsSection.labels:QR labels`,
+    icon: 'info'
+  };
+
+  productSection = {
+    anchor: 'PRODUCT_GENERAL',
+    title: $localize`:@@productLabel.labelsSection.general:Product`
+  };
+
+  processSection = {
+    anchor: 'PRODUCT_PROCESS',
+    title: $localize`:@@productLabel.labelsSection.process:Process`
+  };
+
+  socialResponsibilitySection = {
+    anchor: 'PRODUCT_SOCIAL_RESPONSIBILITY',
+    title: $localize`:@@productLabel.labelsSection.responsibility:Social responsibility`,
+  };
+
+  environmentalSustainabilitySection = {
+    anchor: 'PRODUCT_ENVIRONMENTAL_SUSTAINABILITY',
+    title: $localize`:@@productLabel.labelsSection.sustainability:Environmental sustainability`,
+  };
+
+  settingsSection = {
+    anchor: 'SETTINGS',
+    title: $localize`:@@productLabel.labelsSection.settings:Settings`,
+  };
+
+
+  companySection = {
+    anchor: 'PRODUCT_COMPANY',
+    title: $localize`:@@productLabel.labelsSection.company:Company`,
+  };
+
+  toc = [
+    this.labelsSection,
+    this.productSection,
+    this.processSection,
+    this.socialResponsibilitySection,
+    this.environmentalSustainabilitySection,
+    this.settingsSection,
+    this.companySection
+  ];
+
+  emptyField = '-';
+
+  // indicator of at least on move
+  _itemMoved = false;
+
+  // PRODUCT
+  @ViewChild('productName', { static: false })
+  productNameTmpl: TemplateRef<any>;
+
+  @ViewChild('productLogo', { static: false })
+  productLogoTmpl: TemplateRef<any>;
+
+  @ViewChild('productDescription', { static: false })
+  productDescriptionTmpl: TemplateRef<any>;
+
+  @ViewChild('ingredients', { static: false })
+  ingredientsTmpl: TemplateRef<any>;
+
+  @ViewChild('nutritionalValue', { static: false })
+  nutritionalValueTmpl: TemplateRef<any>;
+
+  @ViewChild('howToUse', { static: false })
+  howToUseTmpl: TemplateRef<any>;
+
+  @ViewChild('origin', { static: false })
+  originValueTmpl: TemplateRef<any>;
+
+  @ViewChild('keyMarkets', { static: false })
+  keyMarketsTmpl: TemplateRef<any>;
+
+  @ViewChild('speciality', { static: false })
+  specialityTmpl: TemplateRef<any>;
+
+  productElements: any[] = [];
+
+  // PROCESS
+  @ViewChild('production', { static: false })
+  productionTmpl: TemplateRef<any>;
+
+  @ViewChild('storage', { static: false })
+  storageTmpl: TemplateRef<any>;
+
+  @ViewChild('codesOfConduct', { static: false })
+  codesOfConductTmpl: TemplateRef<any>;
+
+  @ViewChild('certificationsAndStandards', { static: false })
+  certificationsAndStandardsTmpl: TemplateRef<any>;
+
+  @ViewChild('productionRecords', { static: false })
+  productionRecordsTmpl: TemplateRef<any>;
+
+  processElements: any[] = [];
+
+  // SOCIAL RESPONSIBILITY
+  @ViewChild('laborPolicies', { static: false })
+  laborPoliciesTmpl: TemplateRef<any>;
+
+  @ViewChild('relationshipWithFarmersSuppliers', { static: false })
+  relationshipWithFarmersSuppliersTmpl: TemplateRef<any>;
+
+  @ViewChild('farmerStory', { static: false })
+  farmerStoryTmpl: TemplateRef<any>;
+
+  // @ViewChild("farmerStoryName", { static: false })
+  // farmerStoryNameTmpl: TemplateRef<any>;
+
+  // @ViewChild("farmerStoryPhotos", { static: false })
+  // farmerStoryPhotosTmpl: TemplateRef<any>;
+
+  // @ViewChild("farmerStoryStory", { static: false })
+  // farmerStoryStoryTmpl: TemplateRef<any>;
+
+  socialResponsibilityElements: any[] = [];
+
+  // ENVIRONMENTAL SUSTAINABILITY
+  @ViewChild('environmentalyFriendlyProduction', { static: false })
+  environmentalyFriendlyProductionTmpl: TemplateRef<any>;
+
+  @ViewChild('sustainablePackaging', { static: false })
+  sustainablePackagingTmpl: TemplateRef<any>;
+
+  @ViewChild('co2Footprint', { static: false })
+  co2FootprintTmpl: TemplateRef<any>;
+
+  environmentalSustainabilityElements: any[] = [];
+
+  // COMPANY
+  @ViewChild('companyName', { static: false })
+  companyNameTmpl: TemplateRef<any>;
+
+  @ViewChild('companyLogo', { static: false })
+  companyLogoTmpl: TemplateRef<any>;
+
+  @ViewChild('companyHeadquarters', { static: false })
+  companyHeadquartersTmpl: TemplateRef<any>;
+
+  @ViewChild('aboutTheCompany', { static: false })
+  aboutTheCompanyTmpl: TemplateRef<any>;
+
+  @ViewChild('nameOfManagerCEO', { static: false })
+  nameOfManagerCEOTmpl: TemplateRef<any>;
+
+  @ViewChild('contactEmail', { static: false })
+  contactEmailTmpl: TemplateRef<any>;
+
+  @ViewChild('contactPhoneNumber', { static: false })
+  contactPhoneNumberTmpl: TemplateRef<any>;
+
+  @ViewChild('companyWebPage', { static: false })
+  companyWebPageTmpl: TemplateRef<any>;
+
+  @ViewChild('facebook', { static: false })
+  facebookTmpl: TemplateRef<any>;
+
+  @ViewChild('instagram', { static: false })
+  instagramTmpl: TemplateRef<any>;
+
+  @ViewChild('twitter', { static: false })
+  twitterTmpl: TemplateRef<any>;
+
+  @ViewChild('youtube', { static: false })
+  youtubeTmpl: TemplateRef<any>;
+
+  @ViewChild('other', { static: false })
+  otherTmpl: TemplateRef<any>;
+
+  companyElements: any[] = [];
+
+  // COMPARISON OF PRICE
+  @ViewChild('description', { static: false })
+  descriptionTmpl: TemplateRef<any>;
+
+  @ViewChild('prices', { static: false })
+  pricesTmpl: TemplateRef<any>;
+
+  comparisonOfPriceElements: any[] = [];
+
+  // SETTINGS
+  @ViewChild('language', { static: false })
+  languageTmpl: TemplateRef<any>;
+
+  @ViewChild('checkAuthenticity', { static: false })
+  checkAuthenticityTmpl: TemplateRef<any>;
+
+  @ViewChild('traceOrigin', { static: false })
+  traceOriginTmpl: TemplateRef<any>;
+
+  @ViewChild('giveFeedback', { static: false })
+  giveFeedbackTmpl: TemplateRef<any>;
+
+  @ViewChild('pricingTransparency', { static: false })
+  pricingTransparencyTmpl: TemplateRef<any>;
+
+  @ViewChild('increaseIncome', { static: false })
+  increaseIncomeTmpl: TemplateRef<any>;
+
+  // @ViewChild("costBreakdown", { static: false })
+  // costBreakdownTmpl: TemplateRef<any>;
+
+  @ViewChild('increaseIncomeDescription', { static: false })
+  increaseIncomeDescriptionTmpl: TemplateRef<any>;
+
+  @ViewChild('gdprText', { static: false })
+  gdprTextTmpl: TemplateRef<any>;
+
+  @ViewChild('privacyPolicyText', { static: false })
+  privacyPolicyTextTmpl: TemplateRef<any>;
+
+  @ViewChild('termsOfUseText', { static: false })
+  termsOfUseTextTmpl: TemplateRef<any>;
+
+  @ViewChild('knowledgeBlog', { static: false })
+  knowledgeBlogTmpl: TemplateRef<any>;
+
+  settingsElements: any[] = [];
+
+  pricingTransparencyElements: any[] = [];
+
+  visibilityForm: FormGroup = null;
+
+  sectionToNameToObj = new Map();
+
+  labelSelect$ = new BehaviorSubject(null);
+
+  visibilityMap = new Map();
+
+  reorderMode = false;
+
+  labelTitleForm = new FormControl(null);
+  editTitleMode = false;
+
+  @ViewChild('labelTitleInput', { static: false })
+  labelTitleInput: TextinputComponent;
+
+  publishString = $localize`:@@productLabel.qrLabels.publish:Publish`;
+  unpublishString = $localize`:@@productLabel.qrLabels.unpublish:Unpublish`;
+
+  fadeInProduct = false;
+  codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
+
+  static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
+    const obj = ApiProcessDocument.formMetadata();
+    return defaultEmptyObject(obj) as ApiProcessDocument;
+  }
+
+  static ApiProcessDocumentEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ProductLabelComponent.ApiProcessDocumentCreateEmptyObject(), ApiProcessDocumentValidationScheme.validators);
+    };
+  }
+
+  static ApiResponsibilityFarmerPictureCreateEmptyObject(): ApiResponsibilityFarmerPicture {
+    const obj = ApiResponsibilityFarmerPicture.formMetadata();
+    return defaultEmptyObject(obj) as ApiResponsibilityFarmerPicture;
+  }
+
+  static ApiResponsibilityFarmerPictureEmptyObjectFormFactory(): () => FormControl {
+    return () => {
+      return new FormControl(ProductLabelComponent.ApiResponsibilityFarmerPictureCreateEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators);
+    };
+  }
+
+  ngOnInit(): void {
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.userProfile = this.authService.currentUserProfile;
+    const subUserProfile = this.authService.userProfile$.subscribe(val => {
+      this.userProfile = val;
+      if (this.userProfile) { this.showLabelInfoLink = 'ADMIN' === this.userProfile.role; }
+    });
+    this.unsubscribeList.add(subUserProfile);
+    this.initializeLabelsHelperLink();
+
+    if (this.mode === 'update') {
+      // this.getProduct();
+      this.unsubscribeList.add(
+        this.product$.subscribe(val => { }),
+      );
+      this.unsubscribeList.add(
+        this.currentLabel$.subscribe(label => {
+          this.currentLabel = label;
+        })
+      );
+      this.reload();
+    } else {
+      this.newProduct();
+    }
+  }
+
+  ngAfterViewInit() {   // ViewChildren for templates works only after ngAfterViewInit
+    setTimeout(() => {
+      this.generateDefaultElements();
+      this.initialized$.next(true);
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribeList.cleanup();
+  }
+
+  public canDeactivate(): boolean {
+    return !this.productForm || !(this.changed);
+  }
+
+  reload() {
+    this.reloadPing$.next(true);
+  }
+
+  reloadLabels() {
+    this.labelsReload$.next(true);
+  }
+
+  reloadLabel() {
+    if (this.currentLabel) {
+      this.reloadLabel$.next(this.currentLabel.id);
+    }
+  }
+
+  loadLabel(label) {
+    if (this.changed) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'warning',
+        title: $localize`:@@productLabel.loadLabel.warning.title:Error`,
+        message: $localize`:@@productLabel.loadLabel.warning.message:Unsaved data. Please save changes before creating a new label.`
+      });
+      if (this.currentLabel) {
+        this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true });
+      }
+      return;
+    }
+
+    if (this.initialReload) {
+      this.initialReload = false;
+      this.labelSelect$.next({ id: this.redirectToCertainLabel, preventEmit: true });
+      this.reloadLabel$.next(this.redirectToCertainLabel);
+      this.reload();
+    }
+    else {
+      this.reloadLabel$.next(label.id);
+      this.labelTitleForm.setValue(null);
+    }
+  }
 
   async prepareForm(data) {
 
@@ -406,100 +734,67 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.initializeMarkers();
   }
 
-  static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
-    let obj = ApiProcessDocument.formMetadata();
-    return defaultEmptyObject(obj) as ApiProcessDocument
-  }
-
-  static ApiProcessDocumentEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      let f = new FormControl(ProductLabelComponent.ApiProcessDocumentCreateEmptyObject(), ApiProcessDocumentValidationScheme.validators)
-      return f
-    }
-  }
-
-  static ApiResponsibilityFarmerPictureCreateEmptyObject(): ApiResponsibilityFarmerPicture {
-    let obj = ApiResponsibilityFarmerPicture.formMetadata();
-    return defaultEmptyObject(obj) as ApiResponsibilityFarmerPicture
-  }
-
-  static ApiResponsibilityFarmerPictureEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      let f = new FormControl(ProductLabelComponent.ApiResponsibilityFarmerPictureCreateEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators)
-      return f
-    }
-  }
-
-  standardsListManager = null
-  recordsListManager = null
-  farmerPhotosListManager = null
-
-
-
   initializeListManagers() {
     this.standardsListManager = new ListEditorManager<ApiCertification>(
       this.productForm.get('process.standards') as FormArray,
       CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),
       ApiCertificationValidationScheme
-    )
+    );
     this.recordsListManager = new ListEditorManager<ApiProcessDocument>(
       this.productForm.get('process.records') as FormArray,
       ProductLabelComponent.ApiProcessDocumentEmptyObjectFormFactory(),
       ApiProcessDocumentValidationScheme
-    )
+    );
     this.farmerPhotosListManager = new ListEditorManager<ApiResponsibilityFarmerPicture>(
       this.productForm.get('responsibility.pictures') as FormArray,
       ProductLabelComponent.ApiResponsibilityFarmerPictureEmptyObjectFormFactory(),
       ApiResponsibilityFarmerPictureValidationScheme
-    )
+    );
   }
 
-
-  formProductionRecord = new FormControl(null)
-
   emptyObject() {
-    let obj = defaultEmptyObject(ApiProduct.formMetadata()) as ApiProduct;
-    obj.process = defaultEmptyObject(ApiProcess.formMetadata())
-    obj.responsibility = defaultEmptyObject(ApiResponsibility.formMetadata())
-    obj.sustainability = defaultEmptyObject(ApiSustainability.formMetadata())
-    obj.settings = defaultEmptyObject(ApiProductSettings.formMetadata())
-    obj.company = defaultEmptyObject(ApiCompany.formMetadata())
-    obj.company.headquarters = defaultEmptyObject(ApiAddress.formMetadata())
-    return obj
+    const obj = defaultEmptyObject(ApiProduct.formMetadata()) as ApiProduct;
+    obj.process = defaultEmptyObject(ApiProcess.formMetadata());
+    obj.responsibility = defaultEmptyObject(ApiResponsibility.formMetadata());
+    obj.sustainability = defaultEmptyObject(ApiSustainability.formMetadata());
+    obj.settings = defaultEmptyObject(ApiProductSettings.formMetadata());
+    obj.company = defaultEmptyObject(ApiCompany.formMetadata());
+    obj.company.headquarters = defaultEmptyObject(ApiAddress.formMetadata());
+    return obj;
   }
 
   async newProduct() {
     this.isOwner = true;
 
-    this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme)
-    let marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme)
-    this.productForm.setControl('keyMarketsShare', marketShareForm)
-    let pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), {}, pricingTransparencyValidationScheme);
+    this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme);
+    const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme);
+    this.productForm.setControl('keyMarketsShare', marketShareForm);
+    const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), {}, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-    let comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), {}, ApiComparisonOfPriceValidationScheme);
+    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), {}, ApiComparisonOfPriceValidationScheme);
     this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-    let priceForm = generateFormFromMetadata(pricesFormMetadata(), {}, pricesValidationScheme);
+    const priceForm = generateFormFromMetadata(pricesFormMetadata(), {}, pricesValidationScheme);
     (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
 
-    let originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
+    const originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
 
     this.initializeListManagers();
-    let companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
+    const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
     this.productForm.updateValueAndValidity();
-    let companyId = this.route.snapshot.params.companyId;
-    let valueChainId = this.route.snapshot.params.valueChainId;
+    const companyId = this.route.snapshot.params.companyId;
+    const valueChainId = this.route.snapshot.params.valueChainId;
     try {
       this.globalEventsManager.showLoading(true);
       let resp = await this.companyController.getCompanyUsingGET(Number(companyId)).pipe(take(1)).toPromise();
-      let company = resp.data;
-      let companyForm = generateFormFromMetadata(ApiCompany.formMetadata(), company, ApiCompanyValidationScheme);
+      const company = resp.data;
+      const companyForm = generateFormFromMetadata(ApiCompany.formMetadata(), company, ApiCompanyValidationScheme);
       this.productForm.setControl('company', companyForm);
       resp = await this.valueChainController.getValueChainUsingGET(Number(valueChainId)).toPromise();
-      let valueChain = resp.data;
-      let valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain, ApiValueChainValidationScheme);
+      const valueChain = resp.data;
+      const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
       this.productForm.updateValueAndValidity();
       this.productForm.get('settings.language').setValue('EN');
@@ -517,8 +812,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
-  userForm = new FormControl(null);
-
   userResultFormatter = (value: any) => {
     return this.userSifrant.textRepresentation(value);
   }
@@ -535,15 +828,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   async save() {
     this.submitted = true;
-    if (!this.changed) return; // nothing to save
+    if (!this.changed) { return; } // nothing to save
     if (!this.currentLabel) {   // No labels
-      let res = await this.saveProduct(true);   // save and reload product
+      const res = await this.saveProduct(true);   // save and reload product
       if (res) {
         this.submitted = false;
       }
       return res;
     } else {
-      let res = await this.saveCurrentLabel(true);
+      const res = await this.saveCurrentLabel(true);
       if (res) {
         this.submitted = false;
       }
@@ -663,59 +956,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     // console.log(event)
   }
 
-  labelsSection = {
-    anchor: 'PRODUCT_LABELS',
-    title: $localize`:@@productLabel.labelsSection.labels:QR labels`,
-    icon: 'info'
-  }
-
-  productSection = {
-    anchor: 'PRODUCT_GENERAL',
-    title: $localize`:@@productLabel.labelsSection.general:Product`
-  }
-
-  processSection = {
-    anchor: 'PRODUCT_PROCESS',
-    title: $localize`:@@productLabel.labelsSection.process:Process`
-  }
-
-  socialResponsibilitySection = {
-    anchor: 'PRODUCT_SOCIAL_RESPONSIBILITY',
-    title: $localize`:@@productLabel.labelsSection.responsibility:Social responsibility`,
-  }
-
-  environmentalSustainabilitySection = {
-    anchor: 'PRODUCT_ENVIRONMENTAL_SUSTAINABILITY',
-    title: $localize`:@@productLabel.labelsSection.sustainability:Environmental sustainability`,
-  }
-
-  settingsSection = {
-    anchor: 'SETTINGS',
-    title: $localize`:@@productLabel.labelsSection.settings:Settings`,
-  }
-
-
-  companySection = {
-    anchor: 'PRODUCT_COMPANY',
-    title: $localize`:@@productLabel.labelsSection.company:Company`,
-  }
-
-  toc = [
-    this.labelsSection,
-    this.productSection,
-    this.processSection,
-    this.socialResponsibilitySection,
-    this.environmentalSustainabilitySection,
-    this.settingsSection,
-    this.companySection
-  ]
-
-
-  //origin location helper methods
-  get originLocations(): FormArray {
-    return this.productForm.get('origin.locations') as FormArray
-  }
-
   createOrFillOriginLocationsItem(loc: any, create: boolean): FormGroup {
     return new FormGroup({
       latitude: new FormControl(create ? loc.lat : loc.latitude),
@@ -726,18 +966,18 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   initializeOriginLocations(): void {
-    let tmp = new FormArray([]);
-    for (let loc of this.originLocations.value) {
+    const tmp = new FormArray([]);
+    for (const loc of this.originLocations.value) {
       tmp.push(this.createOrFillOriginLocationsItem(loc, false));
-    };
-    (this.productForm.get('origin') as FormGroup).setControl('locations', tmp)
-    this.productForm.updateValueAndValidity()
+    }
+    (this.productForm.get('origin') as FormGroup).setControl('locations', tmp);
+    this.productForm.updateValueAndValidity();
   }
 
   initializeMarkers(): void {
     this.markers = [];
-    for (let loc of this.originLocations.value) {
-      let tmp = {
+    for (const loc of this.originLocations.value) {
+      const tmp = {
         position: {
           lat: loc.latitude,
           lng: loc.longitude
@@ -746,21 +986,21 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
           text: loc.numberOfFarmers ? String(loc.numberOfFarmers) : ' '
         },
         infoText: loc.pinName
-      }
+      };
       this.markers.push(tmp);
       this.initialBounds.push(tmp.position);
     }
   }
 
   addOriginLocations(loc) {
-    let tmp = {
+    const tmp = {
       position: loc,
       label: {
         text: ' '
       },
       infoText: ' '
-    }
-    this.markers.push(tmp)
+    };
+    this.markers.push(tmp);
     this.originLocations.push(this.createOrFillOriginLocationsItem(loc, true) as FormGroup);
     this.productForm.markAsDirty();
   }
@@ -776,21 +1016,21 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   updateMarkerLocation(loc, index) {
     this.originLocations.at(index).get('latitude').setValue(loc.lat);
     this.originLocations.at(index).get('longitude').setValue(loc.lng);
-    let tmpCurrent = this.markers[index];
-    let tmp = {
+    const tmpCurrent = this.markers[index];
+    const tmp = {
       position: loc,
       label: tmpCurrent.label,
       infoText: tmpCurrent.infoText
-    }
+    };
     this.markers.splice(index, 1, tmp);
   }
   updateInfoWindow(infoText, index) {
-    let tmpCurrent = this.markers[index];
-    let tmp = {
+    const tmpCurrent = this.markers[index];
+    const tmp = {
       position: tmpCurrent.position,
       label: tmpCurrent.label,
-      infoText: infoText
-    }
+      infoText
+    };
     this.markers.splice(index, 1, tmp);
   }
 
@@ -810,41 +1050,37 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onKey(event, index) {
-    this.updateInfoWindow(event.target.value, index)
-  }
-
-  get isGoogleMapsLoaded() {  // fix of a google maps glitch
-    return !!window.google
+    this.updateInfoWindow(event.target.value, index);
   }
 
   googleMapsIsLoaded() {
-    if (this.initialBounds.length == 0) return;
-    this.bounds = new google.maps.LatLngBounds()
-    for (let bound of this.initialBounds) {
+    if (this.initialBounds.length === 0) { return; }
+    this.bounds = new google.maps.LatLngBounds();
+    for (const bound of this.initialBounds) {
       this.bounds.extend(bound);
     }
     if (this.bounds.isEmpty()) {
-      this.gMap.googleMap.setCenter(this.defaultCenter)
+      this.gMap.googleMap.setCenter(this.defaultCenter);
       this.gMap.googleMap.setZoom(this.defaultZoom);
       return;
     }
-    let center = this.bounds.getCenter()
-    let offset = 0.02
-    let northEast = new google.maps.LatLng(
+    const center = this.bounds.getCenter();
+    const offset = 0.02;
+    const northEast = new google.maps.LatLng(
       center.lat() + offset,
       center.lng() + offset
-    )
-    let southWest = new google.maps.LatLng(
+    );
+    const southWest = new google.maps.LatLng(
       center.lat() - offset,
       center.lng() - offset
-    )
-    let minBounds = new google.maps.LatLngBounds(southWest, northEast)
-    this.gMap.fitBounds(this.bounds.union(minBounds))
+    );
+    const minBounds = new google.maps.LatLngBounds(southWest, northEast);
+    this.gMap.fitBounds(this.bounds.union(minBounds));
   }
 
   resetMap() {
     this.initialBounds = [];
-    for (let m of this.markers) {
+    for (const m of this.markers) {
       this.initialBounds.push(m.position);
     }
     this.googleMapsIsLoaded();
@@ -856,13 +1092,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   nonEmptyFormArray(value: any) {
-    return value && value.length > 0
+    return value && value.length > 0;
   }
-
-  emptyField = '-'
-
-  // indicator of at least on move
-  _itemMoved = false;
 
   registerMove() {
     this._itemMoved = true;
@@ -871,40 +1102,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   resetMoveIndicator() {
     this._itemMoved = false;
   }
-
-  get moved() {
-    return this._itemMoved;
-  }
-
-  // PRODUCT
-  @ViewChild("productName", { static: false })
-  productNameTmpl: TemplateRef<any>;
-
-  @ViewChild("productLogo", { static: false })
-  productLogoTmpl: TemplateRef<any>;
-
-  @ViewChild("productDescription", { static: false })
-  productDescriptionTmpl: TemplateRef<any>;
-
-  @ViewChild("ingredients", { static: false })
-  ingredientsTmpl: TemplateRef<any>;
-
-  @ViewChild("nutritionalValue", { static: false })
-  nutritionalValueTmpl: TemplateRef<any>;
-
-  @ViewChild("howToUse", { static: false })
-  howToUseTmpl: TemplateRef<any>;
-
-  @ViewChild("origin", { static: false })
-  originValueTmpl: TemplateRef<any>;
-
-  @ViewChild("keyMarkets", { static: false })
-  keyMarketsTmpl: TemplateRef<any>;
-
-  @ViewChild("speciality", { static: false })
-  specialityTmpl: TemplateRef<any>;
-
-  productElements: any[] = []
 
   generateProductElements() {
     this.productElements = [
@@ -921,30 +1118,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onDropProductSection(event) {
-    if (this.productElements[event.previousIndex].disableDrag || this.productElements[event.currentIndex].disableDrag) return
+    if (this.productElements[event.previousIndex].disableDrag || this.productElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.productElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
-  // PROCESS
-  @ViewChild("production", { static: false })
-  productionTmpl: TemplateRef<any>;
-
-  @ViewChild("storage", { static: false })
-  storageTmpl: TemplateRef<any>;
-
-  @ViewChild("codesOfConduct", { static: false })
-  codesOfConductTmpl: TemplateRef<any>;
-
-  @ViewChild("certificationsAndStandards", { static: false })
-  certificationsAndStandardsTmpl: TemplateRef<any>;
-
-  @ViewChild("productionRecords", { static: false })
-  productionRecordsTmpl: TemplateRef<any>;
-
-  processElements: any[] = []
 
   generateProcessElements() {
     this.processElements = [
@@ -957,64 +1136,28 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onDropProcessSection(event) {
-    if (this.processElements[event.previousIndex].disableDrag || this.processElements[event.currentIndex].disableDrag) return
+    if (this.processElements[event.previousIndex].disableDrag || this.processElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.processElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
-  // SOCIAL RESPONSIBILITY
-  @ViewChild("laborPolicies", { static: false })
-  laborPoliciesTmpl: TemplateRef<any>;
-
-  @ViewChild("relationshipWithFarmersSuppliers", { static: false })
-  relationshipWithFarmersSuppliersTmpl: TemplateRef<any>;
-
-  @ViewChild("farmerStory", { static: false })
-  farmerStoryTmpl: TemplateRef<any>;
-
-  // @ViewChild("farmerStoryName", { static: false })
-  // farmerStoryNameTmpl: TemplateRef<any>;
-
-  // @ViewChild("farmerStoryPhotos", { static: false })
-  // farmerStoryPhotosTmpl: TemplateRef<any>;
-
-  // @ViewChild("farmerStoryStory", { static: false })
-  // farmerStoryStoryTmpl: TemplateRef<any>;
-
-  socialResponsibilityElements: any[] = []
 
   generateSocialResponsibilityElements() {
     this.socialResponsibilityElements = [
       { name: 'responsibility.laborPolicies', section: 'responsibility', visible: new FormControl(false), template: this.laborPoliciesTmpl },
       { name: 'responsibility.relationship', section: 'responsibility', visible: new FormControl(false), template: this.relationshipWithFarmersSuppliersTmpl },
-      // {name: 'responsibility.farmer', section: 'responsibility', visible: new FormControl(false), template: this.farmerStoryNameTmpl},
-      // {name: 'responsibility.pictures', section: 'responsibility', visible: new FormControl(false), template: this.farmerStoryPhotosTmpl},
-      // {name: 'responsibility.story', section: 'responsibility', visible: new FormControl(false), template: this.farmerStoryStoryTmpl},
       { name: 'responsibility.farmerStory', section: 'responsibility', visible: new FormControl(false), template: this.farmerStoryTmpl },
     ];
   }
 
   onDropSocialResponsibilitySection(event) {
-    if (this.socialResponsibilityElements[event.previousIndex].disableDrag || this.socialResponsibilityElements[event.currentIndex].disableDrag) return
+    if (this.socialResponsibilityElements[event.previousIndex].disableDrag || this.socialResponsibilityElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.socialResponsibilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
-  // ENVIRONMENTAL SUSTAINABILITY
-  @ViewChild("environmentalyFriendlyProduction", { static: false })
-  environmentalyFriendlyProductionTmpl: TemplateRef<any>;
-
-  @ViewChild("sustainablePackaging", { static: false })
-  sustainablePackagingTmpl: TemplateRef<any>;
-
-  @ViewChild("co2Footprint", { static: false })
-  co2FootprintTmpl: TemplateRef<any>;
-
-  environmentalSustainabilityElements: any[] = []
 
   generateEnvironmentalSustainabilityElements() {
     this.environmentalSustainabilityElements = [
@@ -1025,54 +1168,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onDropEnvironmentalSustainabilitySection(event) {
-    if (this.environmentalSustainabilityElements[event.previousIndex].disableDrag || this.environmentalSustainabilityElements[event.currentIndex].disableDrag) return
+    if (this.environmentalSustainabilityElements[event.previousIndex].disableDrag || this.environmentalSustainabilityElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.environmentalSustainabilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
-  // COMPANY
-  @ViewChild("companyName", { static: false })
-  companyNameTmpl: TemplateRef<any>;
-
-  @ViewChild("companyLogo", { static: false })
-  companyLogoTmpl: TemplateRef<any>;
-
-  @ViewChild("companyHeadquarters", { static: false })
-  companyHeadquartersTmpl: TemplateRef<any>;
-
-  @ViewChild("aboutTheCompany", { static: false })
-  aboutTheCompanyTmpl: TemplateRef<any>;
-
-  @ViewChild("nameOfManagerCEO", { static: false })
-  nameOfManagerCEOTmpl: TemplateRef<any>;
-
-  @ViewChild("contactEmail", { static: false })
-  contactEmailTmpl: TemplateRef<any>;
-
-  @ViewChild("contactPhoneNumber", { static: false })
-  contactPhoneNumberTmpl: TemplateRef<any>;
-
-  @ViewChild("companyWebPage", { static: false })
-  companyWebPageTmpl: TemplateRef<any>;
-
-  @ViewChild("facebook", { static: false })
-  facebookTmpl: TemplateRef<any>;
-
-  @ViewChild("instagram", { static: false })
-  instagramTmpl: TemplateRef<any>;
-
-  @ViewChild("twitter", { static: false })
-  twitterTmpl: TemplateRef<any>;
-
-  @ViewChild("youtube", { static: false })
-  youtubeTmpl: TemplateRef<any>;
-
-  @ViewChild("other", { static: false })
-  otherTmpl: TemplateRef<any>;
-
-  companyElements: any[] = []
 
   generateCompanyElements() {
     this.companyElements = [
@@ -1093,21 +1194,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onDropCompanySection(event) {
-    if (this.companyElements[event.previousIndex].disableDrag || this.companyElements[event.currentIndex].disableDrag) return
+    if (this.companyElements[event.previousIndex].disableDrag || this.companyElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.companyElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
-  // COMPARISON OF PRICE
-  @ViewChild("description", { static: false })
-  descriptionTmpl: TemplateRef<any>;
-
-  @ViewChild("prices", { static: false })
-  pricesTmpl: TemplateRef<any>;
-
-  comparisonOfPriceElements: any[] = []
 
   generateComparisonOfPriceElementsElements() {
     this.comparisonOfPriceElements = [
@@ -1117,54 +1209,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   onDropComparisonOfPriceElementsSection(event) {
-    if (this.comparisonOfPriceElements[event.previousIndex].disableDrag || this.comparisonOfPriceElements[event.currentIndex].disableDrag) return
+    if (this.comparisonOfPriceElements[event.previousIndex].disableDrag || this.comparisonOfPriceElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.comparisonOfPriceElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
 
-  // SETTINGS
-  @ViewChild("language", { static: false })
-  languageTmpl: TemplateRef<any>;
-
-  @ViewChild("checkAuthenticity", { static: false })
-  checkAuthenticityTmpl: TemplateRef<any>;
-
-  @ViewChild("traceOrigin", { static: false })
-  traceOriginTmpl: TemplateRef<any>;
-
-  @ViewChild("giveFeedback", { static: false })
-  giveFeedbackTmpl: TemplateRef<any>;
-
-  @ViewChild("pricingTransparency", { static: false })
-  pricingTransparencyTmpl: TemplateRef<any>;
-
-  @ViewChild("increaseIncome", { static: false })
-  increaseIncomeTmpl: TemplateRef<any>;
-
-  // @ViewChild("costBreakdown", { static: false })
-  // costBreakdownTmpl: TemplateRef<any>;
-
-  @ViewChild("increaseIncomeDescription", { static: false })
-  increaseIncomeDescriptionTmpl: TemplateRef<any>;
-
-  @ViewChild("gdprText", { static: false })
-  gdprTextTmpl: TemplateRef<any>;
-
-  @ViewChild("privacyPolicyText", { static: false })
-  privacyPolicyTextTmpl: TemplateRef<any>;
-
-  @ViewChild("termsOfUseText", { static: false })
-  termsOfUseTextTmpl: TemplateRef<any>;
-
-  @ViewChild("knowledgeBlog", { static: false })
-  knowledgeBlogTmpl: TemplateRef<any>;
-
-  settingsElements: any[] = []
-
   generateSettingsElements() {
-    if(this.action === 'labels') {
+    if (this.action === 'labels') {
       this.settingsElements = [
         { name: 'settings.language', section: 'settings', visible: new FormControl(false), template: this.languageTmpl },
         { name: 'settings.checkAuthenticity', section: 'settings', visible: new FormControl(false), template: this.checkAuthenticityTmpl },
@@ -1187,25 +1240,21 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'settings.termsOfUseText', section: 'settings', visible: new FormControl(false), template: this.termsOfUseTextTmpl }
     ];
   }
-
-  pricingTransparencyElements: any[] = []
   generatePricingTransparenctElements() {
     this.pricingTransparencyElements = [
       { name: 'settings.incomeIncreaseDescription', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeDescriptionTmpl },
       { name: 'settings.pricingTransparency', section: 'settings', visible: new FormControl(false), template: this.pricingTransparencyTmpl },
-      { name: 'settings.increaseIncome', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeTmpl },
-      // { name: 'settings.costBreakdown', section: 'settings', visible: new FormControl(false), template: this.costBreakdownTmpl }
+      { name: 'settings.increaseIncome', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeTmpl }
     ];
   }
 
   onDropSettingsSection(event) {
-    if (this.settingsElements[event.previousIndex].disableDrag || this.settingsElements[event.currentIndex].disableDrag) return
+    if (this.settingsElements[event.previousIndex].disableDrag || this.settingsElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.settingsElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex != event.currentIndex) {
-      this.registerMove()
+    if (event.previousIndex !== event.currentIndex) {
+      this.registerMove();
     }
   }
-
 
   generateDefaultElements() {
     this.generateProductElements();
@@ -1220,77 +1269,57 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateJointVisibilityForm();
   }
 
-  visibilityForm: FormGroup = null;
   generateJointVisibilityForm() {
-    let allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
+    const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
     ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
-    let formObj = {}
+    const formObj = {};
     allList.forEach(element => {
-      let fixedKey = element.name.replace(/\./g, "_")
-      formObj[fixedKey] = element.visible
-    })
-    this.visibilityForm = new FormGroup(formObj)
-  }
-
-  get labelChanged() {
-    return this.moved || (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty
-  }
-
-  get productChanged() {
-    return this.productForm.dirty
-  }
-
-  ngAfterViewInit() {   // ViewChildren for templates works only after ngAfterViewInit
-    setTimeout(() => {
-      this.generateDefaultElements()
-      this.initialized$.next(true)
+      const fixedKey = element.name.replace(/\./g, '_');
+      formObj[fixedKey] = element.visible;
     });
+    this.visibilityForm = new FormGroup(formObj);
   }
-
-  sectionToNameToObj = new Map()
 
   generateLabelMaps() {
-    let productMap = new Map()
+    const productMap = new Map();
     this.processElements.forEach(el => {
-      productMap.set(el.name, el)
-    })
-    let processMap = new Map()
+      productMap.set(el.name, el);
+    });
+    const processMap = new Map();
     this.processElements.forEach(el => {
-      processMap.set(el.name, el)
-    })
-    let socialResponsibilityMap = new Map()
+      processMap.set(el.name, el);
+    });
+    const socialResponsibilityMap = new Map();
     this.socialResponsibilityElements.forEach(el => {
-      socialResponsibilityMap.set(el.name, el)
-    })
-    let environmentalSustainabilityMap = new Map()
+      socialResponsibilityMap.set(el.name, el);
+    });
+    const environmentalSustainabilityMap = new Map();
     this.environmentalSustainabilityElements.forEach(el => {
-      environmentalSustainabilityMap.set(el.name, el)
-    })
-    let comparisonOfPriceMap = new Map()
+      environmentalSustainabilityMap.set(el.name, el);
+    });
+    const comparisonOfPriceMap = new Map();
     this.comparisonOfPriceElements.forEach(el => {
-      comparisonOfPriceMap.set(el.name, el)
-    })
-    let settingsMap = new Map()
+      comparisonOfPriceMap.set(el.name, el);
+    });
+    const settingsMap = new Map();
     this.settingsElements.forEach(el => {
-      settingsMap.set(el.name, el)
-    })
+      settingsMap.set(el.name, el);
+    });
     this.pricingTransparencyElements.forEach(el => {
-      settingsMap.set(el.name, el)
-    })
-    let companyMap = new Map()
+      settingsMap.set(el.name, el);
+    });
+    const companyMap = new Map();
     this.companyElements.forEach(el => {
-      companyMap.set(el.name, el)
-    })
+      companyMap.set(el.name, el);
+    });
     this.sectionToNameToObj.set('product', productMap);
-    this.sectionToNameToObj.set('process', processMap)
-    this.sectionToNameToObj.set('responsibility', socialResponsibilityMap)
-    this.sectionToNameToObj.set('sustainability', environmentalSustainabilityMap)
-    this.sectionToNameToObj.set('comparisonOPrice', comparisonOfPriceMap)
-    this.sectionToNameToObj.set('settings', settingsMap)
-    this.sectionToNameToObj.set('company', companyMap)
+    this.sectionToNameToObj.set('process', processMap);
+    this.sectionToNameToObj.set('responsibility', socialResponsibilityMap);
+    this.sectionToNameToObj.set('sustainability', environmentalSustainabilityMap);
+    this.sectionToNameToObj.set('comparisonOPrice', comparisonOfPriceMap);
+    this.sectionToNameToObj.set('settings', settingsMap);
+    this.sectionToNameToObj.set('company', companyMap);
   }
-
-  labelSelect$ = new BehaviorSubject(null)
 
   async createLabel() {
     if (this.changed) {
@@ -1299,7 +1328,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         notificationType: 'warning',
         title: $localize`:@@productLabel.createLabel.warning.title:Error`,
         message: $localize`:@@productLabel.createLabel.warning.message:Unsaved data. Please save changes before creating a new label.`
-      })
+      });
       return;
     }
     if (this.mode === 'create') {
@@ -1308,7 +1337,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         notificationType: 'error',
         title: $localize`:@@productLabel.createLabel.error.title:Error`,
         message: $localize`:@@productLabel.createLabel.error.message:Cannot create a label. Please create and save the product first.`
-      })
+      });
       return;
     }
     this.setLanguageForLabel();
@@ -1339,24 +1368,24 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   preparePricingTransparencyElements(): any[] {
-    let elts = [];
+    const elts = [];
     this.pricingTransparencyElements.forEach(elt => {
-      if (elt.name == "settings.increaseIncome") {
+      if (elt.name === 'settings.increaseIncome') {
         elts.push({
-          name: "settings.increaseOfCoffee",
+          name: 'settings.increaseOfCoffee',
           section: elt.section,
           visible: elt.visible
-        })
+        });
         elts.push({
-          name: "settings.incomeIncreaseDescription",
+          name: 'settings.incomeIncreaseDescription',
           section: elt.section,
           visible: elt.visible
-        })
+        });
         elts.push({
-          name: "settings.incomeIncreaseDocument",
+          name: 'settings.incomeIncreaseDocument',
           section: elt.section,
           visible: elt.visible
-        })
+        });
       } else {
         elts.push(elt);
       }
@@ -1365,19 +1394,19 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   prepareProductElements(): any[] {
-    let elts = [];
+    const elts = [];
     this.productElements.forEach(elt => {
-      if (elt.name == "speciality") {
+      if (elt.name === 'speciality') {
         elts.push({
-          name: "specialityDescription",
+          name: 'specialityDescription',
           section: elt.section,
           visible: elt.visible
-        })
+        });
         elts.push({
-          name: "specialityDocument",
+          name: 'specialityDocument',
           section: elt.section,
           visible: elt.visible
-        })
+        });
       } else {
         elts.push(elt);
       }
@@ -1386,24 +1415,24 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   prepareSocialResponsibilityElements(): any[] {
-    let elts = [];
+    const elts = [];
     this.socialResponsibilityElements.forEach(elt => {
-      if (elt.name == "responsibility.farmerStory") {
+      if (elt.name === 'responsibility.farmerStory') {
         elts.push({
-          name: "responsibility.farmer",
+          name: 'responsibility.farmer',
           section: elt.section,
           visible: elt.visible
-        })
+        });
         elts.push({
-          name: "responsibility.pictures",
+          name: 'responsibility.pictures',
           section: elt.section,
           visible: elt.visible
-        })
+        });
         elts.push({
-          name: "responsibility.story",
+          name: 'responsibility.story',
           section: elt.section,
           visible: elt.visible
-        })
+        });
       } else {
         elts.push(elt);
       }
@@ -1412,11 +1441,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   currentLabelFields() {
-    let labels = []
-    let allSocialResponsibilityElements = this.prepareSocialResponsibilityElements();
-    let allProductElements = this.prepareProductElements();
-    let allPricingTransparencyElements = this.preparePricingTransparencyElements();
-    let allList = [allProductElements, this.processElements, allSocialResponsibilityElements,
+    const labels = [];
+    const allSocialResponsibilityElements = this.prepareSocialResponsibilityElements();
+    const allProductElements = this.prepareProductElements();
+    const allPricingTransparencyElements = this.preparePricingTransparencyElements();
+    const allList = [allProductElements, this.processElements, allSocialResponsibilityElements,
       this.environmentalSustainabilityElements, allPricingTransparencyElements, this.comparisonOfPriceElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
@@ -1424,13 +1453,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
           name: val.name,
           section: val.section,
           visible: val.visible.value
-        })
-      })
+        });
+      });
     });
     return labels;
   }
-
-  visibilityMap = new Map()
 
   async initializeByLabel(label: ApiProductLabel) {
 
@@ -1494,26 +1521,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.labelTitleForm.setValue(label.title);
     this.labelTitleForm.markAsPristine();
   }
-
-  get changed(): Boolean {
-    // console.log("CHG:", this.productChanged, this.labelChanged)
-    return this.productChanged || this.labelChanged
-  }
-
-  get invalid() {
-    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid)
-  }
-
-  reorderMode = false;
   toggleReorder() {
     this.reorderMode = !this.reorderMode;
   }
-
-  labelTitleForm = new FormControl(null)
-  editTitleMode = false;
-
-  @ViewChild("labelTitleInput", { static: false })
-  labelTitleInput: TextinputComponent;
 
   toggleEditTitleMode(mode: boolean) {
     if (mode == null) {
@@ -1522,18 +1532,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.editTitleMode = mode;
     }
     if (this.editTitleMode) {
-      this.labelTitleInput.focus()
+      this.labelTitleInput.focus();
     }
 
-  }
-
-  publishString = $localize`:@@productLabel.qrLabels.publish:Publish`
-  unpublishString = $localize`:@@productLabel.qrLabels.unpublish:Unpublish`
-  get publishText() {
-    if (!this.currentLabel) return this.publishString
-    if (this.currentLabel.status == ApiProductLabel.StatusEnum.PUBLISHED) return this.unpublishString
-    if (this.currentLabel.status == ApiProductLabel.StatusEnum.UNPUBLISHED) return this.publishString
-    return this.publishString
   }
 
   async togglePublish() {
@@ -1570,24 +1571,24 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async deleteCurrentProduct() {
-    if (this.changed) return;
-    let productId = Number(this.pId);
-    let result = await this.globalEventsManager.openMessageModal({
+    if (this.changed) { return; }
+    const productId = Number(this.pId);
+    const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabel.deleteCurrentProduct.warning.message:Are you sure you want to delete the product? This will delete all labels and batches attached to the product as well!`,
       options: { centered: true },
       dismissable: false
     });
-    if (result != "ok") return
-    let res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise()
-    if (res && res.status == 'OK') {
+    if (result !== 'ok') { return; }
+    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.globalEventsManager.push({
         action: 'success',
         notificationType: 'success',
         title: $localize`:@@productLabel.deleteCurrentProduct.success.title:Deleted`,
         message: $localize`:@@productLabel.deleteCurrentProduct.success.message:Product was successfuly deleted`
-      })
-      this.router.navigate(['/product-labels'])
+      });
+      this.router.navigate(['/product-labels']);
       return;
     }
     this.globalEventsManager.push({
@@ -1595,42 +1596,34 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       notificationType: 'error',
       title: $localize`:@@productLabel.deleteCurrentProduct.error.title:Error`,
       message: $localize`:@@productLabel.deleteCurrentProduct.error.message:Product cannot be deleted. Please try again.`
-    })
+    });
 
   }
-
-  fadeInProduct = false;
   fadeInProductOnRefresh() {
     this.fadeInProduct = true;
     setTimeout(() => {
       this.fadeInProduct = false;
-    }, 500)
+    }, 500);
   }
 
   batches() {
-    if (!this.currentLabel) return;
-    if (this.changed) return;
-    let productId = this.route.snapshot.params.id;
-    let labelId = this.currentLabel.id
-    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'batches'])
-  }
-
-  get showBatches() {
-    if (this.productForm && this.productForm.get('settings')) {
-      return this.productForm.get('settings.traceOrigin').value;
-    }
+    if (!this.currentLabel) { return; }
+    if (this.changed) { return; }
+    const productId = this.route.snapshot.params.id;
+    const labelId = this.currentLabel.id;
+    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'batches']).then();
   }
 
   statistics() {
-    if (!this.currentLabel) return;
-    if (this.changed) return;
-    let productId = this.route.snapshot.params.id;
-    let labelId = this.currentLabel.id
-    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'statistics'])
+    if (!this.currentLabel) { return; }
+    if (this.changed) { return; }
+    const productId = this.route.snapshot.params.id;
+    const labelId = this.currentLabel.id;
+    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'statistics']).then();
   }
 
   viewLabel() {
-    if (this.changed) return;
+    if (this.changed) { return; }
     if (this.currentLabel) {
       const url = this.router.serializeUrl(
         this.router.createUrlTree(['/p-cd', this.currentLabel.uuid, 'EMPTY'])
@@ -1643,46 +1636,39 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
-  get downloadFileName() {
-    let productName = this.productForm.get('name').value;
-    let LabelName = this.currentLabelName;
-    return productName + "-" + LabelName + "-" + "instructions.pdf"
-  }
-
   downloadInstructions() {
-    if (this.changed) return;
+    if (this.changed) { return; }
     if (this.currentLabel) {
-      let sub = this.productController.getProductLabelInstructionsUsingGET(this.currentLabel.id).subscribe(
+      const sub = this.productController.getProductLabelInstructionsUsingGET(this.currentLabel.id).subscribe(
         blob => {
-          let a = document.createElement("a");
-          let blobURL = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const blobURL = URL.createObjectURL(blob);
           a.download = this.downloadFileName;
           a.href = blobURL;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
         },
-        error => {
+        () => {
           this.globalEventsManager.push({
             action: 'error',
             notificationType: 'error',
             title: $localize`:@@productLabel.downloadInstructions.error.title:Error`,
             message: $localize`:@@productLabel.downloadInstructions.error.message:PDF cannot be generated. Please try again.`
-          })
+          });
         }
-      )
+      );
       this.unsubscribeList.add(sub);
     }
   }
 
   feedbacks() {
-    if (!this.currentLabel) return;
-    if (this.changed) return;
-    let productId = this.route.snapshot.params.id;
-    let labelId = this.currentLabel.id
-    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'feedback'], { state: { data: this.currentLabel.uuid } })
-  }
-
+    if (!this.currentLabel) { return; }
+    if (this.changed) { return; }
+    const productId = this.route.snapshot.params.id;
+    const labelId = this.currentLabel.id;
+    this.router.navigate(['/product-labels', productId, 'labels', labelId, 'feedback'], {state: {data: this.currentLabel.uuid}}).then();
+   }
 
   async prefillFromOther(fromSocialResp: boolean) {
     const modalRef = this.modalService.open(PrefillProductSelectionModalComponent, { centered: true });
@@ -1690,17 +1676,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       title: $localize`:@@productLabel.prefillFromOther.title:Products`,
       instructionsHtmlProduct: $localize`:@@productLabel.prefillFromOther.instructionsHtmlProduct:Select a product`,
       skipItemId: this.productForm.get('id').value
-    })
-    let product = await modalRef.result;
+    });
+    const product = await modalRef.result;
     if (product) {
       this.productController.getProductUsingGET(product.id).pipe(take(1))
         .subscribe(resp => {
-          if (resp.status == "OK") {
+          if (resp.status === 'OK') {
             this.prefillFields(fromSocialResp, resp.data);
           }
-
         }
-        )
+        );
     }
   }
 
@@ -1718,7 +1703,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       if (data.responsibility.pictures) {
         (this.productForm.get('responsibility.pictures') as FormArray).clear();
         data.responsibility.pictures.forEach(pic => {
-          (this.productForm.get('responsibility.pictures') as FormArray).push(new FormControl(pic))
+          (this.productForm.get('responsibility.pictures') as FormArray).push(new FormControl(pic));
         });
       }
       if (data.responsibility.story) {
@@ -1739,13 +1724,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   goToOrders() {
-    if (!this.currentLabel) return;
-    if (this.changed) return;
-    let productId = this.route.snapshot.params.id;
-    let labelId = this.currentLabel.id
-    this.router.navigate(['/product-labels', productId, 'orders'])
+    if (!this.currentLabel) { return; }
+    if (this.changed) { return; }
+    const productId = this.route.snapshot.params.id;
+    const labelId = this.currentLabel.id;
+    this.router.navigate(['/product-labels', productId, 'orders']).then();
   }
-
 
   async prefillCertsFromOther(certsAndStds: boolean) {
     const modalRef = this.modalService.open(PrefillProductSelectionModalComponent, { centered: true });
@@ -1753,17 +1737,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       title: $localize`:@@productLabel.prefillCertsFromOther.title:Products`,
       instructionsHtmlProduct: $localize`:@@productLabel.prefillCertsFromOther.instructionsHtmlProduct:Select a product`,
       skipItemId: this.productForm.get('id').value
-    })
-    let product = await modalRef.result;
+    });
+    const product = await modalRef.result;
     if (product) {
       this.productController.getProductUsingGET(product.id).pipe(take(1))
         .subscribe(resp => {
-          if (resp.status == "OK") {
+          if (resp.status === 'OK') {
             this.prefillCertFields(certsAndStds, resp.data);
           }
-
         }
-        )
+        );
     }
   }
 
@@ -1772,14 +1755,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       if (data.process.standards) {
         (this.productForm.get('process.standards') as FormArray).clear();
         data.process.standards.forEach(doc => {
-          (this.productForm.get('process.standards') as FormArray).push(new FormControl(doc))
+          (this.productForm.get('process.standards') as FormArray).push(new FormControl(doc));
         });
       }
     } else {
       if (data.process.records) {
         (this.productForm.get('process.records') as FormArray).clear();
         data.process.records.forEach(doc => {
-          (this.productForm.get('process.records') as FormArray).push(new FormControl(doc))
+          (this.productForm.get('process.records') as FormArray).push(new FormControl(doc));
         });
       }
     }
@@ -1787,7 +1770,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   checkExternalLink(link: string): string {
-    if (!link) return '#';
+    if (!link) { return '#'; }
     if (!link.startsWith('https://') && !link.startsWith('http://')) {
       return 'http://' + link;
     }
@@ -1795,18 +1778,18 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   labelsInfo(evt) {
-    let message = "";
+    let message = '';
     let link = this.editInfoLabelLink;
     if (!link || /^\s*$/.test(link)) {
-      message = $localize`:@@productLabel.labelsInfo.message:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner.`
+      message = $localize`:@@productLabel.labelsInfo.message:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner.`;
     } else {
       link = this.checkExternalLink(link);
-      message = $localize`:@@productLabel.labelsInfo.messageWithLink:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner. <br> <a href=${link} target="_blank" class="labelInfoLink">More Information</a>`
+      message = $localize`:@@productLabel.labelsInfo.messageWithLink:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner. <br> <a href=${link} target="_blank" class="labelInfoLink">More Information</a>`;
     }
     this.globalEventsManager.openMessageModal({
       type: 'general',
       title: $localize`:@@productLabel.labelsInfo.title:QR  multiple labels`,
-      message: message,
+      message,
       options: { centered: true, size: 'lg' },
       dismissable: false,
       buttons: ['ok'],
@@ -1815,77 +1798,67 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async initializeLabelsHelperLink() {
-    let resp = await this.commonController.getGlobalSettingsUsingGET(this.globalEventsManager.globalSettingsKeys("PRODUCT_LABELS_HELPER_LINK")).pipe(take(1)).toPromise();
-    if (resp && resp.data && resp.data.value) this.editInfoLabelLink = resp.data.value
+    const resp = await this.commonController.getGlobalSettingsUsingGET(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK')).pipe(take(1)).toPromise();
+    if (resp && resp.data && resp.data.value) { this.editInfoLabelLink = resp.data.value; }
   }
-
-  get languageCodes() {
-    let obj = {}
-    obj['EN'] = $localize`:@@productLabel.languageCodes.en:EN`
-    obj['DE'] = $localize`:@@productLabel.languageCodes.de:DE`
-    return obj;
-  }
-  codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes)
-
 
   productNameLabelAndPlaceholder(type, field) {
     if (this.currentLabel) {
-      if (type === 'LABEL' && field === 'name') return $localize`:@@productLabel.label.textinput.label.name:Label name`
-      if (type === 'LABEL' && field === 'photo') return $localize`:@@productLabel.label.textinput.label.photo:Label photo`
-      if (type === 'LABEL' && field === 'description') return $localize`:@@productLabel.label.textinput.label.description:Label description`
-      if (type === 'PLACEHOLDER' && field === 'name') return $localize`:@@productLabel.label.textinput.placeholder.name:Enter label name`
-      // if (type === 'PLACEHOLDER' && field === 'photo') return $localize`:@@productLabel.label.textinput.placeholder.photo:Upload label photo`
-      // if (type === 'PLACEHOLDER' && field === 'description') return $localize`:@@productLabel.label.textinput.placeholder.description:Enter label description`
+      if (type === 'LABEL' && field === 'name') { return $localize`:@@productLabel.label.textinput.label.name:Label name`; }
+      if (type === 'LABEL' && field === 'photo') { return $localize`:@@productLabel.label.textinput.label.photo:Label photo`; }
+      if (type === 'LABEL' && field === 'description') { return $localize`:@@productLabel.label.textinput.label.description:Label description`; }
+      if (type === 'PLACEHOLDER' && field === 'name') { return $localize`:@@productLabel.label.textinput.placeholder.name:Enter label name`; }
+
     } else {
-      if (type === 'LABEL' && field === 'name') return $localize`:@@productLabel.product.textinput.label.name:Product name`
-      if (type === 'LABEL' && field === 'photo') return $localize`:@@productLabel.product.textinput.label.photo:Product photo`
-      if (type === 'LABEL' && field === 'description') return $localize`:@@productLabel.product.textinput.label.description:Product description`
-      if (type === 'PLACEHOLDER' && field === 'name') return $localize`:@@productLabel.product.textinput.placeholder.name:Enter product name`
-      // if (type === 'PLACEHOLDER' && field === 'photo') return $localize`:@@productLabel.product.textinput.placeholder.photo:Upload product photo`
-      // if (type === 'PLACEHOLDER' && field === 'description') return $localize`:@@productLabel.product.textinput.placeholder.description:Enter product description`
+      if (type === 'LABEL' && field === 'name') { return $localize`:@@productLabel.product.textinput.label.name:Product name`; }
+      if (type === 'LABEL' && field === 'photo') { return $localize`:@@productLabel.product.textinput.label.photo:Product photo`; }
+      if (type === 'LABEL' && field === 'description') { return $localize`:@@productLabel.product.textinput.label.description:Product description`; }
+      if (type === 'PLACEHOLDER' && field === 'name') { return $localize`:@@productLabel.product.textinput.placeholder.name:Enter product name`; }
     }
   }
 
   async setLanguageForLabel() {
+
     const modalRef = this.modalService.open(LanguageForLabelModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@productLabel.languageForLabel.title:Label language`,
-      instructionsHtml: $localize`:@@productLabel.languageForLabel.instructionsHtml:Select language for new label:`
-    })
-    let lang = await modalRef.result;
-    if (lang) {
+      title: $localize`:@@productLabel.newLabelModal.title:Create new label`
+    });
 
-      let labels = this.currentLabelFields()
-      let productId = this.pId;
-      let res = await this.productController.createProductLabelUsingPOST(
+    const modalResult: LanguageForLabelModalResult = await modalRef.result;
+    if (modalResult) {
+
+      const labels = this.currentLabelFields();
+      const productId = this.pId;
+      const res = await this.productController.createProductLabelUsingPOST(
         {
-          fields: labels,
-          productId: productId
+          productId,
+          title: modalResult.title,
+          language: modalResult.lang,
+          fields: labels
         }
       ).pipe(take(1)).toPromise();
+
       if (res && res.status === 'OK') {
-        let resp = await this.productController.getProductLabelContentUsingGET(res.data.id).pipe(take(1)).toPromise();
+        const resp = await this.productController.getProductLabelContentUsingGET(res.data.id).pipe(take(1)).toPromise();
         if (resp && resp.status === 'OK' && resp.data) {
-          if (lang != 'EN') {
-            let data = resp.data;
-            data.settings.language = lang;
+          if (modalResult.lang !== 'EN') {
+            const data = resp.data;
+            data.settings.language = modalResult.lang;
             data['labelId'] = res.data.id;
             delete data['id'];
-            let resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
+            const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
             if (resC && resC.status === 'OK') {
-              this.fadeInProductOnRefresh()
-              this.labelSelect$.next({ id: res.data.id, preventEmit: false })
-              this.reload()
+              this.fadeInProductOnRefresh();
+              this.labelSelect$.next({ id: res.data.id, preventEmit: false });
+              this.reload();
             }
           } else {
-            this.fadeInProductOnRefresh()
-            this.labelSelect$.next({ id: res.data.id, preventEmit: false })
-            this.reload()
+            this.fadeInProductOnRefresh();
+            this.labelSelect$.next({ id: res.data.id, preventEmit: false });
+            this.reload();
           }
         }
-
       }
-
     }
   }
 
