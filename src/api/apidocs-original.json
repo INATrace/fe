@@ -8933,39 +8933,6 @@
         "summary": "Get label batch data"
       }
     },
-    "/api/product/labels/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Product id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_List_ApiProductLabelBase_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "getProductLabelsUsingGET",
-        "summary": "Get labels for product"
-      }
-    },
     "/api/product/list": {
       "get": {
         "parameters": [
@@ -9144,6 +9111,39 @@
         ],
         "operationId": "getProductUsingGET",
         "summary": "Get all info about a product"
+      }
+    },
+    "/api/product/{id}/labels": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Product id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ApiProductLabelBase_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getProductLabelsUsingGET",
+        "summary": "Get labels for product"
       }
     },
     "/api/product/{productId}/finalProduct": {

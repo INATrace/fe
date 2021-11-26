@@ -4163,7 +4163,7 @@ export class ProductControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiResponseListApiProductLabelBase>(`${this.configuration.basePath}/api/product/labels/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.get<ApiResponseListApiProductLabelBase>(`${this.configuration.basePath}/api/product/${encodeURIComponent(String(id))}/labels`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
