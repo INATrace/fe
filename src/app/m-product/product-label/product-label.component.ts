@@ -464,15 +464,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('farmerStory', { static: false })
   farmerStoryTmpl: TemplateRef<any>;
 
-  // @ViewChild("farmerStoryName", { static: false })
-  // farmerStoryNameTmpl: TemplateRef<any>;
-
-  // @ViewChild("farmerStoryPhotos", { static: false })
-  // farmerStoryPhotosTmpl: TemplateRef<any>;
-
-  // @ViewChild("farmerStoryStory", { static: false })
-  // farmerStoryStoryTmpl: TemplateRef<any>;
-
   socialResponsibilityElements: any[] = [];
 
   // ENVIRONMENTAL SUSTAINABILITY
@@ -557,9 +548,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('increaseIncome', { static: false })
   increaseIncomeTmpl: TemplateRef<any>;
 
-  // @ViewChild("costBreakdown", { static: false })
-  // costBreakdownTmpl: TemplateRef<any>;
-
   @ViewChild('increaseIncomeDescription', { static: false })
   increaseIncomeDescriptionTmpl: TemplateRef<any>;
 
@@ -624,6 +612,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   ngOnInit(): void {
+
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
     this.userProfile = this.authService.currentUserProfile;
     const subUserProfile = this.authService.userProfile$.subscribe(val => {
@@ -631,10 +620,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       if (this.userProfile) { this.showLabelInfoLink = 'ADMIN' === this.userProfile.role; }
     });
     this.unsubscribeList.add(subUserProfile);
-    this.initializeLabelsHelperLink();
+    this.initializeLabelsHelperLink().then();
 
     if (this.mode === 'update') {
-      // this.getProduct();
+
       this.unsubscribeList.add(
         this.product$.subscribe(val => { }),
       );
@@ -645,7 +634,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       );
       this.reload();
     } else {
-      this.newProduct();
+      this.newProduct().then();
     }
   }
 
@@ -799,31 +788,25 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.productForm.updateValueAndValidity();
       this.productForm.get('settings.language').setValue('EN');
     } catch (e) {
-      // console.log(e)
+
       this.globalEventsManager.push({
         action: 'error',
         notificationType: 'error',
         title: $localize`:@@productLabel.newProduct.error.title:Error`,
         message: $localize`:@@productLabel.newProduct.error.message:Wrong company data. Cannot create a product.`
       });
-      this.router.navigate(['product-labels']);
+      this.router.navigate(['product-labels']).then();
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-  }
-
-  userResultFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value);
   }
 
   userInputFormatter = (value: any) => {
     return this.userSifrant.textRepresentation(value);
   }
 
-
   goBack(): void {
-    // console.log("GOBACK")
-    this.router.navigate(['product-labels']);
+    this.router.navigate(['product-labels']).then();
   }
 
   async save() {
@@ -840,21 +823,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       if (res) {
         this.submitted = false;
       }
-      // label is changed
-      // if (this.productChanged) {
-      //   let res = await this.saveCurrentLabel(false);  // first save label, but do not reload
-      //   if (res) {
-      //     res = await this.saveProduct(true)  // save product and reload all
-      //   }
-      //   if (res) {
-      //     this.submitted = false;
-      //   }
-      //   return res;
-      // } else {  // save label and reload
-      // let res = await this.saveCurrentLabel(true);
-      // if (res) {
-      //   this.submitted = false;
-      // }
+
       return res;
     }
   }
@@ -894,6 +863,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async saveCurrentLabel(reload = false) {
+
     const labels = this.currentLabelFields();
     const res = await this.productController.updateProductLabelUsingPUT(
       {
@@ -902,6 +872,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         title: this.labelTitleForm.value
       },
     ).pipe(take(1)).toPromise();
+
     if (res && res.status === 'OK') {
       const data = this.productForm.value;
 
@@ -1086,13 +1057,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.googleMapsIsLoaded();
   }
 
-  //
   openOnStart(value: any) {
     return true;
-  }
-
-  nonEmptyFormArray(value: any) {
-    return value && value.length > 0;
   }
 
   registerMove() {
@@ -1240,6 +1206,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'settings.termsOfUseText', section: 'settings', visible: new FormControl(false), template: this.termsOfUseTextTmpl }
     ];
   }
+
   generatePricingTransparenctElements() {
     this.pricingTransparencyElements = [
       { name: 'settings.incomeIncreaseDescription', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeDescriptionTmpl },
@@ -1322,6 +1289,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async createLabel() {
+
     if (this.changed) {
       this.globalEventsManager.push({
         action: 'error',
@@ -1331,6 +1299,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       });
       return;
     }
+
     if (this.mode === 'create') {
       this.globalEventsManager.push({
         action: 'error',
@@ -1340,7 +1309,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       });
       return;
     }
-    this.setLanguageForLabel();
+
+    this.setLanguageForLabel().then();
   }
 
   async deleteLabel(labelMessage) {
@@ -1504,10 +1474,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       const field = newFieldMap.get(el.name);
       if (field) {
         el.visible.setValue(field.visible);
-        // el.visible.markAsDirty()
-        // el.visible.updateValueAndValidity()
       } else {
-        // console.log("STRANGE", el, field, newFieldMap)
         el.visible.setValue(false);
       }
 
@@ -1521,6 +1488,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.labelTitleForm.setValue(label.title);
     this.labelTitleForm.markAsPristine();
   }
+
   toggleReorder() {
     this.reorderMode = !this.reorderMode;
   }
@@ -1534,7 +1502,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (this.editTitleMode) {
       this.labelTitleInput.focus();
     }
-
   }
 
   async togglePublish() {
@@ -1597,8 +1564,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       title: $localize`:@@productLabel.deleteCurrentProduct.error.title:Error`,
       message: $localize`:@@productLabel.deleteCurrentProduct.error.message:Product cannot be deleted. Please try again.`
     });
-
   }
+
   fadeInProductOnRefresh() {
     this.fadeInProduct = true;
     setTimeout(() => {
@@ -1721,14 +1688,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       }
     }
     this.productForm.markAsDirty();
-  }
-
-  goToOrders() {
-    if (!this.currentLabel) { return; }
-    if (this.changed) { return; }
-    const productId = this.route.snapshot.params.id;
-    const labelId = this.currentLabel.id;
-    this.router.navigate(['/product-labels', productId, 'orders']).then();
   }
 
   async prefillCertsFromOther(certsAndStds: boolean) {
