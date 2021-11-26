@@ -36,6 +36,10 @@ export interface ApiProductLabelValuesExtended {
      */
     id?: number;
     /**
+     * Label language
+     */
+    language?: ApiProductLabelValuesExtended.LanguageEnum;
+    /**
      * Number of batches
      */
     numberOfBatches?: number;
@@ -82,6 +86,10 @@ export namespace ApiProductLabelValuesExtended {
          */
         id = 'id',
         /**
+         * Label language
+         */
+        language = 'language',
+        /**
          * Number of batches
          */
         numberOfBatches = 'numberOfBatches',
@@ -105,6 +113,16 @@ export namespace ApiProductLabelValuesExtended {
          * Product label uuid (for url)
          */
         uuid = 'uuid'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
     /**
@@ -151,6 +169,18 @@ export namespace ApiProductLabelValuesExtended {
                     name: 'id',
                     classname: 'ApiProductLabelValuesExtended',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelValuesExtended.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -230,6 +260,8 @@ export namespace ApiProductLabelValuesExtended {
                 ],
                 id: [
                 ],
+                language: [
+                ],
                 numberOfBatches: [
                 ],
                 productId: [
@@ -256,6 +288,9 @@ export namespace ApiProductLabelValuesExtended {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //               numberOfBatches: {

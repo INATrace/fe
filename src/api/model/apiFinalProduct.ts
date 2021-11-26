@@ -20,6 +20,7 @@
 
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProductBase } from './apiProductBase';
+import { ApiProductLabelBase } from './apiProductLabelBase';
 
 
 
@@ -32,6 +33,7 @@ export interface ApiFinalProduct {
      * Entity id
      */
     id?: number;
+    labels?: Array<ApiProductLabelBase>;
     measurementUnitType?: ApiMeasureUnitType;
     /**
      * Name of final product
@@ -56,6 +58,7 @@ export namespace ApiFinalProduct {
          * Entity id
          */
         id = 'id',
+        labels = 'labels',
         measurementUnitType = 'measurementUnitType',
         /**
          * Name of final product
@@ -91,6 +94,18 @@ export namespace ApiFinalProduct {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiProductLabelBase.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'labels',
+                    classname: 'ApiFinalProduct',
+                    dataType: 'Array&lt;ApiProductLabelBase&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductLabelBase'
                 },
                 {
                     metadata: ApiMeasureUnitType.formMetadata,
@@ -133,6 +148,8 @@ export namespace ApiFinalProduct {
                 ],
                 id: [
                 ],
+                labels: [
+                ],
                 measurementUnitType: [
                 ],
                 name: [
@@ -150,6 +167,9 @@ export namespace ApiFinalProduct {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               labels: {
   //                   validators: []
   //               },
   //               measurementUnitType: {

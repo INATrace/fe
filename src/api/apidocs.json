@@ -12072,6 +12072,12 @@
             "format": "int64",
             "type": "integer"
           },
+          "labels": {
+            "items": {
+              "$ref": "#/components/schemas/ApiProductLabelBase"
+            },
+            "type": "array"
+          },
           "measurementUnitType": {
             "$ref": "#/components/schemas/ApiMeasureUnitType",
             "description": "Measurement unit type of final product"
@@ -15025,6 +15031,16 @@
             "format": "int64",
             "type": "integer"
           },
+          "language": {
+            "description": "Label language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
           "productId": {
             "description": "Product id",
             "format": "int64",
@@ -15133,6 +15149,16 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "language": {
+            "description": "Label language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
           },
           "productId": {
             "description": "Product id",
@@ -15399,6 +15425,16 @@
             "format": "int64",
             "type": "integer"
           },
+          "language": {
+            "description": "Label language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
           "productId": {
             "description": "Product id",
             "format": "int64",
@@ -15436,6 +15472,16 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "language": {
+            "description": "Label language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
           },
           "productId": {
             "description": "Product id",
@@ -15479,6 +15525,16 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "language": {
+            "description": "Label language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
           },
           "numberOfBatches": {
             "description": "Number of batches",
