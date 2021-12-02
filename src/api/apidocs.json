@@ -9365,6 +9365,49 @@
         "summary": "Get final product by ID."
       }
     },
+    "/api/product/{productId}/finalProduct/{finalProductId}/labels": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Product ID",
+            "in": "path",
+            "name": "productId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Final product ID",
+            "in": "path",
+            "name": "finalProductId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ApiProductLabelBase_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getFinalProductLabelsUsingGET",
+        "summary": "Get final product labels."
+      }
+    },
     "/api/public/company/{id}": {
       "get": {
         "parameters": [

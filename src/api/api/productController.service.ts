@@ -621,6 +621,52 @@ export namespace GetCompanyCustomersList {
 }
 
 /**
+ * Namespace for getFinalProductLabelsUsingGET.
+ */
+export namespace GetFinalProductLabelsUsingGET {
+    /**
+     * Parameter map for getFinalProductLabelsUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Product ID
+       */
+      productId: number;
+      /**
+       * Final product ID
+       */
+      finalProductId: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getFinalProductLabelsUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Product ID
+       */
+      productId = 'productId',
+      /**
+       * Final product ID
+       */
+      finalProductId = 'finalProductId'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getFinalProductLabelsUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetFinalProductLabelsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      productId: [
+              ['required', Validators.required],
+      ],
+      finalProductId: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
  * Namespace for getFinalProductListUsingGET.
  */
 export namespace GetFinalProductListUsingGET {
@@ -2908,6 +2954,93 @@ export class ProductControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyCustomersList')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get final product labels. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getFinalProductLabelsUsingGETByMap(
+    map: GetFinalProductLabelsUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseListApiProductLabelBase>;
+  public getFinalProductLabelsUsingGETByMap(
+    map: GetFinalProductLabelsUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiProductLabelBase>>;
+  public getFinalProductLabelsUsingGETByMap(
+    map: GetFinalProductLabelsUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiProductLabelBase>>;
+  public getFinalProductLabelsUsingGETByMap(
+    map: GetFinalProductLabelsUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getFinalProductLabelsUsingGET(
+      map.productId,
+      map.finalProductId,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get final product labels.
+     * 
+     * @param productId Product ID
+     * @param finalProductId Final product ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiProductLabelBase>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiProductLabelBase>>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiProductLabelBase>>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling getFinalProductLabelsUsingGET.');
+        }
+        if (finalProductId === null || finalProductId === undefined) {
+            throw new Error('Required parameter finalProductId was null or undefined when calling getFinalProductLabelsUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseListApiProductLabelBase>(`${this.configuration.basePath}/api/product/${encodeURIComponent(String(productId))}/finalProduct/${encodeURIComponent(String(finalProductId))}/labels`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFinalProductLabelsUsingGET')));
         }
         return handle;
     }
