@@ -141,7 +141,8 @@ export class QuoteOrderListComponent implements OnInit {
       keyboard: false
     });
     Object.assign(modalRef.componentInstance, {
-      qrCodeTag: order.qrCodeTag
+      qrCodeTag: order.qrCodeTag,
+      qrCodeFinalProduct: order.qrCodeTagFinalProduct
     });
   }
 

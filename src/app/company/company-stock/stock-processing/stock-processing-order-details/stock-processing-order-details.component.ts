@@ -2088,7 +2088,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       keyboard: false
     });
     Object.assign(modalRef.componentInstance, {
-      qrCodeTag: order.qrCodeTag
+      qrCodeTag: order.qrCodeTag,
+      qrCodeFinalProduct: order.qrCodeTagFinalProduct
     });
   }
 

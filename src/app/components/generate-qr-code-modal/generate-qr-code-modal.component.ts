@@ -1,64 +1,65 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { take } from 'rxjs/operators';
-import { ProductService } from 'src/api-chain/api/product.service';
-import { ChainProduct } from 'src/api-chain/model/chainProduct';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { LanguageCodeHelper } from 'src/app/language-code-helper';
 import { environment } from 'src/environments/environment';
+import { FormControl } from '@angular/forms';
+import { FinalProductLabelsService } from '../../shared-services/final-product-labels.service';
+import { ApiFinalProduct } from '../../../api/model/apiFinalProduct';
+import { Subscription } from 'rxjs';
+import { ApiProductLabelBase } from '../../../api/model/apiProductLabelBase';
 
 @Component({
   selector: 'app-generate-qr-code-modal',
   templateUrl: './generate-qr-code-modal.component.html',
   styleUrls: ['./generate-qr-code-modal.component.scss']
 })
-export class GenerateQRCodeModalComponent implements OnInit {
+export class GenerateQRCodeModalComponent implements OnInit, OnDestroy {
 
   @Input()
   qrCodeTag: string;
 
+  @Input()
+  qrCodeFinalProduct: ApiFinalProduct;
+
   title = $localize`:@@generateQRCode.title.orderItemQRCode:Order item QR code`;
 
-  languageCode;
-  qrCodeLanguage = null;
-
   qrCodeSize = 200;
+  qrCodeString: string = null;
+
+  finalProductNameForm = new FormControl({ value: null, disabled: true });
+  finalProductLabelForm = new FormControl(null);
+  finalProductLabelsCodebook: FinalProductLabelsService;
+
+  finalProdLabelSubs: Subscription;
 
   constructor(
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private productController: ProductControllerService
   ) { }
 
   ngOnInit(): void {
-    this.initProduct().then();
+
+    this.finalProductLabelsCodebook = new FinalProductLabelsService(this.qrCodeFinalProduct.product.id, this.qrCodeFinalProduct.id, this.productController);
+    this.finalProductNameForm.setValue(`${this.qrCodeFinalProduct.name} (${this.qrCodeFinalProduct.product.name})`);
+
+    // When the selected Final product label changes, update the QR code string
+    this.finalProdLabelSubs = this.finalProductLabelForm.valueChanges.subscribe((label: ApiProductLabelBase) => {
+      if (label && this.qrCodeTag) {
+        this.qrCodeString = `${environment.appBaseUrl}/${label.language.toLowerCase()}/${environment.qrCodeBasePath}/${label.uuid}/${this.qrCodeTag}`;
+      } else {
+        this.qrCodeString = null;
+      }
+    });
   }
 
-  async initProduct() {
-
-    this.languageCode = 'en';
-    this.qrCodeLanguage = this.languageCode;
+  ngOnDestroy(): void {
+    if (this.finalProdLabelSubs) {
+      this.finalProdLabelSubs.unsubscribe();
+    }
   }
 
   cancel() {
     this.activeModal.close();
-  }
-
-  onConfirm() {
-    this.activeModal.close();
-  }
-
-  get qrCodeString() {
-
-    if (!this.qrCodeLanguage || !this.qrCodeTag) {
-      return null;
-    }
-
-    if (this.qrCodeLanguage === 'de') { return environment.qrCodeBaseUrlDE + '/' + this.qrCodeTag; }
-    if (this.qrCodeLanguage === 'en') { return environment.qrCodeBaseUrlEN + '/' + this.qrCodeTag; }
-  }
-
-  setQRCodeLanguage(lang: string) {
-    this.qrCodeLanguage = lang;
   }
 
   copyToClipboard() {

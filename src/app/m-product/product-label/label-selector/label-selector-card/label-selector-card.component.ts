@@ -14,9 +14,10 @@ import { take } from 'rxjs/operators';
 export class LabelSelectorCardComponent implements OnInit {
 
   appName: string = environment.appName;
-  qrCodeLink: string = "";
+  qrCodeLink = '';
+
   @Input()
-  label = null
+  label = null;
 
   @Input()
   isSelected = false;
@@ -28,7 +29,7 @@ export class LabelSelectorCardComponent implements OnInit {
   currentLabelForm;
 
   @Input()
-  changed: Boolean;
+  changed: boolean;
 
   @Input()
   editable = false;
@@ -41,6 +42,8 @@ export class LabelSelectorCardComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen;
 
+  showDeleteButton$ = new BehaviorSubject<boolean>(false);
+
   constructor(
     public theme: ThemeService,
     private productController: ProductControllerService
@@ -52,27 +55,24 @@ export class LabelSelectorCardComponent implements OnInit {
 
   async setQRCode() {
     if (this.label) {
-      let res = await this.productController.getProductLabelContentUsingGET(this.label.id).pipe(take(1)).toPromise();
+      const res = await this.productController.getProductLabelContentUsingGET(this.label.id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
-        if (res.data.settings && res.data.settings.language === "DE") this.qrCodeLink = environment.qrCodeBaseUrlDE + this.label.uuid;
-        else this.qrCodeLink = environment.qrCodeBaseUrlEN + this.label.uuid;
+        this.qrCodeLink = `${environment.appBaseUrl}/${res.data.settings.language.toLowerCase()}/${environment.qrCodeBasePath}/${this.label.uuid}`;
       }
-
     }
   }
 
-  showDeleteButton$ = new BehaviorSubject<boolean>(false);
   enter(e) {
-    this.showDeleteButton$.next(true)
+    this.showDeleteButton$.next(true);
   }
 
   leave(e) {
-    this.showDeleteButton$.next(false)
+    this.showDeleteButton$.next(false);
   }
 
   delete(event) {
     event.stopPropagation();
-    this.onDelete.next(this.label)
+    this.onDelete.next(this.label);
   }
 
   toogleEditTitle(event){
@@ -86,8 +86,8 @@ export class LabelSelectorCardComponent implements OnInit {
   }
 
   select(label) {
-    if (!this.changed) this.onSelect.next({ label: label, preventEmit: false })
-    else this.onSelect.next({ label: null, preventEmit: true})
+    if (!this.changed) { this.onSelect.next({ label, preventEmit: false }); }
+    else { this.onSelect.next({ label: null, preventEmit: true}); }
   }
 
 }
