@@ -31,6 +31,7 @@ export class GenerateQRCodeModalComponent implements OnInit, OnDestroy {
   finalProductLabelsCodebook: FinalProductLabelsService;
 
   finalProdLabelSubs: Subscription;
+  labelsCodebookSubs: Subscription;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -41,6 +42,13 @@ export class GenerateQRCodeModalComponent implements OnInit, OnDestroy {
 
     this.finalProductLabelsCodebook = new FinalProductLabelsService(this.qrCodeFinalProduct.product.id, this.qrCodeFinalProduct.id, this.productController);
     this.finalProductNameForm.setValue(`${this.qrCodeFinalProduct.name} (${this.qrCodeFinalProduct.product.name})`);
+
+    // If only one label is present, set it as selected value
+    this.labelsCodebookSubs = this.finalProductLabelsCodebook.getAllCandidates().subscribe(labels => {
+      if (labels && labels.length === 1) {
+        this.finalProductLabelForm.setValue(labels[0]);
+      }
+    });
 
     // When the selected Final product label changes, update the QR code string
     this.finalProdLabelSubs = this.finalProductLabelForm.valueChanges.subscribe((label: ApiProductLabelBase) => {
@@ -55,6 +63,9 @@ export class GenerateQRCodeModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.finalProdLabelSubs) {
       this.finalProdLabelSubs.unsubscribe();
+    }
+    if (this.labelsCodebookSubs) {
+      this.labelsCodebookSubs.unsubscribe();
     }
   }
 
