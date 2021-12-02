@@ -8,6 +8,7 @@ import { ApiPaginatedResponseApiFinalProduct } from '../../../../api/model/apiPa
 import { ApiPaginatedListApiFinalProduct } from '../../../../api/model/apiPaginatedListApiFinalProduct';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { FinalProductDetailModalComponent } from '../final-product-detail-modal/final-product-detail-modal.component';
+import { ApiFinalProduct } from '../../../../api/model/apiFinalProduct';
 
 @Component({
   selector: 'app-final-product-list',
@@ -139,13 +140,13 @@ export class FinalProductListComponent implements OnInit, OnChanges {
     ];
   }
 
-  editFinalProduct(finalProduct) {
+  editFinalProduct(finalProduct: ApiFinalProduct) {
     this.modalService.open(FinalProductDetailModalComponent, {
       centered: true
     }, {
       productId: this.productId,
       isUpdate: true,
-      finalProduct,
+      finalProductId: finalProduct.id,
       saveCallback: () => {
         this.reloadPage();
       }

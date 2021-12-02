@@ -27,7 +27,7 @@ export class FinalProductDetailModalComponent implements OnInit {
   isUpdate: boolean;
 
   @Input()
-  finalProduct: ApiFinalProduct;
+  finalProductId: number;
 
   @Output()
   saveCallback: () => string;
@@ -58,10 +58,23 @@ export class FinalProductDetailModalComponent implements OnInit {
         ? $localize`:@@productLabelFinalProduct.modal.title.update:Edit final product`
         : $localize`:@@productLabelFinalProduct.modal.title.new:Add new final products`;
 
+    let finalProduct: ApiFinalProduct;
+    if (this.isUpdate) {
+      const resp = await this.productControllerService.getFinalProductUsingGET(this.productId, this.finalProductId)
+        .pipe(take(1))
+        .toPromise();
+      if (resp && resp.status === 'OK' && resp.data) {
+        finalProduct = resp.data;
+        this.productLabels = [...finalProduct.labels];
+      } else {
+        return;
+      }
+    }
+
     this.form = generateFormFromMetadata(
         ApiFinalProduct.formMetadata(),
         this.isUpdate
-            ? this.finalProduct
+            ? finalProduct
             : defaultEmptyObject(ApiFinalProduct.formMetadata()) as ApiFinalProduct,
         ApiSemiProductValidationScheme
     );
@@ -83,14 +96,15 @@ export class FinalProductDetailModalComponent implements OnInit {
 
   async save() {
 
-    // TODO: add handling for final product labels
-
     this.submitted = true;
     if (this.form.invalid) {
       return;
     }
 
-    const res = await this.productControllerService.createOrUpdateFinalProductUsingPUT(this.productId, this.form.value)
+    const finalProduct: ApiFinalProduct = this.form.value;
+    finalProduct.labels = [...this.productLabels];
+
+    const res = await this.productControllerService.createOrUpdateFinalProductUsingPUT(this.productId, finalProduct)
         .pipe(take(1))
         .toPromise();
 

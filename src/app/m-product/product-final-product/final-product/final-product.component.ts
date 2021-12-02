@@ -46,7 +46,7 @@ export class FinalProductComponent implements OnInit {
     }, {
       productId: this.productId,
       isUpdate: false,
-      finalProduct: null,
+      finalProductId: null,
       saveCallback: () => {
         // Trigger 'ngOnChanges' in list component to reload the list
         this.listReload = !this.listReload;
