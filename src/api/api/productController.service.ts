@@ -636,6 +636,10 @@ export namespace GetFinalProductLabelsUsingGET {
        * Final product ID
        */
       finalProductId: number;
+      /**
+       * Also return the unpublished labels
+       */
+      returnUnpublished?: boolean;
     }
 
     /**
@@ -649,7 +653,11 @@ export namespace GetFinalProductLabelsUsingGET {
       /**
        * Final product ID
        */
-      finalProductId = 'finalProductId'
+      finalProductId = 'finalProductId',
+      /**
+       * Also return the unpublished labels
+       */
+      returnUnpublished = 'returnUnpublished'
     }
 
     /**
@@ -662,6 +670,8 @@ export namespace GetFinalProductLabelsUsingGET {
       ],
       finalProductId: [
               ['required', Validators.required],
+      ],
+      returnUnpublished: [
       ],
     };
 }
@@ -2985,6 +2995,7 @@ export class ProductControllerService {
     return this.getFinalProductLabelsUsingGET(
       map.productId,
       map.finalProductId,
+      map.returnUnpublished,
       observe,
       reportProgress
     );
@@ -2996,18 +3007,24 @@ export class ProductControllerService {
      * 
      * @param productId Product ID
      * @param finalProductId Final product ID
+     * @param returnUnpublished Also return the unpublished labels
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiProductLabelBase>;
-    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiProductLabelBase>>;
-    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiProductLabelBase>>;
-    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, returnUnpublished?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiProductLabelBase>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, returnUnpublished?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiProductLabelBase>>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, returnUnpublished?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiProductLabelBase>>;
+    public getFinalProductLabelsUsingGET(productId: number, finalProductId: number, returnUnpublished?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (productId === null || productId === undefined) {
             throw new Error('Required parameter productId was null or undefined when calling getFinalProductLabelsUsingGET.');
         }
         if (finalProductId === null || finalProductId === undefined) {
             throw new Error('Required parameter finalProductId was null or undefined when calling getFinalProductLabelsUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (returnUnpublished !== undefined && returnUnpublished !== null) {
+            queryParameters = queryParameters.set('returnUnpublished', <any>returnUnpublished);
         }
 
         let headers = this.defaultHeaders;
@@ -3033,6 +3050,7 @@ export class ProductControllerService {
 
         const handle = this.httpClient.get<ApiResponseListApiProductLabelBase>(`${this.configuration.basePath}/api/product/${encodeURIComponent(String(productId))}/finalProduct/${encodeURIComponent(String(finalProductId))}/labels`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

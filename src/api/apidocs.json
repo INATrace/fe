@@ -9387,6 +9387,15 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "Also return the unpublished labels",
+            "in": "query",
+            "name": "returnUnpublished",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
