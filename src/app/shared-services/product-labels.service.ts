@@ -15,12 +15,16 @@ export default class ProductLabelsService extends GeneralSifrantService<ApiProdu
     super();
   }
 
+  get unpublishedTranslations() {
+    return $localize`:@@productLabelFinalProduct.modal.singleChoice.productLabels.status.unpublished:Unpublished`;
+  }
+
   public identifier(el: ApiProductLabelBase) {
     return el.id;
   }
 
   public textRepresentation(el: ApiProductLabelBase) {
-    return `${el.title}`;
+    return `${el.title} ${el.status === 'UNPUBLISHED' ? '(' + this.unpublishedTranslations + ')' : ''}`;
   }
 
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProductLabelBase>> {

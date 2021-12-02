@@ -75,7 +75,10 @@
             </single-choice>
             <div *ngFor="let pl of this.productLabels; index as idx">
                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                    <div>{{ pl.title }}</div>
+                    <div>
+                        <span>{{ pl.title }}</span>
+                        <span *ngIf="pl.status === 'UNPUBLISHED'"> (<span i18n="@@productLabelFinalProduct.modal.singleChoice.productLabels.status.unpublished">Unpublished</span>)</span>
+                    </div>
                     <div (click)="removeSelectedProductLabel(idx)" style="cursor: pointer;">
                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                     </div>
