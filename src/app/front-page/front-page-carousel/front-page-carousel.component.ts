@@ -13,12 +13,12 @@ export class FrontPageCarouselComponent implements OnInit {
   slides;
 
   @Input()
-  productionRecords: boolean = false;
+  productionRecords = false;
+
+  currentSlide = 0;
 
   ngOnInit(): void {
   }
-
-  currentSlide = 0;
 
   onPreviousClick() {
     const previous = this.currentSlide - 1;

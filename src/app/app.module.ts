@@ -75,8 +75,6 @@ import * as Hammer from 'hammerjs';
 import { ChartsModule } from 'ng2-charts';
 import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
 import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
-import { FrontPageCarouselComponent } from './front-page/front-page-carousel/front-page-carousel.component';
-import { FrontPageSlidingComponent } from './front-page/front-page-sliding/front-page-sliding.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
 import { CompanyUserRoleComponent } from './company/company-user-role/company-user-role.component';
@@ -159,8 +157,6 @@ export function getConfiguration(): Configuration {
     FrontPageFooterComponent,
     FrontPagePrivacyComponent,
     FrontPageTermsComponent,
-    FrontPageCarouselComponent,
-    FrontPageSlidingComponent,
     CompanyDetailTranslateComponent,
     CompanyDetailTabManagerComponent,
     CompanyUserRoleComponent,

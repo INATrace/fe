@@ -7,7 +7,6 @@ import { FrontPageProducersComponent } from './front-page-producers/front-page-p
 import { FrontPageQualityComponent } from './front-page-quality/front-page-quality.component';
 import { FrontPageFeedbackComponent } from './front-page-feedback/front-page-feedback.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -62,7 +61,6 @@ const routes: Routes = [
       drobtinice: null
     }
   }
-
 ];
 
 @NgModule({

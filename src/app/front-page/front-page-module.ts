@@ -22,6 +22,8 @@ import { FrontPageFeedbackComponent } from './front-page-feedback/front-page-fee
 import { FrontPageRoutingModule } from './front-page-routing.module';
 import { FrontPageFooterComponent } from './front-page-footer/front-page-footer.component';
 import { FrontPageHeaderComponent } from './front-page-header/front-page-header.component';
+import { FrontPageSlidingComponent } from './front-page-sliding/front-page-sliding.component';
+import { FrontPageCarouselComponent } from './front-page-carousel/front-page-carousel.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { FrontPageHeaderComponent } from './front-page-header/front-page-header.
     FrontPageQualityComponent,
     FrontPageFeedbackComponent,
     FrontPageHeaderComponent,
-    FrontPageFooterComponent
+    FrontPageFooterComponent,
+    FrontPageSlidingComponent,
+    FrontPageCarouselComponent
   ],
   imports: [
     CommonModule,

@@ -10,7 +10,7 @@
     <main class="af-b2c-main">
 
       <h1>{{title}}</h1>
-      <div class="af-b2c-header-arrows--rightonly" *ngIf="pageYoffset> 150"></div>
+      <div class="af-b2c-header-arrows--rightonly" *ngIf="pageYOffset> 150"></div>
 
       <google-map
         *ngIf="isGoogleMapsLoaded"
@@ -25,12 +25,9 @@
         <map-polyline [path]="locations" [options]="polyOptions"></map-polyline>
       </google-map>
 
-      <!-- <button (click)="toggleShort()" class="mt-4">Toggle timeline</button> -->
-
       <ul class="af-journey-wrapper">
 
         <li class="af-journey">
-
           <div class="af-journey-dot"
             [class.spin]="processingShorter.length === 0">
             <a role="button" target="_blank">
@@ -42,26 +39,11 @@
             <span i18n="@@frontPage.journey.yourScan">Your scan</span>
             <span>&nbsp;</span>
           </div>
-
         </li>
-
 
         <ng-container *ngIf="this.processing.length>0 && !short">
           <ng-container *ngFor="let item of this.processing">
-            <!-- <li  class="af-journey">
 
-              <div class="af-journey-dot">
-                <a role="button" target="_blank">
-                  <span class="af-journey-dot-shape af-journey-dot-shape--warehouse"></span>
-                </a>
-              </div>
-              <div class="af-journey-info">
-                <span>10.9.2020</span>
-                <span>Roasting</span>
-                <span>Hamburg, Germany</span>
-              </div>
-
-            </li> -->
             <li *ngIf="item.type === 'TRANSFER'" class="af-journey">
 
               <div class="af-journey-dot">
@@ -76,6 +58,7 @@
               </div>
 
             </li>
+
             <li *ngIf="item.type != 'TRANSFER' && item.type != null" class="af-journey">
 
               <div class="af-journey-dot">
@@ -90,6 +73,7 @@
               </div>
 
             </li>
+
             <li *ngIf="!item.type" class="af-journey">
 
               <div class="af-journey-dot">
@@ -104,10 +88,8 @@
               </div>
 
             </li>
+
           </ng-container>
-
-
-
         </ng-container>
 
         <ng-container *ngIf="this.processingShorter.length>0 && short">
@@ -129,7 +111,6 @@
             </li>
           </ng-container>
 
-
           <li class="af-journey">
 
             <div class="af-journey-dot">
@@ -146,12 +127,9 @@
           </li>
         </ng-container>
 
-
       </ul>
 
-
-      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYoffset> 0">&nbsp;</a>
-
+      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYOffset> 0">&nbsp;</a>
 
     </main>
 

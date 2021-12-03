@@ -22,24 +22,24 @@ export class FrontPageSlidingComponent implements OnInit {
   ngOnInit(): void { }
 
   goTo(tab) {
-    if (tab) this.router.navigate(['/', 'p-cd', this.uuid, this.soid, tab]);
-    else this.router.navigate(['/', 'p-cd', this.uuid, this.soid,]);
+    if (tab) { this.router.navigate(['/', 'p-cd', this.uuid, this.soid, tab]).then(); }
+    else { this.router.navigate(['/', 'p-cd', this.uuid, this.soid]).then(); }
   }
 
   onSwipeLeft() {
-    if (this.tab == 'journey') this.goTo('fair-prices');
-    if (this.tab == 'fair-prices') this.goTo('producers');
-    if (this.tab == 'producers') this.goTo('quality');
-    if (this.tab == 'quality') this.goTo('feedback');
-    if (this.tab == 'feedback') { }
+    if (this.tab === 'journey') { this.goTo('fair-prices'); }
+    if (this.tab === 'fair-prices') { this.goTo('producers'); }
+    if (this.tab === 'producers') { this.goTo('quality'); }
+    if (this.tab === 'quality') { this.goTo('feedback'); }
+    if (this.tab === 'feedback') { }
   }
 
   onSwipeRight() {
-    if (this.tab == 'journey') this.goTo(null);
-    if (this.tab == 'fair-prices') this.goTo('journey');
-    if (this.tab == 'producers') this.goTo('fair-prices');
-    if (this.tab == 'quality') this.goTo('producers');
-    if (this.tab == 'feedback') this.goTo('quality');
+    if (this.tab === 'journey') { this.goTo(null); }
+    if (this.tab === 'fair-prices') { this.goTo('journey'); }
+    if (this.tab === 'producers') { this.goTo('fair-prices'); }
+    if (this.tab === 'quality') { this.goTo('producers'); }
+    if (this.tab === 'feedback') { this.goTo('quality'); }
   }
 
 }
