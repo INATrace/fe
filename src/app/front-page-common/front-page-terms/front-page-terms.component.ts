@@ -18,21 +18,22 @@ export class FrontPageTermsComponent implements OnInit {
   uuid = this.route.snapshot.params.uuid;
   title = $localize`:@@frontPage.terms.title:Terms of use`;
 
+  termsText: string = null;
+
   ngOnInit(): void {
-    this.initLabel();
+    this.initLabel().then();
   }
 
   async initLabel() {
-    let res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
-    if (res && res.status === "OK") {
+    const res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.prepareData(res.data.fields);
     }
   }
 
-  termsText: string = null;
   prepareData(data) {
-    for (let item of data) {
-      if (item.name === "settings.termsOfUseText") {
+    for (const item of data) {
+      if (item.name === 'settings.termsOfUseText') {
         this.termsText = item.value;
       }
     }

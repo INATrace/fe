@@ -26,7 +26,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   coopName = '';
   processingShorter = [];
 
-  soid = this.route.snapshot.params.soid;
+  qrTag = this.route.snapshot.params.qrTag;
 
   locations: google.maps.LatLngLiteral[] = [
     { lat: -3.1428191, lng: 31.2247691 },
@@ -164,9 +164,9 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   }
 
   async data() {
-    if (this.soid !== 'EMPTY') {
+    if (this.qrTag !== 'EMPTY') {
 
-      const res = await this.chainPublicController.getAggregatesForStockOrder(this.soid).pipe(take(1)).toPromise();
+      const res = await this.chainPublicController.getAggregatesForStockOrder(this.qrTag).pipe(take(1)).toPromise();
 
       if (res && res.status === 'OK' && res.data) {
         this.coopName = res.data.coopName;
@@ -180,7 +180,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
 
   googleMapsIsLoaded(map) {
     this.isGoogleMapsLoaded = true;
-    if (this.soid === 'EMPTY') { return; }
+    if (this.qrTag === 'EMPTY') { return; }
     for (const [i, loc] of this.locations.entries()) {
       const tmp = {
         position: {

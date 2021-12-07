@@ -436,11 +436,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'p-cd/:uuid/:soid',
+    path: 'p-cd/:uuid/:qrTag',
     loadChildren: () => import('./front-page/front-page-module').then(m => m.FrontPageModule)
   },
   {
-    path: 's/:uuid/:soid/privacy-policy',
+    path: 's/:uuid/:qrTag/privacy-policy',
     component: FrontPagePrivacyComponent,
     pathMatch: 'full',
     data: {
@@ -448,7 +448,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 's/:uuid/:soid/terms-of-use',
+    path: 's/:uuid/:qrTag/terms-of-use',
     component: FrontPageTermsComponent,
     pathMatch: 'full',
     data: {
@@ -489,7 +489,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'q-cd/:uuid/:soid',
+    path: 'q-cd/:uuid/:qrTag',
     component: QrCodeRedirectComponent,
     pathMatch: 'full'
   },

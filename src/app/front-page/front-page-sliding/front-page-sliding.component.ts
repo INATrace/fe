@@ -12,7 +12,7 @@ export class FrontPageSlidingComponent implements OnInit {
   tab: string;
 
   uuid = this.route.snapshot.params.uuid;
-  soid = this.route.snapshot.params.soid;
+  qrTag = this.route.snapshot.params.qrTag;
 
   constructor(
     private router: Router,
@@ -22,8 +22,8 @@ export class FrontPageSlidingComponent implements OnInit {
   ngOnInit(): void { }
 
   goTo(tab) {
-    if (tab) { this.router.navigate(['/', 'p-cd', this.uuid, this.soid, tab]).then(); }
-    else { this.router.navigate(['/', 'p-cd', this.uuid, this.soid]).then(); }
+    if (tab) { this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, tab]).then(); }
+    else { this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag]).then(); }
   }
 
   onSwipeLeft() {

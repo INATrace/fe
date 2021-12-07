@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { ApiLogRequest } from 'src/api/model/apiLogRequest';
 
-
 @Component({
   selector: 'app-qr-code-redirect',
   templateUrl: './qr-code-redirect.component.html',
@@ -20,17 +19,19 @@ export class QrCodeRedirectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     const labelId = this.route.snapshot.paramMap.get('uuid');
     const urlA = this.router.url.split('/');
     if (urlA.length >= 2) {
       if (urlA[1] === 'q-cd') {
-        const soId = this.route.snapshot.paramMap.get('soid');
-        this.router.navigate(['p-cd', labelId, soId], { replaceUrl: true }).then();
+        const qrTag = this.route.snapshot.paramMap.get('qrTag');
+        this.router.navigate(['p-cd', labelId, qrTag], { replaceUrl: true }).then();
       }
       if (urlA[1] === 'q') {
         this.router.navigate(['p', labelId], { replaceUrl: true }).then();
       }
     }
+
     this.publicController
       .logPublicRequestUsingPOST({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.VISITQR, logKey: labelId })
       .pipe(take(1))

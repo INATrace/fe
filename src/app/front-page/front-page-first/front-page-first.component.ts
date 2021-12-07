@@ -13,7 +13,7 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 export class FrontPageFirstComponent implements OnInit, OnDestroy {
 
   uuid = this.route.snapshot.params.uuid;
-  soid = this.route.snapshot.params.soid;
+  qrTag = this.route.snapshot.params.qrTag;
 
   productName: string = null;
   unpublishedText = '';
@@ -47,7 +47,7 @@ export class FrontPageFirstComponent implements OnInit, OnDestroy {
   }
 
   goToJourney() {
-    this.router.navigate(['/', 'p-cd', this.uuid, this.soid, 'journey']).then();
+    this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, 'journey']).then();
   }
 
   onSwipeLeft() {

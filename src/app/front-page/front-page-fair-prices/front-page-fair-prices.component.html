@@ -9,10 +9,10 @@
 
     <main class="af-b2c-main">
 
-      <h1>{{title}}</h1>
-      <div class="af-b2c-header-arrows--both" *ngIf="pageYoffset > 150"></div>
+      <h1>{{ title }}</h1>
+      <div class="af-b2c-header-arrows--both" *ngIf="pageYOffset > 150"></div>
 
-      <p i18n="@@front-page.fair-prices.paragraph1">Your coffee package is part of Order number {{this.numberOrder}}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
+      <p i18n="@@front-page.fair-prices.paragraph1">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
 
       <div class="af-graph-wrapper" style>
         <div class="af-graph">
@@ -20,29 +20,29 @@
           <div class="af-graph-row af-graph-row--top" style="height: 220px;">
             <div class="af-graph-col">
               <span class="af-graph-bar af-graph-bar--pink" [style.height]="this.worldMarketHeight + 'px'">
-                <span class="af-graph-bar-number">${{this.worldMarketPrice}}</span>
+                <span class="af-graph-bar-number">${{ this.worldMarketPrice }}</span>
               </span>
             </div>
             <div class="af-graph-col">
               <span class="af-graph-bar af-graph-bar--pink" [style.height]="this.fairTradeHeight + 'px'">
-                <span class="af-graph-bar-number">${{this.fairTradePrice}}</span>
+                <span class="af-graph-bar-number">${{ this.fairTradePrice }}</span>
               </span>
             </div>
             <div class="af-graph-col">
               <span class="af-graph-bar af-graph-bar--purple" [style.height]="this.angeliqueHeight + 'px'">
-                <span class="af-graph-bar-number">${{this.angeliquePrice}}</span>
+                <span class="af-graph-bar-number">${{ this.angeliquePrice }}</span>
               </span>
             </div>
           </div>
           <div class="af-graph-row af-graph-row--bottom">
             <div class="af-graph-col">
-              <span class="af-graph-label">{{label1}}</span>
+              <span class="af-graph-label">{{ label1 }}</span>
             </div>
             <div class="af-graph-col">
-              <span class="af-graph-label">{{label2}}</span>
+              <span class="af-graph-label">{{ label2 }}</span>
             </div>
             <div class="af-graph-col">
-              <span class="af-graph-label">{{label3}}</span>
+              <span class="af-graph-label">{{ label3 }}</span>
             </div>
           </div>
 
@@ -51,25 +51,24 @@
 
       <p [innerHTML]="desc"></p>
 
-      <h1>{{title2}}</h1>
-
+      <h1>{{ title2 }}</h1>
 
       <div class="af-stgraph-wrapper" style>
         <div class="af-stgraph">
 
           <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="this.increaseOfCoffee + 'px'">
             <div class="af-stgraph-col">
-              <span class="af-stgraph-description">{{label2Farmers}}</span>
+              <span class="af-stgraph-description">{{ label2Farmers }}</span>
             </div>
             <div class="af-stgraph-col">
               <span class="af-stgraph-bar af-stgraph-bar--purple">
-                <span class="af-stgraph-bar-number">+{{this.increaseOfCoffee}}%</span>
+                <span class="af-stgraph-bar-number">+{{ this.increaseOfCoffee }}%</span>
               </span>
             </div>
           </div>
           <div class="af-stgraph-row af-stgraph-row--middle" style="height: 100px;">
             <div class="af-stgraph-col">
-              <span class="af-stgraph-description">{{label1Farmers}}</span>
+              <span class="af-stgraph-description">{{ label1Farmers }}</span>
             </div>
             <div class="af-stgraph-col">
               <span class="af-stgraph-bar af-stgraph-bar--gray"></span>
@@ -77,7 +76,7 @@
           </div>
           <div class="af-stgraph-row af-graph-row--bottom">
             <div class="af-stgraph-col">
-              <span class="af-stgraph-label">{{title2}}</span>
+              <span class="af-stgraph-label">{{ title2 }}</span>
             </div>
           </div>
 
@@ -86,7 +85,7 @@
 
       <p [innerHTML]="descPricing"></p>
 
-      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYoffset > 0">&nbsp;</a>
+      <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYOffset > 0">&nbsp;</a>
 
     </main>
 

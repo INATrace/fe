@@ -11,10 +11,16 @@ import { take } from 'rxjs/operators';
 export class FrontPageFooterComponent implements OnInit {
 
   @Input()
-  showSplitter: boolean = true;
+  showSplitter = true;
 
   uuid = this.route.snapshot.params.uuid;
-  soid = this.route.snapshot.params.soid;
+  qrTag = this.route.snapshot.params.qrTag;
+
+  facebook = null;
+  twitter = null;
+  instagram = null;
+  youtube = null;
+  other = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,52 +29,46 @@ export class FrontPageFooterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initLabel();
+    this.initLabel().then();
   }
 
   async initLabel() {
-    let res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
-    if (res && res.status === "OK") {
+    const res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.prepareSocial(res.data.fields);
     }
   }
 
-  facebook = null;
-  twitter = null;
-  instagram = null;
-  youtube = null;
-  other = null;
   prepareSocial(data) {
-    for (let item of data) {
-      if (item.name === "company.mediaLinks.facebook" && item.value) {
+    for (const item of data) {
+      if (item.name === 'company.mediaLinks.facebook' && item.value) {
         this.facebook = this.checkExternalLink(item.value);
       }
-      if (item.name === "company.mediaLinks.twitter" && item.value) {
+      if (item.name === 'company.mediaLinks.twitter' && item.value) {
         this.twitter = this.checkExternalLink(item.value);
       }
-      if (item.name === "company.mediaLinks.instagram" && item.value) {
+      if (item.name === 'company.mediaLinks.instagram' && item.value) {
         this.instagram = this.checkExternalLink(item.value);
       }
-      if (item.name === "company.mediaLinks.youtube" && item.value) {
+      if (item.name === 'company.mediaLinks.youtube' && item.value) {
         this.youtube = this.checkExternalLink(item.value);
       }
-      if (item.name === "company.mediaLinks.other" && item.value) {
+      if (item.name === 'company.mediaLinks.other' && item.value) {
         this.other = this.checkExternalLink(item.value);
       }
     }
   }
 
   checkExternalLink(link: string): string {
-    if (!link) return '#';
+    if (!link) { return '#'; }
     if (!link.startsWith('https://') && !link.startsWith('http://')) {
       return 'http://' + link;
     }
     return link;
   }
 
-
   goTo(page) {
-    this.router.navigate(['/', 's', this.uuid, this.soid, page]);
+    this.router.navigate(['/', 's', this.uuid, this.qrTag, page]).then();
   }
 
 }
