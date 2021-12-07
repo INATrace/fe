@@ -4,10 +4,10 @@ import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { PublicService } from 'src/api-chain/api/public.service';
 import { B2CHistoryItem } from 'src/api-chain/model/b2CHistoryItem';
 import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { PublicControllerService } from '../../../api/api/publicController.service';
 
 @Component({
   selector: 'app-front-page-journey',
@@ -102,7 +102,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public globalEventManager: GlobalEventManagerService,
-    private chainPublicController: PublicService,
+    private publicControllerService: PublicControllerService,
     private scroll: ViewportScroller
   ) { }
 
@@ -164,17 +164,19 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   }
 
   async data() {
+
     if (this.qrTag !== 'EMPTY') {
 
-      const res = await this.chainPublicController.getAggregatesForStockOrder(this.qrTag).pipe(take(1)).toPromise();
+      // Get the aggregated history for the QR code tag
+      const resp = await this.publicControllerService.getStockOrderPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
 
-      if (res && res.status === 'OK' && res.data) {
-        this.coopName = res.data.coopName;
-        this.processing = res.data.items;
-        this.processingShorter = res.data.shortItems.map(item => this.addIconStyleForIconType(item));
-        console.log(this.processing);
-        console.log(this.processingShorter);
-      }
+      // TODO: process response
+      // const res = await this.chainPublicController.getAggregatesForStockOrder(this.qrTag).pipe(take(1)).toPromise();
+      // if (res && res.status === 'OK' && res.data) {
+      //   this.coopName = res.data.coopName;
+      //   this.processing = res.data.items;
+      //   this.processingShorter = res.data.shortItems.map(item => this.addIconStyleForIconType(item));
+      // }
     }
   }
 
