@@ -38,6 +38,7 @@ import { ApiResponseApiGlobalSettingsValue } from '../model/apiResponseApiGlobal
 import { ApiResponseApiKnowledgeBlog } from '../model/apiResponseApiKnowledgeBlog';
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
 import { ApiResponseApiProductLabelValuesExtended } from '../model/apiResponseApiProductLabelValuesExtended';
+import { ApiResponseApiStockOrderPublic } from '../model/apiResponseApiStockOrderPublic';
 import { ApiResponseBoolean } from '../model/apiResponseBoolean';
 import { ApiResponseListApiLocation } from '../model/apiResponseListApiLocation';
 
@@ -524,6 +525,41 @@ export namespace GetPublicResizedImageUsingGET {
               ['required', Validators.required],
       ],
       size: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getStockOrderPublicDataUsingGET.
+ */
+export namespace GetStockOrderPublicDataUsingGET {
+    /**
+     * Parameter map for getStockOrderPublicDataUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * QR code tag
+       */
+      qrTag: string;
+    }
+
+    /**
+     * Enumeration of all parameters for getStockOrderPublicDataUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * QR code tag
+       */
+      qrTag = 'qrTag'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderPublicDataUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetStockOrderPublicDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      qrTag: [
               ['required', Validators.required],
       ],
     };
@@ -1658,6 +1694,88 @@ export class PublicControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicResizedImageUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get public data for the Stock order with the given QR code tag by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStockOrderPublicDataUsingGETByMap(
+    map: GetStockOrderPublicDataUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiStockOrderPublic>;
+  public getStockOrderPublicDataUsingGETByMap(
+    map: GetStockOrderPublicDataUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrderPublic>>;
+  public getStockOrderPublicDataUsingGETByMap(
+    map: GetStockOrderPublicDataUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrderPublic>>;
+  public getStockOrderPublicDataUsingGETByMap(
+    map: GetStockOrderPublicDataUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getStockOrderPublicDataUsingGET(
+      map.qrTag,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get public data for the Stock order with the given QR code tag
+     * 
+     * @param qrTag QR code tag
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderPublic>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderPublic>>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderPublic>>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (qrTag === null || qrTag === undefined) {
+            throw new Error('Required parameter qrTag was null or undefined when calling getStockOrderPublicDataUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiStockOrderPublic>(`${this.configuration.basePath}/api/public/stock-order/${encodeURIComponent(String(qrTag))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderPublicDataUsingGET')));
         }
         return handle;
     }
