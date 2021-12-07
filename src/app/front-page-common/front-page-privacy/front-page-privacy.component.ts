@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PublicControllerService } from 'src/api/api/publicController.service';
-import { ignoreElements, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Component({

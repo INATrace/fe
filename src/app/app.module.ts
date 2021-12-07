@@ -63,18 +63,8 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { WelcomeScreenUnconfirmedComponent } from './welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
-import { FrontPageFirstComponent } from './front-page/front-page-first/front-page-first.component';
-import { FrontPageJourneyComponent } from './front-page/front-page-journey/front-page-journey.component';
-import { FrontPageFairPricesComponent } from './front-page/front-page-fair-prices/front-page-fair-prices.component';
-import { FrontPageProducersComponent } from './front-page/front-page-producers/front-page-producers.component';
-import { FrontPageQualityComponent } from './front-page/front-page-quality/front-page-quality.component';
-import { FrontPageFeedbackComponent } from './front-page/front-page-feedback/front-page-feedback.component';
-import { FrontPageHeaderComponent } from './front-page/front-page-header/front-page-header.component';
-import { FrontPageFooterComponent } from './front-page/front-page-footer/front-page-footer.component';
 import * as Hammer from 'hammerjs';
 import { ChartsModule } from 'ng2-charts';
-import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
-import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
 import { CompanyUserRoleComponent } from './company/company-user-role/company-user-role.component';
@@ -90,6 +80,7 @@ import { CompanyProcessingActionsComponent } from './company/company-detail/comp
 import { CompanyDetailProcessingActionsListComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
+import { FrontPageCommonModule } from './front-page-common/front-page-common.module';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -147,16 +138,6 @@ export function getConfiguration(): Configuration {
     SelectedUserCompanyModalComponent,
     SettingsAdditionalComponent,
     SettingsTypesComponent,
-    FrontPageFirstComponent,
-    FrontPageJourneyComponent,
-    FrontPageFairPricesComponent,
-    FrontPageProducersComponent,
-    FrontPageQualityComponent,
-    FrontPageFeedbackComponent,
-    FrontPageHeaderComponent,
-    FrontPageFooterComponent,
-    FrontPagePrivacyComponent,
-    FrontPageTermsComponent,
     CompanyDetailTranslateComponent,
     CompanyDetailTabManagerComponent,
     CompanyUserRoleComponent,
@@ -192,6 +173,7 @@ export function getConfiguration(): Configuration {
     //////////
     CoreModule,
     ComponentsModule,
+    FrontPageCommonModule,
     LayoutModule,
     FontAwesomeModule,
     SharedModule,

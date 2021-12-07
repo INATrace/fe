@@ -1,7 +1,5 @@
-import { trigger } from '@angular/animations';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-front-page-header',
@@ -14,7 +12,7 @@ export class FrontPageHeaderComponent implements OnInit {
   tab: string;
 
   @Input()
-  doShowTabs: boolean = true;
+  doShowTabs = true;
 
   uuid = this.route.snapshot.params.uuid;
   soid = this.route.snapshot.params.soid;
@@ -29,8 +27,8 @@ export class FrontPageHeaderComponent implements OnInit {
 
 
   goTo(tab) {
-    if (tab) this.router.navigate(['/', 'p-cd', this.uuid, this.soid, tab]);
-    else this.router.navigate(['/', 'p-cd', this.uuid, this.soid]);
+    if (tab) { this.router.navigate(['/', 'p-cd', this.uuid, this.soid, tab]).then(); }
+    else { this.router.navigate(['/', 'p-cd', this.uuid, this.soid]).then(); }
   }
 
 }

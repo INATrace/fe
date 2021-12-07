@@ -27,8 +27,8 @@ import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { FrontPagePrivacyComponent } from './front-page/front-page-privacy/front-page-privacy.component';
-import { FrontPageTermsComponent } from './front-page/front-page-terms/front-page-terms.component';
+import { FrontPagePrivacyComponent } from './front-page-common/front-page-privacy/front-page-privacy.component';
+import { FrontPageTermsComponent } from './front-page-common/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
@@ -437,7 +437,7 @@ const routes: Routes = [
   },
   {
     path: 'p-cd/:uuid/:soid',
-    loadChildren: () => import('./front-page/front-page-routing.module').then(m => m.FrontPageRoutingModule)
+    loadChildren: () => import('./front-page/front-page-module').then(m => m.FrontPageModule)
   },
   {
     path: 's/:uuid/:soid/privacy-policy',
