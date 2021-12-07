@@ -542,6 +542,10 @@ export namespace GetStockOrderPublicDataUsingGET {
        * QR code tag
        */
       qrTag: string;
+      /**
+       * Return aggregated history
+       */
+      withHistory?: boolean;
     }
 
     /**
@@ -551,7 +555,11 @@ export namespace GetStockOrderPublicDataUsingGET {
       /**
        * QR code tag
        */
-      qrTag = 'qrTag'
+      qrTag = 'qrTag',
+      /**
+       * Return aggregated history
+       */
+      withHistory = 'withHistory'
     }
 
     /**
@@ -561,6 +569,8 @@ export namespace GetStockOrderPublicDataUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderPublicDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       qrTag: [
               ['required', Validators.required],
+      ],
+      withHistory: [
       ],
     };
 }
@@ -1724,6 +1734,7 @@ export class PublicControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderPublicDataUsingGET(
       map.qrTag,
+      map.withHistory,
       observe,
       reportProgress
     );
@@ -1734,15 +1745,21 @@ export class PublicControllerService {
      * Get public data for the Stock order with the given QR code tag
      * 
      * @param qrTag QR code tag
+     * @param withHistory Return aggregated history
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderPublic>;
-    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderPublic>>;
-    public getStockOrderPublicDataUsingGET(qrTag: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderPublic>>;
-    public getStockOrderPublicDataUsingGET(qrTag: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderPublicDataUsingGET(qrTag: string, withHistory?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderPublic>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, withHistory?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderPublic>>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, withHistory?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderPublic>>;
+    public getStockOrderPublicDataUsingGET(qrTag: string, withHistory?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (qrTag === null || qrTag === undefined) {
             throw new Error('Required parameter qrTag was null or undefined when calling getStockOrderPublicDataUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withHistory !== undefined && withHistory !== null) {
+            queryParameters = queryParameters.set('withHistory', <any>withHistory);
         }
 
         let headers = this.defaultHeaders;
@@ -1768,6 +1785,7 @@ export class PublicControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiStockOrderPublic>(`${this.configuration.basePath}/api/public/stock-order/${encodeURIComponent(String(qrTag))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
