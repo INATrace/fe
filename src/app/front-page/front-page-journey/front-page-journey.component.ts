@@ -4,10 +4,10 @@ import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { B2CHistoryItem } from 'src/api-chain/model/b2CHistoryItem';
-import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { PublicControllerService } from '../../../api/api/publicController.service';
+import { HistoryTimelineItem } from './model';
+import { ApiHistoryTimelineItem } from '../../../api/model/apiHistoryTimelineItem';
 
 @Component({
   selector: 'app-front-page-journey',
@@ -22,9 +22,9 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   title = $localize`:@@frontPage.journey.title:Product journey`;
   subs: Subscription[] = [];
   isGoogleMapsLoaded = false;
-  processing = [];
+
   coopName = '';
-  processingShorter = [];
+  historyItems = [];
 
   qrTag = this.route.snapshot.params.qrTag;
 
@@ -78,9 +78,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     strokeOpacity: 0,
   };
 
-  short = true;
-
-  _map: GoogleMap = null;
+  gMap: GoogleMap = null;
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
@@ -90,13 +88,13 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   @ViewChild(GoogleMap)
   set map(map: GoogleMap) {
     if (map) {
-      this._map = map;
+      this.gMap = map;
       setTimeout(() => this.googleMapsIsLoaded(map));
     }
   }
 
   get map(): GoogleMap {
-    return this._map;
+    return this.gMap;
   }
 
   constructor(
@@ -140,25 +138,17 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     }
   }
 
-  iconStyle(item: ProcessingOrderHistory) {
-    const iconType = item.processingOrder.processingAction.publicTimelineIcon;
-    if (!iconType) {
-      if (item.processingOrder.processingAction.type === 'TRANSFER') { return 'af-journey-dot-shape--ship'; }
-      return 'af-journey-dot-shape--leaf';
-    }
-    return this.styleForIconType(iconType);
-  }
+  addIconStyleForIconType(item: ApiHistoryTimelineItem): HistoryTimelineItem {
 
-  addIconStyleForIconType(item: B2CHistoryItem): B2CHistoryItem {
     let iconClass;
-    if (!item.iconEnumType) {
+    if (!item.iconType) {
       if (item.type === 'TRANSFER') {
         iconClass = 'af-journey-dot-shape--ship';
       } else {
         iconClass = 'af-journey-dot-shape--leaf';
       }
     } else {
-      iconClass = this.styleForIconType(item.iconEnumType);
+      iconClass = this.styleForIconType(item.iconType);
     }
     return {...item, iconClass};
   }
@@ -169,14 +159,9 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
 
       // Get the aggregated history for the QR code tag
       const resp = await this.publicControllerService.getStockOrderPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
-
-      // TODO: process response
-      // const res = await this.chainPublicController.getAggregatesForStockOrder(this.qrTag).pipe(take(1)).toPromise();
-      // if (res && res.status === 'OK' && res.data) {
-      //   this.coopName = res.data.coopName;
-      //   this.processing = res.data.items;
-      //   this.processingShorter = res.data.shortItems.map(item => this.addIconStyleForIconType(item));
-      // }
+      if (resp && resp.status === 'OK' && resp.data) {
+        this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
+      }
     }
   }
 
@@ -243,10 +228,6 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     return day + '.' + month + '.' + year;
-  }
-
-  toggleShort() {
-    this.short = !this.short;
   }
 
 }
