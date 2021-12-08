@@ -18,11 +18,19 @@
  */
 
 
+import { ApiHistoryTimeline } from './apiHistoryTimeline';
 
 
 
 export interface ApiStockOrderPublic { 
+    historyTimeline?: ApiHistoryTimeline;
+    /**
+     * The global (product) order of the Stock order
+     */
     orderId?: string;
+    /**
+     * The QR code tag
+     */
     qrTag?: string;
 }
 
@@ -34,7 +42,14 @@ export namespace ApiStockOrderPublic {
      * All properties of ApiStockOrderPublic.
      */
     export enum Properties {
+        historyTimeline = 'historyTimeline',
+        /**
+         * The global (product) order of the Stock order
+         */
         orderId = 'orderId',
+        /**
+         * The QR code tag
+         */
         qrTag = 'qrTag'
     }
 
@@ -44,6 +59,18 @@ export namespace ApiStockOrderPublic {
             metadata: formMetadata,
             classname: 'ApiStockOrderPublic',
             vars: [
+                {
+                    metadata: ApiHistoryTimeline.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'historyTimeline',
+                    classname: 'ApiStockOrderPublic',
+                    dataType: 'ApiHistoryTimeline',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiHistoryTimeline'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -68,6 +95,8 @@ export namespace ApiStockOrderPublic {
                 },
             ],
             validators: {
+                historyTimeline: [
+                ],
                 orderId: [
                 ],
                 qrTag: [
@@ -79,6 +108,9 @@ export namespace ApiStockOrderPublic {
   // export const ApiStockOrderPublicValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               historyTimeline: {
+  //                   validators: []
+  //               },
   //               orderId: {
   //                   validators: []
   //               },
