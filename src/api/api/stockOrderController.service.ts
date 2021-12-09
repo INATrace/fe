@@ -35,8 +35,8 @@ import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiPurchaseOrder } from '../model/apiResponseApiPurchaseOrder';
 import { ApiResponseApiStockOrder } from '../model/apiResponseApiStockOrder';
+import { ApiResponseApiStockOrderHistory } from '../model/apiResponseApiStockOrderHistory';
 import { ApiStockOrder } from '../model/apiStockOrder';
-import { ApiStockOrderHistory } from '../model/apiStockOrderHistory';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -1724,15 +1724,15 @@ export class StockOrderControllerService {
   public getStockOrderAggregatedHistoryUsingGETByMap(
     map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiStockOrderHistory>;
+    reportProgress?: boolean): Observable<ApiResponseApiStockOrderHistory>;
   public getStockOrderAggregatedHistoryUsingGETByMap(
     map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiStockOrderHistory>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
   public getStockOrderAggregatedHistoryUsingGETByMap(
     map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiStockOrderHistory>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
   public getStockOrderAggregatedHistoryUsingGETByMap(
     map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
     observe: any = 'body',
@@ -1754,9 +1754,9 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiStockOrderHistory>;
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiStockOrderHistory>>;
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiStockOrderHistory>>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderHistory>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
+    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
     public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getStockOrderAggregatedHistoryUsingGET.');
@@ -1786,7 +1786,7 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiStockOrderHistory>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/aggregated-history`,
+        const handle = this.httpClient.get<ApiResponseApiStockOrderHistory>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/aggregated-history`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
