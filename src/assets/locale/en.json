@@ -2544,6 +2544,7 @@
     "breadCrumb.payments.payment": "Balance payment",
     "orderHistoryView.button.edit": "{$START_TAG_SPAN}Edit{$CLOSE_TAG_SPAN}",
     "orderHistoryView.formTitle.basicInformation": "Basic information",
+    "orderHistoryView.tableCol.identifier": "Identifier",
     "orderHistoryView.tableCol.internalLotNumber": "Internal lot name",
     "orderHistoryView.tableCol.facilityName": "Facility",
     "orderHistoryView.tableCol.product": "Product",
