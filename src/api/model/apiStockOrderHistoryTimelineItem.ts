@@ -33,6 +33,10 @@ export interface ApiStockOrderHistoryTimelineItem {
      */
     id?: number;
     processingOrder?: ApiProcessingOrder;
+    /**
+     * Aggregated Purchase orders
+     */
+    purchaseOrders?: Array<ApiStockOrder>;
     stockOrder?: ApiStockOrder;
 }
 
@@ -53,6 +57,10 @@ export namespace ApiStockOrderHistoryTimelineItem {
          */
         id = 'id',
         processingOrder = 'processingOrder',
+        /**
+         * Aggregated Purchase orders
+         */
+        purchaseOrders = 'purchaseOrders',
         stockOrder = 'stockOrder'
     }
 
@@ -101,6 +109,18 @@ export namespace ApiStockOrderHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'purchaseOrders',
+                    classname: 'ApiStockOrderHistoryTimelineItem',
+                    dataType: 'Array&lt;ApiStockOrder&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrder'
+                },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'stockOrder',
                     classname: 'ApiStockOrderHistoryTimelineItem',
                     dataType: 'ApiStockOrder',
@@ -115,6 +135,8 @@ export namespace ApiStockOrderHistoryTimelineItem {
                 id: [
                 ],
                 processingOrder: [
+                ],
+                purchaseOrders: [
                 ],
                 stockOrder: [
                 ],
@@ -132,6 +154,9 @@ export namespace ApiStockOrderHistoryTimelineItem {
   //                   validators: []
   //               },
   //               processingOrder: {
+  //                   validators: []
+  //               },
+  //               purchaseOrders: {
   //                   validators: []
   //               },
   //               stockOrder: {

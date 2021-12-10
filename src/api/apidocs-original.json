@@ -18073,6 +18073,13 @@
             "$ref": "#/components/schemas/ApiProcessingOrder",
             "description": "The Processing order representing this processing step (used when not Purchase order)"
           },
+          "purchaseOrders": {
+            "description": "Aggregated Purchase orders",
+            "items": {
+              "$ref": "#/components/schemas/ApiStockOrder"
+            },
+            "type": "array"
+          },
           "stockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",
             "description": "Stock order representing this processing step (used in Purchase orders)"
