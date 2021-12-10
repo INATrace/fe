@@ -254,7 +254,7 @@
                     </h4>
 
                     <ul>
-                      <ng-container *ngFor="let targetStockOrder of historyItem.processingOrder.targetStockOrders">
+                      <ng-container *ngFor="let targetStockOrder of getTargetStockOrders(historyItem)">
                         <li>
                           <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, targetStockOrder)"
                              (click)="goToOrderView(targetStockOrder)">

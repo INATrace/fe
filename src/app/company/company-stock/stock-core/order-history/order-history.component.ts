@@ -61,6 +61,10 @@ export class OrderHistoryComponent implements OnInit {
     private globalEventsManager: GlobalEventManagerService
   ) { }
 
+  getTargetStockOrders(timelineItem: ApiStockOrderHistoryTimelineItem) {
+    return timelineItem.purchaseOrders?.length > 0 ? timelineItem.purchaseOrders : timelineItem.processingOrder.targetStockOrders;
+  }
+
   isRoot(root: ApiStockOrder, one: ApiStockOrder) {
     return root.id === one.id;
   }
