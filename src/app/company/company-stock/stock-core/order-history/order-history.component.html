@@ -179,8 +179,8 @@
                         <ng-container *ngIf="history.processingOrder?.processingAction?.outputFinalProduct">
                           {{ history.processingOrder.processingAction.outputFinalProduct.name }} ({{ history.processingOrder.processingAction.outputFinalProduct.product.name }})
                         </ng-container>
-                        <ul *ngIf="history.processingOrder?.outputTransactions && history.processingOrder?.outputTransactions.length> 0" style="margin-bottom: 0;">
-                          <li *ngFor="let tx of history.processingOrder?.outputTransactions">
+                        <ul *ngIf="history.outputTransactions.length > 0" style="margin-bottom: 0;">
+                          <li *ngFor="let tx of history.outputTransactions">
                             <a [ngClass]="transactionColor(tx)" (click)="goToOutput(tx)">{{ tx.inputQuantity }} {{ tx.inputMeasureUnitType?.label }}</a>
                             <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
                           </li>
