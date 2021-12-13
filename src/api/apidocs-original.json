@@ -15873,6 +15873,10 @@
             "description": "The global (product) order of the Stock order",
             "type": "string"
           },
+          "producerName": {
+            "description": "The Producer name",
+            "type": "string"
+          },
           "qrTag": {
             "description": "The QR code tag",
             "type": "string"

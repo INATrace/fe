@@ -29,6 +29,10 @@ export interface ApiQRTagPublic {
      */
     orderId?: string;
     /**
+     * The Producer name
+     */
+    producerName?: string;
+    /**
      * The QR code tag
      */
     qrTag?: string;
@@ -47,6 +51,10 @@ export namespace ApiQRTagPublic {
          * The global (product) order of the Stock order
          */
         orderId = 'orderId',
+        /**
+         * The Producer name
+         */
+        producerName = 'producerName',
         /**
          * The QR code tag
          */
@@ -86,6 +94,17 @@ export namespace ApiQRTagPublic {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'producerName',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'qrTag',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
@@ -98,6 +117,8 @@ export namespace ApiQRTagPublic {
                 historyTimeline: [
                 ],
                 orderId: [
+                ],
+                producerName: [
                 ],
                 qrTag: [
                 ],
@@ -112,6 +133,9 @@ export namespace ApiQRTagPublic {
   //                   validators: []
   //               },
   //               orderId: {
+  //                   validators: []
+  //               },
+  //               producerName: {
   //                   validators: []
   //               },
   //               qrTag: {
