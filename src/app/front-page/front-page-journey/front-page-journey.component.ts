@@ -80,15 +80,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
 
   gMap: GoogleMap = null;
 
-  mapMarkerOption = {
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 4,
-      fillColor: '#AC1A56',
-      fillOpacity: 1,
-      strokeColor: '#AC1A56',
-    }
-  };
+  mapMarkerOption: any;
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
@@ -99,6 +91,15 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   set map(map: GoogleMap) {
     if (map) {
       this.gMap = map;
+      this.mapMarkerOption = {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          fillColor: '#AC1A56',
+          fillOpacity: 1,
+          strokeColor: '#AC1A56',
+        }
+      };
       setTimeout(() => this.googleMapsIsLoaded(map));
     }
   }
