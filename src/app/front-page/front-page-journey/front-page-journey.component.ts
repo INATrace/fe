@@ -23,7 +23,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   isGoogleMapsLoaded = false;
 
-  coopName = '';
+  producerName = '';
   historyItems = [];
 
   qrTag = this.route.snapshot.params.qrTag;
@@ -79,6 +79,16 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   };
 
   gMap: GoogleMap = null;
+
+  mapMarkerOption = {
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 4,
+      fillColor: '#AC1A56',
+      fillOpacity: 1,
+      strokeColor: '#AC1A56',
+    }
+  };
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
@@ -158,9 +168,10 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     if (this.qrTag !== 'EMPTY') {
 
       // Get the aggregated history for the QR code tag
-      const resp = await this.publicControllerService.getStockOrderPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
+      const resp = await this.publicControllerService.getQRTagPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
       if (resp && resp.status === 'OK' && resp.data) {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
+        this.producerName = resp.data.producerName;
       }
     }
   }
@@ -200,18 +211,6 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     );
     const minBounds = new google.maps.LatLngBounds(southWest, northEast);
     map.fitBounds(this.bounds.union(minBounds));
-  }
-
-  markerOption(i) {
-    return {
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-        fillColor: '#AC1A56',
-        fillOpacity: 1,
-        strokeColor: '#AC1A56',
-      }
-    };
   }
 
   get polyOptions() {

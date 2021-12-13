@@ -20,7 +20,7 @@
           #gMarker="mapMarker"
           *ngFor="let marker of markers; index as i"
           [position]="marker.position"
-          [options]="markerOption(i)">
+          [options]="mapMarkerOption">
         </map-marker>
         <map-polyline [path]="locations" [options]="polyOptions"></map-polyline>
       </google-map>
@@ -70,7 +70,7 @@
             <div class="af-journey-info">
               <span>&nbsp;</span>
               <span i18n="@@frontPage.journey.harvesting">Harvesting</span>
-              <span i18n="@@frontPage.journey.farmersFromCooperative">Farmers from {{ this.coopName }}</span>
+              <span i18n="@@frontPage.journey.farmersFromCooperative">Farmers from {{ this.producerName }}</span>
             </div>
 
           </li>

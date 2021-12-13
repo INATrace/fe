@@ -72,7 +72,7 @@ export class FrontPageFairPricesComponent implements OnInit {
     }
 
     if (this.qrTag !== 'EMPTY') {
-      const respPubStockOrder = await this.publicController.getStockOrderPublicDataUsingGET(this.qrTag).pipe(take(1)).toPromise();
+      const respPubStockOrder = await this.publicController.getQRTagPublicDataUsingGET(this.qrTag).pipe(take(1)).toPromise();
       if (respPubStockOrder && respPubStockOrder.status === 'OK' && respPubStockOrder.data) {
         this.orderId = respPubStockOrder.data.orderId;
       }
