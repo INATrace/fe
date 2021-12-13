@@ -9969,6 +9969,22 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -9976,7 +9992,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiStockOrderPublic_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiQRTagPublic_"
                 }
               }
             },
@@ -9986,7 +10002,7 @@
         "tags": [
           "public-controller"
         ],
-        "operationId": "getStockOrderPublicDataUsingGET",
+        "operationId": "getQRTagPublicDataUsingGET",
         "summary": "Get public data for the Stock order with the given QR code tag"
       }
     },
@@ -10643,12 +10659,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10658,19 +10671,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10680,19 +10690,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10702,19 +10709,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10724,19 +10728,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10746,19 +10747,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10768,19 +10766,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10790,8 +10785,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -15869,6 +15864,22 @@
         },
         "type": "object"
       },
+      "ApiQRTagPublic": {
+        "properties": {
+          "historyTimeline": {
+            "$ref": "#/components/schemas/ApiHistoryTimeline"
+          },
+          "orderId": {
+            "description": "The global (product) order of the Stock order",
+            "type": "string"
+          },
+          "qrTag": {
+            "description": "The QR code tag",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiResetPasswordRequest": {
         "properties": {
           "password": {
@@ -17090,6 +17101,49 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiQRTagPublic_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiQRTagPublic",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiSemiProduct_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -17138,49 +17192,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiStockOrderHistory",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiResponse_ApiStockOrderPublic_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiStockOrderPublic",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -18143,22 +18154,6 @@
           },
           "pinName": {
             "description": "Pin name",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiStockOrderPublic": {
-        "properties": {
-          "historyTimeline": {
-            "$ref": "#/components/schemas/ApiHistoryTimeline"
-          },
-          "orderId": {
-            "description": "The global (product) order of the Stock order",
-            "type": "string"
-          },
-          "qrTag": {
-            "description": "The QR code tag",
             "type": "string"
           }
         },
