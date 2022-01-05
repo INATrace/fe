@@ -22,9 +22,9 @@ fi
 tag=$version-$env
 
 if [ "$env" == "TEST" ]; then
-  docker build -t $repoName:$tag -f ./Dockerfile-test
+  docker build -t $repoName:$tag -f Dockerfile-test .
 else
-  docker build -t $repoName:$tag -f ./Dockerfile-prod
+  docker build -t $repoName:$tag -f Dockerfile-prod .
 fi
 
 if [ "$push" == "push" ]; then
