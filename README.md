@@ -6,18 +6,40 @@ digitalization of supply chains, connects every actor along the supply chain, as
 
 Project is composed from 3 parts:
 
-* [Java backend](https://github.com/INATrace/backend/tree/main) (Authentication, User, Product, Company APIs)
-* [Coffee network](https://github.com/INATrace/coffee-network/tree/main) (StockOrder, Transaction, Order, SemiProduct APIs)
-* [FE](https://github.com/INATrace/fe/tree/main)
+* [Angular frontend](https://github.com/INATrace/fe/tree/main)
+* [Java backend](https://github.com/INATrace/backend/tree/main)
+* [Coffee network](https://github.com/INATrace/coffee-network/tree/main)
+
+# INATrace 2
+This new major release includes new functionalities, refactorings, optimizations and bugfixes. The most important additions and changes are:
+* Added support for generic value chains. Different value chains with it's specific settings can now be configured in the system.
+* Multi-tenant system support.
+* Reorganized the content in the Product section. This section now includes only the content that is related to a product.
+* Introduced a new section "Company". This section includes all the content that is related with the company's work process within the value chain.
+* The configuration of farmers and collectors is decoupled from the product, and it's part of the Company section.
+* Added support for importing farmers from a provided Excel file.
+* The company customers are now decoupled from the Stakeholders in the product section and are configured as part of the Company section.
+* The configuration of facilities and processing actions is now part of the company's profile.
+* The semi-products configuration is now part of the system settings instead of the product section.
+* Reorganized the content of the Value chain tab inside the Stakeholders section. The Value chain now includes new company roles. Added is also a section for product admin companies.
+* Added support for defining Processing evidence fields in the system settings.
+* Translation for facilities, processing actions, semi-products and processing evidence types and fields can be provided in the system as part of it's definition.
+* Added support for currencies in the system. The enabled currencies can be selected in the system settings. These currencies then appear as select options in various parts of the system where the user is expected to select a currency.
+* Added exchange rates for the enabled currencies that are synced on a daily basis. The currencies data is provided by the https://exchangeratesapi.io/ API.
+* The product section now includes Final products. Final products represent the output of a final processing. The final products can be configured by the product admin company.
+* When placing customer order, now we select a final product instead of a sellable semi-product.
+* Added support for new types of processing actions.
+* Added support for bulk purchases for semi-products.
+* Various changes and addition of new functionalities for purchases, processing and payments.
 
 # Frontend
 
 ## Installing / Getting started
 
 #### Requirements
-* Node 12
+* Node 14
 * Angular 10
-* VS Code (recommended)
+* WebStorm or VS Code (recommended)
 * VS Code pluggins:
 	* Debugger for Chrome
 	* EditorConfig for VS Code
@@ -40,7 +62,7 @@ Project is composed from 3 parts:
 
 ## Contribution
 
-Project INATrace welcomes contribution from everyone. See CONTRIBUTING.md for help getting started.
+Project INATrace welcomes contribution from everyone. See CONTRIBUTING.md for help to get started.
 
 ## License 
 
