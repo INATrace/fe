@@ -2,10 +2,31 @@
 
   <nav class="auth-side-navbar navbar-dark af-layout--aside-nav">
     <a class="auth-side-logo navbar-brand" [routerLink]="['/home']">
-      <img class="auth-img-container" src="/assets/logo-INATrace/logo-INATrace-symbol.svg">
+      <img class="auth-img-container" src="/assets/logo-INATrace/logo-INATrace-symbol.svg" alt="Application logo">
     </a>
 
     <ul class="navbar-nav auth-side-icon-container">
+
+      <div class="auth-side-icon-spacer"></div>
+      <li>
+        <div class="left-border-active"
+             routerLinkActive="active"
+             [ngClass]="{'active': myOrdersActive.isActive || myFarmersActive.isActive || myCollectorsActive.isActive || myCustomersActive.isActive }">
+          <button class="btn-icon-sidebar"
+                  [disabled]="isConfirmedOnly"
+                  data-toggle="tooltip"
+                  title="Company"
+                  i18n-title="@@authorisedSideNav.link.company"
+                  [routerLink]="['/my-stock']">
+
+            <div class="sidebar-icon">
+              <span class="sidebar-icon-shape sidebar-icon-shape--company" style="margin-left: 3px;"></span>
+            </div>
+
+          </button>
+        </div>
+      </li>
+
       <div class="auth-side-icon-spacer"></div>
       <li>
         <div class="left-border-active"
@@ -17,21 +38,19 @@
             i18n-title="@@authorisedSideNav.link.products"
             [routerLink]="['/product-labels']">
 
-            <!-- <i class="fa fa-seedling"></i> -->
             <div class="sidebar-icon">
-              <!-- <i class="fas fa-arrow-up"></i> -->
-              <!-- <img src="assets/icons/icon-arrow--up.svg" style="padding-left: 6px;"> -->
               <span class="sidebar-icon-shape sidebar-icon-shape--products"></span>
             </div>
 
           </button>
         </div>
       </li>
+
       <div class="auth-side-icon-spacer"></div>
       <li>
         <div class="left-border-active"
           routerLinkActive="active"
-          [ngClass]="{'active': usersActive.isActive || settingsActive.isActive }">
+          [ngClass]="{'active': systemUsersActive.isActive || settingsActive.isActive || valueChainsActive.isActive || currenciesActive.isActive }">
           <button *ngIf="isAdmin"
             [disabled]="isConfirmedOnly"
             class="btn-icon-sidebar"
@@ -40,28 +59,24 @@
             i18n-title="@@authorisedSideNav.link.system"
             routerLink="/companies">
 
-            <!-- <i class="fa fa-cog"></i> -->
             <div class="sidebar-icon">
-              <!-- <i class="fas fa-arrow-up"></i> -->
-              <!-- <img src="assets/icons/icon-arrow--up.svg" style="padding-left: 6px;"> -->
               <span class="sidebar-icon-shape sidebar-icon-shape--settings"></span>
             </div>
           </button>
         </div>
       </li>
+
       <!-- Dummy buttons to achieve active System on different links -->
-      <button routerLink="/users" routerLinkActive #usersActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/users" routerLinkActive #systemUsersActive="routerLinkActive" style="display: none"></button>
       <button routerLink="/settings" routerLinkActive #settingsActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/my-orders" routerLinkActive #myOrdersActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/my-farmers" routerLinkActive #myFarmersActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/my-collectors" routerLinkActive #myCollectorsActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/my-customers" routerLinkActive #myCustomersActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/value-chains" routerLinkActive #valueChainsActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/currencies" routerLinkActive #currenciesActive="routerLinkActive" style="display: none"></button>
 
     </ul>
-    <!-- <button class="btn-icon-sidebar"
-      id="info_sidebar_button"
-      data-toggle="tooltip"
-      title="About"
-      i18n-title="@@authorisedSideNav.link.aboutApp"
-      (click)="aboutApp()">
-      <i class="fa fa-info"></i>
-    </button> -->
   </nav>
 
 </div>

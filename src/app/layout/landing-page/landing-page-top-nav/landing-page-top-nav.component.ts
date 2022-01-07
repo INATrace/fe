@@ -1,45 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { faUser, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/system/auth.service';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-landing-page-top-nav',
   templateUrl: './landing-page-top-nav.component.html',
   styleUrls: ['./landing-page-top-nav.component.scss']
 })
-export class LandingPageTopNavComponent implements OnInit {
+export class LandingPageTopNavComponent implements OnInit, OnDestroy {
 
-  _showNavButtons$: BehaviorSubject<boolean>;
-  _isLandingPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  showNavButtons$: BehaviorSubject<boolean>;
 
   public loggedId;
   public userProfile;
   constructor(
-    private router: Router,
     public authService: AuthService
   ) { }
 
-  faUser = faUser
-  faCaretDown = faCaretDown;
+  faUser = faUser;
   subUserProfile: Subscription;
 
   ngOnInit(): void {
-    this._showNavButtons$ = new BehaviorSubject<boolean>(false);
-    this._isLandingPage$.next(this.router.url === '/');
-    this.authService.refreshUserProfile()
+    this.showNavButtons$ = new BehaviorSubject<boolean>(false);
+    this.authService.refreshUserProfile();
     this.subUserProfile = this.authService.userProfile$.subscribe(val => {
-      this.userProfile = val
-    })
+      this.userProfile = val;
+    });
   }
 
   toggleNavButtons(): void {
-    this._showNavButtons$.next(!this._showNavButtons$.value);
+    this.showNavButtons$.next(!this.showNavButtons$.value);
   }
 
   ngOnDestroy() {
-    if(this.subUserProfile) this.subUserProfile.unsubscribe()
-    this.authService.userProfile$
+    if (this.subUserProfile) { this.subUserProfile.unsubscribe(); }
   }
 }

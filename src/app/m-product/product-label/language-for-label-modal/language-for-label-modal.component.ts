@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
+import { generateFormFromMetadata } from '../../../../shared/utils';
+import { ApiProductLabelBase } from '../../../../api/model/apiProductLabelBase';
+import { ApiProductLabelBaseValidationScheme } from './validation';
+import { LanguageForLabelModalResult } from './model';
 
 @Component({
   selector: 'app-language-for-label-modal',
@@ -11,42 +15,47 @@ import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 export class LanguageForLabelModalComponent implements OnInit {
 
   @Input()
-  dismissable = true;
+  dismissible = true;
 
   @Input()
   title = null;
 
-  @Input()
-  instructionsHtml = null
+  form: FormGroup;
+  submitted = false;
 
-  @Input()
-  onSelectedCompany: (company: any) => {}
-
-  form = new FormControl(null)
+  codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
 
   constructor(
     public activeModal: NgbActiveModal,
   ) { }
 
   ngOnInit(): void {
+    this.form = generateFormFromMetadata(ApiProductLabelBase.formMetadata(), {}, ApiProductLabelBaseValidationScheme);
   }
 
   cancel() {
-    this.activeModal.close()
+    this.activeModal.close();
   }
 
   onConfirm() {
-    if (this.form.value) {
-      this.activeModal.close(this.form.value)
+
+    this.submitted = true;
+    if (this.form.valid) {
+
+      const result: LanguageForLabelModalResult = {
+        lang: this.form.get('language').value,
+        title: this.form.get('title').value
+      };
+
+      this.activeModal.close(result);
     }
   }
 
   get languageCodes() {
-    let obj = {}
-    obj['EN'] = $localize`:@@languageForLabelModal.languageCodes.en:EN`
-    obj['DE'] = $localize`:@@languageForLabelModal.languageCodes.de:DE`
+    const obj = {};
+    obj['EN'] = $localize`:@@languageForLabelModal.languageCodes.en:EN`;
+    obj['DE'] = $localize`:@@languageForLabelModal.languageCodes.de:DE`;
     return obj;
   }
-  codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes)
 
 }

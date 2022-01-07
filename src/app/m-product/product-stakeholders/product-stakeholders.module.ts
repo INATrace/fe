@@ -12,41 +12,27 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
-import { CollectorDetailModalComponent } from './collector-detail-modal/collector-detail-modal.component';
+import { CoreModule } from 'src/app/core/core.module';
 import { CompanyCardComponent } from './company-card/company-card.component';
-import { CustomerDetailModalComponent } from './customer-detail-modal/customer-detail-modal.component';
-import { ProducersItemComponent } from './producers-item/producers-item.component';
-import { ProductLabelStakeholdersCollectorsComponent } from './product-label-stakeholders-collectors/product-label-stakeholders-collectors.component';
-import { ProductLabelStakeholdersCustomersComponent } from './product-label-stakeholders-customers/product-label-stakeholders-customers.component';
 import { ProductLabelStakeholdersComponent } from './product-label-stakeholders/product-label-stakeholders.component';
-import { StakeholdersCollectorsComponent } from './product-label-stakeholders/stakeholders-collectors/stakeholders-collectors.component';
-import { StakeholdersCustomersComponent } from './product-label-stakeholders/stakeholders-customers/stakeholders-customers.component';
-import { StakeholdersFarmersComponent } from './product-label-stakeholders/stakeholders-farmers/stakeholders-farmers.component';
 import { StakeholdersValueChainComponent } from './product-label-stakeholders/stakeholders-value-chain/stakeholders-value-chain.component';
 import { ProductStakeholdersRoutingModule } from './product-stakeholders-routing.module';
-
-
+import { ProductCommonModule } from '../product-common/product-common.module';
+import { DataSharingAgreementItemComponent } from './product-label-stakeholders/stakeholders-value-chain/data-sharing-agreement-item/data-sharing-agreement-item.component';
 
 @NgModule({
-  declarations: [
-    CollectorDetailModalComponent,
+declarations: [
     CompanyCardComponent,
-    CustomerDetailModalComponent,
     ProductLabelStakeholdersComponent,
-    ProductLabelStakeholdersCollectorsComponent,
-    ProductLabelStakeholdersCustomersComponent,
-    ProducersItemComponent,
-    StakeholdersCollectorsComponent,
-    StakeholdersCustomersComponent,
-    StakeholdersFarmersComponent,
-    StakeholdersValueChainComponent
+    StakeholdersValueChainComponent,
+    DataSharingAgreementItemComponent
   ],
   imports: [
     CommonModule,
     ProductStakeholdersRoutingModule,
+    ProductCommonModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,

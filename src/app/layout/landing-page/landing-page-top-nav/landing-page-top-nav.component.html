@@ -1,29 +1,38 @@
 <div class="d-lg-none">
   <header>
     <nav class="navbar navbar-light bg-white">
-      <a class="navbar-brand white" [routerLink]="['/']"><img src="/assets/logo-INATrace/logo-INATrace.svg">
+      <a class="navbar-brand white" [routerLink]="['/']">
+        <img src="/assets/logo-INATrace/logo-INATrace.svg">
       </a>
       <button type="button" class="navbar-toggler" (click)="toggleNavButtons()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div *ngIf="_showNavButtons$.value" class="navbar-collapse" id="headercontet">
+      <div *ngIf="showNavButtons$.value" class="navbar-collapse" id="headercontet">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item font-italic">
-            <a class="nav-link" [routerLink]="['/','login']">Login</a>
-          </li>
-          <li class="nav-item font-italic">
-            <a class="nav-link" [routerLink]="['/','register']">Get started</a>
-          </li>
+          <ng-container *ngIf="userProfile">
+            <li class="nav-item font-italic">
+              <app-user-box></app-user-box>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="!userProfile">
+            <li class="nav-item font-italic">
+              <a class="nav-link" [routerLink]="['/','login']">Login</a>
+            </li>
+            <li class="nav-item font-italic">
+              <a class="nav-link" [routerLink]="['/','register']">Get started</a>
+            </li>
+          </ng-container>
         </ul>
       </div>
     </nav>
   </header>
 </div>
-<div *ngIf="_isLandingPage$.value" class="d-none d-lg-block">
+<div class="d-none d-lg-block">
   <header id="main-header-overlay">
     <div class="mainbar-wrap">
       <nav class="navbar navbar-light">
-        <a class="navbar-brand white" [routerLink]="['/']"><img src="/assets/logo-INATrace/logo-INATrace-w-symbol.svg">
+        <a class="navbar-brand white" [routerLink]="['/']">
+          <img src="/assets/logo-INATrace/logo-INATrace-w-symbol.svg">
         </a>
         <form class="form-inline">
           <ng-container *ngIf="userProfile">
@@ -43,30 +52,6 @@
           </ng-container>
         </form>
       </nav>
-    </div>
-  </header>
-</div>
-
-<div *ngIf="!_isLandingPage$.value" class='d-none d-lg-block'>
-  <header>
-    <div class='mainbar-wrap'>
-      <div class='container-fluid'>
-        <nav class='navbar navbar-light'>
-          <a class="navbar-brand white" [routerLink]="['/']"><img
-              src="/assets/logo-INATrace/logo-INATrace.svg" />
-          </a>
-          <form class='form-inline'>
-            <a class="btn btn-underlined btn-bordered border-thin btn-bordered-gradient special7 special8"
-              [routerLink]="['/','login']"><span>
-                <span class='btn-txt'>Login</span>
-              </span>
-            </a><a class="btn btn-default btn-sm round btn-bordered border-thin special5 special6"
-              [routerLink]="['/','products', 'new']"><span>
-                <span class='btn-txt'>Get started</span>
-              </span>
-            </a></form>
-        </nav>
-      </div>
     </div>
   </header>
 </div>

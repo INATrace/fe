@@ -45,7 +45,7 @@ export interface ApiCompanyPublic {
      */
     mediaLinks?: { [key: string]: string; };
     /**
-     * interview
+     * name
      */
     name?: string;
 }
@@ -79,7 +79,7 @@ export namespace ApiCompanyPublic {
          */
         mediaLinks = 'mediaLinks',
         /**
-         * interview
+         * name
          */
         name = 'name'
     }

@@ -1,0 +1,58 @@
+<ng-container *ngIf="processingActions$ | async as processingActions">
+    <div class="main-inside-main">
+        <table *ngIf="processingActions && processingActions.items && processingActions.items.length > 0" class="af-table">
+            <thead>
+                <tr result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pa of processingActions.items">
+                    <td *ngIf="!sortOptions[0].hide" [attr.data-label]="sortOptions[0].name">
+                        <span>{{ pa.name }}</span>
+                    </td>
+                    <td *ngIf="!sortOptions[1].hide" [attr.data-label]="sortOptions[1].name">
+                        <span>{{ pa?.type | formatProcessingActionType }}</span>
+                    </td>
+                    <td *ngIf="!sortOptions[2].hide" [attr.data-label]="sortOptions[2].name">
+                        <span *ngIf="pa.inputSemiProduct">{{ pa.inputSemiProduct.name }}</span>
+                        <span *ngIf="pa.inputFinalProduct">{{ pa.inputFinalProduct.name }} ({{ pa.inputFinalProduct.product.name }})</span>
+                    </td>
+                    <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">
+                        <span *ngIf="pa.outputSemiProduct">{{ pa.outputSemiProduct.name }}</span>
+                        <span *ngIf="pa.outputFinalProduct">{{ pa.outputFinalProduct.name }} ({{ pa.outputFinalProduct.product.name }})</span>
+                    </td>
+                    <td [attr.data-label]="sortOptions[4].name">
+                        <span>
+                            <a i18n="@@processingActionList.tableCol.edit"
+                               class="pa-action"
+                               (click)="editProcessingAction(pa)"
+                               [class.enabled-action]="true">
+                              Edit
+                            </a>
+                            <a i18n="@@processingActionList.tableCol.delete"
+                               class="pa-action"
+                               (click)="deleteProcessingAction(pa)"
+                               [class.enabled-action]="true">
+                                Delete
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="processingActions && processingActions.items && processingActions.items.length == 0"
+             class="no-list-results"
+             i18n="@@processingActionList.noSemiProducts">
+            No processing actions found
+        </div>
+    </div>
+    <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+        <ngb-pagination
+                [(page)]="page"
+                [pageSize]="pageSize"
+                [collectionSize]="processingActions.count"
+                (pageChange)="onPageChange($event)"
+                [maxSize]="7"
+                [rotate]="true">
+        </ngb-pagination>
+    </div>
+</ng-container>

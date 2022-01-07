@@ -7,7 +7,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ApiProcessDocumentValidationScheme } from '../validation';
 
@@ -26,40 +26,46 @@ export class ProductionRecordItemComponent extends GenericEditableItemComponent<
         private commonController: CommonControllerService
 
     ) {
-        super(globalEventsManager)
+        super(globalEventsManager);
     }
+    
+    @Input()
+    disableEdit = false;
 
     @Input()
-    disableDelete = false
+    disableDelete = false;
 
     @Input()
-    title = null
+    title = null;
+
+    @Input()
+    viewOnly = false;
 
     faStamp = faStamp;
 
-    public generateForm(value: any): FormGroup {
-        return generateFormFromMetadata(ApiProcessDocument.formMetadata(), value, ApiProcessDocumentValidationScheme)
-    }
-
     static createEmptyObject(): ApiProcessDocument {
-        let market = ApiProcessDocument.formMetadata();
-        return defaultEmptyObject(market) as ApiProcessDocument
+        const market = ApiProcessDocument.formMetadata();
+        return defaultEmptyObject(market) as ApiProcessDocument;
     }
 
     static emptyObjectFormFactory(): () => FormControl {
         return () => {
-            let f = new FormControl(ProductionRecordItemComponent.createEmptyObject(), ApiProcessDocumentValidationScheme.validators)
-            return f
-        }
+            const f = new FormControl(ProductionRecordItemComponent.createEmptyObject(), ApiProcessDocumentValidationScheme.validators);
+            return f;
+        };
+    }
+
+    public generateForm(value: any): FormGroup {
+        return generateFormFromMetadata(ApiProcessDocument.formMetadata(), value, ApiProcessDocumentValidationScheme);
     }
 
     onDownload() {
-      let apiDoc = this.form.get('document').value as ApiDocument
+      const apiDoc = this.form.get('document').value as ApiDocument;
       if (apiDoc && apiDoc.storageKey) {
-        let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+        const sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
           this.fileSaverService.save(res, apiDoc.name);
-          sub.unsubscribe()
-        })
+          sub.unsubscribe();
+        });
       }
     }
 }

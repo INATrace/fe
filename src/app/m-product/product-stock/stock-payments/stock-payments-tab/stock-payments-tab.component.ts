@@ -10,19 +10,19 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { UserControllerService } from 'src/api/api/userController.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
 import { FacilityStockOrderSelectorForNewPaymentModalComponent } from '../../stock-core/facility-stock-order-selector-for-new-payment-modal/facility-stock-order-selector-for-new-payment-modal.component';
-import { StockTabCore } from '../../stock-core/stock-tab-core/stock-tab-core.component';
+import { StockTabCoreComponent } from '../../stock-core/stock-tab-core/stock-tab-core.component';
 
 @Component({
   selector: 'app-stock-payments-tab',
   templateUrl: './stock-payments-tab.component.html',
   styleUrls: ['./stock-payments-tab.component.scss']
 })
-export class StockPaymentsTabComponent extends StockTabCore {
+export class StockPaymentsTabComponent extends StockTabCoreComponent {
 
   rootTab = 2;
 

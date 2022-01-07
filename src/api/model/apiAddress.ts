@@ -28,14 +28,42 @@ export interface ApiAddress {
      */
     address?: string;
     /**
+     * Village cell
+     */
+    cell?: string;
+    /**
      * city
      */
     city?: string;
     country?: ApiCountry;
     /**
+     * Honduras department name
+     */
+    hondurasDepartment?: string;
+    /**
+     * Honduras farm name
+     */
+    hondurasFarm?: string;
+    /**
+     * Honduras municipality name
+     */
+    hondurasMunicipality?: string;
+    /**
+     * Honduras village name
+     */
+    hondurasVillage?: string;
+    /**
+     * Village sector
+     */
+    sector?: string;
+    /**
      * state / province / region
      */
     state?: string;
+    /**
+     * Village name
+     */
+    village?: string;
     /**
      * ZIP / postal code / p.p. box
      */
@@ -55,14 +83,42 @@ export namespace ApiAddress {
          */
         address = 'address',
         /**
+         * Village cell
+         */
+        cell = 'cell',
+        /**
          * city
          */
         city = 'city',
         country = 'country',
         /**
+         * Honduras department name
+         */
+        hondurasDepartment = 'hondurasDepartment',
+        /**
+         * Honduras farm name
+         */
+        hondurasFarm = 'hondurasFarm',
+        /**
+         * Honduras municipality name
+         */
+        hondurasMunicipality = 'hondurasMunicipality',
+        /**
+         * Honduras village name
+         */
+        hondurasVillage = 'hondurasVillage',
+        /**
+         * Village sector
+         */
+        sector = 'sector',
+        /**
          * state / province / region
          */
         state = 'state',
+        /**
+         * Village name
+         */
+        village = 'village',
         /**
          * ZIP / postal code / p.p. box
          */
@@ -80,6 +136,17 @@ export namespace ApiAddress {
                     isEnum: false,
                     required: false,
                     name: 'address',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cell',
                     classname: 'ApiAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -113,7 +180,73 @@ export namespace ApiAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'hondurasDepartment',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasFarm',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasMunicipality',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hondurasVillage',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sector',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'state',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'village',
                     classname: 'ApiAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -135,11 +268,25 @@ export namespace ApiAddress {
             validators: {
                 address: [
                 ],
+                cell: [
+                ],
                 city: [
                 ],
                 country: [
                 ],
+                hondurasDepartment: [
+                ],
+                hondurasFarm: [
+                ],
+                hondurasMunicipality: [
+                ],
+                hondurasVillage: [
+                ],
+                sector: [
+                ],
                 state: [
+                ],
+                village: [
                 ],
                 zip: [
                 ],
@@ -153,13 +300,34 @@ export namespace ApiAddress {
   //               address: {
   //                   validators: []
   //               },
+  //               cell: {
+  //                   validators: []
+  //               },
   //               city: {
   //                   validators: []
   //               },
   //               country: {
   //                   validators: []
   //               },
+  //               hondurasDepartment: {
+  //                   validators: []
+  //               },
+  //               hondurasFarm: {
+  //                   validators: []
+  //               },
+  //               hondurasMunicipality: {
+  //                   validators: []
+  //               },
+  //               hondurasVillage: {
+  //                   validators: []
+  //               },
+  //               sector: {
+  //                   validators: []
+  //               },
   //               state: {
+  //                   validators: []
+  //               },
+  //               village: {
   //                   validators: []
   //               },
   //               zip: {

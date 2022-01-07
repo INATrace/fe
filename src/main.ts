@@ -7,8 +7,7 @@ import { environment } from './environments/environment';
 import { loadTranslations } from '@angular/localize';
 import { LanguageCodeHelper } from './app/language-code-helper';
 
-
-let languageCode = LanguageCodeHelper.getCurrentLocale();
+const languageCode = LanguageCodeHelper.getCurrentLocale();
 
 if (environment.production) {
   enableProdMode();
@@ -21,11 +20,11 @@ if (languageCode) {
         platformBrowserDynamic()
           .bootstrapModule(module.AppModule)
           .catch(err => console.error(err));
-      }).catch(err => console.error("first", err));
+      }).catch(err => console.error('first', err));
     }
   );
 } else {
   import('./app/app.module').then(module => {
-    platformBrowserDynamic().bootstrapModule(module.AppModule);
+    platformBrowserDynamic().bootstrapModule(module.AppModule).then();
   }).catch(err => console.error(err));
 }

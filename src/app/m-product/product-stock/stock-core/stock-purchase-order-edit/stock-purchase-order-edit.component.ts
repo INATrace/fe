@@ -23,7 +23,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
 import { FieldDefinition } from 'src/api-chain/model/fieldDefinition';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
-import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
 import { ActiveProductsService } from 'src/app/shared-services/active-products.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
@@ -32,12 +31,12 @@ import { CodebookTranslations } from 'src/app/shared-services/codebook-translati
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { StockOrderType } from 'src/shared/types';
 import { dateAtMidnightISOString, dateAtNoonISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { ChainActivityProofValidationScheme } from '../additional-proof-item/validation';
+import { ApiActivityProofValidationScheme } from '../../../../company/company-stock/stock-core/additional-proof-item/validation';
 import { ChainPaymentValidationScheme } from '../payment-item/validation';
 import { ChainStockOrderValidationScheme } from './validation';
 
@@ -74,7 +73,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
   constructor(
     public sifrantProduct: ActiveProductsService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
-    public activeFacilitiesForOrganizationService: ActiveFacilitiesForOrganizationService,
     private chainProductService: ProductService,
     private chainStockOrderService: StockOrderService,
     private globalEventsManager: GlobalEventManagerService,
@@ -114,8 +112,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
         return $localize`:@@productLabelStockPurchaseOrdersModal.updateProcessingOrderTitle:Update processing order`
       case 'PURCHASE_ORDER':
         return $localize`:@@productLabelStockPurchaseOrdersModal.updatePurchaseOrderTitle:Update purchase order`
-      case 'SALES_ORDER':
-        return $localize`:@@productLabelStockPurchaseOrdersModal.updateSalesOrderTitle:Update sales order`
       default:
         return null
     }
@@ -129,8 +125,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
         return $localize`:@@productLabelStockPurchaseOrdersModal.newProcessingOrderTitle:New processing order`
       case 'PURCHASE_ORDER':
         return $localize`:@@productLabelStockPurchaseOrdersModal.newPurchaseOrderTitle:New purchase order`
-      case 'SALES_ORDER':
-        return $localize`:@@productLabelStockPurchaseOrdersModal.newSalesOrderTitle:New sales order`
       default:
         return null
     }
@@ -227,7 +221,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
     obj['GENERAL_ORDER'] = $localize`:@@orderType.codebook.generalOrder:General order`;
     obj['PROCESSING_ORDER'] = $localize`:@@orderType.codebook.processingOrder:Processing order`;
     obj['PURCHASE_ORDER'] = $localize`:@@orderType.codebook.purchaseOrder:Purchase order`;
-    obj['SALES_ORDER'] = $localize`:@@orderType.codebook.salesOrder:Sales order`;
     return obj;
   }
 
@@ -246,9 +239,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
       case 'PROCESSING_ORDER':
         this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'processing-order', 'update', this.purchaseOrderId]);
         return;
-      case 'SALES_ORDER':
-        this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'sales-order', 'update', this.purchaseOrderId]);
-        return;
       default:
         throw Error("Wrong order type: " + typ)
     }
@@ -260,10 +250,6 @@ export class StockPurchaseOrderEditComponent implements OnInit {
 
   get isPurchaseOrder() {
     return this.orderType === 'PURCHASE_ORDER'
-  }
-
-  get isSalesOrder() {
-    return this.orderType === 'SALES_ORDER'
   }
 
   get isProcessingOrder() {
@@ -673,7 +659,7 @@ export class StockPurchaseOrderEditComponent implements OnInit {
     this.additionalProofsListManager = new ListEditorManager<ChainActivityProof>(
       this.additionalProofsForm as FormArray,
       StockPurchaseOrderEditComponent.AdditionalProofItemEmptyObjectFormFactory(),
-      ChainActivityProofValidationScheme
+      ApiActivityProofValidationScheme
     )
 
     this.paymentsListManager = new ListEditorManager<ChainPayment>(
@@ -698,7 +684,7 @@ export class StockPurchaseOrderEditComponent implements OnInit {
 
   static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      let f = new FormControl(StockPurchaseOrderEditComponent.AdditionalProofItemCreateEmptyObject(), ChainActivityProofValidationScheme.validators)
+      let f = new FormControl(StockPurchaseOrderEditComponent.AdditionalProofItemCreateEmptyObject(), ApiActivityProofValidationScheme.validators)
       return f
     }
   }

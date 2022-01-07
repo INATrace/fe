@@ -14,29 +14,26 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ContentsModule } from 'src/app/contents/contents.module';
 import { LayoutModule } from 'src/app/layout/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SystemModule } from 'src/app/system/system.module';
-import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
+import { CoreModule } from 'src/app/core/core.module';
 import { ProcessingEvidenceItemComponent } from './processing-evidence-item/processing-evidence-item.component';
-import { FacilityCardComponent } from './facility-card/facility-card.component';
 import { PaymentFormComponent } from './payment-form/payment-form.component';
 import { PaymentItemComponent } from './payment-item/payment-item.component';
-import { StockTabCore } from './stock-tab-core/stock-tab-core.component';
+import { StockTabCoreComponent } from './stock-tab-core/stock-tab-core.component';
 import { ProductLabelStockOrderListComponent } from './product-label-stock-order-list/product-label-stock-order-list.component';
 import { StockPurchaseOrderEditComponent } from './stock-purchase-order-edit/stock-purchase-order-edit.component';
 import { ProductLabelStockProcessingOrderListComponent } from './product-label-stock-processing-order-list/product-label-stock-processing-order-list.component';
 import { OrderHistoryViewComponent } from './order-history-view/order-history-view.component';
 import { FieldOrDocInfoComponent } from './field-or-doc-info/field-or-doc-info.component';
 import { RejectTransactionModalComponent } from './reject-transaction-modal/reject-transaction-modal.component';
+import { ProductCommonModule } from '../../product-common/product-common.module';
 
 @NgModule({
   declarations: [
     FacilityStockOrderSelectorForNewPaymentModalComponent,
-    AdditionalProofItemComponent,
     ProcessingEvidenceItemComponent,
-    FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
-    StockTabCore,
+    StockTabCoreComponent,
     ProductLabelStockOrderListComponent,
     StockPurchaseOrderEditComponent,
     ProductLabelStockProcessingOrderListComponent,
@@ -47,7 +44,7 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
   imports: [
     CommonModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,
@@ -65,20 +62,20 @@ import { RejectTransactionModalComponent } from './reject-transaction-modal/reje
     NgSelectModule,
     GoogleMapsModule,
     DragDropModule,
+    ProductCommonModule
   ],
   exports: [
     FacilityStockOrderSelectorForNewPaymentModalComponent,
-    AdditionalProofItemComponent,
     ProcessingEvidenceItemComponent,
-    FacilityCardComponent,
     PaymentFormComponent,
     PaymentItemComponent,
-    StockTabCore,
+    StockTabCoreComponent,
     ProductLabelStockOrderListComponent,
     StockPurchaseOrderEditComponent,
     ProductLabelStockProcessingOrderListComponent,
     OrderHistoryViewComponent,
-    FieldOrDocInfoComponent
+    FieldOrDocInfoComponent,
+    ProductCommonModule
   ]
 })
 export class StockCoreModule { }

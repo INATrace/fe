@@ -11,8 +11,8 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainTransaction } from 'src/api-chain/model/chainTransaction';
 // import { KeyAggregates } from 'src/api-chain/model/keyAggregates';
 import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { dbKey } from 'src/shared/utils';
 import { RejectTransactionModalComponent } from '../reject-transaction-modal/reject-transaction-modal.component';
 

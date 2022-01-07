@@ -32,6 +32,10 @@ export interface ApiProductLabelUpdateValues {
      */
     id?: number;
     /**
+     * Label language
+     */
+    language?: ApiProductLabelUpdateValues.LanguageEnum;
+    /**
      * Product id
      */
     productId?: number;
@@ -66,6 +70,10 @@ export namespace ApiProductLabelUpdateValues {
          */
         id = 'id',
         /**
+         * Label language
+         */
+        language = 'language',
+        /**
          * Product id
          */
         productId = 'productId',
@@ -81,6 +89,16 @@ export namespace ApiProductLabelUpdateValues {
          * Product label uuid (for url)
          */
         uuid = 'uuid'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
     /**
@@ -116,6 +134,18 @@ export namespace ApiProductLabelUpdateValues {
                     name: 'id',
                     classname: 'ApiProductLabelUpdateValues',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelUpdateValues.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProductLabelUpdateValues',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -171,6 +201,8 @@ export namespace ApiProductLabelUpdateValues {
                 ],
                 id: [
                 ],
+                language: [
+                ],
                 productId: [
                 ],
                 status: [
@@ -190,6 +222,9 @@ export namespace ApiProductLabelUpdateValues {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //               productId: {

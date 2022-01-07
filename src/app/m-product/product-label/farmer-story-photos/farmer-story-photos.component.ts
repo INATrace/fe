@@ -7,7 +7,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 // import { ApiResponsibilityFarmerPictureValidationScheme } from '../product-label/validation';
 import { environment } from 'src/environments/environment';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
@@ -30,40 +30,43 @@ export class FarmerStoryPhotosComponent extends GenericEditableItemComponent<Api
         private commonController: CommonControllerService
 
     ) {
-        super(globalEventsManager)
+        super(globalEventsManager);
     }
 
     @Input()
-    disableDelete = false
+    disableEdit = false;
 
     @Input()
-    title = null
+    disableDelete = false;
+
+    @Input()
+    title = null;
 
     faStamp = faStamp;
 
-    public generateForm(value: any): FormGroup {
-        return generateFormFromMetadata(ApiResponsibilityFarmerPicture.formMetadata(), value, ApiResponsibilityFarmerPictureValidationScheme)
-    }
-
     static createEmptyObject(): ApiResponsibilityFarmerPicture {
-        let market = ApiResponsibilityFarmerPicture.formMetadata();
-        return defaultEmptyObject(market) as ApiResponsibilityFarmerPicture
+        const market = ApiResponsibilityFarmerPicture.formMetadata();
+        return defaultEmptyObject(market) as ApiResponsibilityFarmerPicture;
     }
 
     static emptyObjectFormFactory(): () => FormControl {
         return () => {
-            let f = new FormControl(FarmerStoryPhotosComponent.createEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators)
-            return f
-        }
+            const f = new FormControl(FarmerStoryPhotosComponent.createEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators);
+            return f;
+        };
+    }
+
+    public generateForm(value: any): FormGroup {
+        return generateFormFromMetadata(ApiResponsibilityFarmerPicture.formMetadata(), value, ApiResponsibilityFarmerPictureValidationScheme);
     }
 
     onDownload() {
-      let apiDoc = this.form.get('document').value as ApiDocument
+      const apiDoc = this.form.get('document').value as ApiDocument;
       if (apiDoc && apiDoc.storageKey) {
-        let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+        const sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
           this.fileSaverService.save(res, apiDoc.name);
-          sub.unsubscribe()
-        })
+          sub.unsubscribe();
+        });
       }
     }
 }

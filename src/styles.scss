@@ -696,9 +696,14 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     font-size: 80%;
 
     color: $danger;
-    // @include themify {
-    //     color: $color-danger;
-    // }
+}
+
+.sc-warning-feedback {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+
+  color: $warning;
 }
 
 // .ab-invalid-feedback {
@@ -2191,9 +2196,9 @@ animation-timing-function: ease-in;
     // This adds basic shape of icon with a background
     background-color: inherit;
     height: $sidebar-icon-bg-size;
-    // width: $sidebar-icon-bg-size;
-    // margin-right: 10px;
-    // border-radius: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &-shape {
       // This defines placement of icon as mask, backtround color defines color of icon
@@ -2202,7 +2207,7 @@ animation-timing-function: ease-in;
       height: $sidebar-icon-size;
       background: white;  // initiall color of icon
       mask-size: cover;
-      margin: ($sidebar-icon-bg-size - $sidebar-icon-size) / 2; // (34 - 24)/2
+      //margin: ($sidebar-icon-bg-size - $sidebar-icon-size) / 2; // (34 - 24)/2
 
       &:hover,
       &:focus {
@@ -2213,6 +2218,9 @@ animation-timing-function: ease-in;
       &--dashboard {
         mask: url(assets/icons/icon-dashboard.svg) no-repeat;
       }
+      &--company {
+        mask: url("assets/icons/building-solid.svg") no-repeat;
+      }
       &--products {
         mask: url(assets/icons/icon-products.svg) no-repeat;
       }
@@ -2222,8 +2230,6 @@ animation-timing-function: ease-in;
     }
   }
 }
-
-
 
 .sidenav {
   margin-top: 0;
@@ -3340,7 +3346,7 @@ $ustwo-colour-delux: #666;
         position: relative;
         width: 250px;
         top: 0;
-        background-color: #F7F7F7;
+        background-color: inherit;
         box-shadow: none;
         border: none;
         border-bottom: 1px solid #25265E;
@@ -4726,4 +4732,13 @@ $af-graph-col-bg: inherit;
   position: fixed;
   bottom: 0;
   right: 0;
+}
+
+.company-profile {
+  margin-left: 8px;
+  margin-right: 8px;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: 2rem;
+  }
 }

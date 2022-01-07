@@ -96,7 +96,8 @@ export namespace ApiUserBase {
     export enum LanguageEnum {
         EN = 'EN',
         DE = 'DE',
-        RW = 'RW'
+        RW = 'RW',
+        ES = 'ES'
     }
 
     /**

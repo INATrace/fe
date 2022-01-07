@@ -41,7 +41,7 @@ export interface ApiCompanyDocument {
      */
     name?: string;
     /**
-     * description of this document
+     * quote of this document
      */
     quote?: string;
     /**
@@ -76,7 +76,7 @@ export namespace ApiCompanyDocument {
          */
         name = 'name',
         /**
-         * description of this document
+         * quote of this document
          */
         quote = 'quote',
         /**

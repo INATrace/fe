@@ -17,8 +17,9 @@ export class LandingPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.publicController.logPublicRequestUsingPOST({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.LANDINGPAGE })
-      .pipe(take(1)).toPromise();
+    this.publicController
+      .logPublicRequestUsingPOST({token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.LANDINGPAGE})
+      .pipe(take(1)).toPromise().then();
   }
 
 }

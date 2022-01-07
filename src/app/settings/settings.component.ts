@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { take } from 'rxjs/operators';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../core/ngb-modal-improved/ngb-modal-improved.service';
 import { Router } from '@angular/router';
-import { TypeDetailModalComponent } from '../type-detail-modal/type-detail-modal.component';
+import { TypeDetailModalComponent } from './type-detail-modal/type-detail-modal.component';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { UserControllerService } from 'src/api/api/userController.service';
@@ -31,21 +31,35 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
 
   allFacilities = 0;
   showedFacilities = 0;
+
   allMeasurements = 0;
   showedMeasurements = 0;
+
   allActions = 0;
   showedActions = 0;
+
   allGrades = 0;
   showedGrades = 0;
+
   allProcEvidTypes = 0;
   showedProcEvidTypes = 0;
+
   allOrderEvidTypes = 0;
   showedOrderEvidTypes = 0;
+
+  allProcEvidFields = 0;
+  showedProcEvidFields = 0;
+
   parentReloadProcEvidTypes = false;
+  parentReloadProcEvidFields = false;
   parentReloadGrade = false;
   parentReloadFacility = false;
   parentReloadMeasure = false;
   parentReloadAction = false;
+  parentReloadSemiProducts = false;
+
+  allSemiProducts = 0;
+  showedSemiProducts = 0;
 
   // TABS ////////////////
   @ViewChild(AuthorisedLayoutComponent) authorizedLayout;
@@ -105,6 +119,8 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.showedActions = event; }
     if (type === 'grade-abbreviation') { this.showedGrades = event; }
     if (type === 'processing-evidence-types') { this.showedProcEvidTypes = event; }
+    if (type === 'processing-evidence-fields') { this.showedProcEvidFields = event; }
+    if (type === 'semi-products') { this.showedSemiProducts = event; }
   }
 
   onCountAll(event, type) {
@@ -113,6 +129,8 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { this.allActions = event; }
     if (type === 'grade-abbreviation') { this.allGrades = event; }
     if (type === 'processing-evidence-types') { this.allProcEvidTypes = event; }
+    if (type === 'processing-evidence-fields') { this.allProcEvidFields = event; }
+    if (type === 'semi-products') { this.allSemiProducts = event; }
   }
 
   ngOnDestroy() {
@@ -128,26 +146,22 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
   }
 
   async save() {
-    let result = false;
     try {
       this.globalEventsManager.showLoading(true);
       const res = await this.commonController.updateGlobalSettingsUsingPOST(this.globalEventsManager.globalSettingsKeys('UNPUBLISHED_PRODUCT_LABEL_TEXT'), { value: this.unpublishedProductLabelText.value, isPublic: true }).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.unpublishedProductLabelText.markAsPristine();
-        result = true;
       }
     } catch (e) {
 
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-    let result1 = false;
     try {
       this.globalEventsManager.showLoading(true);
       const res = await this.commonController.updateGlobalSettingsUsingPOST(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK'), { value: this.labelsHelperLink.value, isPublic: false }).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.labelsHelperLink.markAsPristine();
-        result1 = true;
       }
     } catch (e) {
 
@@ -172,6 +186,8 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     if (type === 'action-types') { addTitle = $localize`:@@settingsPage.newActionType.addTitle:Add action type`; }
     if (type === 'grade-abbreviation') { addTitle = $localize`:@@settingsPage.newGradeAbbreviation.addTitle:Add grade abbreviation`; }
     if (type === 'processing-evidence-types') { addTitle = $localize`:@@settingsPage.newProcessingEvidenceType.addTitle:Add processing evidence type`; }
+    if (type === 'processing-evidence-fields') { addTitle = $localize`:@@settingsPage.newProcessingEvidenceField.addTitle:Add processing evidence field`; }
+    if (type === 'semi-products') { addTitle = $localize`:@@settingsPage.newSemiProducts.addTitle:Add new semi-product`; }
 
     this.modalService.open(TypeDetailModalComponent, {
       centered: true
@@ -184,6 +200,8 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
         if (type === 'action-types') { this.parentReloadAction = !this.parentReloadAction; }
         if (type === 'grade-abbreviation') { this.parentReloadGrade = !this.parentReloadGrade; }
         if (type === 'processing-evidence-types') { this.parentReloadProcEvidTypes = !this.parentReloadProcEvidTypes; }
+        if (type === 'processing-evidence-fields') { this.parentReloadProcEvidFields = !this.parentReloadProcEvidFields; }
+        if (type === 'semi-products') { this.parentReloadSemiProducts = !this.parentReloadSemiProducts; }
       }
     });
   }

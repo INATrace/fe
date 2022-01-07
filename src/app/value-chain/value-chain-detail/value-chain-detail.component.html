@@ -1,0 +1,258 @@
+<app-authorised-layout>
+  <app-system-left-panel title="System" [isAdmin]="true"></app-system-left-panel>
+
+  <div class="main"
+       *ngIf="valueChainDetailForm"
+       contents
+       [initialValue]=""
+       [submitted]="submitted">
+
+    <div class="af-form-wrapper">
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="title-page content-element--title">{{ title }}</div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.basicInfo.title">Basic information</h2>
+          <div class="af-form-element">
+            <app-closable [nonClosable]="true">
+              <textinput label="Value chain name"
+                         placeholder="Enter value chain name"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.valueChainName.label"
+                         i18n-placeholder="@@valueChainDetail.section.basicInfo.field.valueChainName.placeholder"
+                         [form]="valueChainDetailForm.get('name')"
+                         [isInvalid]="submitted && valueChainDetailForm.get('name').invalid">
+                <div *ngIf="submitted && valueChainDetailForm.get('name').invalid" class="sc-invalid-feedback">
+                  <div *ngIf="valueChainDetailForm.get('name').errors.required"
+                       i18n="@@valueChainDetail.section.basicInfo.field.valueChainName.error">
+                    <span>Value chain name is required</span>
+                  </div>
+                </div>
+              </textinput>
+            </app-closable>
+
+            <app-closable [nonClosable]="true">
+              <textinput label="Description"
+                         placeholder="Enter value chain description"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.description.label"
+                         i18n-placeholder="@@valueChainDetail.section.basicInfo.field.description.placeholder"
+                         [textarea]="true"
+                         [form]="valueChainDetailForm.get('description')"
+                         [isInvalid]="submitted && valueChainDetailForm.get('description').invalid">
+                <div *ngIf="submitted && valueChainDetailForm.get('description').invalid" class="sc-invalid-feedback">
+                  <div *ngIf="valueChainDetailForm.get('description').errors.required"
+                       i18n="@@valueChainDetail.section.basicInfo.field.description.error">
+                    <span>Description is required</span>
+                  </div>
+                </div>
+              </textinput>
+            </app-closable>
+
+            <app-closable [nonClosable]="true" *ngIf="mode === 'update'">
+              <textinput label="Status"
+                         hideAsterisk="true"
+                         i18n-label="@@valueChainDetail.section.basicInfo.field.status.label"
+                         [form]="valueChainDetailForm.get('valueChainStatus')"
+                         [readOnly]="true">
+              </textinput>
+            </app-closable>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.facilityTypes.title">Facility types</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain facility types"
+                         i18n-label="@@valueChainDetail.section.facilityTypes.add.title"
+                         addText="Add new"
+                         [listEditorManager]="facilityTypeListManager"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcFacilityTypes; let i=index;">
+                  <app-value-chain-config-item configItemType="facility-types"
+                                               title="Value chain facility types"
+                                               i18n-title="@@valueChainDetail.section.facilityTypes.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="facilityTypeListManager"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="facilityTypeListManager.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.measureUnitTypes.title">Measuring unit types</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain measuring unit types"
+                         i18n-label="@@valueChainDetail.section.measureUnitTypes.add.title"
+                         addText="Add new"
+                         [listEditorManager]="measureUnitTypeListManager"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcMeasureUnitTypes; let i=index;">
+                  <app-value-chain-config-item configItemType="measure-unit-types"
+                                               title="Value chain measuring unit types"
+                                               i18n-title="@@valueChainDetail.section.measureUnitTypes.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="measureUnitTypeListManager"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="measureUnitTypeListManager.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.gradeAbbreviations.title">Grade abbreviations</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain grade abbreviations"
+                         i18n-label="@@valueChainDetail.section.gradeAbbreviations.add.title"
+                         addText="Add new"
+                         [listEditorManager]="gradeAbbreviationTypeListManager"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcGradeAbbreviationTypes; let i=index;">
+                  <app-value-chain-config-item configItemType="grade-abbreviation-types"
+                                               title="Value chain grade abbreviations"
+                                               i18n-title="@@valueChainDetail.section.gradeAbbreviations.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="gradeAbbreviationTypeListManager"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="gradeAbbreviationTypeListManager.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.processingEvidenceTypes.title">Processing evidence types</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain processing evidence types"
+                         i18n-label="@@valueChainDetail.section.processingEvidenceTypes.add.title"
+                         addText="Add new"
+                         [listEditorManager]="processingEvidenceTypeListManger"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcProcEvidenceTypes; let i=index;">
+                  <app-value-chain-config-item configItemType="processing-evidence-types"
+                                               title="Value chain processing evidence types"
+                                               i18n-title="@@valueChainDetail.section.processingEvidenceTypes.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="processingEvidenceTypeListManger"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="processingEvidenceTypeListManger.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.processingEvidenceFields.title">Processing evidence fields</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain processing evidence fields"
+                         i18n-label="@@valueChainDetail.section.processingEvidenceFields.add.title"
+                         addText="Add new"
+                         [listEditorManager]="processingEvidenceFieldListManger"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcProcEvidenceFields; let i=index;">
+                  <app-value-chain-config-item configItemType="processing-evidence-fields"
+                                               title="Value chain processing evidence fields"
+                                               i18n-title="@@valueChainDetail.section.processingEvidenceFields.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="processingEvidenceFieldListManger"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="processingEvidenceFieldListManger.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.semiProducts.title">Semi-products</h2>
+          <div class="af-form-element">
+            <list-editor label="Value chain semi-products"
+                         i18n-label="@@valueChainDetail.section.semiProducts.add.title"
+                         addText="Add new"
+                         [listEditorManager]="semiProductsListManager"
+                         [canAdd]="true">
+              <list-editor-items>
+                <div *ngFor="let item of vcSemiProducts; let i=index;">
+                  <app-value-chain-config-item configItemType="semi-products"
+                                               title="Value chain semi-products"
+                                               i18n-title="@@valueChainDetail.section.semiProducts.add.title"
+                                               [formControlInput]="item"
+                                               [listEditorManager]="semiProductsListManager"
+                                               [listEditorManagerPosition]="i"
+                                               [isOpen]="semiProductsListManager.isOpen(i)">
+                  </app-value-chain-config-item>
+                </div>
+              </list-editor-items>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons">
+            <bottom-buttons *ngIf="mode === 'update'; else createButton"
+                            [changed]="changed"
+                            [invalid]="submitted && valueChainDetailForm.invalid"
+                            (onSave)="save()"
+                            (onValidate)="validate()"
+                            [floatingValidate]="true"
+                            [error]="submitted && valueChainDetailForm.invalid"
+                            [success]="submitted && !valueChainDetailForm.invalid"
+                            [form]="valueChainDetailForm">
+            </bottom-buttons>
+            <ng-template #createButton>
+              <bottom-buttons
+                      [changed]="changed"
+                      [invalid]="submitted && valueChainDetailForm.invalid"
+                      (onSave)="create()"
+                      (onValidate)="validate()"
+                      saveButtonLabel="Create"
+                      i18n-saveButtonLabel="@@valueChainDetail.bottomButtons.createButtonLabel"
+                      [floatingValidate]="true"
+                      [error]="submitted && valueChainDetailForm.invalid"
+                      [success]="submitted && !valueChainDetailForm.invalid">
+              </bottom-buttons>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</app-authorised-layout>

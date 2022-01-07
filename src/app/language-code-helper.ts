@@ -1,20 +1,30 @@
 // source https://afana.me/archive/2018/10/28/angular-internationalization/, https://github.com/NadeemAfana/angular-internationalization/tree/store-locale-in-url/src
 export abstract class LanguageCodeHelper {
+
   public static defaultLocaleId = 'en';
   public static implementedLocales = ['de', 'rw', 'es', LanguageCodeHelper.defaultLocaleId];
 
-
   public static setCurrentLocale(localeId: string) {
+
     const urlLocaleId = LanguageCodeHelper.getCultureFromCurrentUrl();
-    if (urlLocaleId === localeId) { return; }
+    if (urlLocaleId === localeId) {
+      return;
+    }
     if (urlLocaleId) {
-        window.location.href = window.location.href.replace(`/${urlLocaleId}/`, `/${localeId.toLowerCase()}/`);
+      window.location.href = window.location.href.replace(`/${ urlLocaleId }/`, `/${ localeId.toLowerCase() }/`);
     } else {
-        const newUrl = window.location.href.replace(window.location.pathname, `/${localeId}` + window.location.pathname);
-        if (newUrl !== window.location.href) {
-          window.location.href = newUrl;
-        }
+
+      let newUrl;
+      if (window.location.pathname === '/') {
+        newUrl = window.location.href + localeId + '/';
+      } else {
+        newUrl = window.location.href.replace(window.location.pathname, `/${ localeId }` + window.location.pathname);
       }
+
+      if (newUrl !== window.location.href) {
+        window.location.href = newUrl;
+      }
+    }
   }
 
   public static isDefaultLocaleSet(): boolean {

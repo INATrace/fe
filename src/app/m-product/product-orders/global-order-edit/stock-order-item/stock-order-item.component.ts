@@ -13,7 +13,7 @@ import { ActiveSellingFacilitiesForOrganizationAndSemiProductIdStandaloneService
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { OrderProcessiongActionsForProductAndOrganizationStandaloneService } from 'src/app/shared-services/order-processing-actions-for-product-and-organization-standalone';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainStockOrderValidationScheme } from './validation';
 

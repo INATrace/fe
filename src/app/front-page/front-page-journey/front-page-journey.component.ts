@@ -1,175 +1,32 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { PublicService } from 'src/api-chain/api/public.service';
-import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
-import { B2CHistoryItem } from 'src/api-chain/model/b2CHistoryItem';
-import { ProcessingOrderHistory } from 'src/api-chain/model/processingOrderHistory';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { PublicControllerService } from '../../../api/api/publicController.service';
+import { HistoryTimelineItem } from './model';
+import { ApiHistoryTimelineItem } from '../../../api/model/apiHistoryTimelineItem';
 
 @Component({
   selector: 'app-front-page-journey',
   templateUrl: './front-page-journey.component.html',
   styleUrls: ['./front-page-journey.component.scss']
 })
-export class FrontPageJourneyComponent implements OnInit {
+export class FrontPageJourneyComponent implements OnInit, OnDestroy {
 
-  pageYoffset = 0;
-  @HostListener('window:scroll', ['$event']) onScroll(event) {
-    this.pageYoffset = window.pageYOffset;
-  }
-
-  @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) {
-      this._map = map;
-      setTimeout(() => this.googleMapsIsLoaded(map));
-    }
-  };
-
-  constructor(
-    private route: ActivatedRoute,
-    public globalEventManager: GlobalEventManagerService,
-    private chainPublicController: PublicService,
-    private scroll: ViewportScroller
-  ) { }
-
-  _map: GoogleMap = null
-  get map(): GoogleMap {
-    return this._map;
-  }
+  pageYOffset = 0;
 
   tab: string = null;
   title = $localize`:@@frontPage.journey.title:Product journey`;
   subs: Subscription[] = [];
-  isGoogleMapsLoaded: boolean = false;
-  processing = [];
-  coopName: string = ""
-  processingShorter = []
+  isGoogleMapsLoaded = false;
 
+  producerName = '';
+  historyItems = [];
 
-  soid = this.route.snapshot.params.soid;
-  // soid = "f454a462-0d97-42b8-9888-f8844d945bf3";
-
-  ngOnInit(): void {
-    this.tab = this.route.snapshot.data.tab;
-
-    let sub2 = this.globalEventManager.areGoogleMapsLoadedEmmiter.subscribe(
-      loaded => {
-        if (loaded) this.isGoogleMapsLoaded = true;
-      },
-      error => { }
-    )
-    this.subs.push(sub2);
-
-    this.data();
-  }
-
-  scrollToTop() {
-    this.scroll.scrollToPosition([0, 0]);
-  }
-
-  styleForIconType(iconType: string) {
-    switch (iconType) {
-      case 'SHIP': return 'af-journey-dot-shape--ship'
-      case 'LEAF': return 'af-journey-dot-shape--leaf'
-      case 'WAREHOUSE': return 'af-journey-dot-shape--warehouse'
-      case 'QRCODE': return 'af-journey-dot-shape--qr-code'
-      case 'OTHER': return 'af-journey-dot-shape--other'
-      default:
-        return 'af-journey-dot-shape--leaf'
-    }
-  }
-
-  iconStyle(item: ProcessingOrderHistory) {
-    let iconType = item.processingOrder.processingAction.publicTimelineIcon
-    if (!iconType) {
-      if (item.processingOrder.processingAction.type === 'TRANSFER') return 'af-journey-dot-shape--ship'
-      return 'af-journey-dot-shape--leaf'
-    }
-    return this.styleForIconType(iconType)
-  }
-
-  addIconStyleForIconType(item: B2CHistoryItem): B2CHistoryItem {
-    let iconClass = ""
-    if (!item.iconEnumType) {
-      if (item.type === 'TRANSFER') {
-        iconClass = 'af-journey-dot-shape--ship'
-      } else {
-        iconClass = 'af-journey-dot-shape--leaf'
-      }
-    } else {
-      iconClass = this.styleForIconType(item.iconEnumType)
-    }
-    return {...item, iconClass}
-  }
-
-  async data() {
-    if (this.soid != 'EMPTY') {
-
-      let res = await this.chainPublicController.getAggregatesForStockOrder(this.soid).pipe(take(1)).toPromise();
-      if (res && res.status === "OK" && res.data) {
-        // console.log(res.data)
-        // for (let item of res.data) {
-        //   if (item.processingOrder && item.processingOrder.processingAction) {
-        //     if (item.stockOrderAggs.length >= 1) {
-        //       let tmp = {
-        //         type: item.processingOrder.processingAction.type,
-        //         name: item.processingOrder.processingAction.name,
-        //         location: item.stockOrderAggs[0].stockOrder.facility.name,
-        //         date: item.stockOrderAggs[0].stockOrder.productionDate
-        //       }
-        //       this.processing.push(tmp);
-        //       if (item.processingOrder.processingAction.publicTimelineLabel) {
-        //         let defaultLocation = item.stockOrderAggs[0].stockOrder.facility.name
-        //         let publicTimelineLocation = item.processingOrder.processingAction.publicTimelineLocation
-        //         let tmp = {
-        //           type: item.processingOrder.processingAction.type,
-        //           name: item.processingOrder.processingAction.publicTimelineLabel,
-        //           location: publicTimelineLocation ? publicTimelineLocation : defaultLocation,
-        //           date: item.processingOrder.processingDate,
-        //           iconClass: this.iconStyle(item)
-        //         }
-        //         // console.log(item.processingOrder.processingDate)
-        //         this.processingShorter.push(tmp)
-        //       }
-        //     }
-        //   } else {
-        //     if (item.stockOrderAggs.length >= 1) {
-        //       let tmp = {
-        //         type: null,
-        //         name: null,
-        //         location: item.stockOrderAggs[0].stockOrder.facility.name,
-        //         date: item.stockOrderAggs[0].stockOrder.productionDate
-        //       }
-        //       this.coopName = item.stockOrderAggs[0].stockOrder.organization.name;
-        //       this.processing.push(tmp);
-        //       this.processingShorter.push(tmp)
-        //     }
-        //   }
-        // }
-        this.coopName = res.data.coopName
-        this.processing = res.data.items
-        this.processingShorter = res.data.shortItems.map(item => this.addIconStyleForIconType(item))
-        console.log(this.processing)
-        console.log(this.processingShorter)
-        // let len = res.data.length;
-        // let processingOH = res.data[len - 2];
-        // let processingArr = processingOH.stockOrderAggs;
-        // if (processingArr.length >= 1) {
-        //   this.processing = processingArr[0].stockOrder;
-        // console.log(this.processing, this.processingShorter);
-        // }
-      }
-
-    }
-  }
-
-  ngOnDestroy() {
-    this.subs.forEach(sub => sub.unsubscribe());
-  }
+  qrTag = this.route.snapshot.params.qrTag;
 
   locations: google.maps.LatLngLiteral[] = [
     { lat: -3.1428191, lng: 31.2247691 },
@@ -203,94 +60,174 @@ export class FrontPageJourneyComponent implements OnInit {
   zoomForOnePin = 10;
   bounds: any;
 
-  googleMapsIsLoaded(map) {
-    this.isGoogleMapsLoaded = true;
-    if (this.soid === 'EMPTY') return;
-    for (const [i, loc] of this.locations.entries()) {
-      let tmp = {
-        position: {
-          lat: loc.lat,
-          lng: loc.lng,
-          type: i == 0 || i == this.locations.length - 1 ? "bound" : "middle",
-          // icon: new google.maps.MarkerImage('/path/to/icon.svg',
-          //   null, null, null, new google.maps.Size(64, 64)),
-        },
-      }
-      this.markers.push(tmp);
-      this.initialBounds.push(tmp.position);
-    }
-    this.bounds = new google.maps.LatLngBounds()
-    for (let bound of this.initialBounds) {
-      this.bounds.extend(bound);
-    }
-    if (this.bounds.isEmpty()) {
-      map.googleMap.setCenter(this.defaultCenter)
-      map.googleMap.setZoom(this.defaultZoom);
-      return;
-    }
-    let center = this.bounds.getCenter()
-    let offset = 0.02
-    let northEast = new google.maps.LatLng(
-      center.lat() + offset,
-      center.lng() + offset
-    )
-    let southWest = new google.maps.LatLng(
-      center.lat() - offset,
-      center.lng() - offset
-    )
-    let minBounds = new google.maps.LatLngBounds(southWest, northEast)
-    map.fitBounds(this.bounds.union(minBounds))
-  }
-
-
-  markerOption(i) {
-    return {
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 4,
-        fillColor: "#AC1A56",
-        fillOpacity: 1,
-        strokeColor: "#AC1A56",
-      }
-    }
-  }
-
   lineSymbol = {
-    path: "M 0,-1 0,1",
+    path: 'M 0,-1 0,1',
     strokeOpacity: 1,
     scale: 2,
-    strokeColor: "#AC1A56"
+    strokeColor: '#AC1A56'
   };
-
-  get polyOptions() {
-    return this.options;
-  }
 
   options: google.maps.PolylineOptions = {
     icons: [
       {
         icon: this.lineSymbol,
-        offset: "0",
-        repeat: "20px"
+        offset: '0',
+        repeat: '20px'
       },
     ],
     strokeOpacity: 0,
   };
 
-  formatDate(date) {
-    if (date) {
-      let split = date.split("-");
-      return split[2] + "." + split[1] + "." + split[0];
-    }
-    let today = new Date();
-    let day = today.getDate();
-    let month = today.getMonth() + 1;
-    let year = today.getFullYear();
-    return day + "." + month + "." + year;
+  gMap: GoogleMap = null;
+
+  mapMarkerOption: any;
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.pageYOffset = window.pageYOffset;
   }
 
-  short = true;
-  toggleShort() {
-    this.short = !this.short
+  @ViewChild(GoogleMap)
+  set map(map: GoogleMap) {
+    if (map) {
+      this.gMap = map;
+      this.mapMarkerOption = {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 4,
+          fillColor: '#AC1A56',
+          fillOpacity: 1,
+          strokeColor: '#AC1A56',
+        }
+      };
+      setTimeout(() => this.googleMapsIsLoaded(map));
+    }
   }
+
+  get map(): GoogleMap {
+    return this.gMap;
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    public globalEventManager: GlobalEventManagerService,
+    private publicControllerService: PublicControllerService,
+    private scroll: ViewportScroller
+  ) { }
+
+  ngOnInit(): void {
+    this.tab = this.route.snapshot.data.tab;
+
+    const sub2 = this.globalEventManager.areGoogleMapsLoadedEmmiter.subscribe(
+      loaded => {
+        if (loaded) { this.isGoogleMapsLoaded = true; }
+      },
+      () => { }
+    );
+    this.subs.push(sub2);
+
+    this.data().then();
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  scrollToTop() {
+    this.scroll.scrollToPosition([0, 0]);
+  }
+
+  styleForIconType(iconType: string) {
+    switch (iconType) {
+      case 'SHIP': return 'af-journey-dot-shape--ship';
+      case 'LEAF': return 'af-journey-dot-shape--leaf';
+      case 'WAREHOUSE': return 'af-journey-dot-shape--warehouse';
+      case 'QRCODE': return 'af-journey-dot-shape--qr-code';
+      case 'OTHER': return 'af-journey-dot-shape--other';
+      default:
+        return 'af-journey-dot-shape--leaf';
+    }
+  }
+
+  addIconStyleForIconType(item: ApiHistoryTimelineItem): HistoryTimelineItem {
+
+    let iconClass;
+    if (!item.iconType) {
+      if (item.type === 'TRANSFER') {
+        iconClass = 'af-journey-dot-shape--ship';
+      } else {
+        iconClass = 'af-journey-dot-shape--leaf';
+      }
+    } else {
+      iconClass = this.styleForIconType(item.iconType);
+    }
+    return {...item, iconClass};
+  }
+
+  async data() {
+
+    if (this.qrTag !== 'EMPTY') {
+
+      // Get the aggregated history for the QR code tag
+      const resp = await this.publicControllerService.getQRTagPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
+      if (resp && resp.status === 'OK' && resp.data) {
+        this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
+        this.producerName = resp.data.producerName;
+      }
+    }
+  }
+
+  googleMapsIsLoaded(map) {
+    this.isGoogleMapsLoaded = true;
+    if (this.qrTag === 'EMPTY') { return; }
+    for (const [i, loc] of this.locations.entries()) {
+      const tmp = {
+        position: {
+          lat: loc.lat,
+          lng: loc.lng,
+          type: i === 0 || i === this.locations.length - 1 ? 'bound' : 'middle'
+        },
+      };
+      this.markers.push(tmp);
+      this.initialBounds.push(tmp.position);
+    }
+    this.bounds = new google.maps.LatLngBounds();
+    for (const bound of this.initialBounds) {
+      this.bounds.extend(bound);
+    }
+    if (this.bounds.isEmpty()) {
+      map.googleMap.setCenter(this.defaultCenter);
+      map.googleMap.setZoom(this.defaultZoom);
+      return;
+    }
+    const center = this.bounds.getCenter();
+    const offset = 0.02;
+    const northEast = new google.maps.LatLng(
+      center.lat() + offset,
+      center.lng() + offset
+    );
+    const southWest = new google.maps.LatLng(
+      center.lat() - offset,
+      center.lng() - offset
+    );
+    const minBounds = new google.maps.LatLngBounds(southWest, northEast);
+    map.fitBounds(this.bounds.union(minBounds));
+  }
+
+  get polyOptions() {
+    return this.options;
+  }
+
+  formatDate(date) {
+    if (date) {
+      const split = date.split('-');
+      return split[2] + '.' + split[1] + '.' + split[0];
+    }
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    return day + '.' + month + '.' + year;
+  }
+
 }

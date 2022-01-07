@@ -3,18 +3,14 @@
   </app-product-label-left-panel-content>
 
   <div class="main">
-
     <div class="row">
-
       <div class="col">
-
-
 
         <div class="main-inside-top content-element">
 
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.buyers">Buyers</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newBuyer()" i18n="@@productLabelStakeholders.button.newBuyer">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newBuyer()" i18n="@@productLabelStakeholders.button.newBuyer">
               <span>+ Add buyer</span>
             </button>
           </div>
@@ -25,7 +21,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="buyer">
+                  [company]="buyer"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -35,36 +32,53 @@
 
         </div>
 
-
         <div class="main-inside-top content-element">
-
           <div class="d-flex justify-content-between content-element--row1">
-            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Owners</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
-              <span>+ Add owner</span>
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.importers">Importers</div>
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newImporter()" i18n="@@productLabelStakeholders.button.newImporter">
+              <span>+ Add importer</span>
             </button>
           </div>
 
           <div class="container container--bare">
-            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
-              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
-
+            <div class="row" style="margin-top: 30px" *ngIf="this.importers">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let importer of this.importers">
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="owner">
+                  [company]="importer"
+                  [editable]="editable()">
                 </app-company-card>
-
               </div>
             </div>
           </div>
+        </div>
 
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.exporters">Exporters</div>
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newExporter()" i18n="@@productLabelStakeholders.button.newExporter">
+              <span>+ Add exporter</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px" *ngIf="this.exporters">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let exporter of this.exporters">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="exporter"
+                  [editable]="editable()">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="main-inside-top content-element">
 
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.producers">Producers</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProducer()" i18n="@@productLabelStakeholders.button.newProducer">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newProducer()" i18n="@@productLabelStakeholders.button.newProducer">
               <span>+ Add producer</span>
             </button>
           </div>
@@ -75,30 +89,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="producer">
-                </app-company-card>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="main-inside-top content-element">
-
-          <div class="d-flex justify-content-between content-element--row1">
-            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.roasters">Roasters</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newRoaster()" i18n="@@productLabelStakeholders.button.newRoaster">
-              <span>+ Add roaster</span>
-            </button>
-          </div>
-
-          <div class="container container--bare">
-            <div class="row" style="margin-top: 30px;" *ngIf="this.roasters">
-              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let roaster of this.roasters">
-
-                <app-company-card
-                  (onSelect)="remove($event)"
-                  [company]="roaster">
+                  [company]="producer"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -110,7 +102,7 @@
         <div class="main-inside-top content-element">
           <div class="d-flex justify-content-between content-element--row1">
             <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.associations">Associations</div>
-            <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newAssociation()" i18n="@@productLabelStakeholders.button.newAssociation">
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newAssociation()" i18n="@@productLabelStakeholders.button.newAssociation">
               <span>+ Add association</span>
             </button>
           </div>
@@ -121,7 +113,8 @@
 
                 <app-company-card
                   (onSelect)="remove($event)"
-                  [company]="association">
+                  [company]="association"
+                  [editable]="editable()">
                 </app-company-card>
 
               </div>
@@ -130,6 +123,131 @@
 
         </div>
 
+        <div class="main-inside-top content-element">
+
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.processors">Processors</div>
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessor()" i18n="@@productLabelStakeholders.button.newProcessor">
+              <span>+ Add processor</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px;" *ngIf="this.processors">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let processor of this.processors">
+
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="processor"
+                  [editable]="editable()">
+                </app-company-card>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.traders">Traders</div>
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newTrader()" i18n="@@productLabelStakeholders.button.newTrader">
+              <span>+ Add trader</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px" *ngIf="this.traders">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let trader of this.traders">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="trader"
+                  [editable]="editable()">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="main-inside-top content-element">
+          <div class="d-flex justify-content-between content-element--row1">
+            <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.owners">Product admin</div>
+            <button *ngIf="editable()" class="btn btn-solid round btn-table-new content-element--btn" (click)="newOwner()" i18n="@@productLabelStakeholders.button.newOwner">
+              <span>+ Add product admin</span>
+            </button>
+          </div>
+
+          <div class="container container--bare">
+            <div class="row" style="margin-top: 30px;" *ngIf="this.owners">
+              <div class="col-md-6 col-lg-4 col--bare" *ngFor="let owner of this.owners">
+                <app-company-card
+                  (onSelect)="remove($event)"
+                  [company]="owner"
+                  [owner]="true"
+                  [editable]="editable()">
+                </app-company-card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="product$ | async">
+          <hr>
+
+          <div class="af-form-wrapper">
+            <div class="af-form-row">
+              <div class="af-form-block--c12">
+                <div class="title-page content-element--title"
+                     i18n="@@productLabelStakeholders.dataSharingAgreements.title">Data sharing agreements</div>
+                <div class="af-form-element">
+
+                  <list-editor
+                          *ngIf="productForm && dataSharingAgreementListManager"
+                          label="Data sharing agreements"
+                          [listEditorManager]="dataSharingAgreementListManager"
+                          addText="Add new"
+                          [canAdd]="isOwner"
+                          i18n-label="@@productLabelStakeholders.dataSharingAgreements.label"
+                          i18n-addText="@@productLabelStakeholders.dataSharingAgreements.addNew">
+                    <list-editor-items>
+                      <div *ngFor="let item of dataSharingAgreementsControls; let i=index;">
+                        <app-data-sharing-agreement-item
+                                title="Data sharing agreement"
+                                i18n-title="@@productLabelStakeholders.dataSharingAgreements.listEditor.title"
+                                [readOnly]="!isOwner"
+                                [disableDelete]="!isOwner"
+                                [formControlInput]="item"
+                                [isOpen]="dataSharingAgreementListManager.isOpen(i)"
+                                [listEditorManager]="dataSharingAgreementListManager"
+                                [listEditorManagerPosition]="i">
+                        </app-data-sharing-agreement-item>
+                      </div>
+                    </list-editor-items>
+                  </list-editor>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="af-form-row">
+              <div class="af-form-block--c12">
+                <div class="af-bottom-buttons">
+                  <bottom-buttons
+                          [changed]="productForm.dirty"
+                          [invalid]="submitted && productForm.invalid"
+                          (onSave)="saveDataSharingAgreements()"
+                          [floatingValidate]="true"
+                          [error]="submitted && productForm.invalid"
+                          [success]="submitted && !productForm.invalid">
+                  </bottom-buttons>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
 
       </div>
     </div>

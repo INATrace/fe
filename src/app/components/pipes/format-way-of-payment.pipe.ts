@@ -5,22 +5,22 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatWayOfPaymentPipe implements PipeTransform {
 
-  transform(value: string): any {
+  transform(value: string): string {
     switch (value) {
       case 'CASH':
-        return $localize`:@@wayOfPaymentPipe.cash: Cash`
-      case 'BANK':
-        return $localize`:@@wayOfPaymentPipe.bank: Bank`
-      case 'CASH_VIA_COOPERATIVE':
-        return $localize`:@@wayOfPaymentPipe.cashViaCooperative: Cash via cooperative`
+        return $localize`:@@wayOfPaymentPipe.cash: Cash`;
       case 'CASH_VIA_COLLECTOR':
-        return $localize`:@@wayOfPaymentPipe.cashViaCollector: Cash via collector`
+        return $localize`:@@wayOfPaymentPipe.cashViaCollector: Cash via collector`;
       case 'BANK_TRANSFER':
-        return $localize`:@@wayOfPaymentPipe.bankTransfer: Bank transfer`
+        return $localize`:@@wayOfPaymentPipe.bankTransfer: Bank transfer`;
+      case 'CHEQUE':
+        return $localize`:@@preferredWayOfPayment.cheque: Cheque`;
+      case 'OFFSETTING':
+        return $localize`:@@preferredWayOfPayment.offsetting: Offsetting`;
       case 'UNKNOWN':
-        return $localize`:@@wayOfPaymentPipe.unknown: Unknown`
+        return $localize`:@@wayOfPaymentPipe.unknown: Unknown`;
       default:
-        return "-"
+        return '-';
     }
   }
 

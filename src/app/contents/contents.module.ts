@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-// import { ComponentsModule } from 'src/app/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ContentSectionComponent } from './content-section/content-section.component';
 import { ContentsLinkParentDirective } from './contents-link-parent.directive';

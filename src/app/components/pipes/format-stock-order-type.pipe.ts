@@ -8,19 +8,16 @@ export class FormatStockOrderTypePipe implements PipeTransform {
   transform(value: string): any {
     switch (value) {
       case 'GENERAL_ORDER':
-        return $localize`:@@stockOrderTypePipe.quoteOrder: QUO`
+        return $localize`:@@stockOrderTypePipe.quoteOrder: QUO`;
       case 'PROCESSING_ORDER':
-        return $localize`:@@stockOrderTypePipe.processingOrder: PRO`
+        return $localize`:@@stockOrderTypePipe.processingOrder: PRO`;
       case 'PURCHASE_ORDER':
-        return $localize`:@@stockOrderTypePipe.purchaseOrder: PO`
-      case 'SALES_ORDER':
-        return $localize`:@@stockOrderTypePipe.salesOrder: SO`
+        return $localize`:@@stockOrderTypePipe.purchaseOrder: PO`;
       case 'TRANSFER_ORDER':
-        return $localize`:@@stockOrderTypePipe.transferOrder: TO`
+        return $localize`:@@stockOrderTypePipe.transferOrder: TO`;
       default:
-        return "-"
+        return '-';
     }
   }
-
 
 }

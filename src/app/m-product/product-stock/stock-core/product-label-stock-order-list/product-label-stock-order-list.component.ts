@@ -9,7 +9,7 @@ import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ApiResponsePaginatedListChainStockOrder } from 'src/api-chain/model/apiResponsePaginatedListChainStockOrder';
 import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { ChainUserCustomer } from 'src/api-chain/model/chainUserCustomer';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { StockOrderType } from 'src/shared/types';
 import { dbKey, formatDateWithDots } from 'src/shared/utils';
 import { DeliveryDates, StockOrderListingPageMode } from '../stock-tab-core/stock-tab-core.component';
@@ -24,7 +24,7 @@ export class ProductLabelStockOrderListComponent implements OnInit {
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
   @Input()
-  facilityId$ = new BehaviorSubject<string>("");;
+  facilityId$ = new BehaviorSubject<string>("");
   @Input()
   openBalanceOnly$ = new BehaviorSubject<boolean>(false);
   @Input()
@@ -165,7 +165,7 @@ export class ProductLabelStockOrderListComponent implements OnInit {
       },
       {
         key: 'quantity',
-        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity (kg)`,
+        name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity`,
         inactive: true,
         hide: ["COMPANY_ADMIN", "ADMIN"].indexOf(this.pageListingMode) >= 0,
       },
@@ -354,9 +354,6 @@ export class ProductLabelStockOrderListComponent implements OnInit {
           return;
         case 'PROCESSING_ORDER':
           this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'processing-order', dbKey(order)]);
-          return;
-        case 'SALES_ORDER':
-          this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'sales-order', 'update', dbKey(order)]);
           return;
         case 'TRANSFER_ORDER':
           this.router.navigate(['product-labels', this.productId, 'stock', 'processing', 'update', 'transfer-order', dbKey(order)]);

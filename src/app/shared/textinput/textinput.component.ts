@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewChildren, ViewChild, Output, EventEmitter, Optional, Host } from '@angular/core';
 import { FormControl, AbstractControl, FormArray } from '@angular/forms';
 import cloneDeep from 'lodash/cloneDeep';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { TextinputModalComponent } from '../textinput-modal/textinput-modal.component';
 import { BehaviorSubject, combineLatest, Subscription, Subject, merge, of, Observable } from 'rxjs';
 // import { JezikTekst } from 'src/api/model/jezikTekst';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { map, tap, shareReplay, startWith, distinctUntilChanged, filter, debounceTime, delay } from 'rxjs/operators';
 import { CodebookHelperService } from 'src/interfaces/CodebookHelperService';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';

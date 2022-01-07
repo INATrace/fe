@@ -10,9 +10,7 @@ const routes: Routes = [
   { path: 'purchases', loadChildren: () => import('./stock-purchase-orders/stock-purchase-orders.module').then(m => m.StockPurchaseOrdersModule)},
   { path: 'processing', loadChildren: () => import('./stock-processing/stock-processing.module').then(m => m.StockProcessingModule)},
   { path: 'payments', loadChildren: () => import('./stock-payments/stock-payments.module').then(m => m.StockPaymentsModule)},
-  { path: 'configuration', loadChildren: () => import('./stock-configuration/stock-configuration.module').then(m => m.StockConfigurationModule)},
-  { path: 'stock-orders', loadChildren: () => import('./stock-stock-orders/stock-stock-orders.module').then(m => m.StockStockOrdersModule)},
-  { path: 'transactions', loadChildren: () => import('./stock-transactions/stock-transactions.module').then(m => m.StockTransactionsModule)},
+  { path: 'stock-orders', loadChildren: () => import('./stock-stock-orders/stock-stock-orders.module').then(m => m.StockStockOrdersModule)}
 ];
 
 @NgModule({

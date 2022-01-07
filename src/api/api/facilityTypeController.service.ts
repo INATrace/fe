@@ -32,6 +32,7 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiFacilityType } from '../model/apiFacilityType';
 import { ApiPaginatedResponseApiFacilityType } from '../model/apiPaginatedResponseApiFacilityType';
+import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiFacilityType } from '../model/apiResponseApiFacilityType';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -260,15 +261,15 @@ export class FacilityTypeControllerService {
   public createOrUpdateFacilityTypeUsingPUTByMap(
     map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiFacilityType>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public createOrUpdateFacilityTypeUsingPUTByMap(
     map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiFacilityType>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public createOrUpdateFacilityTypeUsingPUTByMap(
     map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiFacilityType>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public createOrUpdateFacilityTypeUsingPUTByMap(
     map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
     observe: any = 'body',
@@ -288,9 +289,9 @@ export class FacilityTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiFacilityType>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiFacilityType>>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiFacilityType>>;
+    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiFacilityType === null || ApiFacilityType === undefined) {
             throw new Error('Required parameter ApiFacilityType was null or undefined when calling createOrUpdateFacilityTypeUsingPUT.');
@@ -322,7 +323,7 @@ export class FacilityTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiFacilityType>(`${this.configuration.basePath}/api/chain/facility-type`,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/facility-type`,
             ApiFacilityType,
             {
                 withCredentials: this.configuration.withCredentials,

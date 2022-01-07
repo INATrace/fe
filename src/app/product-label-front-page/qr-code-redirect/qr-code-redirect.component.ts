@@ -5,7 +5,6 @@ import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { ApiLogRequest } from 'src/api/model/apiLogRequest';
 
-
 @Component({
   selector: 'app-qr-code-redirect',
   templateUrl: './qr-code-redirect.component.html',
@@ -20,19 +19,23 @@ export class QrCodeRedirectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let labelId = this.route.snapshot.paramMap.get('uuid');
-    let urlA = this.router.url.split("/");
+
+    const labelId = this.route.snapshot.paramMap.get('uuid');
+    const urlA = this.router.url.split('/');
     if (urlA.length >= 2) {
-      if (urlA[1] === "q-cd") {
-        let soId = this.route.snapshot.paramMap.get('soid');
-        this.router.navigate(['p-cd', labelId, soId], { replaceUrl: true });
+      if (urlA[1] === 'q-cd') {
+        const qrTag = this.route.snapshot.paramMap.get('qrTag');
+        this.router.navigate(['p-cd', labelId, qrTag], { replaceUrl: true }).then();
       }
-      if (urlA[1] === "q") {
-        this.router.navigate(['p', labelId], { replaceUrl: true });
+      if (urlA[1] === 'q') {
+        this.router.navigate(['p', labelId], { replaceUrl: true }).then();
       }
     }
-    this.publicController.logPublicRequestUsingPOST({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.VISITQR, logKey: labelId})
-    .pipe(take(1)).toPromise();
+
+    this.publicController
+      .logPublicRequestUsingPOST({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.VISITQR, logKey: labelId })
+      .pipe(take(1))
+      .toPromise().then();
   }
 
 }

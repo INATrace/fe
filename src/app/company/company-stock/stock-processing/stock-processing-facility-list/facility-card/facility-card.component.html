@@ -1,0 +1,28 @@
+<div class="af-card">
+
+  <div *ngIf="menuOptions.length > 0" class="af-popover-wrapper">
+    <div class="af-popover-content">
+      <ul *ngFor="let action of menuOptions">
+        <li (click)="goTo(action.id)">{{ action.name }}</li>
+      </ul>
+    </div>
+  </div>
+
+    <div class="af-card-section">
+      <div [ngClass]="facilityTypeColor()">
+        <span class="af-card-indicator">&nbsp;</span>
+        <span class="af-card-title">{{ facility.name }}</span>
+        <span class="af-card-subtitle">{{ whereIsIt(facility) }}</span>
+        <div class="af-card-icon">
+          <span [ngClass]="facilityType()"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="af-card-section">
+      <div class="af-card-section-content">
+        <span class="af-card-description">{{ description }}</span>
+      </div>
+    </div>
+
+</div>

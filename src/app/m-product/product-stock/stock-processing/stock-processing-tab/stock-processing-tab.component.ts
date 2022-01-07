@@ -10,17 +10,17 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { UserControllerService } from 'src/api/api/userController.service';
 import { CodebookTranslations } from 'src/app/shared-services/codebook-translations';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
-import { StockTabCore } from '../../stock-core/stock-tab-core/stock-tab-core.component';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
+import { StockTabCoreComponent } from '../../stock-core/stock-tab-core/stock-tab-core.component';
 
 @Component({
   selector: 'app-stock-processing-tab',
   templateUrl: './stock-processing-tab.component.html',
   styleUrls: ['./stock-processing-tab.component.scss']
 })
-export class StockProcessingTabComponent extends StockTabCore {
+export class StockProcessingTabComponent extends StockTabCoreComponent {
 
   rootTab = 1;
 
@@ -28,7 +28,6 @@ export class StockProcessingTabComponent extends StockTabCore {
     protected route: ActivatedRoute,
     protected chainProductService: ProductService,
     protected chainSemiProductService: SemiProductService,
-    // protected tabCommunicationService: TabCommunicationService,
     protected router: Router,
     public chainOrganizationService: OrganizationService,
     public chainOrganizationCodebook: OrganizationsCodebookService,
@@ -42,6 +41,21 @@ export class StockProcessingTabComponent extends StockTabCore {
     protected companyController: CompanyControllerService,
     protected userController: UserControllerService,
   ) {
-    super(route, chainProductService, chainSemiProductService, router, chainOrganizationService, chainOrganizationCodebook, globalEventManager, chainFacilityService, chainStockOrderService, modalService, codebookTranslations, chainPaymentsContoller, authService, companyController, userController)
+    super(
+      route,
+      chainProductService,
+      chainSemiProductService,
+      router,
+      chainOrganizationService,
+      chainOrganizationCodebook,
+      globalEventManager,
+      chainFacilityService,
+      chainStockOrderService,
+      modalService,
+      codebookTranslations,
+      chainPaymentsContoller,
+      authService,
+      companyController,
+      userController);
   }
 }

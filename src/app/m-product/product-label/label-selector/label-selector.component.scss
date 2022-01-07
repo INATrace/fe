@@ -38,7 +38,9 @@ $chevron-offset: 80px;
 }
 
 .new-label-card:hover {
-  border-width: 3px;
+  outline: 3px dashed;
+  outline-offset: -3px;
+  border: none;
 }
 
 .selected-card {

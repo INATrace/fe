@@ -6,6 +6,7 @@ import { ApiPaginatedResponseApiCompanyListResponse } from 'src/api/model/apiPag
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiCompanyListResponse } from 'src/api/model/apiCompanyListResponse';
+import {GetValueChainListUsingGET} from '../../api/api/valueChainController.service';
 
 @Injectable({
   providedIn: 'root'

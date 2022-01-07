@@ -7,8 +7,8 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { UserControllerService } from 'src/api/api/userController.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { SettingsComponent } from '../settings.component';
 
 @Component({

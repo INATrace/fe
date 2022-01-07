@@ -1,0 +1,38 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.company-action {
+  margin: 0.25rem;
+  cursor: pointer;
+}
+
+.enabled-action {
+  color: $primary;
+}
+
+.enabled-action:hover {
+  text-decoration: underline;
+}
+
+.disabled-action {
+  color: $gray;
+}
+
+.spacer {
+  height: 1.5rem
+}
+
+.aggregated-orders {
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 7px;
+
+  .aggregated-orders-table {
+    width: 50%;
+    tr {
+      background-color: white;
+    }
+  }
+}

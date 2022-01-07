@@ -1,0 +1,44 @@
+<app-authorised-layout>
+    <div class="af-layout--authorised">
+        <div class="af-form-wrapper">
+            <div class="af-form-row">
+                <div class="af-form-block--c12">
+                    <div class="title-page content-element--title" i18n="@@companyDetail.farmers.import.title">Import farmers</div>
+
+                    <h6 i18n="@@companyDetail.farmers.import.template.label">Template</h6>
+                    <a href="/assets/farmer-import/Template_list%20of%20farmers_NEW.xlsx"><fa-icon [icon]="faFileExcel"></fa-icon>&nbsp;<span i18n="@@companyDetail.farmers.import.template">Click to download Excel template</span></a>
+
+                    <div class="spacer-title-section"></div>
+
+                    <h6 i18n="@@companyDetail.farmers.import.data">Upload data</h6>
+                    <attachment-uploader
+                            allowedMimeType="[application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]"
+                            allowedMimeTypeErrorMessage={{mimeError}}
+                            mode="simpleAsTextField"
+                            label="Spreadsheet of farmers"
+                            i18n-label="@@companyDetail.farmers.spreadsheet.label"
+                            [form]="fileForm">
+                    </attachment-uploader>
+                    <small style="font-weight: 300;" i18n="@@companyDetail.farmers.uploadSpreadsheet.label">Upload an excel spreadsheet of farmers (xls, xlsx)</small><br>
+
+                    <button class="btn btn-solid round btn-table-new content-element--btn mt-3" (click)="import()" i18n="@@companyDetail.farmers.import.button">
+                        <span>Import</span>
+                    </button>
+
+                    <div class="spacer-title-section"></div>
+
+                    <ng-container *ngIf="duplicates && duplicates.length > 0">
+                        <h6 i18n="@@companyDetail.farmers.import.duplicates.label">Duplicates</h6>
+                        <div class="d-flex justify-content-between mb-3" *ngFor="let duplicate of duplicates; index as i">
+                            <p class="m-0">{{ duplicate.name }} {{ duplicate.surname }}, {{ duplicate.location.address.village}}</p>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-solid round btn-table-new content-element--btn" i18n="@@companyDetail.farmers.import.accept" (click)="acceptDuplicate(duplicate, i)">Accept</button>
+                                <button class="btn btn-solid round btn-table-new content-element--btn ml-2" i18n="@@companyDetail.farmers.import.reject" (click)="rejectDuplicate(duplicate, i)">Reject</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-authorised-layout>

@@ -32,6 +32,7 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiMeasureUnitType } from '../model/apiMeasureUnitType';
 import { ApiPaginatedResponseApiMeasureUnitType } from '../model/apiPaginatedResponseApiMeasureUnitType';
+import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiMeasureUnitType } from '../model/apiResponseApiMeasureUnitType';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -260,15 +261,15 @@ export class MeasureUnitTypeControllerService {
   public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
     map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiMeasureUnitType>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
     map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiMeasureUnitType>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
     map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiMeasureUnitType>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
     map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
     observe: any = 'body',
@@ -288,9 +289,9 @@ export class MeasureUnitTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiMeasureUnitType>;
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiMeasureUnitType>>;
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiMeasureUnitType>>;
+    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiMeasureUnitType === null || ApiMeasureUnitType === undefined) {
             throw new Error('Required parameter ApiMeasureUnitType was null or undefined when calling createOrUpdateMeasurementUnitTypeUsingPUT.');
@@ -322,7 +323,7 @@ export class MeasureUnitTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiMeasureUnitType>(`${this.configuration.basePath}/api/chain/measure-unit-type`,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/chain/measure-unit-type`,
             ApiMeasureUnitType,
             {
                 withCredentials: this.configuration.withCredentials,

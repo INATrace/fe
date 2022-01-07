@@ -38,6 +38,7 @@ import { ApiResponseApiGlobalSettingsValue } from '../model/apiResponseApiGlobal
 import { ApiResponseApiKnowledgeBlog } from '../model/apiResponseApiKnowledgeBlog';
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
 import { ApiResponseApiProductLabelValuesExtended } from '../model/apiResponseApiProductLabelValuesExtended';
+import { ApiResponseApiQRTagPublic } from '../model/apiResponseApiQRTagPublic';
 import { ApiResponseBoolean } from '../model/apiResponseBoolean';
 import { ApiResponseListApiLocation } from '../model/apiResponseListApiLocation';
 
@@ -525,6 +526,61 @@ export namespace GetPublicResizedImageUsingGET {
       ],
       size: [
               ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getQRTagPublicDataUsingGET.
+ */
+export namespace GetQRTagPublicDataUsingGET {
+    /**
+     * Parameter map for getQRTagPublicDataUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * QR code tag
+       */
+      qrTag: string;
+      /**
+       * Return aggregated history
+       */
+      withHistory?: boolean;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getQRTagPublicDataUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * QR code tag
+       */
+      qrTag = 'qrTag',
+      /**
+       * Return aggregated history
+       */
+      withHistory = 'withHistory',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getQRTagPublicDataUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetQRTagPublicDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      qrTag: [
+              ['required', Validators.required],
+      ],
+      withHistory: [
+      ],
+      language: [
       ],
     };
 }
@@ -1658,6 +1714,101 @@ export class PublicControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicResizedImageUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get public data for the Stock order with the given QR code tag by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getQRTagPublicDataUsingGETByMap(
+    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiQRTagPublic>;
+  public getQRTagPublicDataUsingGETByMap(
+    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiQRTagPublic>>;
+  public getQRTagPublicDataUsingGETByMap(
+    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiQRTagPublic>>;
+  public getQRTagPublicDataUsingGETByMap(
+    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getQRTagPublicDataUsingGET(
+      map.qrTag,
+      map.withHistory,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get public data for the Stock order with the given QR code tag
+     * 
+     * @param qrTag QR code tag
+     * @param withHistory Return aggregated history
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiQRTagPublic>;
+    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiQRTagPublic>>;
+    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiQRTagPublic>>;
+    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (qrTag === null || qrTag === undefined) {
+            throw new Error('Required parameter qrTag was null or undefined when calling getQRTagPublicDataUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withHistory !== undefined && withHistory !== null) {
+            queryParameters = queryParameters.set('withHistory', <any>withHistory);
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiQRTagPublic>(`${this.configuration.basePath}/api/public/stock-order/${encodeURIComponent(String(qrTag))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQRTagPublicDataUsingGET')));
         }
         return handle;
     }

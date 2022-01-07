@@ -1,0 +1,135 @@
+<ng-container *ngIf="types$ | async as types">
+  <div class="main-inside-main">
+    <table *ngIf="types && types.items && types.items.length > 0" class="af-table">
+      <thead>
+        <tr *ngIf="type === 'semi-products'"
+            result-sorter [sortOptions]="sortOptionsSemiProducts" (sortByKey)="changeSort($event)"></tr>
+
+        <tr *ngIf="type === 'processing-evidence-types'"
+            result-sorter [sortOptions]="sortOptionsFPQ" (sortByKey)="changeSort($event)"></tr>
+
+        <tr *ngIf="type === 'processing-evidence-fields'"
+            result-sorter [sortOptions]="sortOptionsEvidenceFields" (sortByKey)="changeSort($event)"></tr>
+
+        <tr *ngIf="type !== 'semi-products' && type !== 'processing-evidence-types' && type !== 'processing-evidence-fields'"
+            result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
+      </thead>
+      <tbody>
+
+        <ng-container *ngIf="type === 'semi-products'">
+          <tr *ngFor="let type of types.items">
+            <td [attr.data-label]="sortOptionsSemiProducts[0].name"><span>{{ type.name }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[1].name"><span>{{ type.description }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[2].name"><span>{{ getBooleanSign(type.buyable) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[3].name"><span>{{ getBooleanSign(type.sku) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[4].name"><span>{{ getBooleanSign(type.skuendCustomer) }}</span></td>
+            <td [attr.data-label]="sortOptionsSemiProducts[5].name">
+              <span>
+                <a i18n="@@settingsTypes.tableCol.edit"
+                   (click)="edit(type)"
+                   class="company-action"
+                   [class.enabled-action]="true">
+                  Edit
+                </a>
+                <a i18n="@@settingsTypes.tableCol.delete"
+                   (click)="delete(type)"
+                   class="company-action"
+                   [class.enabled-action]="true">
+                  Delete
+                </a>
+              </span>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="(type === 'processing-evidence-types')">
+          <tr *ngFor="let type of types.items">
+            <td [attr.data-label]="sortOptionsFPQ[0].name"><span>{{ type.code }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[2].name"><span>{{ type.type | formatProcessingEvidenceTypeType }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[3].name" class="align-center"><span>{{ getBooleanSign(type.fairness) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[4].name" class="align-center"><span>{{ getBooleanSign(type.provenance) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[5].name" class="align-center"><span>{{ getBooleanSign(type.quality) }}</span></td>
+            <td [attr.data-label]="sortOptionsFPQ[6].name">
+              <span>
+              <a i18n="@@settingsTypes.tableCol.edit"
+                (click)="edit(type)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@settingsTypes.tableCol.delete"
+                (click)="delete(type)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Delete
+              </a>
+            </span>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="(type === 'processing-evidence-fields')">
+          <tr *ngFor="let type of types.items">
+            <td [attr.data-label]="sortOptionsEvidenceFields[0].name"><span>{{ type.fieldName }}</span></td>
+            <td [attr.data-label]="sortOptionsEvidenceFields[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
+            <td [attr.data-label]="sortOptionsEvidenceFields[2].name"><span>{{ type.type | formatProcessingEvidenceFieldType }}</span></td>
+            <td [attr.data-label]="sortOptionsEvidenceFields[3].name">
+              <span>
+              <a i18n="@@settingsTypes.tableCol.edit"
+                 (click)="edit(type)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@settingsTypes.tableCol.delete"
+                 (click)="delete(type)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Delete
+              </a>
+            </span>
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="(type !== 'semi-products' &&  type !== 'processing-evidence-types' && type !== 'processing-evidence-fields')">
+          <tr *ngFor="let type of types.items">
+            <td [attr.data-label]="sortOptions[0].name"><span>{{ type.code }}</span></td>
+            <td [attr.data-label]="sortOptions[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
+            <td [attr.data-label]="sortOptions[2].name">
+              <span>
+              <a i18n="@@settingsTypes.tableCol.edit"
+                (click)="edit(type)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Edit
+              </a>
+              <a i18n="@@settingsTypes.tableCol.delete"
+                (click)="delete(type)"
+                class="company-action"
+                [class.enabled-action]="true">
+                Delete
+              </a>
+            </span>
+            </td>
+          </tr>
+        </ng-container>
+
+      </tbody>
+    </table>
+    <div *ngIf="types && types.items && types.items.length == 0" class="no-list-results" i18n="@@settingsTypes.noTypes">
+      No types found
+    </div>
+  </div>
+  <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+    <ngb-pagination
+      [(page)]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="types.count"
+      (pageChange)="onPageChange($event)"
+      [maxSize]="7"
+      [rotate]="true">
+    </ngb-pagination>
+  </div>
+</ng-container>

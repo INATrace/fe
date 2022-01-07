@@ -18,30 +18,55 @@
  */
 
 
+import { ApiBankInformation } from './apiBankInformation';
+import { ApiCertification } from './apiCertification';
+import { ApiFarmInformation } from './apiFarmInformation';
+import { ApiUserCustomerAssociation } from './apiUserCustomerAssociation';
+import { ApiUserCustomerCooperative } from './apiUserCustomerCooperative';
+import { ApiUserCustomerLocation } from './apiUserCustomerLocation';
 
 
 
 export interface ApiUserCustomer { 
     /**
+     * List of associations
+     */
+    associations?: Array<ApiUserCustomerAssociation>;
+    bank?: ApiBankInformation;
+    /**
+     * User customer certifications
+     */
+    certifications?: Array<ApiCertification>;
+    /**
      * Company id
      */
     companyId?: number;
     /**
+     * List of cooperatives
+     */
+    cooperatives?: Array<ApiUserCustomerCooperative>;
+    /**
      * Email
      */
     email?: string;
+    farm?: ApiFarmInformation;
+    /**
+     * Company internal farmer ID
+     */
+    farmerCompanyInternalId?: string;
     /**
      * Gender
      */
     gender?: ApiUserCustomer.GenderEnum;
     /**
+     * Has smartphone
+     */
+    hasSmartphone?: boolean;
+    /**
      * Entity id
      */
     id?: number;
-    /**
-     * Location
-     */
-    location?: string;
+    location?: ApiUserCustomerLocation;
     /**
      * Name
      */
@@ -69,24 +94,43 @@ export namespace ApiUserCustomer {
      */
     export enum Properties {
         /**
+         * List of associations
+         */
+        associations = 'associations',
+        bank = 'bank',
+        /**
+         * User customer certifications
+         */
+        certifications = 'certifications',
+        /**
          * Company id
          */
         companyId = 'companyId',
         /**
+         * List of cooperatives
+         */
+        cooperatives = 'cooperatives',
+        /**
          * Email
          */
         email = 'email',
+        farm = 'farm',
+        /**
+         * Company internal farmer ID
+         */
+        farmerCompanyInternalId = 'farmerCompanyInternalId',
         /**
          * Gender
          */
         gender = 'gender',
         /**
+         * Has smartphone
+         */
+        hasSmartphone = 'hasSmartphone',
+        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * Location
-         */
         location = 'location',
         /**
          * Name
@@ -129,6 +173,42 @@ export namespace ApiUserCustomer {
             classname: 'ApiUserCustomer',
             vars: [
                 {
+                    metadata: ApiUserCustomerAssociation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'associations',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiUserCustomerAssociation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiUserCustomerAssociation'
+                },
+                {
+                    metadata: ApiBankInformation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'bank',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiBankInformation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBankInformation'
+                },
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certifications',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -140,10 +220,45 @@ export namespace ApiUserCustomer {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUserCustomerCooperative.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cooperatives',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiUserCustomerCooperative&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiUserCustomerCooperative'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'email',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiFarmInformation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farm',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiFarmInformation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFarmInformation'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farmerCompanyInternalId',
                     classname: 'ApiUserCustomer',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -166,9 +281,9 @@ export namespace ApiUserCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'hasSmartphone',
                     classname: 'ApiUserCustomer',
-                    dataType: 'number',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -177,12 +292,24 @@ export namespace ApiUserCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'location',
+                    name: 'id',
                     classname: 'ApiUserCustomer',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiUserCustomerLocation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'location',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiUserCustomerLocation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUserCustomerLocation'
                 },
                 {
                     isReadOnly: false,
@@ -231,11 +358,25 @@ export namespace ApiUserCustomer {
                 },
             ],
             validators: {
+                associations: [
+                ],
+                bank: [
+                ],
+                certifications: [
+                ],
                 companyId: [
+                ],
+                cooperatives: [
                 ],
                 email: [
                 ],
+                farm: [
+                ],
+                farmerCompanyInternalId: [
+                ],
                 gender: [
+                ],
+                hasSmartphone: [
                 ],
                 id: [
                 ],
@@ -256,13 +397,34 @@ export namespace ApiUserCustomer {
   // export const ApiUserCustomerValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               associations: {
+  //                   validators: []
+  //               },
+  //               bank: {
+  //                   validators: []
+  //               },
+  //               certifications: {
+  //                   validators: []
+  //               },
   //               companyId: {
+  //                   validators: []
+  //               },
+  //               cooperatives: {
   //                   validators: []
   //               },
   //               email: {
   //                   validators: []
   //               },
+  //               farm: {
+  //                   validators: []
+  //               },
+  //               farmerCompanyInternalId: {
+  //                   validators: []
+  //               },
   //               gender: {
+  //                   validators: []
+  //               },
+  //               hasSmartphone: {
   //                   validators: []
   //               },
   //               id: {

@@ -8,8 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProductLabelFrontLayoutComponent implements OnInit {
 
-  isGreenPaddingNeeded: boolean = false;
-  isBreadcrumbsSpaceNeeded: boolean = false;
+  isGreenPaddingNeeded = false;
+  isBreadcrumbsSpaceNeeded = false;
   drobtinice = [];
 
   constructor(

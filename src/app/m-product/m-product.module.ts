@@ -12,7 +12,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ContentsModule } from '../contents/contents.module';
 import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
-import { SystemModule } from '../system/system.module';
+import { CoreModule } from '../core/core.module';
 import { BatchDetailPageComponent } from './batch-detail-page/batch-detail-page.component';
 import { PrefillLocationsFromProductModalComponent } from './batch-detail-page/prefill-locations-from-product-modal/prefill-locations-from-product-modal.component';
 import { BatchEditModalComponent } from './batches-list/batch-edit-modal/batch-edit-modal.component';
@@ -29,16 +29,13 @@ import { NumberRowComponent } from './product-label/number-row/number-row.compon
 import { PrefillProductSelectionModalComponent } from './product-label/prefill-product-selection-modal/prefill-product-selection-modal.component';
 import { ProductLabelComponent } from './product-label/product-label.component';
 import { ProductionRecordItemComponent } from './product-label/production-record-item/production-record-item.component';
-import { ProductCardComponent } from './product-list/product-card/product-card.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { LanguageForLabelModalComponent } from './product-label/language-for-label-modal/language-for-label-modal.component';
-
-
+import { ProductCommonModule } from './product-common/product-common.module';
 
 @NgModule({
   declarations: [
     ProductListComponent,
-    ProductCardComponent,
     ProductLabelComponent,
     LabelRedirectToProductPageComponent,
     BatchesListComponent,
@@ -53,7 +50,6 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     LabelSelectorComponent,
     NumberRowComponent,
     PrefillProductSelectionModalComponent,
-    ProductionRecordItemComponent,
     LabelSelectorCardComponent,
     LanguageForLabelModalComponent
   ],
@@ -61,7 +57,7 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     CommonModule,
     MProductRoutingModule,
     // Clean up unnecessary
-    SystemModule,
+    CoreModule,
     ComponentsModule,
     LayoutModule,
     FontAwesomeModule,
@@ -72,12 +68,12 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
     ContentsModule,
     EllipsisModule,
     QRCodeModule,
-    // BrowserAnimationsModule,
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbPaginationModule,
     GoogleMapsModule,
     DragDropModule,
+    ProductCommonModule
   ]
 })
 export class MProductModule { }

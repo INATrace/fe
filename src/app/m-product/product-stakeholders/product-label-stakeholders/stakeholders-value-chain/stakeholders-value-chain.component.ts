@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/api-chain/api/product.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
-import { NgbModalImproved } from 'src/app/system/ngb-modal-improved/ngb-modal-improved.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
+import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProductLabelStakeholdersComponent } from '../product-label-stakeholders.component';
-import { UserCustomerService } from 'src/api-chain/api/userCustomer.service';
+import { AuthService } from '../../../../core/auth.service';
+import { AbstractControl, FormArray } from '@angular/forms';
+import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
+import { ApiProductDataSharingAgreement } from '../../../../../api/model/apiProductDataSharingAgreement';
 
 @Component({
   selector: 'app-stakeholders-value-chain',
   templateUrl: './stakeholders-value-chain.component.html',
-  styleUrls: ['../product-label-stakeholders.component.scss']
+  styleUrls: ['./stakeholders-value-chain.component.scss']
 })
-export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent {
+export class StakeholdersValueChainComponent extends ProductLabelStakeholdersComponent implements OnInit {
 
-  rootTab = 0
+  rootTab = 0;
+
+  dataSharingAgreementListManager: ListEditorManager<ApiProductDataSharingAgreement>;
 
   constructor(
     protected productController: ProductControllerService,
@@ -23,10 +26,17 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
     protected router: Router,
-    public chainOrganizationCodebook: OrganizationsCodebookService,
-    protected chainProductService: ProductService,
-    public chainUserCustomer: UserCustomerService
+    protected authService: AuthService
   ) {
-    super(productController, globalEventsManager, modalService, route, router, chainOrganizationCodebook, chainProductService, chainUserCustomer)
+    super(productController, globalEventsManager, modalService, route, router, authService);
   }
+
+  get dataSharingAgreementsControls(): AbstractControl[] {
+    return (this.productForm.get('dataSharingAgreements') as FormArray).controls;
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
 }

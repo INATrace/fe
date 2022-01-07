@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { faEye, faSeedling, faGlobeAmericas, faFilePdf, faFileImage } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookSquare, faTwitterSquare, faInstagramSquare, faYoutubeSquare } from '@fortawesome/free-brands-svg-icons'
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalImproved } from '../system/ngb-modal-improved/ngb-modal-improved.service';
+import { NgbModalImproved } from '../core/ngb-modal-improved/ngb-modal-improved.service';
 import { CheckBatchNumberModalComponent } from './check-batch-number-modal/check-batch-number-modal.component';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
-import { GlobalEventManagerService } from '../system/global-event-manager.service';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiLogRequest } from 'src/api/model/apiLogRequest';
 import { take } from 'rxjs/operators';
-import { ProductLabelFrontFeedbackComponent } from '../product-label-front-feedback/product-label-front-feedback.component';
+import { ProductLabelFrontFeedbackComponent } from './product-label-front-feedback/product-label-front-feedback.component';
 import _ from 'lodash-es';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 

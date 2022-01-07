@@ -34,8 +34,8 @@ import { CompanyControllerService } from 'src/api/api/companyController.service'
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import { CompanyDetailComponent } from 'src/app/company-detail/company-detail.component';
-import { ApiCompanyGetValidationScheme } from 'src/app/company-detail/validation';
+import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
+import { ApiCompanyGetValidationScheme } from 'src/app/company/company-detail/validation';
 import { ApiCertificationValidationScheme } from 'src/app/m-product/product-label/validation';
 import { ActionTypesService } from 'src/app/shared-services/action-types.service';
 import { ActiveCompanyCustomersByOrganizationService } from 'src/app/shared-services/active-company-customers-by-organization.service';
@@ -49,12 +49,12 @@ import { GradeAbbreviationCodebook } from 'src/app/shared-services/grade-abbrevi
 import { SemiProductInFacilityCodebookServiceStandalone } from 'src/app/shared-services/semi-products-in-facility-standalone-codebook.service';
 import { ThemeService } from 'src/app/shared-services/theme.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { ProcessingActionType } from 'src/shared/types';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
-import { ChainActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiActivityProofValidationScheme } from '../../../../company/company-stock/stock-core/additional-proof-item/validation';
 import { ChainStockOrderValidationScheme, ChainTransactionValidationScheme } from './validation';
 import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { ActionTypeControllerService } from '../../../../../api/api/actionTypeController.service';
@@ -493,7 +493,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
 
   static ChainActivityProofEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofCreateEmptyObject(), ChainActivityProofValidationScheme.validators);
+      return new FormControl(ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofCreateEmptyObject(), ApiActivityProofValidationScheme.validators);
     };
   }
 
@@ -577,6 +577,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
     } else if (action === 'update') {
       this.update = true;
       const actionType = this.route.snapshot.data.type;
+
       if (actionType === 'SHIPMENT') {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update action`;
         const orderId = this.route.snapshot.params.orderId as string;
@@ -614,6 +615,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
           }
         }
       }
+
       if (actionType === 'PROCESSING') {  // FIX
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
         const orderId = this.route.snapshot.params.orderId as string;
@@ -643,6 +645,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
           }
         }
       }
+
       if (actionType === 'TRANSFER') {  // FIX
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
         const orderId = this.route.snapshot.params.orderId as string;
@@ -1541,7 +1544,7 @@ export class ProductLabelStockProcessingOrderDetailComponent implements OnInit, 
     this.processingEvidenceListManager = new ListEditorManager<ChainActivityProof>(
       this.otherProcessingEvidenceArray as FormArray,
       ProductLabelStockProcessingOrderDetailComponent.ChainActivityProofEmptyObjectFormFactory(),
-      ChainActivityProofValidationScheme
+      ApiActivityProofValidationScheme
     );
 
   }

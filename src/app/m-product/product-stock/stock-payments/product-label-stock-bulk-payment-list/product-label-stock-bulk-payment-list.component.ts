@@ -4,7 +4,7 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { PaymentsService } from 'src/api-chain/api/payments.service';
 import { ApiResponsePaginatedListChainBulkPayment } from 'src/api-chain/model/apiResponsePaginatedListChainBulkPayment';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { dbKey } from 'src/shared/utils';
 
 @Component({

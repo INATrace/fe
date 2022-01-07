@@ -52,7 +52,7 @@ export class ActiveSemiProductsForProductServiceStandalone extends GeneralSifran
   // }
 
   public placeholder(): string {
-    let placeholder = $localize`:@@activeSemiProduct.input.placehoder:Select SemiProduct`;
+    let placeholder = $localize`:@@activeSemiProduct.input.placehoder:Select Semi-product`;
     return placeholder;
   }
 

@@ -12,7 +12,7 @@ import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMet
 import { ActiveUserCustomersByOrganizationAndRoleService } from 'src/app/shared-services/active-user-customers-by-organization-and-role.service';
 import { AllOrganizationService } from 'src/app/shared-services/all-organizations.service';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { StockOrderService } from 'src/api-chain/api/stockOrder.service';
 import { ChainPaymentValidationScheme } from '../../stock-payments/product-label-stock-payment-detail/validation';
 

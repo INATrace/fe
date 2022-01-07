@@ -1,0 +1,19 @@
+<div *ngIf="product" class="card-elevation card-box">
+  <a routerLink="/product-labels/{{ product.id }}/product">
+    <img *ngIf="product.photoStorageId; else showImagePlaceholder"
+    src="/api/common/image/{{ product.photoStorageId }}/SMALL"
+    default="/api/common/image/{{ product.photoStorageId }}"
+    class="card-img-top" alt="Product image">
+
+    <ng-template #showImagePlaceholder>
+      <img src="/src/assets/product-label-card/product-card-placeholder.png"
+           class="card-img-top" alt="Product image placeholder">
+    </ng-template>
+
+    <div class="card-body">
+      <div class="card-text">
+        <h5>{{ product.name }}</h5>
+      </div>
+    </div>
+  </a>
+</div>

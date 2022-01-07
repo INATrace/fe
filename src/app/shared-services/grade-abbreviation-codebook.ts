@@ -6,11 +6,15 @@ import { CodebookTranslations } from './codebook-translations';
 import { GetGradeAbbreviationListUsingGET, GradeAbbreviationControllerService } from '../../api/api/gradeAbbreviationController.service';
 import { ApiGradeAbbreviation } from '../../api/model/apiGradeAbbreviation';
 import { ApiPaginatedResponseApiGradeAbbreviation } from '../../api/model/apiPaginatedResponseApiGradeAbbreviation';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class GradeAbbreviationCodebook extends GeneralSifrantService<ApiGradeAbbreviation> {
 
   constructor(
-    private chainCodebookService: GradeAbbreviationControllerService,
+    private codebookService: GradeAbbreviationControllerService,
     protected codebookTranslations: CodebookTranslations
   ) {
     super();
@@ -36,7 +40,7 @@ export class GradeAbbreviationCodebook extends GeneralSifrantService<ApiGradeAbb
       ...this.requestParams
     };
 
-    return this.chainCodebookService.getGradeAbbreviationListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getGradeAbbreviationListUsingGETByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiGradeAbbreviation) => {
           return {
             results: res.data.items,

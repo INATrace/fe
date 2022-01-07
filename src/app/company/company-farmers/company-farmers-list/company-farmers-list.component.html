@@ -1,0 +1,90 @@
+<app-authorised-layout>
+    <app-company-left-panel></app-company-left-panel>
+
+    <div class="main">
+        <div class="main-inside-top content-element">
+            <div class="d-flex justify-content-between content-element--row1">
+                <div class="title-page content-element--title" i18n="@@productLabelStakeholders.title.farmers">Farmers</div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-solid round btn-table-new content-element--btn mr-2" (click)="importFarmers()" i18n="@@companyDetail.farmers.importFarmers.button">
+                        <span>+ Import farmers</span>
+                    </button>
+                    <button class="btn btn-solid round btn-table-new content-element--btn" (click)="addFarmer()" i18n="@@productLabelStakeholders.button.newFarmer">
+                        <span>+ Add farmer</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between content-element--row2">
+                <div>
+                    <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStakeholders.subTitle.listOfFarmers">List of farmers</div>
+                    <div class="counting-page content-element--counting" i18n="@@productLabelStakeholders.subTitle.showingFarmers">Showing {{ showing }}/{{ farmerCount }}</div>
+                </div>
+
+                <app-search-textinput
+                        [form]="searchNameFarmers"
+                        (valueChange)="onSearchInput($event)"
+                        [items]="items"
+                        byCategory="true"
+                        [searchCategory]="this.byCategory"
+                        (categoryChange)="onCategoryChange($event)">
+                </app-search-textinput>
+            </div>
+        </div>
+
+        <ng-container *ngIf="farmer$ | async as farmers">
+            <div class="main-inside-main">
+                <table *ngIf="farmers && farmers.items && farmers.items.length > 0; else noFarmers" class="af-table">
+                    <thead *ngIf="!showHonduras">
+                        <tr scope="col" result-sorter [sortOptions]="sortOptions" (sortByKey)="changeSort($event)"></tr>
+                    </thead>
+
+                    <thead *ngIf="showHonduras">
+                        <tr scope="col" result-sorter [sortOptions]="sortOptionsHonduras" (sortByKey)="changeSort($event)"></tr>
+                    </thead>
+
+                    <tbody>
+                    <tr *ngFor="let farmer of farmers.items">
+                        <td scope="row" [attr.data-label]="sortOptions[0].name"><span>{{farmer.name}}</span></td>
+                        <td [attr.data-label]="sortOptions[1].name"><span>{{farmer.surname}}</span></td>
+                        <td [attr.data-label]="sortOptions[2].name"><span>{{farmer.gender}}</span></td>
+                        <td [attr.data-label]="sortOptions[3].name"><span>{{farmer.id}}</span></td>
+                        <td [attr.data-label]="sortOptions[4].name"><span>{{showLocation(showHonduras ? 'hondurasMunicipality' : 'village', farmer.location)}}</span></td>
+                        <td [attr.data-label]="sortOptions[5].name"><span>{{showLocation(showHonduras ? 'hondurasVillage' : 'cell', farmer.location)}}</span></td>
+                        <td [attr.data-label]="sortOptions[6].name">
+                                <span>
+                                <a i18n="@@productLabelStakeholdersCollectors.tableCol.edit"
+                                   (click)="editFarmer(farmer.id)"
+                                   class="company-action"
+                                   [class.enabled-action]="true">
+                                  Edit
+                                </a>
+                                <a i18n="@@productLabelStakeholdersCollectors.tableCol.delete"
+                                   (click)="deleteFarmer(farmer.id)"
+                                   class="company-action"
+                                   [class.enabled-action]="true">
+                                  Delete
+                                </a>
+                              </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div [style.display]="showPagination() ? 'flex' : 'none'" class="justify-content-end">
+                <ngb-pagination
+                        [(page)]="page"
+                        [pageSize]="pageSize"
+                        [collectionSize]="farmers.count"
+                        (pageChange)="onPageChange($event)"
+                        [maxSize]="7"
+                        [rotate]="true"></ngb-pagination>
+            </div>
+        </ng-container>
+        <ng-template #noFarmers>
+            <div class="no-list-results" i18n="@@productLabelStakeholdersCollectors.noFarmers">
+                No farmers found
+            </div>
+        </ng-template>
+    </div>
+</app-authorised-layout>

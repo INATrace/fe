@@ -12,8 +12,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { FileUploadModule } from 'ng2-file-upload';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { FileSaverModule } from 'ngx-filesaver';
-// import { ComponentsModule } from '../components/components.module';
-import { NgbModalImprovedModule } from '../system/ngb-modal-improved/ngb-modal-improved.module';
+import { NgbModalImprovedModule } from '../core/ngb-modal-improved/ngb-modal-improved.module';
 import { AccordionPanelComponent } from './accordion/accordion-panel.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { CheckboxGroupMultiChoiceComponent } from './checkbox-group-multi-choice/checkbox-group-multi-choice.component';
@@ -67,6 +66,8 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { CompanyDocumentItemComponent } from './company-document-item/company-document-item.component';
 import { CompanyDocumentCategoryFilterPipe } from './pipes/company-document-category-filter.pipe';
 import { CertificationAndStandardItemComponent } from './certification-and-standard-item/certification-and-standard-item.component';
+import { LocationFormNewComponent } from './location-form-new/location-form-new.component';
+import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.component';
 
 @NgModule({
     declarations: [
@@ -121,7 +122,9 @@ import { CertificationAndStandardItemComponent } from './certification-and-stand
         ContactFormComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
-        CompanyDocumentCategoryFilterPipe
+        CompanyDocumentCategoryFilterPipe,
+        LocationFormNewComponent,
+        GeoaddressFormComponent
     ],
     entryComponents: [
         TextinputModalComponent,
@@ -189,7 +192,9 @@ import { CertificationAndStandardItemComponent } from './certification-and-stand
         LocationFormComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
-        CompanyDocumentCategoryFilterPipe
+        CompanyDocumentCategoryFilterPipe,
+        LocationFormNewComponent,
+        GeoaddressFormComponent
     ]
 })
 export class SharedModule {

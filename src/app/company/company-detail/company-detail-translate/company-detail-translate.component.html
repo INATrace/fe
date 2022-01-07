@@ -1,0 +1,702 @@
+
+<app-authorised-layout>
+  <app-system-left-panel
+          [isAdmin]="isAdmin"
+          i18n="@@companyDetailTranslate.navTitle"
+          title="System">
+  </app-system-left-panel>
+
+  <div [class.main]="isAdmin" [class.company-profile]="!isAdmin"
+    *ngIf="prepared">
+
+    <div class="af-form-wrapper">
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="title-page content-element--title">{{title}}</div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@companyDetailTranslate.section0.translations">English version</h2>
+          <div class="af-form-element">
+
+            <div class="spacer-title-section"></div>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailForm.get('name')" label="Company name (EN)"
+                style="width: 100%"
+                hideAsterisk="true"
+                placeholder="Enter company name"
+                i18n-label="@@companyDetailTranslate.textinput.companyName.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyName.placeholder"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailForm.get('abbreviation')" label="Company abbreviation (EN)"
+                style="width: 100%"
+                hideAsterisk="true"
+                placeholder="Enter company abbreviation in 3-6 characters"
+                i18n-label="@@companyDetailTranslate.textinput.companyAbbreviation.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyAbbreviation.placeholder"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailForm.get('about')" label="About company (EN)"
+                style="width: 100%" [textarea]="true"
+                hideAsterisk="true"
+                helpText="Briefly describe your company and its history. Include the company mission and vision as well as core values. (max 2000 characters)"
+                i18n-label="@@companyDetailTranslate.textinput.companyAbout.label"
+                i18n-helpText="@@companyDetailTranslate.textinput.companyAbout.helpText"
+                [readOnly]="true">
+                <!-- [isInvalid]="submitted && companyDetailForm.get('about').invalid"> -->
+                <!-- <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailForm.get('about').errors as errors" class="sc-invalid-feedback" i18n="@@companyDetailTranslate.textinput.companyAbout.errors">
+                    <div *ngIf="errors.required">
+                      <span>
+                        About is required
+                      </span>
+                    </div>
+                    <div *ngIf="errors.maxlength">
+                      <span>
+                        Entry exceeds allowed max characters limit
+                      </span>
+                    </div>
+                  </div>
+                </ng-container> -->
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailForm.get('interview')" label="Interview (EN)"
+                style="width: 100%" [textarea]="true"
+                hideAsterisk="true"
+                helpText="Briefly describe your company - PR statement. (max 2000 characters)"
+                i18n-label="@@companyDetailTranslate.textinput.companyInterview.label"
+                i18n-helpText="@@companyDetailTranslate.textinput.companyInterview.helpText"
+                [readOnly]="true">
+                <!-- [isInvalid]="submitted && companyDetailForm.get('interview').invalid"> -->
+                <!-- <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailForm.get('interview').errors as errors" class="sc-invalid-feedback" i18n="@@companyDetailTranslate.textinput.companyAbout.errors">
+                    <div *ngIf="errors.required">
+                      <span>
+                        Interview is required
+                      </span>
+                    </div>
+                    <div *ngIf="errors.maxlength">
+                      <span>
+                        Entry exceeds allowed max characters limit
+                      </span>
+                    </div>
+                  </div>
+                </ng-container> -->
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="companyDetailForm.get('webPage')"
+                label="Company webpage URL (EN)"
+                style="width: 100%; color: #939393"
+                placeholder="Enter company webpage URL"
+                i18n-label="@@companyDetailTranslate.textinput.companyWebPage.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyWebPage.placeholder"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaForm.get('facebook')"
+                label="Facebook webpage URL (EN)"
+                placeholder="Enter Facebook URL"
+                i18n-label="@@companyDetailTranslate.textinput.facebook.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.facebook.placeholder"
+                style="width: 100%; color: #939393"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaForm.get('instagram')"
+                label="Instagram webpage URL (EN)"
+                placeholder="Enter Instagram URL"
+                i18n-label="@@companyDetailTranslate.textinput.instagram.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.instagram.placeholder"
+                style="width: 100%; color: #939393"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaForm.get('twitter')"
+                label="Twitter webpage URL (EN)"
+                placeholder="Enter Twitter URL"
+                i18n-label="@@companyDetailTranslate.textinput.twitter.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.twitter.placeholder"
+                style="width: 100%; color: #939393"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaForm.get('youtube')"
+                label="YouTube webpage URL (EN)"
+                placeholder="Enter YouTube URL"
+                i18n-label="@@companyDetailTranslate.textinput.youtube.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.youtube.placeholder"
+                style="width: 100%; color: #939393"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaForm.get('other')"
+                label="Other webpage URL (EN)"
+                placeholder="Enter Other URL"
+                i18n-label="@@companyDetailTranslate.textinput.other.label"
+                i18n-placeholder="@@companyDetailTranslate.textinput.other.placeholder"
+                style="width: 100%; color: #939393"
+                [readOnly]="true">
+              </textinput>
+            </app-closable>
+
+
+            <list-editor
+              label="Videos"
+              [listEditorManager]="videosListManager"
+              addText="Add new"
+              [canAdd]="false"
+              i18n-label="@@companyDetailTranslate.list-editor.videos.label"
+              i18n-addText="@@companyDetailTranslate.list-editor.videos.addText"
+              [invalid]="submitted &&
+              companyDetailForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="videosListManager.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      [readOnly]="true"
+                      title="Video"
+                      i18n-title="@@companyDetailTranslate.list-editor.videos.title"
+                      [formControlInput]="item"
+                      [isOpen]="videosListManager.isOpen(i)"
+                      [listEditorManager]="this.videosListManager"
+                      [listEditorManagerPosition]="i"
+                      category="VIDEO"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'VIDEO'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <!-- <ng-container *ngIf="submitted">
+                    <div *ngIf="companyDetailForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.videos.error">
+                        <span>
+                          Videos are required
+                        </span>
+                      </div>
+                    </div>
+                  </ng-container> -->
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Certification"
+              [listEditorManager]="certificationListManager"
+              addText="Add new"
+              [canAdd]="false"
+              i18n-label="@@companyDetailTranslate.list-editor.certificationsAndStandards.label"
+              i18n-addText="@@companyDetailTranslate.list-editor.certificationsAndStandards.addText"
+              [invalid]="submitted &&
+              companyDetailForm.get('certifications')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="certificationListManager.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailForm.get('certifications')?.controls; let i=
+                    index;">
+                    <app-certification-and-standard-item
+                      [viewOnly]="true"
+                      title="Certification"
+                      i18n-title="@@companyDetailTranslate.list-editor.certificationsAndStandards.title"
+                      [formControlInput]="item"
+                      [isOpen]="certificationListManager.isOpen(i)"
+                      [listEditorManager]="this.certificationListManager"
+                      [listEditorManagerPosition]="i">
+                    </app-certification-and-standard-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailForm.get('certifications').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.certificationsAndStandards.error">
+                      <span>
+                        Certifications are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Production records"
+              [listEditorManager]="productionRecordListManager"
+              addText="Add new"
+              [canAdd]="false"
+              i18n-label="@@companyDetailTranslate.list-editor.productionRecord.label"
+              i18n-addText="@@companyDetailTranslate.list-editor.productionRecord.addText"
+              [invalid]="submitted &&
+              companyDetailForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="productionRecordListManager.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      [readOnly]="true"
+                      title="Production record"
+                      i18n-title="@@companyDetailTranslate.list-editor.productionRecord.title"
+                      [formControlInput]="item"
+                      [isOpen]="productionRecordListManager.isOpen(i)"
+                      [listEditorManager]="this.productionRecordListManager"
+                      [listEditorManagerPosition]="i"
+                      category="PRODUCTION_RECORD"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'PRODUCTION_RECORD'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.productionRecord.error">
+                      <span>
+                        Production records are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Meet the Farmers"
+              [listEditorManager]="meetTheFarmerListManager"
+              addText="Add new"
+              [canAdd]="false"
+              i18n-label="@@companyDetailTranslate.list-editor.meetTheFarmer.label"
+              i18n-addText="@@companyDetailTranslate.list-editor.meetTheFarmer.addText"
+              [invalid]="submitted &&
+              companyDetailForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="meetTheFarmerListManager.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      [readOnly]="true"
+                      title="Meet the Farmer"
+                      i18n-title="@@companyDetailTranslate.list-editor.meetTheFarmer.title"
+                      [formControlInput]="item"
+                      [isOpen]="meetTheFarmerListManager.isOpen(i)"
+                      [listEditorManager]="this.meetTheFarmerListManager"
+                      [listEditorManagerPosition]="i"
+                      category="MEET_THE_FARMER"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'MEET_THE_FARMER'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.meetTheFarmer.error">
+                      <span>
+                        Meet the Farmers are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+          </div>
+        </div>
+
+
+        <div class="af-form-block--c6">
+          <h2 i18n="@@companyDetailTranslate.section1.translations">German version</h2>
+          <div class="af-form-element">
+
+            <div class="spacer-title-section"></div>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailDEForm.get('name')" label="Company name (DE)"
+                style="width: 100%"
+                hideAsterisk="true"
+                placeholder="Enter company name"
+                i18n-label="@@companyDetailTranslate.textinput.companyName.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyName.placeholder.de">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailDEForm.get('abbreviation')" label="Company abbreviation (DE)"
+                style="width: 100%"
+                hideAsterisk="true"
+                placeholder="Enter company abbreviation in 3-6 characters"
+                i18n-label="@@companyDetailTranslate.textinput.companyAbbreviation.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyAbbreviation.placeholder.de"
+                [isInvalid]="submitted && companyDetailDEForm.get('abbreviation').invalid">
+                <div *ngIf="submitted && companyDetailDEForm.get('abbreviation').invalid" class="sc-invalid-feedback">
+                  <div *ngIf="companyDetailDEForm.get('abbreviation').errors.minlength || companyDetailDEForm.get('abbreviation').errors.maxlength" i18n="@@companyDetailTranslate.textinput.companyAbbreviation.errorLength">
+                    <span>
+                      Company abbreviation can be empty or should contain 3-6 characters
+                    </span>
+                  </div>
+                </div>
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailDEForm.get('about')" label="About company (DE)"
+                style="width: 100%" [textarea]="true"
+                hideAsterisk="true"
+                helpText="Briefly describe your company and its history. Include the company mission and vision as well as core values. (max 2000 characters)"
+                i18n-label="@@companyDetailTranslate.textinput.companyAbout.label.de"
+                i18n-helpText="@@companyDetailTranslate.textinput.companyAbout.helpText.de"
+                [isInvalid]="submitted && companyDetailDEForm.get('about').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('about').errors as errors" class="sc-invalid-feedback" i18n="@@companyDetailTranslate.textinput.companyAbout.errors">
+                    <div *ngIf="errors.required">
+                      <span>
+                        About is required
+                      </span>
+                    </div>
+                    <div *ngIf="errors.maxlength">
+                      <span>
+                        Entry exceeds allowed max characters limit
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput [form]="companyDetailDEForm.get('interview')" label="Interview (DE)"
+                style="width: 100%" [textarea]="true"
+                hideAsterisk="true"
+                helpText="Briefly describe your company - PR statement. (max 2000 characters)"
+                i18n-label="@@companyDetailTranslate.textinput.companyInterview.label.de"
+                i18n-helpText="@@companyDetailTranslate.textinput.companyInterview.helpText.de"
+                [isInvalid]="submitted && companyDetailDEForm.get('interview').invalid">
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('interview').errors as errors" class="sc-invalid-feedback" i18n="@@companyDetailTranslate.textinput.companyAbout.errors">
+                    <div *ngIf="errors.required">
+                      <span>
+                        Interview is required
+                      </span>
+                    </div>
+                    <div *ngIf="errors.maxlength">
+                      <span>
+                        Entry exceeds allowed max characters limit
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="companyDetailDEForm.get('webPage')"
+                label="Company webpage URL (DE)"
+                style="width: 100%; color: #939393"
+                placeholder="Enter company webpage URL"
+                i18n-label="@@companyDetailTranslate.textinput.companyWebPage.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.companyWebPage.placeholder.de">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaDEForm.get('facebook')"
+                label="Facebook webpage URL (DE)"
+                placeholder="Enter Facebook URL"
+                i18n-label="@@companyDetailTranslate.textinput.facebook.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.facebook.placeholder.de"
+                style="width: 100%; color: #939393">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaDEForm.get('instagram')"
+                label="Instagram webpage URL (DE)"
+                placeholder="Enter Instagram URL"
+                i18n-label="@@companyDetailTranslate.textinput.instagram.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.instagram.placeholder.de"
+                style="width: 100%; color: #939393">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaDEForm.get('twitter')"
+                label="Twitter webpage URL (DE)"
+                placeholder="Enter Twitter URL"
+                i18n-label="@@companyDetailTranslate.textinput.twitter.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.twitter.placeholder.de"
+                style="width: 100%; color: #939393">
+              </textinput>
+            </app-closable>
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaDEForm.get('youtube')"
+                label="YouTube webpage URL (DE)"
+                placeholder="Enter YouTube URL"
+                i18n-label="@@companyDetailTranslate.textinput.youtube.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.youtube.placeholder.de"
+                style="width: 100%; color: #939393">
+              </textinput>
+            </app-closable>
+
+
+            <app-closable
+              [nonClosable]="true">
+              <textinput
+                [form]="socialMediaDEForm.get('other')"
+                label="Other webpage URL (DE)"
+                placeholder="Enter Other URL"
+                i18n-label="@@companyDetailTranslate.textinput.other.label.de"
+                i18n-placeholder="@@companyDetailTranslate.textinput.other.placeholder.de"
+                style="width: 100%; color: #939393">
+              </textinput>
+            </app-closable>
+
+            <list-editor
+              label="Videos (DE)"
+              [listEditorManager]="videosListManagerDE"
+              addText="Add new"
+              [canAdd]="true"
+              i18n-label="@@companyDetailTranslate.list-editor.videos.label.de"
+              i18n-addText="@@companyDetailTranslate.list-editor.videos.addText.de"
+              [invalid]="submitted &&
+              companyDetailDEForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="videosListManagerDE.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailDEForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      title="Video"
+                      i18n-title="@@companyDetailTranslate.list-editor.videos.title.de"
+                      [formControlInput]="item"
+                      [isOpen]="videosListManagerDE.isOpen(i)"
+                      [listEditorManager]="this.videosListManagerDE"
+                      [listEditorManagerPosition]="i"
+                      category="VIDEO"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'VIDEO'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.videos.error.de">
+                      <span>
+                        Videos are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Certification (DE)"
+              [listEditorManager]="certificationListManagerDE"
+              addText="Add new"
+              [canAdd]="true"
+              i18n-label="@@companyDetailTranslate.list-editor.certificationsAndStandards.label.de"
+              i18n-addText="@@companyDetailTranslate.list-editor.certificationsAndStandards.addText.de"
+              [invalid]="submitted &&
+              companyDetailDEForm.get('certifications')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="certificationListManagerDE.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailDEForm.get('certifications')?.controls; let i=
+                    index;">
+                    <app-certification-and-standard-item
+                      title="Certification"
+                      i18n-title="@@companyDetailTranslate.list-editor.certificationsAndStandards.title.de"
+                      [formControlInput]="item"
+                      [isOpen]="certificationListManagerDE.isOpen(i)"
+                      [listEditorManager]="this.certificationListManagerDE"
+                      [listEditorManagerPosition]="i">
+                    </app-certification-and-standard-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('certifications').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.certificationsAndStandards.error.de">
+                      <span>
+                        Certifications are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Production records (DE)"
+              [listEditorManager]="productionRecordListManagerDE"
+              addText="Add new"
+              [canAdd]="true"
+              i18n-label="@@companyDetailTranslate.list-editor.productionRecord.label.de"
+              i18n-addText="@@companyDetailTranslate.list-editor.productionRecord.addText.de"
+              [invalid]="submitted &&
+              companyDetailDEForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="productionRecordListManagerDE.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailDEForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      title="Production record"
+                      i18n-title="@@companyDetailTranslate.list-editor.productionRecord.title.de"
+                      [formControlInput]="item"
+                      [isOpen]="productionRecordListManagerDE.isOpen(i)"
+                      [listEditorManager]="this.productionRecordListManagerDE"
+                      [listEditorManagerPosition]="i"
+                      category="PRODUCTION_RECORD"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'PRODUCTION_RECORD'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.productionRecord.error.de">
+                      <span>
+                        Production records are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+            <list-editor
+              label="Meet the Farmers (DE)"
+              [listEditorManager]="meetTheFarmerListManagerDE"
+              addText="Add new"
+              [canAdd]="true"
+              i18n-label="@@companyDetailTranslate.list-editor.meetTheFarmer.label.de"
+              i18n-addText="@@companyDetailTranslate.list-editor.meetTheFarmer.addText.de"
+              [invalid]="submitted &&
+              companyDetailDEForm.get('documents')?.invalid">
+              <list-editor-items>
+                <div cdkDropList
+                  (cdkDropListDropped)="meetTheFarmerListManagerDE.onDrop($event)">
+                  <div *ngFor="let item of
+                    companyDetailDEForm.get('documents')?.controls; let i=
+                    index;">
+                    <app-company-document-item
+                      title="Meet the Farmer"
+                      i18n-title="@@companyDetailTranslate.list-editor.meetTheFarmer.title.de"
+                      [formControlInput]="item"
+                      [isOpen]="meetTheFarmerListManagerDE.isOpen(i)"
+                      [listEditorManager]="this.meetTheFarmerListManagerDE"
+                      [listEditorManagerPosition]="i"
+                      category="MEET_THE_FARMER"
+                      *ngIf="!item || !item.value || !item.value.category || item.value.category == 'MEET_THE_FARMER'">
+                    </app-company-document-item>
+                  </div>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+                <ng-container *ngIf="submitted">
+                  <div *ngIf="companyDetailDEForm.get('documents').errors as errors" class="sc-invalid-feedback">
+                    <div *ngIf="errors.required" i18n-title="@@companyDetailTranslate.list-editor.meetTheFarmer.error.de">
+                      <span>
+                        Meet the Farmers are required
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </list-editor-errors>
+            </list-editor>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+
+          <div class="af-bottom-buttons">
+            <button i18n="@@companyDetailTranslate.bottom-buttons.save" class="btn mr-2" type="button" (click)="saveCompany()"><span>Save</span></button>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</app-authorised-layout>

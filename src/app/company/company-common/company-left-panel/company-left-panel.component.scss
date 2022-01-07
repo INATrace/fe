@@ -1,0 +1,100 @@
+@import "../../../../variables";
+@import "../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../../node_modules/bootstrap/scss/mixins";
+
+.link-normal{
+  padding-left: 33px;
+
+  &:hover {
+    color: $moderate-cyan;
+  }
+}
+
+// Adjutsments for img-container
+.img-container {
+  $img-container-height:218px ;
+  $img-container-width: 290px;
+  $img-container-height-small: 80px;
+  $img-container-width-small: 120px;
+
+  margin-top: 0;
+  height: $img-container-height;
+  width: $img-container-width;
+  border-radius: 4px;
+  position: relative;
+
+  display: none;
+  opacity: 0;
+
+  @include media-breakpoint-up(lg) {
+    margin-top: 20px;
+    display: block;
+    opacity: 1;
+  }
+
+  &--overlay {
+    // something to consider for the futures: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Using_multiple_backgrounds
+    // but that assumes we can link image in stack of background-image, currently we're using <img> tag
+    height: $img-container-height;
+    width: $img-container-width;
+    position: absolute;
+    border-radius: 4px;
+    background-image: linear-gradient(transparent 23.95%, rgba(24, 27, 48, 0.4));
+  }
+
+  // adjustmnets for up to lg
+  &-small {
+    margin-top: 0;
+    height: $img-container-height-small;
+    width: $img-container-width-small;
+    border-radius: 4px;
+    position: relative;
+
+    float: right;
+    margin-right: 1rem;
+
+    display: block;
+    opacity: 1;
+
+    &--overlay {
+      // something to consider for the futures: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Using_multiple_backgrounds
+      // but that assumes we can link image in stack of background-image, currently we're using <img> tag
+      height: $img-container-height-small;
+      width: $img-container-width-small;
+      position: absolute;
+      border-radius: 4px;
+      // background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #181B31 100%);
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.00) 25%, rgba(24,27,49,0.90) 100%);
+    }
+
+    @include media-breakpoint-up(lg) {
+      display: none;
+      opacity: 0;
+    }
+
+    .img-style{
+      height: inherit;
+      width: inherit;
+      border-radius: 4px;
+      object-fit: contain; // hopefully fixes image placement
+    }
+  }
+}
+
+.img-style{
+  height: 218px;
+  width: 290px;
+  border-radius: 4px;
+  object-fit: contain; // hopefully fixes image placement
+}
+
+.company-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 40px;
+
+  .settings-icon {
+    cursor: pointer;
+  }
+}

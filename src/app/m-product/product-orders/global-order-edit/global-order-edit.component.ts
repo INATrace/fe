@@ -23,7 +23,6 @@ import { ChainStockOrder } from 'src/api-chain/model/chainStockOrder';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ActiveCompanyCustomersByOrganizationService } from 'src/app/shared-services/active-company-customers-by-organization.service';
 import { ActiveFacilitiesForOrganizationCodebookStandaloneService } from 'src/app/shared-services/active-facilities-for-organization-codebook-standalone.service';
-import { ActiveFacilitiesForOrganizationService } from 'src/app/shared-services/active-facilities-for-organization.service';
 import { ActiveMeasureUnitTypeService } from 'src/app/shared-services/active-measure-unit-types.service';
 import { ActiveProductsService } from 'src/app/shared-services/active-products.service';
 import { ActiveSemiProductsForProductServiceStandalone } from 'src/app/shared-services/active-semi-products-for-product-standalone.service';
@@ -32,8 +31,8 @@ import { CodebookTranslations } from 'src/app/shared-services/codebook-translati
 import { GradeAbbreviationCodebook } from 'src/app/shared-services/grade-abbreviation-codebook';
 import { OrganizationsCodebookService } from 'src/app/shared-services/organizations-codebook.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { environment } from 'src/environments/environment';
 import { dateAtMidnightISOString, dbKey, defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ChainStockOrderValidationScheme } from './stock-order-item/validation';
@@ -52,7 +51,6 @@ export class GlobalOrderEditComponent implements OnInit {
     // private productController: ProductControllerService,
     protected chainCompanyCustomerService: CompanyCustomerService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
-    public activeFacilitiesForOrganizationService: ActiveFacilitiesForOrganizationService,
     private chainProductService: ProductService,
     private chainStockOrderService: StockOrderService,
     private chainOrderService: OrderService,

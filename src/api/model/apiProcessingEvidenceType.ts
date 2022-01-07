@@ -18,6 +18,7 @@
  */
 
 
+import { ApiProcessingEvidenceTypeTranslation } from './apiProcessingEvidenceTypeTranslation';
 
 
 
@@ -39,6 +40,10 @@ export interface ApiProcessingEvidenceType {
      */
     label?: string;
     /**
+     * whether the evidence is mandatory
+     */
+    mandatory?: boolean;
+    /**
      * if evidence is of provenance type
      */
     provenance?: boolean;
@@ -47,10 +52,6 @@ export interface ApiProcessingEvidenceType {
      */
     quality?: boolean;
     /**
-     * whether the evidence is required
-     */
-    required?: boolean;
-    /**
      * whether the evidence is required on quote
      */
     requiredOnQuote?: boolean;
@@ -58,6 +59,10 @@ export interface ApiProcessingEvidenceType {
      * a group in which at least one document has to be provided
      */
     requiredOneOfGroupIdForQuote?: string;
+    /**
+     * Translations for processing evidence type
+     */
+    translations?: Array<ApiProcessingEvidenceTypeTranslation>;
     /**
      * type of evidence
      */
@@ -89,6 +94,10 @@ export namespace ApiProcessingEvidenceType {
          */
         label = 'label',
         /**
+         * whether the evidence is mandatory
+         */
+        mandatory = 'mandatory',
+        /**
          * if evidence is of provenance type
          */
         provenance = 'provenance',
@@ -97,10 +106,6 @@ export namespace ApiProcessingEvidenceType {
          */
         quality = 'quality',
         /**
-         * whether the evidence is required
-         */
-        required = 'required',
-        /**
          * whether the evidence is required on quote
          */
         requiredOnQuote = 'requiredOnQuote',
@@ -108,6 +113,10 @@ export namespace ApiProcessingEvidenceType {
          * a group in which at least one document has to be provided
          */
         requiredOneOfGroupIdForQuote = 'requiredOneOfGroupIdForQuote',
+        /**
+         * Translations for processing evidence type
+         */
+        translations = 'translations',
         /**
          * type of evidence
          */
@@ -177,6 +186,17 @@ export namespace ApiProcessingEvidenceType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'mandatory',
+                    classname: 'ApiProcessingEvidenceType',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'provenance',
                     classname: 'ApiProcessingEvidenceType',
                     dataType: 'boolean',
@@ -189,17 +209,6 @@ export namespace ApiProcessingEvidenceType {
                     isEnum: false,
                     required: false,
                     name: 'quality',
-                    classname: 'ApiProcessingEvidenceType',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'required',
                     classname: 'ApiProcessingEvidenceType',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -229,6 +238,18 @@ export namespace ApiProcessingEvidenceType {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProcessingEvidenceTypeTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiProcessingEvidenceType',
+                    dataType: 'Array&lt;ApiProcessingEvidenceTypeTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceTypeTranslation'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingEvidenceType.TypeEnum',
@@ -250,15 +271,17 @@ export namespace ApiProcessingEvidenceType {
                 ],
                 label: [
                 ],
+                mandatory: [
+                ],
                 provenance: [
                 ],
                 quality: [
                 ],
-                required: [
-                ],
                 requiredOnQuote: [
                 ],
                 requiredOneOfGroupIdForQuote: [
+                ],
+                translations: [
                 ],
                 type: [
                 ],
@@ -281,19 +304,22 @@ export namespace ApiProcessingEvidenceType {
   //               label: {
   //                   validators: []
   //               },
+  //               mandatory: {
+  //                   validators: []
+  //               },
   //               provenance: {
   //                   validators: []
   //               },
   //               quality: {
   //                   validators: []
   //               },
-  //               required: {
-  //                   validators: []
-  //               },
   //               requiredOnQuote: {
   //                   validators: []
   //               },
   //               requiredOneOfGroupIdForQuote: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //               type: {

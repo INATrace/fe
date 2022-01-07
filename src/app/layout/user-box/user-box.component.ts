@@ -1,41 +1,44 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { faCaretDown, faUser, faBars} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { faUser, faBars} from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UnsubscribeList } from 'src/shared/rxutils';
-import { OrganizationService } from 'src/api-chain/api/organization.service';
 import { take } from 'rxjs/operators';
 import { AboutAppInfoService } from 'src/app/about-app-info.service';
-import { AuthService } from 'src/app/system/auth.service';
-import { GlobalEventManagerService } from 'src/app/system/global-event-manager.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-user-box',
   templateUrl: './user-box.component.html',
   styleUrls: ['./user-box.component.scss']
 })
-export class UserBoxComponent implements OnInit {
+export class UserBoxComponent implements OnInit, OnDestroy {
 
   userProfile = null;
-  displayName = "";
-  displayCompany = "";
+  displayName = '';
+  displayCompany = '';
   productId = this.route.snapshot.params.id;
 
   @Input()
   whitetexts = false;
 
-  faCaretDown = faCaretDown
-  faUser = faUser
-  faBars = faBars
-  isConfirmedOnly: boolean = false;
-  isAdmin: boolean = false;
-  showProductNav: boolean = false;
-  showSystemNav: boolean = false;
-  showProductOrdersTabs: boolean = false;
-  showProductMyStockTabs: boolean = false;
-  showProductStakeholdersTabs: boolean = false;
-  showSettingsTabs: boolean = false;
-  showCompaniesTabs: boolean = false;
+  faUser = faUser;
+  faBars = faBars;
+
+  isConfirmedOnly = false;
+  isAdmin = false;
+  isCompanyAdmin = false;
+  companyId: number;
+
+  showProductNav = false;
+  showSystemNav = false;
+
+  showProductStakeholdersTabs = false;
+
+  showSettingsTabs = false;
+  showCompaniesTabs = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,58 +46,74 @@ export class UserBoxComponent implements OnInit {
     private router: Router,
     private aboutAppInfoService: AboutAppInfoService,
     private globalEventManager: GlobalEventManagerService,
-    private chainOrganizationService: OrganizationService,
+    private companyControllerService: CompanyControllerService,
     private productController: ProductControllerService
   ) { }
 
-  unsubsribeList = new UnsubscribeList()
+  unsubscribeList = new UnsubscribeList();
 
   ngOnInit(): void {
+
     this.showProductNav = this.router.url.startsWith('/product-labels/');
-    this.showSystemNav = this.router.url.startsWith('/companies') || this.router.url.startsWith('/users') || this.router.url.startsWith('/settings');
-    this.showProductOrdersTabs = this.router.url.startsWith(`/product-labels/${this.productId}/orders`);
-    this.showProductMyStockTabs = this.router.url.startsWith(`/product-labels/${this.productId}/stock`);
+
+    this.showSystemNav =
+      this.router.url.startsWith('/companies') ||
+      this.router.url.startsWith('/users') ||
+      this.router.url.startsWith('/settings') ||
+      this.router.url.startsWith('/value-chains') ||
+      this.router.url.startsWith('/currencies');
+
     this.showProductStakeholdersTabs = this.router.url.startsWith(`/product-labels/${this.productId}/stakeholders`);
+
     this.showSettingsTabs = this.router.url.startsWith('/settings/');
     this.showCompaniesTabs = this.router.url.startsWith('/companies/');
 
+    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+
     this.userProfile = this.authService.currentUserProfile;
-    this.unsubsribeList.add(
+    this.unsubscribeList.add(
       this.authService.userProfile$.subscribe(val => {
-        this.userProfile = val
+        this.userProfile = val;
         if (this.userProfile) {
           this.isConfirmedOnly = 'CONFIRMED_EMAIL' === this.userProfile.status;
           this.isAdmin = 'ADMIN' === this.userProfile.role;
+          this.isCompanyAdmin = this.userProfile.companyIdsAdmin.includes(this.companyId);
           this.displayName = this.userProfile.name;
-          this.setDisplayCompany();
-          this.unsubsribeList.add(
+          this.setDisplayCompany().then();
+          this.unsubscribeList.add(
             this.globalEventManager.selectedUserCompanyEmitter.subscribe(
               company => {
-                if (company) this.displayCompany = company;
-                else this.displayCompany = "";
+                if (company) { this.displayCompany = company; }
+                else { this.displayCompany = ''; }
               },
-              error => { }
+              () => { }
             )
-          )
+          );
         }
       })
-    )
+    );
   }
 
   ngOnDestroy() {
-    this.unsubsribeList.cleanup()
+    this.unsubscribeList.cleanup();
   }
 
   logout() {
-    this.authService.logout()
+    this.authService.logout().then();
   }
 
   onUser() {
-    this.router.navigate(['home'])
+    this.router.navigate(['home']).then();
   }
 
   aboutUser() {
-    this.router.navigate(['user-profile'], { queryParams: { returnUrl: this.router.routerState.snapshot.url } });
+    this.router.navigate(['user-profile'], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
+   }
+
+  companyProfile() {
+    const id = localStorage.getItem('selectedUserCompany');
+    if (!id) { return; }
+    this.router.navigate(['companies', id, 'company']).then();
   }
 
   aboutApp() {
@@ -102,42 +121,42 @@ export class UserBoxComponent implements OnInit {
   }
 
   async setDisplayCompany() {
-    let id = localStorage.getItem("selectedUserCompany");
-    if (!id) return;
-    let res = await this.chainOrganizationService.getOrganization(id).pipe(take(1)).toPromise();
-    if (res && res.status === "OK" && res.data) {
+    const id = localStorage.getItem('selectedUserCompany');
+    if (!id) { return; }
+    const res = await this.companyControllerService.getCompanyUsingGET(Number(id)).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK' && res.data) {
       this.globalEventManager.selectedUserCompany(res.data.name);
     }
   }
 
   goToProduct() {
-    this.router.navigate(['/', 'product-labels'])
+    this.router.navigate(['/', 'product-labels']).then();
   }
 
   goTo(type) {
-    let arr = type.split('/');
+    const arr = type.split('/');
     return this.router.navigate(['/product-labels', this.productId].concat(arr));
   }
 
   async deleteCurrentProduct() {
-    // if (this.changed) return;
-    let productId = this.productId;
-    let result = await this.globalEventManager.openMessageModal({
+
+    const productId = this.productId;
+    const result = await this.globalEventManager.openMessageModal({
       type: 'warning',
       message: $localize`:@@productLabel.deleteCurrentProduct.warning.message:Are you sure you want to delete the product? This will delete all labels and batches attached to the product as well!`,
       options: { centered: true },
       dismissable: false
     });
-    if (result != "ok") return
-    let res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise()
-    if (res && res.status == 'OK') {
+    if (result !== 'ok') { return; }
+    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
       this.globalEventManager.push({
         action: 'success',
         notificationType: 'success',
         title: $localize`:@@productLabel.deleteCurrentProduct.success.title:Deleted`,
         message: $localize`:@@productLabel.deleteCurrentProduct.success.message:Product was successfuly deleted`
-      })
-      this.router.navigate(['/product-labels'])
+      });
+      this.router.navigate(['/product-labels']).then();
       return;
     }
     this.globalEventManager.push({
@@ -145,11 +164,11 @@ export class UserBoxComponent implements OnInit {
       notificationType: 'error',
       title: $localize`:@@productLabel.deleteCurrentProduct.error.title:Error`,
       message: $localize`:@@productLabel.deleteCurrentProduct.error.message:Product cannot be deleted. Please try again.`
-    })
+    });
   }
 
   goToCompany(type) {
-    let companyId = this.route.snapshot.params.id;
+    const companyId = this.route.snapshot.params.id;
     return this.router.navigate(['/companies', companyId, type]);
   }
 

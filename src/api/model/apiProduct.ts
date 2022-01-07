@@ -23,11 +23,13 @@ import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductCompany } from './apiProductCompany';
+import { ApiProductDataSharingAgreement } from './apiProductDataSharingAgreement';
 import { ApiProductLabelValues } from './apiProductLabelValues';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
 import { ApiResponsibility } from './apiResponsibility';
 import { ApiSustainability } from './apiSustainability';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -38,6 +40,10 @@ export interface ApiProduct {
     associatedCompanies?: Array<ApiProductCompany>;
     company?: ApiCompany;
     comparisonOfPrice?: ApiComparisonOfPrice;
+    /**
+     * Data sharing agreements
+     */
+    dataSharingAgreements?: Array<ApiProductDataSharingAgreement>;
     /**
      * product description
      */
@@ -85,6 +91,7 @@ export interface ApiProduct {
     specialityDescription?: string;
     specialityDocument?: ApiDocument;
     sustainability?: ApiSustainability;
+    valueChain?: ApiValueChain;
 }
 
 /**
@@ -101,6 +108,10 @@ export namespace ApiProduct {
         associatedCompanies = 'associatedCompanies',
         company = 'company',
         comparisonOfPrice = 'comparisonOfPrice',
+        /**
+         * Data sharing agreements
+         */
+        dataSharingAgreements = 'dataSharingAgreements',
         /**
          * product description
          */
@@ -147,7 +158,8 @@ export namespace ApiProduct {
          */
         specialityDescription = 'specialityDescription',
         specialityDocument = 'specialityDocument',
-        sustainability = 'sustainability'
+        sustainability = 'sustainability',
+        valueChain = 'valueChain'
     }
 
 
@@ -191,6 +203,18 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiComparisonOfPrice'
+                },
+                {
+                    metadata: ApiProductDataSharingAgreement.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dataSharingAgreements',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductDataSharingAgreement&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductDataSharingAgreement'
                 },
                 {
                     isReadOnly: false,
@@ -387,6 +411,18 @@ export namespace ApiProduct {
                     isListContainer: false,
                     complexType: 'ApiSustainability'
                 },
+                {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChain',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiValueChain',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiValueChain'
+                },
             ],
             validators: {
                 associatedCompanies: [
@@ -394,6 +430,8 @@ export namespace ApiProduct {
                 company: [
                 ],
                 comparisonOfPrice: [
+                ],
+                dataSharingAgreements: [
                 ],
                 description: [
                 ],
@@ -429,6 +467,8 @@ export namespace ApiProduct {
                 ],
                 sustainability: [
                 ],
+                valueChain: [
+                ],
             }
         }
     }
@@ -443,6 +483,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               comparisonOfPrice: {
+  //                   validators: []
+  //               },
+  //               dataSharingAgreements: {
   //                   validators: []
   //               },
   //               description: {
@@ -494,6 +537,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               sustainability: {
+  //                   validators: []
+  //               },
+  //               valueChain: {
   //                   validators: []
   //               },
   //     }

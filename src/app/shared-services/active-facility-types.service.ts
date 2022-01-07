@@ -14,7 +14,7 @@ import { ApiPaginatedResponseApiFacilityType } from '../../api/model/apiPaginate
 export class ActiveFacilityTypeService extends GeneralSifrantService<ApiFacilityType> {
 
   constructor(
-    private chainCodebookService: FacilityTypeControllerService,
+    private codebookService: FacilityTypeControllerService,
     protected codebookTranslations: CodebookTranslations
   ) {
     super();
@@ -40,7 +40,7 @@ export class ActiveFacilityTypeService extends GeneralSifrantService<ApiFacility
       ...this.requestParams
     };
 
-    return this.chainCodebookService.getFacilityTypeListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getFacilityTypeListUsingGETByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiFacilityType) => {
           return {
             results: res.data.items,

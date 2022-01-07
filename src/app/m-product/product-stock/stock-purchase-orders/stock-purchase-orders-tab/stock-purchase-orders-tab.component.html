@@ -1,4 +1,3 @@
-
 <app-authorised-layout>
   <app-product-label-left-panel-content>
   </app-product-label-left-panel-content>
@@ -87,7 +86,7 @@
               <button *ngIf="!openBalanceOnly" ngbDropdownItem (click)="setOpenBalanceOnly(true)" i18n="@@productLabelStock.filter.openBalanceOnly.button">Open balance</button>
               <!-- <button *ngIf="!purchaseOrderOnly" ngbDropdownItem (click)="setPurchaseOrdersOnly(true)" i18n="@@productLabelStock.filter.purchaseOrderOnly.button">Purchase orders only</button> -->
               <div *ngIf="!openBalanceOnly" class="line"></div>
-              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COOPERATIVE')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCooperative">Cash via cooperative</button>
+              <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COOPERATIVE')" i18n="@@productLabelStock.filter.wayOfPayment.cash">Cash</button>
               <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COLLECTOR')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCollector">Cash via collector</button>
               <button ngbDropdownItem (click)="setWayOfPayment('BANK_TRANSFER')" i18n="@@productLabelStock.filter.wayOfPayment.bankTransfer">Bank transfer</button>
               <button ngbDropdownItem (click)="setWayOfPayment('UNKNOWN')" i18n="@@productLabelStock.filter.wayOfPayment.unknown">Unknown</button>

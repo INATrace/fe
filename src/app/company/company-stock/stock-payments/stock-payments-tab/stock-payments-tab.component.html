@@ -1,0 +1,156 @@
+<app-authorised-layout>
+
+    <app-company-left-panel></app-company-left-panel>
+
+    <div class="main" *ngIf="this.isAuthRoleToSeePayments">
+
+        <div class="main-inside-top content-element">
+
+            <!-- PAYMENTS -->
+
+            <div class="d-flex justify-content-between content-element--row1">
+                <div class="title-page content-element--title"
+                     i18n="@@productLabelStock.title.payments">Payments</div>
+                <button *ngIf="this.isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
+                        (click)="newPayment()"
+                        i18n="@@productLabelStock.button.newPayment">
+                    <span>+ Add payment</span>
+                </button>
+            </div>
+
+            <div class="d-flex justify-content-between main-inside-top--row2">
+
+                <div>
+                    <div class="sub-title-page content-element--subtitle"
+                         i18n="@@productLabelStock.subTitle.listOfPayments">
+                        List of payments
+                    </div>
+                    <div class="counting-page content-element--counting"
+                         i18n="@@productLabelStock.subTitle.showingPayments">
+                        Showing {{ showedPayments }}/{{ allPayments }}
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-top">
+                    <div class="d-flex align-items-center"
+                         style="margin-bottom: 1rem;"
+                         ngbDropdown
+                         placement="bottom-right"
+                         display="dynamic"
+                         container="body">
+
+                        <div *ngIf="filterWayOfPayment && filterWayOfPayment?.value.length > 0"
+                             class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">
+                            {{ filterWayOfPayment.value | formatWayOfPayment }}
+                            <div (click)="setWayOfPayment('')" style="margin-left: 0.5rem;">
+                                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                                </fa-icon>
+                            </div>
+                        </div>
+
+                        <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+                            <div class="button-icon">
+                                <span class="button-icon-shape button-icon-shape--filter"></span>
+                            </div>
+                            <span i18n="@@list.button.filter" class="button-icon-label">Filter</span>
+                        </button>
+
+                        <div class="dropdown-menu" ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="setWayOfPayment('CASH')" i18n="@@productLabelStock.filter.wayOfPayment.cash">Cash</button>
+                            <button ngbDropdownItem (click)="setWayOfPayment('CASH_VIA_COLLECTOR')" i18n="@@productLabelStock.filter.wayOfPayment.cashViaCollector">Cash via collector</button>
+                            <button ngbDropdownItem (click)="setWayOfPayment('BANK_TRANSFER')" i18n="@@productLabelStock.filter.wayOfPayment.bankTransfer">Bank transfer</button>
+                            <button ngbDropdownItem (click)="setWayOfPayment('CHEQUE')" i18n="@@preferredWayOfPayment.cheque">Cheque</button>
+                            <button ngbDropdownItem (click)="setWayOfPayment('OFFSETTING')" i18n="@@preferredWayOfPayment.offsetting">Offsetting</button>
+                            <button ngbDropdownItem (click)="setWayOfPayment('UNKNOWN')" i18n="@@productLabelStock.filter.wayOfPayment.unknown">Unknown</button>
+                        </div>
+
+                        <app-search-textinput
+                                [form]="searchFarmerNameAndSurname"
+                                (valueChange)="searchPaymentByFarmerNameInput($event)">
+                        </app-search-textinput>
+
+                        <button class="af-actions-btn"
+                                [class.af-actions-btn--disabled]="allPayments < 1"
+                                [disabled]="allPayments < 1"
+                                (click)="generatePaymentsCsv()">
+                            <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <app-datepicker
+                        label="From"
+                        i18n-label="@@productLabelStock.datepicker.date.from"
+                        [form]="fromFilterDate"
+                        [invalid]="fromFilterDate.invalid"
+                        (onChange)="onFilterDateRangeChange()"
+                        style="width: 130px; margin-right: 1rem;">
+                </app-datepicker>
+
+                <app-datepicker
+                        label="To"
+                        i18n-label="@@productLabelStock.datepicker.date.to"
+                        [form]="toFilterDate"
+                        [invalid]="toFilterDate.invalid"
+                        (onChange)="onFilterDateRangeChange()"
+                        style="width: 130px">
+                </app-datepicker>
+            </div>
+
+            <app-stock-payments-list
+                    [reloadPingList$]="reloadPaymentPingList$"
+                    [companyId]="companyId"
+                    [wayOfPaymentPing$]="wayOfPaymentPing$"
+                    [deliveryDatesPing$]="deliveryDatesPing$"
+                    [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
+                    [currency]="currency"
+                    [selectedPayments]="selectedPayments"
+                    (selectedPaymentsChanged)="selectedIdsChanged($event)"
+                    (showing)="onShowPayments($event)"
+                    (countAll)="onCountAllPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
+            </app-stock-payments-list>
+
+
+            <!-- BULK PAYMENTS -->
+
+            <div class="spacer-between-sections"></div>
+
+            <div class="d-flex justify-content-between content-element--row1">
+                <div class="title-page content-element--title"
+                     i18n="@@productLabelStock.title.bulkPayments">
+                    Bulk payments
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between main-inside-top--row2">
+                <div>
+                    <div class="sub-title-page content-element--subtitle"
+                         i18n="@@productLabelStock.subTitle.listOfBulkPayments">
+                        List of bulk payments
+                    </div>
+                    <div class="counting-page content-element--counting"
+                         i18n="@@productLabelStock.subTitle.showingBulkPayments">
+                        Showing {{showedBulkPayments}}/{{allBulkPayments}}
+                    </div>
+                </div>
+            </div>
+
+            <app-stock-payments-bulk-list
+                    [companyId]="companyId"
+                    (showing)="onShowBulkPayments($event)"
+                    (countAll)="onCountAllBulkPayments($event)"
+                    [readOnly]="!isAuthRoleToEditPayments">
+            </app-stock-payments-bulk-list>
+
+        </div>
+    </div>
+
+    <div class="main" *ngIf="!this.isAuthRoleToSeeProcessing">
+        <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
+    </div>
+
+</app-authorised-layout>
