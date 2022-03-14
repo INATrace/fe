@@ -3,29 +3,29 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  environmentName: '',
-  basePath: '',
-  appBaseUrl: '',
-  qrCodeBasePath: '',
-  chainRelativeFileUploadUrl: '',
-  chainRelativeFileDownloadUrl: '',
-  relativeFileUploadUrl: '',
-  relativeFileUploadUrlManualType: '',
-  relativeImageUplodadUrl: '',
-  relativeImageUplodadUrlAllSizes: '',
-  version: '',
+    production: false,
+    environmentName: '',
+    basePath: '',
+    appBaseUrl: '',
+    qrCodeBasePath: '',
+    chainRelativeFileUploadUrl: '',
+    chainRelativeFileDownloadUrl: '',
+    relativeFileUploadUrl: '',
+    relativeFileUploadUrlManualType: '',
+    relativeImageUplodadUrl: '',
+    relativeImageUplodadUrlAllSizes: '',
+    version: '',
 
-  googleMapsApiKey: '',
-  googleAnalyticsId: '',
-  facebookPixelId: null,
-  intercomAppId: null,
-  chatApp: null,
-  rocketChatServer: null,
-  tokenForPublicLogRoute: '',
-  appName: 'INATrace',
-  reloadDelay: 500,
-  harcodedLabelForPrivacyOnRegisterPage: ''
+    googleMapsApiKey: '',
+    googleAnalyticsId: '',
+    facebookPixelId: null,
+    intercomAppId: null,
+    chatApp: null,
+    rocketChatServer: null,
+    tokenForPublicLogRoute: '',
+    appName: 'INATrace',
+    reloadDelay: 500,
+    harcodedLabelForPrivacyOnRegisterPage: ''
 };
 
 /*

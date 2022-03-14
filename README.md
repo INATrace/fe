@@ -53,7 +53,7 @@ This new major release includes new functionalities, refactorings, optimizations
 
 3. Open project in VS Code as working directory
 4. Generate API-s with running tasks `Generate API classes` and `Generate Chain API classes` to include APIs from Java backend and Coffee network projects
-4. Set environment as in [`environment.example.ts`](https://github.com/INATrace/fe/blob/main/src/environments/environment.example.ts)
+4. Set environment as in [`environment.ts`](https://github.com/INATrace/fe/blob/main/src/environments/environment.ts)
 5. Run Angular server with debugger by pressing `F5`
 	* Tasks in VS Code:
 		* Press `Ctrl +Shift+P` or `Cmd+Shift+P` and choose Tasks: Run Task and run desired task

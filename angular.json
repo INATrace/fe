@@ -44,26 +44,26 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
-                            {
-                              "glob": "**/*",
-                              "input": "node_modules/tinymce/skins",
-                              "output": "/tinymce/skins/"
-                            },
-                            {
-                              "glob": "**/*",
-                              "input": "node_modules/tinymce/themes",
-                              "output": "/tinymce/themes/"
-                            },
-                            {
-                              "glob": "**/*",
-                              "input": "node_modules/tinymce/plugins",
-                              "output": "/tinymce/plugins/"
-                            },
-                            {
-                              "glob": "**/*",
-                              "input": "node_modules/tinymce/icons",
-                              "output": "/tinymce/icons/"
-                            }
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/skins",
+                "output": "/tinymce/skins/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/themes",
+                "output": "/tinymce/themes/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/plugins",
+                "output": "/tinymce/plugins/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/icons",
+                "output": "/tinymce/icons/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -131,96 +131,13 @@
               },
               "outputPath": "dist/test"
             },
-            "INATrace-dev": {
+            "dev": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.INATrace-dev.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/"
-                ]
-              },
-              "outputPath": "dist/INATrace-dev"
-            },
-            "INATrace-prod-couch-db": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.INATrace-prod-couch-db.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/"
-                ]
-              },
-              "outputPath": "dist/INATrace-prod-couch-db"
-            },
-
-            "live": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.live.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "stylePreprocessorOptions": {
-                "includePaths": [
-                  "src/"
-                ]
-              },
-              "outputPath": "dist/live"
+              ]
             }
           }
         },
@@ -232,6 +149,9 @@
           "configurations": {
             "production": {
               "browserTarget": "inatrace-fe:build:production"
+            },
+            "dev": {
+              "browserTarget": "inatrace-fe:build:dev"
             }
           }
         },

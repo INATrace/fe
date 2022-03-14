@@ -14,7 +14,7 @@
     "generate-chain-api": "node generate-chain-api.js",
     "update-version": "node update-version.js",
     "extract-i18n-generate-translations": "node generate-translations.js",
-    "dev": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng serve --aot --host 0.0.0.0 --proxy-config proxy.INATrace-local.conf.json"
+    "dev": "ng serve --configuration=dev --aot --host 0.0.0.0 --proxy-config proxy.INATrace-local.conf.json"
   },
   "private": true,
   "dependencies": {
