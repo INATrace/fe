@@ -58,7 +58,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
 
   batchDetailForm: FormGroup;
   submitted: boolean = false;
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
   title: string = "";
 
   subs: Subscription[] = [];

@@ -60,7 +60,7 @@ export class StockPurchaseOrderEditComponent implements OnInit {
   stockOrderForm: FormGroup;
   submitted: Boolean = false;
 
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
 
   activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
   farmersCodebook: ActiveUserCustomersByOrganizationAndRoleService;

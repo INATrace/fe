@@ -89,7 +89,7 @@ export class GlobalOrderEditComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
 
   activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
   farmersCodebook: ActiveUserCustomersByOrganizationAndRoleService;

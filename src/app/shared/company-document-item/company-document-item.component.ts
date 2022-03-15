@@ -36,7 +36,7 @@ export class CompanyDocumentItemComponent extends GenericEditableItemComponent<A
       super(globalEventsManager);
   }
 
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
 
   documentCategory = DocumentCategory;
 

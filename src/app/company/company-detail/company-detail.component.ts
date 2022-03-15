@@ -49,7 +49,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
 
   faTimes = faTimes;
 
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
 
   submitted = false;
   title = '';

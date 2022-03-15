@@ -21,7 +21,7 @@ import { ApiResponsibilityFarmerPictureValidationScheme } from '../validation';
 })
 export class FarmerStoryPhotosComponent extends GenericEditableItemComponent<ApiResponsibilityFarmerPicture> {
 
-    rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+    rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
 
     constructor(
         protected globalEventsManager: GlobalEventManagerService,

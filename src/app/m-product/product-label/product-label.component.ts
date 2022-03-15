@@ -220,7 +220,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   faSlidersH = faSlidersH;
   faQrcode = faQrcode;
 
-  rootImageUrl: string = environment.relativeImageUplodadUrlAllSizes;
+  rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
   submitted = false;
 
   redirectToCertainLabel = null;
