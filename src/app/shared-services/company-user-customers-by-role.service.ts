@@ -33,6 +33,8 @@ export class CompanyUserCustomersByRoleService extends GeneralSifrantService<Api
 
     const limit = params && params.limit ? params.limit : this.limit();
     const reqParams: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
+      query: key,
+      searchBy: 'BY_NAME_AND_SURNAME',
       companyId: this.companyId,
       type: this.role,
       ...this.requestParams
