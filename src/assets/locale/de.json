@@ -1906,7 +1906,7 @@
     "productLabelStockProcessingOrderDetail.filterSemiProduct.label": "Halbfertigprodukt auswählen",
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Qualität wird benötigt",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Gewünschte Output-Menge erst eingeben",
-    "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Ausgabemenge ist größer als die Eingabemenge",
+    "productLabelStockProcessingOrderDetail.outputQuantityTooLargeValue.textinput.error": "Die Ausgangsmenge übersteigt die Eingangsmenge. Möchten Sie fortfahren?",
     "productLabelStockProcessingOrderDetail.invalidFormat.textinput.error": "Ungültiges Zahlenformat",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Input-Menge kappen",
     "typeDetailModal.processingEvidenceType.checkbox.fairness": "Fairness",

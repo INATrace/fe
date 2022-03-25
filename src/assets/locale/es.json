@@ -1990,7 +1990,7 @@
     "productLabelStockProcessingOrderDetail.filterSemiProduct.label": "Seleccione semiproducto",
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Se requiere una cantidad",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Introduzca primero la cantidad de salida deseada",
-    "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Cantidad de salida es mayor a cantidad de entrada",
+    "productLabelStockProcessingOrderDetail.outputQuantityTooLargeValue.textinput.error": "La cantidad de salida excede la cantidad de entrada. ¿Le gustaría continuar?",
     "productLabelStockProcessingOrderDetail.invalidFormat.textinput.error": "Formato de número invalido",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Cortar cantidad de entrada",
     "typeDetailModal.processingEvidenceType.checkbox.requiredOnQuote.label": "Requerido en el pedido",

@@ -1546,7 +1546,7 @@
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Quantity is required ",
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange": "Output quantity not in expected range",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Enter the desired output quantity first",
-    "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Output quantity is larger than the input quantity",
+    "productLabelStockProcessingOrderDetail.outputQuantityTooLargeValue.textinput.error": "Output quantity exceeds input quantity. Would you like to proceed?",
     "productLabelStockProcessingOrderDetail.invalidFormat.textinput.error": "Invalid number format",
     "productLabelStockProcessingOrderDetail.checkbox.useInput.label": "Use input",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Clip input quantity ",

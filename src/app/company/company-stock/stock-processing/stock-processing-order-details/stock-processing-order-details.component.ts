@@ -458,7 +458,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
    return Number.isNaN(Number(this.outputStockOrderForm.get('totalQuantity').value));
   }
 
-  get invalidOutputQuantityTooLargeValue() {
+  get outputQuantityTooLargeValue() {
 
     if (this.actionType === 'SHIPMENT') {
       return false;
@@ -529,7 +529,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.invalidOutputQuantity || this.invalidOutputQuantityTooLargeValue || this.invalidFormat) {
+    if (this.invalidOutputQuantity || this.invalidFormat) {
       return false;
     }
     if (this.inputFacilityForm.invalid) {
@@ -620,9 +620,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.outputStockOrderForm.get('totalQuantity').valueChanges
       .pipe(debounceTime(300))
       .subscribe((val: number) => {
-        if (!this.invalidOutputQuantityTooLargeValue) {
-          this.setInputOutputFormAccordinglyToTransaction(val);
-        }
+        this.setInputOutputFormAccordinglyToTransaction(val);
       }));
   }
 

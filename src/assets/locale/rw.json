@@ -1907,7 +1907,7 @@
     "productLabelStockProcessingOrderDetail.filterSemiProduct.label": "Hitamo igicuruzwa kigitunganywa ",
     "productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2": "Ingano irakenewe",
     "productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error": "Banza winjizemo ingano y'ibyifuzwa gusohorwa",
-    "productLabelStockProcessingOrderDetail.invalidOutputQuantityTooLargeValue.textinput.error": "Ingano y'ibisohoka iraruta ingano y'ibyinjira",
+    "productLabelStockProcessingOrderDetail.outputQuantityTooLargeValue.textinput.error": "Umubare wibisohoka urenze umubare winjiza. Urashaka gukomeza?",
     "productLabelStockProcessingOrderDetail.invalidFormat.textinput.error": "Uburyo bwo kwandika imibare ntibuhuye",
     "productLabelStockProcessingOrderDetail.checkbox.clipOrder.label": "Huza ingano y'ibyinjira ",
     "typeDetailModal.processingEvidenceType.checkbox.fairness": "Kutabogama",
