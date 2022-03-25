@@ -59,6 +59,17 @@ This new major release includes new functionalities, refactorings, optimizations
 		* Press `Ctrl +Shift+P` or `Cmd+Shift+P` and choose Tasks: Run Task and run desired task
 		* New tasks can be added in `tasks.json`
 
+## Preview
+
+![INAtrace welcome](docs/images/inatrace_welcome.png)
+
+![INAtrace registration](docs/images/inatrace_register.png)
+
+![INAtrace home](docs/images/inatrace_home.png)
+
+![INAtrace company](docs/images/inatrace_company.png)
+
+![INAtrace settings](docs/images/inatrace_settings.png)
 
 ## Contribution
 
