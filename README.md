@@ -39,37 +39,123 @@ This new major release includes new functionalities, refactorings, optimizations
 #### Requirements
 * Node 14
 * Angular 10
+* Docker
 * WebStorm or VS Code (recommended)
 * VS Code pluggins:
-	* Debugger for Chrome
-	* EditorConfig for VS Code
-	* npm support for VS Code
-	* HTML Format (from Mohamed)
+  * Debugger for Chrome
+  * EditorConfig for VS Code
+  * npm support for VS Code
+  * HTML Format (from Mohamed)
+  * TSLint
 
 #### How to run
 1. Clone the repository
 	
-2.  Run ```npm install```
+2. Run ```npm install```
 
-3. Open project in VS Code as working directory
-4. Generate API-s with running tasks `Generate API classes` and `Generate Chain API classes` to include APIs from Java backend and Coffee network projects
-4. Set environment as in [`environment.ts`](https://github.com/INATrace/fe/blob/main/src/environments/environment.ts)
-5. Run Angular server with debugger by pressing `F5`
-	* Tasks in VS Code:
-		* Press `Ctrl +Shift+P` or `Cmd+Shift+P` and choose Tasks: Run Task and run desired task
-		* New tasks can be added in `tasks.json`
+3. Open project in IDE of choice
 
-## Preview
+4. Generate API client from Java backend by running `npm run generate-api`
+
+5. Add development environment as `environment.dev.ts` by copying `environment.ts` and adding default values for configuration keys besides window environment (e.g. `environmentName: window['env']['environmentName'] || 'DEV'`)
+   1. `environmentName`: `'DEV'`
+   2. `appBaseUrl`: `'http://localhost:4200'`
+   3. `qrCodeBasePath`: `'q-cd'`
+   4. `relativeFileUploadUrl`: `'/api/common/document'`
+   5. `relativeFileUploadUrlManualType`: `'/api/common/document'`
+   6. `relativeImageUploadUrl`: `'/api/common/image'`
+   7. `relativeImageUploadUrlAllSizes`: `'/api/common/image'`
+   8. `googleMapsApiKey`: have to obtain a key yourself
+
+6. Run Angular server with `npm run dev`
+
+## Screens
+
+### Welcome page
+
+This is the welcome page at [inatrace.org](https://inatrace.org/). From here, existing users can login by clicking "Login" in the top right corner. New users can click on either one of the two "Get started" buttons to register. 
 
 ![INAtrace welcome](docs/images/inatrace_welcome.png)
 
+### Registration
+
+New users must enter their name, surname, email and password. The terms and conditions have to be accepted. The submitted email address receives a confirmation link to confirm the email address. After confirming the email, a system admin must activate the account.
+
 ![INAtrace registration](docs/images/inatrace_register.png)
+
+### Home
 
 ![INAtrace home](docs/images/inatrace_home.png)
 
-![INAtrace company](docs/images/inatrace_company.png)
+This is the home page. In the left sidebar from top to bottom, we have the following links:
+- Home
+- Company
+- Products
+- Settings (Admin only)
 
-![INAtrace settings](docs/images/inatrace_settings.png)
+The current user's products are displayed in the center, along with quick access links to stock, orders, customers, farmers and collectors.
+
+In the top right corner, an expandable menu contains quick links, user profile settings and a logout button.
+
+If the user has multiple companies, an active company can be selected in the "User profile" section.
+
+![INAtrace_user_profile](docs/images/inatrace_user_profile.png)
+
+### Settings
+
+This section is dedicated to system settings. Settings are accessible by clicking the cog icon in the sidebar. This menu is only available for system administrators.
+
+#### Companies
+
+Here, new companies can be added and existing ones can be edited.
+
+![INAtrace company](docs/images/inatrace_settings_companies.png)
+
+#### Users
+
+This is the list of system users. To show all users, the "My users" filter needs to be deactivated. Users can be edited, activated, deactivated and promoted or demoted out of the admin role.
+
+Users who confirmed their emails can be activated by clicking "Activate". After that, they can login and start using the app.
+
+![INArace_users](docs/images/inatrace_settings_users.png)
+
+#### Settings
+
+Under the "Settings" page and "Types" tab, we find constants and system-level values like semi-products, facility types, measurement units, grade abbreviations, processing evidence types and processing evidence fields. Add, edit or remove any of these values to fit your use case.
+
+![INAtrace_settings](docs/images/inatrace_settings_types.png)
+
+#### Value chains
+
+Value chains are listed on this tab. From here, create a new or edit an existing value chain. Value chains contains facility types, measuring unit types and other constants added in the types settings. 
+
+![INAtrace_settings_value_chains](docs/images/inatrace_settings_value_chains_details.png)
+
+#### Currencies
+
+The system supports 168 different currencies, provided by [exchangeratesapi.io](https://exchangeratesapi.io/). To use a currency, an admin has to manualy activate it before it can be selected in currency lists.
+
+To search for a currency, click the "Search" button above the enabled or disabled list and type the ISO code or full name.  
+
+![INAtrace_settings_currencies](docs/images/inatrace_settings_currencies.png)
+
+## Building
+
+Builds are done using Docker with the build script located in `Dockerfile`.
+
+To build, tag and push an image run `docker-build.sh`. See the file for a detailed command syntax.
+
+To build and tag an image localy with name `inatrace-be` and version `2.4.0` run:
+
+```
+./docker-build.sh inatrace-be 2.4.0
+```
+
+To build and tag an image with name `inatrace-be`, version `2.4.0` and push it to a remote Docker registry `my-docker-registry` run:
+
+```
+./docker-build.sh my-docker-registry/inatrace-be 2.4.0 push
+```
 
 ## Contribution
 
