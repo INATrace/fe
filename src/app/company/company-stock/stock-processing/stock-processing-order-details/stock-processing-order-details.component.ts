@@ -2025,7 +2025,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   setRemaining() {
 
     if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
-      this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
+      const remaining: number = (this.calcInputQuantity(false) - this.calculateOutputQuantity);
+      this.remainingForm.setValue(Math.max(0, remaining).toFixed(2));
     }
 
     if (this.actionType === 'SHIPMENT') {
