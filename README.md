@@ -69,7 +69,7 @@ This new major release includes new functionalities, refactorings, optimizations
 
 6. Run Angular server with `npm run dev`
 
-## Screens
+## How it works
 
 ### Welcome page
 
@@ -101,9 +101,73 @@ If the user has multiple companies, an active company can be selected in the "Us
 
 ![INAtrace_user_profile](docs/images/inatrace_user_profile.png)
 
+### Products
+
+![Products_icon](docs/images/icon-products.svg)
+
+Each company has its products which are visible in the products tab which is opened by clicking the above icon.
+
+#### Product settings
+
+Each product can contain information like name, picture, origin, data about social responsibility, enviromental sustainability, etc. This is defined in the "Product settings".
+
+#### QR labels
+
+For traceability, QR labels with product information are created here.
+
+![Product_QR_labels](docs/images/inatrace_product_qr.png)
+
+#### Stakeholders
+
+Stakeholders are companies participating in the production of the final product. Companies from the system can be added here. Their roles can be:
+
+- Buyer
+- Importer
+- Exporter
+- Producer
+- Association
+- Processor
+- Trader
+
+![Product_stakeholders](docs/images/inatrace_product_stakeholders.png)
+
+#### Final products
+
+Final products are retail products for sale to end customers.
+
+![Product_final_products](docs/images/inatrace_product_final_product.png)
+
+### Companies
+
+The currently active company is displayed when opening the company tab. "Purchases" tab of "My stock" is opened by default.
+
+#### Purchases
+
+Shows purchases of products from farmers and collectors. By selecting a facility, new purchases can be added by clicking "Add purchase" or "Add bulk purchase".
+
+![Company_purchases](docs/images/inatrace_company_purchases.png)
+
+#### Processing
+
+This is where processing actions are recorded e.g. roasting green coffee beans to make roasted coffee beans. Input and output items and quantity are defined and processing evidence can be added.
+
+![Company_processing](docs/images/inatrace_company_processing_action.png)
+
+#### Payments
+
+On this tab payments to farmers and collectors are recorded.
+
+![Company_payments](docs/images/inatrace_company_payments.png)
+
+#### Farmers and collectors
+
+Here, farmers and collectors with their personal and banking details are recorded. For each farmer and collector there is also an aggregation of past payments. Each person has a unique QR code.
+
+![Company_farmers_collectors](docs/images/inatrace_farmer.png)
+
 ### Settings
 
-This section is dedicated to system settings. Settings are accessible by clicking the cog icon in the sidebar. This menu is only available for system administrators.
+This section is dedicated to system settings. Settings are accessible by clicking the cog icon in the sidebar. This menu is only available for system administrators. Companies, users, value chains, currencies and settings are configured are configured on these pages.
 
 #### Companies
 
