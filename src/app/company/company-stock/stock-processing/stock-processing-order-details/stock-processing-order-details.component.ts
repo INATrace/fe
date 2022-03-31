@@ -458,7 +458,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
    return Number.isNaN(Number(this.outputStockOrderForm.get('totalQuantity').value));
   }
 
-  get invalidOutputQuantityTooLargeValue() {
+  get outputQuantityTooLargeValue() {
 
     if (this.actionType === 'SHIPMENT') {
       return false;
@@ -529,7 +529,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.invalidOutputQuantity || this.invalidOutputQuantityTooLargeValue || this.invalidFormat) {
+    if (this.invalidOutputQuantity || this.invalidFormat) {
       return false;
     }
     if (this.inputFacilityForm.invalid) {
@@ -620,9 +620,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.outputStockOrderForm.get('totalQuantity').valueChanges
       .pipe(debounceTime(300))
       .subscribe((val: number) => {
-        if (!this.invalidOutputQuantityTooLargeValue) {
-          this.setInputOutputFormAccordinglyToTransaction(val);
-        }
+        this.setInputOutputFormAccordinglyToTransaction(val);
       }));
   }
 
@@ -2027,7 +2025,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   setRemaining() {
 
     if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
-      this.remainingForm.setValue((this.calcInputQuantity(false) - this.calculateOutputQuantity).toFixed(2));
+      const remaining: number = (this.calcInputQuantity(false) - this.calculateOutputQuantity);
+      this.remainingForm.setValue(Math.max(0, remaining).toFixed(2));
     }
 
     if (this.actionType === 'SHIPMENT') {

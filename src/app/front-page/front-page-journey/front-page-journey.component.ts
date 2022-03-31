@@ -28,7 +28,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
 
   qrTag = this.route.snapshot.params.qrTag;
 
-  locations: google.maps.LatLngLiteral[] = [
+  locations: google.maps.LatLngLiteral[] = []; /*[
     { lat: -3.1428191, lng: 31.2247691 },
     { lat: -4.0351857, lng: 39.596223 },
     { lat: 1.611664, lng: 45.490649 },
@@ -48,7 +48,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     { lat: 49.112271, lng: -6.587187 },
     { lat: 50.684359, lng: 1.223039 },
     { lat: 53.234390, lng: 4.584119 },
-    { lat: 52.8754751, lng: 10.6686748 }];
+    { lat: 52.8754751, lng: 10.6686748 }];*/
 
   markers: any = [];
   initialBounds: any = [];
@@ -173,6 +173,17 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
       if (resp && resp.status === 'OK' && resp.data) {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = resp.data.producerName;
+  
+        this.locations = resp.data.historyTimeline.items
+            .filter(historyTimelineItem => {
+              return !!(historyTimelineItem.latitude && historyTimelineItem.longitude);
+            })
+            .map(historyTimelineItem => {
+          return {
+            lat: historyTimelineItem.latitude,
+            lng: historyTimelineItem.longitude,
+          };
+        });
       }
     }
   }
