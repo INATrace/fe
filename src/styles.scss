@@ -4503,10 +4503,10 @@ $af-graph-col-bg: inherit;
     display: inline-block;
 
     &--pink {
-      background-color: #AC1A56;
+      background-color: $primary;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
@@ -4584,7 +4584,7 @@ $af-graph-col-bg: inherit;
       background-color: #D8D8D8;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
@@ -4671,7 +4671,7 @@ $af-graph-col-bg: inherit;
       background-color: #ABABAB;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
