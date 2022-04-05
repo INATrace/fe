@@ -26,6 +26,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   producerName = '';
   historyItems = [];
 
+  uuid = this.route.snapshot.params.uuid;
   qrTag = this.route.snapshot.params.qrTag;
 
   locations: google.maps.LatLngLiteral[] = []; /*[
@@ -126,6 +127,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     );
     this.subs.push(sub2);
 
+    this.initLabel().then();
     this.data().then();
   }
 
@@ -162,6 +164,17 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
       iconClass = this.styleForIconType(item.iconType);
     }
     return {...item, iconClass};
+  }
+
+  async initLabel() {
+    const res = await this.publicControllerService.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
+    if (res && res.status === 'OK') {
+      for (const item of res.data.fields) {
+        if (item.name === 'name') {
+          this.producerName = item.value;
+        }
+      }
+    }
   }
 
   async data() {

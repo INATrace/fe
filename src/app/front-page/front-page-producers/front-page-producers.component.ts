@@ -20,7 +20,6 @@ export class FrontPageProducersComponent implements OnInit {
 
   titleFarmers = $localize`:@@frontPage.producers.title.meetFarmers:Meet the farmers`;
   titleCooperative = $localize`:@@frontPage.producers.title.meetCooperative:Meet the cooperative`;
-  titleOwner = $localize`:@@frontPage.producers.title.meetOwner:The brand Angelique’s Finest owned by local producers`;
 
   videoRWurl = null;
   videoMeetTheFarmers = null;
@@ -45,6 +44,8 @@ export class FrontPageProducersComponent implements OnInit {
   companyNameCooperative: string = null;
 
   lang = 'EN';
+
+  productName = '';
 
   pageYOffset = 0;
   @HostListener('window:scroll', ['$event']) onScroll(event) {
@@ -74,7 +75,12 @@ export class FrontPageProducersComponent implements OnInit {
     const res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
       for (const item of res.data.fields) {
-        if (item.name === 'settings.language') { this.lang = item.value; }
+        if (item.name === 'name') {
+          this.productName = item.value;
+        }
+        if (item.name === 'settings.language') {
+          this.lang = item.value;
+        }
       }
     }
 

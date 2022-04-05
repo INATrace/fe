@@ -2,6 +2,6 @@
 <svg width="22px" height="32px" viewBox="0 0 22 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>back-to-top</title>
     <g id="back-to-top" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
-        <path d="M11,1 C16.5228475,1 21,5.4771525 21,11 L21,20.2196923 L21,20.2196923 L11,31 L1,20.2196923 L1,11 C1,5.4771525 5.4771525,1 11,1 Z" id="Rectangle-Copy-29" stroke="#AC1A56" stroke-width="2" transform="translate(11.000000, 16.000000) scale(-1, -1) translate(-11.000000, -16.000000) "></path>
+        <path d="M11,1 C16.5228475,1 21,5.4771525 21,11 L21,20.2196923 L21,20.2196923 L11,31 L1,20.2196923 L1,11 C1,5.4771525 5.4771525,1 11,1 Z" id="Rectangle-Copy-29" stroke="#5DBCCF" stroke-width="2" transform="translate(11.000000, 16.000000) scale(-1, -1) translate(-11.000000, -16.000000) "></path>
     </g>
 </svg>
