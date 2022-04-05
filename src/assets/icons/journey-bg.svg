@@ -8,7 +8,7 @@
         <mask id="mask-2" fill="white">
             <use xlink:href="#path-1"></use>
         </mask>
-        <use id="Rectangle" fill="#AC1A56" xlink:href="#path-1"></use>
+        <use id="Rectangle" fill="#25265E" xlink:href="#path-1"></use>
         <path d="M11.3518494,7.32402931 C17.262859,4.25885528 22.1970329,9.79112256 26.4503394,6.28408677 C28.5215755,4.57626281 28.0787976,2.14779533 27.5961793,5.68434189e-14 C26.2803545,5.68434189e-14 17.0816281,5.68434189e-14 0,5.68434189e-14 L0,20 C2.69179282,14.0778746 6.47574264,9.85255103 11.3518494,7.32402931 Z" id="Oval" fill-opacity="0.303840691" fill="#000000" fill-rule="nonzero" mask="url(#mask-2)"></path>
     </g>
 </svg>
