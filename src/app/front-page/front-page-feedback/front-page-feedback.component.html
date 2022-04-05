@@ -4,7 +4,8 @@
   <div class="af-b2c-wrapper">
 
     <app-front-page-header
-      [tab]="this.tab">
+      [tab]="this.tab"
+      [productName]="productName">
     </app-front-page-header>
 
     <main class="af-b2c-main af-b2c-main--adjusted">
@@ -14,7 +15,7 @@
 
       <textinput
         [form]="feedbackForm.get('feedback')"
-        label="The producers of Angelique’s Finest look forward to your feedback (what do you like / not)"
+        label="The producers of {{ productName }} look forward to your feedback (what do you like / not)"
         style="width: 100%;"
         [textarea]="true"
         i18n-label="@@frontPage.feedback.textinput.text.label"
@@ -31,7 +32,7 @@
       <h2 i18n="@@frontPage.feedback.questions">Please also answer the following questions:</h2>
 
       <single-choice
-        label="1. How would you rate the taste of Angelique's Finest in comparison to other coffee which you drink?"
+        label="1. How would you rate the taste of {{ productName }} in comparison to other coffee which you drink?"
         i18n-label="@@frontPage.feedback.taste"
         [formControlInput]="feedbackForm.get('questionnaireAnswers.rateTaste')"
         [codebookService]="codebookTasteCodes"
@@ -41,7 +42,7 @@
 
 
 
-      <div i18n="@@frontPage.feedback.prepare" class="af-b2c-spacer--top-two">2. How did you prepare Angelique’s Finest? (multiple selection possible)</div>
+      <div i18n="@@frontPage.feedback.prepare" class="af-b2c-spacer--top-two">2. How did you prepare {{ productName }}? (multiple selection possible)</div>
       <checkbox-input
         [form]="filterCoffeeForm"
         class="af-b2c-form-element af-b2c-form-element--checkbox af-b2c-spacer--top-one af-b2c-form-element--nolabel">
@@ -166,7 +167,11 @@
 
 
 
-      <button i18n="@@frontPage.feedback.button.submit" class="af-b2c-front--cta" type="button" (click)="submitFeedback()"><span>Submit</span></button>
+      <button i18n="@@frontPage.feedback.button.submit"
+              class="btn"
+              style="padding-left: 100px; padding-right: 100px; text-transform: uppercase;"
+              type="button"
+              (click)="submitFeedback()"><span>Submit</span></button>
 
 
       <a class="af-b2c-btt scroll-to-top" (click)="scrollToTop()" *ngIf="pageYoffset > 0">&nbsp;</a>

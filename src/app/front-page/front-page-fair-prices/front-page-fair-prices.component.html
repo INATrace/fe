@@ -4,7 +4,8 @@
   <div class="af-b2c-wrapper">
 
     <app-front-page-header
-      [tab]="this.tab">
+      [tab]="this.tab"
+      [productName]="productName">
     </app-front-page-header>
 
     <main class="af-b2c-main">
@@ -42,7 +43,7 @@
               <span class="af-graph-label">{{ label2 }}</span>
             </div>
             <div class="af-graph-col">
-              <span class="af-graph-label">{{ label3 }}</span>
+              <span class="af-graph-label">{{ productName }}</span>
             </div>
           </div>
 
@@ -51,14 +52,16 @@
 
       <p [innerHTML]="desc"></p>
 
-      <h1>{{ title2 }}</h1>
+      <h1>{{ title2 }} {{ productName }}</h1>
 
       <div class="af-stgraph-wrapper" style>
         <div class="af-stgraph">
 
           <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="this.increaseOfCoffee + 'px'">
             <div class="af-stgraph-col">
-              <span class="af-stgraph-description">{{ label2Farmers }}</span>
+              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label1Farmers">
+                Price paid if sold as {{ productName }}
+              </span>
             </div>
             <div class="af-stgraph-col">
               <span class="af-stgraph-bar af-stgraph-bar--purple">
@@ -68,7 +71,9 @@
           </div>
           <div class="af-stgraph-row af-stgraph-row--middle" style="height: 100px;">
             <div class="af-stgraph-col">
-              <span class="af-stgraph-description">{{ label1Farmers }}</span>
+              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label2Farmers">
+                Average price paid if not sold as {{ productName }}
+              </span>
             </div>
             <div class="af-stgraph-col">
               <span class="af-stgraph-bar af-stgraph-bar--gray"></span>

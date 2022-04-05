@@ -4,7 +4,8 @@
   <div class="af-b2c-wrapper">
 
     <app-front-page-header
-      [tab]="this.tab">
+      [tab]="this.tab"
+      [productName]="productName">
     </app-front-page-header>
 
     <main class="af-b2c-main">
@@ -33,7 +34,7 @@
         [productionRecords]=true>
       </app-front-page-carousel>
 
-      <h1>{{titleOwner}}</h1>
+      <h1 i18n="@@frontPage.producers.title.meetOwner">The brand {{ productName }} owned by local producers</h1>
 
       <ng-container *ngIf="videoRWurl">
         <iframe [src]="this.videoRWurl" frameborder="0" allowfullscreen></iframe>

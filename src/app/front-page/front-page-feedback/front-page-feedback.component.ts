@@ -45,6 +45,8 @@ export class FrontPageFeedbackComponent implements OnInit {
 
   uuid = this.route.snapshot.params.uuid;
 
+  productName = '';
+
   ngOnInit(): void {
     this.tab = this.route.snapshot.data.tab;
     this.initLabel();
@@ -69,6 +71,9 @@ export class FrontPageFeedbackComponent implements OnInit {
   gdprHtmlContext: string = "";
   prepareGDPR(data) {
     for (let item of data) {
+      if (item.name === 'name') {
+        this.productName = item.value;
+      }
       if (item.name === "settings.gdprText") {
         this.gdprHtmlContext = item.value;
       }

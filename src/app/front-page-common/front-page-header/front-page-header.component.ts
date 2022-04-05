@@ -14,6 +14,9 @@ export class FrontPageHeaderComponent implements OnInit {
   @Input()
   doShowTabs = true;
 
+  @Input()
+  productName = '';
+
   uuid = this.route.snapshot.params.uuid;
   qrTag = this.route.snapshot.params.qrTag;
 
