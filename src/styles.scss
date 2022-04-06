@@ -3638,11 +3638,11 @@ $af-b2c-arrows-shape: 48px;
 $af-b2c-arrows: 24px;
 
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
-// $af-b2c-font-family: 'Raleway', sans-serif;
-$af-b2c-font-family: 'Montserrat', sans-serif;;
-
+//@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+$af-b2c-font-family: 'Open Sans', sans-serif;
 
 .af-b2c {
   &-wrapper {
@@ -3663,7 +3663,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       h1 {
         color: #FFFFFF;
         text-transform: uppercase;
-        font-family: 'graystroke', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
       }
     }
@@ -4093,7 +4093,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       h1 {
         color: $white;
         text-transform: uppercase;
-        font-family: 'graystroke', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
 
         span {
@@ -4510,7 +4510,7 @@ $af-graph-col-bg: inherit;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       font-size: 12px;
       color: #000000;
       text-align: center;
@@ -4588,7 +4588,7 @@ $af-graph-col-bg: inherit;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       color: #FFFFFF;
       font-size: 16px;
       text-align: center;
@@ -4675,7 +4675,7 @@ $af-graph-col-bg: inherit;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       color: #FFFFFF;
       font-size: 16px;
       text-align: center;
