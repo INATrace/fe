@@ -34,6 +34,8 @@ export class FrontPageQualityComponent implements OnInit {
   label1 = $localize`:@@frontPage.quality.chart.label1:80 points = specialty coffee`;
   label2 = '';
 
+  productName = '';
+
   pageYOffset = 0;
   @HostListener('window:scroll', ['$event']) onScroll(event) {
     this.pageYOffset = window.pageYOffset;
@@ -65,7 +67,12 @@ export class FrontPageQualityComponent implements OnInit {
     const res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
       for (const item of res.data.fields) {
-        if (item.name === 'settings.language') { this.lang = item.value; }
+        if (item.name === 'name') {
+          this.productName = item.value;
+        }
+        if (item.name === 'settings.language') {
+          this.lang = item.value;
+        }
       }
 
       if (this.qrTag !== 'EMPTY') {

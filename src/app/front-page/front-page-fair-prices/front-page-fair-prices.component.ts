@@ -13,7 +13,7 @@ export class FrontPageFairPricesComponent implements OnInit {
 
   tab: string = null;
   title = $localize`:@@frontPage.fair-prices.title:Fair prices`;
-  title2 = $localize`:@@frontPage.fair-prices.title2:Increase of farmers' income through Angelique's Finest`;
+  title2 = $localize`:@@frontPage.fair-prices.title2:Increase of farmers' income through`;
 
   uuid = this.route.snapshot.params.uuid;
   qrTag = this.route.snapshot.params.qrTag;
@@ -37,12 +37,12 @@ export class FrontPageFairPricesComponent implements OnInit {
 
   label1 = $localize`:@@frontPage.fair-prices.barChart.label1:World market price for Arabica coffee`;
   label2 = $localize`:@@frontPage.fair-prices.barChart.label2:Fairtrade Price`;
-  label3 = $localize`:@@frontPage.fair-prices.barChart.label3:Angelique’s Finest`;
-  label2Farmers = $localize`:@@frontPage.fair-prices.barChart.label1Farmers:Price paid if sold as Angelique's Finest`;
-  label1Farmers = $localize`:@@frontPage.fair-prices.barChart.label2Farmers:Average price paid if not sold as Angelique's Finest`;
+
   label0Farmers = $localize`:@@frontPage.fair-prices.barChart.label0Farmers:Increase in % per kg of coffee sold`;
 
   pageYOffset = 0;
+
+  productName = '';
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
@@ -84,6 +84,9 @@ export class FrontPageFairPricesComponent implements OnInit {
     let prices = null;
 
     for (const item of data) {
+      if (item.name === 'name') {
+        this.productName = item.value;
+      }
       if (item.name === 'comparisonOfPrice.prices') {
         prices = item.value;
       }

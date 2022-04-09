@@ -17,7 +17,7 @@ export class FrontPageFirstComponent implements OnInit, OnDestroy {
 
   productName: string = null;
   unpublishedText = '';
-  published = true;
+  published = false;
   sub: Subscription;
 
   constructor(
@@ -57,6 +57,7 @@ export class FrontPageFirstComponent implements OnInit, OnDestroy {
   async initLabel() {
     const res = await this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
+      this.published = true;
       for (const item of res.data.fields) {
         if (item.name === 'name') {
           this.productName = item.value;

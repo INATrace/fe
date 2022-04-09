@@ -10,9 +10,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-
+html {
+  height: 100%;
+}
 
 body {
+  height: 100%;
     margin:0;
     // font-family: 'Signika','Helvetica Neue','sans-serif';
     font-family: 'Poppins', sans-serif;
@@ -3641,19 +3644,14 @@ $af-b2c-arrows: 24px;
 $af-b2c-font-family: 'Montserrat', sans-serif;;
 
 
-
 .af-b2c {
   &-wrapper {
     background: $af-wrapper;
   }
   &-header {
-    background-color: $af-header;
-    background-image: url(/assets/logo/header-bg-graphics.svg);
-    background-position: 0 -78px;
-    background-repeat: no-repeat;
+    background-color: $secondary;
 
-    border-top: 20px solid #AC1A56;
-    border-top: 20px solid #ac1a56a6;
+    border-top: 20px solid $primary;
     text-align: center;
 
     &--logo {
@@ -3663,13 +3661,12 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       padding-bottom: $af-spacing-one-and-a-treequarters;
 
       h1 {
-        color: $white;
+        color: #FFFFFF;
         text-transform: uppercase;
         font-family: 'graystroke', sans-serif;
         font-size: 1rem;
       }
     }
-
   }
 
   &-nav {
@@ -3694,13 +3691,12 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       padding-bottom: $af-spacing-one;
       padding-left: 0;
     }
+
     &--selected {
       border-bottom: 2px solid white;
       border-radius: 1px solid;
     }
   }
-
-
 
   &-main {
     padding-left: 25px;
@@ -3900,13 +3896,14 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       }
     }
   }
+
   &-social {
     &-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       height: calc(96px + 20px);
-      background-color: $af-header;
+      background-color: $secondary;
     }
 
     display: inline-block;
@@ -3924,7 +3921,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       display: inline-block;
       height: 24px;
       width: 24px;
-      background: #5C267B;  // this will be color of icon, default is --BLUE
+      background: $secondary;  // this will be color of icon, default is --BLUE
       mask-size: cover;
       margin-top: 12px;
       margin-left: 12px;
@@ -3949,7 +3946,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
 
   &-splitter {
     height: 20px;
-    background-color: #AC1A56;
+    background-color: $primary;
   }
 
   // &-social {
@@ -4084,13 +4081,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
 //
 .af-b2c {
   &-front {
-    background-color: #AC1A56;
-    background-image: url(/assets/logo/header-bg-graphics.svg), url(/assets/logo/afc-smile70.png);
-    background-position: 0 -78px, center top;
-    background-repeat: no-repeat;
-
-    border-top:  20px solid #EDD200;
-    border-top: 20px solid #edd200cf;
+    border-top:  20px solid $secondary;
     text-align: center;
 
     &--logo {
@@ -4114,25 +4105,24 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
         }
       }
     }
+
     &--headline {
       font-family: $af-b2c-font-family;
       font-weight: 600;
       font-size: 32px;
       line-height: 1.5;
-      color: #FFFFFF;
-      text-align: left;
+      color: $secondary;
+      text-align: center;
 
       padding-left: 1rem;
       padding-right: 1rem;
-
-      @include media-breakpoint-up(md) {
-        text-align: center;
-      }
     }
+
     &--nope {
       margin-top: 2rem;
       height: 10vh;                   // whole viewport height, you say?
     }
+
     &--cta {
       background: #0FAE94;
       font-family: $af-b2c-font-family;
@@ -4513,10 +4503,10 @@ $af-graph-col-bg: inherit;
     display: inline-block;
 
     &--pink {
-      background-color: #AC1A56;
+      background-color: $primary;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
@@ -4594,7 +4584,7 @@ $af-graph-col-bg: inherit;
       background-color: #D8D8D8;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
@@ -4681,7 +4671,7 @@ $af-graph-col-bg: inherit;
       background-color: #ABABAB;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
