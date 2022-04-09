@@ -279,6 +279,37 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2>Product journey</h2>
+          <div class="af-form-element">
+            <section class="droppable-list">
+
+              <google-map
+                  *ngIf="isGoogleMapsLoaded"
+                  width="100%"
+                  [zoom]="defaultZoom"
+                  [center]="defaultCenter"
+                  [options]="{disableDoubleClickZoom: true}"
+                  (mapClick)="addJourneyMarker($event)">
+                <map-marker
+                    #gMarker="mapMarker"
+                    *ngFor="let marker of journeyMarkersCtrl.controls; index as i"
+                    [position]="{lat: marker.get('latitude').value, lng: marker.get('longitude').value}"
+                    (mapRightclick)="removeJourneyMarker(i)"
+                    >
+                </map-marker>
+                <map-polyline *ngIf="journeyMarkersCtrl.length > 1"
+                    [path]="getJourneyVertices()"
+                ></map-polyline>
+                <map-info-window>{{gInfoWindowText}}</map-info-window>
+              </google-map>
+
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@productLabel.section.settings">Settings</h2>
           <div class="af-form-element">
             <section

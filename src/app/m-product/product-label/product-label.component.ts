@@ -198,6 +198,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   productForm: FormGroup;
   countries: any = [];
   markers: any = [];
+  journeyMarkers: any[] = [];
   defaultCenter = {
     lat: 5.274054,
     lng: 21.514503
@@ -1019,6 +1020,26 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.gInfoWindowText = marker.infoText;
     this.gInfoWindow.open(gMarker);
   }
+  
+  addJourneyMarker(event: google.maps.MouseEvent) {
+    this.journeyMarkersCtrl.push(new FormGroup({
+      latitude: new FormControl(event.latLng.lat()),
+      longitude: new FormControl(event.latLng.lng()),
+    }));
+  }
+  
+  removeJourneyMarker(i: number) {
+    this.journeyMarkersCtrl.removeAt(i);
+  }
+  
+  getJourneyVertices(): google.maps.LatLngLiteral[] {
+    return this.journeyMarkersCtrl.controls.map(ctrl => {
+      return {
+        lat: ctrl.get('latitude').value,
+        lng: ctrl.get('longitude').value,
+      };
+    });
+  }
 
   onKey(event, index) {
     this.updateInfoWindow(event.target.value, index);
@@ -1825,4 +1846,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.isOwner;
   }
 
+  public get journeyMarkersCtrl(): FormArray {
+    return this.productForm.get('journeyMarkers') as FormArray;
+  }
 }
