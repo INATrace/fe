@@ -27,6 +27,10 @@ export interface ApiHistoryTimeline {
      * The items in the history timeline
      */
     items?: Array<ApiHistoryTimelineItem>;
+    /**
+     * The items in the journey of history timeline
+     */
+    journeyMarkers?: Array<ApiHistoryTimelineItem>;
 }
 
 /**
@@ -40,7 +44,11 @@ export namespace ApiHistoryTimeline {
         /**
          * The items in the history timeline
          */
-        items = 'items'
+        items = 'items',
+        /**
+         * The items in the journey of history timeline
+         */
+        journeyMarkers = 'journeyMarkers'
     }
 
 
@@ -61,9 +69,23 @@ export namespace ApiHistoryTimeline {
                     isListContainer: true,
                     complexType: 'ApiHistoryTimelineItem'
                 },
+                {
+                    metadata: ApiHistoryTimelineItem.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiHistoryTimeline',
+                    dataType: 'Array&lt;ApiHistoryTimelineItem&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiHistoryTimelineItem'
+                },
             ],
             validators: {
                 items: [
+                ],
+                journeyMarkers: [
                 ],
             }
         }
@@ -73,6 +95,9 @@ export namespace ApiHistoryTimeline {
   //     validators: [],
   //     fields: {
   //               items: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //     }
