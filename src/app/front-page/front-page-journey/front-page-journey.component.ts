@@ -173,6 +173,14 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
         if (item.name === 'name') {
           this.producerName = item.value;
         }
+        if (item.name === 'journeyMarkers') {
+          this.locations = item.value.map(marker => {
+            return {
+              lat: marker.latitude,
+              lng: marker.longitude,
+            };
+          });
+        }
       }
     }
   }
@@ -186,17 +194,6 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
       if (resp && resp.status === 'OK' && resp.data) {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = resp.data.producerName;
-  
-        this.locations = resp.data.historyTimeline.items
-            .filter(historyTimelineItem => {
-              return !!(historyTimelineItem.latitude && historyTimelineItem.longitude);
-            })
-            .map(historyTimelineItem => {
-          return {
-            lat: historyTimelineItem.latitude,
-            lng: historyTimelineItem.longitude,
-          };
-        });
       }
     }
   }
