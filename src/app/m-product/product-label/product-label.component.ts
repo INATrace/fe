@@ -1026,10 +1026,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       latitude: new FormControl(event.latLng.lat()),
       longitude: new FormControl(event.latLng.lng()),
     }));
+    this.journeyMarkersCtrl.markAsDirty();
   }
   
   removeJourneyMarker(i: number) {
     this.journeyMarkersCtrl.removeAt(i);
+    this.journeyMarkersCtrl.markAsDirty();
   }
   
   getJourneyVertices(): google.maps.LatLngLiteral[] {
@@ -1100,7 +1102,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'howToUse', section: 'product', visible: new FormControl(false), template: this.howToUseTmpl },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
       { name: 'keyMarketsShare', section: 'product', visible: new FormControl(false), template: this.keyMarketsTmpl },
-      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl }
+      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl },
+      { name: 'journeyMarkers', section: 'product', visible: new FormControl(true), disableDrag: true }
     ];
   }
 
@@ -1440,11 +1443,19 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.environmentalSustainabilityElements, allPricingTransparencyElements, this.comparisonOfPriceElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
-        labels.push({
-          name: val.name,
-          section: val.section,
-          visible: val.visible.value
-        });
+        if (val.name === 'journeyMarkers') {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: true,
+          });
+        } else {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: val.visible.value
+          });
+        }
       });
     });
     return labels;

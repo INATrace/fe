@@ -377,6 +377,14 @@ export const ApiProductValidationScheme = {
     comparisonOfPrice: ApiComparisonOfPriceValidationScheme,
     knowledgeBlog: {
       validators: []
+    },
+    journeyMarkers: {
+      validators: [],
+      forceExpand: true,
+      arrayElementValidators: {
+        validators: [],
+        forceExpand: true,
+      }
     }
   }
 } as SimpleValidationScheme<ApiProduct>;
