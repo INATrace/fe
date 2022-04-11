@@ -194,6 +194,17 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
       if (resp && resp.status === 'OK' && resp.data) {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = resp.data.producerName;
+        
+        this.markers = resp.data.historyTimeline.items.map(historyItem => {
+          if (historyItem.longitude && historyItem.latitude) {
+            return {
+              position: {
+                lat: historyItem.latitude,
+                lng: historyItem.longitude,
+              },
+            };
+          }
+        });
       }
     }
   }
@@ -209,7 +220,6 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
           type: i === 0 || i === this.locations.length - 1 ? 'bound' : 'middle'
         },
       };
-      this.markers.push(tmp);
       this.initialBounds.push(tmp.position);
     }
     this.bounds = new google.maps.LatLngBounds();
