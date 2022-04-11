@@ -19,6 +19,7 @@
 
 
 import { ApiHistoryTimelineItem } from './apiHistoryTimelineItem';
+import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
 
 
 
@@ -30,7 +31,7 @@ export interface ApiHistoryTimeline {
     /**
      * The items in the journey of history timeline
      */
-    journeyMarkers?: Array<ApiHistoryTimelineItem>;
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
 }
 
 /**
@@ -70,16 +71,16 @@ export namespace ApiHistoryTimeline {
                     complexType: 'ApiHistoryTimelineItem'
                 },
                 {
-                    metadata: ApiHistoryTimelineItem.formMetadata,
+                    metadata: ApiProductJourneyMarker.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'journeyMarkers',
                     classname: 'ApiHistoryTimeline',
-                    dataType: 'Array&lt;ApiHistoryTimelineItem&gt;',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
                     isPrimitiveType: false,
                     isListContainer: true,
-                    complexType: 'ApiHistoryTimelineItem'
+                    complexType: 'ApiProductJourneyMarker'
                 },
             ],
             validators: {

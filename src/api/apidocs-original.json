@@ -12251,7 +12251,7 @@
           "journeyMarkers": {
             "description": "The items in the journey of history timeline",
             "items": {
-              "$ref": "#/components/schemas/ApiHistoryTimelineItem"
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
             },
             "type": "array"
           }
@@ -15316,6 +15316,13 @@
           "ingredients": {
             "description": "ingredients - list the ingredients in the product and describe their properties",
             "type": "string"
+          },
+          "journeyMarkers": {
+            "description": "Product journey path",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
           },
           "keyMarketsShare": {
             "additionalProperties": {
