@@ -195,16 +195,17 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = resp.data.producerName;
         
-        this.markers = resp.data.historyTimeline.items.map(historyItem => {
+        this.markers = resp.data.historyTimeline.items.reduce((acc, historyItem) => {
           if (historyItem.longitude && historyItem.latitude) {
-            return {
+            acc.push({
               position: {
                 lat: historyItem.latitude,
                 lng: historyItem.longitude,
               },
-            };
+            });
           }
-        });
+          return acc;
+        }, []);
       }
     }
   }
