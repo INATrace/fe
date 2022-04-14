@@ -11106,6 +11106,39 @@
         },
         "type": "object"
       },
+      "ApiBusinessToCustomerSettings": {
+        "properties": {
+          "creationTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "footerColor": {
+            "type": "string"
+          },
+          "headerColor": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "primaryColor": {
+            "type": "string"
+          },
+          "secondaryColor": {
+            "type": "string"
+          },
+          "ternaryColor": {
+            "type": "string"
+          },
+          "updateTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiCertification": {
         "properties": {
           "certificate": {
@@ -12246,8 +12279,16 @@
             ],
             "type": "string"
           },
+          "latitude": {
+            "format": "double",
+            "type": "number"
+          },
           "location": {
             "type": "string"
+          },
+          "longitude": {
+            "format": "double",
+            "type": "number"
           },
           "name": {
             "type": "string"
@@ -14834,6 +14875,10 @@
             },
             "type": "array"
           },
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
@@ -15019,6 +15064,10 @@
       },
       "ApiProductLabel": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "fields": {
             "description": "Fields",
             "items": {
@@ -15236,6 +15285,10 @@
       },
       "ApiProductLabelContent": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
@@ -15509,6 +15562,10 @@
       },
       "ApiProductLabelValuesExtended": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "checkAuthenticityCount": {
             "description": "Number of true 'checkAuthenticity' fields over all of batches",
             "format": "int32",

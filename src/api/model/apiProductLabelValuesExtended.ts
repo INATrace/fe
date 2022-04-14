@@ -18,11 +18,13 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiProductLabelFieldValue } from './apiProductLabelFieldValue';
 
 
 
 export interface ApiProductLabelValuesExtended { 
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     /**
      * Number of true 'checkAuthenticity' fields over all of batches
      */
@@ -73,6 +75,7 @@ export namespace ApiProductLabelValuesExtended {
      * All properties of ApiProductLabelValuesExtended.
      */
     export enum Properties {
+        businessToCustomerSettings = 'businessToCustomerSettings',
         /**
          * Number of true 'checkAuthenticity' fields over all of batches
          */
@@ -139,6 +142,18 @@ export namespace ApiProductLabelValuesExtended {
             metadata: formMetadata,
             classname: 'ApiProductLabelValuesExtended',
             vars: [
+                {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -254,6 +269,8 @@ export namespace ApiProductLabelValuesExtended {
                 },
             ],
             validators: {
+                businessToCustomerSettings: [
+                ],
                 checkAuthenticityCount: [
                 ],
                 fields: [
@@ -281,6 +298,9 @@ export namespace ApiProductLabelValuesExtended {
   // export const ApiProductLabelValuesExtendedValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
   //               checkAuthenticityCount: {
   //                   validators: []
   //               },

@@ -18,6 +18,7 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
 import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
@@ -30,6 +31,7 @@ import { ApiSustainability } from './apiSustainability';
 
 
 export interface ApiProductLabelContent { 
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
     comparisonOfPrice?: ApiComparisonOfPrice;
     /**
@@ -89,6 +91,7 @@ export namespace ApiProductLabelContent {
      * All properties of ApiProductLabelContent.
      */
     export enum Properties {
+        businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
         comparisonOfPrice = 'comparisonOfPrice',
         /**
@@ -146,6 +149,18 @@ export namespace ApiProductLabelContent {
             metadata: formMetadata,
             classname: 'ApiProductLabelContent',
             vars: [
+                {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
                 {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
@@ -366,6 +381,8 @@ export namespace ApiProductLabelContent {
                 },
             ],
             validators: {
+                businessToCustomerSettings: [
+                ],
                 company: [
                 ],
                 comparisonOfPrice: [
@@ -411,6 +428,9 @@ export namespace ApiProductLabelContent {
   // export const ApiProductLabelContentValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
   //               company: {
   //                   validators: []
   //               },

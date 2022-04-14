@@ -18,11 +18,13 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiProductLabelField } from './apiProductLabelField';
 
 
 
 export interface ApiProductLabel { 
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     /**
      * Fields
      */
@@ -61,6 +63,7 @@ export namespace ApiProductLabel {
      * All properties of ApiProductLabel.
      */
     export enum Properties {
+        businessToCustomerSettings = 'businessToCustomerSettings',
         /**
          * Fields
          */
@@ -115,6 +118,18 @@ export namespace ApiProductLabel {
             metadata: formMetadata,
             classname: 'ApiProductLabel',
             vars: [
+                {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProductLabel',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
                 {
                     metadata: ApiProductLabelField.formMetadata,
                     isReadOnly: false,
@@ -197,6 +212,8 @@ export namespace ApiProductLabel {
                 },
             ],
             validators: {
+                businessToCustomerSettings: [
+                ],
                 fields: [
                 ],
                 id: [
@@ -218,6 +235,9 @@ export namespace ApiProductLabel {
   // export const ApiProductLabelValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
   //               fields: {
   //                   validators: []
   //               },

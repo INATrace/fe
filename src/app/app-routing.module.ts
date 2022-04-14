@@ -440,6 +440,10 @@ const routes: Routes = [
     loadChildren: () => import('./front-page/front-page-module').then(m => m.FrontPageModule)
   },
   {
+    path: 'b2c',
+    loadChildren: () => import('./b2c/b2c.module').then(m => m.B2cModule)
+  },
+  {
     path: 's/:uuid/:qrTag/privacy-policy',
     component: FrontPagePrivacyComponent,
     pathMatch: 'full',

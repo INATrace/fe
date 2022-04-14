@@ -1,0 +1,20 @@
+<div class="d-flex flex-column h-100">
+    <header *ngIf="!loading" [style.background-color]="headerColor" class="py-3">
+
+    </header>
+
+    <div class="flex-grow-1">
+        <ng-container *ngIf="loading">
+            <div class="spinner-border justify-content-center" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!loading">
+            <router-outlet></router-outlet>
+        </ng-container>
+    </div>
+
+    <footer *ngIf="!loading" [style.background-color]="footerColor" class="py-4">
+
+    </footer>
+</div>

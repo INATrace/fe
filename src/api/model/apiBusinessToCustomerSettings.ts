@@ -21,56 +21,53 @@
 
 
 
-export interface ApiHistoryTimelineItem { 
-    date?: Date;
-    iconType?: ApiHistoryTimelineItem.IconTypeEnum;
-    latitude?: number;
-    location?: string;
-    longitude?: number;
-    name?: string;
-    type?: string;
+export interface ApiBusinessToCustomerSettings { 
+    creationTimestamp?: Date;
+    footerColor?: string;
+    headerColor?: string;
+    /**
+     * Entity id
+     */
+    id?: number;
+    primaryColor?: string;
+    secondaryColor?: string;
+    ternaryColor?: string;
+    updateTimestamp?: Date;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiHistoryTimelineItem.
+ * Namespace for property- and property-value-enumerations of ApiBusinessToCustomerSettings.
  */
-export namespace ApiHistoryTimelineItem {
+export namespace ApiBusinessToCustomerSettings {
     /**
-     * All properties of ApiHistoryTimelineItem.
+     * All properties of ApiBusinessToCustomerSettings.
      */
     export enum Properties {
-        date = 'date',
-        iconType = 'iconType',
-        latitude = 'latitude',
-        location = 'location',
-        longitude = 'longitude',
-        name = 'name',
-        type = 'type'
-    }
-
-    /**
-     * All possible values of iconType.
-     */
-    export enum IconTypeEnum {
-        SHIP = 'SHIP',
-        LEAF = 'LEAF',
-        WAREHOUSE = 'WAREHOUSE',
-        QRCODE = 'QRCODE',
-        OTHER = 'OTHER'
+        creationTimestamp = 'creationTimestamp',
+        footerColor = 'footerColor',
+        headerColor = 'headerColor',
+        /**
+         * Entity id
+         */
+        id = 'id',
+        primaryColor = 'primaryColor',
+        secondaryColor = 'secondaryColor',
+        ternaryColor = 'ternaryColor',
+        updateTimestamp = 'updateTimestamp'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiHistoryTimelineItem',
+            classname: 'ApiBusinessToCustomerSettings',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'date',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'creationTimestamp',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -78,11 +75,10 @@ export namespace ApiHistoryTimelineItem {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiHistoryTimelineItem.IconTypeEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'iconType',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'footerColor',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -92,8 +88,19 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'latitude',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'headerColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -103,8 +110,8 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'location',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'primaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -114,19 +121,8 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'longitude',
-                    classname: 'ApiHistoryTimelineItem',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'secondaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -136,59 +132,75 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'type',
-                    classname: 'ApiHistoryTimelineItem',
+                    name: 'ternaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                date: [
+                creationTimestamp: [
                 ],
-                iconType: [
+                footerColor: [
                 ],
-                latitude: [
+                headerColor: [
                 ],
-                location: [
+                id: [
                 ],
-                longitude: [
+                primaryColor: [
                 ],
-                name: [
+                secondaryColor: [
                 ],
-                type: [
+                ternaryColor: [
+                ],
+                updateTimestamp: [
                 ],
             }
         }
     }
 
-  // export const ApiHistoryTimelineItemValidationScheme = {
+  // export const ApiBusinessToCustomerSettingsValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               date: {
+  //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               iconType: {
+  //               footerColor: {
   //                   validators: []
   //               },
-  //               latitude: {
+  //               headerColor: {
   //                   validators: []
   //               },
-  //               location: {
+  //               id: {
   //                   validators: []
   //               },
-  //               longitude: {
+  //               primaryColor: {
   //                   validators: []
   //               },
-  //               name: {
+  //               secondaryColor: {
   //                   validators: []
   //               },
-  //               type: {
+  //               ternaryColor: {
+  //                   validators: []
+  //               },
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiHistoryTimelineItem>;
+  // } as SimpleValidationScheme<ApiBusinessToCustomerSettings>;
 
 
 }
