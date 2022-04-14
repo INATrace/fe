@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-b2c-intro',
@@ -8,19 +9,25 @@ import { B2cPageComponent } from '../b2c-page.component';
 })
 export class B2cIntroComponent implements OnInit {
 
+  uuid: string;
+  qrTag: string;
+
   constructor(
-      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
-  ) { }
+      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent,
+      private router: Router
+  ) {
+    this.uuid = b2cPage.uuid;
+    this.qrTag = b2cPage.qrTag;
+  }
 
   productName: string;
 
   ngOnInit(): void {
-    // Load name from fields
-    for (const item of this.b2cPage.fields) {
-      if (item.name === 'name') {
-        this.productName = item.value;
-      }
-    }
+    this.productName = this.b2cPage.productName;
+  }
+
+  openJourney() {
+    this.router.navigate(['/', 'b2c', this.uuid, this.qrTag, 'journey']);
   }
 
 }

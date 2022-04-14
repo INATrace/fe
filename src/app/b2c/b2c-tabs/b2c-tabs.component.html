@@ -1,0 +1,10 @@
+<div class="af-b2c-header--logo" [style.background-color]="backgroundColor">
+    <h1>{{ productName }}</h1>
+</div>
+<ul class="af-b2c-nav text-center" [style.background-color]="backgroundColor">
+    <li [class.af-b2c-nav--selected]="tab === tabEnum.JOURNEY" (click)="goTo(tabEnum.JOURNEY)">JOURNEY</li>
+    <li [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES" (click)="goTo(tabEnum.FAIR_PRICES)">FAIR PRICES</li>
+    <li [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS" (click)="goTo(tabEnum.PRODUCERS)">PRODUCERS</li>
+    <li [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY" (click)="goTo(tabEnum.QUALITY)">QUALITY</li>
+    <li [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK" (click)="goTo(tabEnum.FEEDBACK)">FEEDBACK</li>
+</ul>
