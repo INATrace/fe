@@ -23,15 +23,18 @@
 
 export interface ApiBusinessToCustomerSettings { 
     creationTimestamp?: Date;
-    footerColor?: string;
-    headerColor?: string;
+    headingColor?: string;
     /**
      * Entity id
      */
     id?: number;
     primaryColor?: string;
     secondaryColor?: string;
-    ternaryColor?: string;
+    tabFairPrices?: boolean;
+    tabFeedback?: boolean;
+    tabProducers?: boolean;
+    tabQuality?: boolean;
+    textColor?: string;
     updateTimestamp?: Date;
 }
 
@@ -44,15 +47,18 @@ export namespace ApiBusinessToCustomerSettings {
      */
     export enum Properties {
         creationTimestamp = 'creationTimestamp',
-        footerColor = 'footerColor',
-        headerColor = 'headerColor',
+        headingColor = 'headingColor',
         /**
          * Entity id
          */
         id = 'id',
         primaryColor = 'primaryColor',
         secondaryColor = 'secondaryColor',
-        ternaryColor = 'ternaryColor',
+        tabFairPrices = 'tabFairPrices',
+        tabFeedback = 'tabFeedback',
+        tabProducers = 'tabProducers',
+        tabQuality = 'tabQuality',
+        textColor = 'textColor',
         updateTimestamp = 'updateTimestamp'
     }
 
@@ -77,18 +83,7 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'footerColor',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'headerColor',
+                    name: 'headingColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -132,7 +127,51 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'ternaryColor',
+                    name: 'tabFairPrices',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tabFeedback',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tabProducers',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tabQuality',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'textColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -154,9 +193,7 @@ export namespace ApiBusinessToCustomerSettings {
             validators: {
                 creationTimestamp: [
                 ],
-                footerColor: [
-                ],
-                headerColor: [
+                headingColor: [
                 ],
                 id: [
                 ],
@@ -164,7 +201,15 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 secondaryColor: [
                 ],
-                ternaryColor: [
+                tabFairPrices: [
+                ],
+                tabFeedback: [
+                ],
+                tabProducers: [
+                ],
+                tabQuality: [
+                ],
+                textColor: [
                 ],
                 updateTimestamp: [
                 ],
@@ -178,10 +223,7 @@ export namespace ApiBusinessToCustomerSettings {
   //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               footerColor: {
-  //                   validators: []
-  //               },
-  //               headerColor: {
+  //               headingColor: {
   //                   validators: []
   //               },
   //               id: {
@@ -193,7 +235,19 @@ export namespace ApiBusinessToCustomerSettings {
   //               secondaryColor: {
   //                   validators: []
   //               },
-  //               ternaryColor: {
+  //               tabFairPrices: {
+  //                   validators: []
+  //               },
+  //               tabFeedback: {
+  //                   validators: []
+  //               },
+  //               tabProducers: {
+  //                   validators: []
+  //               },
+  //               tabQuality: {
+  //                   validators: []
+  //               },
+  //               textColor: {
   //                   validators: []
   //               },
   //               updateTimestamp: {

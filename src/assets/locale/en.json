@@ -2978,6 +2978,10 @@
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.label": "Enter the quantity to be used from this transaction",
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.helpText": "Available quantity",
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.required": "Quantity is required",
-    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.max": "Selected quantity cannot be greater than the available"
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.max": "Selected quantity cannot be greater than the available",
+    "productLabel.b2c.primaryColor": "Primary color",
+    "productLabel.b2c.secondaryColor": "Secondary color",
+    "productLabel.b2c.headingColor": "Heading color",
+    "productLabel.b2c.textColor": "Text color"
   }
 }

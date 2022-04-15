@@ -8,6 +8,7 @@ import { B2cFairPricesComponent } from './b2c-fair-prices/b2c-fair-prices.compon
 import { B2cProducersComponent } from './b2c-producers/b2c-producers.component';
 import { B2cQualityComponent } from './b2c-quality/b2c-quality.component';
 import { B2cFeedbackComponent } from './b2c-feedback/b2c-feedback.component';
+import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 
 @Component({
   selector: 'app-b2c-page',
@@ -57,6 +58,8 @@ export class B2cPageComponent implements OnInit {
   headerColor: string;
   footerColor: string;
 
+  b2cSettings: ApiBusinessToCustomerSettings;
+
   ngOnInit(): void {
     this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).subscribe({
       next: (value) => {
@@ -66,8 +69,7 @@ export class B2cPageComponent implements OnInit {
             break;
           }
         }
-        this.headerColor = value.data.businessToCustomerSettings.headerColor;
-        this.footerColor = value.data.businessToCustomerSettings.footerColor;
+        this.b2cSettings = value.data.businessToCustomerSettings;
       },
       complete: () => {
         this.loading = false;

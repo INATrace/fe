@@ -341,6 +341,24 @@ export const ApiComparisonOfPriceValidationScheme = {
   }
 } as SimpleValidationScheme<ApiComparisonOfPrice>;
 
+export const ApiBusinessToCustomerSettingsValidationScheme = {
+  validators: [],
+  fields: {
+    primaryColor: {
+      validators: []
+    },
+    secondaryColor: {
+      validators: []
+    },
+    headingColor: {
+      validators: []
+    },
+    textColor: {
+      validators: []
+    }
+  }
+};
+
 export const ApiProductValidationScheme = {
   validators: [],
   fields: {
@@ -377,10 +395,10 @@ export const ApiProductValidationScheme = {
     comparisonOfPrice: ApiComparisonOfPriceValidationScheme,
     knowledgeBlog: {
       validators: []
-    }
+    },
+    businessToCustomerSettings: ApiBusinessToCustomerSettingsValidationScheme
   }
 } as SimpleValidationScheme<ApiProduct>;
-
 
 export function pricingTransparencyFormMetadata() {
   return {

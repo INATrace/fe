@@ -334,6 +334,30 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2>B2C settings</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropCompanySection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of b2cElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <div class="af-bottom-buttons">
             <ng-container *ngIf="mode === 'update'">
               <bottom-buttons
@@ -1565,5 +1589,53 @@
     <div class="readonly-text-data">
       {{productForm.get('company.mediaLinks.other').value || emptyField}}
     </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cPrimaryColor>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.primaryColor')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart"
+      label="Primary color"
+      i18n-label="@@productLabel.b2c.primaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.primaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cSecondaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.secondaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Secondary color"
+          i18n-label="@@productLabel.b2c.secondaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.secondaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeadingColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headingColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Heading color"
+          i18n-label="@@productLabel.b2c.headingColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.headingColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTextColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.textColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Text color"
+          i18n-label="@@productLabel.b2c.textColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')"></app-color-input>
   </app-closable>
 </ng-template>

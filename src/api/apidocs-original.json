@@ -11112,10 +11112,7 @@
             "format": "date-time",
             "type": "string"
           },
-          "footerColor": {
-            "type": "string"
-          },
-          "headerColor": {
+          "headingColor": {
             "type": "string"
           },
           "id": {
@@ -11129,7 +11126,19 @@
           "secondaryColor": {
             "type": "string"
           },
-          "ternaryColor": {
+          "tabFairPrices": {
+            "type": "boolean"
+          },
+          "tabFeedback": {
+            "type": "boolean"
+          },
+          "tabProducers": {
+            "type": "boolean"
+          },
+          "tabQuality": {
+            "type": "boolean"
+          },
+          "textColor": {
             "type": "string"
           },
           "updateTimestamp": {

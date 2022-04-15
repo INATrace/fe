@@ -2877,6 +2877,10 @@
     "formatProcessingActionType.generateQrCode": "Generar código QR",
     "productLabelFacilities.tableCol.activate": "Activate",
     "productLabelFacilities.tableCol.deactivate": "Deactivate",
-    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?",
+    "productLabel.b2c.primaryColor": "Primary color",
+    "productLabel.b2c.secondaryColor": "Secondary color",
+    "productLabel.b2c.headingColor": "Heading color",
+    "productLabel.b2c.textColor": "Text color"
   }
 }
