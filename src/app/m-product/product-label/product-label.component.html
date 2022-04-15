@@ -1639,3 +1639,71 @@
     <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')"></app-color-input>
   </app-closable>
 </ng-template>
+
+<ng-template #b2cTabFairPrices>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabFairPrices')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart"
+      class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabFairPrices')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
+        Enable 'Fair prices' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabProducers>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabProducers')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabProducers')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
+        Enable 'Producers' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabQuality>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabQuality')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabQuality')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
+        Enable 'Quality' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabFeedback>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabFeedback')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabFeedback')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
+        Enable 'Feedback' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>

@@ -2982,6 +2982,10 @@
     "productLabel.b2c.primaryColor": "Primary color",
     "productLabel.b2c.secondaryColor": "Secondary color",
     "productLabel.b2c.headingColor": "Heading color",
-    "productLabel.b2c.textColor": "Text color"
+    "productLabel.b2c.textColor": "Text color",
+    "productLabel.b2c.tabFairPrices": "Enable 'Fair prices' tab",
+    "productLabel.b2c.tabProducers": "Enable 'Producers' tab",
+    "productLabel.b2c.tabQuality": "Enable 'Quality' tab",
+    "productLabel.b2c.tabFeedback": "Enable 'Feedback' tab"
   }
 }

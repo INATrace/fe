@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 
 @Component({
   selector: 'app-b2c-tabs',
@@ -22,13 +23,13 @@ export class B2cTabsComponent implements OnInit {
   productName: string;
 
   @Input()
-  backgroundColor: string;
-
-  @Input()
   uuid: string;
 
   @Input()
   qrTag: string;
+
+  @Input()
+  b2cSettings: ApiBusinessToCustomerSettings;
 
   ngOnInit(): void {
   }

@@ -538,6 +538,18 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cTextColor', { static: false })
   b2cTextColor: TemplateRef<any>;
 
+  @ViewChild('b2cTabFairPrices', { static: false })
+  b2cTabFairPrices: TemplateRef<any>;
+
+  @ViewChild('b2cTabProducers', { static: false })
+  b2cTabProducers: TemplateRef<any>;
+
+  @ViewChild('b2cTabQuality', { static: false })
+  b2cTabQuality: TemplateRef<any>;
+
+  @ViewChild('b2cTabFeedback', { static: false })
+  b2cTabFeedback: TemplateRef<any>;
+
   b2cElements: any[] = [];
 
   // COMPARISON OF PRICE
@@ -1246,7 +1258,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.primaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrimaryColor },
       { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
       { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
-      { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor }
+      { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
+      { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },
+      { name: 'businessToCustomerSettings.tabProducers', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabProducers },
+      { name: 'businessToCustomerSettings.tabQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabQuality },
+      { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback }
     ];
   }
 
@@ -1629,7 +1645,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (this.changed) { return; }
     if (this.currentLabel) {
       const url = this.router.serializeUrl(
-        this.router.createUrlTree(['/p-cd', this.currentLabel.uuid, 'EMPTY'])
+        this.router.createUrlTree(['/b2c', this.currentLabel.uuid, 'EMPTY'])
       );
       if (this.productForm.value && this.productForm.value.settings && this.productForm.value.settings.language) {
         window.open(this.productForm.value.settings.language.toLowerCase() + url, '_blank');

@@ -14,7 +14,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf="!loading">
-            <app-b2c-tabs *ngIf="tab" [tab]="tab" [backgroundColor]="b2cSettings.primaryColor" [productName]="productName" [uuid]="uuid" [qrTag]="qrTag"></app-b2c-tabs>
+            <app-b2c-tabs *ngIf="tab" [tab]="tab" [b2cSettings]="b2cSettings" [productName]="productName" [uuid]="uuid" [qrTag]="qrTag"></app-b2c-tabs>
 
             <router-outlet></router-outlet>
         </ng-container>
