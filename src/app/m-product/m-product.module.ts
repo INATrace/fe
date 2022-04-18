@@ -32,6 +32,7 @@ import { ProductionRecordItemComponent } from './product-label/production-record
 import { ProductListComponent } from './product-list/product-list.component';
 import { LanguageForLabelModalComponent } from './product-label/language-for-label-modal/language-for-label-modal.component';
 import { ProductCommonModule } from './product-common/product-common.module';
+import { PathlineMapComponent } from './product-label/pathline-map/pathline-map.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ProductCommonModule } from './product-common/product-common.module';
     NumberRowComponent,
     PrefillProductSelectionModalComponent,
     LabelSelectorCardComponent,
-    LanguageForLabelModalComponent
+    LanguageForLabelModalComponent,
+    PathlineMapComponent
   ],
   imports: [
     CommonModule,

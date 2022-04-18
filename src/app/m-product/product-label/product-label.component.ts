@@ -6,7 +6,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { CommonControllerService } from 'src/api/api/commonController.service';
@@ -220,6 +220,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   faCompass = faCompass;
   faSlidersH = faSlidersH;
   faQrcode = faQrcode;
+  faArrowDown = faArrowDown;
+  faArrowUp = faArrowUp;
 
   rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
   submitted = false;
@@ -1032,6 +1034,30 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   removeJourneyMarker(i: number) {
     this.journeyMarkersCtrl.removeAt(i);
     this.journeyMarkersCtrl.markAsDirty();
+  }
+  
+  moveJourneyMarkerUp(i: number) {
+    if (i > 0) {
+      const values = this.journeyMarkersCtrl.value;
+      const newValues = this.swapJourneyMarkers(values, i - 1, i);
+      this.journeyMarkersCtrl.setValue(newValues);
+    }
+  }
+  
+  moveJourneyMarkerDown(i: number) {
+    const values = this.journeyMarkersCtrl.value;
+    if (i < values.length - 1) {
+      const newValues = this.swapJourneyMarkers(values, i, i + 1);
+      this.journeyMarkersCtrl.setValue(newValues);
+    }
+  }
+  
+  private swapJourneyMarkers(arr: any[], index1: number, index2: number) {
+    arr = [...arr];
+    const temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+    return arr;
   }
   
   getJourneyVertices(): google.maps.LatLngLiteral[] {
