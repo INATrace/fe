@@ -2,9 +2,9 @@
     <h1>{{ productName }}</h1>
 </div>
 <ul class="af-b2c-nav text-center" [style.background-color]="b2cSettings.primaryColor">
-    <li [class.af-b2c-nav--selected]="tab === tabEnum.JOURNEY" (click)="goTo(tabEnum.JOURNEY)">JOURNEY</li>
-    <li *ngIf="b2cSettings.tabFairPrices" [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES" (click)="goTo(tabEnum.FAIR_PRICES)">FAIR PRICES</li>
-    <li *ngIf="b2cSettings.tabProducers" [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS" (click)="goTo(tabEnum.PRODUCERS)">PRODUCERS</li>
-    <li *ngIf="b2cSettings.tabQuality" [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY" (click)="goTo(tabEnum.QUALITY)">QUALITY</li>
-    <li *ngIf="b2cSettings.tabFeedback" [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK" (click)="goTo(tabEnum.FEEDBACK)">FEEDBACK</li>
+    <li i18n="@@frontPage.header.tab.journey" [class.af-b2c-nav--selected]="tab === tabEnum.JOURNEY" (click)="goTo(tabEnum.JOURNEY)">JOURNEY</li>
+    <li i18n="@@frontPage.header.tab.fair-prices" *ngIf="b2cSettings.tabFairPrices" [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES" (click)="goTo(tabEnum.FAIR_PRICES)">FAIR PRICES</li>
+    <li i18n="@@frontPage.header.tab.producers" *ngIf="b2cSettings.tabProducers" [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS" (click)="goTo(tabEnum.PRODUCERS)">PRODUCERS</li>
+    <li i18n="@@frontPage.header.tab.quality" *ngIf="b2cSettings.tabQuality" [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY" (click)="goTo(tabEnum.QUALITY)">QUALITY</li>
+    <li i18n="@@frontPage.header.tab.feedback" *ngIf="b2cSettings.tabFeedback" [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK" (click)="goTo(tabEnum.FEEDBACK)">FEEDBACK</li>
 </ul>
