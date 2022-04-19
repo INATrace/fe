@@ -92,7 +92,7 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
             map.googleMap.setZoom(this.defaultZoom);
             return;
         }
-        /*const center = this.bounds.getCenter();
+        const center = this.bounds.getCenter();
         const offset = 0.02;
         const northEast = new google.maps.LatLng(
             center.lat() + offset,
@@ -102,9 +102,9 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
             center.lat() - offset,
             center.lng() - offset
         );
-        const minBounds = new google.maps.LatLngBounds(southWest, northEast);*/
-        // map.fitBounds(this.bounds.union(minBounds));
-        map.fitBounds(this.bounds);
+        const minBounds = new google.maps.LatLngBounds(southWest, northEast);
+        map.fitBounds(this.bounds.union(minBounds));
+        // map.fitBounds(this.bounds);
     }
     
     addJourneyMarker(event: google.maps.MouseEvent) {
