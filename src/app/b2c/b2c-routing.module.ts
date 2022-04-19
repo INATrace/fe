@@ -7,6 +7,8 @@ import { B2cFairPricesComponent } from './b2c-page/b2c-fair-prices/b2c-fair-pric
 import { B2cProducersComponent } from './b2c-page/b2c-producers/b2c-producers.component';
 import { B2cQualityComponent } from './b2c-page/b2c-quality/b2c-quality.component';
 import { B2cFeedbackComponent } from './b2c-page/b2c-feedback/b2c-feedback.component';
+import { B2cTermsComponent } from './b2c-page/b2c-terms/b2c-terms.component';
+import { B2cPrivacyComponent } from './b2c-page/b2c-privacy/b2c-privacy.component';
 
 
 const routes: Routes = [
@@ -37,6 +39,14 @@ const routes: Routes = [
       {
         path: 'feedback',
         component: B2cFeedbackComponent
+      },
+      {
+        path: 'terms-of-use',
+        component: B2cTermsComponent
+      },
+      {
+        path: 'privacy-policy',
+        component: B2cPrivacyComponent
       }
     ]
   }

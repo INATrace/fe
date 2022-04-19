@@ -11,6 +11,8 @@ import { B2cFeedbackComponent } from './b2c-feedback/b2c-feedback.component';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 import { ApiProductLabelFieldValue } from '../../../api/model/apiProductLabelFieldValue';
 import { ViewportScroller } from '@angular/common';
+import { B2cTermsComponent } from './b2c-terms/b2c-terms.component';
+import { B2cPrivacyComponent } from './b2c-privacy/b2c-privacy.component';
 
 @Component({
   selector: 'app-b2c-page',
@@ -47,6 +49,10 @@ export class B2cPageComponent implements OnInit {
           case B2cFeedbackComponent:
             this.tab = B2CTab.FEEDBACK;
             break;
+          case B2cTermsComponent:
+          case B2cPrivacyComponent:
+            this.tab = B2CTab.NONE;
+            break;
           default:
             this.tab = undefined;
         }
@@ -70,6 +76,9 @@ export class B2cPageComponent implements OnInit {
   youtube;
   other;
 
+  termsText: string;
+  privacyText: string;
+
   pageYOffset = 0;
 
   @HostListener('window:scroll', ['$event']) onScroll(event) {
@@ -92,9 +101,11 @@ export class B2cPageComponent implements OnInit {
   processFields(fields) {
     this.extractName(fields);
     this.extractLinks(fields);
+    this.extractTerms(fields);
+    this.extractPrivacy(fields);
   }
 
-  extractName(fields) {
+  extractName(fields: ApiProductLabelFieldValue[]) {
     for (const field of fields) {
       if (field.name === 'name') {
         this.productName = field.value;
@@ -119,6 +130,22 @@ export class B2cPageComponent implements OnInit {
       }
       if (field.name === 'company.mediaLinks.other' && field.value) {
         this.other = this.checkExternalLink(field.value);
+      }
+    }
+  }
+
+  extractTerms(fields: ApiProductLabelFieldValue[]) {
+    for (const field of fields) {
+      if (field.name === 'settings.termsOfUseText') {
+        this.termsText = field.value;
+      }
+    }
+  }
+
+  extractPrivacy(fields: ApiProductLabelFieldValue[]) {
+    for (const field of fields) {
+      if (field.name === 'settings.privacyPolicyText') {
+        this.privacyText = field.value;
       }
     }
   }

@@ -21,7 +21,7 @@
     </div>
 
     <div *ngIf="!loading" class="flex-shrink-0 splitter" [style.background-color]="b2cSettings.secondaryColor"></div>
-    <div *ngIf="!loading" class="d-flex flex-row justify-content-center align-items-center py-4" [style.background-color]="b2cSettings.primaryColor">
+    <div *ngIf="!loading && tab" class="d-flex flex-row justify-content-center align-items-center py-4" [style.background-color]="b2cSettings.primaryColor">
         <div class="af-b2c-social" *ngIf="facebook">
             <a role="button" href="{{ facebook }}" target="_blank">
                 <span class="af-b2c-social-shape af-b2c-social-shape--fb" [style.background-color]="b2cSettings.primaryColor"></span>
@@ -53,10 +53,10 @@
         <div class="container-fluid">
             <div class="row text-white text-center">
                 <div class="col-12 col-md-6">
-                    <p>Terms of Use</p>
+                    <p><a [routerLink]="['/', 'b2c', this.uuid, this.qrTag, 'terms-of-use']">Terms of Use</a></p>
                 </div>
                 <div class="col-12 col-md-6">
-                    <p>Privacy Policy</p>
+                    <p><a [routerLink]="['/', 'b2c', this.uuid, this.qrTag, 'privacy-policy']">Privacy Policy</a></p>
                 </div>
             </div>
             <div class="row text-center">

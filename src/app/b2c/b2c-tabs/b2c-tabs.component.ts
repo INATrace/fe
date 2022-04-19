@@ -41,6 +41,7 @@ export class B2cTabsComponent implements OnInit {
 }
 
 export enum B2CTab {
+  NONE = 'none',
   JOURNEY = 'journey',
   FAIR_PRICES = 'fair-prices',
   PRODUCERS = 'producers',
