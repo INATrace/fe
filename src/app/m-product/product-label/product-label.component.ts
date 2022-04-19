@@ -804,7 +804,18 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
 
-    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(), {}, ApiBusinessToCustomerSettingsValidationScheme);
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+        {
+          primaryColor: '#25265e',
+          secondaryColor: '#5dbccf',
+          headingColor: '#000000',
+          textColor: '#000000',
+          tabFairPrices: true,
+          tabProducers: true,
+          tabQuality: true,
+          tabFeedback: true
+        },
+        ApiBusinessToCustomerSettingsValidationScheme);
     this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
     this.initializeListManagers();
