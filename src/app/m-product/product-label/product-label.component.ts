@@ -1041,6 +1041,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       const values = this.journeyMarkersCtrl.value;
       const newValues = this.swapJourneyMarkers(values, i - 1, i);
       this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
     }
   }
   
@@ -1049,6 +1050,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (i < values.length - 1) {
       const newValues = this.swapJourneyMarkers(values, i, i + 1);
       this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
     }
   }
   

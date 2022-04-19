@@ -302,13 +302,15 @@
                       </textinput>
                     </div>
                     <div class="col-2 d-flex align-self-center" style="margin-top: 0.5rem">
-                      <button class="btn round btn-del" (click)="moveJourneyMarkerDown(idx)">
+                      <button class="btn round btn-del"
+                          [disabled]="idx === journeyMarkersCtrl.controls.length - 1"
+                          (click)="moveJourneyMarkerDown(idx)">
                         <span><fa-icon
                             class="del-icon"
                             [icon]="faArrowDown">
                         </fa-icon></span>
                       </button>
-                      <button class="btn round btn-del" (click)="moveJourneyMarkerUp(idx)">
+                      <button class="btn round btn-del" (click)="moveJourneyMarkerUp(idx)" [disabled]="idx === 0">
                         <span><fa-icon
                             class="del-icon"
                             [icon]="faArrowUp">
