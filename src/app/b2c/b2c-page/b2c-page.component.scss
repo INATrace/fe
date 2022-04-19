@@ -9,3 +9,17 @@ footer {
 .splitter {
   height: 20px;
 }
+
+.back-to-top {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: block;
+  height: 32px;
+  width: 22px;
+  background-repeat: no-repeat;
+  background-image: url(../../../assets/icons/back-to-top.svg);
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}

@@ -1,5 +1,5 @@
 <div class="d-flex flex-column h-100">
-    <header *ngIf="!loading" class="splitter" [style.background-color]="b2cSettings.secondaryColor">
+    <header *ngIf="!loading" class="flex-shrink-0 splitter" [style.background-color]="b2cSettings.secondaryColor">
 
     </header>
 
@@ -20,8 +20,8 @@
         </ng-container>
     </div>
 
-    <div class="splitter" [style.background-color]="b2cSettings.secondaryColor"></div>
-    <div class="d-flex flex-row justify-content-center align-items-center py-4" [style.background-color]="b2cSettings.primaryColor">
+    <div *ngIf="!loading" class="flex-shrink-0 splitter" [style.background-color]="b2cSettings.secondaryColor"></div>
+    <div *ngIf="!loading" class="d-flex flex-row justify-content-center align-items-center py-4" [style.background-color]="b2cSettings.primaryColor">
         <div class="af-b2c-social" *ngIf="facebook">
             <a role="button" href="{{ facebook }}" target="_blank">
                 <span class="af-b2c-social-shape af-b2c-social-shape--fb" [style.background-color]="b2cSettings.primaryColor"></span>
@@ -66,4 +66,6 @@
             </div>
         </div>
     </footer>
+
+    <a class="back-to-top" *ngIf="showScrollToTop" (click)="scrollToTop()" [style.stroke]="b2cSettings.secondaryColor" [style.fill]="b2cSettings.secondaryColor" [style.color]="b2cSettings.secondaryColor">&nbsp;</a>
 </div>

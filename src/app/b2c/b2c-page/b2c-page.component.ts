@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { PublicControllerService } from '../../../api/api/publicController.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +10,7 @@ import { B2cQualityComponent } from './b2c-quality/b2c-quality.component';
 import { B2cFeedbackComponent } from './b2c-feedback/b2c-feedback.component';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 import { ApiProductLabelFieldValue } from '../../../api/model/apiProductLabelFieldValue';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-b2c-page',
@@ -25,7 +26,8 @@ export class B2cPageComponent implements OnInit {
 
   constructor(
       private route: ActivatedRoute,
-      private publicController: PublicControllerService
+      private publicController: PublicControllerService,
+      private scroll: ViewportScroller
   ) {
     route.url.subscribe({
       next: () => {
@@ -67,6 +69,12 @@ export class B2cPageComponent implements OnInit {
   instagram;
   youtube;
   other;
+
+  pageYOffset = 0;
+
+  @HostListener('window:scroll', ['$event']) onScroll(event) {
+    this.pageYOffset = window.pageYOffset;
+  }
 
   ngOnInit(): void {
     this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).subscribe({
@@ -121,6 +129,14 @@ export class B2cPageComponent implements OnInit {
       return 'http://' + link;
     }
     return link;
+  }
+
+  get showScrollToTop() {
+    return this.pageYOffset > 0;
+  }
+
+  scrollToTop() {
+    this.scroll.scrollToPosition([0, 0]);
   }
 
 }
