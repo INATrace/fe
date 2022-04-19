@@ -9,6 +9,7 @@ import { B2cProducersComponent } from './b2c-producers/b2c-producers.component';
 import { B2cQualityComponent } from './b2c-quality/b2c-quality.component';
 import { B2cFeedbackComponent } from './b2c-feedback/b2c-feedback.component';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
+import { ApiProductLabelFieldValue } from '../../../api/model/apiProductLabelFieldValue';
 
 @Component({
   selector: 'app-b2c-page',
@@ -60,21 +61,66 @@ export class B2cPageComponent implements OnInit {
 
   b2cSettings: ApiBusinessToCustomerSettings;
 
+  // Social links
+  facebook;
+  twitter;
+  instagram;
+  youtube;
+  other;
+
   ngOnInit(): void {
     this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).subscribe({
       next: (value) => {
-        for (const field of value.data.fields) {
-          if (field.name === 'name') {
-            this.productName = field.value;
-            break;
-          }
-        }
+        this.processFields(value.data.fields);
+
         this.b2cSettings = value.data.businessToCustomerSettings;
       },
       complete: () => {
         this.loading = false;
       }
     });
+  }
+
+  processFields(fields) {
+    this.extractName(fields);
+    this.extractLinks(fields);
+  }
+
+  extractName(fields) {
+    for (const field of fields) {
+      if (field.name === 'name') {
+        this.productName = field.value;
+        break;
+      }
+    }
+  }
+
+  extractLinks(fields: ApiProductLabelFieldValue[]) {
+    for (const field of fields) {
+      if (field.name === 'company.mediaLinks.facebook' && field.value) {
+        this.facebook = this.checkExternalLink(field.value);
+      }
+      if (field.name === 'company.mediaLinks.twitter' && field.value) {
+        this.twitter = this.checkExternalLink(field.value);
+      }
+      if (field.name === 'company.mediaLinks.instagram' && field.value) {
+        this.instagram = this.checkExternalLink(field.value);
+      }
+      if (field.name === 'company.mediaLinks.youtube' && field.value) {
+        this.youtube = this.checkExternalLink(field.value);
+      }
+      if (field.name === 'company.mediaLinks.other' && field.value) {
+        this.other = this.checkExternalLink(field.value);
+      }
+    }
+  }
+
+  checkExternalLink(link: string): string {
+    if (!link) { return '#'; }
+    if (!link.startsWith('https://') && !link.startsWith('http://')) {
+      return 'http://' + link;
+    }
+    return link;
   }
 
 }

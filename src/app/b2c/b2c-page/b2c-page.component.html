@@ -1,5 +1,5 @@
 <div class="d-flex flex-column h-100">
-    <header *ngIf="!loading" [style.background-color]="b2cSettings.secondaryColor" class="py-3">
+    <header *ngIf="!loading" class="splitter" [style.background-color]="b2cSettings.secondaryColor">
 
     </header>
 
@@ -18,6 +18,35 @@
 
             <router-outlet></router-outlet>
         </ng-container>
+    </div>
+
+    <div class="splitter" [style.background-color]="b2cSettings.secondaryColor"></div>
+    <div class="d-flex flex-row justify-content-center align-items-center py-4" [style.background-color]="b2cSettings.primaryColor">
+        <div class="af-b2c-social" *ngIf="facebook">
+            <a role="button" href="{{ facebook }}" target="_blank">
+                <span class="af-b2c-social-shape af-b2c-social-shape--fb" [style.background-color]="b2cSettings.primaryColor"></span>
+            </a>
+        </div>
+        <div class="af-b2c-social" *ngIf="twitter">
+            <a role="button" href="{{ twitter }}" target="_blank">
+                <span class="af-b2c-social-shape af-b2c-social-shape--twitter" [style.background-color]="b2cSettings.primaryColor"></span>
+            </a>
+        </div>
+        <div class="af-b2c-social" *ngIf="instagram">
+            <a role="button" href="{{ instagram }}" target="_blank">
+                <span class="af-b2c-social-shape af-b2c-social-shape--instagram" [style.background-color]="b2cSettings.primaryColor"></span>
+            </a>
+        </div>
+        <div class="af-b2c-social" *ngIf="youtube">
+            <a role="button" href="{{ youtube }}" target="_blank">
+                <span class="af-b2c-social-shape af-b2c-social-shape--youtube" [style.background-color]="b2cSettings.primaryColor"></span>
+            </a>
+        </div>
+        <div class="af-b2c-social" *ngIf="other">
+            <a role="button" href="{{ other }}" target="_blank">
+                <span class="af-b2c-social-shape af-b2c-social-shape--other" [style.background-color]="b2cSettings.primaryColor"></span>
+            </a>
+        </div>
     </div>
 
     <footer *ngIf="!loading" class="py-4">
