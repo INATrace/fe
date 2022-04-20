@@ -31,7 +31,7 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
         path: 'M 0,-1 0,1',
         strokeOpacity: 1,
         scale: 2,
-        strokeColor: '#AC1A56'
+        strokeColor: '#25265E'
     };
     polylineOptions: google.maps.PolylineOptions = {
         icons: [
@@ -64,9 +64,9 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     scale: 4,
-                    fillColor: '#AC1A56',
+                    fillColor: '#25265E',
                     fillOpacity: 1,
-                    strokeColor: '#AC1A56',
+                    strokeColor: '#25265E',
                 }
             };
             setTimeout(() => this.googleMapsIsLoaded(gMap));
