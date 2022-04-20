@@ -18,11 +18,15 @@
  */
 
 
+import { ApiDocument } from './apiDocument';
 
 
 
 export interface ApiBusinessToCustomerSettings { 
     creationTimestamp?: Date;
+    font?: ApiDocument;
+    footerImage?: ApiDocument;
+    headerImage?: ApiDocument;
     headingColor?: string;
     /**
      * Entity id
@@ -47,6 +51,9 @@ export namespace ApiBusinessToCustomerSettings {
      */
     export enum Properties {
         creationTimestamp = 'creationTimestamp',
+        font = 'font',
+        footerImage = 'footerImage',
+        headerImage = 'headerImage',
         headingColor = 'headingColor',
         /**
          * Entity id
@@ -78,6 +85,42 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'font',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'footerImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'headerImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -193,6 +236,12 @@ export namespace ApiBusinessToCustomerSettings {
             validators: {
                 creationTimestamp: [
                 ],
+                font: [
+                ],
+                footerImage: [
+                ],
+                headerImage: [
+                ],
                 headingColor: [
                 ],
                 id: [
@@ -221,6 +270,15 @@ export namespace ApiBusinessToCustomerSettings {
   //     validators: [],
   //     fields: {
   //               creationTimestamp: {
+  //                   validators: []
+  //               },
+  //               font: {
+  //                   validators: []
+  //               },
+  //               footerImage: {
+  //                   validators: []
+  //               },
+  //               headerImage: {
   //                   validators: []
   //               },
   //               headingColor: {

@@ -550,6 +550,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cTabFeedback', { static: false })
   b2cTabFeedback: TemplateRef<any>;
 
+  @ViewChild('b2cFont', { static: false })
+  b2cFont: TemplateRef<any>;
+
+  @ViewChild('b2cHeaderImage', { static: false })
+  b2cHeaderImage: TemplateRef<any>;
+
+  @ViewChild('b2cFooterImage', { static: false })
+  b2cFooterImage: TemplateRef<any>;
+
   b2cElements: any[] = [];
 
   // COMPARISON OF PRICE
@@ -1273,7 +1282,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },
       { name: 'businessToCustomerSettings.tabProducers', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabProducers },
       { name: 'businessToCustomerSettings.tabQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabQuality },
-      { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback }
+      { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
+      { name: 'businessToCustomerSettings.font', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFont },
+      { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
+      { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }
     ];
   }
 

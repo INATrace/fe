@@ -11112,6 +11112,15 @@
             "format": "date-time",
             "type": "string"
           },
+          "font": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "footerImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "headerImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
           "headingColor": {
             "type": "string"
           },

@@ -1707,3 +1707,58 @@
     </checkbox-input>
   </app-closable>
 </ng-template>
+
+<ng-template #b2cFont>
+  <app-closable
+    [nonClosable]="true"
+    [visibilityForm]="visibilityMap.get('businessToCustomerSettings.font')"
+    [reorderMode]="reorderMode"
+    [openOnValueChange]="openOnStart"
+    class="af-form-element--nolabel">
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'application/octet-stream', 'application/x-font-ttf', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF."
+                           mode="simpleAsTextField"
+                           label="Font"
+                           i18n-label="@@productLabel.b2c.font"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="productForm.get('businessToCustomerSettings.font')"
+                           [attachmentUploaderId]="'b2cFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload font</attachment-uploader-content>
+      </attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeaderImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Header image"
+                         i18n-label="@@productLabel.b2c.headerImage"
+                         [form]="productForm.get('businessToCustomerSettings.headerImage')"
+                         [attachmentUploaderId]="'b2cHeaderImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cFooterImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Footer image"
+                         i18n-label="@@productLabel.b2c.footerImage"
+                         [form]="productForm.get('businessToCustomerSettings.footerImage')"
+                         [attachmentUploaderId]="'b2cFooterImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
