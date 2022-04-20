@@ -29,27 +29,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
   uuid = this.route.snapshot.params.uuid;
   qrTag = this.route.snapshot.params.qrTag;
 
-  locations: google.maps.LatLngLiteral[] = []; /*[
-    { lat: -3.1428191, lng: 31.2247691 },
-    { lat: -4.0351857, lng: 39.596223 },
-    { lat: 1.611664, lng: 45.490649 },
-    { lat: 5.252843, lng: 49.322321 },
-    { lat: 11.872511, lng: 52.230004 },
-    { lat: 12.699950, lng: 50.575840 },
-    { lat: 11.291795, lng: 44.399540 },
-    { lat: 17.558982, lng: 39.921926 },
-    { lat: 25.669884, lng: 35.724128 },
-    { lat: 31.945803, lng: 30.671221 },
-    { lat: 34.112980, lng: 23.620653 },
-    { lat: 36.372962, lng: 14.375589 },
-    { lat: 37.913591, lng: 7.756875 },
-    { lat: 35.941126, lng: -2.936486 },
-    { lat: 35.791304, lng: -8.153219 },
-    { lat: 39.291012, lng: -10.927130 },
-    { lat: 49.112271, lng: -6.587187 },
-    { lat: 50.684359, lng: 1.223039 },
-    { lat: 53.234390, lng: 4.584119 },
-    { lat: 52.8754751, lng: 10.6686748 }];*/
+  locations: google.maps.LatLngLiteral[] = [];
 
   markers: any = [];
   initialBounds: any = [];
@@ -65,7 +45,7 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
     path: 'M 0,-1 0,1',
     strokeOpacity: 1,
     scale: 2,
-    strokeColor: '#AC1A56'
+    strokeColor: '#25265E'
   };
 
   options: google.maps.PolylineOptions = {
@@ -96,9 +76,9 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 4,
-          fillColor: '#AC1A56',
+          fillColor: '#25265E',
           fillOpacity: 1,
-          strokeColor: '#AC1A56',
+          strokeColor: '#25265E',
         }
       };
       setTimeout(() => this.googleMapsIsLoaded(map));
@@ -173,6 +153,14 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
         if (item.name === 'name') {
           this.producerName = item.value;
         }
+        if (item.name === 'journeyMarkers') {
+          this.locations = item.value.map(marker => {
+            return {
+              lat: marker.latitude,
+              lng: marker.longitude,
+            };
+          });
+        }
       }
     }
   }
@@ -186,17 +174,18 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
       if (resp && resp.status === 'OK' && resp.data) {
         this.historyItems = resp.data.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = resp.data.producerName;
-  
-        this.locations = resp.data.historyTimeline.items
-            .filter(historyTimelineItem => {
-              return !!(historyTimelineItem.latitude && historyTimelineItem.longitude);
-            })
-            .map(historyTimelineItem => {
-          return {
-            lat: historyTimelineItem.latitude,
-            lng: historyTimelineItem.longitude,
-          };
-        });
+        
+        this.markers = resp.data.historyTimeline.items.reduce((acc, historyItem) => {
+          if (historyItem.longitude && historyItem.latitude) {
+            acc.push({
+              position: {
+                lat: historyItem.latitude,
+                lng: historyItem.longitude,
+              },
+            });
+          }
+          return acc;
+        }, []);
       }
     }
   }
@@ -212,7 +201,6 @@ export class FrontPageJourneyComponent implements OnInit, OnDestroy {
           type: i === 0 || i === this.locations.length - 1 ? 'bound' : 'middle'
         },
       };
-      this.markers.push(tmp);
       this.initialBounds.push(tmp.position);
     }
     this.bounds = new google.maps.LatLngBounds();

@@ -224,3 +224,8 @@ button.btn-del {
     border: 1px solid $moderate-cyan;
   }
 }
+.markers-form {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

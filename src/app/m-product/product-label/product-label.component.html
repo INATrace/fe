@@ -279,6 +279,62 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2>Product journey</h2>
+          <div class="af-form-element">
+            <section class="droppable-list">
+
+              <app-pathline-map [markersForm]="journeyMarkersCtrl">
+              </app-pathline-map>
+
+              <div class="mt-3 mb-3 markers-form">
+                <div *ngFor="let markerCtrl of journeyMarkersCtrl.controls; let idx = index">
+                  <div class="row">
+                    <div class="col-3">
+                      <textinput [form]="markerCtrl.get('latitude')"
+                          label="Latitude"
+                          [readOnly]="true">
+                      </textinput>
+                    </div>
+                    <div class="col-3">
+                      <textinput [form]="markerCtrl.get('longitude')"
+                          label="Longitude"
+                          [readOnly]="true">
+                      </textinput>
+                    </div>
+                    <div class="col-2 d-flex align-self-center" style="margin-top: 0.5rem">
+                      <button class="btn round btn-del"
+                          [disabled]="idx === journeyMarkersCtrl.controls.length - 1"
+                          (click)="moveJourneyMarkerDown(idx)">
+                        <span><fa-icon
+                            class="del-icon"
+                            [icon]="faArrowDown">
+                        </fa-icon></span>
+                      </button>
+                      <button class="btn round btn-del" (click)="moveJourneyMarkerUp(idx)" [disabled]="idx === 0">
+                        <span><fa-icon
+                            class="del-icon"
+                            [icon]="faArrowUp">
+                        </fa-icon></span>
+                      </button>
+
+                      <button class="btn round btn-del" (click)="removeJourneyMarker(idx)">
+                        <span><fa-icon
+                            class="del-icon"
+                            [icon]="faTrashAlt">
+                        </fa-icon></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@productLabel.section.settings">Settings</h2>
           <div class="af-form-element">
             <section

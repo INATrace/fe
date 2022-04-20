@@ -6,7 +6,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { CommonControllerService } from 'src/api/api/commonController.service';
@@ -198,6 +198,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   productForm: FormGroup;
   countries: any = [];
   markers: any = [];
+  journeyMarkers: any[] = [];
   defaultCenter = {
     lat: 5.274054,
     lng: 21.514503
@@ -219,6 +220,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   faCompass = faCompass;
   faSlidersH = faSlidersH;
   faQrcode = faQrcode;
+  faArrowDown = faArrowDown;
+  faArrowUp = faArrowUp;
 
   rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
   submitted = false;
@@ -1019,6 +1022,54 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.gInfoWindowText = marker.infoText;
     this.gInfoWindow.open(gMarker);
   }
+  
+  addJourneyMarker(event: google.maps.MouseEvent) {
+    this.journeyMarkersCtrl.push(new FormGroup({
+      latitude: new FormControl(event.latLng.lat()),
+      longitude: new FormControl(event.latLng.lng()),
+    }));
+    this.journeyMarkersCtrl.markAsDirty();
+  }
+  
+  removeJourneyMarker(i: number) {
+    this.journeyMarkersCtrl.removeAt(i);
+    this.journeyMarkersCtrl.markAsDirty();
+  }
+  
+  moveJourneyMarkerUp(i: number) {
+    if (i > 0) {
+      const values = this.journeyMarkersCtrl.value;
+      const newValues = this.swapJourneyMarkers(values, i - 1, i);
+      this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
+    }
+  }
+  
+  moveJourneyMarkerDown(i: number) {
+    const values = this.journeyMarkersCtrl.value;
+    if (i < values.length - 1) {
+      const newValues = this.swapJourneyMarkers(values, i, i + 1);
+      this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
+    }
+  }
+  
+  private swapJourneyMarkers(arr: any[], index1: number, index2: number) {
+    arr = [...arr];
+    const temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+    return arr;
+  }
+  
+  getJourneyVertices(): google.maps.LatLngLiteral[] {
+    return this.journeyMarkersCtrl.controls.map(ctrl => {
+      return {
+        lat: ctrl.get('latitude').value,
+        lng: ctrl.get('longitude').value,
+      };
+    });
+  }
 
   onKey(event, index) {
     this.updateInfoWindow(event.target.value, index);
@@ -1079,7 +1130,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'howToUse', section: 'product', visible: new FormControl(false), template: this.howToUseTmpl },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
       { name: 'keyMarketsShare', section: 'product', visible: new FormControl(false), template: this.keyMarketsTmpl },
-      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl }
+      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl },
+      { name: 'journeyMarkers', section: 'product', visible: new FormControl(true), disableDrag: true }
     ];
   }
 
@@ -1419,11 +1471,19 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.environmentalSustainabilityElements, allPricingTransparencyElements, this.comparisonOfPriceElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
-        labels.push({
-          name: val.name,
-          section: val.section,
-          visible: val.visible.value
-        });
+        if (val.name === 'journeyMarkers') {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: true,
+          });
+        } else {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: val.visible.value
+          });
+        }
       });
     });
     return labels;
@@ -1825,4 +1885,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.isOwner;
   }
 
+  public get journeyMarkersCtrl(): FormArray {
+    return this.productForm.get('journeyMarkers') as FormArray;
+  }
 }
