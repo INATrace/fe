@@ -33,11 +33,13 @@ export interface ApiBusinessToCustomerSettings {
      */
     id?: number;
     primaryColor?: string;
+    quaternaryColor?: string;
     secondaryColor?: string;
     tabFairPrices?: boolean;
     tabFeedback?: boolean;
     tabProducers?: boolean;
     tabQuality?: boolean;
+    tertiaryColor?: string;
     textColor?: string;
     updateTimestamp?: Date;
 }
@@ -60,11 +62,13 @@ export namespace ApiBusinessToCustomerSettings {
          */
         id = 'id',
         primaryColor = 'primaryColor',
+        quaternaryColor = 'quaternaryColor',
         secondaryColor = 'secondaryColor',
         tabFairPrices = 'tabFairPrices',
         tabFeedback = 'tabFeedback',
         tabProducers = 'tabProducers',
         tabQuality = 'tabQuality',
+        tertiaryColor = 'tertiaryColor',
         textColor = 'textColor',
         updateTimestamp = 'updateTimestamp'
     }
@@ -159,6 +163,17 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'quaternaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'secondaryColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
@@ -214,6 +229,17 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'tertiaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'textColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
@@ -248,6 +274,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 primaryColor: [
                 ],
+                quaternaryColor: [
+                ],
                 secondaryColor: [
                 ],
                 tabFairPrices: [
@@ -257,6 +285,8 @@ export namespace ApiBusinessToCustomerSettings {
                 tabProducers: [
                 ],
                 tabQuality: [
+                ],
+                tertiaryColor: [
                 ],
                 textColor: [
                 ],
@@ -290,6 +320,9 @@ export namespace ApiBusinessToCustomerSettings {
   //               primaryColor: {
   //                   validators: []
   //               },
+  //               quaternaryColor: {
+  //                   validators: []
+  //               },
   //               secondaryColor: {
   //                   validators: []
   //               },
@@ -303,6 +336,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               tabQuality: {
+  //                   validators: []
+  //               },
+  //               tertiaryColor: {
   //                   validators: []
   //               },
   //               textColor: {

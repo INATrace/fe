@@ -1,6 +1,8 @@
-<div class="h-100 d-flex flex-column justify-content-center align-items-center">
+<div class="h-100 d-flex flex-column justify-content-center align-items-center" [style.background-color]="b2cSettings.tertiaryColor">
+    <img src="http://localhost:4200/api/public/document/{{b2cSettings.headerImage.storageKey}}" class="mw-100">
+
     <h2 class="af-b2c-front--headline mb-4">{{ this.productName }}</h2>
     <div>
-        <button class="btn px-5" (click)="openJourney()">PRODUCT JOURNEY</button>
+        <button class="btn px-5 mb-5" (click)="openJourney()" [style.background-color]="b2cSettings.secondaryColor">PRODUCT JOURNEY</button>
     </div>
 </div>

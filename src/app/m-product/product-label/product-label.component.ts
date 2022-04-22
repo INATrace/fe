@@ -532,6 +532,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cSecondaryColor', { static: false })
   b2cSecondaryColor: TemplateRef<any>;
 
+  @ViewChild('b2cTertiaryColor', { static: false })
+  b2cTertiaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cQuaternaryColor', { static: false })
+  b2cQuaternaryColor: TemplateRef<any>;
+
   @ViewChild('b2cHeadingColor', { static: false })
   b2cHeadingColor: TemplateRef<any>;
 
@@ -815,8 +821,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
         {
-          primaryColor: '#25265e',
-          secondaryColor: '#5dbccf',
+          primaryColor: '#5c267b',
+          secondaryColor: '#0fae94',
+          tertiaryColor: '#ac1b56',
+          quaternaryColor: '#e3b22b',
           headingColor: '#000000',
           textColor: '#000000',
           tabFairPrices: true,
@@ -1277,6 +1285,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.b2cElements = [
       { name: 'businessToCustomerSettings.primaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrimaryColor },
       { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
+      { name: 'businessToCustomerSettings.tertiaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTertiaryColor },
+      { name: 'businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cQuaternaryColor },
       { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
       { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
       { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },

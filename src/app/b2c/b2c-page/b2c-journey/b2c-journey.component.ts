@@ -11,7 +11,10 @@ export class B2cJourneyComponent implements OnInit {
 
   constructor(
       @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
-  ) { }
+  ) {
+    this.productName = b2cPage.productName;
+    this.b2cSettings = b2cPage.b2cSettings;
+  }
 
   productName: string;
 
@@ -20,8 +23,6 @@ export class B2cJourneyComponent implements OnInit {
   b2cSettings: ApiBusinessToCustomerSettings;
 
   ngOnInit(): void {
-    this.productName = this.b2cPage.productName;
-    this.b2cSettings = this.b2cPage.b2cSettings;
   }
 
 }

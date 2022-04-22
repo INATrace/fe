@@ -1616,6 +1616,30 @@
   </app-closable>
 </ng-template>
 
+<ng-template #b2cTertiaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tertiaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Tertiary color"
+          i18n-label="@@productLabel.b2c.tertiaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.tertiaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cQuaternaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.quaternaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Quaternary color"
+          i18n-label="@@productLabel.b2c.quaternaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.quaternaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
 <ng-template #b2cHeadingColor>
   <app-closable
           [nonClosable]="true"
