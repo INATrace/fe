@@ -13,6 +13,7 @@ import { ApiProductLabelFieldValue } from '../../../api/model/apiProductLabelFie
 import { ViewportScroller } from '@angular/common';
 import { B2cTermsComponent } from './b2c-terms/b2c-terms.component';
 import { B2cPrivacyComponent } from './b2c-privacy/b2c-privacy.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-b2c-page',
@@ -91,6 +92,18 @@ export class B2cPageComponent implements OnInit {
         this.processFields(value.data.fields);
 
         this.b2cSettings = value.data.businessToCustomerSettings;
+
+        if (this.b2cSettings.font) {
+          const node = document.createElement('style');
+          node.innerHTML = `
+            @font-face {
+              font-family: 'custom';
+              font-style: normal;
+              font-weight: 400;
+              src: url(${this.fontHref});
+            }`;
+          document.body.appendChild(node);
+        }
       },
       complete: () => {
         this.loading = false;
@@ -164,6 +177,10 @@ export class B2cPageComponent implements OnInit {
 
   scrollToTop() {
     this.scroll.scrollToPosition([0, 0]);
+  }
+
+  get fontHref() {
+    return `${environment.appBaseUrl}/api/public/document/${this.b2cSettings.font.storageKey}`;
   }
 
 }
