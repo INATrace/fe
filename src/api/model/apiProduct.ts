@@ -25,6 +25,7 @@ import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductCompany } from './apiProductCompany';
 import { ApiProductDataSharingAgreement } from './apiProductDataSharingAgreement';
+import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
 import { ApiProductLabelValues } from './apiProductLabelValues';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
@@ -62,6 +63,10 @@ export interface ApiProduct {
      * ingredients - list the ingredients in the product and describe their properties
      */
     ingredients?: string;
+    /**
+     * Product journey path
+     */
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
      * Key Markets, market name - share number map
      */
@@ -131,6 +136,10 @@ export namespace ApiProduct {
          * ingredients - list the ingredients in the product and describe their properties
          */
         ingredients = 'ingredients',
+        /**
+         * Product journey path
+         */
+        journeyMarkers = 'journeyMarkers',
         /**
          * Key Markets, market name - share number map
          */
@@ -274,6 +283,18 @@ export namespace ApiProduct {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
                 },
                 {
                     isReadOnly: false,
@@ -458,6 +479,8 @@ export namespace ApiProduct {
                 ],
                 ingredients: [
                 ],
+                journeyMarkers: [
+                ],
                 keyMarketsShare: [
                 ],
                 knowledgeBlog: [
@@ -518,6 +541,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               ingredients: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //               keyMarketsShare: {

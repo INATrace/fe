@@ -23,6 +23,7 @@ import { ApiCompany } from './apiCompany';
 import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
+import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
 import { ApiResponsibility } from './apiResponsibility';
@@ -50,6 +51,10 @@ export interface ApiProductLabelContent {
      * ingredients - list the ingredients in the product and describe their properties
      */
     ingredients?: string;
+    /**
+     * Product journey path
+     */
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
      * Key Markets, market name - share number map
      */
@@ -110,6 +115,10 @@ export namespace ApiProductLabelContent {
          * ingredients - list the ingredients in the product and describe their properties
          */
         ingredients = 'ingredients',
+        /**
+         * Product journey path
+         */
+        journeyMarkers = 'journeyMarkers',
         /**
          * Key Markets, market name - share number map
          */
@@ -228,6 +237,18 @@ export namespace ApiProductLabelContent {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
                 },
                 {
                     isReadOnly: false,
@@ -395,6 +416,8 @@ export namespace ApiProductLabelContent {
                 ],
                 ingredients: [
                 ],
+                journeyMarkers: [
+                ],
                 keyMarketsShare: [
                 ],
                 knowledgeBlog: [
@@ -447,6 +470,9 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               ingredients: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //               keyMarketsShare: {

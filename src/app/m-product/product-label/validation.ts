@@ -396,7 +396,15 @@ export const ApiProductValidationScheme = {
     knowledgeBlog: {
       validators: []
     },
-    businessToCustomerSettings: ApiBusinessToCustomerSettingsValidationScheme
+    businessToCustomerSettings: ApiBusinessToCustomerSettingsValidationScheme,
+    journeyMarkers: {
+      validators: [],
+      forceExpand: true,
+      arrayElementValidators: {
+        validators: [],
+        forceExpand: true,
+      }
+    }
   }
 } as SimpleValidationScheme<ApiProduct>;
 

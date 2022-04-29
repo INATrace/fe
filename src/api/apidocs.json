@@ -12304,6 +12304,13 @@
               "$ref": "#/components/schemas/ApiHistoryTimelineItem"
             },
             "type": "array"
+          },
+          "journeyMarkers": {
+            "description": "The items in the journey of history timeline",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
           }
         },
         "type": "object"
@@ -14956,6 +14963,13 @@
             "description": "ingredients - list the ingredients in the product and describe their properties",
             "type": "string"
           },
+          "journeyMarkers": {
+            "description": "Product journey path",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
+          },
           "keyMarketsShare": {
             "additionalProperties": {
               "format": "double",
@@ -15103,6 +15117,19 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProductJourneyMarker": {
+        "properties": {
+          "latitude": {
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "format": "double",
+            "type": "number"
           }
         },
         "type": "object"
@@ -15358,6 +15385,13 @@
           "ingredients": {
             "description": "ingredients - list the ingredients in the product and describe their properties",
             "type": "string"
+          },
+          "journeyMarkers": {
+            "description": "Product journey path",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
           },
           "keyMarketsShare": {
             "additionalProperties": {

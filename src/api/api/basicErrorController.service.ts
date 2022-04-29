@@ -29,176 +29,175 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
-import { ModelAndView } from '../model/modelAndView';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for errorHtmlUsingDELETE.
+ * Namespace for errorUsingDELETE.
  */
-export namespace ErrorHtmlUsingDELETE {
+export namespace ErrorUsingDELETE {
     /**
-     * Parameter map for errorHtmlUsingDELETE.
+     * Parameter map for errorUsingDELETE.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingDELETE.
+     * Enumeration of all parameters for errorUsingDELETE.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingDELETE
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingGET.
+ * Namespace for errorUsingGET.
  */
-export namespace ErrorHtmlUsingGET {
+export namespace ErrorUsingGET {
     /**
-     * Parameter map for errorHtmlUsingGET.
+     * Parameter map for errorUsingGET.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingGET.
+     * Enumeration of all parameters for errorUsingGET.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingGET
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingHEAD.
+ * Namespace for errorUsingHEAD.
  */
-export namespace ErrorHtmlUsingHEAD {
+export namespace ErrorUsingHEAD {
     /**
-     * Parameter map for errorHtmlUsingHEAD.
+     * Parameter map for errorUsingHEAD.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingHEAD.
+     * Enumeration of all parameters for errorUsingHEAD.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingHEAD
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingHEAD
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingHEAD.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingHEAD.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingOPTIONS.
+ * Namespace for errorUsingOPTIONS.
  */
-export namespace ErrorHtmlUsingOPTIONS {
+export namespace ErrorUsingOPTIONS {
     /**
-     * Parameter map for errorHtmlUsingOPTIONS.
+     * Parameter map for errorUsingOPTIONS.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingOPTIONS.
+     * Enumeration of all parameters for errorUsingOPTIONS.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingOPTIONS
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingOPTIONS
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingOPTIONS.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingOPTIONS.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingPATCH.
+ * Namespace for errorUsingPATCH.
  */
-export namespace ErrorHtmlUsingPATCH {
+export namespace ErrorUsingPATCH {
     /**
-     * Parameter map for errorHtmlUsingPATCH.
+     * Parameter map for errorUsingPATCH.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingPATCH.
+     * Enumeration of all parameters for errorUsingPATCH.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingPATCH
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingPATCH
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingPATCH.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingPATCH.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingPOST.
+ * Namespace for errorUsingPOST.
  */
-export namespace ErrorHtmlUsingPOST {
+export namespace ErrorUsingPOST {
     /**
-     * Parameter map for errorHtmlUsingPOST.
+     * Parameter map for errorUsingPOST.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingPOST.
+     * Enumeration of all parameters for errorUsingPOST.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingPOST
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for errorHtmlUsingPUT.
+ * Namespace for errorUsingPUT.
  */
-export namespace ErrorHtmlUsingPUT {
+export namespace ErrorUsingPUT {
     /**
-     * Parameter map for errorHtmlUsingPUT.
+     * Parameter map for errorUsingPUT.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for errorHtmlUsingPUT.
+     * Enumeration of all parameters for errorUsingPUT.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of errorHtmlUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of errorUsingPUT
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ErrorHtmlUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ErrorUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
@@ -240,29 +239,29 @@ export class BasicErrorControllerService {
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingDELETEByMap(
-    map: ErrorHtmlUsingDELETE.PartialParamMap,
+  public errorUsingDELETEByMap(
+    map: ErrorUsingDELETE.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingDELETEByMap(
-    map: ErrorHtmlUsingDELETE.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingDELETEByMap(
+    map: ErrorUsingDELETE.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingDELETEByMap(
-    map: ErrorHtmlUsingDELETE.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingDELETEByMap(
+    map: ErrorUsingDELETE.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingDELETEByMap(
-    map: ErrorHtmlUsingDELETE.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingDELETEByMap(
+    map: ErrorUsingDELETE.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingDELETE(
+    return this.errorUsingDELETE(
       observe,
       reportProgress
     );
@@ -270,21 +269,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingDELETE(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingDELETE(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingDELETE(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingDELETE(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingDELETE(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingDELETE(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingDELETE(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingDELETE(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -301,7 +300,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.delete<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.delete<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -310,36 +309,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingDELETE')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingGETByMap(
-    map: ErrorHtmlUsingGET.PartialParamMap,
+  public errorUsingGETByMap(
+    map: ErrorUsingGET.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingGETByMap(
-    map: ErrorHtmlUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingGETByMap(
+    map: ErrorUsingGET.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingGETByMap(
-    map: ErrorHtmlUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingGETByMap(
+    map: ErrorUsingGET.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingGETByMap(
-    map: ErrorHtmlUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingGETByMap(
+    map: ErrorUsingGET.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingGET(
+    return this.errorUsingGET(
       observe,
       reportProgress
     );
@@ -347,21 +346,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingGET(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingGET(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingGET(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingGET(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingGET(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingGET(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingGET(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingGET(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -378,7 +377,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.get<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -387,36 +386,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingGET')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingHEADByMap(
-    map: ErrorHtmlUsingHEAD.PartialParamMap,
+  public errorUsingHEADByMap(
+    map: ErrorUsingHEAD.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingHEADByMap(
-    map: ErrorHtmlUsingHEAD.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingHEADByMap(
+    map: ErrorUsingHEAD.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingHEADByMap(
-    map: ErrorHtmlUsingHEAD.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingHEADByMap(
+    map: ErrorUsingHEAD.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingHEADByMap(
-    map: ErrorHtmlUsingHEAD.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingHEADByMap(
+    map: ErrorUsingHEAD.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingHEAD(
+    return this.errorUsingHEAD(
       observe,
       reportProgress
     );
@@ -424,21 +423,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingHEAD(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingHEAD(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingHEAD(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingHEAD(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingHEAD(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingHEAD(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingHEAD(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingHEAD(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -455,7 +454,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.head<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.head<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -464,36 +463,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingHEAD')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingHEAD')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingOPTIONSByMap(
-    map: ErrorHtmlUsingOPTIONS.PartialParamMap,
+  public errorUsingOPTIONSByMap(
+    map: ErrorUsingOPTIONS.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingOPTIONSByMap(
-    map: ErrorHtmlUsingOPTIONS.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingOPTIONSByMap(
+    map: ErrorUsingOPTIONS.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingOPTIONSByMap(
-    map: ErrorHtmlUsingOPTIONS.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingOPTIONSByMap(
+    map: ErrorUsingOPTIONS.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingOPTIONSByMap(
-    map: ErrorHtmlUsingOPTIONS.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingOPTIONSByMap(
+    map: ErrorUsingOPTIONS.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingOPTIONS(
+    return this.errorUsingOPTIONS(
       observe,
       reportProgress
     );
@@ -501,21 +500,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingOPTIONS(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingOPTIONS(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingOPTIONS(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingOPTIONS(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingOPTIONS(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingOPTIONS(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingOPTIONS(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingOPTIONS(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -532,7 +531,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.options<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.options<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -541,36 +540,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingOPTIONS')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingOPTIONS')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingPATCHByMap(
-    map: ErrorHtmlUsingPATCH.PartialParamMap,
+  public errorUsingPATCHByMap(
+    map: ErrorUsingPATCH.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingPATCHByMap(
-    map: ErrorHtmlUsingPATCH.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingPATCHByMap(
+    map: ErrorUsingPATCH.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingPATCHByMap(
-    map: ErrorHtmlUsingPATCH.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingPATCHByMap(
+    map: ErrorUsingPATCH.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingPATCHByMap(
-    map: ErrorHtmlUsingPATCH.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingPATCHByMap(
+    map: ErrorUsingPATCH.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingPATCH(
+    return this.errorUsingPATCH(
       observe,
       reportProgress
     );
@@ -578,21 +577,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingPATCH(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingPATCH(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingPATCH(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingPATCH(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingPATCH(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingPATCH(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingPATCH(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingPATCH(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -609,7 +608,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.patch<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.patch<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -619,36 +618,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingPATCH')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingPATCH')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingPOSTByMap(
-    map: ErrorHtmlUsingPOST.PartialParamMap,
+  public errorUsingPOSTByMap(
+    map: ErrorUsingPOST.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingPOSTByMap(
-    map: ErrorHtmlUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingPOSTByMap(
+    map: ErrorUsingPOST.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingPOSTByMap(
-    map: ErrorHtmlUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingPOSTByMap(
+    map: ErrorUsingPOST.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingPOSTByMap(
-    map: ErrorHtmlUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingPOSTByMap(
+    map: ErrorUsingPOST.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingPOST(
+    return this.errorUsingPOST(
       observe,
       reportProgress
     );
@@ -656,21 +655,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingPOST(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingPOST(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingPOST(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingPOST(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingPOST(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingPOST(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingPOST(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingPOST(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -687,7 +686,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.post<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.post<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -697,36 +696,36 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingPOST')));
         }
         return handle;
     }
 
 
   /**
-   * errorHtml by map.
+   * error by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public errorHtmlUsingPUTByMap(
-    map: ErrorHtmlUsingPUT.PartialParamMap,
+  public errorUsingPUTByMap(
+    map: ErrorUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ModelAndView>;
-  public errorHtmlUsingPUTByMap(
-    map: ErrorHtmlUsingPUT.PartialParamMap,
+    reportProgress?: boolean): Observable<{ [key: string]: any; }>;
+  public errorUsingPUTByMap(
+    map: ErrorUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ModelAndView>>;
-  public errorHtmlUsingPUTByMap(
-    map: ErrorHtmlUsingPUT.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<{ [key: string]: any; }>>;
+  public errorUsingPUTByMap(
+    map: ErrorUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ModelAndView>>;
-  public errorHtmlUsingPUTByMap(
-    map: ErrorHtmlUsingPUT.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<{ [key: string]: any; }>>;
+  public errorUsingPUTByMap(
+    map: ErrorUsingPUT.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.errorHtmlUsingPUT(
+    return this.errorUsingPUT(
       observe,
       reportProgress
     );
@@ -734,21 +733,21 @@ export class BasicErrorControllerService {
 
 
     /**
-     * errorHtml
+     * error
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public errorHtmlUsingPUT(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ModelAndView>;
-    public errorHtmlUsingPUT(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ModelAndView>>;
-    public errorHtmlUsingPUT(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ModelAndView>>;
-    public errorHtmlUsingPUT(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public errorUsingPUT(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<{ [key: string]: any; }>;
+    public errorUsingPUT(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<{ [key: string]: any; }>>;
+    public errorUsingPUT(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<{ [key: string]: any; }>>;
+    public errorUsingPUT(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'text/html'
+            '*/*'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -765,7 +764,7 @@ export class BasicErrorControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ModelAndView>(`${this.configuration.basePath}/error`,
+        const handle = this.httpClient.put<{ [key: string]: any; }>(`${this.configuration.basePath}/error`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -775,7 +774,7 @@ export class BasicErrorControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorHtmlUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'errorUsingPUT')));
         }
         return handle;
     }
