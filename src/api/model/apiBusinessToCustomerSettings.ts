@@ -26,6 +26,7 @@ export interface ApiBusinessToCustomerSettings {
     creationTimestamp?: Date;
     font?: ApiDocument;
     footerImage?: ApiDocument;
+    headerBackgroundImage?: ApiDocument;
     headerImage?: ApiDocument;
     headingColor?: string;
     /**
@@ -55,6 +56,7 @@ export namespace ApiBusinessToCustomerSettings {
         creationTimestamp = 'creationTimestamp',
         font = 'font',
         footerImage = 'footerImage',
+        headerBackgroundImage = 'headerBackgroundImage',
         headerImage = 'headerImage',
         headingColor = 'headingColor',
         /**
@@ -108,6 +110,18 @@ export namespace ApiBusinessToCustomerSettings {
                     isEnum: false,
                     required: false,
                     name: 'footerImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'headerBackgroundImage',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'ApiDocument',
                     isPrimitiveType: false,
@@ -266,6 +280,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 footerImage: [
                 ],
+                headerBackgroundImage: [
+                ],
                 headerImage: [
                 ],
                 headingColor: [
@@ -306,6 +322,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               footerImage: {
+  //                   validators: []
+  //               },
+  //               headerBackgroundImage: {
   //                   validators: []
   //               },
   //               headerImage: {

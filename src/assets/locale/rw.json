@@ -2918,6 +2918,7 @@
     "productLabel.b2c.headerImage": "Header image",
     "productLabel.b2c.footerImage": "Footer image",
     "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF.",
-    "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG."
+    "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",
+    "productLabel.b2c.headerBackgroundImage": "Header background image"
   }
 }

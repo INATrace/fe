@@ -565,6 +565,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cHeaderImage', { static: false })
   b2cHeaderImage: TemplateRef<any>;
 
+  @ViewChild('b2cHeaderBackgroundImage', { static: false })
+  b2cHeaderBackgroundImage: TemplateRef<any>;
+
   @ViewChild('b2cFooterImage', { static: false })
   b2cFooterImage: TemplateRef<any>;
 
@@ -1347,6 +1350,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
       { name: 'businessToCustomerSettings.font', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFont },
       { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
+      { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }
     ];
   }

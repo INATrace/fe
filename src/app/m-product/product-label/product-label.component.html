@@ -1826,6 +1826,23 @@
   </app-closable>
 </ng-template>
 
+<ng-template #b2cHeaderBackgroundImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerBackgroundImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Header background image"
+                         i18n-label="@@productLabel.b2c.headerBackgroundImage"
+                         [form]="productForm.get('businessToCustomerSettings.headerBackgroundImage')"
+                         [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
 <ng-template #b2cFooterImage>
   <app-closable [nonClosable]="true"
                 [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"

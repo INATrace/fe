@@ -11139,6 +11139,9 @@
           "footerImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },
+          "headerBackgroundImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
           "headerImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },

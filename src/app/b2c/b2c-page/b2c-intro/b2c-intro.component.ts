@@ -36,4 +36,12 @@ export class B2cIntroComponent implements OnInit {
     this.router.navigate(['/', 'b2c', this.uuid, this.qrTag, 'journey']);
   }
 
+  get headerImage() {
+    return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerImage.storageKey;
+  }
+
+  get headerBackgroundImage() {
+    return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
+  }
+
 }
