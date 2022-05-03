@@ -14,6 +14,9 @@ import { ViewportScroller } from '@angular/common';
 import { B2cTermsComponent } from './b2c-terms/b2c-terms.component';
 import { B2cPrivacyComponent } from './b2c-privacy/b2c-privacy.component';
 import { environment } from 'src/environments/environment';
+import { ApiProductLabelValuesExtended } from '../../../api/model/apiProductLabelValuesExtended';
+import { ApiQRTagPublic } from '../../../api/model/apiQRTagPublic';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-b2c-page',
@@ -69,6 +72,8 @@ export class B2cPageComponent implements OnInit {
   footerColor: string;
 
   b2cSettings: ApiBusinessToCustomerSettings;
+  publicProductLabel: ApiProductLabelValuesExtended;
+  qrProductLabel: ApiQRTagPublic;
 
   // Social links
   facebook;
@@ -87,11 +92,16 @@ export class B2cPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)).subscribe({
-      next: (value) => {
-        this.processFields(value.data.fields);
+    forkJoin([
+      this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)),
+      this.publicController.getQRTagPublicDataUsingGET(this.qrTag, true).pipe(take(1))
+    ]).subscribe({
+      next: ([label, qrTag]) => {
+        this.processFields(label.data.fields);
 
-        this.b2cSettings = value.data.businessToCustomerSettings;
+        this.publicProductLabel = label.data;
+
+        this.b2cSettings = label.data.businessToCustomerSettings;
 
         if (this.b2cSettings.font) {
           const node = document.createElement('style');
@@ -104,6 +114,8 @@ export class B2cPageComponent implements OnInit {
             }`;
           document.body.appendChild(node);
         }
+
+        this.qrProductLabel = qrTag.data;
       },
       complete: () => {
         this.loading = false;

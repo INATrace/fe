@@ -1,0 +1,65 @@
+@import "src/_variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+// HAI
+
+$form-group-blue: gainsboro;
+$form-group-red: red;
+$form-group-green: green;
+$form-group-gray: gray;
+$form-group-orange: orange;
+
+$form-group-blue: inherit;
+$form-group-red: inherit;
+$form-group-green: inherit;
+$form-group-gray: inherit;
+$form-group-orange: inherit;
+
+.af-b2c-main {
+  .p {
+    font-weight: normal;
+  }
+
+  .af-b2c-form-element {
+    color: $form-group-red;
+    background-color: $form-group-blue;
+    display: block;
+
+    &--singlechoice {
+      background-color: $form-group-gray;
+    }
+    &--textarea {
+      background-color: $form-group-green;
+    }
+    &--textinput {
+      background-color: $form-group-red;
+    }
+    &--checkbox {
+      background-color: $form-group-orange;
+    }
+  }
+}
+.af-b2c-spacer  {
+  &--top {
+    &-one {
+      margin-top: 1rem;
+    }
+    &-two {
+      margin-top: 2rem;
+    }
+    &-three {
+      margin-top: 3rem;
+    }
+  }
+  &--bottom {
+    &-one {
+      margin-bottom: 1rem;
+    }
+    &-two {
+      margin-bottom: 2rem;
+    }
+  }
+
+}
