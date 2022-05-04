@@ -9,20 +9,20 @@
             [slides]="picsMeetTheFarmers">
     </app-front-page-carousel>
 
-    <h1>{{titleCooperative}}</h1>
+    <h1 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{titleCooperative}}</h1>
 
-    <h2>{{companyNameCooperative}}</h2>
+    <h2 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{companyNameCooperative}}</h2>
 
-    <p *ngIf="this.coopAbout">{{this.coopAbout}}</p>
+    <p *ngIf="this.coopAbout" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.coopAbout}}</p>
 
-    <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center">Processing story</h2>
+    <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center" [style.font-family]="b2cSettings.font ? 'custom' : ''">Processing story</h2>
 
     <app-front-page-carousel
             [slides]="picsProduction"
             [productionRecords]=true>
     </app-front-page-carousel>
 
-    <h1 i18n="@@frontPage.producers.title.meetOwner">The brand {{ productName }} owned by local producers</h1>
+    <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.font ? 'custom' : ''">The brand {{ productName }} owned by local producers</h1>
 
     <ng-container *ngIf="videoRWurl">
         <iframe [src]="this.videoRWurl" frameborder="0" allowfullscreen></iframe>

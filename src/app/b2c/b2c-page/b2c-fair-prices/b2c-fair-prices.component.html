@@ -1,65 +1,65 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''">Fair prices</h1>
 
-    <p i18n="@@front-page.fair-prices.paragraph1">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
+    <p i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.font ? 'custom' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
 
     <div class="af-graph-wrapper" style>
         <div class="af-graph">
 
             <div class="af-graph-row af-graph-row--top" style="height: 220px;">
                 <div class="af-graph-col">
-              <span class="af-graph-bar af-graph-bar--pink" [style.height]="this.worldMarketHeight + 'px'">
+              <span class="af-graph-bar" [style.height]="this.worldMarketHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
                 <span class="af-graph-bar-number">${{ this.worldMarketPrice }}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar af-graph-bar--pink" [style.height]="this.fairTradeHeight + 'px'">
+              <span class="af-graph-bar" [style.height]="this.fairTradeHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
                 <span class="af-graph-bar-number">${{ this.fairTradePrice }}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar af-graph-bar--purple" [style.height]="this.angeliqueHeight + 'px'">
+              <span class="af-graph-bar" [style.height]="this.angeliqueHeight + 'px'" [style.background-color]="b2cSettings.primaryColor">
                 <span class="af-graph-bar-number">${{ this.angeliquePrice }}</span>
               </span>
                 </div>
             </div>
             <div class="af-graph-row af-graph-row--bottom">
                 <div class="af-graph-col">
-                    <span class="af-graph-label">{{ label1 }}</span>
+                    <span class="af-graph-label" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ label1 }}</span>
                 </div>
                 <div class="af-graph-col">
-                    <span class="af-graph-label">{{ label2 }}</span>
+                    <span class="af-graph-label" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ label2 }}</span>
                 </div>
                 <div class="af-graph-col">
-                    <span class="af-graph-label">{{ productName }}</span>
+                    <span class="af-graph-label" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ productName }}</span>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <p [innerHTML]="desc"></p>
+    <p [innerHTML]="desc" [style.font-family]="b2cSettings.font ? 'custom' : ''"></p>
 
-    <h1>{{ title2 }} {{ productName }}</h1>
+    <h1 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ title2 }} {{ productName }}</h1>
 
     <div class="af-stgraph-wrapper" style>
         <div class="af-stgraph">
 
             <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="this.increaseOfCoffee + 'px'">
                 <div class="af-stgraph-col">
-              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label1Farmers">
+              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label1Farmers" [style.font-family]="b2cSettings.font ? 'custom' : ''">
                 Price paid if sold as {{ productName }}
               </span>
                 </div>
                 <div class="af-stgraph-col">
-              <span class="af-stgraph-bar af-stgraph-bar--purple">
+              <span class="af-stgraph-bar" [style.font-family]="b2cSettings.font ? 'custom' : ''" [style.background-color]="b2cSettings.primaryColor">
                 <span class="af-stgraph-bar-number">+{{ this.increaseOfCoffee }}%</span>
               </span>
                 </div>
             </div>
             <div class="af-stgraph-row af-stgraph-row--middle" style="height: 100px;">
                 <div class="af-stgraph-col">
-              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label2Farmers">
+              <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label2Farmers" [style.font-family]="b2cSettings.font ? 'custom' : ''">
                 Average price paid if not sold as {{ productName }}
               </span>
                 </div>
@@ -69,12 +69,12 @@
             </div>
             <div class="af-stgraph-row af-graph-row--bottom">
                 <div class="af-stgraph-col">
-                    <span class="af-stgraph-label">{{ title2 }}</span>
+                    <span class="af-stgraph-label" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ title2 }}</span>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <p [innerHTML]="descPricing"></p>
+    <p [innerHTML]="descPricing" [style.font-family]="b2cSettings.font ? 'custom' : ''"></p>
 </main>

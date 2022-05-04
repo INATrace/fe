@@ -33,7 +33,7 @@ export class B2cIntroComponent implements OnInit {
   }
 
   openJourney() {
-    this.router.navigate(['/', 'b2c', this.uuid, this.qrTag, 'journey']);
+    this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, 'journey']);
   }
 
   get headerImage() {
@@ -41,7 +41,10 @@ export class B2cIntroComponent implements OnInit {
   }
 
   get headerBackgroundImage() {
-    return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
+    if (this.b2cSettings.headerBackgroundImage) {
+      return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
+    }
+    return undefined;
   }
 
 }

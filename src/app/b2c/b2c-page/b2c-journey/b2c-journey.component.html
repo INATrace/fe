@@ -18,14 +18,14 @@
 
         <li class="af-journey">
             <div class="af-journey-dot"
-                 [class.spin]="historyItems.length === 0">
+                 [class.spin]="historyItems.length === 0" [style.background-color]="b2cSettings.primaryColor">
                 <a role="button" target="_blank">
                     <span class="af-journey-dot-shape af-journey-dot-shape--qr-code"></span>
                 </a>
             </div>
             <div class="af-journey-info">
-                <span>{{ formatDate(null) }}</span>
-                <span i18n="@@frontPage.journey.yourScan">Your scan</span>
+                <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ formatDate(null) }}</span>
+                <span i18n="@@frontPage.journey.yourScan" [style.font-family]="b2cSettings.font ? 'custom' : ''">Your scan</span>
                 <span>&nbsp;</span>
             </div>
         </li>
@@ -35,15 +35,15 @@
 
                 <li class="af-journey" *ngIf="item.type">
 
-                    <div class="af-journey-dot">
+                    <div class="af-journey-dot" [style.background-color]="b2cSettings.primaryColor">
                         <a role="button" target="_blank">
                             <span class="af-journey-dot-shape {{ item.iconClass }}"></span>
                         </a>
                     </div>
                     <div class="af-journey-info">
-                        <span>{{ formatDate(item.date) }}</span>
-                        <span>{{ item.name }}</span>
-                        <span>{{ item.location }}</span>
+                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ formatDate(item.date) }}</span>
+                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ item.name }}</span>
+                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ item.location }}</span>
                     </div>
 
                 </li>
@@ -51,7 +51,7 @@
 
             <li class="af-journey">
 
-                <div class="af-journey-dot">
+                <div class="af-journey-dot" [style.background-color]="b2cSettings.primaryColor">
                     <a role="button" target="_blank">
                         <span class="af-journey-dot-shape af-journey-dot-shape--leaf"></span>
                     </a>

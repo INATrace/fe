@@ -35,7 +35,7 @@ export class B2cTabsComponent implements OnInit {
   }
 
   goTo(target: B2CTab) {
-    this.router.navigate(['/', 'b2c', this.uuid, this.qrTag, target]);
+    this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, target]);
   }
 
 }

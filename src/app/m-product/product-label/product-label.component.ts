@@ -1742,7 +1742,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (this.changed) { return; }
     if (this.currentLabel) {
       const url = this.router.serializeUrl(
-        this.router.createUrlTree(['/b2c', this.currentLabel.uuid, 'EMPTY'])
+        this.router.createUrlTree(['/p-cd', this.currentLabel.uuid, 'EMPTY'])
       );
       if (this.productForm.value && this.productForm.value.settings && this.productForm.value.settings.language) {
         window.open(this.productForm.value.settings.language.toLowerCase() + url, '_blank');

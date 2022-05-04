@@ -6,15 +6,15 @@
 
             <div class="af-bgraph-row">
                 <div class="af-bgraph-col" style="height: 160px;">
-                    <span class="af-bgraph-description">{{label1}}</span>
+                    <span class="af-bgraph-description" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{label1}}</span>
                 </div>
                 <div class="af-bgraph-col" style="height: 160px; width: 40px">
               <span class="af-bgraph-bar af-bgraph-bar--darkergray">
               </span>
                 </div>
                 <div class="af-bgraph-col" [style.height]="this.gradeHeight + 'px'">
-              <span class="af-bgraph-bar af-bgraph-bar--purple">
-                <span class="af-bgraph-bar-number">{{this.grade}} points</span>
+              <span class="af-bgraph-bar" [style.background-color]="b2cSettings.primaryColor">
+                <span class="af-bgraph-bar-number" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.grade}} points</span>
               </span>
                 </div>
             </div>
@@ -22,12 +22,12 @@
         </div>
     </div>
 
-    <p i18n="@@frontPage.quality.paragraph.points">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
+    <p i18n="@@frontPage.quality.paragraph.points" [style.font-family]="b2cSettings.font ? 'custom' : ''">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
 
-    <h2>{{subtitle}}</h2>
+    <h2 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{subtitle}}</h2>
 
     <!-- <p i18n="@@frontPage.quality.paragraph.flavor">Smooth body, brown sugar, orange and honey flavor, balanced acidity, clean and sweet finish.</p> -->
-    <p>{{this.flavour}}</p>
+    <p [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.flavour}}</p>
 
     <ng-container *ngFor="let item of rwCerts">
         <div class="af-b2c-quality-card">

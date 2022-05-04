@@ -6,6 +6,7 @@ import { GoogleMap } from '@angular/google-maps';
 import { ApiHistoryTimelineItem } from '../../../../api/model/apiHistoryTimelineItem';
 import { HistoryTimelineItem } from '../../../front-page/front-page-journey/model';
 import { take } from 'rxjs/operators';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 
 @Component({
   selector: 'app-b2c-journey',
@@ -15,7 +16,8 @@ import { take } from 'rxjs/operators';
 export class B2cJourneyComponent implements OnInit {
 
   constructor(
-      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
+      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent,
+      public globalEventManager: GlobalEventManagerService
   ) {
     this.productName = b2cPage.productName;
     this.b2cSettings = b2cPage.b2cSettings;
@@ -92,6 +94,16 @@ export class B2cJourneyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const sub2 = this.globalEventManager.areGoogleMapsLoadedEmmiter.subscribe(
+        loaded => {
+          if (loaded) { this.isGoogleMapsLoaded = true; }
+        },
+        () => { }
+    );
+    this.subs.push(sub2);
+
+    this.initLabel().then();
+    this.data().then();
   }
 
   styleForIconType(iconType: string) {
