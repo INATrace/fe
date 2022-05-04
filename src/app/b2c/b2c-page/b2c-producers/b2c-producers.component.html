@@ -1,5 +1,5 @@
 <main class="af-b2c-main">
-    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''">Meet the farmers</h1>
+    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''" i18n="@@frontPage.producers.title.meetFarmers">Meet the farmers</h1>
 
     <ng-container *ngIf="videoMeetTheFarmers">
         <iframe [src]="this.videoMeetTheFarmers" frameborder="0" allowfullscreen></iframe>
