@@ -11127,6 +11127,66 @@
         },
         "type": "object"
       },
+      "ApiBusinessToCustomerSettings": {
+        "properties": {
+          "creationTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "font": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "footerImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "headerBackgroundImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "headerImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "headingColor": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "primaryColor": {
+            "type": "string"
+          },
+          "quaternaryColor": {
+            "type": "string"
+          },
+          "secondaryColor": {
+            "type": "string"
+          },
+          "tabFairPrices": {
+            "type": "boolean"
+          },
+          "tabFeedback": {
+            "type": "boolean"
+          },
+          "tabProducers": {
+            "type": "boolean"
+          },
+          "tabQuality": {
+            "type": "boolean"
+          },
+          "tertiaryColor": {
+            "type": "string"
+          },
+          "textColor": {
+            "type": "string"
+          },
+          "updateTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiCertification": {
         "properties": {
           "certificate": {
@@ -14870,6 +14930,10 @@
             },
             "type": "array"
           },
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
@@ -15075,6 +15139,10 @@
       },
       "ApiProductLabel": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "fields": {
             "description": "Fields",
             "items": {
@@ -15292,6 +15360,10 @@
       },
       "ApiProductLabelContent": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
@@ -15572,6 +15644,10 @@
       },
       "ApiProductLabelValuesExtended": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "checkAuthenticityCount": {
             "description": "Number of true 'checkAuthenticity' fields over all of batches",
             "format": "int32",

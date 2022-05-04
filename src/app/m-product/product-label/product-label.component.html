@@ -390,6 +390,30 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2>B2C settings</h2>
+          <div class="af-form-element">
+            <section
+              cdkDropList (cdkDropListDropped)="onDropCompanySection($event)"
+              class="droppable-list">
+
+              <ng-container *ngFor="let element of b2cElements">
+                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
+                  <div class="col-1 px-0 d-flex justify-content-center">
+                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
+                  </div>
+                  <div class="col-11">
+                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
+                  </div>
+                </div>
+              </ng-container>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <div class="af-bottom-buttons">
             <ng-container *ngIf="mode === 'update'">
               <bottom-buttons
@@ -1621,5 +1645,217 @@
     <div class="readonly-text-data">
       {{productForm.get('company.mediaLinks.other').value || emptyField}}
     </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cPrimaryColor>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.primaryColor')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart"
+      label="Primary color"
+      i18n-label="@@productLabel.b2c.primaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.primaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cSecondaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.secondaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Secondary color"
+          i18n-label="@@productLabel.b2c.secondaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.secondaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTertiaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tertiaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Tertiary color"
+          i18n-label="@@productLabel.b2c.tertiaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.tertiaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cQuaternaryColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.quaternaryColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Quaternary color"
+          i18n-label="@@productLabel.b2c.quaternaryColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.quaternaryColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeadingColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headingColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Heading color"
+          i18n-label="@@productLabel.b2c.headingColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.headingColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTextColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.textColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Text color"
+          i18n-label="@@productLabel.b2c.textColor">
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')"></app-color-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabFairPrices>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabFairPrices')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart"
+      class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabFairPrices')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
+        Enable 'Fair prices' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabProducers>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabProducers')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabProducers')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
+        Enable 'Producers' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabQuality>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabQuality')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabQuality')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
+        Enable 'Quality' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTabFeedback>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.tabFeedback')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.tabFeedback')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
+        Enable 'Feedback' tab
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cFont>
+  <app-closable
+    [nonClosable]="true"
+    [visibilityForm]="visibilityMap.get('businessToCustomerSettings.font')"
+    [reorderMode]="reorderMode"
+    [openOnValueChange]="openOnStart"
+    class="af-form-element--nolabel">
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF."
+                           mode="simpleAsTextField"
+                           label="Font"
+                           i18n-label="@@productLabel.b2c.font"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="productForm.get('businessToCustomerSettings.font')"
+                           [attachmentUploaderId]="'b2cFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload font</attachment-uploader-content>
+      </attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeaderImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Header image"
+                         i18n-label="@@productLabel.b2c.headerImage"
+                         [form]="productForm.get('businessToCustomerSettings.headerImage')"
+                         [attachmentUploaderId]="'b2cHeaderImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeaderBackgroundImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerBackgroundImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Header background image"
+                         i18n-label="@@productLabel.b2c.headerBackgroundImage"
+                         [form]="productForm.get('businessToCustomerSettings.headerBackgroundImage')"
+                         [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cFooterImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Footer image"
+                         i18n-label="@@productLabel.b2c.footerImage"
+                         [form]="productForm.get('businessToCustomerSettings.footerImage')"
+                         [attachmentUploaderId]="'b2cFooterImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
 </ng-template>

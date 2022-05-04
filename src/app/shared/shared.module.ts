@@ -68,6 +68,7 @@ import { CompanyDocumentCategoryFilterPipe } from './pipes/company-document-cate
 import { CertificationAndStandardItemComponent } from './certification-and-standard-item/certification-and-standard-item.component';
 import { LocationFormNewComponent } from './location-form-new/location-form-new.component';
 import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.component';
+import { ColorInputComponent } from './color-input/color-input.component';
 
 @NgModule({
     declarations: [
@@ -124,7 +125,8 @@ import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.compo
         CompanyDocumentItemComponent,
         CompanyDocumentCategoryFilterPipe,
         LocationFormNewComponent,
-        GeoaddressFormComponent
+        GeoaddressFormComponent,
+        ColorInputComponent
     ],
     entryComponents: [
         TextinputModalComponent,
@@ -194,7 +196,8 @@ import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.compo
         CompanyDocumentItemComponent,
         CompanyDocumentCategoryFilterPipe,
         LocationFormNewComponent,
-        GeoaddressFormComponent
+        GeoaddressFormComponent,
+        ColorInputComponent
     ]
 })
 export class SharedModule {
