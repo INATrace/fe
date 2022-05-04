@@ -1461,7 +1461,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (value) {
 
-      const outputQuantity = this.totalQuantity;
+      const outputQuantity = this.totalQuantity as number;
       let tmpQuantity = 0;
 
       for (const tx of this.inputTransactions) {
@@ -1484,7 +1484,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           continue;
         }
 
-        item.selectedQuantity = outputQuantity - tmpQuantity;
+        item.selectedQuantity = Number((outputQuantity - tmpQuantity).toFixed(2));
         tmpQuantity = outputQuantity;
       }
 
@@ -1541,7 +1541,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (!this.availableStockOrders[index].selected) {
 
       const outputQuantity = this.totalQuantity as number || 0;
-      const toFill = outputQuantity - this.calcInputQuantity(false);
+      const inputQuantity = this.calcInputQuantity(false);
+
+      const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
 
       const currentAvailable = this.availableStockOrders[index].availableQuantity;
 
