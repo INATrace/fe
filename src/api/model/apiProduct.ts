@@ -18,6 +18,7 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
 import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
@@ -39,6 +40,7 @@ export interface ApiProduct {
      * associated companies
      */
     associatedCompanies?: Array<ApiProductCompany>;
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
     comparisonOfPrice?: ApiComparisonOfPrice;
     /**
@@ -111,6 +113,7 @@ export namespace ApiProduct {
          * associated companies
          */
         associatedCompanies = 'associatedCompanies',
+        businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
         comparisonOfPrice = 'comparisonOfPrice',
         /**
@@ -188,6 +191,18 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiProductCompany'
+                },
+                {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
                 },
                 {
                     metadata: ApiCompany.formMetadata,
@@ -448,6 +463,8 @@ export namespace ApiProduct {
             validators: {
                 associatedCompanies: [
                 ],
+                businessToCustomerSettings: [
+                ],
                 company: [
                 ],
                 comparisonOfPrice: [
@@ -500,6 +517,9 @@ export namespace ApiProduct {
   //     validators: [],
   //     fields: {
   //               associatedCompanies: {
+  //                   validators: []
+  //               },
+  //               businessToCustomerSettings: {
   //                   validators: []
   //               },
   //               company: {

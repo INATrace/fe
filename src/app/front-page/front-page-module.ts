@@ -16,24 +16,27 @@ import { FrontPageCarouselComponent } from './front-page-carousel/front-page-car
 import { FrontPageCommonModule } from '../front-page-common/front-page-common.module';
 
 @NgModule({
-  declarations: [
-    FrontPageFirstComponent,
-    FrontPageJourneyComponent,
-    FrontPageFairPricesComponent,
-    FrontPageProducersComponent,
-    FrontPageQualityComponent,
-    FrontPageFeedbackComponent,
-    FrontPageSlidingComponent,
-    FrontPageCarouselComponent
-  ],
-  imports: [
-    FrontPageRoutingModule,
-    FrontPageCommonModule,
-    CommonModule,
-    CoreModule,
-    ComponentsModule,
-    SharedModule,
-    GoogleMapsModule
-  ]
+    declarations: [
+        FrontPageFirstComponent,
+        FrontPageJourneyComponent,
+        FrontPageFairPricesComponent,
+        FrontPageProducersComponent,
+        FrontPageQualityComponent,
+        FrontPageFeedbackComponent,
+        FrontPageSlidingComponent,
+        FrontPageCarouselComponent
+    ],
+    exports: [
+        FrontPageCarouselComponent
+    ],
+    imports: [
+        FrontPageRoutingModule,
+        FrontPageCommonModule,
+        CommonModule,
+        CoreModule,
+        ComponentsModule,
+        SharedModule,
+        GoogleMapsModule
+    ]
 })
 export class FrontPageModule { }

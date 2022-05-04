@@ -2877,6 +2877,20 @@
     "formatProcessingActionType.generateQrCode": "Generar código QR",
     "productLabelFacilities.tableCol.activate": "Activate",
     "productLabelFacilities.tableCol.deactivate": "Deactivate",
-    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?"
+    "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?",
+    "productLabel.b2c.primaryColor": "Primary color",
+    "productLabel.b2c.secondaryColor": "Secondary color",
+    "productLabel.b2c.headingColor": "Heading color",
+    "productLabel.b2c.textColor": "Text color",
+    "productLabel.b2c.tabFairPrices": "Enable 'Fair prices' tab",
+    "productLabel.b2c.tabProducers": "Enable 'Producers' tab",
+    "productLabel.b2c.tabQuality": "Enable 'Quality' tab",
+    "productLabel.b2c.tabFeedback": "Enable 'Feedback' tab",
+    "productLabel.b2c.font": "Font",
+    "productLabel.b2c.headerImage": "Header image",
+    "productLabel.b2c.footerImage": "Footer image",
+    "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF.",
+    "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",
+    "productLabel.b2c.headerBackgroundImage": "Header background image"
   }
 }

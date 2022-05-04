@@ -37,6 +37,7 @@ import { UnsubscribeList } from 'src/shared/rxutils';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { PrefillProductSelectionModalComponent } from './prefill-product-selection-modal/prefill-product-selection-modal.component';
 import {
+  ApiBusinessToCustomerSettingsValidationScheme,
   ApiCertificationValidationScheme,
   ApiCompanyValidationScheme,
   ApiComparisonOfPriceValidationScheme,
@@ -61,6 +62,7 @@ import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 import { ApiProductCompany } from '../../../api/model/apiProductCompany';
 import { LanguageForLabelModalResult } from './language-for-label-modal/model';
+import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 
 @Component({
   selector: 'app-product-label',
@@ -294,6 +296,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
 
+      const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(), product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+      this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
+
       const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
       this.productForm.updateValueAndValidity();
@@ -523,6 +528,51 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   companyElements: any[] = [];
 
+  // B2C
+  @ViewChild('b2cPrimaryColor', { static: false })
+  b2cPrimaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cSecondaryColor', { static: false })
+  b2cSecondaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cTertiaryColor', { static: false })
+  b2cTertiaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cQuaternaryColor', { static: false })
+  b2cQuaternaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cHeadingColor', { static: false })
+  b2cHeadingColor: TemplateRef<any>;
+
+  @ViewChild('b2cTextColor', { static: false })
+  b2cTextColor: TemplateRef<any>;
+
+  @ViewChild('b2cTabFairPrices', { static: false })
+  b2cTabFairPrices: TemplateRef<any>;
+
+  @ViewChild('b2cTabProducers', { static: false })
+  b2cTabProducers: TemplateRef<any>;
+
+  @ViewChild('b2cTabQuality', { static: false })
+  b2cTabQuality: TemplateRef<any>;
+
+  @ViewChild('b2cTabFeedback', { static: false })
+  b2cTabFeedback: TemplateRef<any>;
+
+  @ViewChild('b2cFont', { static: false })
+  b2cFont: TemplateRef<any>;
+
+  @ViewChild('b2cHeaderImage', { static: false })
+  b2cHeaderImage: TemplateRef<any>;
+
+  @ViewChild('b2cHeaderBackgroundImage', { static: false })
+  b2cHeaderBackgroundImage: TemplateRef<any>;
+
+  @ViewChild('b2cFooterImage', { static: false })
+  b2cFooterImage: TemplateRef<any>;
+
+  b2cElements: any[] = [];
+
   // COMPARISON OF PRICE
   @ViewChild('description', { static: false })
   descriptionTmpl: TemplateRef<any>;
@@ -721,6 +771,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
 
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(), product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+    this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
+
     this.productForm.updateValueAndValidity();
     this.initializeOriginLocations();
     this.initializeMarkers();
@@ -771,6 +824,22 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     const originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
+
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+        {
+          primaryColor: '#5c267b',
+          secondaryColor: '#0fae94',
+          tertiaryColor: '#ac1b56',
+          quaternaryColor: '#e3b22b',
+          headingColor: '#000000',
+          textColor: '#000000',
+          tabFairPrices: true,
+          tabProducers: true,
+          tabQuality: true,
+          tabFeedback: true
+        },
+        ApiBusinessToCustomerSettingsValidationScheme);
+    this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
     this.initializeListManagers();
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
@@ -1267,6 +1336,25 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
+  generateBusinessToCustomerSettingsElements() {
+    this.b2cElements = [
+      { name: 'businessToCustomerSettings.primaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrimaryColor },
+      { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
+      { name: 'businessToCustomerSettings.tertiaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTertiaryColor },
+      { name: 'businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cQuaternaryColor },
+      { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
+      { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
+      { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },
+      { name: 'businessToCustomerSettings.tabProducers', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabProducers },
+      { name: 'businessToCustomerSettings.tabQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabQuality },
+      { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
+      { name: 'businessToCustomerSettings.font', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFont },
+      { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
+      { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
+      { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }
+    ];
+  }
+
   onDropSettingsSection(event) {
     if (this.settingsElements[event.previousIndex].disableDrag || this.settingsElements[event.currentIndex].disableDrag) { return; }
     moveItemInArray(this.settingsElements, event.previousIndex, event.currentIndex);
@@ -1284,6 +1372,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateComparisonOfPriceElementsElements();
     this.generateSettingsElements();
     this.generateCompanyElements();
+    this.generateBusinessToCustomerSettingsElements();
 
     this.generateJointVisibilityForm();
   }
