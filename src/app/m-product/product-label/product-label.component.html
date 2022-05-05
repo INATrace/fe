@@ -1795,17 +1795,19 @@
     [reorderMode]="reorderMode"
     [openOnValueChange]="openOnStart"
     class="af-form-element--nolabel">
-      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
-                           allowedMimeTypeErrorMessage="Upload only file types: TTF."
-                           mode="simpleAsTextField"
-                           label="Font"
-                           i18n-label="@@productLabel.b2c.font"
-                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                           [form]="productForm.get('businessToCustomerSettings.font')"
-                           [attachmentUploaderId]="'b2cFont'"
-                           [readOnly]="!canEdit()">
-        <attachment-uploader-content>Upload font</attachment-uploader-content>
-      </attachment-uploader>
+      <div class="mt-4">
+        <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                             allowedMimeTypeErrorMessage="Upload only file types: TTF."
+                             mode="simpleAsTextField"
+                             label="Font"
+                             i18n-label="@@productLabel.b2c.font"
+                             i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                             [form]="productForm.get('businessToCustomerSettings.font')"
+                             [attachmentUploaderId]="'b2cFont'"
+                             [readOnly]="!canEdit()">
+          <attachment-uploader-content>Upload font</attachment-uploader-content>
+        </attachment-uploader>
+      </div>
   </app-closable>
 </ng-template>
 
