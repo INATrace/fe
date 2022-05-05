@@ -827,10 +827,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
         {
-          primaryColor: '#5c267b',
-          secondaryColor: '#0fae94',
-          tertiaryColor: '#ac1b56',
-          quaternaryColor: '#e3b22b',
+          primaryColor: '#25265E',
+          secondaryColor: '#5DBCCF',
+          tertiaryColor: '#F7F7F7',
+          quaternaryColor: '#25265E',
           headingColor: '#000000',
           textColor: '#000000',
           tabFairPrices: true,
