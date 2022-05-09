@@ -42,6 +42,7 @@ import { ApiPaginatedResponseApiProductListResponse } from '../model/apiPaginate
 import { ApiProduct } from '../model/apiProduct';
 import { ApiProductLabel } from '../model/apiProductLabel';
 import { ApiProductLabelBatch } from '../model/apiProductLabelBatch';
+import { ApiProductLabelCompanyDocument } from '../model/apiProductLabelCompanyDocument';
 import { ApiProductLabelContent } from '../model/apiProductLabelContent';
 import { ApiProductLabelUpdateValues } from '../model/apiProductLabelUpdateValues';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
@@ -53,7 +54,9 @@ import { ApiResponseApiProductLabelAnalytics } from '../model/apiResponseApiProd
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
 import { ApiResponseApiProductLabelContent } from '../model/apiResponseApiProductLabelContent';
 import { ApiResponseApiProductLabelValues } from '../model/apiResponseApiProductLabelValues';
+import { ApiResponseListApiCompanyDocument } from '../model/apiResponseListApiCompanyDocument';
 import { ApiResponseListApiProductLabelBase } from '../model/apiResponseListApiProductLabelBase';
+import { ApiResponseListApiProductLabelCompanyDocument } from '../model/apiResponseListApiProductLabelCompanyDocument';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -510,6 +513,41 @@ export namespace ExecuteAction {
      */
     export const ParamValidators: {[K in keyof ExecuteAction.PartialParamMap]?: [string, ValidatorFn][]} = {
       action: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getAvailableCompanyDocumentsForProductLabelUsingGET.
+ */
+export namespace GetAvailableCompanyDocumentsForProductLabelUsingGET {
+    /**
+     * Parameter map for getAvailableCompanyDocumentsForProductLabelUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Label id
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getAvailableCompanyDocumentsForProductLabelUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Label id
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getAvailableCompanyDocumentsForProductLabelUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetAvailableCompanyDocumentsForProductLabelUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
               ['required', Validators.required],
       ],
     };
@@ -1398,6 +1436,41 @@ export namespace GetProductUsingGET {
 }
 
 /**
+ * Namespace for getSelectedCompanyDocuementsForProductLabelUsingGET.
+ */
+export namespace GetSelectedCompanyDocuementsForProductLabelUsingGET {
+    /**
+     * Parameter map for getSelectedCompanyDocuementsForProductLabelUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Label id
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getSelectedCompanyDocuementsForProductLabelUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Label id
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getSelectedCompanyDocuementsForProductLabelUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetSelectedCompanyDocuementsForProductLabelUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
  * Namespace for listProductsAdminUsingGET.
  */
 export namespace ListProductsAdminUsingGET {
@@ -1604,6 +1677,52 @@ export namespace UpdateCompanyCustomer {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof UpdateCompanyCustomer.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
+ * Namespace for updateCompanyDocumentsForProductLabelUsingPUT.
+ */
+export namespace UpdateCompanyDocumentsForProductLabelUsingPUT {
+    /**
+     * Parameter map for updateCompanyDocumentsForProductLabelUsingPUT.
+     */
+    export interface PartialParamMap {
+      /**
+       * Label ID
+       */
+      id: number;
+      /**
+       * Company document list
+       */
+      ApiProductLabelCompanyDocument: Array<ApiProductLabelCompanyDocument>;
+    }
+
+    /**
+     * Enumeration of all parameters for updateCompanyDocumentsForProductLabelUsingPUT.
+     */
+    export enum Parameters {
+      /**
+       * Label ID
+       */
+      id = 'id',
+      /**
+       * Company document list
+       */
+      ApiProductLabelCompanyDocument = 'ApiProductLabelCompanyDocument'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of updateCompanyDocumentsForProductLabelUsingPUT
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof UpdateCompanyDocumentsForProductLabelUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      ApiProductLabelCompanyDocument: [
+              ['required', Validators.required],
+      ],
     };
 }
 
@@ -2844,6 +2963,88 @@ export class ProductControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'executeAction')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get available company documents for product label by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getAvailableCompanyDocumentsForProductLabelUsingGETByMap(
+    map: GetAvailableCompanyDocumentsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseListApiCompanyDocument>;
+  public getAvailableCompanyDocumentsForProductLabelUsingGETByMap(
+    map: GetAvailableCompanyDocumentsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiCompanyDocument>>;
+  public getAvailableCompanyDocumentsForProductLabelUsingGETByMap(
+    map: GetAvailableCompanyDocumentsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiCompanyDocument>>;
+  public getAvailableCompanyDocumentsForProductLabelUsingGETByMap(
+    map: GetAvailableCompanyDocumentsForProductLabelUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getAvailableCompanyDocumentsForProductLabelUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get available company documents for product label
+     * 
+     * @param id Label id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAvailableCompanyDocumentsForProductLabelUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiCompanyDocument>;
+    public getAvailableCompanyDocumentsForProductLabelUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiCompanyDocument>>;
+    public getAvailableCompanyDocumentsForProductLabelUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiCompanyDocument>>;
+    public getAvailableCompanyDocumentsForProductLabelUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getAvailableCompanyDocumentsForProductLabelUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseListApiCompanyDocument>(`${this.configuration.basePath}/api/product/label/${encodeURIComponent(String(id))}/documents/available`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableCompanyDocumentsForProductLabelUsingGET')));
         }
         return handle;
     }
@@ -4420,6 +4621,88 @@ export class ProductControllerService {
 
 
   /**
+   * Get selected company documents for product label by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getSelectedCompanyDocuementsForProductLabelUsingGETByMap(
+    map: GetSelectedCompanyDocuementsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseListApiProductLabelCompanyDocument>;
+  public getSelectedCompanyDocuementsForProductLabelUsingGETByMap(
+    map: GetSelectedCompanyDocuementsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiProductLabelCompanyDocument>>;
+  public getSelectedCompanyDocuementsForProductLabelUsingGETByMap(
+    map: GetSelectedCompanyDocuementsForProductLabelUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiProductLabelCompanyDocument>>;
+  public getSelectedCompanyDocuementsForProductLabelUsingGETByMap(
+    map: GetSelectedCompanyDocuementsForProductLabelUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getSelectedCompanyDocuementsForProductLabelUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get selected company documents for product label
+     * 
+     * @param id Label id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getSelectedCompanyDocuementsForProductLabelUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiProductLabelCompanyDocument>;
+    public getSelectedCompanyDocuementsForProductLabelUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiProductLabelCompanyDocument>>;
+    public getSelectedCompanyDocuementsForProductLabelUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiProductLabelCompanyDocument>>;
+    public getSelectedCompanyDocuementsForProductLabelUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getSelectedCompanyDocuementsForProductLabelUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseListApiProductLabelCompanyDocument>(`${this.configuration.basePath}/api/product/label/${encodeURIComponent(String(id))}/documents`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getSelectedCompanyDocuementsForProductLabelUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Lists all products. Must be admin. Sorting: name or default by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -4727,6 +5010,99 @@ export class ProductControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateCompanyCustomer')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Update company document product label list by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public updateCompanyDocumentsForProductLabelUsingPUTByMap(
+    map: UpdateCompanyDocumentsForProductLabelUsingPUT.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public updateCompanyDocumentsForProductLabelUsingPUTByMap(
+    map: UpdateCompanyDocumentsForProductLabelUsingPUT.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public updateCompanyDocumentsForProductLabelUsingPUTByMap(
+    map: UpdateCompanyDocumentsForProductLabelUsingPUT.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public updateCompanyDocumentsForProductLabelUsingPUTByMap(
+    map: UpdateCompanyDocumentsForProductLabelUsingPUT.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.updateCompanyDocumentsForProductLabelUsingPUT(
+      map.id,
+      map.ApiProductLabelCompanyDocument,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Update company document product label list
+     * 
+     * @param id Label ID
+     * @param ApiProductLabelCompanyDocument Company document list
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateCompanyDocumentsForProductLabelUsingPUT(id: number, ApiProductLabelCompanyDocument: Array<ApiProductLabelCompanyDocument>, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public updateCompanyDocumentsForProductLabelUsingPUT(id: number, ApiProductLabelCompanyDocument: Array<ApiProductLabelCompanyDocument>, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public updateCompanyDocumentsForProductLabelUsingPUT(id: number, ApiProductLabelCompanyDocument: Array<ApiProductLabelCompanyDocument>, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public updateCompanyDocumentsForProductLabelUsingPUT(id: number, ApiProductLabelCompanyDocument: Array<ApiProductLabelCompanyDocument>, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling updateCompanyDocumentsForProductLabelUsingPUT.');
+        }
+        if (ApiProductLabelCompanyDocument === null || ApiProductLabelCompanyDocument === undefined) {
+            throw new Error('Required parameter ApiProductLabelCompanyDocument was null or undefined when calling updateCompanyDocumentsForProductLabelUsingPUT.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.put<ApiDefaultResponse>(`${this.configuration.basePath}/api/product/label/${encodeURIComponent(String(id))}/documents`,
+            ApiProductLabelCompanyDocument,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateCompanyDocumentsForProductLabelUsingPUT')));
         }
         return handle;
     }
