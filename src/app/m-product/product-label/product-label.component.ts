@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
@@ -63,6 +63,8 @@ import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-det
 import { ApiProductCompany } from '../../../api/model/apiProductCompany';
 import { LanguageForLabelModalResult } from './language-for-label-modal/model';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
+import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
+import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 
 @Component({
   selector: 'app-product-label',
@@ -160,13 +162,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.productForm.dirty;
   }
 
+  get mediaChanged() {
+    return this.mediaForm && this.mediaForm.dirty;
+  }
+
   get changed(): boolean {
     // console.log("CHG:", this.productChanged, this.labelChanged)
-    return this.productChanged || this.labelChanged;
+    return this.productChanged || this.labelChanged || this.mediaChanged;
   }
 
   get invalid() {
-    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid);
+    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid) || (this.mediaForm && this.mediaForm.invalid);
   }
   get publishText() {
     if (!this.currentLabel) { return this.publishString; }
@@ -247,6 +253,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   reloadProductNoLabel = true;
 
   action = this.route.snapshot.data.action;
+
+  availableMedia: ApiProductLabelCompanyDocument[];
+  mediaForm = new FormGroup({});
+
+  viewIcon = faEye;
 
   reloadPing$ = new BehaviorSubject(false);
 
@@ -570,6 +581,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   @ViewChild('b2cFooterImage', { static: false })
   b2cFooterImage: TemplateRef<any>;
+
+  @ViewChild('b2cMedia', { static: false })
+  b2cMedia: TemplateRef<any>;
 
   b2cElements: any[] = [];
 
@@ -953,6 +967,13 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
       const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
       if (resC && resC.status === 'OK') { this.productForm.markAsPristine(); }
+
+      const labelDocuments: ApiProductLabelCompanyDocument[] = this.mediaForm.get('video').value
+          .concat(this.mediaForm.get('farmers').value, this.mediaForm.get('productionRecord').value);
+      const resLD = await this.productController.updateCompanyDocumentsForProductLabelUsingPUT(this.currentLabel.id, labelDocuments).pipe(take(1)).toPromise();
+      if (resLD && resLD.status === 'OK') {
+        this.mediaForm.markAsPristine();
+      }
 
       this.visibilityForm.markAsPristine();
       this.labelTitleForm.setValue(null);
@@ -1353,6 +1374,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }
     ];
+    if (this.action === 'labels') {
+      this.b2cElements.push(
+          { name: 'businessToCustomerSettings.media', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cMedia}
+      );
+    }
   }
 
   onDropSettingsSection(event) {
@@ -1578,7 +1604,53 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return labels;
   }
 
+  get videoList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('video') ? (this.mediaForm.get('video') as FormArray).controls : [];
+  }
+
+  get farmerList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('farmers') ? (this.mediaForm.get('farmers') as FormArray).controls : [];
+  }
+
+  get productionRecordList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('productionRecord') ? (this.mediaForm.get('productionRecord') as FormArray).controls : [];
+  }
+
+  showImage(storageKey: string) {
+    const modalRef = this.modalService.open(ImageViewerComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      modal: false,
+      fileInfo: {
+        storageKey
+      },
+      chainApi: false
+    });
+  }
+
   async initializeByLabel(label: ApiProductLabel) {
+
+    const media = await this.productController.getCompanyDocumentsForProductLabelUsingGET(label.id).pipe(take(1)).toPromise();
+    if (media && media.status === 'OK' && media.data) {
+      this.availableMedia = media.data;
+
+      this.mediaForm.setControl('video', new FormArray([]));
+      this.mediaForm.setControl('farmers', new FormArray([]));
+      this.mediaForm.setControl('productionRecord', new FormArray([]));
+
+      this.availableMedia.map(value => {
+        switch (value.category) {
+          case ApiProductLabelCompanyDocument.CategoryEnum.VIDEO:
+            (this.mediaForm.get('video') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+          case ApiProductLabelCompanyDocument.CategoryEnum.MEETTHEFARMER:
+            (this.mediaForm.get('farmers') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+          case ApiProductLabelCompanyDocument.CategoryEnum.PRODUCTIONRECORD:
+            (this.mediaForm.get('productionRecord') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+        }
+      });
+    }
 
     if (!this.currentLabel) { this.currentLabel = label; this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true }); }
     const res = await this.productController.getProductLabelContentUsingGET(label.id).pipe(take(1)).toPromise();

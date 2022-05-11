@@ -2891,6 +2891,9 @@
     "productLabel.b2c.footerImage": "Footer image",
     "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF.",
     "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",
-    "productLabel.b2c.headerBackgroundImage": "Header background image"
+    "productLabel.b2c.headerBackgroundImage": "Header background image",
+    "productLabel.b2c.videos": "Videos",
+    "productLabel.b2c.meetTheFarmers": "Conozca a los Agricultores",
+    "productLabel.b2c.productionRecords": "Registros de producción"
   }
 }

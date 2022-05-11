@@ -1861,3 +1861,47 @@
                          [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
 </ng-template>
+
+<ng-template #b2cMedia>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.b2cMedia')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <h2 i18n="@@productLabel.b2c.videos" class="mt-4 mb-0">Videos</h2>
+    <ng-container *ngFor="let video of videoList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="video.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="video"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+      </div>
+    </ng-container>
+
+    <h2 i18n="@@productLabel.b2c.meetTheFarmers" class="mt-4 mb-0">Meet the farmers</h2>
+    <ng-container *ngFor="let farmer of farmerList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="farmer.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="farmer"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+        <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(farmer.get('document').value.storageKey)"></fa-icon>
+      </div>
+    </ng-container>
+
+    <h2 i18n="@@productLabel.b2c.productionRecords" class="mt-4 mb-0">Production records</h2>
+    <ng-container *ngFor="let record of productionRecordList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="record.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="record"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+        <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(record.get('document').value.storageKey)"></fa-icon>
+      </div>
+    </ng-container>
+
+  </app-closable>
+</ng-template>

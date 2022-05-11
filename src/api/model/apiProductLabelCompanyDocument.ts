@@ -18,12 +18,41 @@
  */
 
 
+import { ApiDocument } from './apiDocument';
 
 
 
 export interface ApiProductLabelCompanyDocument { 
-    companyDocumentId?: number;
-    productLabelId?: number;
+    active?: boolean;
+    /**
+     * document category
+     */
+    category?: ApiProductLabelCompanyDocument.CategoryEnum;
+    /**
+     * description of this document
+     */
+    description?: string;
+    document?: ApiDocument;
+    /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * link
+     */
+    link?: string;
+    /**
+     * name
+     */
+    name?: string;
+    /**
+     * quote of this document
+     */
+    quote?: string;
+    /**
+     * type of the document (link, file)
+     */
+    type?: ApiProductLabelCompanyDocument.TypeEnum;
 }
 
 /**
@@ -34,8 +63,53 @@ export namespace ApiProductLabelCompanyDocument {
      * All properties of ApiProductLabelCompanyDocument.
      */
     export enum Properties {
-        companyDocumentId = 'companyDocumentId',
-        productLabelId = 'productLabelId'
+        active = 'active',
+        /**
+         * document category
+         */
+        category = 'category',
+        /**
+         * description of this document
+         */
+        description = 'description',
+        document = 'document',
+        /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * link
+         */
+        link = 'link',
+        /**
+         * name
+         */
+        name = 'name',
+        /**
+         * quote of this document
+         */
+        quote = 'quote',
+        /**
+         * type of the document (link, file)
+         */
+        type = 'type'
+    }
+
+    /**
+     * All possible values of category.
+     */
+    export enum CategoryEnum {
+        VIDEO = 'VIDEO',
+        PRODUCTIONRECORD = 'PRODUCTION_RECORD',
+        MEETTHEFARMER = 'MEET_THE_FARMER'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        LINK = 'LINK',
+        FILE = 'FILE'
     }
 
 
@@ -48,7 +122,53 @@ export namespace ApiProductLabelCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'companyDocumentId',
+                    name: 'active',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.CategoryEnum',
+                    required: false,
+                    name: 'category',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'document',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
                     classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -59,18 +179,66 @@ export namespace ApiProductLabelCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productLabelId',
+                    name: 'link',
                     classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'quote',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.TypeEnum',
+                    required: false,
+                    name: 'type',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                companyDocumentId: [
+                active: [
                 ],
-                productLabelId: [
+                category: [
+                ],
+                description: [
+                ],
+                document: [
+                ],
+                id: [
+                ],
+                link: [
+                ],
+                name: [
+                ],
+                quote: [
+                ],
+                type: [
                 ],
             }
         }
@@ -79,10 +247,31 @@ export namespace ApiProductLabelCompanyDocument {
   // export const ApiProductLabelCompanyDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               companyDocumentId: {
+  //               active: {
   //                   validators: []
   //               },
-  //               productLabelId: {
+  //               category: {
+  //                   validators: []
+  //               },
+  //               description: {
+  //                   validators: []
+  //               },
+  //               document: {
+  //                   validators: []
+  //               },
+  //               id: {
+  //                   validators: []
+  //               },
+  //               link: {
+  //                   validators: []
+  //               },
+  //               name: {
+  //                   validators: []
+  //               },
+  //               quote: {
+  //                   validators: []
+  //               },
+  //               type: {
   //                   validators: []
   //               },
   //     }
