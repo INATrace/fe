@@ -15792,10 +15792,24 @@
             "format": "int32",
             "type": "integer"
           },
+          "photosMeetTheFarmers": {
+            "description": "Meet the farmers photos",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
+          },
           "productId": {
             "description": "Product id",
             "format": "int64",
             "type": "integer"
+          },
+          "productionRecords": {
+            "description": "Production records",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
           },
           "status": {
             "description": "Product label status",
@@ -15817,6 +15831,10 @@
           "uuid": {
             "description": "Product label uuid (for url)",
             "type": "string"
+          },
+          "videoMeetTheFarmers": {
+            "$ref": "#/components/schemas/ApiCompanyDocument",
+            "description": "Meet the farmers video"
           }
         },
         "type": "object"

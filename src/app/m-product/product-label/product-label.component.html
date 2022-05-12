@@ -1878,6 +1878,15 @@
         </checkbox-input>
       </div>
     </ng-container>
+    <ng-container *ngIf="submitted">
+      <div *ngIf="mediaForm.get('video').errors as errors" class="sc-invalid-feedback">
+        <div *ngIf="errors.maxActive">
+          <span>
+            Only one video can be selected
+          </span>
+        </div>
+      </div>
+    </ng-container>
 
     <h2 i18n="@@productLabel.b2c.meetTheFarmers" class="mt-4 mb-0">Meet the farmers</h2>
     <ng-container *ngFor="let farmer of farmerList">

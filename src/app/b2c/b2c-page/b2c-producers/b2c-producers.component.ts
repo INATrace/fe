@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
+import { ApiCompanyDocument } from '../../../../api/model/apiCompanyDocument';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-b2c-producers',
@@ -15,9 +17,9 @@ export class B2cProducersComponent implements OnInit {
   titleCooperative = $localize`:@@frontPage.producers.title.meetCooperative:Meet the cooperative`;
 
   videoRWurl = null;
-  videoMeetTheFarmers = null;
-  picsMeetTheFarmers: any[] = [];
-  picsProduction: any[] = [];
+  videoMeetTheFarmers;
+  picsMeetTheFarmers: ApiCompanyDocument[];
+  picsProduction: ApiCompanyDocument[];
 
   companyName: string = null;
   companyLogo = null;
@@ -41,7 +43,8 @@ export class B2cProducersComponent implements OnInit {
   productName = '';
 
   constructor(
-      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
+      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent,
+      private sanitizer: DomSanitizer
   ) {
     this.b2cSettings = b2cPage.b2cSettings;
   }
@@ -59,6 +62,12 @@ export class B2cProducersComponent implements OnInit {
         this.lang = item.value;
       }
     }
+
+    if (this.b2cPage.publicProductLabel.videoMeetTheFarmers) {
+      this.videoMeetTheFarmers = this.sanitizer.bypassSecurityTrustResourceUrl(this.b2cPage.publicProductLabel.videoMeetTheFarmers.link.replace('youtu.be', 'youtube.com/embed'));
+    }
+    this.picsMeetTheFarmers = this.b2cPage.publicProductLabel.photosMeetTheFarmers;
+    this.picsProduction = this.b2cPage.publicProductLabel.productionRecords;
   }
 
 }

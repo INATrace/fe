@@ -65,6 +65,7 @@ import { LanguageForLabelModalResult } from './language-for-label-modal/model';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
 import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
+import { maxActiveArrayControls } from '../../../shared/validation';
 
 @Component({
   selector: 'app-product-label',
@@ -949,6 +950,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async saveCurrentLabel(reload = false) {
+    this.submitted = true;
+    if (this.mediaForm.invalid) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'error',
+        title: $localize`:@@productLabel.saveProduct.error.title:Error`,
+        message: $localize`:@@productLabel.saveProduct.error.message:Errors on page. Please check!`
+      });
+      return false;
+    }
 
     const labels = this.currentLabelFields();
     const res = await this.productController.updateProductLabelUsingPUT(
@@ -1633,7 +1644,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (media && media.status === 'OK' && media.data) {
       this.availableMedia = media.data;
 
-      this.mediaForm.setControl('video', new FormArray([]));
+      this.mediaForm.setControl('video', new FormArray([], maxActiveArrayControls(1)));
       this.mediaForm.setControl('farmers', new FormArray([]));
       this.mediaForm.setControl('productionRecord', new FormArray([]));
 
