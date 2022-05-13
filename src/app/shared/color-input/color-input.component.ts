@@ -13,6 +13,9 @@ export class ColorInputComponent implements OnInit {
   @Input()
   control: FormControl;
 
+  @Input()
+  disabled = false;
+
   ngOnInit(): void {
   }
 
