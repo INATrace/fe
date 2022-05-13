@@ -2800,7 +2800,7 @@
     "productLabelStakeholders.title.importers": "Importeure",
     "productLabelStakeholders.button.newImporter": "{$START_TAG_SPAN}+ Importeur hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.exporters": "Exporteure",
-    "productLabelStakeholders.button.newExporter": "{$START_TAG_SPAN}+ Exporteur hinzufügen$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.button.newExporter": "{$START_TAG_SPAN}+ Exporteur hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.processors": "Verarbeiter",
     "productLabelStakeholders.button.newProcessor": "{$START_TAG_SPAN}+ Verarbeiter hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.traders": "Trader",
