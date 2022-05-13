@@ -571,8 +571,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cTabFeedback', { static: false })
   b2cTabFeedback: TemplateRef<any>;
 
-  @ViewChild('b2cFont', { static: false })
-  b2cFont: TemplateRef<any>;
+  @ViewChild('b2cProductFont', { static: false })
+  b2cProductFont: TemplateRef<any>;
+
+  @ViewChild('b2cTextFont', { static: false })
+  b2cTextFont: TemplateRef<any>;
 
   @ViewChild('b2cHeaderImage', { static: false })
   b2cHeaderImage: TemplateRef<any>;
@@ -1380,7 +1383,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.tabProducers', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabProducers },
       { name: 'businessToCustomerSettings.tabQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabQuality },
       { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
-      { name: 'businessToCustomerSettings.font', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFont },
+      { name: 'businessToCustomerSettings.productFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductFont },
+      { name: 'businessToCustomerSettings.textFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextFont },
       { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }

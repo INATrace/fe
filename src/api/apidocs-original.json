@@ -11190,9 +11190,6 @@
             "format": "date-time",
             "type": "string"
           },
-          "font": {
-            "$ref": "#/components/schemas/ApiDocument"
-          },
           "footerImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },
@@ -11212,6 +11209,9 @@
           },
           "primaryColor": {
             "type": "string"
+          },
+          "productFont": {
+            "$ref": "#/components/schemas/ApiDocument"
           },
           "quaternaryColor": {
             "type": "string"
@@ -11236,6 +11236,9 @@
           },
           "textColor": {
             "type": "string"
+          },
+          "textFont": {
+            "$ref": "#/components/schemas/ApiDocument"
           },
           "updateTimestamp": {
             "format": "date-time",

@@ -24,7 +24,6 @@ import { ApiDocument } from './apiDocument';
 
 export interface ApiBusinessToCustomerSettings { 
     creationTimestamp?: Date;
-    font?: ApiDocument;
     footerImage?: ApiDocument;
     headerBackgroundImage?: ApiDocument;
     headerImage?: ApiDocument;
@@ -34,6 +33,7 @@ export interface ApiBusinessToCustomerSettings {
      */
     id?: number;
     primaryColor?: string;
+    productFont?: ApiDocument;
     quaternaryColor?: string;
     secondaryColor?: string;
     tabFairPrices?: boolean;
@@ -42,6 +42,7 @@ export interface ApiBusinessToCustomerSettings {
     tabQuality?: boolean;
     tertiaryColor?: string;
     textColor?: string;
+    textFont?: ApiDocument;
     updateTimestamp?: Date;
 }
 
@@ -54,7 +55,6 @@ export namespace ApiBusinessToCustomerSettings {
      */
     export enum Properties {
         creationTimestamp = 'creationTimestamp',
-        font = 'font',
         footerImage = 'footerImage',
         headerBackgroundImage = 'headerBackgroundImage',
         headerImage = 'headerImage',
@@ -64,6 +64,7 @@ export namespace ApiBusinessToCustomerSettings {
          */
         id = 'id',
         primaryColor = 'primaryColor',
+        productFont = 'productFont',
         quaternaryColor = 'quaternaryColor',
         secondaryColor = 'secondaryColor',
         tabFairPrices = 'tabFairPrices',
@@ -72,6 +73,7 @@ export namespace ApiBusinessToCustomerSettings {
         tabQuality = 'tabQuality',
         tertiaryColor = 'tertiaryColor',
         textColor = 'textColor',
+        textFont = 'textFont',
         updateTimestamp = 'updateTimestamp'
     }
 
@@ -91,18 +93,6 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'font',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
                 },
                 {
                     metadata: ApiDocument.formMetadata,
@@ -172,6 +162,18 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productFont',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -262,6 +264,18 @@ export namespace ApiBusinessToCustomerSettings {
                     complexType: ''
                 },
                 {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'textFont',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -276,8 +290,6 @@ export namespace ApiBusinessToCustomerSettings {
             validators: {
                 creationTimestamp: [
                 ],
-                font: [
-                ],
                 footerImage: [
                 ],
                 headerBackgroundImage: [
@@ -289,6 +301,8 @@ export namespace ApiBusinessToCustomerSettings {
                 id: [
                 ],
                 primaryColor: [
+                ],
+                productFont: [
                 ],
                 quaternaryColor: [
                 ],
@@ -306,6 +320,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 textColor: [
                 ],
+                textFont: [
+                ],
                 updateTimestamp: [
                 ],
             }
@@ -316,9 +332,6 @@ export namespace ApiBusinessToCustomerSettings {
   //     validators: [],
   //     fields: {
   //               creationTimestamp: {
-  //                   validators: []
-  //               },
-  //               font: {
   //                   validators: []
   //               },
   //               footerImage: {
@@ -337,6 +350,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               primaryColor: {
+  //                   validators: []
+  //               },
+  //               productFont: {
   //                   validators: []
   //               },
   //               quaternaryColor: {
@@ -361,6 +377,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               textColor: {
+  //                   validators: []
+  //               },
+  //               textFont: {
   //                   validators: []
   //               },
   //               updateTimestamp: {

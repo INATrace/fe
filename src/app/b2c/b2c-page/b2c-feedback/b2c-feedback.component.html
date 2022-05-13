@@ -1,5 +1,5 @@
 <main class="af-b2c-main">
-    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''" i18n="@@frontPage.feedback.title">Feedback</h1>
+    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.feedback.title">Feedback</h1>
 
     <textinput
             [form]="feedbackForm.get('feedback')"
