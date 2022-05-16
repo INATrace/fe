@@ -25,6 +25,9 @@ import { ApiDocument } from './apiDocument';
 export interface ApiBusinessToCustomerSettings { 
     creationTimestamp?: Date;
     footerImage?: ApiDocument;
+    graphicFairPrices?: boolean;
+    graphicIncreaseOfIncome?: boolean;
+    graphicQuality?: boolean;
     headerBackgroundImage?: ApiDocument;
     headerImage?: ApiDocument;
     headingColor?: string;
@@ -56,6 +59,9 @@ export namespace ApiBusinessToCustomerSettings {
     export enum Properties {
         creationTimestamp = 'creationTimestamp',
         footerImage = 'footerImage',
+        graphicFairPrices = 'graphicFairPrices',
+        graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
+        graphicQuality = 'graphicQuality',
         headerBackgroundImage = 'headerBackgroundImage',
         headerImage = 'headerImage',
         headingColor = 'headingColor',
@@ -105,6 +111,39 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiDocument'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicFairPrices',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicIncreaseOfIncome',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicQuality',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiDocument.formMetadata,
@@ -292,6 +331,12 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 footerImage: [
                 ],
+                graphicFairPrices: [
+                ],
+                graphicIncreaseOfIncome: [
+                ],
+                graphicQuality: [
+                ],
                 headerBackgroundImage: [
                 ],
                 headerImage: [
@@ -335,6 +380,15 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               footerImage: {
+  //                   validators: []
+  //               },
+  //               graphicFairPrices: {
+  //                   validators: []
+  //               },
+  //               graphicIncreaseOfIncome: {
+  //                   validators: []
+  //               },
+  //               graphicQuality: {
   //                   validators: []
   //               },
   //               headerBackgroundImage: {

@@ -1,7 +1,7 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.quality.title">Quality and Certificates</h1>
 
-    <div class="af-bgraph-wrapper">
+    <div *ngIf="b2cSettings.graphicQuality" class="af-bgraph-wrapper">
         <div class="af-bgraph">
 
             <div class="af-bgraph-row">
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <p i18n="@@frontPage.quality.paragraph.points" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
+    <p *ngIf="b2cSettings.graphicQuality" i18n="@@frontPage.quality.paragraph.points" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
 
     <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{subtitle}}</h2>
 

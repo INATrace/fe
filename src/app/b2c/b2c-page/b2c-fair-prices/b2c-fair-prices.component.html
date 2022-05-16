@@ -1,9 +1,9 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.fair-prices.title">Fair prices</h1>
 
-    <p i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
+    <p *ngIf="b2cSettings.graphicFairPrices" i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
 
-    <div class="af-graph-wrapper" style>
+    <div *ngIf="b2cSettings.graphicFairPrices" class="af-graph-wrapper" style>
         <div class="af-graph">
 
             <div class="af-graph-row af-graph-row--top" style="height: 220px;">
@@ -42,7 +42,7 @@
 
     <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ title2 }} {{ productName }}</h1>
 
-    <div class="af-stgraph-wrapper" style>
+    <div *ngIf="b2cSettings.graphicIncreaseOfIncome" class="af-stgraph-wrapper" style>
         <div class="af-stgraph">
 
             <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="this.increaseOfCoffee + 'px'">

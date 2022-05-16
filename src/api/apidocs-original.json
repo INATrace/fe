@@ -11193,6 +11193,15 @@
           "footerImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },
+          "graphicFairPrices": {
+            "type": "boolean"
+          },
+          "graphicIncreaseOfIncome": {
+            "type": "boolean"
+          },
+          "graphicQuality": {
+            "type": "boolean"
+          },
           "headerBackgroundImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },

@@ -1788,6 +1788,57 @@
   </app-closable>
 </ng-template>
 
+<ng-template #b2cGraphicFairPrices>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFairPrices')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicFairPrices')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicFairPrices">
+        Enable 'Fair prices' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cGraphicIncreaseOfIncome>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicIncreaseOfIncome">
+        Enable 'Increase of income' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cGraphicQuality>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicQuality')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicQuality')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicQuality">
+        Enable 'Quality' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
 <ng-template #b2cProductFont>
   <app-closable
           [nonClosable]="true"

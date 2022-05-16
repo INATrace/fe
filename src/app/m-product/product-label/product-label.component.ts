@@ -589,6 +589,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cMedia', { static: false })
   b2cMedia: TemplateRef<any>;
 
+  @ViewChild('b2cGraphicFairPrices', { static: false })
+  b2cGraphicFairPrices: TemplateRef<any>;
+
+  @ViewChild('b2cGraphicIncreaseOfIncome', { static: false })
+  b2cGraphicIncreaseOfIncome: TemplateRef<any>;
+
+  @ViewChild('b2cGraphicQuality', { static: false })
+  b2cGraphicQuality: TemplateRef<any>;
+
   b2cElements: any[] = [];
 
   // COMPARISON OF PRICE
@@ -854,7 +863,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
           tabFairPrices: true,
           tabProducers: true,
           tabQuality: true,
-          tabFeedback: true
+          tabFeedback: true,
+          graphicFairPrices: true,
+          graphicIncreaseOfIncome: true,
+          graphicQuality: true
         },
         ApiBusinessToCustomerSettingsValidationScheme);
     this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
@@ -1387,7 +1399,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.textFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextFont },
       { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
-      { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage }
+      { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
+      { name: 'businessToCustomerSettings.graphicFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicFairPrices},
+      { name: 'businessToCustomerSettings.graphicIncreaseOfIncome', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicIncreaseOfIncome},
+      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality}
     ];
     if (this.action === 'labels') {
       this.b2cElements.push(
