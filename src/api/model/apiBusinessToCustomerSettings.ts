@@ -24,8 +24,10 @@ import { ApiDocument } from './apiDocument';
 
 export interface ApiBusinessToCustomerSettings { 
     creationTimestamp?: Date;
-    font?: ApiDocument;
     footerImage?: ApiDocument;
+    graphicFairPrices?: boolean;
+    graphicIncreaseOfIncome?: boolean;
+    graphicQuality?: boolean;
     headerBackgroundImage?: ApiDocument;
     headerImage?: ApiDocument;
     headingColor?: string;
@@ -34,6 +36,7 @@ export interface ApiBusinessToCustomerSettings {
      */
     id?: number;
     primaryColor?: string;
+    productFont?: ApiDocument;
     quaternaryColor?: string;
     secondaryColor?: string;
     tabFairPrices?: boolean;
@@ -42,6 +45,7 @@ export interface ApiBusinessToCustomerSettings {
     tabQuality?: boolean;
     tertiaryColor?: string;
     textColor?: string;
+    textFont?: ApiDocument;
     updateTimestamp?: Date;
 }
 
@@ -54,8 +58,10 @@ export namespace ApiBusinessToCustomerSettings {
      */
     export enum Properties {
         creationTimestamp = 'creationTimestamp',
-        font = 'font',
         footerImage = 'footerImage',
+        graphicFairPrices = 'graphicFairPrices',
+        graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
+        graphicQuality = 'graphicQuality',
         headerBackgroundImage = 'headerBackgroundImage',
         headerImage = 'headerImage',
         headingColor = 'headingColor',
@@ -64,6 +70,7 @@ export namespace ApiBusinessToCustomerSettings {
          */
         id = 'id',
         primaryColor = 'primaryColor',
+        productFont = 'productFont',
         quaternaryColor = 'quaternaryColor',
         secondaryColor = 'secondaryColor',
         tabFairPrices = 'tabFairPrices',
@@ -72,6 +79,7 @@ export namespace ApiBusinessToCustomerSettings {
         tabQuality = 'tabQuality',
         tertiaryColor = 'tertiaryColor',
         textColor = 'textColor',
+        textFont = 'textFont',
         updateTimestamp = 'updateTimestamp'
     }
 
@@ -97,7 +105,7 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'font',
+                    name: 'footerImage',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'ApiDocument',
                     isPrimitiveType: false,
@@ -105,16 +113,37 @@ export namespace ApiBusinessToCustomerSettings {
                     complexType: 'ApiDocument'
                 },
                 {
-                    metadata: ApiDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'footerImage',
+                    name: 'graphicFairPrices',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiDocument'
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicIncreaseOfIncome',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicQuality',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiDocument.formMetadata,
@@ -172,6 +201,18 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productFont',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -262,6 +303,18 @@ export namespace ApiBusinessToCustomerSettings {
                     complexType: ''
                 },
                 {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'textFont',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -276,9 +329,13 @@ export namespace ApiBusinessToCustomerSettings {
             validators: {
                 creationTimestamp: [
                 ],
-                font: [
-                ],
                 footerImage: [
+                ],
+                graphicFairPrices: [
+                ],
+                graphicIncreaseOfIncome: [
+                ],
+                graphicQuality: [
                 ],
                 headerBackgroundImage: [
                 ],
@@ -289,6 +346,8 @@ export namespace ApiBusinessToCustomerSettings {
                 id: [
                 ],
                 primaryColor: [
+                ],
+                productFont: [
                 ],
                 quaternaryColor: [
                 ],
@@ -306,6 +365,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 textColor: [
                 ],
+                textFont: [
+                ],
                 updateTimestamp: [
                 ],
             }
@@ -318,10 +379,16 @@ export namespace ApiBusinessToCustomerSettings {
   //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               font: {
+  //               footerImage: {
   //                   validators: []
   //               },
-  //               footerImage: {
+  //               graphicFairPrices: {
+  //                   validators: []
+  //               },
+  //               graphicIncreaseOfIncome: {
+  //                   validators: []
+  //               },
+  //               graphicQuality: {
   //                   validators: []
   //               },
   //               headerBackgroundImage: {
@@ -337,6 +404,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               primaryColor: {
+  //                   validators: []
+  //               },
+  //               productFont: {
   //                   validators: []
   //               },
   //               quaternaryColor: {
@@ -361,6 +431,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               textColor: {
+  //                   validators: []
+  //               },
+  //               textFont: {
   //                   validators: []
   //               },
   //               updateTimestamp: {

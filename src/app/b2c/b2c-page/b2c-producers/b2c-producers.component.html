@@ -1,28 +1,30 @@
 <main class="af-b2c-main">
-    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''" i18n="@@frontPage.producers.title.meetFarmers">Meet the farmers</h1>
+    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.producers.title.meetFarmers">Meet the farmers</h1>
 
     <ng-container *ngIf="videoMeetTheFarmers">
         <iframe [src]="this.videoMeetTheFarmers" frameborder="0" allowfullscreen></iframe>
     </ng-container>
 
     <app-front-page-carousel
-            [slides]="picsMeetTheFarmers">
+            [slides]="picsMeetTheFarmers"
+            [b2cSettings]="b2cSettings">
     </app-front-page-carousel>
 
-    <h1 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{titleCooperative}}</h1>
+    <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{titleCooperative}}</h1>
 
-    <h2 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{companyNameCooperative}}</h2>
+    <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{companyNameCooperative}}</h2>
 
-    <p *ngIf="this.coopAbout" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.coopAbout}}</p>
+    <p *ngIf="this.coopAbout" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{this.coopAbout}}</p>
 
-    <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center" [style.font-family]="b2cSettings.font ? 'custom' : ''">Processing story</h2>
+    <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Processing story</h2>
 
     <app-front-page-carousel
             [slides]="picsProduction"
-            [productionRecords]=true>
+            [productionRecords]=true
+            [b2cSettings]="b2cSettings">
     </app-front-page-carousel>
 
-    <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.font ? 'custom' : ''">The brand {{ productName }} owned by local producers</h1>
+    <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The brand {{ productName }} owned by local producers</h1>
 
     <ng-container *ngIf="videoRWurl">
         <iframe [src]="this.videoRWurl" frameborder="0" allowfullscreen></iframe>

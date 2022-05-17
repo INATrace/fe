@@ -27,11 +27,11 @@
         </div>
       </div>
 
-      <h2 *ngIf="!productionRecords">{{item.name}}</h2>
+      <h2 *ngIf="!productionRecords" [style.font-family]="b2cSettings?.textFont ? 'custom-text' : ''">{{item.name}}</h2>
 
-      <p>{{item.description}}</p>
+      <p [style.font-family]="b2cSettings?.textFont ? 'custom-text' : ''">{{item.description}}</p>
       <blockquote *ngIf="!productionRecords">
-        <span>
+        <span [style.font-family]="b2cSettings?.textFont ? 'custom-text' : ''">
           {{item.quote}}
         </span>
       </blockquote>

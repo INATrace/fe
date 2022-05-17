@@ -137,6 +137,35 @@ Final products are retail products for sale to end customers.
 
 ![Product_final_products](docs/images/inatrace_product_final_product.png)
 
+#### B2C settings
+
+The public facing B2C page has editable colors, fonts and content to allow for corporate identity compliance. The settings are visible on `Product settings` and `QR labels` tabs.
+
+The B2C configuration on the `Product settings` is automatically inherited by QR labels. If QR labels define another value, this value overrides the product values. This way QR labels inherit product settings by default, but can be changed on a label-by-label basis.
+
+The following values can be customized:
+- Colors
+  - Primary
+  - Secondary
+  - Ternary
+  - Quaternary
+  - Header
+  - Text
+- Enable/disable tabs
+  - Fair prices
+  - Producers
+  - Quality
+  - Feedback
+- Font (TTF, WOFF and WOFF2)
+  - Product
+  - Text
+- Images
+  - Header (PNG, JPG and JPEG)
+  - Header background (PNG, JPG, JPEG and SVG)
+  - Footer (PNG, JPG and JPEG)
+
+![Product_B2C_settings](docs/images/b2c_settings.png)
+
 ### Companies
 
 The currently active company is displayed when opening the company tab. "Purchases" tab of "My stock" is opened by default.

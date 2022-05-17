@@ -1,12 +1,12 @@
 <main class="af-b2c-main">
-    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''" i18n="@@frontPage.quality.title">Quality and Certificates</h1>
+    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.quality.title">Quality and Certificates</h1>
 
-    <div class="af-bgraph-wrapper">
+    <div *ngIf="b2cSettings.graphicQuality" class="af-bgraph-wrapper">
         <div class="af-bgraph">
 
             <div class="af-bgraph-row">
                 <div class="af-bgraph-col" style="height: 160px;">
-                    <span class="af-bgraph-description" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{label1}}</span>
+                    <span class="af-bgraph-description" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{label1}}</span>
                 </div>
                 <div class="af-bgraph-col" style="height: 160px; width: 40px">
               <span class="af-bgraph-bar af-bgraph-bar--darkergray">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="af-bgraph-col" [style.height]="this.gradeHeight + 'px'">
               <span class="af-bgraph-bar" [style.background-color]="b2cSettings.primaryColor">
-                <span class="af-bgraph-bar-number" [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.grade}} points</span>
+                <span class="af-bgraph-bar-number" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{this.grade}} points</span>
               </span>
                 </div>
             </div>
@@ -22,12 +22,12 @@
         </div>
     </div>
 
-    <p i18n="@@frontPage.quality.paragraph.points" [style.font-family]="b2cSettings.font ? 'custom' : ''">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
+    <p *ngIf="b2cSettings.graphicQuality" i18n="@@frontPage.quality.paragraph.points" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The graphic shows the quality score of this package of {{ productName }} in comparison to the minimum level of 80 points for specialty coffee according to the Specialty Coffee Association (SCA).</p>
 
-    <h2 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{subtitle}}</h2>
+    <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{subtitle}}</h2>
 
     <!-- <p i18n="@@frontPage.quality.paragraph.flavor">Smooth body, brown sugar, orange and honey flavor, balanced acidity, clean and sweet finish.</p> -->
-    <p [style.font-family]="b2cSettings.font ? 'custom' : ''">{{this.flavour}}</p>
+    <p [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{this.flavour}}</p>
 
     <ng-container *ngFor="let item of rwCerts">
         <div class="af-b2c-quality-card">

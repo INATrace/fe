@@ -1,39 +1,41 @@
-<div class="af-b2c-header--logo" [style.background-color]="b2cSettings.primaryColor">
-    <h1 [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ productName }}</h1>
+<div [style.background-image]="headerBackgroundImage ? 'url(' + headerBackgroundImage + ')' : ''" [style.background-repeat]="'no-repeat'" [style.background-color]="b2cSettings.primaryColor">
+    <div class="af-b2c-header--logo">
+        <h1 [style.font-family]="b2cSettings.productFont ? 'custom-product' : ''">{{ productName }}</h1>
+    </div>
+    <ul class="af-b2c-nav text-center">
+        <li i18n="@@frontPage.header.tab.journey"
+            [class.af-b2c-nav--selected]="tab === tabEnum.JOURNEY"
+            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+            (click)="goTo(tabEnum.JOURNEY)">
+            JOURNEY
+        </li>
+        <li i18n="@@frontPage.header.tab.fair-prices"
+            *ngIf="b2cSettings.tabFairPrices"
+            [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES"
+            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+            (click)="goTo(tabEnum.FAIR_PRICES)">
+            FAIR PRICES
+        </li>
+        <li i18n="@@frontPage.header.tab.producers"
+            *ngIf="b2cSettings.tabProducers"
+            [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS"
+            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+            (click)="goTo(tabEnum.PRODUCERS)">
+            PRODUCERS
+        </li>
+        <li i18n="@@frontPage.header.tab.quality"
+            *ngIf="b2cSettings.tabQuality"
+            [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY"
+            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+            (click)="goTo(tabEnum.QUALITY)">
+            QUALITY
+        </li>
+        <li i18n="@@frontPage.header.tab.feedback"
+            *ngIf="b2cSettings.tabFeedback"
+            [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK"
+            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+            (click)="goTo(tabEnum.FEEDBACK)">
+            FEEDBACK
+        </li>
+    </ul>
 </div>
-<ul class="af-b2c-nav text-center" [style.background-color]="b2cSettings.primaryColor">
-    <li i18n="@@frontPage.header.tab.journey"
-        [class.af-b2c-nav--selected]="tab === tabEnum.JOURNEY"
-        [style.font-family]="b2cSettings.font ? 'custom' : ''"
-        (click)="goTo(tabEnum.JOURNEY)">
-        JOURNEY
-    </li>
-    <li i18n="@@frontPage.header.tab.fair-prices"
-        *ngIf="b2cSettings.tabFairPrices"
-        [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES"
-        [style.font-family]="b2cSettings.font ? 'custom' : ''"
-        (click)="goTo(tabEnum.FAIR_PRICES)">
-        FAIR PRICES
-    </li>
-    <li i18n="@@frontPage.header.tab.producers"
-        *ngIf="b2cSettings.tabProducers"
-        [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS"
-        [style.font-family]="b2cSettings.font ? 'custom' : ''"
-        (click)="goTo(tabEnum.PRODUCERS)">
-        PRODUCERS
-    </li>
-    <li i18n="@@frontPage.header.tab.quality"
-        *ngIf="b2cSettings.tabQuality"
-        [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY"
-        [style.font-family]="b2cSettings.font ? 'custom' : ''"
-        (click)="goTo(tabEnum.QUALITY)">
-        QUALITY
-    </li>
-    <li i18n="@@frontPage.header.tab.feedback"
-        *ngIf="b2cSettings.tabFeedback"
-        [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK"
-        [style.font-family]="b2cSettings.font ? 'custom' : ''"
-        (click)="goTo(tabEnum.FEEDBACK)">
-        FEEDBACK
-    </li>
-</ul>

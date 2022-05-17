@@ -22,11 +22,12 @@ import { ApiDocument } from './apiDocument';
 
 
 
-export interface ApiCompanyDocument { 
+export interface ApiProductLabelCompanyDocument { 
+    active?: boolean;
     /**
      * document category
      */
-    category?: ApiCompanyDocument.CategoryEnum;
+    category?: ApiProductLabelCompanyDocument.CategoryEnum;
     /**
      * description of this document
      */
@@ -51,17 +52,18 @@ export interface ApiCompanyDocument {
     /**
      * type of the document (link, file)
      */
-    type?: ApiCompanyDocument.TypeEnum;
+    type?: ApiProductLabelCompanyDocument.TypeEnum;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiCompanyDocument.
+ * Namespace for property- and property-value-enumerations of ApiProductLabelCompanyDocument.
  */
-export namespace ApiCompanyDocument {
+export namespace ApiProductLabelCompanyDocument {
     /**
-     * All properties of ApiCompanyDocument.
+     * All properties of ApiProductLabelCompanyDocument.
      */
     export enum Properties {
+        active = 'active',
         /**
          * document category
          */
@@ -114,15 +116,26 @@ export namespace ApiCompanyDocument {
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiCompanyDocument',
+            classname: 'ApiProductLabelCompanyDocument',
             vars: [
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'active',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyDocument.CategoryEnum',
+                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.CategoryEnum',
                     required: false,
                     name: 'category',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -133,7 +146,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'description',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -145,7 +158,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'document',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'ApiDocument',
                     isPrimitiveType: false,
                     isListContainer: false,
@@ -156,7 +169,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -167,7 +180,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'link',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -178,7 +191,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'name',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -189,7 +202,7 @@ export namespace ApiCompanyDocument {
                     isEnum: false,
                     required: false,
                     name: 'quote',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -198,10 +211,10 @@ export namespace ApiCompanyDocument {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyDocument.TypeEnum',
+                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.TypeEnum',
                     required: false,
                     name: 'type',
-                    classname: 'ApiCompanyDocument',
+                    classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -209,6 +222,8 @@ export namespace ApiCompanyDocument {
                 },
             ],
             validators: {
+                active: [
+                ],
                 category: [
                 ],
                 description: [
@@ -229,9 +244,12 @@ export namespace ApiCompanyDocument {
         }
     }
 
-  // export const ApiCompanyDocumentValidationScheme = {
+  // export const ApiProductLabelCompanyDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               active: {
+  //                   validators: []
+  //               },
   //               category: {
   //                   validators: []
   //               },
@@ -257,7 +275,7 @@ export namespace ApiCompanyDocument {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiCompanyDocument>;
+  // } as SimpleValidationScheme<ApiProductLabelCompanyDocument>;
 
 
 }

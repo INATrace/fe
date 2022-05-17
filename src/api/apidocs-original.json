@@ -8729,6 +8729,84 @@
         "summary": "Get label batches for specified label. Sorting: number or productionDate, expiryDate"
       }
     },
+    "/api/product/label/{id}/documents": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Label id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ApiProductLabelCompanyDocument_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getCompanyDocumentsForProductLabelUsingGET",
+        "summary": "Get selected company documents for product label"
+      },
+      "put": {
+        "parameters": [
+          {
+            "description": "Label ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "updateCompanyDocumentsForProductLabelUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ApiProductLabelCompanyDocument"
+                },
+                "type": "array"
+              }
+            }
+          },
+          "description": "Company document list",
+          "required": true
+        },
+        "summary": "Update company document product label list"
+      }
+    },
     "/api/product/label/{id}/instructions": {
       "get": {
         "parameters": [
@@ -10659,12 +10737,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10674,19 +10749,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10696,19 +10768,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10718,19 +10787,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10740,19 +10806,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10762,19 +10825,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10784,19 +10844,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10806,8 +10863,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -11133,11 +11190,17 @@
             "format": "date-time",
             "type": "string"
           },
-          "font": {
-            "$ref": "#/components/schemas/ApiDocument"
-          },
           "footerImage": {
             "$ref": "#/components/schemas/ApiDocument"
+          },
+          "graphicFairPrices": {
+            "type": "boolean"
+          },
+          "graphicIncreaseOfIncome": {
+            "type": "boolean"
+          },
+          "graphicQuality": {
+            "type": "boolean"
           },
           "headerBackgroundImage": {
             "$ref": "#/components/schemas/ApiDocument"
@@ -11155,6 +11218,9 @@
           },
           "primaryColor": {
             "type": "string"
+          },
+          "productFont": {
+            "$ref": "#/components/schemas/ApiDocument"
           },
           "quaternaryColor": {
             "type": "string"
@@ -11179,6 +11245,9 @@
           },
           "textColor": {
             "type": "string"
+          },
+          "textFont": {
+            "$ref": "#/components/schemas/ApiDocument"
           },
           "updateTimestamp": {
             "format": "date-time",
@@ -11449,6 +11518,11 @@
           "document": {
             "$ref": "#/components/schemas/ApiDocument",
             "description": "document"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
           },
           "link": {
             "description": "link",
@@ -15358,6 +15432,56 @@
         },
         "type": "object"
       },
+      "ApiProductLabelCompanyDocument": {
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "description": "document category",
+            "enum": [
+              "VIDEO",
+              "PRODUCTION_RECORD",
+              "MEET_THE_FARMER"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "description": "description of this document",
+            "type": "string"
+          },
+          "document": {
+            "$ref": "#/components/schemas/ApiDocument",
+            "description": "document"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "link": {
+            "description": "link",
+            "type": "string"
+          },
+          "name": {
+            "description": "name",
+            "type": "string"
+          },
+          "quote": {
+            "description": "quote of this document",
+            "type": "string"
+          },
+          "type": {
+            "description": "type of the document (link, file)",
+            "enum": [
+              "LINK",
+              "FILE"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiProductLabelContent": {
         "properties": {
           "businessToCustomerSettings": {
@@ -15680,10 +15804,24 @@
             "format": "int32",
             "type": "integer"
           },
+          "photosMeetTheFarmers": {
+            "description": "Meet the farmers photos",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
+          },
           "productId": {
             "description": "Product id",
             "format": "int64",
             "type": "integer"
+          },
+          "productionRecords": {
+            "description": "Production records",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
           },
           "status": {
             "description": "Product label status",
@@ -15705,6 +15843,10 @@
           "uuid": {
             "description": "Product label uuid (for url)",
             "type": "string"
+          },
+          "videoMeetTheFarmers": {
+            "$ref": "#/components/schemas/ApiCompanyDocument",
+            "description": "Meet the farmers video"
           }
         },
         "type": "object"
@@ -17687,6 +17829,52 @@
             "description": "Response body for successful responses.",
             "items": {
               "$ref": "#/components/schemas/ApiProductLabelBase"
+            },
+            "type": "array"
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_List_ApiProductLabelCompanyDocument_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "description": "Response body for successful responses.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductLabelCompanyDocument"
             },
             "type": "array"
           },

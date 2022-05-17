@@ -103,14 +103,26 @@ export class B2cPageComponent implements OnInit {
 
         this.b2cSettings = label.data.businessToCustomerSettings;
 
-        if (this.b2cSettings.font) {
+        if (this.b2cSettings.productFont) {
           const node = document.createElement('style');
           node.innerHTML = `
             @font-face {
-              font-family: 'custom';
+              font-family: 'custom-product';
               font-style: normal;
               font-weight: 400;
-              src: url(${this.fontHref});
+              src: url(${this.productFontHref});
+            }`;
+          document.body.appendChild(node);
+        }
+
+        if (this.b2cSettings.textFont) {
+          const node = document.createElement('style');
+          node.innerHTML = `
+            @font-face {
+              font-family: 'custom-text';
+              font-style: normal;
+              font-weight: 400;
+              src: url(${this.textFontHref});
             }`;
           document.body.appendChild(node);
         }
@@ -191,8 +203,12 @@ export class B2cPageComponent implements OnInit {
     this.scroll.scrollToPosition([0, 0]);
   }
 
-  get fontHref() {
-    return `${environment.appBaseUrl}/api/public/document/${this.b2cSettings.font.storageKey}`;
+  get productFontHref() {
+    return `${environment.appBaseUrl}/api/public/document/${this.b2cSettings.productFont.storageKey}`;
+  }
+
+  get textFontHref() {
+    return `${environment.appBaseUrl}/api/public/document/${this.b2cSettings.textFont.storageKey}`;
   }
 
 }

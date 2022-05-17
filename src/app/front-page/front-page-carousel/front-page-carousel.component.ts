@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
 
 @Component({
   selector: 'app-front-page-carousel',
@@ -14,6 +15,9 @@ export class FrontPageCarouselComponent implements OnInit {
 
   @Input()
   productionRecords = false;
+  
+  @Input()
+  b2cSettings: ApiBusinessToCustomerSettings;
 
   currentSlide = 0;
 

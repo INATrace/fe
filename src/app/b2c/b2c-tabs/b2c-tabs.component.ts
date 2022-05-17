@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-b2c-tabs',
@@ -11,7 +12,11 @@ export class B2cTabsComponent implements OnInit {
 
   constructor(
       private router: Router
-  ) { }
+  ) {
+    this.appBaseUrl = environment.appBaseUrl;
+  }
+
+  appBaseUrl: string;
 
   tabEnum = B2CTab;
 
@@ -36,6 +41,13 @@ export class B2cTabsComponent implements OnInit {
 
   goTo(target: B2CTab) {
     this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, target]);
+  }
+
+  get headerBackgroundImage() {
+    if (this.b2cSettings.headerBackgroundImage) {
+      return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
+    }
+    return undefined;
   }
 
 }

@@ -2800,7 +2800,7 @@
     "productLabelStakeholders.title.importers": "Importeure",
     "productLabelStakeholders.button.newImporter": "{$START_TAG_SPAN}+ Importeur hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.exporters": "Exporteure",
-    "productLabelStakeholders.button.newExporter": "{$START_TAG_SPAN}+ Exporteur hinzufügen$CLOSE_TAG_SPAN}",
+    "productLabelStakeholders.button.newExporter": "{$START_TAG_SPAN}+ Exporteur hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.processors": "Verarbeiter",
     "productLabelStakeholders.button.newProcessor": "{$START_TAG_SPAN}+ Verarbeiter hinzufügen{$CLOSE_TAG_SPAN}",
     "productLabelStakeholders.title.traders": "Trader",
@@ -2943,11 +2943,15 @@
     "productLabel.b2c.tabProducers": "Enable 'Producers' tab",
     "productLabel.b2c.tabQuality": "Enable 'Quality' tab",
     "productLabel.b2c.tabFeedback": "Enable 'Feedback' tab",
-    "productLabel.b2c.font": "Font",
+    "productLabel.b2c.productFont": "Product font",
+    "productLabel.b2c.textFont": "Text font",
     "productLabel.b2c.headerImage": "Header image",
     "productLabel.b2c.footerImage": "Footer image",
-    "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF.",
+    "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF, WOFF or WOFF2.",
     "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",
-    "productLabel.b2c.headerBackgroundImage": "Header background image"
+    "productLabel.b2c.headerBackgroundImage": "Header background image",
+    "productLabel.b2c.videos": "Videos",
+    "productLabel.b2c.meetTheFarmers": "Lernen Sie die Bäuerinnen kennen",
+    "productLabel.b2c.productionRecords": "Verarbeitungsaufzeichnung"
   }
 }

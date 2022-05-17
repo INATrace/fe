@@ -2914,11 +2914,15 @@
     "productLabel.b2c.tabProducers": "Enable 'Producers' tab",
     "productLabel.b2c.tabQuality": "Enable 'Quality' tab",
     "productLabel.b2c.tabFeedback": "Enable 'Feedback' tab",
-    "productLabel.b2c.font": "Font",
+    "productLabel.b2c.productFont": "Product font",
+    "productLabel.b2c.textFont": "Text font",
     "productLabel.b2c.headerImage": "Header image",
     "productLabel.b2c.footerImage": "Footer image",
-    "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF.",
+    "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF, WOFF or WOFF2.",
     "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",
-    "productLabel.b2c.headerBackgroundImage": "Header background image"
+    "productLabel.b2c.headerBackgroundImage": "Header background image",
+    "productLabel.b2c.videos": "Videwo",
+    "productLabel.b2c.meetTheFarmers": "Hura n'umuhinzi",
+    "productLabel.b2c.productionRecords": "Impapuro z'ibikorwa"
   }
 }

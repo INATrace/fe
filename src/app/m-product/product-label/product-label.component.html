@@ -1656,7 +1656,7 @@
       [openOnValueChange]="openOnStart"
       label="Primary color"
       i18n-label="@@productLabel.b2c.primaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.primaryColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.primaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1668,7 +1668,7 @@
           [openOnValueChange]="openOnStart"
           label="Secondary color"
           i18n-label="@@productLabel.b2c.secondaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.secondaryColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.secondaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1680,7 +1680,7 @@
           [openOnValueChange]="openOnStart"
           label="Tertiary color"
           i18n-label="@@productLabel.b2c.tertiaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.tertiaryColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.tertiaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1692,7 +1692,7 @@
           [openOnValueChange]="openOnStart"
           label="Quaternary color"
           i18n-label="@@productLabel.b2c.quaternaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.quaternaryColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.quaternaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1704,7 +1704,7 @@
           [openOnValueChange]="openOnStart"
           label="Heading color"
           i18n-label="@@productLabel.b2c.headingColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.headingColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.headingColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1716,7 +1716,7 @@
           [openOnValueChange]="openOnStart"
           label="Text color"
           i18n-label="@@productLabel.b2c.textColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')"></app-color-input>
+    <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1788,26 +1788,100 @@
   </app-closable>
 </ng-template>
 
-<ng-template #b2cFont>
+<ng-template #b2cGraphicFairPrices>
   <app-closable
-    [nonClosable]="true"
-    [visibilityForm]="visibilityMap.get('businessToCustomerSettings.font')"
-    [reorderMode]="reorderMode"
-    [openOnValueChange]="openOnStart"
-    class="af-form-element--nolabel">
-      <div class="mt-4">
-        <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
-                             allowedMimeTypeErrorMessage="Upload only file types: TTF."
-                             mode="simpleAsTextField"
-                             label="Font"
-                             i18n-label="@@productLabel.b2c.font"
-                             i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                             [form]="productForm.get('businessToCustomerSettings.font')"
-                             [attachmentUploaderId]="'b2cFont'"
-                             [readOnly]="!canEdit()">
-          <attachment-uploader-content>Upload font</attachment-uploader-content>
-        </attachment-uploader>
-      </div>
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFairPrices')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicFairPrices')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicFairPrices">
+        Enable 'Fair prices' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cGraphicIncreaseOfIncome>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicIncreaseOfIncome">
+        Enable 'Increase of income' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cGraphicQuality>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicQuality')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <checkbox-input
+            [form]="productForm.get('businessToCustomerSettings.graphicQuality')"
+            [disabled]="!canEdit()">
+      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicQuality">
+        Enable 'Quality' graphic
+      </checkbox-input-rich-label>
+    </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cProductFont>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.productFont')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <div class="mt-4">
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
+                           mode="simpleAsTextField"
+                           label="Product font"
+                           i18n-label="@@productLabel.b2c.productFont"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="productForm.get('businessToCustomerSettings.productFont')"
+                           [attachmentUploaderId]="'b2cProductFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload product font</attachment-uploader-content>
+      </attachment-uploader>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTextFont>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.textFont')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <div>
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
+                           mode="simpleAsTextField"
+                           label="Text font"
+                           i18n-label="@@productLabel.b2c.textFont"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="productForm.get('businessToCustomerSettings.textFont')"
+                           [attachmentUploaderId]="'b2cTextFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload text font</attachment-uploader-content>
+      </attachment-uploader>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1859,5 +1933,58 @@
                          [form]="productForm.get('businessToCustomerSettings.footerImage')"
                          [attachmentUploaderId]="'b2cFooterImage'"
                          [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cMedia>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.b2cMedia')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <h2 i18n="@@productLabel.b2c.videos" class="mt-4 mb-0">Videos</h2>
+    <ng-container *ngFor="let video of videoList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="video.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="video"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="submitted">
+      <div *ngIf="mediaForm.get('video').errors as errors" class="sc-invalid-feedback">
+        <div *ngIf="errors.maxActive">
+          <span>
+            Only one video can be selected
+          </span>
+        </div>
+      </div>
+    </ng-container>
+
+    <h2 i18n="@@productLabel.b2c.meetTheFarmers" class="mt-4 mb-0">Meet the farmers</h2>
+    <ng-container *ngFor="let farmer of farmerList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="farmer.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="farmer"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+        <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(farmer.get('document').value.storageKey)"></fa-icon>
+      </div>
+    </ng-container>
+
+    <h2 i18n="@@productLabel.b2c.productionRecords" class="mt-4 mb-0">Production records</h2>
+    <ng-container *ngFor="let record of productionRecordList">
+      <div class="d-flex flex-row align-items-end">
+        <checkbox-input [form]="record.get('active')" [disabled]="!canEdit()">
+          <checkbox-input-rich-label style="font-weight: 300">
+            <app-document-preview [document]="record"></app-document-preview>
+          </checkbox-input-rich-label>
+        </checkbox-input>
+        <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(record.get('document').value.storageKey)"></fa-icon>
+      </div>
+    </ng-container>
+
   </app-closable>
 </ng-template>

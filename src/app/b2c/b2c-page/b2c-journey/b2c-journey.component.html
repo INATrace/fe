@@ -1,5 +1,5 @@
 <main class="af-b2c-main">
-    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.font ? 'custom' : ''" i18n="@@frontPage.journey.title">Product journey</h1>
+    <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.journey.title">Product journey</h1>
 
     <google-map
             *ngIf="isGoogleMapsLoaded"
@@ -24,8 +24,8 @@
                 </a>
             </div>
             <div class="af-journey-info">
-                <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ formatDate(null) }}</span>
-                <span i18n="@@frontPage.journey.yourScan" [style.font-family]="b2cSettings.font ? 'custom' : ''">Your scan</span>
+                <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ formatDate(null) }}</span>
+                <span i18n="@@frontPage.journey.yourScan" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your scan</span>
                 <span>&nbsp;</span>
             </div>
         </li>
@@ -41,9 +41,9 @@
                         </a>
                     </div>
                     <div class="af-journey-info">
-                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ formatDate(item.date) }}</span>
-                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ item.name }}</span>
-                        <span [style.font-family]="b2cSettings.font ? 'custom' : ''">{{ item.location }}</span>
+                        <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ formatDate(item.date) }}</span>
+                        <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ item.name }}</span>
+                        <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ item.location }}</span>
                     </div>
 
                 </li>
