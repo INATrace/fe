@@ -6,7 +6,8 @@
     </ng-container>
 
     <app-front-page-carousel
-            [slides]="picsMeetTheFarmers">
+            [slides]="picsMeetTheFarmers"
+            [b2cSettings]="b2cSettings">
     </app-front-page-carousel>
 
     <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{titleCooperative}}</h1>
@@ -19,7 +20,8 @@
 
     <app-front-page-carousel
             [slides]="picsProduction"
-            [productionRecords]=true>
+            [productionRecords]=true
+            [b2cSettings]="b2cSettings">
     </app-front-page-carousel>
 
     <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The brand {{ productName }} owned by local producers</h1>
