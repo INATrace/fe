@@ -22,7 +22,6 @@ export class FrontPageCarouselComponent implements OnInit {
   currentSlide = 0;
 
   ngOnInit(): void {
-    console.log('b2c', this.b2cSettings);
   }
 
   onPreviousClick() {
