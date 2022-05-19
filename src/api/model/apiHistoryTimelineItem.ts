@@ -28,6 +28,8 @@ export interface ApiHistoryTimelineItem {
     location?: string;
     longitude?: number;
     name?: string;
+    step?: number;
+    steps?: number;
     type?: string;
 }
 
@@ -45,6 +47,8 @@ export namespace ApiHistoryTimelineItem {
         location = 'location',
         longitude = 'longitude',
         name = 'name',
+        step = 'step',
+        steps = 'steps',
         type = 'type'
     }
 
@@ -136,6 +140,28 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'step',
+                    classname: 'ApiHistoryTimelineItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'steps',
+                    classname: 'ApiHistoryTimelineItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'type',
                     classname: 'ApiHistoryTimelineItem',
                     dataType: 'string',
@@ -156,6 +182,10 @@ export namespace ApiHistoryTimelineItem {
                 longitude: [
                 ],
                 name: [
+                ],
+                step: [
+                ],
+                steps: [
                 ],
                 type: [
                 ],
@@ -182,6 +212,12 @@ export namespace ApiHistoryTimelineItem {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               step: {
+  //                   validators: []
+  //               },
+  //               steps: {
   //                   validators: []
   //               },
   //               type: {

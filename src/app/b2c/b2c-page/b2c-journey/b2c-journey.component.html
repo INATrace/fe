@@ -42,7 +42,7 @@
                     </div>
                     <div class="af-journey-info">
                         <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ formatDate(item.date) }}</span>
-                        <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ item.name }}</span>
+                        <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ item.name }}{{ item.step && item.steps ? ' (' + item.step + '/' + item.steps + ')' : ''}}</span>
                         <span [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ item.location }}</span>
                     </div>
 

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { GoogleMap } from '@angular/google-maps';
 import { ApiHistoryTimelineItem } from '../../../../api/model/apiHistoryTimelineItem';
 import { HistoryTimelineItem } from '../../../front-page/front-page-journey/model';
-import { take } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 
 @Component({
@@ -33,7 +32,7 @@ export class B2cJourneyComponent implements OnInit {
   isGoogleMapsLoaded = false;
 
   producerName = '';
-  historyItems = [];
+  historyItems: HistoryTimelineItem[] = [];
 
   // uuid = this.route.snapshot.params.uuid;
   // qrTag = this.route.snapshot.params.qrTag;
