@@ -36,7 +36,10 @@ export class B2cTabsComponent implements OnInit {
   @Input()
   b2cSettings: ApiBusinessToCustomerSettings;
 
+  tabList: B2CTab[] = [];
+
   ngOnInit(): void {
+    this.generateTabList();
   }
 
   goTo(target: B2CTab) {
@@ -48,6 +51,26 @@ export class B2cTabsComponent implements OnInit {
       return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
     }
     return undefined;
+  }
+
+  generateTabList() {
+    const tempTabList: {number: number, tab: B2CTab}[] = [];
+    if (this.b2cSettings.tabFairPrices) {
+      tempTabList.push({number: this.b2cSettings.orderFairPrices, tab: B2CTab.FAIR_PRICES});
+    }
+    if (this.b2cSettings.tabProducers) {
+      tempTabList.push({number: this.b2cSettings.orderProducers, tab: B2CTab.PRODUCERS});
+    }
+    if (this.b2cSettings.tabQuality) {
+      tempTabList.push({number: this.b2cSettings.orderQuality, tab: B2CTab.QUALITY});
+    }
+    if (this.b2cSettings.tabFeedback) {
+      tempTabList.push({number: this.b2cSettings.orderFeedback, tab: B2CTab.FEEDBACK});
+    }
+
+    tempTabList.sort((a, b) => a.number - b.number);
+
+    this.tabList = tempTabList.map(value => value.tab);
   }
 
 }

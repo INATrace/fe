@@ -864,6 +864,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
           tabProducers: true,
           tabQuality: true,
           tabFeedback: true,
+          orderFairPrices: 1,
+          orderProducers: 2,
+          orderQuality: 3,
+          orderFeedback: 4,
           graphicFairPrices: true,
           graphicIncreaseOfIncome: true,
           graphicQuality: true

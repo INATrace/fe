@@ -35,6 +35,10 @@ export interface ApiBusinessToCustomerSettings {
      * Entity id
      */
     id?: number;
+    orderFairPrices?: number;
+    orderFeedback?: number;
+    orderProducers?: number;
+    orderQuality?: number;
     primaryColor?: string;
     productFont?: ApiDocument;
     quaternaryColor?: string;
@@ -69,6 +73,10 @@ export namespace ApiBusinessToCustomerSettings {
          * Entity id
          */
         id = 'id',
+        orderFairPrices = 'orderFairPrices',
+        orderFeedback = 'orderFeedback',
+        orderProducers = 'orderProducers',
+        orderQuality = 'orderQuality',
         primaryColor = 'primaryColor',
         productFont = 'productFont',
         quaternaryColor = 'quaternaryColor',
@@ -185,6 +193,50 @@ export namespace ApiBusinessToCustomerSettings {
                     isEnum: false,
                     required: false,
                     name: 'id',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderFairPrices',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderFeedback',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderProducers',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderQuality',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -345,6 +397,14 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 id: [
                 ],
+                orderFairPrices: [
+                ],
+                orderFeedback: [
+                ],
+                orderProducers: [
+                ],
+                orderQuality: [
+                ],
                 primaryColor: [
                 ],
                 productFont: [
@@ -401,6 +461,18 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               orderFairPrices: {
+  //                   validators: []
+  //               },
+  //               orderFeedback: {
+  //                   validators: []
+  //               },
+  //               orderProducers: {
+  //                   validators: []
+  //               },
+  //               orderQuality: {
   //                   validators: []
   //               },
   //               primaryColor: {

@@ -1734,6 +1734,11 @@
         Enable 'Fair prices' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFairPrices').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderFairPrices')"
+                 label="'Fair prices' tab position"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1751,6 +1756,11 @@
         Enable 'Producers' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabProducers').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderProducers')"
+                 label="'Producers' tab position"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1768,6 +1778,11 @@
         Enable 'Quality' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabQuality').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderQuality')"
+                 label="'Quality' tab position"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1785,6 +1800,11 @@
         Enable 'Feedback' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFeedback').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderFeedback')"
+                 label="'Feedback' tab position"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
