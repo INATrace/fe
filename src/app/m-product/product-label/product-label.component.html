@@ -1447,6 +1447,24 @@
           style="width: 100%">
         </textinput>
       </app-number-row>
+      <app-number-row label="Manual farm-gate price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
+        <textinput
+                [form]="productForm.get('comparisonOfPrice.prices.manualFarmGatePrice')"
+                [label]="null"
+                [noBottomMargin]="true"
+                [readOnly]="!canEdit()"
+                style="width: 100%">
+        </textinput>
+      </app-number-row>
+      <app-number-row label="Manual producer price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualProducerPrice">
+        <textinput
+                [form]="productForm.get('comparisonOfPrice.prices.manualProducerPrice')"
+                [label]="null"
+                [noBottomMargin]="true"
+                [readOnly]="!canEdit()"
+                style="width: 100%">
+        </textinput>
+      </app-number-row>
     </div>
   </app-closable>
 </ng-template>

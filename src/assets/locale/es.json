@@ -2895,6 +2895,8 @@
     "productLabel.b2c.headerBackgroundImage": "Header background image",
     "productLabel.b2c.videos": "Videos",
     "productLabel.b2c.meetTheFarmers": "Conozca a los Agricultores",
-    "productLabel.b2c.productionRecords": "Registros de producción"
+    "productLabel.b2c.productionRecords": "Registros de producción",
+    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Manual farm-gate price (USD/pound)",
+    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)"
   }
 }
