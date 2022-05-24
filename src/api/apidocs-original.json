@@ -16199,6 +16199,14 @@
             "description": "The global (product) order of the Stock order",
             "type": "string"
           },
+          "priceToFarmer": {
+            "description": "Price paid to farmers in EUR/kg",
+            "type": "number"
+          },
+          "priceToProducer": {
+            "description": "Price paid to producer in EUR/kg",
+            "type": "number"
+          },
           "producerName": {
             "description": "The Producer name",
             "type": "string"
@@ -18248,6 +18256,13 @@
           "paid": {
             "description": "Paid",
             "type": "number"
+          },
+          "payments": {
+            "description": "Payments for stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiPayment"
+            },
+            "type": "array"
           },
           "preferredWayOfPayment": {
             "description": "Preferred way of payment",
