@@ -201,6 +201,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return obj;
   }
 
+  get graphicFairPriceUnits() {
+    const obj = {};
+
+    obj['DISABLED'] = 'Disabled';
+    obj['PER_CONTAINER'] = 'Per container';
+    obj['PER_KG'] = 'Per kg';
+    obj['PERCENT_VALUE'] = '% value';
+
+    return obj;
+  }
+
   gMap = null;
   gInfoWindow = null;
   gInfoWindowText = '';
@@ -595,6 +606,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cGraphicIncreaseOfIncome', { static: false })
   b2cGraphicIncreaseOfIncome: TemplateRef<any>;
 
+  @ViewChild('b2cPricePaidToProducerGraphic', { static: false })
+  b2cPricePaidToProducer: TemplateRef<any>;
+
+  @ViewChild('b2cFarmGatePriceGraphic', { static: false })
+  b2cFarmGatePrice: TemplateRef<any>;
+
   @ViewChild('b2cGraphicQuality', { static: false })
   b2cGraphicQuality: TemplateRef<any>;
 
@@ -668,6 +685,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   fadeInProduct = false;
   codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
+
+  graphicFairPricesCodes = EnumSifrant.fromObject(this.graphicFairPriceUnits);
 
   static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
     const obj = ApiProcessDocument.formMetadata();
@@ -1406,7 +1425,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
       { name: 'businessToCustomerSettings.graphicFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicFairPrices},
       { name: 'businessToCustomerSettings.graphicIncreaseOfIncome', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicIncreaseOfIncome},
-      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality}
+      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality},
+      { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
+      { name: 'businessToCustomerSettings.graphicFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFarmGatePrice }
     ];
     if (this.action === 'labels') {
       this.b2cElements.push(

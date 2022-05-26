@@ -1,25 +1,25 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.fair-prices.title">Fair prices</h1>
 
-    <p *ngIf="b2cSettings.graphicFairPrices" i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
+    <p *ngIf="producerPriceGraphic" i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order {{ this.producerPriceGraphicText }} in comparison to the world market price and Fairtrade minimum prices.</p>
 
-    <div *ngIf="b2cSettings.graphicFairPrices" class="af-graph-wrapper" style>
+    <div *ngIf="producerPriceGraphic" class="af-graph-wrapper" style>
         <div class="af-graph">
 
             <div class="af-graph-row af-graph-row--top" style="height: 220px;">
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.worldMarketHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
-                <span class="af-graph-bar-number">${{ this.worldMarketPrice }}</span>
+              <span class="af-graph-bar" [style.height]="'40px'" [style.background-color]="b2cSettings.secondaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.worldMarketPrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.fairTradeHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
-                <span class="af-graph-bar-number">${{ this.fairTradePrice }}</span>
+              <span class="af-graph-bar" [style.height]="40 * this.fairTradePrice / this.worldMarketPrice + 'px'" [style.background-color]="b2cSettings.secondaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.fairTradePrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.angeliqueHeight + 'px'" [style.background-color]="b2cSettings.primaryColor">
-                <span class="af-graph-bar-number">${{ this.angeliquePrice }}</span>
+              <span class="af-graph-bar" [style.height]="40 * this.angeliquePrice / this.worldMarketPrice + 'px'" [style.background-color]="b2cSettings.primaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.angeliquePrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
             </div>

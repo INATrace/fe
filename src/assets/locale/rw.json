@@ -2924,7 +2924,7 @@
     "productLabel.b2c.videos": "Videwo",
     "productLabel.b2c.meetTheFarmers": "Hura n'umuhinzi",
     "productLabel.b2c.productionRecords": "Impapuro z'ibikorwa",
-    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Manual farm-gate price (USD/pound)",
+    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
     "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)"
   }
 }

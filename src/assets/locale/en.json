@@ -2384,7 +2384,7 @@
     "frontPage.journey.harvesting": "Harvesting",
     "frontPage.journey.farmersFromCooperative": "Farmers from {$INTERPOLATION}",
     "frontPage.journey.title": "Product journey",
-    "front-page.fair-prices.paragraph1": "Your coffee package is part of Order number {$INTERPOLATION}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.",
+    "front-page.fair-prices.paragraph1": "Your coffee package is part of Order number {$INTERPOLATION}. Below you can see how much the local producers were paid for this order {$UNIT} in comparison to the world market price and Fairtrade minimum prices.",
     "frontPage.fair-prices.title": "Fair prices",
     "frontPage.fair-prices.title2": "Increase of farmers' income through",
     "frontPage.fair-prices.barChart.label1": "World market price for Arabica coffee",
@@ -2997,7 +2997,7 @@
     "productLabel.b2c.videos": "Videos",
     "productLabel.b2c.meetTheFarmers": "Meet the farmers",
     "productLabel.b2c.productionRecords": "Production records",
-    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Manual farm-gate price  (USD/pound)",
+    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
     "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price  (USD/pound)"
   }
 }

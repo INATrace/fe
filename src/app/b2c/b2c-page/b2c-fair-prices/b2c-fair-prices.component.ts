@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
+import GraphicPriceToProducerEnum = ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
 
 @Component({
   selector: 'app-b2c-fair-prices',
@@ -18,10 +19,13 @@ export class B2cFairPricesComponent implements OnInit {
   desc: string = null;
   descPricing: string = null;
 
-  worldMarketPrice: string = null;
-  fairTradePrice: string = null;
-  angeliquePrice: string = null;
+  worldMarketPrice: number = null;
+  fairTradePrice: number = null;
+  angeliquePrice: number = null;
   increaseOfCoffee: number = null;
+
+  farmGateAveragePrice: number;
+  farmGateProductPrice: number;
 
   worldMarketHeight: number = null;
   fairTradeHeight: number = null;
@@ -37,6 +41,13 @@ export class B2cFairPricesComponent implements OnInit {
   label0Farmers = $localize`:@@frontPage.fair-prices.barChart.label0Farmers:Increase in % per kg of coffee sold`;
 
   productName = '';
+  
+  producerPriceGraphic: boolean;
+  producerPriceGraphicText: string;
+
+  farmerPriceGraphic: boolean;
+
+  producerUnitEnum = GraphicPriceToProducerEnum;
 
   constructor(
       @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
@@ -53,6 +64,33 @@ export class B2cFairPricesComponent implements OnInit {
 
     if (this.b2cPage.qrTag !== 'EMPTY') {
       this.orderId = this.b2cPage.qrProductLabel.orderId;
+    }
+
+    switch (this.b2cSettings.graphicPriceToProducer) {
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.DISABLED:
+        this.producerPriceGraphic = false;
+        break;
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
+        this.producerPriceGraphic = true;
+        this.producerPriceGraphicText = 'per container';
+        break;
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
+        this.producerPriceGraphic = true;
+        this.producerPriceGraphicText = 'per kg';
+        break;
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCENTVALUE:
+        this.producerPriceGraphic = true;
+        this.producerPriceGraphicText = '% value';
+        break;
+    }
+
+    switch (this.b2cSettings.graphicFarmGatePrice) {
+      case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.DISABLED:
+        this.farmerPriceGraphic = false;
+        break;
+      default:
+        this.farmerPriceGraphic = true;
+        break;
     }
   }
 
@@ -78,37 +116,23 @@ export class B2cFairPricesComponent implements OnInit {
       }
     }
 
-    this.worldMarketPrice = Math.round(prices.worldMarket * prices.poundToKg * prices.containerSize).toString();
-    this.fairTradePrice = Math.round(prices.fairTrade * prices.poundToKg * prices.containerSize).toString();
-
-    if (prices.estimatedAdditionalPrice) {
-      this.angeliquePrice = Math.round(prices.estimatedAdditionalPrice * prices.EURtoUSD * prices.containerSize).toString();
+    switch (this.b2cSettings.graphicPriceToProducer) {
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
+        this.worldMarketPrice = prices.worldMarket * prices.poundToKg * prices.containerSize;
+        this.fairTradePrice = prices.fairTrade * prices.poundToKg * prices.containerSize;
+        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer * prices.containerSize;
+        break;
+      case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
+        this.worldMarketPrice = prices.worldMarket * prices.poundToKg;
+        this.fairTradePrice = prices.fairTrade * prices.poundToKg;
+        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer;
+        break;
+      case GraphicPriceToProducerEnum.PERCENTVALUE:
+        this.worldMarketPrice = 100;
+        this.fairTradePrice = prices.fairTrade / prices.worldMarket * 100;
+        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer / prices.poundToKg / prices.worldMarket * 100;
+        break;
     }
-    else {
-      this.angeliquePrice = '120629'; // TODO: In future change this with the price from the stock order
-    }
-
-    if (this.worldMarketPrice.length > 3) {
-      this.worldMarketPrice =
-          this.worldMarketPrice.substring(0, this.worldMarketPrice.length - 3) + '.' +
-          this.worldMarketPrice.substring(this.worldMarketPrice.length - 3, this.worldMarketPrice.length);
-    }
-
-    if (this.fairTradePrice.length > 3) {
-      this.fairTradePrice =
-          this.fairTradePrice.substring(0, this.fairTradePrice.length - 3) + '.' +
-          this.fairTradePrice.substring(this.fairTradePrice.length - 3, this.fairTradePrice.length);
-    }
-
-    if (this.angeliquePrice.length > 3) {
-      this.angeliquePrice =
-          this.angeliquePrice.substring(0, this.angeliquePrice.length - 3) + '.' +
-          this.angeliquePrice.substring(this.angeliquePrice.length - 3, this.angeliquePrice.length);
-    }
-
-    this.worldMarketHeight = Number(this.worldMarketPrice.slice(0, -3));
-    this.fairTradeHeight = Number(this.fairTradePrice.slice(0, -3));
-    this.angeliqueHeight = Number(this.angeliquePrice.slice(0, -3));
   }
 
 }

@@ -26,7 +26,9 @@ export interface ApiBusinessToCustomerSettings {
     creationTimestamp?: Date;
     footerImage?: ApiDocument;
     graphicFairPrices?: boolean;
+    graphicFarmGatePrice?: ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum;
     graphicIncreaseOfIncome?: boolean;
+    graphicPriceToProducer?: ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
     graphicQuality?: boolean;
     headerBackgroundImage?: ApiDocument;
     headerImage?: ApiDocument;
@@ -64,7 +66,9 @@ export namespace ApiBusinessToCustomerSettings {
         creationTimestamp = 'creationTimestamp',
         footerImage = 'footerImage',
         graphicFairPrices = 'graphicFairPrices',
+        graphicFarmGatePrice = 'graphicFarmGatePrice',
         graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
+        graphicPriceToProducer = 'graphicPriceToProducer',
         graphicQuality = 'graphicQuality',
         headerBackgroundImage = 'headerBackgroundImage',
         headerImage = 'headerImage',
@@ -89,6 +93,26 @@ export namespace ApiBusinessToCustomerSettings {
         textColor = 'textColor',
         textFont = 'textFont',
         updateTimestamp = 'updateTimestamp'
+    }
+
+    /**
+     * All possible values of graphicFarmGatePrice.
+     */
+    export enum GraphicFarmGatePriceEnum {
+        DISABLED = 'DISABLED',
+        PERCONTAINER = 'PER_CONTAINER',
+        PERKG = 'PER_KG',
+        PERCENTVALUE = 'PERCENT_VALUE'
+    }
+
+    /**
+     * All possible values of graphicPriceToProducer.
+     */
+    export enum GraphicPriceToProducerEnum {
+        DISABLED = 'DISABLED',
+        PERCONTAINER = 'PER_CONTAINER',
+        PERKG = 'PER_KG',
+        PERCENTVALUE = 'PERCENT_VALUE'
     }
 
 
@@ -133,11 +157,35 @@ export namespace ApiBusinessToCustomerSettings {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum',
+                    required: false,
+                    name: 'graphicFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'graphicIncreaseOfIncome',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum',
+                    required: false,
+                    name: 'graphicPriceToProducer',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -385,7 +433,11 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 graphicFairPrices: [
                 ],
+                graphicFarmGatePrice: [
+                ],
                 graphicIncreaseOfIncome: [
+                ],
+                graphicPriceToProducer: [
                 ],
                 graphicQuality: [
                 ],
@@ -445,7 +497,13 @@ export namespace ApiBusinessToCustomerSettings {
   //               graphicFairPrices: {
   //                   validators: []
   //               },
+  //               graphicFarmGatePrice: {
+  //                   validators: []
+  //               },
   //               graphicIncreaseOfIncome: {
+  //                   validators: []
+  //               },
+  //               graphicPriceToProducer: {
   //                   validators: []
   //               },
   //               graphicQuality: {

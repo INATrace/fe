@@ -1447,18 +1447,9 @@
           style="width: 100%">
         </textinput>
       </app-number-row>
-      <app-number-row label="Manual farm-gate price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
+      <app-number-row label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
         <textinput
                 [form]="productForm.get('comparisonOfPrice.prices.manualFarmGatePrice')"
-                [label]="null"
-                [noBottomMargin]="true"
-                [readOnly]="!canEdit()"
-                style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="Manual producer price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualProducerPrice">
-        <textinput
-                [form]="productForm.get('comparisonOfPrice.prices.manualProducerPrice')"
                 [label]="null"
                 [noBottomMargin]="true"
                 [readOnly]="!canEdit()"
@@ -1857,6 +1848,34 @@
         Enable 'Increase of income' graphic
       </checkbox-input-rich-label>
     </checkbox-input>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cPricePaidToProducerGraphic>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicPriceToProducer')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart">
+    <single-choice
+            label="Price paid to producer graphic"
+            [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
+            [codebookService]="graphicFairPricesCodes">
+    </single-choice>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cFarmGatePriceGraphic>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFarmGatePrice')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart">
+    <single-choice
+            label="Farm-gate price graphic"
+            [formControlInput]="productForm.get('businessToCustomerSettings.graphicFarmGatePrice')"
+            [codebookService]="graphicFairPricesCodes">
+    </single-choice>
   </app-closable>
 </ng-template>
 

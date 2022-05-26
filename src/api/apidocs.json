@@ -11217,8 +11217,26 @@
           "graphicFairPrices": {
             "type": "boolean"
           },
+          "graphicFarmGatePrice": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
+          },
           "graphicIncreaseOfIncome": {
             "type": "boolean"
+          },
+          "graphicPriceToProducer": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
           },
           "graphicQuality": {
             "type": "boolean"
