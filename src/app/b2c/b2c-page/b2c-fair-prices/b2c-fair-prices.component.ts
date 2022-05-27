@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
 import GraphicPriceToProducerEnum = ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-b2c-fair-prices',
@@ -22,7 +23,7 @@ export class B2cFairPricesComponent implements OnInit {
   worldMarketPrice: number = null;
   fairTradePrice: number = null;
   angeliquePrice: number = null;
-  increaseOfCoffee: number = null;
+  increaseOfCoffee: string = null;
 
   farmGateAveragePrice: number;
   farmGateProductPrice: number;
@@ -50,7 +51,8 @@ export class B2cFairPricesComponent implements OnInit {
   producerUnitEnum = GraphicPriceToProducerEnum;
 
   constructor(
-      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
+      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent,
+      private decimalPipe: DecimalPipe
   ) {
     this.b2cSettings = b2cPage.b2cSettings;
   }
@@ -111,9 +113,9 @@ export class B2cFairPricesComponent implements OnInit {
       if (item.name === 'settings.incomeIncreaseDescription') {
         this.descPricing = item.value;
       }
-      if (item.name === 'settings.increaseOfCoffee') {
-        this.increaseOfCoffee = Math.round(item.value);
-      }
+      // if (item.name === 'settings.increaseOfCoffee') {
+      //   this.increaseOfCoffee = Math.round(item.value);
+      // }
     }
 
     switch (this.b2cSettings.graphicPriceToProducer) {
@@ -131,6 +133,24 @@ export class B2cFairPricesComponent implements OnInit {
         this.worldMarketPrice = 100;
         this.fairTradePrice = prices.fairTrade / prices.worldMarket * 100;
         this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer / prices.poundToKg / prices.worldMarket * 100;
+        break;
+    }
+
+    switch (this.b2cSettings.graphicFarmGatePrice) {
+      case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
+        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg * prices.containerSize;
+        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer * prices.containerSize;
+        this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
+        break;
+      case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERKG:
+        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg;
+        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer;
+        this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
+        break;
+      case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCENTVALUE:
+        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg;
+        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer / (prices.worldMarket * prices.poundToKg) * 100 - 100;
+        this.increaseOfCoffee = '+' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-0') + '%';
         break;
     }
   }
