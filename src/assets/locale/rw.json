@@ -1603,7 +1603,7 @@
     "front-page.footer.allrightsreserved": "Uburenganzira bwose burihariwe",
     "front-page.button.productJourney": "Urugendo rw'igicuruzwa",
     "frontPage.journey.title": "Urugendo rw'igicuruzwa",
-    "front-page.fair-prices.paragraph1": "Ipaki y'ikawa yawe iri muri order ifite nomero ya {$INTERPOLATION}. Munsi ushobora kubona ingano y'amafaranga abahinzi babonye kuri kontineri yiyo order ugeranyije n'igiciro cy'ikawa ku isoko ry'isi ndetse n'ibiciro bito bishoboka bya Fairtrade. ",
+    "front-page.fair-prices.paragraph1": "Ipaki y'ikawa yawe iri muri order ifite nomero ya {$INTERPOLATION}. Munsi ushobora kubona ingano y'amafaranga abahinzi babonye {$UNIT} yiyo order ugeranyije n'igiciro cy'ikawa ku isoko ry'isi ndetse n'ibiciro bito bishoboka bya Fairtrade. ",
     "frontPage.fair-prices.title": "Ibiciro biboneye",
     "frontPage.fair-prices.title2": "Kongera icyo umuhinzi yinjiza binyuze muri",
     "frontPage.fair-prices.barChart.label1": "Igiciro cy'ikawa ya Arabic ku isoko ry'isi",
@@ -2925,6 +2925,9 @@
     "productLabel.b2c.meetTheFarmers": "Hura n'umuhinzi",
     "productLabel.b2c.productionRecords": "Impapuro z'ibikorwa",
     "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
-    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)"
+    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)",
+    "productLabel.b2c.price.unit.container": "kuri kontineri",
+    "productLabel.b2c.price.unit.kg": "ku kg",
+    "productLabel.b2c.price.unit.percentValue": "% agaciro"
   }
 }

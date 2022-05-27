@@ -44,6 +44,7 @@ export class B2cFairPricesComponent implements OnInit {
   productName = '';
   
   producerPriceGraphic: boolean;
+  producerPriceGraphicUnit: string;
   producerPriceGraphicText: string;
 
   farmerPriceGraphic: boolean;
@@ -74,17 +75,19 @@ export class B2cFairPricesComponent implements OnInit {
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
         this.producerPriceGraphic = true;
-        this.producerPriceGraphicText = 'per container';
+        this.producerPriceGraphicUnit = $localize`:@@productLabel.b2c.price.unit.container:per container`;
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
         this.producerPriceGraphic = true;
-        this.producerPriceGraphicText = 'per kg';
+        this.producerPriceGraphicUnit = $localize`:@@productLabel.b2c.price.unit.kg:per kg`;
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCENTVALUE:
         this.producerPriceGraphic = true;
-        this.producerPriceGraphicText = '% value';
+        this.producerPriceGraphicUnit = $localize`:@@productLabel.b2c.price.unit.percentValue:% value`;
         break;
     }
+
+    this.producerPriceGraphicText = $localize`:@@front-page.fair-prices.paragraph1:${this.orderId}:INTERPOLATION:${this.producerPriceGraphicUnit}:UNIT:`;
 
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.DISABLED:

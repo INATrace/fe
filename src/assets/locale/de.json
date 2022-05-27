@@ -1602,7 +1602,7 @@
     "front-page.footer.allrightsreserved": "Alle Rechte vorbehalten.",
     "front-page.button.productJourney": "PRODUKTREISE",
     "frontPage.journey.title": "Produktreise",
-    "front-page.fair-prices.paragraph1": "Bitte wählen Sie eine Anlage aus um die Liste der Vorgänge zu sehen",
+    "front-page.fair-prices.paragraph1": "Ihr Kaffeepaket ist Teil der Bestellnummer {$INTERPOLATION}. Unten sehen Sie, wie viel die lokalen Produzenten für diese Bestellung {$UNIT} im Vergleich zum Weltmarktpreis und Fairtrade-Mindestpreisen bezahlt wurden.",
     "frontPage.fair-prices.title": "Faire Preise",
     "frontPage.fair-prices.title2": "Erhöhung des Einkommens der Bäuerinnen durch",
     "frontPage.fair-prices.barChart.label1": "Weltmarktpreis für Arabica-Kaffee",
@@ -2954,6 +2954,9 @@
     "productLabel.b2c.meetTheFarmers": "Lernen Sie die Bäuerinnen kennen",
     "productLabel.b2c.productionRecords": "Verarbeitungsaufzeichnung",
     "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
-    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)"
+    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)",
+    "productLabel.b2c.price.unit.container": "pro Container",
+    "productLabel.b2c.price.unit.kg": "pro kg",
+    "productLabel.b2c.price.unit.percentValue": "% Wert"
   }
 }

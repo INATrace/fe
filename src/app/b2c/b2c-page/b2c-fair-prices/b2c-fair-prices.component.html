@@ -1,7 +1,7 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.fair-prices.title">Fair prices</h1>
 
-    <p *ngIf="producerPriceGraphic" i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order {{ this.producerPriceGraphicText }} in comparison to the world market price and Fairtrade minimum prices.</p>
+    <p *ngIf="producerPriceGraphic" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ producerPriceGraphicText }}</p>
 
     <div *ngIf="producerPriceGraphic" class="af-graph-wrapper" style>
         <div class="af-graph">

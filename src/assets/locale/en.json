@@ -2998,6 +2998,9 @@
     "productLabel.b2c.meetTheFarmers": "Meet the farmers",
     "productLabel.b2c.productionRecords": "Production records",
     "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
-    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price  (USD/pound)"
+    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price  (USD/pound)",
+    "productLabel.b2c.price.unit.container": "per container",
+    "productLabel.b2c.price.unit.kg": "per kg",
+    "productLabel.b2c.price.unit.percentValue": "% VALUE"
   }
 }
