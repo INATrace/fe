@@ -605,17 +605,7 @@ export function pricesFormMetadata() {
         isReadOnly: false,
         isEnum: false,
         required: false,
-        name: 'manualFarmGatePrice',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'manualProducerPrice',
+        name: 'averageRegionFarmGatePrice',
         dataType: 'number',
         isPrimitiveType: true,
         isListContainer: false,

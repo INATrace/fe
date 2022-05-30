@@ -121,38 +121,40 @@ export class B2cFairPricesComponent implements OnInit {
       // }
     }
 
+    const producerPrice = this.b2cPage.qrProductLabel.priceToProducer ? this.b2cPage.qrProductLabel.priceToProducer : this.b2cSettings.manualProducerPrice;
     switch (this.b2cSettings.graphicPriceToProducer) {
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
         this.worldMarketPrice = prices.worldMarket * prices.poundToKg * prices.containerSize;
         this.fairTradePrice = prices.fairTrade * prices.poundToKg * prices.containerSize;
-        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer * prices.containerSize;
+        this.angeliquePrice = producerPrice * prices.containerSize;
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
         this.worldMarketPrice = prices.worldMarket * prices.poundToKg;
         this.fairTradePrice = prices.fairTrade * prices.poundToKg;
-        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer;
+        this.angeliquePrice = producerPrice;
         break;
       case GraphicPriceToProducerEnum.PERCENTVALUE:
         this.worldMarketPrice = 100;
         this.fairTradePrice = prices.fairTrade / prices.worldMarket * 100;
-        this.angeliquePrice = this.b2cPage.qrProductLabel.priceToProducer / prices.poundToKg / prices.worldMarket * 100;
+        this.angeliquePrice = producerPrice / prices.worldMarket * 100;
         break;
     }
 
+    const farmGatePrice = this.b2cPage.qrProductLabel.priceToFarmer ? this.b2cPage.qrProductLabel.priceToFarmer : this.b2cSettings.manualFarmGatePrice;
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
-        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg * prices.containerSize;
-        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer * prices.containerSize;
+        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg * prices.containerSize;
+        this.farmGateProductPrice = farmGatePrice * prices.containerSize;
         this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERKG:
-        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg;
-        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer;
+        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg;
+        this.farmGateProductPrice = farmGatePrice;
         this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCENTVALUE:
-        this.farmGateAveragePrice = prices.worldMarket * prices.poundToKg;
-        this.farmGateProductPrice = this.b2cPage.qrProductLabel.priceToFarmer / (prices.worldMarket * prices.poundToKg) * 100 - 100;
+        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg;
+        this.farmGateProductPrice = farmGatePrice / this.farmGateAveragePrice * 100 - 100;
         this.increaseOfCoffee = '+' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-0') + '%';
         break;
     }

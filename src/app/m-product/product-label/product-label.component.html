@@ -1449,7 +1449,7 @@
       </app-number-row>
       <app-number-row label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
         <textinput
-                [form]="productForm.get('comparisonOfPrice.prices.manualFarmGatePrice')"
+                [form]="productForm.get('comparisonOfPrice.prices.averageRegionFarmGatePrice')"
                 [label]="null"
                 [noBottomMargin]="true"
                 [readOnly]="!canEdit()"
@@ -1817,52 +1817,20 @@
   </app-closable>
 </ng-template>
 
-<ng-template #b2cGraphicFairPrices>
-  <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFairPrices')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.graphicFairPrices')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicFairPrices">
-        Enable 'Fair prices' graphic
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cGraphicIncreaseOfIncome>
-  <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicIncreaseOfIncome">
-        Enable 'Increase of income' graphic
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
 <ng-template #b2cPricePaidToProducerGraphic>
-  <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicPriceToProducer')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart">
-    <single-choice
-            label="Price paid to producer graphic"
-            [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
-            [codebookService]="graphicFairPricesCodes">
-    </single-choice>
-  </app-closable>
+  <div class="mt-3">
+    <app-closable
+            [nonClosable]="true"
+            [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicPriceToProducer')"
+            [reorderMode]="reorderMode"
+            [openOnValueChange]="openOnStart">
+      <single-choice
+              label="Price paid to producer graphic"
+              [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
+              [codebookService]="graphicFairPricesCodes">
+      </single-choice>
+    </app-closable>
+  </div>
 </ng-template>
 
 <ng-template #b2cFarmGatePriceGraphic>
@@ -1876,6 +1844,30 @@
             [formControlInput]="productForm.get('businessToCustomerSettings.graphicFarmGatePrice')"
             [codebookService]="graphicFairPricesCodes">
     </single-choice>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cManualFarmGatePrice>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart">
+    <div class="mt-2">
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)"></textinput>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cManualProducerPrice>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart">
+    <div class="mt-2">
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 

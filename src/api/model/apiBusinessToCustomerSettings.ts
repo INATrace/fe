@@ -37,6 +37,8 @@ export interface ApiBusinessToCustomerSettings {
      * Entity id
      */
     id?: number;
+    manualFarmGatePrice?: number;
+    manualProducerPrice?: number;
     orderFairPrices?: number;
     orderFeedback?: number;
     orderProducers?: number;
@@ -77,6 +79,8 @@ export namespace ApiBusinessToCustomerSettings {
          * Entity id
          */
         id = 'id',
+        manualFarmGatePrice = 'manualFarmGatePrice',
+        manualProducerPrice = 'manualProducerPrice',
         orderFairPrices = 'orderFairPrices',
         orderFeedback = 'orderFeedback',
         orderProducers = 'orderProducers',
@@ -241,6 +245,28 @@ export namespace ApiBusinessToCustomerSettings {
                     isEnum: false,
                     required: false,
                     name: 'id',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'manualFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'manualProducerPrice',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -449,6 +475,10 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 id: [
                 ],
+                manualFarmGatePrice: [
+                ],
+                manualProducerPrice: [
+                ],
                 orderFairPrices: [
                 ],
                 orderFeedback: [
@@ -519,6 +549,12 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               manualFarmGatePrice: {
+  //                   validators: []
+  //               },
+  //               manualProducerPrice: {
   //                   validators: []
   //               },
   //               orderFairPrices: {
