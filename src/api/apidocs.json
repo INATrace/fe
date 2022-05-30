@@ -11196,8 +11196,26 @@
           "graphicFairPrices": {
             "type": "boolean"
           },
+          "graphicFarmGatePrice": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
+          },
           "graphicIncreaseOfIncome": {
             "type": "boolean"
+          },
+          "graphicPriceToProducer": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
           },
           "graphicQuality": {
             "type": "boolean"
@@ -11213,6 +11231,28 @@
           },
           "id": {
             "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "manualFarmGatePrice": {
+            "type": "number"
+          },
+          "manualProducerPrice": {
+            "type": "number"
+          },
+          "orderFairPrices": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderFeedback": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderProducers": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderQuality": {
             "format": "int64",
             "type": "integer"
           },
@@ -12421,6 +12461,14 @@
           },
           "name": {
             "type": "string"
+          },
+          "step": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "steps": {
+            "format": "int32",
+            "type": "integer"
           },
           "type": {
             "type": "string"
@@ -16154,6 +16202,14 @@
             "description": "The global (product) order of the Stock order",
             "type": "string"
           },
+          "priceToFarmer": {
+            "description": "Price paid to farmers in EUR/kg",
+            "type": "number"
+          },
+          "priceToProducer": {
+            "description": "Price paid to producer in EUR/kg",
+            "type": "number"
+          },
           "producerName": {
             "description": "The Producer name",
             "type": "string"
@@ -18203,6 +18259,13 @@
           "paid": {
             "description": "Paid",
             "type": "number"
+          },
+          "payments": {
+            "description": "Payments for stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiPayment"
+            },
+            "type": "array"
           },
           "preferredWayOfPayment": {
             "description": "Preferred way of payment",

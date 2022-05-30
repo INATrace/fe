@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { B2cRoutingModule } from './b2c-routing.module';
 import { B2cPageComponent } from './b2c-page/b2c-page.component';
@@ -37,6 +37,9 @@ import { SharedModule } from '../shared/shared.module';
         FrontPageModule,
         ComponentsModule,
         SharedModule
+    ],
+    providers: [
+        DecimalPipe
     ]
 })
 export class B2cModule { }

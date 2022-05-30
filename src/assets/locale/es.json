@@ -344,7 +344,7 @@
     "breadCrumb.collectors.stakeholders": "Interesados",
     "front-page.button.productJourney": "VIAJE DEL PRODUCTO",
     "frontPage.journey.title": "Viaje del producto",
-    "front-page.fair-prices.paragraph1": "Su paquete de café forma parte del número del Pedido {$INTERPOLATION}. Abajo puede ver el importe pagado a los productores locales por contenedor para este pedido en comparación con el precio del mercado mundial y los precios Fairtrade mínimos.",
+    "front-page.fair-prices.paragraph1": "Su paquete de café forma parte del número del Pedido {$INTERPOLATION}. Abajo puede ver el importe pagado a los productores locales {$UNIT} para este pedido en comparación con el precio del mercado mundial y los precios Fairtrade mínimos.",
     "frontPage.fair-prices.title": "Precios justos",
     "frontPage.fair-prices.title2": "Aumento de los salarios de los agricultores a través de",
     "frontPage.fair-prices.barChart.label1": "Precio del mercado mundial del café arábica",
@@ -2895,6 +2895,11 @@
     "productLabel.b2c.headerBackgroundImage": "Header background image",
     "productLabel.b2c.videos": "Videos",
     "productLabel.b2c.meetTheFarmers": "Conozca a los Agricultores",
-    "productLabel.b2c.productionRecords": "Registros de producción"
+    "productLabel.b2c.productionRecords": "Registros de producción",
+    "productLabel.textinput.comparisonOfPrice.manualFarmGatePrice": "Average farm-gate price for region (USD/pound)",
+    "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)",
+    "productLabel.b2c.price.unit.container": "por contenedor",
+    "productLabel.b2c.price.unit.kg": "por kg",
+    "productLabel.b2c.price.unit.percentValue": "% valor"
   }
 }

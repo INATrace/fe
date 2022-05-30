@@ -1447,6 +1447,15 @@
           style="width: 100%">
         </textinput>
       </app-number-row>
+      <app-number-row label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
+        <textinput
+                [form]="productForm.get('comparisonOfPrice.prices.averageRegionFarmGatePrice')"
+                [label]="null"
+                [noBottomMargin]="true"
+                [readOnly]="!canEdit()"
+                style="width: 100%">
+        </textinput>
+      </app-number-row>
     </div>
   </app-closable>
 </ng-template>
@@ -1734,6 +1743,11 @@
         Enable 'Fair prices' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFairPrices').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderFairPrices')"
+                 label="'Fair prices' tab position" [readOnly]="!canEdit()"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1751,6 +1765,11 @@
         Enable 'Producers' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabProducers').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderProducers')"
+                 label="'Producers' tab position" [readOnly]="!canEdit()"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1768,6 +1787,11 @@
         Enable 'Quality' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabQuality').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderQuality')"
+                 label="'Quality' tab position" [readOnly]="!canEdit()"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
@@ -1785,40 +1809,65 @@
         Enable 'Feedback' tab
       </checkbox-input-rich-label>
     </checkbox-input>
+
+    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFeedback').value">
+      <textinput [form]="productForm.get('businessToCustomerSettings.orderFeedback')"
+                 label="'Feedback' tab position" [readOnly]="!canEdit()"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 
-<ng-template #b2cGraphicFairPrices>
+<ng-template #b2cPricePaidToProducerGraphic>
+  <div class="mt-3">
+    <app-closable
+            [nonClosable]="true"
+            [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicPriceToProducer')"
+            [reorderMode]="reorderMode"
+            [openOnValueChange]="openOnStart">
+      <single-choice
+              label="Price paid to producer graphic"
+              [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
+              [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
+      </single-choice>
+    </app-closable>
+  </div>
+</ng-template>
+
+<ng-template #b2cFarmGatePriceGraphic>
   <app-closable
           [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFairPrices')"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicFarmGatePrice')"
           [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.graphicFairPrices')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicFairPrices">
-        Enable 'Fair prices' graphic
-      </checkbox-input-rich-label>
-    </checkbox-input>
+          [openOnValueChange]="openOnStart">
+    <single-choice
+            label="Farm-gate price graphic"
+            [formControlInput]="productForm.get('businessToCustomerSettings.graphicFarmGatePrice')"
+            [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
+    </single-choice>
   </app-closable>
 </ng-template>
 
-<ng-template #b2cGraphicIncreaseOfIncome>
+<ng-template #b2cManualFarmGatePrice>
   <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.graphicIncreaseOfIncome')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicIncreaseOfIncome">
-        Enable 'Increase of income' graphic
-      </checkbox-input-rich-label>
-    </checkbox-input>
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart">
+    <div class="mt-2">
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cManualProducerPrice>
+  <app-closable
+      [nonClosable]="true"
+      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
+      [reorderMode]="reorderMode"
+      [openOnValueChange]="openOnStart">
+    <div class="mt-2">
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+    </div>
   </app-closable>
 </ng-template>
 

@@ -201,6 +201,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return obj;
   }
 
+  get graphicFairPriceUnits() {
+    const obj = {};
+
+    obj['DISABLED'] = 'Disabled';
+    obj['PER_CONTAINER'] = 'Per container';
+    obj['PER_KG'] = 'Per kg';
+    obj['PERCENT_VALUE'] = '% value';
+
+    return obj;
+  }
+
   gMap = null;
   gInfoWindow = null;
   gInfoWindowText = '';
@@ -589,11 +600,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cMedia', { static: false })
   b2cMedia: TemplateRef<any>;
 
-  @ViewChild('b2cGraphicFairPrices', { static: false })
-  b2cGraphicFairPrices: TemplateRef<any>;
+  @ViewChild('b2cPricePaidToProducerGraphic', { static: false })
+  b2cPricePaidToProducer: TemplateRef<any>;
 
-  @ViewChild('b2cGraphicIncreaseOfIncome', { static: false })
-  b2cGraphicIncreaseOfIncome: TemplateRef<any>;
+  @ViewChild('b2cFarmGatePriceGraphic', { static: false })
+  b2cFarmGatePrice: TemplateRef<any>;
+
+  @ViewChild('b2cManualFarmGatePrice', { static: false })
+  b2cManualFarmGatePrice: TemplateRef<any>;
+
+  @ViewChild('b2cManualProducerPrice', { static: false })
+  b2cManualProducerPrice: TemplateRef<any>;
 
   @ViewChild('b2cGraphicQuality', { static: false })
   b2cGraphicQuality: TemplateRef<any>;
@@ -668,6 +685,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   fadeInProduct = false;
   codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
+
+  graphicFairPricesCodes = EnumSifrant.fromObject(this.graphicFairPriceUnits);
 
   static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
     const obj = ApiProcessDocument.formMetadata();
@@ -864,6 +883,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
           tabProducers: true,
           tabQuality: true,
           tabFeedback: true,
+          orderFairPrices: 1,
+          orderProducers: 2,
+          orderQuality: 3,
+          orderFeedback: 4,
           graphicFairPrices: true,
           graphicIncreaseOfIncome: true,
           graphicQuality: true
@@ -1400,9 +1423,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
-      { name: 'businessToCustomerSettings.graphicFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicFairPrices},
-      { name: 'businessToCustomerSettings.graphicIncreaseOfIncome', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicIncreaseOfIncome},
-      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality}
+      { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
+      { name: 'businessToCustomerSettings.graphicFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFarmGatePrice },
+      { name: 'businessToCustomerSettings.manualFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cManualFarmGatePrice },
+      { name: 'businessToCustomerSettings.manualProducerPrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cManualProducerPrice },
+      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality},
     ];
     if (this.action === 'labels') {
       this.b2cElements.push(

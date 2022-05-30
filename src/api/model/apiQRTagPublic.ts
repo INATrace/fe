@@ -29,6 +29,14 @@ export interface ApiQRTagPublic {
      */
     orderId?: string;
     /**
+     * Price paid to farmers in EUR/kg
+     */
+    priceToFarmer?: number;
+    /**
+     * Price paid to producer in EUR/kg
+     */
+    priceToProducer?: number;
+    /**
      * The Producer name
      */
     producerName?: string;
@@ -51,6 +59,14 @@ export namespace ApiQRTagPublic {
          * The global (product) order of the Stock order
          */
         orderId = 'orderId',
+        /**
+         * Price paid to farmers in EUR/kg
+         */
+        priceToFarmer = 'priceToFarmer',
+        /**
+         * Price paid to producer in EUR/kg
+         */
+        priceToProducer = 'priceToProducer',
         /**
          * The Producer name
          */
@@ -94,6 +110,28 @@ export namespace ApiQRTagPublic {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'priceToFarmer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'priceToProducer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'producerName',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
@@ -118,6 +156,10 @@ export namespace ApiQRTagPublic {
                 ],
                 orderId: [
                 ],
+                priceToFarmer: [
+                ],
+                priceToProducer: [
+                ],
                 producerName: [
                 ],
                 qrTag: [
@@ -133,6 +175,12 @@ export namespace ApiQRTagPublic {
   //                   validators: []
   //               },
   //               orderId: {
+  //                   validators: []
+  //               },
+  //               priceToFarmer: {
+  //                   validators: []
+  //               },
+  //               priceToProducer: {
   //                   validators: []
   //               },
   //               producerName: {

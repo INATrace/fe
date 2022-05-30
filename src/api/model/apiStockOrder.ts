@@ -24,6 +24,7 @@ import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
 import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiPayment } from './apiPayment';
 import { ApiProcessingOrder } from './apiProcessingOrder';
 import { ApiProductOrder } from './apiProductOrder';
 import { ApiSemiProduct } from './apiSemiProduct';
@@ -136,6 +137,10 @@ export interface ApiStockOrder {
      * Paid
      */
     paid?: number;
+    /**
+     * Payments for stock order
+     */
+    payments?: Array<ApiPayment>;
     /**
      * Preferred way of payment
      */
@@ -309,6 +314,10 @@ export namespace ApiStockOrder {
          * Paid
          */
         paid = 'paid',
+        /**
+         * Payments for stock order
+         */
+        payments = 'payments',
         /**
          * Preferred way of payment
          */
@@ -753,6 +762,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiPayment.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'payments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiPayment&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPayment'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.PreferredWayOfPaymentEnum',
@@ -1093,6 +1114,8 @@ export namespace ApiStockOrder {
                 ],
                 paid: [
                 ],
+                payments: [
+                ],
                 preferredWayOfPayment: [
                 ],
                 pricePerUnit: [
@@ -1239,6 +1262,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               paid: {
+  //                   validators: []
+  //               },
+  //               payments: {
   //                   validators: []
   //               },
   //               preferredWayOfPayment: {

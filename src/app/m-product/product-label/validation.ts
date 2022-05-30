@@ -600,6 +600,16 @@ export function pricesFormMetadata() {
         isPrimitiveType: true,
         isListContainer: false,
         complexType: ''
+      },
+      {
+        isReadOnly: false,
+        isEnum: false,
+        required: false,
+        name: 'averageRegionFarmGatePrice',
+        dataType: 'number',
+        isPrimitiveType: true,
+        isListContainer: false,
+        complexType: ''
       }
     ]
   }
@@ -627,6 +637,12 @@ export const pricesValidationScheme = {
       validators: []
     },
     estimatedAdditionalPrice: {
+      validators: []
+    },
+    manualFarmGatePrice: {
+      validators: []
+    },
+    manualProducerPrice: {
       validators: []
     }
   }

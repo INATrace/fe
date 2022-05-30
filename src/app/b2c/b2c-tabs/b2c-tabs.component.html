@@ -9,33 +9,33 @@
             (click)="goTo(tabEnum.JOURNEY)">
             JOURNEY
         </li>
-        <li i18n="@@frontPage.header.tab.fair-prices"
-            *ngIf="b2cSettings.tabFairPrices"
-            [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES"
-            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
-            (click)="goTo(tabEnum.FAIR_PRICES)">
-            FAIR PRICES
-        </li>
-        <li i18n="@@frontPage.header.tab.producers"
-            *ngIf="b2cSettings.tabProducers"
-            [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS"
-            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
-            (click)="goTo(tabEnum.PRODUCERS)">
-            PRODUCERS
-        </li>
-        <li i18n="@@frontPage.header.tab.quality"
-            *ngIf="b2cSettings.tabQuality"
-            [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY"
-            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
-            (click)="goTo(tabEnum.QUALITY)">
-            QUALITY
-        </li>
-        <li i18n="@@frontPage.header.tab.feedback"
-            *ngIf="b2cSettings.tabFeedback"
-            [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK"
-            [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
-            (click)="goTo(tabEnum.FEEDBACK)">
-            FEEDBACK
-        </li>
+        <ng-container *ngFor="let tabElement of tabList">
+            <ng-container [ngSwitch]="tabElement">
+                <li *ngSwitchCase="tabEnum.FAIR_PRICES" i18n="@@frontPage.header.tab.fair-prices"
+                    [class.af-b2c-nav--selected]="tab === tabEnum.FAIR_PRICES"
+                    [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+                    (click)="goTo(tabEnum.FAIR_PRICES)">
+                    FAIR PRICES
+                </li>
+                <li *ngSwitchCase="tabEnum.PRODUCERS" i18n="@@frontPage.header.tab.producers"
+                    [class.af-b2c-nav--selected]="tab === tabEnum.PRODUCERS"
+                    [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+                    (click)="goTo(tabEnum.PRODUCERS)">
+                    PRODUCERS
+                </li>
+                <li *ngSwitchCase="tabEnum.QUALITY" i18n="@@frontPage.header.tab.quality"
+                    [class.af-b2c-nav--selected]="tab === tabEnum.QUALITY"
+                    [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+                    (click)="goTo(tabEnum.QUALITY)">
+                    QUALITY
+                </li>
+                <li *ngSwitchCase="tabEnum.FEEDBACK" i18n="@@frontPage.header.tab.feedback"
+                    [class.af-b2c-nav--selected]="tab === tabEnum.FEEDBACK"
+                    [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"
+                    (click)="goTo(tabEnum.FEEDBACK)">
+                    FEEDBACK
+                </li>
+            </ng-container>
+        </ng-container>
     </ul>
 </div>

@@ -1,25 +1,25 @@
 <main class="af-b2c-main">
     <h1 [style.color]="b2cSettings.headingColor" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" i18n="@@frontPage.fair-prices.title">Fair prices</h1>
 
-    <p *ngIf="b2cSettings.graphicFairPrices" i18n="@@front-page.fair-prices.paragraph1" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Your coffee package is part of Order number {{ this.orderId }}. Below you can see how much the local producers were paid for this order per container in comparison to the world market price and Fairtrade minimum prices.</p>
+    <p *ngIf="producerPriceGraphic" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ producerPriceGraphicText }}</p>
 
-    <div *ngIf="b2cSettings.graphicFairPrices" class="af-graph-wrapper" style>
+    <div *ngIf="producerPriceGraphic" class="af-graph-wrapper" style>
         <div class="af-graph">
 
             <div class="af-graph-row af-graph-row--top" style="height: 220px;">
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.worldMarketHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
-                <span class="af-graph-bar-number">${{ this.worldMarketPrice }}</span>
+              <span class="af-graph-bar" [style.height]="'40px'" [style.background-color]="b2cSettings.secondaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.worldMarketPrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.fairTradeHeight + 'px'" [style.background-color]="b2cSettings.secondaryColor">
-                <span class="af-graph-bar-number">${{ this.fairTradePrice }}</span>
+              <span class="af-graph-bar" [style.height]="40 * this.fairTradePrice / this.worldMarketPrice + 'px'" [style.background-color]="b2cSettings.secondaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.fairTradePrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
                 <div class="af-graph-col">
-              <span class="af-graph-bar" [style.height]="this.angeliqueHeight + 'px'" [style.background-color]="b2cSettings.primaryColor">
-                <span class="af-graph-bar-number">${{ this.angeliquePrice }}</span>
+              <span class="af-graph-bar" [style.height]="40 * this.angeliquePrice / this.worldMarketPrice + 'px'" [style.background-color]="b2cSettings.primaryColor">
+                <span class="af-graph-bar-number">{{ this.b2cSettings.graphicPriceToProducer !== producerUnitEnum.PERCENTVALUE ? '$' : ''}}{{ this.angeliquePrice | number: '1.0-3' }}{{ this.b2cSettings.graphicPriceToProducer == producerUnitEnum.PERCENTVALUE ? '%' : ''}}</span>
               </span>
                 </div>
             </div>
@@ -38,14 +38,14 @@
         </div>
     </div>
 
-    <p [innerHTML]="desc" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"></p>
+    <p *ngIf="producerPriceGraphic" [innerHTML]="desc" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"></p>
 
-    <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ title2 }} {{ productName }}</h1>
+    <h1 *ngIf="farmerPriceGraphic" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ title2 }} {{ productName }}</h1>
 
-    <div *ngIf="b2cSettings.graphicIncreaseOfIncome" class="af-stgraph-wrapper" style>
+    <div *ngIf="farmerPriceGraphic" class="af-stgraph-wrapper" style>
         <div class="af-stgraph">
 
-            <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="this.increaseOfCoffee + 'px'">
+            <div class="af-stgraph-row af-stgraph-row--top"  [style.height]="'72px'">
                 <div class="af-stgraph-col">
               <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label1Farmers" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">
                 Price paid if sold as {{ productName }}
@@ -53,7 +53,7 @@
                 </div>
                 <div class="af-stgraph-col">
               <span class="af-stgraph-bar" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''" [style.background-color]="b2cSettings.primaryColor">
-                <span class="af-stgraph-bar-number">+{{ this.increaseOfCoffee }}%</span>
+                <span class="af-stgraph-bar-number">{{ this.increaseOfCoffee }}</span>
               </span>
                 </div>
             </div>
@@ -64,7 +64,9 @@
               </span>
                 </div>
                 <div class="af-stgraph-col">
-                    <span class="af-stgraph-bar af-stgraph-bar--gray"></span>
+                    <span class="af-stgraph-bar af-stgraph-bar--gray">
+                        <span class="af-stgraph-bar-number">${{ this.farmGateAveragePrice | number: '1.0-3' }}</span>
+                    </span>
                 </div>
             </div>
             <div class="af-stgraph-row af-graph-row--bottom">
@@ -76,5 +78,5 @@
         </div>
     </div>
 
-    <p [innerHTML]="descPricing" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"></p>
+    <p *ngIf="farmerPriceGraphic" [innerHTML]="descPricing" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''"></p>
 </main>
