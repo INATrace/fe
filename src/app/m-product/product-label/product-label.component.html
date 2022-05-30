@@ -1746,7 +1746,7 @@
 
     <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFairPrices').value">
       <textinput [form]="productForm.get('businessToCustomerSettings.orderFairPrices')"
-                 label="'Fair prices' tab position"></textinput>
+                 label="'Fair prices' tab position" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1768,7 +1768,7 @@
 
     <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabProducers').value">
       <textinput [form]="productForm.get('businessToCustomerSettings.orderProducers')"
-                 label="'Producers' tab position"></textinput>
+                 label="'Producers' tab position" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1790,7 +1790,7 @@
 
     <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabQuality').value">
       <textinput [form]="productForm.get('businessToCustomerSettings.orderQuality')"
-                 label="'Quality' tab position"></textinput>
+                 label="'Quality' tab position" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1812,7 +1812,7 @@
 
     <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFeedback').value">
       <textinput [form]="productForm.get('businessToCustomerSettings.orderFeedback')"
-                 label="'Feedback' tab position"></textinput>
+                 label="'Feedback' tab position" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1827,7 +1827,7 @@
       <single-choice
               label="Price paid to producer graphic"
               [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
-              [codebookService]="graphicFairPricesCodes">
+              [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
       </single-choice>
     </app-closable>
   </div>
@@ -1842,7 +1842,7 @@
     <single-choice
             label="Farm-gate price graphic"
             [formControlInput]="productForm.get('businessToCustomerSettings.graphicFarmGatePrice')"
-            [codebookService]="graphicFairPricesCodes">
+            [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
     </single-choice>
   </app-closable>
 </ng-template>
@@ -1854,7 +1854,7 @@
       [reorderMode]="reorderMode"
       [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="productForm.get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)"></textinput>
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1866,7 +1866,7 @@
       [reorderMode]="reorderMode"
       [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="productForm.get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)"></textinput>
+      <textinput [form]="productForm.get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
