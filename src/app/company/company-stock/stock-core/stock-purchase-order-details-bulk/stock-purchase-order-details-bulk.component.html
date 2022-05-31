@@ -272,6 +272,29 @@
                           </textinput>
                         </div>
 
+                        <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showDamagedWeightDeduction(idx)">
+                          <textinput [form]="item.get('damagedWeightDeduction')"
+                                     [label]="damagedWeightDeductionLabel(idx)"
+                                     style="width: 100%"
+                                     placeholder="Enter damaged weight deduction"
+                                     i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder"
+                                     [isInvalid]="(submitted && item.get('damagedWeightDeduction').invalid) || damagedWeightDeductionInvalidCheck(idx)"
+                                     [readOnly]="readonlyDamagedWeightDeduction">
+                            <ng-container *ngIf="submitted">
+                              <div *ngIf="item.get('damagedWeightDeduction').errors as errors" class="sc-invalid-feedback">
+                                <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error">
+                                  Damaged weight deduction is required
+                                </div>
+                              </div>
+                            </ng-container>
+                            <div *ngIf="damagedWeightDeductionInvalidCheck(idx)" class="sc-invalid-feedback">
+                              <div i18n="@@productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error">
+                                Damaged weight deduction is larger than net weight
+                              </div>
+                            </div>
+                          </textinput>
+                        </div>
+
                         <div class="af-c3 af-md-c6 af-sm-c11" *ngIf="showOrganic(idx)">
                           <single-choice
                             label="Organic"

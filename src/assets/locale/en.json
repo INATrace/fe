@@ -2978,6 +2978,11 @@
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.label": "Enter the quantity to be used from this transaction",
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.helpText": "Available quantity",
     "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.required": "Quantity is required",
-    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.max": "Selected quantity cannot be greater than the available"
+    "productLabelStockProcessingOrderDetail.clipInputModal.inputQuantity.error.max": "Selected quantity cannot be greater than the available",
+    "productLabelStockFacilityModal.checkbox.weightReductionDamage.label": "Display 'Damaged weight deduction'",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder": "Enter damaged weight deduction",
+    "productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error": "Damaged weight deduction is larger than net weight",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error": "Damaged weight deduction is required",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label": "Damaged weight deduction"
   }
 }
