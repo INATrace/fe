@@ -2907,9 +2907,9 @@
     "productLabelFacilities.tableCol.deactivate": "Deactivate",
     "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?",
     "productLabelStockFacilityModal.checkbox.weightReductionDamage.label": "Display 'Damaged weight deduction'",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder": "Enter damaged weight deduction",
-    "productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error": "Damaged weight deduction is larger than net weight",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error": "Damaged weight deduction is required",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label": "Damaged weight deduction"
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder": "Injiza igabanyirizwa ry'uburemere byangiritse",
+    "productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error": "Kugabanya ibiro byangiritse ni binini kurenza uburemere",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error": "Igabanyirizwa ry'uburemere byangiritse ni ngombwa",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label": "Igabanyirizwa ry'uburemere byangiritse"
   }
 }

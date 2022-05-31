@@ -2879,9 +2879,9 @@
     "productLabelFacilities.tableCol.deactivate": "Deactivate",
     "productLabelFacilities.deactivateFacility.delete": "Are you sure you want to deactivate the facility?",
     "productLabelStockFacilityModal.checkbox.weightReductionDamage.label": "Display 'Damaged weight deduction'",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder": "Enter damaged weight deduction",
-    "productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error": "Damaged weight deduction is larger than net weight",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error": "Damaged weight deduction is required",
-    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label": "Damaged weight deduction"
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder": "Introducza descuento de peso",
+    "productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error": "La deducción de peso dañado es mayor que el peso neto",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error": "Se requiere descuento de peso para defectos",
+    "productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label": "Descuento de peso para defectos"
   }
 }
