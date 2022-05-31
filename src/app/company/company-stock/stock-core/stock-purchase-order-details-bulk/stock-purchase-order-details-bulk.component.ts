@@ -176,6 +176,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label: Deduction` + ` (${this.selectedCurrency}/${this.measureUnitArray[idx]})`;
   }
 
+  damagedWeightDeductionLabel(idx: number) {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label: Deduction` + ` (${this.measureUnitArray[idx]})`;
+  }
+
   get additionalProofsForm(): FormArray {
     return this.purchaseOrderBulkForm.get('activityProofs') as FormArray;
   }
@@ -419,6 +423,12 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return damagedPriceDeduction && pricePerUnit && (damagedPriceDeduction > pricePerUnit);
   }
 
+  damagedWeightDeductionInvalidCheck(idx: number) {
+    const damagedWeightDeduction = Number(this.farmersFormArray.at(idx).get('damagedWeightDeduction').value).valueOf();
+    const totalQuantity = Number(this.farmersFormArray.at(idx).get('totalQuantity').value).valueOf();
+    return damagedWeightDeduction && totalQuantity && (damagedWeightDeduction > totalQuantity);
+  }
+
   setFarmer(event: ApiUserCustomer, idx: number) {
 
     this.farmersFormArray.at(idx).get('producerUserCustomer').markAsDirty();
@@ -476,6 +486,10 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
 
       if (this.farmersFormArray.at(idx).get('tare').value) {
         netWeight -= this.farmersFormArray.at(idx).get('tare').value;
+      }
+
+      if (this.farmersFormArray.at(idx).get('damagedWeightDeduction').value) {
+        netWeight -= this.farmersFormArray.at(idx).get('damagedWeightDeduction').value;
       }
 
       if (netWeight < 0) {
@@ -546,21 +560,29 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     return this.facility && this.facility.displayPriceDeductionDamage || this.farmersFormArray.at(idx).get('damagedPriceDeduction').value;
   }
 
+  showDamagedWeightDeduction(idx: number) {
+    return this.facility && this.facility.displayWeightDeductionDamage || this.farmersFormArray.at(idx).get('damagedWeightDeduction').value;
+  }
+
   get readonlyDamagedPriceDeduction() {
     return this.facility && !this.facility.displayPriceDeductionDamage;
   }
 
+  get readonlyDamagedWeightDeduction() {
+    return this.facility && !this.facility.displayWeightDeductionDamage;
+  }
+
   netWeight(idx: number) {
     if (this.farmersFormArray.at(idx) && this.farmersFormArray.at(idx).get('totalGrossQuantity').value) {
+      let netWeight = Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value);
       if (this.farmersFormArray.at(idx).get('tare').value) {
-        if (Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value) > Number(this.farmersFormArray.at(idx).get('tare').value)){
-          this.netWeightFormArray[idx].setValue(Number(this.farmersFormArray.at(idx).get('totalGrossQuantity').value - this.farmersFormArray.at(idx).get('tare').value).toFixed(2));
-        } else {
-          this.netWeightFormArray[idx].setValue(Number(0).toFixed(2));
-        }
-      } else {
-        this.netWeightFormArray[idx].setValue(this.farmersFormArray.at(idx).get('totalGrossQuantity').value);
+        netWeight -= Number(this.farmersFormArray.at(idx).get('tare').value);
       }
+      if (this.farmersFormArray.at(idx).get('damagedWeightDeduction').value) {
+        netWeight -= Number(this.farmersFormArray.at(idx).get('damagedWeightDeduction').value);
+      }
+      netWeight = Math.max(0, netWeight);
+      this.netWeightFormArray[idx].setValue(netWeight.toFixed(2));
     } else {
       this.netWeightFormArray[idx].setValue(null);
     }
@@ -610,6 +632,14 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
             [Validators.required] : []
         );
         nextFormGroup.get('damagedPriceDeduction').updateValueAndValidity();
+
+        // This is for field damagedWeightDeduction
+        nextFormGroup.get('damagedWeightDeduction').setValidators(
+            this.facility &&
+            this.facility.displayWeightDeductionDamage ?
+                [Validators.required] : []
+        );
+        nextFormGroup.get('damagedWeightDeduction').updateValueAndValidity();
 
         // This is for field womenShare
         nextFormGroup.get('womenShare').setValidators(

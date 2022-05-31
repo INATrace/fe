@@ -47,6 +47,10 @@ export interface ApiFacility {
      */
     displayTare?: boolean;
     /**
+     * Enable form control 'Weight deduction damage'
+     */
+    displayWeightDeductionDamage?: boolean;
+    /**
      * Enable form control 'Women only'
      */
     displayWomenOnly?: boolean;
@@ -108,6 +112,10 @@ export namespace ApiFacility {
          * Enable form control 'Tare'
          */
         displayTare = 'displayTare',
+        /**
+         * Enable form control 'Weight deduction damage'
+         */
+        displayWeightDeductionDamage = 'displayWeightDeductionDamage',
         /**
          * Enable form control 'Women only'
          */
@@ -211,6 +219,17 @@ export namespace ApiFacility {
                     isEnum: false,
                     required: false,
                     name: 'displayTare',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayWeightDeductionDamage',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -346,6 +365,8 @@ export namespace ApiFacility {
                 ],
                 displayTare: [
                 ],
+                displayWeightDeductionDamage: [
+                ],
                 displayWomenOnly: [
                 ],
                 facilityFinalProducts: [
@@ -389,6 +410,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               displayTare: {
+  //                   validators: []
+  //               },
+  //               displayWeightDeductionDamage: {
   //                   validators: []
   //               },
   //               displayWomenOnly: {

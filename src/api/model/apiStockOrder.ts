@@ -82,6 +82,10 @@ export interface ApiStockOrder {
      */
     damagedPriceDeduction?: number;
     /**
+     * Damaged weight deduction
+     */
+    damagedWeightDeduction?: number;
+    /**
      * Delivery time
      */
     deliveryTime?: Date;
@@ -258,6 +262,10 @@ export namespace ApiStockOrder {
          * Damaged price deduction
          */
         damagedPriceDeduction = 'damagedPriceDeduction',
+        /**
+         * Damaged weight deduction
+         */
+        damagedWeightDeduction = 'damagedWeightDeduction',
         /**
          * Delivery time
          */
@@ -563,6 +571,17 @@ export namespace ApiStockOrder {
                     isEnum: false,
                     required: false,
                     name: 'damagedPriceDeduction',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'damagedWeightDeduction',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -1080,6 +1099,8 @@ export namespace ApiStockOrder {
                 ],
                 damagedPriceDeduction: [
                 ],
+                damagedWeightDeduction: [
+                ],
                 deliveryTime: [
                 ],
                 facility: [
@@ -1211,6 +1232,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               damagedPriceDeduction: {
+  //                   validators: []
+  //               },
+  //               damagedWeightDeduction: {
   //                   validators: []
   //               },
   //               deliveryTime: {

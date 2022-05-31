@@ -252,6 +252,32 @@
               </div>
             </div>
 
+            <div class="af-row">
+              <div class="af-c6">
+                <textinput *ngIf="showDamagedWeightDeduction"
+                           [form]="stockOrderForm.get('damagedWeightDeduction')"
+                           [label]="damagedWeightDeductionLabel"
+                           style="width: 100%"
+                           placeholder="Enter damaged weight deduction"
+                           i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.placeholder"
+                           [isInvalid]="(submitted && stockOrderForm.get('damagedWeightDeduction').invalid) || damagedWeightDeductionInvalidCheck"
+                           [readOnly]="readonlyDamagedWeightDeduction">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="stockOrderForm.get('damagedWeightDeduction').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.error">
+                        Damaged weight deduction is required
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div *ngIf="damagedWeightDeductionInvalidCheck" class="sc-invalid-feedback">
+                    <div i18n="@@productLabelStockPurchaseOrdersModal.textinput.deductionGreaterThanWeight.error">
+                      Damaged weight deduction is larger than net weight
+                    </div>
+                  </div>
+                </textinput>
+              </div>
+            </div>
+
             <div class="af-row" *ngIf="showTare">
               <div class="af-c6">
                 <textinput [form]="netWeightForm"
