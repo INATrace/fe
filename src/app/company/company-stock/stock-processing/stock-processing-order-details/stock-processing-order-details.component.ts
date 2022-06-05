@@ -7,7 +7,7 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, dateAtNoonISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -870,7 +870,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         processingAction: this.prAction,
         targetStockOrders: outputStockOrderList,
         inputTransactions: [...this.inputTransactions],
-        processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
+        processingDate: this.processingDateForm.value ? (dateAtNoonISOString(this.processingDateForm.value) as any) : null
       };
 
       for (const stockOrder of this.selectedInputStockOrders) {
@@ -960,7 +960,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           finalProduct: inputStockOrder.finalProduct,
           internalLotNumber: `${this.outputStockOrderForm.get('internalLotNumber').value}/${index + 1 + existingTargetStockOrdersCount}`,
           creatorId: this.creatorId,
-          productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
+          productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : (dateAtNoonISOString(new Date()) as any),
           orderType: OrderTypeEnum.TRANSFERORDER,
           totalQuantity: inputStockOrder.availableQuantity,
           fulfilledQuantity: 0,
@@ -995,7 +995,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               totalQuantity: outputStockOrder.totalQuantity,
               fulfilledQuantity: outputStockOrder.totalQuantity,
               availableQuantity: outputStockOrder.totalQuantity,
-              productionDate: new Date(),
+              productionDate: (dateAtNoonISOString(new Date()) as any),
               sacNumber: outputStockOrder.sacNumber,
               currency: this.outputStockOrderForm.get('pricePerUnit').value ? this.companyProfile.currency.code : null,
               orderType: OrderTypeEnum.PROCESSINGORDER
@@ -1031,7 +1031,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             parseFloat(this.totalQuantity) : 0,
           availableQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE') ?
             parseFloat(this.totalQuantity) : 0,
-          productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
+          productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : (dateAtNoonISOString(new Date()) as any),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
           quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
           currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? this.companyProfile.currency.code : null)
