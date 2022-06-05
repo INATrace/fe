@@ -14,7 +14,7 @@ export const environment = {
     relativeFileUploadUrlManualType: window['env']['relativeFileUploadUrlManualType'] || '',
     relativeImageUploadUrl: window['env']['relativeImageUploadUrl'] || '',
     relativeImageUploadUrlAllSizes: window['env']['relativeImageUploadUrlAllSizes'] || '',
-    version: '2.17.0-SNAPSHOT',
+    version: '2.18.0-SNAPSHOT',
 
     googleMapsApiKey: window['env']['googleMapsApiKey'] || '',
     googleAnalyticsId: '',
