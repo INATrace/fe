@@ -250,7 +250,7 @@
                 <ng-container *ngFor="let historyItem of history.timelineItems; let i= index; let last= last">
                   <div class="af-timeline-box" [class.last-box]="last">
                     <h4 class="af-timeline-box-subtitle">
-                      <span *ngIf="processingCreationDate(historyItem) as dateOfCreation">{{ dateOfCreation | date: 'yyyy-MM-dd hh:mm' }} - </span>{{ processingOrderName(historyItem) }}
+                      <span *ngIf="processingCreationDate(historyItem) as dateOfCreation">{{ dateOfCreation | date: 'yyyy-MM-dd' }} - </span>{{ processingOrderName(historyItem) }}
                     </h4>
 
                     <ul>
@@ -258,7 +258,7 @@
                         <li>
                           <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, targetStockOrder)"
                              (click)="goToOrderView(targetStockOrder)">
-                            {{ targetStockOrder.creationTimestamp | date: 'yyyy-MM-dd hh:mm' }} @ {{ targetStockOrder.facility?.name }} : {{ targetStockOrder.internalLotNumber || targetStockOrder.identifier }} - {{ targetStockOrder.totalQuantity }} {{ targetStockOrder.measureUnitType?.label }}
+                            {{ targetStockOrder.productionDate | date: 'yyyy-MM-dd' }} @ {{ targetStockOrder.facility?.name }} : {{ targetStockOrder.internalLotNumber || targetStockOrder.identifier }} - {{ targetStockOrder.totalQuantity }} {{ targetStockOrder.measureUnitType?.label }}
                             <span *ngIf="isRoot(stockOrder, targetStockOrder)">&nbsp;(<span i18n="@@orderHistoryView.thisOrder.notice">this order</span>)</span>
                           </a>
 
