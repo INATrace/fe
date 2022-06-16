@@ -134,7 +134,14 @@
                   </tr>
                   <tr>
                     <th i18n="@@orderHistoryView.tableCol.costPaidBalance">Cost / Paid / Balance</th>
-                    <td>{{ stockOrder.cost ? stockOrder.cost : 'TBD' }} / {{ stockOrder.paid || 0 }} / {{ stockOrder.balance ? stockOrder.balance : 'TBD' }} {{ stockOrder.currency }}</td>
+                    <td>
+                      <ng-container *ngIf="stockOrder.priceDeterminedLater; else priceAvailable">
+                        TBD
+                      </ng-container>
+                      <ng-template #priceAvailable>
+                        {{ stockOrder.cost }} / {{ stockOrder.paid || 0 }} / {{ stockOrder.balance }} {{ stockOrder.currency }}
+                      </ng-template>
+                    </td>
                   </tr>
                 </ng-container>
 
