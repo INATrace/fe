@@ -2990,6 +2990,8 @@
     "productLabelStockProcessingOrderDetail.filter.organicOnlyCoffee": "Nur Bio-Kaffee",
     "productLabelStockProcessingOrderDetail.filter.nonOrganicOnlyCoffee": "Konventioneller Kaffee",
     "productLabelStockProcessingOrderDetail.organicOnlyStatus.organicCoffee": "Bio-Kaffee",
-    "productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee": "Konventioneller Kaffee"
+    "productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee": "Konventioneller Kaffee",
+    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
   }
 }

@@ -2933,6 +2933,8 @@
     "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)",
     "productLabel.b2c.price.unit.container": "kuri kontineri",
     "productLabel.b2c.price.unit.kg": "ku kg",
-    "productLabel.b2c.price.unit.percentValue": "% agaciro"
+    "productLabel.b2c.price.unit.percentValue": "% agaciro",
+    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
   }
 }

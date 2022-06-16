@@ -30,7 +30,7 @@
             {{ order.totalQuantity ? (order.totalQuantity | number : '1.0-2') : 0 }} / {{ order.fulfilledQuantity ? (order.fulfilledQuantity | number : '1.0-2') : 0 }} / {{ order.availableQuantity ? (order.availableQuantity | number : '1.0-2') : 0 }}
           </td>
           <td *ngIf="!sortOptions[8].hide" [attr.data-label]="sortOptions[8].name">{{ order.measureUnitType?.label }}</td>
-          <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost | number : '1.0-2' }} / {{ order.balance | number : '1.0-2' }}</td>
+          <td *ngIf="!sortOptions[9].hide" [attr.data-label]="sortOptions[9].name">{{ order.cost ? (order.cost | number : '1.0-2') : 'TBD' }} / {{ order.balance ? (order.balance | number : '1.0-2') : 'TBD' }}</td>
           <td *ngIf="!sortOptions[10].hide" [attr.data-label]="sortOptions[10].name">{{ formatDate(order.deliveryTime) }}</td>
           <td *ngIf="!sortOptions[11].hide" [attr.data-label]="sortOptions[11].name">{{ order.updateTimestamp | date: 'yyyy-MM-dd hh:mm' }}</td>
           <td *ngIf="!sortOptions[12].hide" [attr.data-label]="sortOptions[12].name">{{ order.isAvailable | formatAvailability }}</td>

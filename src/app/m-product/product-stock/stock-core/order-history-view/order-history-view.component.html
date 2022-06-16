@@ -217,7 +217,7 @@
                     </tr>
                     <tr>
                       <th i18n="@@orderHistoryView.tableCol.costPaidBalance">Cost / Paid / Balance</th>
-                      <td>{{stockOrder.cost}} / {{stockOrder.paid || 0}} / {{stockOrder.balance}} {{stockOrder.currency}}</td>
+                      <td>{{stockOrder.cost ? stockOrder.cost : 'TBD'}} / {{stockOrder.paid || 0}} / {{stockOrder.balance ? stockOrder.balance : 'TBD'}} {{stockOrder.currency}}</td>
                     </tr>
                   </ng-container>
 

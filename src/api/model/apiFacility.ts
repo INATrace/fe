@@ -43,6 +43,10 @@ export interface ApiFacility {
      */
     displayPriceDeductionDamage?: boolean;
     /**
+     * Enable form control 'Price determined later'
+     */
+    displayPriceDeterminedLater?: boolean;
+    /**
      * Enable form control 'Tare'
      */
     displayTare?: boolean;
@@ -108,6 +112,10 @@ export namespace ApiFacility {
          * Enable form control 'Price deduction damage'
          */
         displayPriceDeductionDamage = 'displayPriceDeductionDamage',
+        /**
+         * Enable form control 'Price determined later'
+         */
+        displayPriceDeterminedLater = 'displayPriceDeterminedLater',
         /**
          * Enable form control 'Tare'
          */
@@ -208,6 +216,17 @@ export namespace ApiFacility {
                     isEnum: false,
                     required: false,
                     name: 'displayPriceDeductionDamage',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayPriceDeterminedLater',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -363,6 +382,8 @@ export namespace ApiFacility {
                 ],
                 displayPriceDeductionDamage: [
                 ],
+                displayPriceDeterminedLater: [
+                ],
                 displayTare: [
                 ],
                 displayWeightDeductionDamage: [
@@ -407,6 +428,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               displayPriceDeductionDamage: {
+  //                   validators: []
+  //               },
+  //               displayPriceDeterminedLater: {
   //                   validators: []
   //               },
   //               displayTare: {
