@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
@@ -17,6 +17,7 @@ import { ApiUserCustomerCooperative } from '../../../../../api/model/apiUserCust
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stock-payments-detail',
@@ -60,7 +61,9 @@ export class StockPaymentsDetailComponent implements OnInit {
       private globalEventsManager: GlobalEventManagerService,
       private companyControllerService: CompanyControllerService,
       private stockOrderControllerService: StockOrderControllerService,
-      private paymentControllerService: PaymentControllerService
+      private paymentControllerService: PaymentControllerService,
+      private toasterService: ToastrService,
+      private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -142,6 +145,11 @@ export class StockPaymentsDetailComponent implements OnInit {
   }
 
   private async newPayment() {
+
+    if (this.stockOrder.priceDeterminedLater) {
+      this.toasterService.error('Add price per unit before adding balance payments.');
+      this.router.navigate(['my-stock', 'purchases', 'tab']);
+    }
 
     this.submitted = false;
 
