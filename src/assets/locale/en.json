@@ -3006,6 +3006,8 @@
     "productLabel.textinput.comparisonOfPrice.manualProducerPrice": "Manual producer price (USD/pound)",
     "productLabel.b2c.price.unit.container": "per container",
     "productLabel.b2c.price.unit.kg": "per kg",
-    "productLabel.b2c.price.unit.percentValue": "% VALUE"
+    "productLabel.b2c.price.unit.percentValue": "% VALUE",
+    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
   }
 }

@@ -2934,6 +2934,8 @@
     "productLabelStockProcessingOrderDetail.filter.nonOrganicOnlyCoffee": "Café convencional",
     "productLabelStockProcessingOrderDetail.organicOnlyStatus.organicCoffee": "Café orgánico",
     "productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee": "Café convencional",
-    "productLabelStockFacilityModal.removeSemiOrFinalProduct.confirm.message": "Está seguro que quiere remover el producto? Ya no va a poder trabajar con estos productos"
+    "productLabelStockFacilityModal.removeSemiOrFinalProduct.confirm.message": "Está seguro que quiere remover el producto? Ya no va a poder trabajar con estos productos",
+    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
   }
 }

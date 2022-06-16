@@ -150,6 +150,10 @@ export interface ApiStockOrder {
      */
     preferredWayOfPayment?: ApiStockOrder.PreferredWayOfPaymentEnum;
     /**
+     * Option to determine price later after taking delivery
+     */
+    priceDeterminedLater?: boolean;
+    /**
      * Price per unit
      */
     pricePerUnit?: number;
@@ -330,6 +334,10 @@ export namespace ApiStockOrder {
          * Preferred way of payment
          */
         preferredWayOfPayment = 'preferredWayOfPayment',
+        /**
+         * Option to determine price later after taking delivery
+         */
+        priceDeterminedLater = 'priceDeterminedLater',
         /**
          * Price per unit
          */
@@ -808,6 +816,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'priceDeterminedLater',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'pricePerUnit',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
@@ -1139,6 +1158,8 @@ export namespace ApiStockOrder {
                 ],
                 preferredWayOfPayment: [
                 ],
+                priceDeterminedLater: [
+                ],
                 pricePerUnit: [
                 ],
                 pricePerUnitForEndCustomer: [
@@ -1292,6 +1313,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               preferredWayOfPayment: {
+  //                   validators: []
+  //               },
+  //               priceDeterminedLater: {
   //                   validators: []
   //               },
   //               pricePerUnit: {

@@ -12142,6 +12142,11 @@
             "example": false,
             "type": "boolean"
           },
+          "displayPriceDeterminedLater": {
+            "description": "Enable form control 'Price determined later'",
+            "example": false,
+            "type": "boolean"
+          },
           "displayTare": {
             "description": "Enable form control 'Tare'",
             "example": false,
@@ -18312,6 +18317,11 @@
               "UNKNOWN"
             ],
             "type": "string"
+          },
+          "priceDeterminedLater": {
+            "description": "Option to determine price later after taking delivery",
+            "example": false,
+            "type": "boolean"
           },
           "pricePerUnit": {
             "description": "Price per unit",

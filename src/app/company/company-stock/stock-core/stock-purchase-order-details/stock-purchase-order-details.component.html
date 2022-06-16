@@ -165,6 +165,15 @@
               </div>
             </div>
 
+            <div class="af-row" *ngIf="displayPriceDeterminedLater">
+              <div class="af-c6"></div>
+              <div class="af-c6">
+                <checkbox-input [form]="stockOrderForm.get('priceDeterminedLater')" (onClick)="priceDeterminedLaterChanged()">
+                  <checkbox-input-rich-label style="font-weight: 300">Price determined later</checkbox-input-rich-label>
+                </checkbox-input>
+              </div>
+            </div>
+
             <div class="af-row">
               <div class="af-c6">
                 <textinput
@@ -188,10 +197,12 @@
                 <textinput
                         [form]="stockOrderForm.get('pricePerUnit')"
                         [label]="pricePerUnitLabel"
+                        [disabled]="stockOrderForm.get('priceDeterminedLater').value"
                         style="width: 100%"
                         placeholder="Enter price per unit"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.pricePerUnit.placeholder"
-                        [isInvalid]="submitted && stockOrderForm.get('pricePerUnit').invalid">
+                        [isInvalid]="submitted && stockOrderForm.get('pricePerUnit').invalid"
+                        [readOnly]="stockOrderForm.get('priceDeterminedLater').value">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="stockOrderForm.get('pricePerUnit').errors as errors" class="sc-invalid-feedback">
                       <div *ngIf="errors.required" i18n="@@productLabelStockPurchaseOrdersModal.unityPrice.textinput.unityPrice.error">
@@ -231,6 +242,7 @@
                 <textinput *ngIf="showDamagedPriceDeduction"
                         [form]="stockOrderForm.get('damagedPriceDeduction')"
                         [label]="damagedPriceDeductionLabel"
+                        [disabled]="stockOrderForm.get('priceDeterminedLater').value"
                         style="width: 100%"
                         placeholder="Enter damaged price deduction"
                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.placeholder"

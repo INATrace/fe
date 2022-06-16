@@ -20,6 +20,7 @@ import { AggregatedStockItem } from './models';
 import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -116,7 +117,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderControllerService: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
-    private modalService: NgbModalImproved
+    private modalService: NgbModalImproved,
+    private toasterService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -388,6 +390,10 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   payment(order: ApiStockOrder) {
+    if (order.priceDeterminedLater) {
+      this.toasterService.warning('Add price per unit before adding balance payments.');
+      return;
+    }
     this.router.navigate(['my-stock', 'payments', 'purchase-order', order.id, 'new']).then();
   }
 
