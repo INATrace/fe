@@ -605,6 +605,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   private addPayments() {
     const poIds = [];
     for (const item of this.selectedOrders) {
+      if (item.priceDeterminedLater) {
+        continue;
+      }
       poIds.push(item.id);
     }
     this.router.navigate(['my-stock', 'payments', 'purchases', 'bulk-payment', poIds.toString(), 'new', 'PO']).then();
