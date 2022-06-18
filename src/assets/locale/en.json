@@ -3008,6 +3008,7 @@
     "productLabel.b2c.price.unit.kg": "per kg",
     "productLabel.b2c.price.unit.percentValue": "% VALUE",
     "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
-    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later",
+    "productLabelStockPayments.addPricePerUnit.message": "Select 'edit' to add price per unit before adding balance payments."
   }
 }

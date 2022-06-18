@@ -111,6 +111,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   addPaymentsSubscription: Subscription;
 
+  private addPricePerUnitMessage: string = $localize`:@@productLabelStockPayments.addPricePerUnit.message:Add price per unit`;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -391,7 +393,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   payment(order: ApiStockOrder) {
     if (order.priceDeterminedLater) {
-      this.toasterService.warning('Add price per unit before adding balance payments.');
+      this.toasterService.warning(this.addPricePerUnitMessage);
       return;
     }
     this.router.navigate(['my-stock', 'payments', 'purchase-order', order.id, 'new']).then();

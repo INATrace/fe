@@ -55,6 +55,8 @@ export class StockPaymentsDetailComponent implements OnInit {
   payableFromForm = new FormControl(null);
   orderReferenceForm = new FormControl(null);
 
+  private addPricePerUnitMessage: string = $localize`:@@productLabelStockPayments.addPricePerUnit.message:Add price per unit`;
+
   constructor(
       private location: Location,
       private route: ActivatedRoute,
@@ -147,8 +149,8 @@ export class StockPaymentsDetailComponent implements OnInit {
   private async newPayment() {
 
     if (this.stockOrder.priceDeterminedLater) {
-      this.toasterService.error('Add price per unit before adding balance payments.');
-      this.router.navigate(['my-stock', 'purchases', 'tab']);
+      this.toasterService.error(this.addPricePerUnitMessage);
+      this.router.navigate(['my-stock', 'purchases', 'tab']).then();
     }
 
     this.submitted = false;
