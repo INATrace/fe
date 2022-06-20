@@ -36,7 +36,7 @@ export class CompanyUserCustomersByRoleService extends GeneralSifrantService<Api
       return el.name + ' ' + el.surname + ' (' + el.id + ', ' + municipality + '-' + village + ')';
     }
 
-    return `${el.name} ${el.surname}`;
+    return `${el.name} ${el.surname} (${el.id})`;
   }
 
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiUserCustomer>> {
