@@ -2935,7 +2935,9 @@
     "productLabelStockProcessingOrderDetail.organicOnlyStatus.organicCoffee": "Café orgánico",
     "productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee": "Café convencional",
     "productLabelStockFacilityModal.removeSemiOrFinalProduct.confirm.message": "Está seguro que quiere remover el producto? Ya no va a poder trabajar con estos productos",
-    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
-    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later"
+    "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Muestra 'Precio por determinar'",
+    "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Precio por determinar",
+    "stockOrderItem.pricePerUnitForEndCustomer.textinput.error": "Se requiere precio",
+    "productLabelStockPayments.addPricePerUnit.message": "Seleccione 'editar' para añadir el precio por unidad antes de añadir un pago de saldo"
   }
 }
