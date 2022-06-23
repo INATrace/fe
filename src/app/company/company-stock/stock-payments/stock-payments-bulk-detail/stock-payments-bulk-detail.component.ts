@@ -403,7 +403,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
           stockOrder: purchaseOrder,
           orderId: purchaseOrder.orderId,
           amount: purchaseOrder.paid,
-          recipientUserCustomer: purchaseOrder.recipientUserCustomer,
+          recipientUserCustomer: purchaseOrder.producerUserCustomer,
           preferredWayOfPayment: purchaseOrder.preferredWayOfPayment,
           representativeOfRecipientUserCustomer: purchaseOrder.representativeOfRecipientUserCustomer,
           paymentType: PaymentTypeEnum.BANKTRANSFER,
