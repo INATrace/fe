@@ -2493,7 +2493,7 @@
     "productLabelStockBulkPayments.textinput.paymentPerKg.label": "Payment per kg (RWF)",
     "productLabelStockBulkPayments.textinput.paymentPerKg.placeholder": "Enter payment per kg (RWF)",
     "productLabelStockBulkPayments.textinput.paymentPerKg.error": " Payment per kg is required ",
-    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Angelique's finest estimated price",
+    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Endprodukt geschätzter Preis",
     "productLabelStockBulkPayments.textinput.totalPurchased.label": "Total purchased in selected order(s) (kg)",
     "productLabelStockBulkPayments.textinput.totalPurchased.placeholder": "Enter yotal purchased in selected order(s) (kg)",
     "productLabelStockBulkPayments.textinput.totalBalance.label": "Total balance to be paid(RWF)",

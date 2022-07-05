@@ -2497,7 +2497,7 @@
     "paymentForm.textinput.amount.currency.label": "Moneda",
     "paymentForm.textinput.currency.error": "Se requiere moneda",
     "productLabelStock.button.clearCheckbox": "Borrar las casillas de verificación",
-    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Precio estimado de Angelique's Finest",
+    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Precio estimado de producto final",
     "productLabelStockBulkPayments.textinput.totalPurchased.label": "Total comprado en el(los) pedido(s) seleccionado(s) (kg)",
     "productLabelStockBulkPayments.textinput.totalPurchased.placeholder": "Introduzca el total de compras en los pedidos seleccionados (kg)",
     "productLabelStockBulkPayments.textinput.totalBalance.label": "Saldo total a pagar (RWF)",

@@ -2491,7 +2491,7 @@
     "productLabelStockBulkPayments.textinput.paymentPerKg.label": "Payment per kg (RWF)",
     "productLabelStockBulkPayments.textinput.paymentPerKg.placeholder": "Enter payment per kg (RWF)",
     "productLabelStockBulkPayments.textinput.paymentPerKg.error": " Payment per kg is required ",
-    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Igiciro cyigereranya cya Angelique's finest",
+    "productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice": "Igiciro cyigereranya cya ibicuruzwa byanyuma",
     "productLabelStockBulkPayments.textinput.totalPurchased.label": "Ibyaguzwe byose mu buryo bwatoranijwe (kg)",
     "productLabelStockBulkPayments.textinput.totalPurchased.placeholder": "Injiza ibyaguzwe byose mu buryo bwo guhitamo komande (kg)",
     "productLabelStockBulkPayments.textinput.totalBalance.label": "Amafaranga asigaye yose agomba kwishyurwa (RWF)",
