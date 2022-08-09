@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import _ from 'lodash-es';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { ChainOrganization } from '../../../../api-chain/model/chainOrganization';
-import { ChainCompanyCustomer } from '../../../../api-chain/model/chainCompanyCustomer';
 import { FormArray, FormGroup } from '@angular/forms';
 import { ApiCompany } from '../../../../api/model/apiCompany';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';

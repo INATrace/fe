@@ -21,7 +21,6 @@ import { formatBytes } from 'src/shared/utils';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ClosableComponent } from '../closable/closable.component';
-import { ChainFileInfo } from 'src/api-chain/model/chainFileInfo';
 import { DocumentService } from 'src/api-chain/api/document.service';
 
 class UploadResponse {

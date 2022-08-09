@@ -7,7 +7,6 @@ import { UserControllerService } from 'src/api/api/userController.service';
 import { ApiResponseApiUserGet } from 'src/api/model/apiResponseApiUserGet';
 import { ApiUserGet } from 'src/api/model/apiUserGet';
 import { GlobalEventManagerService } from './global-event-manager.service';
-import { UserService } from 'src/api-chain/api/user.service';
 import { LanguageCodeHelper } from '../language-code-helper';
 
 @Injectable({

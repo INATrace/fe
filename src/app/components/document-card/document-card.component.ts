@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { take } from 'rxjs/operators';
 import { DocumentService } from 'src/api-chain/api/document.service';
-import { ChainFileInfo } from 'src/api-chain/model/chainFileInfo';
 import { FormatPaymentPurposeTypePipe } from '../pipes/format-payment-purpose-type';
 
 @Component({
