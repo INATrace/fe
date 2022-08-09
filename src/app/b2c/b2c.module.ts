@@ -13,13 +13,14 @@ import { B2cFeedbackComponent } from './b2c-page/b2c-feedback/b2c-feedback.compo
 import { B2cTermsComponent } from './b2c-page/b2c-terms/b2c-terms.component';
 import { B2cPrivacyComponent } from './b2c-page/b2c-privacy/b2c-privacy.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { FrontPageModule } from '../front-page/front-page-module';
 import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
+import { B2cCarouselComponent } from './b2c-components/b2c-carousel/b2c-carousel.component';
 
 
 @NgModule({
   declarations: [
+    B2cCarouselComponent,
     B2cPageComponent,
     B2cIntroComponent,
     B2cJourneyComponent,
@@ -29,12 +30,12 @@ import { SharedModule } from '../shared/shared.module';
     B2cQualityComponent,
     B2cFeedbackComponent,
     B2cTermsComponent,
-    B2cPrivacyComponent],
+    B2cPrivacyComponent,
+  ],
     imports: [
         CommonModule,
         B2cRoutingModule,
         GoogleMapsModule,
-        FrontPageModule,
         ComponentsModule,
         SharedModule
     ],

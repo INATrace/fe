@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
+import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
 
 @Component({
-  selector: 'app-front-page-carousel',
-  templateUrl: './front-page-carousel.component.html',
-  styleUrls: ['./front-page-carousel.component.scss']
+  selector: 'app-b2c-carousel',
+  templateUrl: './b2c-carousel.component.html',
+  styleUrls: ['./b2c-carousel.component.scss']
 })
-export class FrontPageCarouselComponent implements OnInit {
+export class B2cCarouselComponent implements OnInit {
 
   constructor() { }
 

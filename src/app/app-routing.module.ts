@@ -436,10 +436,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'p-cd-old/:uuid/:qrTag',
-    loadChildren: () => import('./front-page/front-page-module').then(m => m.FrontPageModule)
-  },
-  {
     path: 'p-cd',
     loadChildren: () => import('./b2c/b2c.module').then(m => m.B2cModule)
   },

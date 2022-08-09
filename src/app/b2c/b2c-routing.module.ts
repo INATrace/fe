@@ -10,7 +10,6 @@ import { B2cFeedbackComponent } from './b2c-page/b2c-feedback/b2c-feedback.compo
 import { B2cTermsComponent } from './b2c-page/b2c-terms/b2c-terms.component';
 import { B2cPrivacyComponent } from './b2c-page/b2c-privacy/b2c-privacy.component';
 
-
 const routes: Routes = [
   {
     path: ':uuid/:qrTag',

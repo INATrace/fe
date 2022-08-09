@@ -5,10 +5,10 @@
         <iframe [src]="this.videoMeetTheFarmers" frameborder="0" allowfullscreen></iframe>
     </ng-container>
 
-    <app-front-page-carousel
+    <app-b2c-carousel
             [slides]="picsMeetTheFarmers"
             [b2cSettings]="b2cSettings">
-    </app-front-page-carousel>
+    </app-b2c-carousel>
 
     <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{titleCooperative}}</h1>
 
@@ -18,11 +18,11 @@
 
     <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Processing story</h2>
 
-    <app-front-page-carousel
+    <app-b2c-carousel
             [slides]="picsProduction"
             [productionRecords]=true
             [b2cSettings]="b2cSettings">
-    </app-front-page-carousel>
+    </app-b2c-carousel>
 
     <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The brand {{ productName }} owned by local producers</h1>
 
