@@ -1,19 +1,17 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-pathline-map',
     templateUrl: './pathline-map.component.html',
     styleUrls: ['./pathline-map.component.scss']
 })
-export class PathlineMapComponent implements OnInit, OnDestroy {
-    
-    @Input()
-    public markersForm: FormArray;
+export class PathlineMapComponent implements OnInit, OnChanges, OnDestroy {
     
     private destroy$ = new Subject<boolean>();
     
@@ -27,6 +25,7 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
     bounds: google.maps.LatLngBounds;
     mapMarkerOption: any;
     initialBounds: google.maps.LatLngLiteral[] = [];
+    journeyVertices: google.maps.LatLngLiteral[] = [];
     lineSymbol = {
         path: 'M 0,-1 0,1',
         strokeOpacity: 1,
@@ -43,21 +42,17 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
         ],
         strokeOpacity: 0,
     };
+
+    private markersFormValueChangeSubs: Subscription;
+
+    @Input()
+    public markersForm: FormArray;
     
     constructor(public globalEventManager: GlobalEventManagerService) {
     }
     
-    ngOnInit(): void {
-        this.globalEventManager.areGoogleMapsLoadedEmmiter.pipe(takeUntil(this.destroy$)).subscribe({
-            next: loaded => {
-                if (loaded) {
-                    this.isGoogleMapsLoaded = true;
-                }
-            }
-        });
-    }
-    
-    @ViewChild(GoogleMap) set map(gMap: GoogleMap) {
+    @ViewChild(GoogleMap)
+    set map(gMap: GoogleMap) {
         if (gMap) {
             this.gMap = gMap;
             this.mapMarkerOption = {
@@ -72,6 +67,35 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
             setTimeout(() => this.googleMapsIsLoaded(gMap));
         }
     }
+
+    ngOnInit(): void {
+        this.globalEventManager.areGoogleMapsLoadedEmmiter.pipe(takeUntil(this.destroy$)).subscribe({
+            next: loaded => {
+                if (loaded) {
+                    this.isGoogleMapsLoaded = true;
+                }
+            }
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.markersForm) {
+
+            // Form instance is changed, we need to register new subscription (also update the journey points)
+            this.updateJourneyVertices();
+
+            this.markersFormValueChangeSubs = this.markersForm?.valueChanges.subscribe(() => {
+                this.updateJourneyVertices();
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.markersFormValueChangeSubs) {
+            this.markersFormValueChangeSubs.unsubscribe();
+        }
+        this.destroy$.next(true);
+    }
     
     googleMapsIsLoaded(map) {
         this.isGoogleMapsLoaded = true;
@@ -82,6 +106,8 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
                 lng: ctrl.get('longitude').value,
             });
         });
+
+        this.updateJourneyVertices();
         
         this.bounds = new google.maps.LatLngBounds();
         for (const bound of this.initialBounds) {
@@ -104,7 +130,6 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
         );
         const minBounds = new google.maps.LatLngBounds(southWest, northEast);
         map.fitBounds(this.bounds.union(minBounds));
-        // map.fitBounds(this.bounds);
     }
     
     addJourneyMarker(event: google.maps.MouseEvent) {
@@ -113,24 +138,20 @@ export class PathlineMapComponent implements OnInit, OnDestroy {
             longitude: new FormControl(event.latLng.lng()),
         }));
         this.markersForm.markAsDirty();
-        
     }
     
     removeJourneyMarker(i: number) {
         this.markersForm.removeAt(i);
         this.markersForm.markAsDirty();
     }
-    
-    getJourneyVertices(): google.maps.LatLngLiteral[] {
-        return this.markersForm.controls.map(ctrl => {
+
+    private updateJourneyVertices(): void {
+        this.journeyVertices = this.markersForm.controls.map(ctrl => {
             return {
                 lat: ctrl.get('latitude').value,
                 lng: ctrl.get('longitude').value,
             };
         });
     }
-    
-    ngOnDestroy() {
-        this.destroy$.next(true);
-    }
+
 }

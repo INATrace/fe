@@ -8,10 +8,10 @@
         *ngFor="let marker of markersForm.controls; index as i"
         [position]="{lat: marker.get('latitude').value, lng: marker.get('longitude').value}"
         (mapRightclick)="removeJourneyMarker(i)"
-        [options]="mapMarkerOption"
-    >
+        [options]="mapMarkerOption">
     </map-marker>
-    <map-polyline *ngIf="markersForm.length > 1" [options]="polylineOptions"
-        [path]="getJourneyVertices()"
-    ></map-polyline>
+    <map-polyline *ngIf="markersForm.length > 1"
+                  [options]="polylineOptions"
+                  [path]="journeyVertices">
+    </map-polyline>
 </google-map>

@@ -168,7 +168,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   get changed(): boolean {
-    // console.log("CHG:", this.productChanged, this.labelChanged)
     return this.productChanged || this.labelChanged || this.mediaChanged;
   }
 
@@ -319,7 +318,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
 
-      const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(), product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+      const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+          product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
       this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
       const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
@@ -817,7 +817,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
 
-    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(), product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+        product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
     this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
     this.productForm.updateValueAndValidity();
