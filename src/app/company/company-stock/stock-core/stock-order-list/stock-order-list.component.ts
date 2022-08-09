@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
-import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
+import { DeliveryDates, StockOrderListingPageMode } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
-import { StockOrderListingPageMode } from '../../../../m-product/product-stock/stock-core/stock-tab-core/stock-tab-core.component';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
