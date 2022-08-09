@@ -35,6 +35,7 @@ import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-typ
 import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing-evidence-field-type.pipe';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
+import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
-    FormatPaymentStatusPipe
+    FormatPaymentStatusPipe,
+    QrCodeRedirectComponent
   ],
   imports: [
     CommonModule,

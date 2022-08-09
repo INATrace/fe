@@ -8,7 +8,7 @@ import { ApiProductLabelFeedback } from '../../../../api/model/apiProductLabelFe
 import {
   ApiProductLabelFeedbackValidationScheme,
   questionnaireAnswersFormMetadata, questionnaireAnswersValidationScheme
-} from '../../../product-label-front-page/product-label-front-feedback/validation';
+} from '../../../m-product/product-label-feedback-page/feedback-modal/validation';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { PublicControllerService } from '../../../../api/api/publicController.service';

@@ -3,18 +3,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { ApiProductLabelFeedback } from 'src/api/model/apiProductLabelFeedback';
-import { GlobalEventManagerService } from '../../core/global-event-manager.service';
+import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { take } from 'rxjs/operators';
 import { ApiProductLabelFeedbackValidationScheme, questionnaireAnswersValidationScheme, questionnaireAnswersFormMetadata } from './validation';
-import { EnumSifrant } from '../../shared-services/enum-sifrant';
+import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 
 @Component({
-  selector: 'app-product-label-front-feedback',
-  templateUrl: './product-label-front-feedback.component.html',
-  styleUrls: ['./product-label-front-feedback.component.scss']
+  selector: 'app-feedback-modal',
+  templateUrl: './feedback-modal.component.html',
+  styleUrls: ['./feedback-modal.component.scss']
 })
-export class ProductLabelFrontFeedbackComponent implements OnInit {
+export class FeedbackModalComponent implements OnInit {
 
   submitted: boolean = false;
 

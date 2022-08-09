@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductLabelFrontFeedbackComponent } from './product-label-front-feedback.component';
+import { FeedbackModalComponent } from './feedback-modal.component';
 
 describe('ProductLabelFrontFeedbackComponent', () => {
-  let component: ProductLabelFrontFeedbackComponent;
-  let fixture: ComponentFixture<ProductLabelFrontFeedbackComponent>;
+  let component: FeedbackModalComponent;
+  let fixture: ComponentFixture<FeedbackModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductLabelFrontFeedbackComponent ]
+      declarations: [ FeedbackModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductLabelFrontFeedbackComponent);
+    fixture = TestBed.createComponent(FeedbackModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,8 +13,7 @@ import { GuestLayoutComponent } from './layout/guest/guest-layout/guest-layout.c
 import { LandingPageLayoutComponent } from './layout/landing-page/landing-page-layout/landing-page-layout.component';
 import { ProductLabelFrontLayoutComponent } from './layout/product-label-front/product-label-front-layout/product-label-front-layout.component';
 import { LoginComponent } from './user/login/login.component';
-import { ProductLabelFrontPageComponent } from './product-label-front-page/product-label-front-page.component';
-import { QrCodeRedirectComponent } from './product-label-front-page/qr-code-redirect/qr-code-redirect.component';
+import { QrCodeRedirectComponent } from './components/qr-code-redirect/qr-code-redirect.component';
 import { RegisterActivationComponent } from './user/register-activation/register-activation.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ResetPasswordRequestComponent } from './user/reset-password-request/reset-password-request.component';
@@ -425,13 +424,6 @@ const routes: Routes = [
         }
       ]
     }
-  },
-  {
-    path: 'p/:uuid',
-    component: ProductLabelFrontLayoutComponent,
-    children: [
-      { path: '', component: ProductLabelFrontPageComponent, pathMatch: 'full' },
-    ]
   },
   {
     path: 'blog/:productId/:type/:knowledgeBlogId',
