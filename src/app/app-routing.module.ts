@@ -27,8 +27,6 @@ import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { FrontPagePrivacyComponent } from './front-page-common/front-page-privacy/front-page-privacy.component';
-import { FrontPageTermsComponent } from './front-page-common/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
@@ -436,35 +434,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'p-cd',
-    loadChildren: () => import('./b2c/b2c.module').then(m => m.B2cModule)
-  },
-  {
-    path: 's/:uuid/:qrTag/privacy-policy',
-    component: FrontPagePrivacyComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 's/:uuid/:qrTag/terms-of-use',
-    component: FrontPageTermsComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 's/privacy-policy',
-    component: FrontPagePrivacyComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null,
-      action: 'privacy_only'
-    }
-  },
-  {
     path: 'blog/:productId/:type/:knowledgeBlogId',
     component: ProductLabelFrontLayoutComponent,
     children: [
@@ -482,6 +451,10 @@ const routes: Routes = [
         }
       ]
     }
+  },
+  {
+    path: 'p-cd',
+    loadChildren: () => import('./b2c/b2c.module').then(m => m.B2cModule)
   },
   {
     path: 'q/:uuid',
