@@ -4,7 +4,7 @@ import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusiness
 import { Subscription } from 'rxjs';
 import { GoogleMap } from '@angular/google-maps';
 import { ApiHistoryTimelineItem } from '../../../../api/model/apiHistoryTimelineItem';
-import { HistoryTimelineItem } from '../../../front-page/front-page-journey/model';
+import { HistoryTimelineItem } from './model';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 
 @Component({
