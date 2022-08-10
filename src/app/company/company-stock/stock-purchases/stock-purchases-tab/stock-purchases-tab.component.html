@@ -246,19 +246,19 @@
       <div class="d-flex main-inside-top--row2 justify-content-between">
         <div class="d-flex">
 
-          <single-choice
-                  label="Orders"
-                  i18n-label="@@productLabelStock.label.order"
-                  [formControlInput]="orderListForm"
-                  [codebookService]="quoteOrdersOnOrganizationCodebook"
-                  [readonly]="orderListFormReadOnly"
-                  [isInvalidChoice]="orderListError">
-            <ng-container *ngIf="orderListError">
-              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">
-                Order is required
-              </div>
-            </ng-container>
-          </single-choice>
+<!--          <single-choice-->
+<!--                  label="Orders"-->
+<!--                  i18n-label="@@productLabelStock.label.order"-->
+<!--                  [formControlInput]="orderListForm"-->
+<!--                  [codebookService]="quoteOrdersOnOrganizationCodebook"-->
+<!--                  [readonly]="orderListFormReadOnly"-->
+<!--                  [isInvalidChoice]="orderListError">-->
+<!--            <ng-container *ngIf="orderListError">-->
+<!--              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">-->
+<!--                Order is required-->
+<!--              </div>-->
+<!--            </ng-container>-->
+<!--          </single-choice>-->
 
           <checkbox-input
                   style="margin-left: 1rem; margin-top: 0.4rem"
