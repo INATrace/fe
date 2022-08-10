@@ -13,12 +13,10 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { take } from 'rxjs/operators';
-import { ProcessingActionService } from '../../../../../api-chain/api/processingAction.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ApiProcessingActionValidationScheme } from './validation';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
-import { SemiProductService } from '../../../../../api-chain/api/semiProduct.service';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
@@ -46,7 +44,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   form: FormGroup;
   action: ApiProcessingAction;
 
-  codebookRepackedOutputs = EnumSifrant.fromObject(this.repackedOutputs);
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   activeSemiProductService: ActiveSemiProductsService;
@@ -81,10 +78,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingEvidenceTypeControllerService: ProcessingEvidenceTypeControllerService,
       private processingEvidenceFieldControllerService: ProcessingEvidenceFieldControllerService,
       private processingActionControllerService: ProcessingActionControllerService,
-      private processingActionService: ProcessingActionService,
       public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
-      private semiProductService: SemiProductService,
       private finalProductController: FinalProductControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
