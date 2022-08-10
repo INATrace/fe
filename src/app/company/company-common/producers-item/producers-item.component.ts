@@ -1,12 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChainUserCustomerRole } from 'src/api-chain/model/chainUserCustomerRole';
 import { faStamp } from '@fortawesome/free-solid-svg-icons';
-import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
-import { FormGroup, FormControl } from '@angular/forms';
+import { generateFormFromMetadata } from 'src/shared/utils';
+import { FormGroup } from '@angular/forms';
 import {
-  ApiUserCustomerCooperativeValidationScheme,
-  ChainUserCustomerRoleValidationScheme
+  ApiUserCustomerCooperativeValidationScheme
 } from '../../company-collectors/company-collectors-details/validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
@@ -19,7 +17,7 @@ import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
   templateUrl: './producers-item.component.html',
   styleUrls: ['./producers-item.component.scss']
 })
-export class ProducersItemComponent extends GenericEditableItemComponent<ChainUserCustomerRole> {
+export class ProducersItemComponent extends GenericEditableItemComponent<ApiUserCustomerCooperative> {
 
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
@@ -77,18 +75,6 @@ export class ProducersItemComponent extends GenericEditableItemComponent<ChainUs
 
   public generateForm(value: any): FormGroup {
     return generateFormFromMetadata(ApiUserCustomerCooperative.formMetadata(), value, ApiUserCustomerCooperativeValidationScheme);
-  }
-
-  static createEmptyObject(): ChainUserCustomerRole {
-    let market = ChainUserCustomerRole.formMetadata();
-    return defaultEmptyObject(market) as ChainUserCustomerRole
-  }
-
-  static emptyObjectFormFactory(): () => FormControl {
-    return () => {
-      let f = new FormControl(ProducersItemComponent.createEmptyObject(), ChainUserCustomerRoleValidationScheme.validators)
-      return f
-    }
   }
 
   get roles() {
