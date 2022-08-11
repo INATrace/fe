@@ -14,7 +14,6 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 import { BottomButtonsComponent } from './bottom-buttons/bottom-buttons.component';
 import { CardComponent } from './card/card.component';
-import { DocumentCardComponent } from './document-card/document-card.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { FormDetailsLeftPanelComponent } from './form-details-left-panel/form-details-left-panel.component';
 import { FormPositionBoxComponent } from './form-position-box/form-position-box.component';
@@ -49,7 +48,6 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     FormatStockOrderTypePipe,
     RedirectClearCacheComponent,
     CardComponent,
-    DocumentCardComponent,
     FormatTransactionTypePipe,
     FormatTransactionStatusPipe,
     FormatProcessingActionTypePipe,
@@ -102,7 +100,6 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     TranslateCodebookPipe,
     FormatCompanyCertsPipe,
     GenerateQRCodeModalComponent,
-    DocumentCardComponent,
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
