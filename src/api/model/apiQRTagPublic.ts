@@ -23,6 +23,14 @@ import { ApiHistoryTimeline } from './apiHistoryTimeline';
 
 
 export interface ApiQRTagPublic { 
+    /**
+     * The cupping flavour entered during one of the processing actions
+     */
+    cuppingFlavour?: string;
+    /**
+     * The cupping score entered during one of the processing actions
+     */
+    cuppingScore?: number;
     historyTimeline?: ApiHistoryTimeline;
     /**
      * The global (product) order of the Stock order
@@ -44,6 +52,10 @@ export interface ApiQRTagPublic {
      * The QR code tag
      */
     qrTag?: string;
+    /**
+     * The roasting profile entered during one of the processing actions
+     */
+    roastingProfile?: string;
 }
 
 /**
@@ -54,6 +66,14 @@ export namespace ApiQRTagPublic {
      * All properties of ApiQRTagPublic.
      */
     export enum Properties {
+        /**
+         * The cupping flavour entered during one of the processing actions
+         */
+        cuppingFlavour = 'cuppingFlavour',
+        /**
+         * The cupping score entered during one of the processing actions
+         */
+        cuppingScore = 'cuppingScore',
         historyTimeline = 'historyTimeline',
         /**
          * The global (product) order of the Stock order
@@ -74,7 +94,11 @@ export namespace ApiQRTagPublic {
         /**
          * The QR code tag
          */
-        qrTag = 'qrTag'
+        qrTag = 'qrTag',
+        /**
+         * The roasting profile entered during one of the processing actions
+         */
+        roastingProfile = 'roastingProfile'
     }
 
 
@@ -83,6 +107,28 @@ export namespace ApiQRTagPublic {
             metadata: formMetadata,
             classname: 'ApiQRTagPublic',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingFlavour',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingScore',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiHistoryTimeline.formMetadata,
                     isReadOnly: false,
@@ -150,8 +196,23 @@ export namespace ApiQRTagPublic {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'roastingProfile',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
+                cuppingFlavour: [
+                ],
+                cuppingScore: [
+                ],
                 historyTimeline: [
                 ],
                 orderId: [
@@ -164,6 +225,8 @@ export namespace ApiQRTagPublic {
                 ],
                 qrTag: [
                 ],
+                roastingProfile: [
+                ],
             }
         }
     }
@@ -171,6 +234,12 @@ export namespace ApiQRTagPublic {
   // export const ApiQRTagPublicValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               cuppingFlavour: {
+  //                   validators: []
+  //               },
+  //               cuppingScore: {
+  //                   validators: []
+  //               },
   //               historyTimeline: {
   //                   validators: []
   //               },
@@ -187,6 +256,9 @@ export namespace ApiQRTagPublic {
   //                   validators: []
   //               },
   //               qrTag: {
+  //                   validators: []
+  //               },
+  //               roastingProfile: {
   //                   validators: []
   //               },
   //     }

@@ -16230,6 +16230,14 @@
       },
       "ApiQRTagPublic": {
         "properties": {
+          "cuppingFlavour": {
+            "description": "The cupping flavour entered during one of the processing actions",
+            "type": "string"
+          },
+          "cuppingScore": {
+            "description": "The cupping score entered during one of the processing actions",
+            "type": "number"
+          },
           "historyTimeline": {
             "$ref": "#/components/schemas/ApiHistoryTimeline"
           },
@@ -16251,6 +16259,10 @@
           },
           "qrTag": {
             "description": "The QR code tag",
+            "type": "string"
+          },
+          "roastingProfile": {
+            "description": "The roasting profile entered during one of the processing actions",
             "type": "string"
           }
         },
