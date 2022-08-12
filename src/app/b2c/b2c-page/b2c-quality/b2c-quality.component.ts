@@ -14,7 +14,13 @@ export class B2cQualityComponent implements OnInit {
   b2cSettings: ApiBusinessToCustomerSettings;
 
   title = $localize`:@@frontPage.quality.title:Quality and Certificates`;
-  subtitle = $localize`:@@frontPage.quality.subtitle:Flavor profile`;
+
+  flavourProfileTitle = $localize`:@@frontPage.quality.flavourProfile:Flavor profile`;
+  flavourProfile: string | null = null;
+
+  roastingProfileTitle = $localize`:@@frontPage.quality.roastingProfile:Roasting profile`;
+  roastingProfile: string | null = null;
+
   chartsArePrepared = false;
 
   rwCerts = [];
@@ -23,12 +29,10 @@ export class B2cQualityComponent implements OnInit {
 
   lang = 'EN';
 
-  grade = 80;
+  grade = null;
   gradeHeight = 160;
-  flavour = '';
 
-  label1 = $localize`:@@frontPage.quality.chart.label1:80 points = specialty coffee`;
-  label2 = '';
+  qualityChartLabel = $localize`:@@frontPage.quality.chart.label1:80 points = specialty coffee`;
 
   productName = '';
 
@@ -40,13 +44,27 @@ export class B2cQualityComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.prepareCertificatesDataAndCharts();
+
+    // Calculate grade if cupping score is available
+    if (this.b2cPage.qrProductLabel?.cuppingScore) {
+      this.grade = this.b2cPage.qrProductLabel.cuppingScore;
+      this.gradeHeight = 2 * this.grade;
+    }
+
+    // Set flavour profile if available
+    if (this.b2cPage.qrProductLabel?.cuppingFlavour) {
+      this.flavourProfile = this.b2cPage.qrProductLabel.cuppingFlavour;
+    }
+
+    // Set roasting profile if available
+    if (this.b2cPage.qrProductLabel?.roastingProfile) {
+      this.roastingProfile = this.b2cPage.qrProductLabel.roastingProfile;
+    }
   }
 
-  async prepareCertificatesDataAndCharts() {
-    // Rwashoscco 2
-    // KaffeeKoop 4
-    // Musasa 3
-    // Koakaka 1
+  prepareCertificatesDataAndCharts() {
 
     for (const item of this.b2cPage.publicProductLabel.fields) {
       if (item.name === 'name') {
