@@ -31,10 +31,7 @@
 
               <section
                 cdkDropList
-                class="droppable-list"
-                (onIconClickChange)="labelsInfo()">
-                <!-- <div class="row">
-              <div class="col offset-md-1 pl-md-0"> -->
+                class="droppable-list">
                 <app-label-selector
                   [labels]="labels$ | async"
                   (onCreate)="createLabel()"
@@ -108,7 +105,7 @@
           <h2 i18n="@@productLabel.section.valueChain">Value chain</h2>
           <div class="af-form-element" style="margin-top: 20px;">
             <section [class.sp-page-fade-in]="fadeInProduct"
-                     cdkDropList (cdkDropListDropped)="onDropProductSection($event)"
+                     cdkDropList
                      class="droppable-list">
               <div cdkDrag class="row" [class.draggable-box]="reorderMode" [cdkDragDisabled]="!reorderMode">
                 <div cdkDragHandle class="col-1 px-0 d-flex justify-content-start">
@@ -129,7 +126,7 @@
           <h2 *ngIf="this.currentLabel" i18n="@@productLabel.section.labelData">Label data</h2>
           <div class="af-form-element" style="margin-top: 20px;">
             <section [class.sp-page-fade-in]="fadeInProduct"
-              cdkDropList (cdkDropListDropped)="onDropProductSection($event)"
+              cdkDropList
               class="droppable-list">
               <ng-container *ngFor="let element of productElements">
                 <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
@@ -151,7 +148,7 @@
           <h2 i18n="@@productLabel.section.process">Process</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropProcessSection($event)"
+              cdkDropList
               class="droppable-list">
 
               <ng-container *ngFor="let element of processElements">
@@ -174,7 +171,7 @@
           <h2 i18n="@@productLabel.section.socialResponsibility">Social responsibility</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropSocialResponsibilitySection($event)"
+              cdkDropList
               class="droppable-list">
               <div class="row">
                 <div class="col-1 px-0"></div>
@@ -205,7 +202,7 @@
           <h2 i18n="@@productLabel.section.environmentalSustainability">Environmental sustainability</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropEnvironmentalSustainabilitySection($event)"
+              cdkDropList
               class="droppable-list">
               <div class="row">
                 <div class="col-1 px-0"></div>
@@ -236,33 +233,10 @@
           <h2 i18n="@@productLabel.section.pricingTransparency">Pricing Transparency</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropSettingsSection($event)"
+              cdkDropList
               class="droppable-list">
 
               <ng-container *ngFor="let element of pricingTransparencyElements">
-                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
-                  <div class="col-1 px-0 d-flex justify-content-center">
-                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
-                  </div>
-                  <div class="col-11">
-                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
-                  </div>
-                </div>
-              </ng-container>
-            </section>
-          </div>
-        </div>
-      </div>
-
-      <div class="af-form-row">
-        <div class="af-form-block--c12">
-          <h2 i18n="@@productLabel.section.comparisonOfPrice">Comparison of prices</h2>
-          <div class="af-form-element">
-            <section
-              cdkDropList (cdkDropListDropped)="onDropComparisonOfPriceElementsSection($event)"
-              class="droppable-list">
-
-              <ng-container *ngFor="let element of comparisonOfPriceElements">
                 <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
                   <div class="col-1 px-0 d-flex justify-content-center">
                     <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
@@ -290,13 +264,13 @@
                 <div *ngFor="let markerCtrl of journeyMarkersCtrl.controls; let idx = index">
                   <div class="row">
                     <div class="col-3">
-                      <textinput [form]="markerCtrl.get('latitude')"
+                      <textinput [form]="$any(markerCtrl).get('latitude')"
                           label="Latitude"
                           [readOnly]="true">
                       </textinput>
                     </div>
                     <div class="col-3">
-                      <textinput [form]="markerCtrl.get('longitude')"
+                      <textinput [form]="$any(markerCtrl).get('longitude')"
                           label="Longitude"
                           [readOnly]="true">
                       </textinput>
@@ -338,7 +312,7 @@
           <h2 i18n="@@productLabel.section.settings">Settings</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropSettingsSection($event)"
+              cdkDropList
               class="droppable-list">
 
               <ng-container *ngFor="let element of settingsElements">
@@ -361,7 +335,7 @@
           <h2 i18n="@@productLabel.section.company">Company</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropCompanySection($event)"
+              cdkDropList
               class="droppable-list">
               <div class="row">
                 <div class="col-1 px-0">
@@ -393,7 +367,7 @@
           <h2>B2C settings</h2>
           <div class="af-form-element">
             <section
-              cdkDropList (cdkDropListDropped)="onDropCompanySection($event)"
+              cdkDropList
               class="droppable-list">
 
               <ng-container *ngFor="let element of b2cElements">
@@ -455,7 +429,7 @@
           [visibilityForm]="visibilityMap.get('valueChain')"
           [reorderMode]="reorderMode"
           [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('valueChain').get('name')"
+    <textinput [form]="$any(productForm).get('valueChain').get('name')"
                [readOnly]="true"
                style="width: 100%;"
                hideAsterisk="true">
@@ -469,7 +443,7 @@
     [visibilityForm]="visibilityMap.get('name')"
     [reorderMode]="reorderMode"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('name')"
+    <textinput [form]="$any(productForm).get('name')"
       [label]="this.productNameLabelAndPlaceholder('LABEL', 'name')"
       [placeholder]="this.productNameLabelAndPlaceholder('PLACEHOLDER', 'name')"
       style="width: 100%;"
@@ -504,7 +478,7 @@
       i18n-label="@@productLabel.attachment-uploader.productPhoto.label"
       [flexCol]="true"
       (onFileInfoLoad)="onFileUpload($event)"
-      [form]="productForm.get('photo')"
+      [form]="$any(productForm).get('photo')"
       [attachmentUploaderId]="'product_image'"
       [readOnly]="productForm.disabled || !canEdit()"
       comment="Please upload a high-quality photo of your product – make sure the photo is of marketing quality. (72dpi and 1200x2000px recommended)"
@@ -535,7 +509,7 @@
     [visibilityForm]="visibilityMap.get('description')"
     [reorderMode]="reorderMode"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('description')"
+    <textinput [form]="$any(productForm).get('description')"
       i18n-label="@@productLabel.textinput.productDesc.label"
       i18n-helpText="@@productLabel.textinput.productDesc.helpText"
       [label]="this.productNameLabelAndPlaceholder('LABEL', 'description')"
@@ -562,7 +536,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('ingredients')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('ingredients')"
+    <textinput [form]="$any(productForm).get('ingredients')"
       label="Ingredients"
       style="width: 100%"
       [textarea]="true"
@@ -578,7 +552,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('nutritionalValue')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('nutritionalValue')"
+    <textinput [form]="$any(productForm).get('nutritionalValue')"
       label="Nutritional Value"
       style="width: 100%"
       [textarea]="true"
@@ -594,7 +568,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('howToUse')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('howToUse')"
+    <textinput [form]="$any(productForm).get('howToUse')"
       label="How to Use / Recipes"
       style="width: 100%"
       [textarea]="true"
@@ -616,7 +590,7 @@
     [form]="productForm.get('origin.locations')"
     [openOnValueChange]="openOnStart"
     [nonClosable]="true">
-    <textinput [form]="productForm.get('origin.text')"
+    <textinput [form]="$any(productForm).get('origin.text')"
       style="width: 100%"
       [textarea]="true"
       helpText="Briefly describe where the product or its ingredients are coming from."
@@ -670,8 +644,7 @@
       Reset map
     </button>
 
-    <div *ngFor="let loc of productForm.get('origin.locations')?.controls;
-      index as idx">
+    <div *ngFor="let loc of productForm.get('origin.locations')?.controls; index as idx">
       <div class="row">
         <div class="col-6">
           <textinput [form]="loc.get('pinName')"
@@ -711,7 +684,7 @@
     <div>
       <app-number-row label="% Share sold in your country:" i18n-label="@@productLabel.textinput.keyMarkets.ourCountry">
         <textinput
-          [form]="productForm.get('keyMarketsShare.yourCountry')"
+          [form]="$any(productForm).get('keyMarketsShare.yourCountry')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -720,7 +693,7 @@
       </app-number-row>
       <app-number-row label="% Share sold in East Africa:" i18n-label="@@productLabel.textinput.keyMarkets.eastAfrica">
         <textinput
-          [form]="productForm.get('keyMarketsShare.eastAfrica')"
+          [form]="$any(productForm).get('keyMarketsShare.eastAfrica')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -729,7 +702,7 @@
       </app-number-row>
       <app-number-row label="% Share sold in the rest of Africa:" i18n-label="@@productLabel.textinput.keyMarkets.africa">
         <textinput
-          [form]="productForm.get('keyMarketsShare.restOfAfrica')"
+          [form]="$any(productForm).get('keyMarketsShare.restOfAfrica')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -737,7 +710,7 @@
         </textinput>
       </app-number-row>
       <app-number-row label="% Share sold in Europe:" i18n-label="@@productLabel.textinput.keyMarkets.europe">
-        <textinput [form]="productForm.get('keyMarketsShare.europe')"
+        <textinput [form]="$any(productForm).get('keyMarketsShare.europe')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -745,7 +718,7 @@
         </textinput>
       </app-number-row>
       <app-number-row label="% Share sold in USA:" i18n-label="@@productLabel.textinput.keyMarkets.usa">
-        <textinput [form]="productForm.get('keyMarketsShare.usa')"
+        <textinput [form]="$any(productForm).get('keyMarketsShare.usa')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -753,7 +726,7 @@
         </textinput>
       </app-number-row>
       <app-number-row label="% Share sold elsewhere:" i18n-label="@@productLabel.textinput.keyMarkets.elsewhere">
-        <textinput [form]="productForm.get('keyMarketsShare.elsewhere')"
+        <textinput [form]="$any(productForm).get('keyMarketsShare.elsewhere')"
           [label]="null"
           [noBottomMargin]="true"
           [readOnly]="!canEdit()"
@@ -773,7 +746,7 @@
     i18n-label="@@productLabel.speciality.label"
     mode="simple">
 
-    <textinput [form]="productForm.get('specialityDescription')"
+    <textinput [form]="$any(productForm).get('specialityDescription')"
       label="Description"
       style="width: 100%"
       [textarea]="true"
@@ -791,7 +764,7 @@
       i18n-label="@@productLabel.attachment-uploader.specialityDocument.label"
       i18n-placeholder="@@productLabel.attachment-uploader.specialityDocument.allowedMimeTypeErrorMessage"
       (onFileInfoLoad)="onFileUpload($event)"
-      [form]="productForm.get('specialityDocument')"
+      [form]="$any(productForm).get('specialityDocument')"
       [attachmentUploaderId]="'speciality_document'"
       [readOnly]="productForm.disabled || !canEdit()">
       <attachment-uploader-content i18n="@@productLabel.attachment-uploader.specialityDocument.content">
@@ -809,7 +782,7 @@
     [reorderMode]="reorderMode"
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('process.production')"
+    <textinput [form]="$any(productForm).get('process.production')"
       label="Production"
       style="width: 100%"
       [textarea]="true"
@@ -836,7 +809,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('process.storage')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('process.storage')"
+    <textinput [form]="$any(productForm).get('process.storage')"
       label="Storage"
       style="width: 100%"
       [textarea]="true"
@@ -852,7 +825,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('process.codesOfConduct')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('process.codesOfConduct')"
+    <textinput [form]="$any(productForm).get('process.codesOfConduct')"
       label="Codes of Conduct"
       style="width: 100%"
       [textarea]="true"
@@ -884,8 +857,7 @@
         <div cdkDropList
           (cdkDropListDropped)="standardsListManager.onDrop($event)">
           <div *ngFor="let item of
-            productForm.get('process.standards')?.controls; let i=
-            index;">
+            productForm.get('process.standards')?.controls; let i=index;">
             <app-certification-and-standard-item
               title="Certification, Standard"
               i18n-title="@@productLabel.list-editor.certificationsAndStandards.title"
@@ -928,14 +900,10 @@
       [canAdd]="canEdit()"
       [invalid]="submitted && productForm.get('process.records')?.invalid">
       <list-editor-items>
-        <!-- <div class="tool-button tool-button-right prefill-button" (click)="prefillCertsFromOther(true)" i18n="@@productLabel.button.prefillCertsFromOther.recs.prefill">
-          Prefill
-        </div> -->
         <div cdkDropList
           (cdkDropListDropped)="recordsListManager.onDrop($event)">
           <div *ngFor="let item of
-            productForm.get('process.records').controls; let i=
-            index;">
+            productForm.get('process.records').controls; let i=index;">
             <app-production-record-item
               title="Production Record"
               i18n-title="@@productLabel.list-editor.productionRecords.title"
@@ -967,7 +935,7 @@
     [reorderMode]="reorderMode"
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('responsibility.laborPolicies')"
+    <textinput [form]="$any(productForm).get('responsibility.laborPolicies')"
       label="Labor Policies"
       style="width: 100%"
       [textarea]="true"
@@ -994,7 +962,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('responsibility.relationship')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('responsibility.relationship')"
+    <textinput [form]="$any(productForm).get('responsibility.relationship')"
       label="Relationship with Farmers / Suppliers"
       style="width: 100%"
       [textarea]="true"
@@ -1014,7 +982,7 @@
     i18n-label="@@productLabel.farmerStory.label"
     mode="simple">
 
-    <textinput [form]="productForm.get('responsibility.farmer')"
+    <textinput [form]="$any(productForm).get('responsibility.farmer')"
       label="Farmer or Community Name"
       style="width: 100%"
       [textarea]="true"
@@ -1055,7 +1023,7 @@
       </list-editor-errors>
     </list-editor>
 
-    <textinput [form]="productForm.get('responsibility.story')"
+    <textinput [form]="$any(productForm).get('responsibility.story')"
       label="Short story"
       style="width: 100%"
       [textarea]="true"
@@ -1074,7 +1042,7 @@
     [reorderMode]="reorderMode"
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('sustainability.production')"
+    <textinput [form]="$any(productForm).get('sustainability.production')"
       label="Environmentally Friendly Production"
       style="width: 100%"
       [textarea]="true"
@@ -1107,7 +1075,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('sustainability.packaging')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('sustainability.packaging')"
+    <textinput [form]="$any(productForm).get('sustainability.packaging')"
       label="Sustainable Packaging"
       style="width: 100%"
       [textarea]="true"
@@ -1134,7 +1102,7 @@
   <app-closable
     [visibilityForm]="visibilityMap.get('sustainability.co2Footprint')"
     [reorderMode]="reorderMode">
-    <textinput [form]="productForm.get('sustainability.co2Footprint')"
+    <textinput [form]="$any(productForm).get('sustainability.co2Footprint')"
       label="CO2 Footprint"
       style="width: 100%"
       [textarea]="true"
@@ -1154,7 +1122,7 @@
     [reorderMode]="reorderMode"
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
-    <textinput [form]="productForm.get('settings.language')"
+    <textinput [form]="$any(productForm).get('settings.language')"
       label="Language"
       style="width: 100%"
       i18n-label="@@productLabel.languge.label"
@@ -1170,7 +1138,7 @@
     [nonClosable]="true"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-    [form]="productForm.get('knowledgeBlog')"
+    [form]="$any(productForm).get('knowledgeBlog')"
     [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
@@ -1191,7 +1159,7 @@
     class="af-form-element--nolabel"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.checkAuthenticity')"
+      [form]="$any(productForm).get('settings.checkAuthenticity')"
       [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
@@ -1210,7 +1178,7 @@
     class="af-form-element--nolabel"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.traceOrigin')"
+      [form]="$any(productForm).get('settings.traceOrigin')"
       [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
@@ -1229,7 +1197,7 @@
     class="af-form-element--last"
     [openOnValueChange]="openOnStart">
     <checkbox-input
-      [form]="productForm.get('settings.giveFeedback')"
+      [form]="$any(productForm).get('settings.giveFeedback')"
       [disabled]="!canEdit()">
       <checkbox-input-rich-label
         style="font-weight: 300;"
@@ -1249,7 +1217,7 @@
     [openOnValueChange]="openOnStart">
 
     <tinymce-textarea
-      [formControlInput]="productForm.get('settings.gdprText')"
+      [formControlInput]="$any(productForm).get('settings.gdprText')"
       [disabled]="!canEdit()"
       label="GDPR text"
       style="width: 100%;"
@@ -1268,7 +1236,7 @@
     [openOnValueChange]="openOnStart">
 
     <tinymce-textarea
-      [formControlInput]="productForm.get('settings.privacyPolicyText')"
+      [formControlInput]="$any(productForm).get('settings.privacyPolicyText')"
       [disabled]="!canEdit()"
       label="Privacy policy text"
       style="width: 100%;"
@@ -1288,7 +1256,7 @@
     [openOnValueChange]="openOnStart">
 
     <tinymce-textarea
-      [formControlInput]="productForm.get('settings.termsOfUseText')"
+      [formControlInput]="$any(productForm).get('settings.termsOfUseText')"
       [disabled]="!canEdit()"
       label="Terms of use text"
       style="width: 100%;"
@@ -1310,7 +1278,7 @@
     <div>
 
       <textinput
-        [form]="productForm.get('settings.increaseOfCoffee')"
+        [form]="$any(productForm).get('settings.increaseOfCoffee')"
         [readOnly]="!canEdit()"
         label="Increase per kg of coffee cherries sold (%)"
         style="width: 100%"
@@ -1326,7 +1294,7 @@
         i18n-label="@@productLabel.attachment-uploader.incomeIncreaseDocument.label"
         i18n-placeholder="@@productLabel.attachment-uploader.incomeIncreaseDocument.allowedMimeTypeErrorMessage"
         (onFileInfoLoad)="onFileUpload($event)"
-        [form]="productForm.get('settings.incomeIncreaseDocument')"
+        [form]="$any(productForm).get('settings.incomeIncreaseDocument')"
         [attachmentUploaderId]="'income_increase_document'"
         [readOnly]="productForm.disabled || !canEdit()">
         <attachment-uploader-content i18n="@@productLabel.attachment-uploader.incomeIncreaseDocument.content">
@@ -1348,115 +1316,11 @@
     [nonClosable]="true">
 
     <tinymce-textarea
-      [formControlInput]="productForm.get('settings.incomeIncreaseDescription')"
+      [formControlInput]="$any(productForm).get('settings.incomeIncreaseDescription')"
       [disabled]="!canEdit()"
       style="width: 100%;">
     </tinymce-textarea>
 
-  </app-closable>
-</ng-template>
-
-<!-- COMPARISON OF PRICES TEMPLATES -->
-<ng-template #description>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('comparisonOfPrice.description')"
-    [reorderMode]="reorderMode"
-    mode="simple"
-    label="Description"
-    i18n-label="@@productLabel.tinymce.comparisonOfPriceDescription.label"
-    [openOnValueChange]="openOnStart"
-    [nonClosable]="true">
-
-    <tinymce-textarea
-      [formControlInput]="productForm.get('comparisonOfPrice.description')"
-      [disabled]="!canEdit()"
-      style="width: 100%;">
-    </tinymce-textarea>
-
-  </app-closable>
-</ng-template>
-
-<ng-template #prices>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('comparisonOfPrice.prices')"
-    [reorderMode]="reorderMode"
-    mode="simple"
-    label="Comparison of prices"
-    i18n-label="@@productLabel.textinput.comparisonOfPrice.label">
-    <div>
-      <app-number-row label="World market price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.worldMarket">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.worldMarket')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="Fairtrade Minimum Price + Premium (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.fairTrade">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.fairTrade')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="EUR to RWF" i18n-label="@@productLabel.textinput.comparisonOfPrice.EURtoRWF">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.EURtoRWF')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="EUR to USD" i18n-label="@@productLabel.textinput.comparisonOfPrice.EURtoUSD">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.EURtoUSD')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="Pound to kg" i18n-label="@@productLabel.textinput.comparisonOfPrice.poundToKg">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.poundToKg')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="Container size" i18n-label="@@productLabel.textinput.comparisonOfPrice.containerSize">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.containerSize')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="End product estimated price" i18n-label="@@productLabel.textinput.comparisonOfPrice.estimatedAdditionalPrice">
-        <textinput
-          [form]="productForm.get('comparisonOfPrice.prices.estimatedAdditionalPrice')"
-          [label]="null"
-          [noBottomMargin]="true"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
-        <textinput
-                [form]="productForm.get('comparisonOfPrice.prices.averageRegionFarmGatePrice')"
-                [label]="null"
-                [noBottomMargin]="true"
-                [readOnly]="!canEdit()"
-                style="width: 100%">
-        </textinput>
-      </app-number-row>
-    </div>
   </app-closable>
 </ng-template>
 
@@ -1665,7 +1529,7 @@
       [openOnValueChange]="openOnStart"
       label="Primary color"
       i18n-label="@@productLabel.b2c.primaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.primaryColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.primaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1677,7 +1541,7 @@
           [openOnValueChange]="openOnStart"
           label="Secondary color"
           i18n-label="@@productLabel.b2c.secondaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.secondaryColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.secondaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1689,7 +1553,7 @@
           [openOnValueChange]="openOnStart"
           label="Tertiary color"
           i18n-label="@@productLabel.b2c.tertiaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.tertiaryColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.tertiaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1701,7 +1565,7 @@
           [openOnValueChange]="openOnStart"
           label="Quaternary color"
           i18n-label="@@productLabel.b2c.quaternaryColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.quaternaryColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.quaternaryColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1713,7 +1577,7 @@
           [openOnValueChange]="openOnStart"
           label="Heading color"
           i18n-label="@@productLabel.b2c.headingColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.headingColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.headingColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1725,7 +1589,7 @@
           [openOnValueChange]="openOnStart"
           label="Text color"
           i18n-label="@@productLabel.b2c.textColor">
-    <app-color-input [control]="productForm.get('businessToCustomerSettings.textColor')" [disabled]="!canEdit()"></app-color-input>
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.textColor')" [disabled]="!canEdit()"></app-color-input>
   </app-closable>
 </ng-template>
 
@@ -1736,17 +1600,19 @@
       [reorderMode]="reorderMode"
       [openOnValueChange]="openOnStart"
       class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.tabFairPrices')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
-        Enable 'Fair prices' tab
-      </checkbox-input-rich-label>
-    </checkbox-input>
+    <div class="d-flex align-items-baseline justify-content-between">
+      <checkbox-input
+              [form]="$any(productForm).get('businessToCustomerSettings.tabFairPrices')"
+              [disabled]="!canEdit()">
+        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
+          Enable 'Fair prices' tab
+        </checkbox-input-rich-label>
+      </checkbox-input>
 
-    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFairPrices').value">
-      <textinput [form]="productForm.get('businessToCustomerSettings.orderFairPrices')"
-                 label="'Fair prices' tab position" [readOnly]="!canEdit()"></textinput>
+      <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFairPrices').value">
+        <textinput [form]="$any(productForm).get('businessToCustomerSettings.orderFairPrices')"
+                   label="'Fair prices' tab position" [readOnly]="!canEdit()"></textinput>
+      </div>
     </div>
   </app-closable>
 </ng-template>
@@ -1758,17 +1624,19 @@
           [reorderMode]="reorderMode"
           [openOnValueChange]="openOnStart"
           class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.tabProducers')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
-        Enable 'Producers' tab
-      </checkbox-input-rich-label>
-    </checkbox-input>
+    <div class="d-flex align-items-baseline justify-content-between">
+      <checkbox-input
+              [form]="$any(productForm).get('businessToCustomerSettings.tabProducers')"
+              [disabled]="!canEdit()">
+        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
+          Enable 'Producers' tab
+        </checkbox-input-rich-label>
+      </checkbox-input>
 
-    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabProducers').value">
-      <textinput [form]="productForm.get('businessToCustomerSettings.orderProducers')"
-                 label="'Producers' tab position" [readOnly]="!canEdit()"></textinput>
+      <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabProducers').value">
+        <textinput [form]="$any(productForm).get('businessToCustomerSettings.orderProducers')"
+                   label="'Producers' tab position" [readOnly]="!canEdit()"></textinput>
+      </div>
     </div>
   </app-closable>
 </ng-template>
@@ -1780,17 +1648,19 @@
           [reorderMode]="reorderMode"
           [openOnValueChange]="openOnStart"
           class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.tabQuality')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
-        Enable 'Quality' tab
-      </checkbox-input-rich-label>
-    </checkbox-input>
+    <div class="d-flex align-items-baseline justify-content-between">
+      <checkbox-input
+              [form]="$any(productForm).get('businessToCustomerSettings.tabQuality')"
+              [disabled]="!canEdit()">
+        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
+          Enable 'Quality' tab
+        </checkbox-input-rich-label>
+      </checkbox-input>
 
-    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabQuality').value">
-      <textinput [form]="productForm.get('businessToCustomerSettings.orderQuality')"
-                 label="'Quality' tab position" [readOnly]="!canEdit()"></textinput>
+      <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabQuality').value">
+        <textinput [form]="$any(productForm).get('businessToCustomerSettings.orderQuality')"
+                   label="'Quality' tab position" [readOnly]="!canEdit()"></textinput>
+      </div>
     </div>
   </app-closable>
 </ng-template>
@@ -1802,17 +1672,19 @@
           [reorderMode]="reorderMode"
           [openOnValueChange]="openOnStart"
           class="af-form-element--nolabel">
-    <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.tabFeedback')"
-            [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
-        Enable 'Feedback' tab
-      </checkbox-input-rich-label>
-    </checkbox-input>
+    <div class="d-flex align-items-baseline justify-content-between">
+      <checkbox-input
+              [form]="$any(productForm).get('businessToCustomerSettings.tabFeedback')"
+              [disabled]="!canEdit()">
+        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
+          Enable 'Feedback' tab
+        </checkbox-input-rich-label>
+      </checkbox-input>
 
-    <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFeedback').value">
-      <textinput [form]="productForm.get('businessToCustomerSettings.orderFeedback')"
-                 label="'Feedback' tab position" [readOnly]="!canEdit()"></textinput>
+      <div class="mt-2" *ngIf="productForm.get('businessToCustomerSettings.tabFeedback').value">
+        <textinput [form]="$any(productForm).get('businessToCustomerSettings.orderFeedback')"
+                   label="'Feedback' tab position" [readOnly]="!canEdit()"></textinput>
+      </div>
     </div>
   </app-closable>
 </ng-template>
@@ -1826,7 +1698,7 @@
             [openOnValueChange]="openOnStart">
       <single-choice
               label="Price paid to producer graphic"
-              [formControlInput]="productForm.get('businessToCustomerSettings.graphicPriceToProducer')"
+              [formControlInput]="$any(productForm).get('businessToCustomerSettings.graphicPriceToProducer')"
               [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
       </single-choice>
     </app-closable>
@@ -1841,7 +1713,7 @@
           [openOnValueChange]="openOnStart">
     <single-choice
             label="Farm-gate price graphic"
-            [formControlInput]="productForm.get('businessToCustomerSettings.graphicFarmGatePrice')"
+            [formControlInput]="$any(productForm).get('businessToCustomerSettings.graphicFarmGatePrice')"
             [codebookService]="graphicFairPricesCodes" [readonly]="!canEdit()">
     </single-choice>
   </app-closable>
@@ -1854,7 +1726,7 @@
       [reorderMode]="reorderMode"
       [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="productForm.get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1866,7 +1738,7 @@
       [reorderMode]="reorderMode"
       [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="productForm.get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)" [readOnly]="!canEdit()"></textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1879,7 +1751,7 @@
           [openOnValueChange]="openOnStart"
           class="af-form-element--nolabel">
     <checkbox-input
-            [form]="productForm.get('businessToCustomerSettings.graphicQuality')"
+            [form]="$any(productForm).get('businessToCustomerSettings.graphicQuality')"
             [disabled]="!canEdit()">
       <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicQuality">
         Enable 'Quality' graphic
@@ -1902,7 +1774,7 @@
                            label="Product font"
                            i18n-label="@@productLabel.b2c.productFont"
                            i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                           [form]="productForm.get('businessToCustomerSettings.productFont')"
+                           [form]="$any(productForm).get('businessToCustomerSettings.productFont')"
                            [attachmentUploaderId]="'b2cProductFont'"
                            [readOnly]="!canEdit()">
         <attachment-uploader-content>Upload product font</attachment-uploader-content>
@@ -1925,7 +1797,7 @@
                            label="Text font"
                            i18n-label="@@productLabel.b2c.textFont"
                            i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                           [form]="productForm.get('businessToCustomerSettings.textFont')"
+                           [form]="$any(productForm).get('businessToCustomerSettings.textFont')"
                            [attachmentUploaderId]="'b2cTextFont'"
                            [readOnly]="!canEdit()">
         <attachment-uploader-content>Upload text font</attachment-uploader-content>
@@ -1945,7 +1817,7 @@
                          mode="simpleAsTextField"
                          label="Header image"
                          i18n-label="@@productLabel.b2c.headerImage"
-                         [form]="productForm.get('businessToCustomerSettings.headerImage')"
+                         [form]="$any(productForm).get('businessToCustomerSettings.headerImage')"
                          [attachmentUploaderId]="'b2cHeaderImage'"
                          [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
@@ -1962,7 +1834,7 @@
                          mode="simpleAsTextField"
                          label="Header background image"
                          i18n-label="@@productLabel.b2c.headerBackgroundImage"
-                         [form]="productForm.get('businessToCustomerSettings.headerBackgroundImage')"
+                         [form]="$any(productForm).get('businessToCustomerSettings.headerBackgroundImage')"
                          [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
                          [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
@@ -1979,7 +1851,7 @@
                          mode="simpleAsTextField"
                          label="Footer image"
                          i18n-label="@@productLabel.b2c.footerImage"
-                         [form]="productForm.get('businessToCustomerSettings.footerImage')"
+                         [form]="$any(productForm).get('businessToCustomerSettings.footerImage')"
                          [attachmentUploaderId]="'b2cFooterImage'"
                          [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
@@ -1994,9 +1866,9 @@
     <h2 i18n="@@productLabel.b2c.videos" class="mt-4 mb-0">Videos</h2>
     <ng-container *ngFor="let video of videoList">
       <div class="d-flex flex-row align-items-end">
-        <checkbox-input [form]="video.get('active')" [disabled]="!canEdit()">
+        <checkbox-input [form]="$any(video).get('active')" [disabled]="!canEdit()">
           <checkbox-input-rich-label style="font-weight: 300">
-            <app-document-preview [document]="video"></app-document-preview>
+            <app-document-preview [document]="$any(video)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
       </div>
@@ -2014,9 +1886,9 @@
     <h2 i18n="@@productLabel.b2c.meetTheFarmers" class="mt-4 mb-0">Meet the farmers</h2>
     <ng-container *ngFor="let farmer of farmerList">
       <div class="d-flex flex-row align-items-end">
-        <checkbox-input [form]="farmer.get('active')" [disabled]="!canEdit()">
+        <checkbox-input [form]="$any(farmer).get('active')" [disabled]="!canEdit()">
           <checkbox-input-rich-label style="font-weight: 300">
-            <app-document-preview [document]="farmer"></app-document-preview>
+            <app-document-preview [document]="$any(farmer)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
         <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(farmer.get('document').value.storageKey)"></fa-icon>
@@ -2026,9 +1898,9 @@
     <h2 i18n="@@productLabel.b2c.productionRecords" class="mt-4 mb-0">Production records</h2>
     <ng-container *ngFor="let record of productionRecordList">
       <div class="d-flex flex-row align-items-end">
-        <checkbox-input [form]="record.get('active')" [disabled]="!canEdit()">
+        <checkbox-input [form]="$any(record).get('active')" [disabled]="!canEdit()">
           <checkbox-input-rich-label style="font-weight: 300">
-            <app-document-preview [document]="record"></app-document-preview>
+            <app-document-preview [document]="$any(record)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
         <fa-icon [icon]="viewIcon" class="eye-icon ml-2" (click)="showImage(record.get('document').value.storageKey)"></fa-icon>

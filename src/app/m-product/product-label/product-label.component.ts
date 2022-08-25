@@ -1,5 +1,4 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -40,21 +39,17 @@ import {
   ApiBusinessToCustomerSettingsValidationScheme,
   ApiCertificationValidationScheme,
   ApiCompanyValidationScheme,
-  ApiComparisonOfPriceValidationScheme,
   ApiProcessDocumentValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
   ApiResponsibilityFarmerPictureValidationScheme,
   marketShareFormMetadata,
   MarketShareValidationScheme,
-  pricesFormMetadata,
-  pricesValidationScheme,
   pricingTransparencyFormMetadata,
   pricingTransparencyValidationScheme
 } from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
-import { ApiComparisonOfPrice } from 'src/api/model/apiComparisonOfPrice';
 import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
@@ -147,16 +142,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.productForm.get('origin.locations') as FormArray;
   }
 
-  get isGoogleMapsLoaded() {  // fix of a google maps glitch
+  get isGoogleMapsLoaded() {  // fix of a Google Maps glitch
     return !!window.google;
   }
 
-  get moved() {
-    return this._itemMoved;
-  }
-
   get labelChanged() {
-    return this.moved || (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty;
+    return (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty;
   }
 
   get productChanged() {
@@ -302,16 +293,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }),
     tap(val => { this.globalEventsManager.showLoading(false); }),
     tap((data: ApiProduct) => {
+
       const product = data;
+
       this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
+
       const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
       this.productForm.setControl('keyMarketsShare', marketShareForm);
+
       const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
-      const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-      this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-      const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
-      (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
+
       this.initializeListManagers();
       const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
       const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
@@ -434,10 +426,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   emptyField = '-';
 
-  // indicator of at least on move
-  _itemMoved = false;
-
-  // PRODUCT
+// PRODUCT
   @ViewChild('productName', { static: false })
   productNameTmpl: TemplateRef<any>;
 
@@ -617,15 +606,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   b2cElements: any[] = [];
 
-  // COMPARISON OF PRICE
-  @ViewChild('description', { static: false })
-  descriptionTmpl: TemplateRef<any>;
-
-  @ViewChild('prices', { static: false })
-  pricesTmpl: TemplateRef<any>;
-
-  comparisonOfPriceElements: any[] = [];
-
   // SETTINGS
   @ViewChild('language', { static: false })
   languageTmpl: TemplateRef<any>;
@@ -804,12 +784,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-
-    const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
-    (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
-
     this.initializeListManagers();
 
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
@@ -856,18 +830,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async newProduct() {
+
     this.isOwner = true;
 
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme);
+
     const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme);
     this.productForm.setControl('keyMarketsShare', marketShareForm);
+
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), {}, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
-
-    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), {}, ApiComparisonOfPriceValidationScheme);
-    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-    const priceForm = generateFormFromMetadata(pricesFormMetadata(), {}, pricesValidationScheme);
-    (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
 
     const originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
@@ -1028,7 +1000,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.visibilityForm.markAsPristine();
       this.labelTitleForm.setValue(null);
       this.labelTitleForm.markAsPristine();
-      this.resetMoveIndicator();
+
       if (reload) {
         this.reloadLabels();
       }
@@ -1252,14 +1224,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return true;
   }
 
-  registerMove() {
-    this._itemMoved = true;
-  }
-
-  resetMoveIndicator() {
-    this._itemMoved = false;
-  }
-
   generateProductElements() {
     this.productElements = [
       { name: 'name', section: 'product', visible: new FormControl(true), template: this.productNameTmpl, disableDrag: true },
@@ -1275,14 +1239,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropProductSection(event) {
-    if (this.productElements[event.previousIndex].disableDrag || this.productElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.productElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
   generateProcessElements() {
     this.processElements = [
       { name: 'process.production', section: 'process', visible: new FormControl(false), template: this.productionTmpl },
@@ -1293,14 +1249,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropProcessSection(event) {
-    if (this.processElements[event.previousIndex].disableDrag || this.processElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.processElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
   generateSocialResponsibilityElements() {
     this.socialResponsibilityElements = [
       { name: 'responsibility.laborPolicies', section: 'responsibility', visible: new FormControl(false), template: this.laborPoliciesTmpl },
@@ -1309,28 +1257,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropSocialResponsibilitySection(event) {
-    if (this.socialResponsibilityElements[event.previousIndex].disableDrag || this.socialResponsibilityElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.socialResponsibilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
   generateEnvironmentalSustainabilityElements() {
     this.environmentalSustainabilityElements = [
       { name: 'sustainability.production', section: 'sustainability', visible: new FormControl(false), template: this.environmentalyFriendlyProductionTmpl },
       { name: 'sustainability.packaging', section: 'sustainability', visible: new FormControl(false), template: this.sustainablePackagingTmpl },
       { name: 'sustainability.co2Footprint', section: 'sustainability', visible: new FormControl(false), template: this.co2FootprintTmpl },
     ];
-  }
-
-  onDropEnvironmentalSustainabilitySection(event) {
-    if (this.environmentalSustainabilityElements[event.previousIndex].disableDrag || this.environmentalSustainabilityElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.environmentalSustainabilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
   }
 
   generateCompanyElements() {
@@ -1349,29 +1281,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'company.mediaLinks.youtube', section: 'company', visible: new FormControl(false), template: this.youtubeTmpl },
       { name: 'company.mediaLinks.other', section: 'company', visible: new FormControl(false), template: this.otherTmpl },
     ];
-  }
-
-  onDropCompanySection(event) {
-    if (this.companyElements[event.previousIndex].disableDrag || this.companyElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.companyElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
-  generateComparisonOfPriceElementsElements() {
-    this.comparisonOfPriceElements = [
-      { name: 'comparisonOfPrice.prices', section: 'comparisonOfPrice', visible: new FormControl(false), template: this.pricesTmpl },
-      { name: 'comparisonOfPrice.description', section: 'comparisonOfPrice', visible: new FormControl(false), template: this.descriptionTmpl }
-    ];
-  }
-
-  onDropComparisonOfPriceElementsSection(event) {
-    if (this.comparisonOfPriceElements[event.previousIndex].disableDrag || this.comparisonOfPriceElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.comparisonOfPriceElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
   }
 
   generateSettingsElements() {
@@ -1432,16 +1341,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
     if (this.action === 'labels') {
       this.b2cElements.push(
-          { name: 'businessToCustomerSettings.media', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cMedia}
+          { name: 'businessToCustomerSettings.media', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cMedia }
       );
-    }
-  }
-
-  onDropSettingsSection(event) {
-    if (this.settingsElements[event.previousIndex].disableDrag || this.settingsElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.settingsElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
     }
   }
 
@@ -1451,7 +1352,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateSocialResponsibilityElements();
     this.generateEnvironmentalSustainabilityElements();
     this.generatePricingTransparenctElements();
-    this.generateComparisonOfPriceElementsElements();
     this.generateSettingsElements();
     this.generateCompanyElements();
     this.generateBusinessToCustomerSettingsElements();
@@ -1461,7 +1361,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   generateJointVisibilityForm() {
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
     const formObj = {};
     allList.forEach(element => {
       const fixedKey = element.name.replace(/\./g, '_');
@@ -1471,42 +1371,45 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   generateLabelMaps() {
+
     const productMap = new Map();
     this.processElements.forEach(el => {
       productMap.set(el.name, el);
     });
+
     const processMap = new Map();
     this.processElements.forEach(el => {
       processMap.set(el.name, el);
     });
+
     const socialResponsibilityMap = new Map();
     this.socialResponsibilityElements.forEach(el => {
       socialResponsibilityMap.set(el.name, el);
     });
+
     const environmentalSustainabilityMap = new Map();
     this.environmentalSustainabilityElements.forEach(el => {
       environmentalSustainabilityMap.set(el.name, el);
     });
-    const comparisonOfPriceMap = new Map();
-    this.comparisonOfPriceElements.forEach(el => {
-      comparisonOfPriceMap.set(el.name, el);
-    });
+
     const settingsMap = new Map();
     this.settingsElements.forEach(el => {
       settingsMap.set(el.name, el);
     });
+
     this.pricingTransparencyElements.forEach(el => {
       settingsMap.set(el.name, el);
     });
+
     const companyMap = new Map();
     this.companyElements.forEach(el => {
       companyMap.set(el.name, el);
     });
+
     this.sectionToNameToObj.set('product', productMap);
     this.sectionToNameToObj.set('process', processMap);
     this.sectionToNameToObj.set('responsibility', socialResponsibilityMap);
     this.sectionToNameToObj.set('sustainability', environmentalSustainabilityMap);
-    this.sectionToNameToObj.set('comparisonOPrice', comparisonOfPriceMap);
     this.sectionToNameToObj.set('settings', settingsMap);
     this.sectionToNameToObj.set('company', companyMap);
   }
@@ -1639,7 +1542,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const allProductElements = this.prepareProductElements();
     const allPricingTransparencyElements = this.preparePricingTransparencyElements();
     const allList = [allProductElements, this.processElements, allSocialResponsibilityElements,
-      this.environmentalSustainabilityElements, allPricingTransparencyElements, this.comparisonOfPriceElements, this.settingsElements, this.companyElements];
+      this.environmentalSustainabilityElements, allPricingTransparencyElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
         if (val.name === 'journeyMarkers') {
@@ -1722,7 +1625,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateDefaultElements();
 
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
     let i = 0;
     allList.forEach(el => {    // default order
       sortOrderMap.set(el.name, i);
@@ -1743,7 +1646,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.socialResponsibilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.environmentalSustainabilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.pricingTransparencyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
-    this.comparisonOfPriceElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.settingsElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.companyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.visibilityMap = new Map();
@@ -1770,7 +1672,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.reorderMode = !this.reorderMode;
   }
 
-  toggleEditTitleMode(mode: boolean) {
+  toggleEditTitleMode(mode?: boolean) {
     if (mode == null) {
       this.editTitleMode = !this.editTitleMode;
     } else {
