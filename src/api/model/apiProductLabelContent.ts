@@ -20,7 +20,6 @@
 
 import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
-import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
@@ -34,7 +33,6 @@ import { ApiSustainability } from './apiSustainability';
 export interface ApiProductLabelContent { 
     businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
-    comparisonOfPrice?: ApiComparisonOfPrice;
     /**
      * product description
      */
@@ -98,7 +96,6 @@ export namespace ApiProductLabelContent {
     export enum Properties {
         businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
-        comparisonOfPrice = 'comparisonOfPrice',
         /**
          * product description
          */
@@ -181,18 +178,6 @@ export namespace ApiProductLabelContent {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiComparisonOfPrice.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'comparisonOfPrice',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'ApiComparisonOfPrice',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiComparisonOfPrice'
                 },
                 {
                     isReadOnly: false,
@@ -406,8 +391,6 @@ export namespace ApiProductLabelContent {
                 ],
                 company: [
                 ],
-                comparisonOfPrice: [
-                ],
                 description: [
                 ],
                 howToUse: [
@@ -455,9 +438,6 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               company: {
-  //                   validators: []
-  //               },
-  //               comparisonOfPrice: {
   //                   validators: []
   //               },
   //               description: {

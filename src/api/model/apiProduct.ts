@@ -20,7 +20,6 @@
 
 import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
-import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductCompany } from './apiProductCompany';
@@ -42,7 +41,6 @@ export interface ApiProduct {
     associatedCompanies?: Array<ApiProductCompany>;
     businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
-    comparisonOfPrice?: ApiComparisonOfPrice;
     /**
      * Data sharing agreements
      */
@@ -115,7 +113,6 @@ export namespace ApiProduct {
         associatedCompanies = 'associatedCompanies',
         businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
-        comparisonOfPrice = 'comparisonOfPrice',
         /**
          * Data sharing agreements
          */
@@ -215,18 +212,6 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiComparisonOfPrice.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'comparisonOfPrice',
-                    classname: 'ApiProduct',
-                    dataType: 'ApiComparisonOfPrice',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiComparisonOfPrice'
                 },
                 {
                     metadata: ApiProductDataSharingAgreement.formMetadata,
@@ -467,8 +452,6 @@ export namespace ApiProduct {
                 ],
                 company: [
                 ],
-                comparisonOfPrice: [
-                ],
                 dataSharingAgreements: [
                 ],
                 description: [
@@ -523,9 +506,6 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               company: {
-  //                   validators: []
-  //               },
-  //               comparisonOfPrice: {
   //                   validators: []
   //               },
   //               dataSharingAgreements: {

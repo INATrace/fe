@@ -11946,23 +11946,6 @@
         },
         "type": "object"
       },
-      "ApiComparisonOfPrice": {
-        "properties": {
-          "description": {
-            "description": "description",
-            "type": "string"
-          },
-          "prices": {
-            "additionalProperties": {
-              "format": "double",
-              "type": "number"
-            },
-            "description": "prices - string-number map",
-            "type": "object"
-          }
-        },
-        "type": "object"
-      },
       "ApiCountry": {
         "properties": {
           "code": {
@@ -15091,10 +15074,6 @@
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
           },
-          "comparisonOfPrice": {
-            "$ref": "#/components/schemas/ApiComparisonOfPrice",
-            "description": "comparison of price"
-          },
           "dataSharingAgreements": {
             "description": "Data sharing agreements",
             "items": {
@@ -15570,10 +15549,6 @@
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
-          },
-          "comparisonOfPrice": {
-            "$ref": "#/components/schemas/ApiComparisonOfPrice",
-            "description": "comparison of price"
           },
           "description": {
             "description": "product description",
