@@ -92,14 +92,6 @@
         </ng-container>
       </div>
 
-      <div class=spacer-between-sections></div>
-      <div *ngIf="currentLabel" style="position:relative;">
-        <div class="tool-button tool-button-right" (click)="toggleReorder()" [class.tool-button-right-reorder]="reorderMode"
-          style="position:absolute; right:0; z-index: 10;" i18n="@@productLabel.button.reorder">
-          <fa-icon [icon]="faListOl" class="button-icon1 button-icon1-right" [class.button-icon-right-reorder]="reorderMode"></fa-icon>Reorder
-        </div>
-      </div>
-
       <div class="af-form-row" *ngIf="action !== 'labels'">
         <div class="af-form-block--c12">
           <h2 i18n="@@productLabel.section.valueChain">Value chain</h2>
