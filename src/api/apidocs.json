@@ -11244,9 +11244,6 @@
           "headerBackgroundImage": {
             "$ref": "#/components/schemas/ApiDocument"
           },
-          "headerImage": {
-            "$ref": "#/components/schemas/ApiDocument"
-          },
           "headingColor": {
             "type": "string"
           },
@@ -11254,6 +11251,12 @@
             "description": "Entity id",
             "format": "int64",
             "type": "integer"
+          },
+          "landingPageBackgroundImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "landingPageImage": {
+            "$ref": "#/components/schemas/ApiDocument"
           },
           "manualFarmGatePrice": {
             "type": "number"

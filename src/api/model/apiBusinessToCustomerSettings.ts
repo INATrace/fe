@@ -31,12 +31,13 @@ export interface ApiBusinessToCustomerSettings {
     graphicPriceToProducer?: ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
     graphicQuality?: boolean;
     headerBackgroundImage?: ApiDocument;
-    headerImage?: ApiDocument;
     headingColor?: string;
     /**
      * Entity id
      */
     id?: number;
+    landingPageBackgroundImage?: ApiDocument;
+    landingPageImage?: ApiDocument;
     manualFarmGatePrice?: number;
     manualProducerPrice?: number;
     orderFairPrices?: number;
@@ -73,12 +74,13 @@ export namespace ApiBusinessToCustomerSettings {
         graphicPriceToProducer = 'graphicPriceToProducer',
         graphicQuality = 'graphicQuality',
         headerBackgroundImage = 'headerBackgroundImage',
-        headerImage = 'headerImage',
         headingColor = 'headingColor',
         /**
          * Entity id
          */
         id = 'id',
+        landingPageBackgroundImage = 'landingPageBackgroundImage',
+        landingPageImage = 'landingPageImage',
         manualFarmGatePrice = 'manualFarmGatePrice',
         manualProducerPrice = 'manualProducerPrice',
         orderFairPrices = 'orderFairPrices',
@@ -218,18 +220,6 @@ export namespace ApiBusinessToCustomerSettings {
                     complexType: 'ApiDocument'
                 },
                 {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'headerImage',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -250,6 +240,30 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'landingPageBackgroundImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'landingPageImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -469,11 +483,13 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 headerBackgroundImage: [
                 ],
-                headerImage: [
-                ],
                 headingColor: [
                 ],
                 id: [
+                ],
+                landingPageBackgroundImage: [
+                ],
+                landingPageImage: [
                 ],
                 manualFarmGatePrice: [
                 ],
@@ -542,13 +558,16 @@ export namespace ApiBusinessToCustomerSettings {
   //               headerBackgroundImage: {
   //                   validators: []
   //               },
-  //               headerImage: {
-  //                   validators: []
-  //               },
   //               headingColor: {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               landingPageBackgroundImage: {
+  //                   validators: []
+  //               },
+  //               landingPageImage: {
   //                   validators: []
   //               },
   //               manualFarmGatePrice: {
