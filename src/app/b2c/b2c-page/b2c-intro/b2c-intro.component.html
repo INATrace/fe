@@ -1,6 +1,9 @@
-<div id="intro-wrapper" class="h-100 d-flex flex-column justify-content-center align-items-center" [style.background-color]="b2cSettings.tertiaryColor" [style.background-image]="headerBackgroundImage ? 'url(' + headerBackgroundImage + ')' : ''">
+<div id="intro-wrapper"
+     class="h-100 d-flex flex-column justify-content-center align-items-center"
+     [style.background-color]="b2cSettings.tertiaryColor"
+     [style.background-image]="landingPageBackgroundImage ? 'url(' + landingPageBackgroundImage + ')' : ''">
     <div id="intro-content" class="d-flex flex-column justify-content-center align-items-center">
-        <img *ngIf="b2cSettings.headerImage" src="{{ appBaseUrl }}/api/public/document/{{ b2cSettings.headerImage.storageKey }}" class="mw-100" alt="Header image">
+        <img *ngIf="b2cSettings.landingPageImage" src="{{ appBaseUrl }}/api/public/document/{{ b2cSettings.landingPageImage.storageKey }}" class="mw-100" alt="Header image">
 
         <h2 class="af-b2c-front--headline mb-4" [style.font-family]="b2cSettings.productFont ? 'custom-product' : ''">{{ this.productName }}</h2>
         <div>

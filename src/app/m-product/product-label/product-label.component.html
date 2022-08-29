@@ -1771,6 +1771,7 @@
                            [readOnly]="!canEdit()">
         <attachment-uploader-content>Upload product font</attachment-uploader-content>
       </attachment-uploader>
+      <small i18n="@@productLabel.b2c.productFontHint">Upload font used for product title (TTF, WOFF or WOFF2)</small>
     </div>
   </app-closable>
 </ng-template>
@@ -1794,24 +1795,46 @@
                            [readOnly]="!canEdit()">
         <attachment-uploader-content>Upload text font</attachment-uploader-content>
       </attachment-uploader>
+      <small i18n="@@productLabel.b2c.textFontHint">Upload font used for main content (TTF, WOFF or WOFF2)</small>
     </div>
   </app-closable>
 </ng-template>
 
-<ng-template #b2cHeaderImage>
+<ng-template #b2cLandingPageImage>
   <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerImage')"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageImage')"
                 [reorderMode]="reorderMode"
                 [openOnValueChange]="openOnStart"
                 class="af-form-element--nolabel">
     <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
                          [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
                          mode="simpleAsTextField"
-                         label="Header image"
-                         i18n-label="@@productLabel.b2c.headerImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.headerImage')"
-                         [attachmentUploaderId]="'b2cHeaderImage'"
-                         [readOnly]="!canEdit()"></attachment-uploader>
+                         label="Landing page image"
+                         i18n-label="@@productLabel.b2c.landingPageImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageImage')"
+                         [attachmentUploaderId]="'b2cLandingPageImage'"
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.landingPageImageHint">Upload high-quality landing page product image (recommended size 1200x1200px; file types: PNG, JPG and JPEG)</small>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cLandingPageBackgroundImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageBackgroundImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Landing page background image"
+                         i18n-label="@@productLabel.b2c.landingPageBackgroundImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageBackgroundImage')"
+                         [attachmentUploaderId]="'b2cLandingPageBackgroundImage'"
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.landingPageBackgroundImageHint">Upload high-quality landing page background image (recommended size 1200x1800px; file types: PNG, JPG and JPEG)</small>
   </app-closable>
 </ng-template>
 
@@ -1828,7 +1851,9 @@
                          i18n-label="@@productLabel.b2c.headerBackgroundImage"
                          [form]="$any(productForm).get('businessToCustomerSettings.headerBackgroundImage')"
                          [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
-                         [readOnly]="!canEdit()"></attachment-uploader>
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.headerBackgroundImageHint">Upload high-quality header background image (recommended size 1200x476px; file types: PNG, JPG and JPEG)</small>
   </app-closable>
 </ng-template>
 

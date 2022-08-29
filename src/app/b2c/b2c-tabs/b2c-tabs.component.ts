@@ -21,7 +21,6 @@ export class B2cTabsComponent implements OnInit {
   tabEnum = B2CTab;
 
   @Input()
-  // tab: 'journey' | 'fair-prices' | 'producers' | 'quality' | 'feedback';
   tab: B2CTab;
 
   @Input()
@@ -43,7 +42,7 @@ export class B2cTabsComponent implements OnInit {
   }
 
   goTo(target: B2CTab) {
-    this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, target]);
+    this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, target]).then();
   }
 
   get headerBackgroundImage() {

@@ -36,13 +36,13 @@ export class B2cIntroComponent implements OnInit {
     this.router.navigate(['/', 'p-cd', this.uuid, this.qrTag, 'journey']);
   }
 
-  get headerImage() {
-    return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerImage.storageKey;
+  get landingPageImage() {
+    return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.landingPageImage.storageKey;
   }
 
-  get headerBackgroundImage() {
-    if (this.b2cSettings.headerBackgroundImage) {
-      return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.headerBackgroundImage.storageKey;
+  get landingPageBackgroundImage() {
+    if (this.b2cSettings.landingPageBackgroundImage) {
+      return this.appBaseUrl + '/api/public/document/' + this.b2cSettings.landingPageBackgroundImage.storageKey;
     }
     return undefined;
   }

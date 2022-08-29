@@ -577,8 +577,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cTextFont', { static: false })
   b2cTextFont: TemplateRef<any>;
 
-  @ViewChild('b2cHeaderImage', { static: false })
-  b2cHeaderImage: TemplateRef<any>;
+  @ViewChild('b2cLandingPageImage', { static: false })
+  b2cLandingPageImage: TemplateRef<any>;
+
+  @ViewChild('b2cLandingPageBackgroundImage', { static: false })
+  b2cLandingPageBackgroundImage: TemplateRef<any>;
 
   @ViewChild('b2cHeaderBackgroundImage', { static: false })
   b2cHeaderBackgroundImage: TemplateRef<any>;
@@ -1330,7 +1333,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
       { name: 'businessToCustomerSettings.productFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductFont },
       { name: 'businessToCustomerSettings.textFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextFont },
-      { name: 'businessToCustomerSettings.headerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderImage },
+      { name: 'businessToCustomerSettings.landingPageImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cLandingPageImage },
+      { name: 'businessToCustomerSettings.landingPageBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cLandingPageBackgroundImage },
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
       { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
