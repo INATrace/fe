@@ -11,6 +11,8 @@ import { DecimalPipe } from '@angular/common';
 })
 export class B2cFairPricesComponent implements OnInit {
 
+  private static POUND_TO_KG = 0.453592;
+
   b2cSettings: ApiBusinessToCustomerSettings;
 
   title = $localize`:@@frontPage.fair-prices.title:Fair prices`;
@@ -101,15 +103,12 @@ export class B2cFairPricesComponent implements OnInit {
 
   pricesAndDescription(data) {
 
-    let prices = null;
-
     for (const item of data) {
+
       if (item.name === 'name') {
         this.productName = item.value;
       }
-      if (item.name === 'comparisonOfPrice.prices') {
-        prices = item.value;
-      }
+
       if (item.name === 'comparisonOfPrice.description') {
         this.desc = item.value;
       }
@@ -124,36 +123,36 @@ export class B2cFairPricesComponent implements OnInit {
     const producerPrice = this.b2cPage.qrProductLabel.priceToProducer ? this.b2cPage.qrProductLabel.priceToProducer : this.b2cSettings.manualProducerPrice;
     switch (this.b2cSettings.graphicPriceToProducer) {
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
-        this.worldMarketPrice = prices.worldMarket * prices.poundToKg * prices.containerSize;
-        this.fairTradePrice = prices.fairTrade * prices.poundToKg * prices.containerSize;
-        this.angeliquePrice = producerPrice * prices.containerSize;
+        this.worldMarketPrice = this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
+        this.fairTradePrice = this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
+        this.angeliquePrice = producerPrice * this.b2cSettings.containerSize;
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
-        this.worldMarketPrice = prices.worldMarket * prices.poundToKg;
-        this.fairTradePrice = prices.fairTrade * prices.poundToKg;
+        this.worldMarketPrice = this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG;
+        this.fairTradePrice = this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG;
         this.angeliquePrice = producerPrice;
         break;
       case GraphicPriceToProducerEnum.PERCENTVALUE:
         this.worldMarketPrice = 100;
-        this.fairTradePrice = prices.fairTrade / prices.worldMarket * 100;
-        this.angeliquePrice = producerPrice / prices.worldMarket * 100;
+        this.fairTradePrice = this.b2cSettings.fairTrade / this.b2cSettings.worldMarket * 100;
+        this.angeliquePrice = producerPrice / this.b2cSettings.worldMarket * 100;
         break;
     }
 
     const farmGatePrice = this.b2cPage.qrProductLabel.priceToFarmer ? this.b2cPage.qrProductLabel.priceToFarmer : this.b2cSettings.manualFarmGatePrice;
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
-        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg * prices.containerSize;
-        this.farmGateProductPrice = farmGatePrice * prices.containerSize;
+        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
+        this.farmGateProductPrice = farmGatePrice * this.b2cSettings.containerSize;
         this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERKG:
-        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg;
+        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG;
         this.farmGateProductPrice = farmGatePrice;
         this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCENTVALUE:
-        this.farmGateAveragePrice = prices.averageRegionFarmGatePrice * prices.poundToKg;
+        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG;
         this.farmGateProductPrice = farmGatePrice / this.farmGateAveragePrice * 100 - 100;
         this.increaseOfCoffee = '+' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-0') + '%';
         break;
