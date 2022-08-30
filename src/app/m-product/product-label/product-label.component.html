@@ -1597,6 +1597,128 @@
   </app-closable>
 </ng-template>
 
+<ng-template #b2cProductFont>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.productFont')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <div class="mt-4">
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
+                           mode="simpleAsTextField"
+                           label="Product font"
+                           i18n-label="@@productLabel.b2c.productFont"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="$any(productForm).get('businessToCustomerSettings.productFont')"
+                           [attachmentUploaderId]="'b2cProductFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload product font</attachment-uploader-content>
+      </attachment-uploader>
+      <small i18n="@@productLabel.b2c.productFontHint">Upload font used for product title (TTF, WOFF or WOFF2)</small>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cTextFont>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.textFont')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          class="af-form-element--nolabel">
+    <div>
+      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
+                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
+                           mode="simpleAsTextField"
+                           label="Text font"
+                           i18n-label="@@productLabel.b2c.textFont"
+                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
+                           [form]="$any(productForm).get('businessToCustomerSettings.textFont')"
+                           [attachmentUploaderId]="'b2cTextFont'"
+                           [readOnly]="!canEdit()">
+        <attachment-uploader-content>Upload text font</attachment-uploader-content>
+      </attachment-uploader>
+      <small i18n="@@productLabel.b2c.textFontHint">Upload font used for main content (TTF, WOFF or WOFF2)</small>
+    </div>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cLandingPageImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Landing page image"
+                         i18n-label="@@productLabel.b2c.landingPageImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageImage')"
+                         [attachmentUploaderId]="'b2cLandingPageImage'"
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.landingPageImageHint">Upload high-quality landing page product image (recommended size 780x780px; file types: PNG, JPG and JPEG)</small>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cLandingPageBackgroundImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageBackgroundImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Landing page background image"
+                         i18n-label="@@productLabel.b2c.landingPageBackgroundImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageBackgroundImage')"
+                         [attachmentUploaderId]="'b2cLandingPageBackgroundImage'"
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.landingPageBackgroundImageHint">Upload high-quality landing page background image (recommended size 1200x1800px; file types: PNG, JPG and JPEG)</small>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cHeaderBackgroundImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerBackgroundImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Header background image"
+                         i18n-label="@@productLabel.b2c.headerBackgroundImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.headerBackgroundImage')"
+                         [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
+                         [readOnly]="!canEdit()">
+    </attachment-uploader>
+    <small i18n="@@productLabel.b2c.headerBackgroundImageHint">Upload high-quality header background image (recommended size 1200x476px; file types: PNG, JPG and JPEG)</small>
+  </app-closable>
+</ng-template>
+
+<ng-template #b2cFooterImage>
+  <app-closable [nonClosable]="true"
+                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"
+                [reorderMode]="reorderMode"
+                [openOnValueChange]="openOnStart"
+                class="af-form-element--nolabel">
+    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
+                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
+                         mode="simpleAsTextField"
+                         label="Footer image"
+                         i18n-label="@@productLabel.b2c.footerImage"
+                         [form]="$any(productForm).get('businessToCustomerSettings.footerImage')"
+                         [attachmentUploaderId]="'b2cFooterImage'"
+                         [readOnly]="!canEdit()"></attachment-uploader>
+  </app-closable>
+</ng-template>
+
 <ng-template #b2cTabFairPrices>
   <app-closable
       [nonClosable]="true"
@@ -1723,26 +1845,51 @@
   </app-closable>
 </ng-template>
 
-<ng-template #b2cManualFarmGatePrice>
+<ng-template #b2cPrices>
   <app-closable
-      [nonClosable]="true"
-      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
-      [reorderMode]="reorderMode"
-      [openOnValueChange]="openOnStart">
+          [nonClosable]="true"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualFarmGatePrice')" label="Manual farm-gate price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.containerSize')"
+                 [readOnly]="!canEdit()"
+                 label="Container size" i18n-label="@@productLabel.textinput.comparisonOfPrice.containerSize">
+      </textinput>
     </div>
-  </app-closable>
-</ng-template>
 
-<ng-template #b2cManualProducerPrice>
-  <app-closable
-      [nonClosable]="true"
-      [visibilityForm]="visibilityMap.get('businessToCustomerSettings.manualFarmGatePrice')"
-      [reorderMode]="reorderMode"
-      [openOnValueChange]="openOnStart">
     <div class="mt-2">
-      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualProducerPrice')" label="Manual producer price (USD/kg)" [readOnly]="!canEdit()"></textinput>
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.worldMarket')"
+                 [readOnly]="!canEdit()"
+                 label="World market price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.worldMarket">
+      </textinput>
+    </div>
+
+    <div class="mt-2">
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.fairTrade')"
+                 [readOnly]="!canEdit()"
+                 label="Fairtrade Minimum Price + Premium (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.fairTrade">
+      </textinput>
+    </div>
+
+    <div class="mt-2">
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualFarmGatePrice')"
+                 [readOnly]="!canEdit()"
+                 label="Manual farm-gate price (USD/kg)" i18n-label="">
+      </textinput>
+    </div>
+
+    <div class="mt-2">
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.averageRegionFarmGatePrice')"
+                 [readOnly]="!canEdit()"
+                 label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
+      </textinput>
+    </div>
+
+    <div class="mt-2">
+      <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualProducerPrice')"
+                 [readOnly]="!canEdit()"
+                 label="Manual producer price (USD/kg)" i18n-label="">
+      </textinput>
     </div>
   </app-closable>
 </ng-template>
@@ -1761,128 +1908,6 @@
         Enable 'Quality' graphic
       </checkbox-input-rich-label>
     </checkbox-input>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cProductFont>
-  <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.productFont')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <div class="mt-4">
-      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
-                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
-                           mode="simpleAsTextField"
-                           label="Product font"
-                           i18n-label="@@productLabel.b2c.productFont"
-                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                           [form]="$any(productForm).get('businessToCustomerSettings.productFont')"
-                           [attachmentUploaderId]="'b2cProductFont'"
-                           [readOnly]="!canEdit()">
-        <attachment-uploader-content>Upload product font</attachment-uploader-content>
-      </attachment-uploader>
-      <small i18n="@@productLabel.b2c.productFontHint">Upload font used for product title (TTF, WOFF or WOFF2)</small>
-    </div>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cTextFont>
-  <app-closable
-          [nonClosable]="true"
-          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.textFont')"
-          [reorderMode]="reorderMode"
-          [openOnValueChange]="openOnStart"
-          class="af-form-element--nolabel">
-    <div>
-      <attachment-uploader [allowedMimeType]="['font/ttf', 'font/woff', 'font/woff2', 'application/x-font-ttf', 'application/font-woff', 'application/x-font-woff', '']"
-                           allowedMimeTypeErrorMessage="Upload only file types: TTF, WOFF or WOFF2."
-                           mode="simpleAsTextField"
-                           label="Text font"
-                           i18n-label="@@productLabel.b2c.textFont"
-                           i18n-allowedMimeTypeErrorMessage="@@productLabel.b2c.font.allowedMimeTypeErrorMessage"
-                           [form]="$any(productForm).get('businessToCustomerSettings.textFont')"
-                           [attachmentUploaderId]="'b2cTextFont'"
-                           [readOnly]="!canEdit()">
-        <attachment-uploader-content>Upload text font</attachment-uploader-content>
-      </attachment-uploader>
-      <small i18n="@@productLabel.b2c.textFontHint">Upload font used for main content (TTF, WOFF or WOFF2)</small>
-    </div>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cLandingPageImage>
-  <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageImage')"
-                [reorderMode]="reorderMode"
-                [openOnValueChange]="openOnStart"
-                class="af-form-element--nolabel">
-    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
-                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
-                         mode="simpleAsTextField"
-                         label="Landing page image"
-                         i18n-label="@@productLabel.b2c.landingPageImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageImage')"
-                         [attachmentUploaderId]="'b2cLandingPageImage'"
-                         [readOnly]="!canEdit()">
-    </attachment-uploader>
-    <small i18n="@@productLabel.b2c.landingPageImageHint">Upload high-quality landing page product image (recommended size 780x780px; file types: PNG, JPG and JPEG)</small>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cLandingPageBackgroundImage>
-  <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.landingPageBackgroundImage')"
-                [reorderMode]="reorderMode"
-                [openOnValueChange]="openOnStart"
-                class="af-form-element--nolabel">
-    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
-                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
-                         mode="simpleAsTextField"
-                         label="Landing page background image"
-                         i18n-label="@@productLabel.b2c.landingPageBackgroundImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.landingPageBackgroundImage')"
-                         [attachmentUploaderId]="'b2cLandingPageBackgroundImage'"
-                         [readOnly]="!canEdit()">
-    </attachment-uploader>
-    <small i18n="@@productLabel.b2c.landingPageBackgroundImageHint">Upload high-quality landing page background image (recommended size 1200x1800px; file types: PNG, JPG and JPEG)</small>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cHeaderBackgroundImage>
-  <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.headerBackgroundImage')"
-                [reorderMode]="reorderMode"
-                [openOnValueChange]="openOnStart"
-                class="af-form-element--nolabel">
-    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png', 'image/svg+xml']"
-                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
-                         mode="simpleAsTextField"
-                         label="Header background image"
-                         i18n-label="@@productLabel.b2c.headerBackgroundImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.headerBackgroundImage')"
-                         [attachmentUploaderId]="'b2cHeaderBackgroundImage'"
-                         [readOnly]="!canEdit()">
-    </attachment-uploader>
-    <small i18n="@@productLabel.b2c.headerBackgroundImageHint">Upload high-quality header background image (recommended size 1200x476px; file types: PNG, JPG and JPEG)</small>
-  </app-closable>
-</ng-template>
-
-<ng-template #b2cFooterImage>
-  <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"
-                [reorderMode]="reorderMode"
-                [openOnValueChange]="openOnStart"
-                class="af-form-element--nolabel">
-    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
-                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
-                         mode="simpleAsTextField"
-                         label="Footer image"
-                         i18n-label="@@productLabel.b2c.footerImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.footerImage')"
-                         [attachmentUploaderId]="'b2cFooterImage'"
-                         [readOnly]="!canEdit()"></attachment-uploader>
   </app-closable>
 </ng-template>
 

@@ -601,11 +601,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cFarmGatePriceGraphic', { static: false })
   b2cFarmGatePrice: TemplateRef<any>;
 
-  @ViewChild('b2cManualFarmGatePrice', { static: false })
-  b2cManualFarmGatePrice: TemplateRef<any>;
-
-  @ViewChild('b2cManualProducerPrice', { static: false })
-  b2cManualProducerPrice: TemplateRef<any>;
+  @ViewChild('b2cPrices', { static: false })
+  b2cPrices: TemplateRef<any>;
 
   @ViewChild('b2cGraphicQuality', { static: false })
   b2cGraphicQuality: TemplateRef<any>;
@@ -1328,7 +1325,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
       { name: 'businessToCustomerSettings.tertiaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTertiaryColor },
       { name: 'businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cQuaternaryColor },
-      { name: 'businessToCustomerSettings.businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductTitleColor },
+      { name: 'businessToCustomerSettings.productTitleColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductTitleColor },
       { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
       { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
       { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },
@@ -1343,8 +1340,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
       { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
       { name: 'businessToCustomerSettings.graphicFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFarmGatePrice },
-      { name: 'businessToCustomerSettings.manualFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cManualFarmGatePrice },
-      { name: 'businessToCustomerSettings.manualProducerPrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cManualProducerPrice },
+      { name: 'businessToCustomerSettings.prices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrices },
       { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality},
     ];
     if (this.action === 'labels') {
