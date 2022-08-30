@@ -46,6 +46,7 @@ export interface ApiBusinessToCustomerSettings {
     orderQuality?: number;
     primaryColor?: string;
     productFont?: ApiDocument;
+    productTitleColor?: string;
     quaternaryColor?: string;
     secondaryColor?: string;
     tabFairPrices?: boolean;
@@ -89,6 +90,7 @@ export namespace ApiBusinessToCustomerSettings {
         orderQuality = 'orderQuality',
         primaryColor = 'primaryColor',
         productFont = 'productFont',
+        productTitleColor = 'productTitleColor',
         quaternaryColor = 'quaternaryColor',
         secondaryColor = 'secondaryColor',
         tabFairPrices = 'tabFairPrices',
@@ -358,6 +360,17 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'productTitleColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'quaternaryColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
@@ -507,6 +520,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 productFont: [
                 ],
+                productTitleColor: [
+                ],
                 quaternaryColor: [
                 ],
                 secondaryColor: [
@@ -592,6 +607,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               productFont: {
+  //                   validators: []
+  //               },
+  //               productTitleColor: {
   //                   validators: []
   //               },
   //               quaternaryColor: {
