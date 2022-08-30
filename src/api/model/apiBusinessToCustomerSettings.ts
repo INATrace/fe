@@ -23,7 +23,10 @@ import { ApiDocument } from './apiDocument';
 
 
 export interface ApiBusinessToCustomerSettings { 
+    averageRegionFarmGatePrice?: number;
+    containerSize?: number;
     creationTimestamp?: Date;
+    fairTrade?: number;
     footerImage?: ApiDocument;
     graphicFairPrices?: boolean;
     graphicFarmGatePrice?: ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum;
@@ -57,6 +60,7 @@ export interface ApiBusinessToCustomerSettings {
     textColor?: string;
     textFont?: ApiDocument;
     updateTimestamp?: Date;
+    worldMarket?: number;
 }
 
 /**
@@ -67,7 +71,10 @@ export namespace ApiBusinessToCustomerSettings {
      * All properties of ApiBusinessToCustomerSettings.
      */
     export enum Properties {
+        averageRegionFarmGatePrice = 'averageRegionFarmGatePrice',
+        containerSize = 'containerSize',
         creationTimestamp = 'creationTimestamp',
+        fairTrade = 'fairTrade',
         footerImage = 'footerImage',
         graphicFairPrices = 'graphicFairPrices',
         graphicFarmGatePrice = 'graphicFarmGatePrice',
@@ -100,7 +107,8 @@ export namespace ApiBusinessToCustomerSettings {
         tertiaryColor = 'tertiaryColor',
         textColor = 'textColor',
         textFont = 'textFont',
-        updateTimestamp = 'updateTimestamp'
+        updateTimestamp = 'updateTimestamp',
+        worldMarket = 'worldMarket'
     }
 
     /**
@@ -133,9 +141,42 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'averageRegionFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'containerSize',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'creationTimestamp',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'fairTrade',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -478,9 +519,26 @@ export namespace ApiBusinessToCustomerSettings {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'worldMarket',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
+                averageRegionFarmGatePrice: [
+                ],
+                containerSize: [
+                ],
                 creationTimestamp: [
+                ],
+                fairTrade: [
                 ],
                 footerImage: [
                 ],
@@ -542,6 +600,8 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 updateTimestamp: [
                 ],
+                worldMarket: [
+                ],
             }
         }
     }
@@ -549,7 +609,16 @@ export namespace ApiBusinessToCustomerSettings {
   // export const ApiBusinessToCustomerSettingsValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               averageRegionFarmGatePrice: {
+  //                   validators: []
+  //               },
+  //               containerSize: {
+  //                   validators: []
+  //               },
   //               creationTimestamp: {
+  //                   validators: []
+  //               },
+  //               fairTrade: {
   //                   validators: []
   //               },
   //               footerImage: {
@@ -640,6 +709,9 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               updateTimestamp: {
+  //                   validators: []
+  //               },
+  //               worldMarket: {
   //                   validators: []
   //               },
   //     }
