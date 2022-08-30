@@ -1,6 +1,12 @@
 #intro-wrapper {
-  background-position: center top;
+  background-position: 50%;
   background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.intro-image-wrapper {
+  width: 260px;
+  margin-bottom: 10px;
 }
 
 #intro-content {

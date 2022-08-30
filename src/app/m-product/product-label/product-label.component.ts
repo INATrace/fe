@@ -553,6 +553,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cQuaternaryColor', { static: false })
   b2cQuaternaryColor: TemplateRef<any>;
 
+  @ViewChild('b2cProductTitleColor', { static: false })
+  b2cProductTitleColor: TemplateRef<any>;
+
   @ViewChild('b2cHeadingColor', { static: false })
   b2cHeadingColor: TemplateRef<any>;
 
@@ -1325,6 +1328,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
       { name: 'businessToCustomerSettings.tertiaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTertiaryColor },
       { name: 'businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cQuaternaryColor },
+      { name: 'businessToCustomerSettings.businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductTitleColor },
       { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
       { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
       { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },

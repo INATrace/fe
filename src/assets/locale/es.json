@@ -2897,7 +2897,7 @@
     "productLabel.b2c.textFont": "Text font",
     "productLabel.b2c.textFontHint": "Upload font used for main content (TTF, WOFF or WOFF2)",
     "productLabel.b2c.landingPageImage": "Landing page image",
-    "productLabel.b2c.landingPageImageHint": "Upload high-quality landing page product image (recommended size 1200x1200px; file types: PNG, JPG and JPEG)",
+    "productLabel.b2c.landingPageImageHint": "Upload high-quality landing page product image (recommended size 780x780px; file types: PNG, JPG and JPEG)",
     "productLabel.b2c.footerImage": "Footer image",
     "productLabel.b2c.font.allowedMimeTypeErrorMessage": "Upload only file types: TTF, WOFF or WOFF2.",
     "productLabel.b2c.headerFooterImage.allowedMimeTypeErrorMessage": "Upload only file types: PNG, JPG and JPEG.",

@@ -1561,6 +1561,18 @@
   </app-closable>
 </ng-template>
 
+<ng-template #b2cProductTitleColor>
+  <app-closable
+          [nonClosable]="true"
+          [visibilityForm]="visibilityMap.get('businessToCustomerSettings.productTitleColor')"
+          [reorderMode]="reorderMode"
+          [openOnValueChange]="openOnStart"
+          label="Product title color"
+          i18n-label="@@productLabel.b2c.productTitleColor">
+    <app-color-input [control]="$any(productForm).get('businessToCustomerSettings.productTitleColor')" [disabled]="!canEdit()"></app-color-input>
+  </app-closable>
+</ng-template>
+
 <ng-template #b2cHeadingColor>
   <app-closable
           [nonClosable]="true"
@@ -1815,7 +1827,7 @@
                          [attachmentUploaderId]="'b2cLandingPageImage'"
                          [readOnly]="!canEdit()">
     </attachment-uploader>
-    <small i18n="@@productLabel.b2c.landingPageImageHint">Upload high-quality landing page product image (recommended size 1200x1200px; file types: PNG, JPG and JPEG)</small>
+    <small i18n="@@productLabel.b2c.landingPageImageHint">Upload high-quality landing page product image (recommended size 780x780px; file types: PNG, JPG and JPEG)</small>
   </app-closable>
 </ng-template>
 
