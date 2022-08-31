@@ -367,6 +367,7 @@
     "frontPage.quality.title": "Calidad y Certificados",
     "frontPage.quality.flavourProfile": "Perfil de sabor",
     "frontPage.quality.roastingProfile": "Perfil de tueste",
+    "frontPage.quality.certificates": "Certificates",
     "frontPage.quality.chart.label1": "80 puntos = café especial",
     "frontPage.quality.chart.label2": "{$PH} puntos",
     "frontPage.feedback.textinput.text.label": "Los productores de {$INTERPOLATION} desean recibir sus comentarios (¿Qué es lo que le gusta o no?)",

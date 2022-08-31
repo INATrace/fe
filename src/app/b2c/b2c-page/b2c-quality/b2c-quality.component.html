@@ -47,34 +47,23 @@
     <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ roastingProfileTitle }}</h2>
     <p [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ roastingProfile ? roastingProfile : '/' }}</p>
 
-    <!-- TODO: this part need to be redone -->
-<!--    <ng-container *ngFor="let item of rwCerts">-->
-<!--        <div class="af-b2c-quality-card">-->
-<!--            <h2>{{item.type | formatCompanyCerts}}</h2>-->
-<!--            <p *ngIf="item.validity" i18n="@@frontPage.quality.cert.paragraph.valid">valid: {{item.validity}}</p>-->
-<!--            <p>{{item.description}}</p>-->
-<!--            <button i18n="@@frontPage.quality.cert.button.download" class="af-b2c-quality-card&#45;&#45;cta" type="button" (click)="downloadCert(item.certificate)"><span>Download</span></button>-->
-<!--        </div>-->
-<!--    </ng-container>-->
-
-
-<!--    <ng-container *ngFor="let item of coopCerts">-->
-<!--        <div class="af-b2c-quality-card">-->
-<!--            <h2>{{item.type | formatCompanyCerts}}</h2>-->
-<!--            <p *ngIf="item.validity" i18n="@@frontPage.quality.cert.paragraph.valid">valid: {{item.validity}}</p>-->
-<!--            <p>{{item.description}}</p>-->
-<!--            <button i18n="@@frontPage.quality.cert.button.download" class="af-b2c-quality-card&#45;&#45;cta" type="button" (click)="downloadCert(item.certificate)"><span>Download</span></button>-->
-<!--        </div>-->
-<!--    </ng-container>-->
-
-
-<!--    <ng-container *ngFor="let item of kfCerts">-->
-<!--        <div class="af-b2c-quality-card">-->
-<!--            <h2>{{item.type | formatCompanyCerts}}</h2>-->
-<!--            <p *ngIf="item.validity" i18n="@@frontPage.quality.cert.paragraph.valid">valid: {{item.validity}}</p>-->
-<!--            <p>{{item.description}}</p>-->
-<!--            <button i18n="@@frontPage.quality.cert.button.download" class="af-b2c-quality-card&#45;&#45;cta" type="button" (click)="downloadCert(item.certificate)"><span>Download</span></button>-->
-<!--        </div>-->
-<!--    </ng-container>-->
+    <!-- Companies certificates -->
+    <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ certificatesSectionTitle }}</h2>
+    <ng-container *ngIf="certificates.length > 0; else noCertificates">
+        <div *ngFor="let cert of certificates" class="af-b2c-quality-card">
+            <h2>{{ cert.type | formatCompanyCerts }}</h2>
+            <p *ngIf="cert.validity" i18n="@@frontPage.quality.cert.paragraph.valid">valid: {{ cert.validity }}</p>
+            <p>{{ cert.description }}</p>
+            <button i18n="@@frontPage.quality.cert.button.download"
+                    class="af-b2c-quality-card--cta"
+                    type="button"
+                    (click)="downloadCert(cert.certificate)">
+                <span>Download</span>
+            </button>
+        </div>
+    </ng-container>
+    <ng-template #noCertificates>
+        <p [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">/</p>
+    </ng-template>
 
 </main>

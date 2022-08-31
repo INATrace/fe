@@ -2406,6 +2406,7 @@
     "frontPage.quality.title": "Quality and Certificates",
     "frontPage.quality.flavourProfile": "Flavor profile",
     "frontPage.quality.roastingProfile": "Roasting profile",
+    "frontPage.quality.certificates": "Certificates",
     "frontPage.quality.chart.label1": "80 points = specialty coffee",
     "frontPage.quality.chart.label2": "{$PH} points",
     "frontPage.feedback.textinput.text.label": "The producers of {$INTERPOLATION} look forward to your feedback (what do you like / not)",

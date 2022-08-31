@@ -1668,6 +1668,7 @@
     "frontPage.quality.paragraph.points": "Die Graphik zeigt die Qualität dieser Packung {$START_TAG_STRONG}{$INTERPOLATION}{$CLOSE_TAG_STRONG} im Vergleich zur Mindestpunktzahl von 80 Punkten für Spezialitätenkaffee nach der Skala der Specialty Coffee Association (SCA).",
     "frontPage.quality.flavourProfile": "Geschmacksprofil",
     "frontPage.quality.roastingProfile": "Röstprofil",
+    "frontPage.quality.certificates": "Certificates",
     "frontPage.quality.chart.label1": "80+ Punkte= Spezialitätenkaffee",
     "frontPage.quality.chart.label2": "{$PH} Punkte",
     "productLabelProcessingAction.textinput.prefix.label": "Präfix der internen Lot-Nummer",

@@ -3,6 +3,7 @@ import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
 import { take } from 'rxjs/operators';
 import { PublicControllerService } from '../../../../api/api/publicController.service';
+import { ApiCertification } from '../../../../api/model/apiCertification';
 
 @Component({
   selector: 'app-b2c-quality',
@@ -21,11 +22,8 @@ export class B2cQualityComponent implements OnInit {
   roastingProfileTitle = $localize`:@@frontPage.quality.roastingProfile:Roasting profile`;
   roastingProfile: string | null = null;
 
-  chartsArePrepared = false;
-
-  rwCerts = [];
-  coopCerts = [];
-  kfCerts = [];
+  certificatesSectionTitle = $localize`:@@frontPage.quality.certificates:Certificates`;
+  certificates: ApiCertification[] = [];
 
   lang = 'EN';
 
@@ -74,6 +72,8 @@ export class B2cQualityComponent implements OnInit {
         this.lang = item.value;
       }
     }
+
+    this.certificates = this.b2cPage.qrProductLabel?.certificates ?? [];
   }
 
   async downloadCert(data) {

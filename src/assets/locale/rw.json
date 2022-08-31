@@ -1669,6 +1669,7 @@
     "frontPage.quality.paragraph.points": "Igishushanyo kirerekana amanota y'ubwiza bw'ikawa iri muri iyi paki ya {$START_TAG_STRONG}{$INTERPOLATION}{$CLOSE_TAG_STRONG} ugeraranyije n'amanota 80 adashobora kugibwa munsi ku ikawa ihebije ya Speciality Coffee nkuko Specialty Coffee Association (SCA) ibigena.",
     "frontPage.quality.flavourProfile": "Umwirondoro w'icyanga",
     "frontPage.quality.roastingProfile": "Roasting profile",
+    "frontPage.quality.certificates": "Certificates",
     "frontPage.quality.chart.label1": "Amanota 80 = Specialty coffee",
     "frontPage.quality.chart.label2": "{$PH} amanota",
     "productLabelProcessingAction.textinput.prefix.label": "Imibare ibanza kuri nomero ya loti",
