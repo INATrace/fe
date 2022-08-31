@@ -18,11 +18,16 @@
  */
 
 
+import { ApiCertification } from './apiCertification';
 import { ApiHistoryTimeline } from './apiHistoryTimeline';
 
 
 
 export interface ApiQRTagPublic { 
+    /**
+     * List of certificates of the participating companies in this Stock order
+     */
+    certificates?: Array<ApiCertification>;
     /**
      * The cupping flavour entered during one of the processing actions
      */
@@ -67,6 +72,10 @@ export namespace ApiQRTagPublic {
      */
     export enum Properties {
         /**
+         * List of certificates of the participating companies in this Stock order
+         */
+        certificates = 'certificates',
+        /**
          * The cupping flavour entered during one of the processing actions
          */
         cuppingFlavour = 'cuppingFlavour',
@@ -107,6 +116,18 @@ export namespace ApiQRTagPublic {
             metadata: formMetadata,
             classname: 'ApiQRTagPublic',
             vars: [
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certificates',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -209,6 +230,8 @@ export namespace ApiQRTagPublic {
                 },
             ],
             validators: {
+                certificates: [
+                ],
                 cuppingFlavour: [
                 ],
                 cuppingScore: [
@@ -234,6 +257,9 @@ export namespace ApiQRTagPublic {
   // export const ApiQRTagPublicValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               certificates: {
+  //                   validators: []
+  //               },
   //               cuppingFlavour: {
   //                   validators: []
   //               },

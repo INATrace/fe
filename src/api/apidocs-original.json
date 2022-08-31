@@ -9437,49 +9437,6 @@
         "summary": "Get final product labels."
       }
     },
-    "/api/public/company/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "language",
-            "in": "query",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiCompanyPublic_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "public-controller"
-        ],
-        "operationId": "getPublicCompanyUsingGET",
-        "summary": "Get public data about company"
-      }
-    },
     "/api/public/document/{storageKey}": {
       "get": {
         "parameters": [
@@ -11757,44 +11714,6 @@
               "ACTIVE",
               "DEACTIVATED"
             ],
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiCompanyPublic": {
-        "properties": {
-          "about": {
-            "description": "about the company",
-            "type": "string"
-          },
-          "certifications": {
-            "description": "company certifications",
-            "items": {
-              "$ref": "#/components/schemas/ApiCertification"
-            },
-            "type": "array"
-          },
-          "documents": {
-            "description": "company documents",
-            "items": {
-              "$ref": "#/components/schemas/ApiCompanyDocument"
-            },
-            "type": "array"
-          },
-          "interview": {
-            "description": "interview",
-            "type": "string"
-          },
-          "mediaLinks": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "description": "social media URL links (Facebook, Instagram, Twitter, YouTube, ...)",
-            "type": "object"
-          },
-          "name": {
-            "description": "name",
             "type": "string"
           }
         },
@@ -16223,6 +16142,13 @@
       },
       "ApiQRTagPublic": {
         "properties": {
+          "certificates": {
+            "description": "List of certificates of the participating companies in this Stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiCertification"
+            },
+            "type": "array"
+          },
           "cuppingFlavour": {
             "description": "The cupping flavour entered during one of the processing actions",
             "type": "string"
@@ -16455,49 +16381,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiCompanyGet",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiResponse_ApiCompanyPublic_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiCompanyPublic",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
