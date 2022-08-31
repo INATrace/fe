@@ -1853,42 +1853,48 @@
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.containerSize')"
                  [readOnly]="!canEdit()"
-                 label="Container size" i18n-label="@@productLabel.textinput.comparisonOfPrice.containerSize">
+                 label="Container size"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.containerSize">
       </textinput>
     </div>
 
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.worldMarket')"
                  [readOnly]="!canEdit()"
-                 label="World market price (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.worldMarket">
+                 label="World market price (USD/pound)"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.worldMarket">
       </textinput>
     </div>
 
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.fairTrade')"
                  [readOnly]="!canEdit()"
-                 label="Fairtrade Minimum Price + Premium (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.fairTrade">
+                 label="Fairtrade Minimum Price + Premium (USD/pound)"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.fairTrade">
       </textinput>
     </div>
 
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualFarmGatePrice')"
                  [readOnly]="!canEdit()"
-                 label="Manual farm-gate price (USD/kg)" i18n-label="">
+                 label="Manual farm-gate price (USD/kg)"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
       </textinput>
     </div>
 
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.averageRegionFarmGatePrice')"
                  [readOnly]="!canEdit()"
-                 label="Average farm-gate price for region (USD/pound)" i18n-label="@@productLabel.textinput.comparisonOfPrice.manualFarmGatePrice">
+                 label="Average farm-gate price for region (USD/pound)"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.averageRegionFarmGatePrice">
       </textinput>
     </div>
 
     <div class="mt-2">
       <textinput [form]="$any(productForm).get('businessToCustomerSettings.manualProducerPrice')"
                  [readOnly]="!canEdit()"
-                 label="Manual producer price (USD/kg)" i18n-label="">
+                 label="Manual producer price (USD/kg)"
+                 i18n-label="@@productLabel.textinput.comparisonOfPrice.manualProducerPrice">
       </textinput>
     </div>
   </app-closable>
