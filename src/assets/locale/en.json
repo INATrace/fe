@@ -2279,7 +2279,6 @@
     "productLabel.textinput.privacyPolicyText.label": "Privacy policy text",
     "productLabel.textinput.termsOfUseText.label": "Terms of use text",
     "productLabel.increaseIncome.label": "Increase in income on this value chain",
-    "productLabel.textinput.increaseOfCoffee.label": "Increase per kg of coffee cherries sold (%)",
     "productLabel.attachment-uploader.incomeIncreaseDocument.label": "Photo",
     "productLabel.attachment-uploader.incomeIncreaseDocument.content": "Upload photo",
     "productLabel.tinymce.incomeIncreaseDescription.label": "Description",
