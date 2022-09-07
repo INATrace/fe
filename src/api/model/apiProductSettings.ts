@@ -45,10 +45,6 @@ export interface ApiProductSettings {
     incomeIncreaseDescription?: string;
     incomeIncreaseDocument?: ApiDocument;
     /**
-     * increase of coffee
-     */
-    increaseOfCoffee?: number;
-    /**
      * language
      */
     language?: ApiProductSettings.LanguageEnum;
@@ -99,10 +95,6 @@ export namespace ApiProductSettings {
          */
         incomeIncreaseDescription = 'incomeIncreaseDescription',
         incomeIncreaseDocument = 'incomeIncreaseDocument',
-        /**
-         * increase of coffee
-         */
-        increaseOfCoffee = 'increaseOfCoffee',
         /**
          * language
          */
@@ -210,17 +202,6 @@ export namespace ApiProductSettings {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'increaseOfCoffee',
-                    classname: 'ApiProductSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProductSettings.LanguageEnum',
                     required: false,
@@ -289,8 +270,6 @@ export namespace ApiProductSettings {
                 ],
                 incomeIncreaseDocument: [
                 ],
-                increaseOfCoffee: [
-                ],
                 language: [
                 ],
                 pricingTransparency: [
@@ -324,9 +303,6 @@ export namespace ApiProductSettings {
   //                   validators: []
   //               },
   //               incomeIncreaseDocument: {
-  //                   validators: []
-  //               },
-  //               increaseOfCoffee: {
   //                   validators: []
   //               },
   //               language: {

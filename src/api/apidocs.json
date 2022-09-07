@@ -15954,11 +15954,6 @@
             "$ref": "#/components/schemas/ApiDocument",
             "description": "increase in income - document"
           },
-          "increaseOfCoffee": {
-            "description": "increase of coffee",
-            "format": "double",
-            "type": "number"
-          },
           "language": {
             "description": "language",
             "enum": [
