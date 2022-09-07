@@ -27,7 +27,6 @@ export interface ApiBusinessToCustomerSettings {
     containerSize?: number;
     creationTimestamp?: Date;
     fairTrade?: number;
-    footerImage?: ApiDocument;
     graphicFairPrices?: boolean;
     graphicFarmGatePrice?: ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum;
     graphicIncreaseOfIncome?: boolean;
@@ -75,7 +74,6 @@ export namespace ApiBusinessToCustomerSettings {
         containerSize = 'containerSize',
         creationTimestamp = 'creationTimestamp',
         fairTrade = 'fairTrade',
-        footerImage = 'footerImage',
         graphicFairPrices = 'graphicFairPrices',
         graphicFarmGatePrice = 'graphicFarmGatePrice',
         graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
@@ -180,18 +178,6 @@ export namespace ApiBusinessToCustomerSettings {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'footerImage',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -540,8 +526,6 @@ export namespace ApiBusinessToCustomerSettings {
                 ],
                 fairTrade: [
                 ],
-                footerImage: [
-                ],
                 graphicFairPrices: [
                 ],
                 graphicFarmGatePrice: [
@@ -619,9 +603,6 @@ export namespace ApiBusinessToCustomerSettings {
   //                   validators: []
   //               },
   //               fairTrade: {
-  //                   validators: []
-  //               },
-  //               footerImage: {
   //                   validators: []
   //               },
   //               graphicFairPrices: {
