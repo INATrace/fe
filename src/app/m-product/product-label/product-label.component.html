@@ -1269,14 +1269,6 @@
     [openOnValueChange]="openOnStart">
     <div>
 
-      <textinput
-        [form]="$any(productForm).get('settings.increaseOfCoffee')"
-        [readOnly]="!canEdit()"
-        label="Increase per kg of coffee cherries sold (%)"
-        style="width: 100%"
-        i18n-label="@@productLabel.textinput.increaseOfCoffee.label">
-      </textinput>
-
       <attachment-uploader
         rootImageUrl="{{rootImageUrl}}"
         allowedMimeType="[image/png', 'image/jpeg']"

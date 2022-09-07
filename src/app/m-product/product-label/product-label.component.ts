@@ -1472,11 +1472,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.pricingTransparencyElements.forEach(elt => {
       if (elt.name === 'settings.increaseIncome') {
         elts.push({
-          name: 'settings.increaseOfCoffee',
-          section: elt.section,
-          visible: elt.visible
-        });
-        elts.push({
           name: 'settings.incomeIncreaseDescription',
           section: elt.section,
           visible: elt.visible

@@ -311,9 +311,6 @@ export const ApiProductSettingsValidationScheme = {
     incomeIncreaseDocument: {
       validators: []
     },
-    increaseOfCoffee: {
-      validators: []
-    },
     language: {
       validators: []
     },

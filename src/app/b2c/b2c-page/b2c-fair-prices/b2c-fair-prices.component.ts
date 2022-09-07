@@ -114,9 +114,6 @@ export class B2cFairPricesComponent implements OnInit {
       if (item.name === 'settings.incomeIncreaseDescription') {
         this.descPricing = item.value;
       }
-      // if (item.name === 'settings.increaseOfCoffee') {
-      //   this.increaseOfCoffee = Math.round(item.value);
-      // }
     }
 
     const producerPrice = this.b2cPage.qrProductLabel.priceToProducer ? this.b2cPage.qrProductLabel.priceToProducer : this.b2cSettings.manualProducerPrice;
