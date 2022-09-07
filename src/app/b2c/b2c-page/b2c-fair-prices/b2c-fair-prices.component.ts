@@ -18,17 +18,16 @@ export class B2cFairPricesComponent implements OnInit {
   title = $localize`:@@frontPage.fair-prices.title:Fair prices`;
   title2 = $localize`:@@frontPage.fair-prices.title2:Increase of farmers' income through`;
 
-  prices: string = null;
   desc: string = null;
   descPricing: string = null;
 
   worldMarketPrice: number = null;
   fairTradePrice: number = null;
-  angeliquePrice: number = null;
+  productPrice: number = null;
   increaseOfCoffee: string = null;
 
   farmGateAveragePrice: number;
-  farmGateProductPrice: number;
+  private farmGateProductPrice: number;
 
   worldMarketHeight: number = null;
   fairTradeHeight: number = null;
@@ -123,38 +122,38 @@ export class B2cFairPricesComponent implements OnInit {
     const producerPrice = this.b2cPage.qrProductLabel.priceToProducer ? this.b2cPage.qrProductLabel.priceToProducer : this.b2cSettings.manualProducerPrice;
     switch (this.b2cSettings.graphicPriceToProducer) {
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
-        this.worldMarketPrice = this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
-        this.fairTradePrice = this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
-        this.angeliquePrice = producerPrice * this.b2cSettings.containerSize;
+        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
+        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
+        this.productPrice = Math.ceil(producerPrice * this.b2cSettings.containerSize);
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
-        this.worldMarketPrice = this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG;
-        this.fairTradePrice = this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG;
-        this.angeliquePrice = producerPrice;
+        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG);
+        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG);
+        this.productPrice = producerPrice;
         break;
       case GraphicPriceToProducerEnum.PERCENTVALUE:
         this.worldMarketPrice = 100;
-        this.fairTradePrice = this.b2cSettings.fairTrade / this.b2cSettings.worldMarket * 100;
-        this.angeliquePrice = producerPrice / this.b2cSettings.worldMarket * 100;
+        this.fairTradePrice = Math.round(this.b2cSettings.fairTrade / this.b2cSettings.worldMarket * 100);
+        this.productPrice = Math.round(producerPrice / this.b2cSettings.worldMarket * 100);
         break;
     }
 
     const farmGatePrice = this.b2cPage.qrProductLabel.priceToFarmer ? this.b2cPage.qrProductLabel.priceToFarmer : this.b2cSettings.manualFarmGatePrice;
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
-        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize;
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
         this.farmGateProductPrice = farmGatePrice * this.b2cSettings.containerSize;
-        this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
+        this.increaseOfCoffee = '$' +  Math.ceil(this.farmGateProductPrice);
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERKG:
-        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG;
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG);
         this.farmGateProductPrice = farmGatePrice;
-        this.increaseOfCoffee = '$' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-3');
+        this.increaseOfCoffee = '$' + Math.ceil(this.farmGateProductPrice);
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCENTVALUE:
-        this.farmGateAveragePrice = this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG;
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG);
         this.farmGateProductPrice = farmGatePrice / this.farmGateAveragePrice * 100 - 100;
-        this.increaseOfCoffee = '+' + this.decimalPipe.transform(this.farmGateProductPrice, '1.0-0') + '%';
+        this.increaseOfCoffee = '+' + Math.ceil(this.farmGateProductPrice) + '%';
         break;
     }
   }
