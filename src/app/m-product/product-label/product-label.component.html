@@ -1694,23 +1694,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #b2cFooterImage>
-  <app-closable [nonClosable]="true"
-                [visibilityForm]="visibilityMap.get('businessToCustomerSettings.footerImage')"
-                [reorderMode]="reorderMode"
-                [openOnValueChange]="openOnStart"
-                class="af-form-element--nolabel">
-    <attachment-uploader [allowedMimeType]="['image/jpeg', 'image/png']"
-                         [allowedMimeTypeErrorMessage]="'Upload only file types: PNG, JPG and JPEG.'"
-                         mode="simpleAsTextField"
-                         label="Footer image"
-                         i18n-label="@@productLabel.b2c.footerImage"
-                         [form]="$any(productForm).get('businessToCustomerSettings.footerImage')"
-                         [attachmentUploaderId]="'b2cFooterImage'"
-                         [readOnly]="!canEdit()"></attachment-uploader>
-  </app-closable>
-</ng-template>
-
 <ng-template #b2cTabFairPrices>
   <app-closable
       [nonClosable]="true"

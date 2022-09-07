@@ -589,9 +589,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('b2cHeaderBackgroundImage', { static: false })
   b2cHeaderBackgroundImage: TemplateRef<any>;
 
-  @ViewChild('b2cFooterImage', { static: false })
-  b2cFooterImage: TemplateRef<any>;
-
   @ViewChild('b2cMedia', { static: false })
   b2cMedia: TemplateRef<any>;
 
@@ -1335,9 +1332,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'businessToCustomerSettings.productFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductFont },
       { name: 'businessToCustomerSettings.textFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextFont },
       { name: 'businessToCustomerSettings.landingPageImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cLandingPageImage },
-      { name: 'businessToCustomerSettings.landingPageBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cLandingPageBackgroundImage },
+      { name: 'businessToCustomerSettings.landingPageBackgroundImage', section: 'businessToCustomerSettings',
+        visible: new FormControl(false), template: this.b2cLandingPageBackgroundImage },
       { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
-      { name: 'businessToCustomerSettings.footerImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFooterImage },
       { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
       { name: 'businessToCustomerSettings.graphicFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFarmGatePrice },
       { name: 'businessToCustomerSettings.prices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrices },
