@@ -24,8 +24,6 @@ export class B2cJourneyComponent implements OnInit {
 
   productName: string;
 
-  headerColor: string;
-
   b2cSettings: ApiBusinessToCustomerSettings;
 
   subs: Subscription[] = [];
@@ -34,20 +32,17 @@ export class B2cJourneyComponent implements OnInit {
   producerName = '';
   historyItems: HistoryTimelineItem[] = [];
 
-  // uuid = this.route.snapshot.params.uuid;
-  // qrTag = this.route.snapshot.params.qrTag;
-
   locations: google.maps.LatLngLiteral[] = [];
 
   markers: any = [];
   initialBounds: any = [];
+  bounds: any;
+
   defaultCenter = {
     lat: 5.274054,
     lng: 21.514503
   };
-  defaultZoom = 3;
-  zoomForOnePin = 10;
-  bounds: any;
+  defaultZoom = 2;
 
   lineSymbol = {
     path: 'M 0,-1 0,1',
@@ -78,7 +73,7 @@ export class B2cJourneyComponent implements OnInit {
       this.mapMarkerOption = {
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
-          scale: 4,
+          scale: 3,
           fillColor: '#25265E',
           fillOpacity: 1,
           strokeColor: '#25265E',
@@ -101,7 +96,7 @@ export class B2cJourneyComponent implements OnInit {
     );
     this.subs.push(sub2);
 
-    this.initLabel().then();
+    this.initLabel();
     this.data().then();
   }
 
@@ -132,7 +127,8 @@ export class B2cJourneyComponent implements OnInit {
     return {...item, iconClass};
   }
 
-  async initLabel() {
+  initLabel() {
+
     const labelData = this.b2cPage.publicProductLabel;
 
     for (const item of labelData.fields) {
@@ -152,33 +148,39 @@ export class B2cJourneyComponent implements OnInit {
 
   async data() {
 
+    for (let i = 0; i < this.locations.length; i += 2) {
+      this.markers.push({
+        position: {
+          lat: this.locations[i].lat,
+          lng: this.locations[i].lng
+        }
+      });
+    }
+
     if (this.b2cPage.qrTag !== 'EMPTY') {
 
       // Get the aggregated history for the QR code tag
-      // const resp = await this.publicControllerService.getQRTagPublicDataUsingGET(this.qrTag, true).pipe(take(1)).toPromise();
       const qrData = this.b2cPage.qrProductLabel;
       if (qrData) {
         this.historyItems = qrData.historyTimeline.items.map(item => this.addIconStyleForIconType(item));
         this.producerName = qrData.producerName;
 
-        this.markers = qrData.historyTimeline.items.reduce((acc, historyItem) => {
+        qrData.historyTimeline.items.map(historyItem => {
           if (historyItem.longitude && historyItem.latitude) {
-            acc.push({
+            this.markers.push({
               position: {
                 lat: historyItem.latitude,
-                lng: historyItem.longitude,
-              },
+                lng: historyItem.longitude
+              }
             });
           }
-          return acc;
-        }, []);
+        });
       }
     }
   }
 
   googleMapsIsLoaded(map) {
     this.isGoogleMapsLoaded = true;
-    if (this.b2cPage.qrTag === 'EMPTY') { return; }
     for (const [i, loc] of this.locations.entries()) {
       const tmp = {
         position: {

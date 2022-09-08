@@ -16,15 +16,18 @@ export class PathlineMapComponent implements OnInit, OnChanges, OnDestroy {
     private destroy$ = new Subject<boolean>();
     
     isGoogleMapsLoaded = false;
+
     defaultCenter = {
         lat: 5.274054,
         lng: 21.514503
     };
     defaultZoom = 3;
+
     gMap: GoogleMap = null;
     bounds: google.maps.LatLngBounds;
     mapMarkerOption: any;
     initialBounds: google.maps.LatLngLiteral[] = [];
+
     journeyVertices: google.maps.LatLngLiteral[] = [];
     lineSymbol = {
         path: 'M 0,-1 0,1',
@@ -32,6 +35,7 @@ export class PathlineMapComponent implements OnInit, OnChanges, OnDestroy {
         scale: 2,
         strokeColor: '#25265E'
     };
+
     polylineOptions: google.maps.PolylineOptions = {
         icons: [
             {

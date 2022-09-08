@@ -6,7 +6,6 @@
             height="380px"
             width="100%">
         <map-marker
-            #gMarker="mapMarker"
             *ngFor="let marker of markers; index as i"
             [position]="marker.position"
             [options]="mapMarkerOption">
