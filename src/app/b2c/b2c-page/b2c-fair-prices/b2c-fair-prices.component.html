@@ -49,10 +49,11 @@
 
     <h1 *ngIf="farmerPriceGraphic" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ title2 }} {{ productName }}</h1>
 
-    <div *ngIf="farmerPriceGraphic" class="af-stgraph-wrapper" style>
+    <div *ngIf="farmerPriceGraphic" class="af-stgraph-wrapper">
         <div class="af-stgraph">
 
-            <div class="af-stgraph-row af-stgraph-row--top" [style.height]="'72px'">
+            <div class="af-stgraph-row af-stgraph-row--top"
+                 [style.height]="increaseOfCoffeeHeight + 'px'">
                 <div class="af-stgraph-col">
                   <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label1Farmers"
                         [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">
@@ -66,7 +67,8 @@
                   </span>
                 </div>
             </div>
-            <div class="af-stgraph-row af-stgraph-row--middle" style="height: 100px;">
+            <div class="af-stgraph-row af-stgraph-row--middle"
+                 [style.height]="farmGateAveragePriceHeight + 'px'">
                 <div class="af-stgraph-col">
                   <span class="af-stgraph-description" i18n="@@frontPage.fair-prices.barChart.label2Farmers"
                         [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">
