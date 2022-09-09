@@ -119,38 +119,38 @@ export class B2cFairPricesComponent implements OnInit {
     const producerPrice = this.b2cPage.qrProductLabel.priceToProducer ? this.b2cPage.qrProductLabel.priceToProducer : this.b2cSettings.manualProducerPrice;
     switch (this.b2cSettings.graphicPriceToProducer) {
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERCONTAINER:
-        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
-        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
+        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket / B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
+        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade / B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
         this.productPrice = Math.ceil(producerPrice * this.b2cSettings.containerSize);
         break;
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
-        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG);
-        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG);
+        this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket / B2cFairPricesComponent.POUND_TO_KG);
+        this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade / B2cFairPricesComponent.POUND_TO_KG);
         this.productPrice = Math.ceil(producerPrice);
         break;
       case GraphicPriceToProducerEnum.PERCENTVALUE:
         this.worldMarketPrice = 100;
         this.fairTradePrice = Math.round(this.b2cSettings.fairTrade / this.b2cSettings.worldMarket * 100);
-        this.productPrice = Math.round(producerPrice / this.b2cSettings.worldMarket * 100);
+        this.productPrice = Math.round(producerPrice / (this.b2cSettings.worldMarket / B2cFairPricesComponent.POUND_TO_KG) * 100);
         break;
     }
 
     const farmGatePrice = this.b2cPage.qrProductLabel.priceToFarmer ? this.b2cPage.qrProductLabel.priceToFarmer : this.b2cSettings.manualFarmGatePrice;
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
-        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice / B2cFairPricesComponent.POUND_TO_KG * this.b2cSettings.containerSize);
         this.farmGateProductPrice = farmGatePrice * this.b2cSettings.containerSize;
         this.increaseOfCoffee = '$' +  Math.ceil(this.farmGateProductPrice);
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERKG:
-        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG);
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice / B2cFairPricesComponent.POUND_TO_KG);
         this.farmGateProductPrice = farmGatePrice;
         this.increaseOfCoffee = '$' + Math.ceil(this.farmGateProductPrice);
         break;
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCENTVALUE:
-        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice * B2cFairPricesComponent.POUND_TO_KG);
+        this.farmGateAveragePrice = Math.ceil(this.b2cSettings.averageRegionFarmGatePrice / B2cFairPricesComponent.POUND_TO_KG);
         this.farmGateProductPrice = farmGatePrice / this.farmGateAveragePrice * 100 - 100;
-        this.increaseOfCoffee = '+' + Math.ceil(this.farmGateProductPrice) + '%';
+        this.increaseOfCoffee = '+' + Math.round(this.farmGateProductPrice) + '%';
         break;
     }
   }
