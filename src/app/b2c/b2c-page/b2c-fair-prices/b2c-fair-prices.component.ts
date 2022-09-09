@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
 import GraphicPriceToProducerEnum = ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
-import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-b2c-fair-prices',
@@ -12,6 +11,8 @@ import { DecimalPipe } from '@angular/common';
 export class B2cFairPricesComponent implements OnInit {
 
   private static POUND_TO_KG = 0.453592;
+
+  private static GRAPHIC_HEIGHT = 220;
 
   b2cSettings: ApiBusinessToCustomerSettings;
 
@@ -29,9 +30,9 @@ export class B2cFairPricesComponent implements OnInit {
   farmGateAveragePrice: number;
   private farmGateProductPrice: number;
 
-  worldMarketHeight: number = null;
-  fairTradeHeight: number = null;
-  angeliqueHeight: number = null;
+  worldMarketPriceHeight: number = null;
+  fairTradePriceHeight: number = null;
+  productPriceHeight: number = null;
 
   orderId = '';
 
@@ -53,8 +54,7 @@ export class B2cFairPricesComponent implements OnInit {
   producerUnitEnum = GraphicPriceToProducerEnum;
 
   constructor(
-      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent,
-      private decimalPipe: DecimalPipe
+      @Inject(B2cPageComponent) private b2cPage: B2cPageComponent
   ) {
     this.b2cSettings = b2cPage.b2cSettings;
   }
@@ -135,6 +135,19 @@ export class B2cFairPricesComponent implements OnInit {
         break;
     }
 
+    // Calculate graphic chart bars height
+    const worldMarketPriceHeight = 40;
+    const fairTradePriceHeight = worldMarketPriceHeight * this.fairTradePrice / this.worldMarketPrice;
+    const productPriceHeight = worldMarketPriceHeight * this.productPrice / this.worldMarketPrice;
+
+    // Normalize the heights to a maximum graphic height
+    const maxBarValue = Math.max(worldMarketPriceHeight, fairTradePriceHeight, productPriceHeight);
+    const scale = B2cFairPricesComponent.GRAPHIC_HEIGHT / maxBarValue;
+
+    this.worldMarketPriceHeight = worldMarketPriceHeight * scale;
+    this.fairTradePriceHeight = fairTradePriceHeight * scale;
+    this.productPriceHeight = productPriceHeight * scale;
+
     const farmGatePrice = this.b2cPage.qrProductLabel.priceToFarmer ? this.b2cPage.qrProductLabel.priceToFarmer : this.b2cSettings.manualFarmGatePrice;
     switch (this.b2cSettings.graphicFarmGatePrice) {
       case ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum.PERCONTAINER:
@@ -153,6 +166,7 @@ export class B2cFairPricesComponent implements OnInit {
         this.increaseOfCoffee = '+' + Math.round(this.farmGateProductPrice) + '%';
         break;
     }
+
   }
 
 }

@@ -4498,7 +4498,6 @@ $af-graph-col-bg: inherit;
   &-bar {
     position: relative;
     width: 40px;              // for science, height should come from inline values in template
-    min-height: 40px;
     display: inline-block;
 
     &--pink {
