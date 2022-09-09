@@ -126,7 +126,7 @@ export class B2cFairPricesComponent implements OnInit {
       case ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum.PERKG:
         this.worldMarketPrice = Math.ceil(this.b2cSettings.worldMarket * B2cFairPricesComponent.POUND_TO_KG);
         this.fairTradePrice = Math.ceil(this.b2cSettings.fairTrade * B2cFairPricesComponent.POUND_TO_KG);
-        this.productPrice = producerPrice;
+        this.productPrice = Math.ceil(producerPrice);
         break;
       case GraphicPriceToProducerEnum.PERCENTVALUE:
         this.worldMarketPrice = 100;
