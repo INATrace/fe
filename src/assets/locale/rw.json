@@ -1798,6 +1798,8 @@
     "companyDetailProcessingActions.textInput.search-field.placeholder": "Select evidence document...",
     "companyDetailProcessingActions.button.cancel": "Funga",
     "companyDetailProcessingActions.button.save": "Bika",
+    "companyDetailProcessingActions.supportedFacilities": "Facilities where this process starts",
+    "companyDetailProcessingActions.hint.supportedFacilities": "Add facilities where this processing action starts.",
     "processingEvidenceField.input.placeholder": "Hitamo aho ibihamya by'igikorwa bijya",
     "productLabelPurchaseOrder.sortOptions.wayOfPayment.name": "Uburyo bwo kwishyura",
     "productLabelPayments.sortOptions.wayOfPayment.name": "Uburyo bwo kwishyura",

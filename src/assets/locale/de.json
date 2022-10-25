@@ -1797,6 +1797,8 @@
     "companyDetailProcessingActions.textInput.search-field.placeholder": "Select evidence document...",
     "companyDetailProcessingActions.button.cancel": "Abbrechen",
     "companyDetailProcessingActions.button.save": "Speichern",
+    "companyDetailProcessingActions.supportedFacilities": "Einrichtungen, in denen dieser Prozess beginnt",
+    "companyDetailProcessingActions.hint.supportedFacilities": "Fügen Sie Einrichtungen hinzu, an denen diese Verarbeitungsaktion beginnt.",
     "processingEvidenceField.input.placeholder": "Nachweisfeld auswählen",
     "productLabelPurchaseOrder.sortOptions.wayOfPayment.name": "Zahlungsart",
     "productLabelPayments.sortOptions.wayOfPayment.name": "Zahlungsart",
