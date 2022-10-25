@@ -26,6 +26,9 @@ import { FinalProductsForCompanyService } from '../../../../shared-services/fina
 import { FinalProductControllerService } from '../../../../../api/api/finalProductController.service';
 import { Subscription } from 'rxjs';
 import { ApiValueChain } from '../../../../../api/model/apiValueChain';
+import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -52,6 +55,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   evidenceDocInputForm: FormControl;
   evidenceFieldInputForm: FormControl;
 
+  supportedFacilitiesInputForm: FormControl;
+  supportedFacilitiesService: CompanyFacilitiesService;
+
   finalProductsForCompanyCodebook: FinalProductsForCompanyService;
 
   languages = ['EN', 'DE', 'RW', 'ES'];
@@ -77,6 +83,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       protected codebookTranslations: CodebookTranslations,
       private processingEvidenceTypeControllerService: ProcessingEvidenceTypeControllerService,
       private processingEvidenceFieldControllerService: ProcessingEvidenceFieldControllerService,
+      private facilitiesController: FacilityControllerService,
       private processingActionControllerService: ProcessingActionControllerService,
       public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
@@ -100,9 +107,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     this.activeSemiProductService =
         new ActiveSemiProductsService(this.semiProductControllerService, this.codebookTranslations);
-    this.evidenceDocInputForm = new FormControl(null);
 
+    this.evidenceDocInputForm = new FormControl(null);
     this.evidenceFieldInputForm = new FormControl(null);
+    this.supportedFacilitiesInputForm = new FormControl(null);
 
     this.initInitialData().then(
         () => {
@@ -112,6 +120,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
             this.newAction();
           }
           this.finalizeForm();
+
+          // Initialize codebook service for company facilities
+          this.supportedFacilitiesService = new CompanyFacilitiesService(this.facilitiesController, this.companyId);
 
           this.valueChainSubs = this.form.get('valueChain').valueChanges.subscribe((valueChain: ApiValueChain) => {
 
@@ -155,6 +166,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     if (!this.form.contains('requiredDocumentTypes')) {
       this.form.addControl('requiredDocumentTypes', new FormArray([]));
+    }
+
+    if (!this.form.contains('supportedFacilities')) {
+      this.form.addControl('supportedFacilities', new FormArray([]));
     }
 
     if (!this.form.contains('translations')) {
@@ -294,6 +309,36 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (!field) { return; }
     const formArray = this.form.get('requiredEvidenceFields') as FormArray;
     const index = (formArray.value as ApiProcessingEvidenceField[]).findIndex(x => x.id === field.id);
+    if (index >= 0) {
+      formArray.removeAt(index);
+      formArray.markAsDirty();
+    }
+  }
+
+  async addSelectedSupportedFacility(facility: ApiFacility) {
+
+    if (!facility) { return; }
+    const formArray = this.form.get('supportedFacilities') as FormArray;
+
+    // If selected facility is already present in array, clear input field
+    if (formArray.value.some(x => x.id === facility.id)) {
+      setTimeout(() => this.supportedFacilitiesInputForm.setValue(null));
+      return;
+    }
+
+    // Add selected element to array
+    formArray.push(new FormControl({...facility}));
+    formArray.markAsDirty();
+
+    // Clear input field
+    setTimeout(() => this.supportedFacilitiesInputForm.setValue(null));
+  }
+
+  async removeSupportedFacility(facility: ApiFacility) {
+
+    if (!facility) { return; }
+    const formArray = this.form.get('supportedFacilities') as FormArray;
+    const index = (formArray.value as ApiFacility[]).findIndex(x => x.id === facility.id);
     if (index >= 0) {
       formArray.removeAt(index);
       formArray.markAsDirty();
