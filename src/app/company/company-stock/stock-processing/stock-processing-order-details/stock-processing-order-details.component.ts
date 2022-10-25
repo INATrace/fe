@@ -1816,6 +1816,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const outputSemiProductId = this.prAction.outputSemiProduct?.id;
     const outputFinalProductId = this.prAction.outputFinalProduct?.id;
 
+    let supportedFacilitiesIds: number[] | undefined;
+    if (this.prAction.supportedFacilities && this.prAction.supportedFacilities.length > 0) {
+      supportedFacilitiesIds = this.prAction.supportedFacilities.map(f => f.id);
+    }
+
     // If there is input semi-product or input final product set, initialize input facility codebook
     if (inputSemiProductId || inputFinalProductId) {
 
@@ -1825,14 +1830,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
+          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId, supportedFacilitiesIds);
       }
     }
 
     // If there is output semi-product or output final product set, initialize output facility codebook
     if (outputSemiProductId || outputFinalProductId) {
-      this.outputFacilitiesCodebook =
-        new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+      if (this.actionType === 'SHIPMENT') {
+        this.outputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId, supportedFacilitiesIds);
+      } else {
+        this.outputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+      }
     }
   }
 

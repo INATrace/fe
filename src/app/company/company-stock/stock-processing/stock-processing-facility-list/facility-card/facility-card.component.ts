@@ -121,6 +121,11 @@ export class FacilityCardComponent implements OnInit {
 
     for (const action of this.actions) {
 
+      // If processing action has specified supported facilities check if this facility is specified (if not, skip the processing action)
+      if (action.supportedFacilities && action.supportedFacilities.length > 0 && action.supportedFacilities.findIndex(sf => sf.id === this.facility.id) === -1) {
+        continue;
+      }
+
       const facilitySemiProd = this.facility.facilitySemiProductList.find(fsp => fsp.id === action.inputSemiProduct?.id);
       if (facilitySemiProd) {
         this.menuOptions.push({
