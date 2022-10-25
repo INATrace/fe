@@ -1124,6 +1124,8 @@
     "companyDetailProcessingActions.hint.selectValueChain": "Please select Value chain",
     "companyDetailProcessingActions.button.cancel": "Cancel",
     "companyDetailProcessingActions.button.save": "Save",
+    "companyDetailProcessingActions.supportedFacilities": "Facilities where this process starts",
+    "companyDetailProcessingActions.hint.supportedFacilities": "Add facilities where this processing action starts.",
     "processingEvidenceField.input.placeholder": "Select evidence field",
     "breadCrumb.cookiesPage.home": "Home",
     "breadCrumb.cookiesPage.cookiePolicy": "Cookie policy",
