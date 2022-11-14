@@ -15,6 +15,11 @@ $fa-font-path: "../src/assets/webfonts";
   font-style: normal;
 }
 
+// Landing page variables
+$landing-primary: rgb(157, 160, 66);
+$landing-primary-lightest: rgba(126, 128, 53, 0.25);
+$landing-text-color: rgb(0, 0, 0, 0.77);
+
 /// SYNC COLORS WITH theme.service.ts !!!!
 
 $gray-dark:   #666666 !default;
