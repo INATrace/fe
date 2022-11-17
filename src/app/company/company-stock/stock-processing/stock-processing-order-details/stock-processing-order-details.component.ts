@@ -987,7 +987,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             const newStockOrder: ApiStockOrder = {
               ...sharedFields,
               id: outputStockOrder.id,
-              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
+              // internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
+              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value,
               creatorId: this.creatorId,
               semiProduct,
               finalProduct,
