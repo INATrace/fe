@@ -36,7 +36,8 @@
       <!-- FILTERS -->
       <div class="d-flex justify-content-between main-inside-top--row2" *ngIf="this.selectedFacilityId">
         <div>
-          <div class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
+          <div *ngIf="!showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
+          <div *ngIf="showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfGroupedOrders">List of grouped orders</div>
           <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingOrders">Showing {{ showedOrders }}/{{ allOrders }}</div>
         </div>
 
@@ -73,6 +74,9 @@
               <button ngbDropdownItem (click)="setAvailableOnly(true)" i18n="@@productLabelStock.filter.availableOnly.button">Available only</button>
             </div>
 
+            <input class="toggle-switch-checkbox" type="checkbox" id="switch" [formControl]="groupViewControl" />
+            <label class="toggle-switch-label" for="switch">Toggle</label>
+
             <div class="ml-2">
               <single-choice
                       [noMargin]="true"
@@ -88,7 +92,7 @@
 
       <!-- LIST OF STOCK ORDERS -->
       <app-stock-order-list
-              *ngIf="this.selectedFacilityId"
+              *ngIf="this.selectedFacilityId && !showGroupView"
               mode="GENERAL"
               [reloadPingList$]="reloadStockOrdersPing$"
               (countAll)="onCountAllSO($event)"
@@ -103,6 +107,19 @@
               (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
               [clickAddPaymentsPing$]="clickAddPaymentsPing$">
       </app-stock-order-list>
+
+      <app-group-stock-order-list
+              *ngIf="this.selectedFacilityId && showGroupView"
+              [reloadPingList$]="reloadStockOrdersPing$"
+              (countAll)="onCountAllSO($event)"
+              [facilityId$]="facilityIdPing$"
+              (showing)="onShowSO($event)"
+              [openBalanceOnly$]="openBalancePing$"
+              [purchaseOrderOnly$]="purchaseOrderOnly$"
+              [availableOnly$]="availableOnly$"
+              [semiProductId$]="semiProductId$"
+              (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+      ></app-group-stock-order-list>
 
     </div>
   </div>

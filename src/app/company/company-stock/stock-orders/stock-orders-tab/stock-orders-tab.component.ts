@@ -18,6 +18,8 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class StockOrdersTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
+  groupViewControl = new FormControl(false);
+  showGroupView = false;
   rootTab = 3;
 
   showedOrders = 0;
@@ -60,6 +62,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     super.ngOnInit();
 
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
+    this.groupViewControl.valueChanges.subscribe(state => this.showGroupView = state);
   }
 
   ngOnDestroy(): void {
