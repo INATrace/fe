@@ -7,17 +7,16 @@
         <div class="login-subtitle" i18n="@@login.subtitle">Sign in to continue</div>
         <div class="login-big-spacer"></div>
         <form class="form-group">
-          <label for="username" class="mb-0 mt-3">
-            <div class="text-input-label" [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('username').invalid" i18n="@@login.input.username.label">
+          <label for="username" class="mb-0 mt-3 text-input-label landing-page">
+            <div [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('username').invalid" i18n="@@login.input.username.label">
               Username
             </div>
           </label>
           <input
-            #inputfield
-            class="form-control text-input-bigger"
+            class="form-control landing-page text-input-bigger"
             id="username"
             [ngClass]="{ 'is-invalid': submitted && loginForm.get('username').invalid }"
-            style="margin-bottom: 0px;"
+            style="margin-bottom: 0;"
             placeholder="Enter your username"
             type="text"
             i18n-placeholder="@@login.input.username.placeholder"
@@ -34,34 +33,22 @@
           </ng-container>
           <div class="login-small-spacer"></div>
           <div class="login-small-spacer"></div>
-          <label for="password" class="mb-0 mt-3 text-input-label">
-            <div class="text-input-label" [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('password').invalid" i18n="@@login.input.password.label">
+          <label for="password" class="mb-0 mt-3 text-input-label landing-page">
+            <div [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('password').invalid" i18n="@@login.input.password.label">
               Password
             </div>
           </label>
           <div class="input-group">
             <input
-              #inputfield
-              class="form-control text-input-bigger"
+              class="form-control landing-page text-input-bigger"
               id="password"
               [ngClass]="{ 'is-invalid': submitted && loginForm.get('password').invalid }"
-              style="margin-bottom: 0px;"
+              style="margin-bottom: 0;"
               type="password"
               placeholder="Enter your password"
               i18n-placeholder="@@login.input.password.placeholder"
               [formControl]="loginForm.get('password')"
               (keyup.enter)="login()">
-
-            <!-- <span class="input-group-append bg-white border-left-0">
-            <span class="input-group-text bg-transparent">
-              <fa-icon
-                [icon]="faEyeSlash">
-              </fa-icon>
-              <fa-icon
-                [icon]="faEye">
-              </fa-icon>
-            </span>
-          </span> -->
 
           </div>
           <div *ngIf="submitted">
@@ -84,22 +71,15 @@
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
-        <button class="btn btn-solid round btn-register" (click)="login()" i18n="@@login.button.login">
+        <button class="btn landing-page btn-register" (click)="login()" i18n="@@login.button.login">
           <span>Login</span>
         </button>
-        <!-- <div>
-        <a [routerLink]="['/', 'register']" i18n="@@login.link.notAUser">Not a user? <span style="font-weight: 600">Register</span></a>
-      </div>-->
 
       </div>
     </div>
     <div class="col-sm-12 col-lg-6" style="background-color: rgba(247,247,247,0.56); border-radius: 32px;">
-
       <div class="login-right-side-text">
-        Everything starts with the good coffee.
-      </div>
-      <div class="login-right-side-subtext">
-        <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+        Make agricultural supply chains transparent and fair with INATrace
       </div>
     </div>
 

@@ -19,11 +19,16 @@ import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./textinput.component.scss']
 })
 export class TextinputComponent implements OnInit {
+
   @Input()
   label: string;
 
   @Input()
   htmlLabel: string;
+
+  // If this text input should be styled with the landing page theme
+  @Input()
+  landingPageStyle = false;
 
   _form = null
   @Input() set form(value: FormControl) {
