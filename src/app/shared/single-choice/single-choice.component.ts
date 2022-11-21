@@ -43,8 +43,11 @@ export class SingleChoiceComponent implements OnInit {
     }
 
     get codebookService(): CodebookHelperService<any> {
-      return this._codebookService;
+        return this._codebookService;
     }
+
+    @Input()
+    allowMultiple: boolean = false;
 
     @Input()
     enumChoices?: any;
@@ -125,6 +128,9 @@ export class SingleChoiceComponent implements OnInit {
     @Input()
     organizationId: string = null;
 
+    @Input()
+    touchedOnBlur: boolean = false;
+
     @Output() onChange = new EventEmitter<any>();
 
     @Output() isActive = new EventEmitter<any>();
@@ -136,6 +142,7 @@ export class SingleChoiceComponent implements OnInit {
     keys$: Observable<string> = null
 
     public modelChoice: any = null;   // corresponding model
+    public modelChoiceArr: any[] = null;   // corresponding model
 
     constructor() {
 
@@ -270,19 +277,34 @@ export class SingleChoiceComponent implements OnInit {
         if (!this.formControlInput) {
             throw Error("formControlInput ne sme biti null pri izbiri enumChoices")
         }
-        let val = this.formControlInput.value
-        this.modelChoice = this.allOptions.find(x => {
-            if (this.forceAllInLowercase) {
+        const val = this.formControlInput.value
+
+        if (this.allowMultiple) {
+            this.modelChoiceArr = this.allOptions.filter(x => {
                 if (val == null) return false;
-                return x.value.toLocaleLowerCase() === (val as string).toLocaleLowerCase()
-            }
-            return x.value === val
-        })
+                if (this.forceAllInLowercase) {
+                    return val.map(v => v.toLocaleLowerCase()).includes(x.value.toLocaleLowerCase());
+                }
+                return val.includes(x.value);
+            })
+        } else {
+            this.modelChoice = this.allOptions.find(x => {
+                if (this.forceAllInLowercase) {
+                    if (val == null) return false;
+                    return x.value.toLocaleLowerCase() === (val as string).toLocaleLowerCase()
+                }
+                return x.value === val
+            })
+        }
         if (this.modelChoiceSubscription) {
             this.modelChoiceSubscription.unsubscribe();
         }
         this.modelChoiceSubscription = this.formControlInput.valueChanges.subscribe(val => {
-            this.modelChoice = this.allOptions.find(x => x.value === val)
+            if (this.allowMultiple) {
+                this.modelChoiceArr = this.allOptions.filter(x => val?.includes(x.value))
+            } else {
+                this.modelChoice = this.allOptions.find(x => x.value === val)
+            }
         })
         if (this.optionsSubscription) {
             this.optionsSubscription.unsubscribe()
@@ -365,6 +387,8 @@ export class SingleChoiceComponent implements OnInit {
             if (this.enumChoices || this.isBooleanSelector()) {
                 if (event == null) {
                     this.formControlInput.setValue(null)
+                } else if (event instanceof Array) {
+                    this.formControlInput.setValue(event.map(e => e.value))
                 } else {
                     this.formControlInput.setValue(event.value)
                 }
@@ -402,6 +426,7 @@ export class SingleChoiceComponent implements OnInit {
     }
 
     onBlur(event) {
+        if (this.touchedOnBlur) this._formControl.markAsTouched();
         this.typeahead$.next(null)   // vedno počisti typeahead
         this.isActive.next(false)
     }

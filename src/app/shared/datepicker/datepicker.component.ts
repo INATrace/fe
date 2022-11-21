@@ -43,6 +43,9 @@ export class DatepickerComponent implements OnInit {
     @Input()
     clearable = false;
 
+    @Input()
+    touchOnBlur: boolean = false;
+
     @Output()
     onChange = new EventEmitter<Date>();
 
@@ -117,6 +120,7 @@ export class DatepickerComponent implements OnInit {
         if(!this.form.value) {
             setTimeout(() => this.updateDisplay(null))
         }
+        if (this.touchOnBlur) this._form.markAsTouched();
     }
 
     ngOnDestroy() {

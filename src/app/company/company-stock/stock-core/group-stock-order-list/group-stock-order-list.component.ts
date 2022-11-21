@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
-import { DeliveryDates, StockOrderListingPageMode } from '../stock-core-tab/stock-core-tab.component';
+import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { map, switchMap, take, tap } from 'rxjs/operators';
@@ -13,7 +13,6 @@ import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
 import StatusEnum = ApiDefaultResponse.StatusEnum;
-// import { AggregatedStockItem } from './models';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import {GroupStockOrderControllerService} from '../../../../../api/api/groupStockOrderController.service';
 import {ApiPaginatedResponseApiGroupStockOrder} from '../../../../../api/model/apiPaginatedResponseApiGroupStockOrder';
