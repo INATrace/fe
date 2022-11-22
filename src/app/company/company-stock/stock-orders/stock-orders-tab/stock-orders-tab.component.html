@@ -7,6 +7,9 @@
 
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock orders</div>
+        <div *ngIf="!isBeycoAuthorized">
+          <button class="btn" type="button" (click)="getAuthCodeFromBeyco()">Authorize Beyco application</button>
+        </div>
       </div>
 
       <!-- FACILITY SELECTION DROPDOWN -->
@@ -86,6 +89,7 @@
               </single-choice>
             </div>
 
+            <button *ngIf="isBeycoAuthorized" class="btn ml-2" type="button">Create Beyco order</button>
           </div>
         </div>
       </div>

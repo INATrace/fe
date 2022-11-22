@@ -22,6 +22,8 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   showGroupView = false;
   rootTab = 3;
 
+  isBeycoAuthorized = false;
+
   showedOrders = 0;
   allOrders = 0;
 
@@ -61,6 +63,10 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   ngOnInit(): void {
     super.ngOnInit();
 
+    if (sessionStorage.getItem('beycoToken')) {
+      this.isBeycoAuthorized = true;
+    }
+
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
     this.groupViewControl.valueChanges.subscribe(state => this.showGroupView = state);
   }
@@ -95,6 +101,19 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
 
   onCountAllSO(event) {
     this.allOrders = event;
+  }
+
+  getAuthCodeFromBeyco() {
+    const redirectUri = window.location.origin + '/oauth2';
+    const clientId = '0228d47d-0c19-49cd-91c0-c0e87da40a60';
+    const params = [
+      'responseType=code',
+      'clientId=' + clientId,
+      'redirectUri=' + redirectUri,
+      'scope=' + encodeURIComponent('Offer:Create'),
+      'state=nekstateidk'
+    ];
+    window.location.href = 'https://test.beyco.chippr.dev/oauth2/authorize?' + params.join('&');
   }
 
 }
