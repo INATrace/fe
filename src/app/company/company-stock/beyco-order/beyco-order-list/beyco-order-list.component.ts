@@ -13,6 +13,7 @@ import {BeycoOrderControllerService} from '../../../../../api/api/beycoOrderCont
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiBeycoPortOfExport} from '../../../../../api/model/apiBeycoPortOfExport';
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
+import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-beyco-order-list',
@@ -26,7 +27,8 @@ export class BeycoOrderListComponent implements OnInit {
       private beycoOrderService: BeycoOrderControllerService,
       private route: ActivatedRoute,
       private router: Router,
-      private notificationService: GlobalEventManagerService
+      private notificationService: GlobalEventManagerService,
+      private beycoTokenService: BeycoTokenService
   ) { }
 
   generalForm: FormGroup;
@@ -48,7 +50,7 @@ export class BeycoOrderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!sessionStorage.getItem('beycoToken')) {
+    if (!this.beycoTokenService.beycoToken) {
       this.router.navigate(['my-stock', 'orders', 'tab']);
       return;
     }

@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { map, startWith } from 'rxjs/operators';
+import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-stock-orders-tab',
@@ -55,7 +56,8 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
-    private codebookTranslations: CodebookTranslations
+    private codebookTranslations: CodebookTranslations,
+    private beycoTokenService: BeycoTokenService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -63,7 +65,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (sessionStorage.getItem('beycoToken')) {
+    if (this.beycoTokenService.beycoToken) {
       this.isBeycoAuthorized = true;
     }
 

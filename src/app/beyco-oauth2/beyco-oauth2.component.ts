@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GlobalEventManagerService} from '../core/global-event-manager.service';
-import {BeycoOrderControllerService} from '../../api/api/beycoOrderController.service';
-import {ApiResponseApiBeycoTokenResponse} from '../../api/model/apiResponseApiBeycoTokenResponse';
+import {BeycoTokenService} from '../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-beyco-oauth2',
@@ -15,7 +14,7 @@ export class BeycoOauth2Component implements OnInit {
       private router: Router,
       private route: ActivatedRoute,
       private notificationService: GlobalEventManagerService,
-      private beycoService: BeycoOrderControllerService
+      private beycoTokenService: BeycoTokenService
   ) { }
 
   // TODO: add translations
@@ -34,22 +33,24 @@ export class BeycoOauth2Component implements OnInit {
       }
 
       else {
-        this.beycoService.getTokenUsingGET(params['code']).subscribe((tokenResp: ApiResponseApiBeycoTokenResponse) => {
-          sessionStorage.setItem('beycoToken', JSON.stringify(tokenResp.data));
-          this.notificationService.push({
-            action: 'success',
-            notificationType: 'success',
-            title: 'Beyco application authorized',
-            message: 'You can now send Beyco orders!'
-          });
-        }, (err) => {
-          this.notificationService.push({
-            action: 'error',
-            notificationType: 'error',
-            title: 'Error on Beyco authorization',
-            message: this.getErrorMessage(err['error'])
-          });
-        }, () => this.router.navigate(['my-stock', 'orders', 'tab']));
+        this.beycoTokenService.requestToken(params['code'])
+            .then(() => {
+              this.notificationService.push({
+                action: 'success',
+                notificationType: 'success',
+                title: 'Beyco application authorized',
+                message: 'You can now send Beyco orders!'
+              });
+            })
+            .catch((err) => {
+              this.notificationService.push({
+                action: 'error',
+                notificationType: 'error',
+                title: 'Error on Beyco authorization',
+                message: this.getErrorMessage(err.error)
+              });
+            })
+            .finally(() => this.router.navigate(['my-stock', 'orders', 'tab']));
       }
     });
   }
