@@ -347,6 +347,15 @@
                             </div>
                         </div>
 
+                        <div class="af-row" *ngIf="fc(form, 'varieties').value?.includes('Other')">
+                            <div class="af-c12">
+                                <textinput
+                                        label="Other variety"
+                                        [form]="fc(form, 'customVariety')"
+                                ></textinput>
+                            </div>
+                        </div>
+
                         <div class="af-row">
                             <div class="af-c6">
                                 <single-choice

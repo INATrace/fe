@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ApiPaginatedResponseApiGroupStockOrder} from '../../../../../api/model/apiPaginatedResponseApiGroupStockOrder';
-import StatusEnum = ApiPaginatedResponseApiGroupStockOrder.StatusEnum;
 import {ApiBeycoCoffeeVariety} from '../../../../../api/model/apiBeycoCoffeeVariety';
 import {ApiBeycoCoffeeQuality} from '../../../../../api/model/apiBeycoCoffeeQuality';
 import {ApiBeycoCoffeeGrade} from '../../../../../api/model/apiBeycoCoffeeGrade';
@@ -34,7 +32,6 @@ export class BeycoOrderListComponent implements OnInit {
   generalForm: FormGroup;
   coffeeInfoForms: FormGroup[] = [];
 
-  readonly Status = StatusEnum;
   readonly Variety = ApiBeycoCoffeeVariety.TypeEnum;
   readonly QualitySegment = ApiBeycoCoffeeQuality.TypeEnum;
   readonly Grade = ApiBeycoCoffeeGrade.TypeEnum;
@@ -158,6 +155,7 @@ export class BeycoOrderListComponent implements OnInit {
         [Validators.required, Validators.min(60), Validators.max(100)]
       ],
       varieties: [coffee?.coffee.varieties?.map(v => v.type), Validators.required],
+      customVariety: [coffee?.coffee.varieties?.find(v => v.type === ApiBeycoCoffeeVariety.TypeEnum.Other)?.customVariety],
       qualitySegments: [coffee?.coffee.qualitySegments?.map(v => v.type), Validators.required],
       grades: [coffee?.coffee.grades?.map(v => v.type), Validators.required],
       certificates: [coffee?.coffee.certificates?.map(v => v.type)]
@@ -186,7 +184,7 @@ export class BeycoOrderListComponent implements OnInit {
         certificates: form.get('certificates').value?.map(c => ({ type: c }) as ApiBeycoCoffeeCertificate),
         grades: form.get('grades').value?.map(g => ({ type: g }) as ApiBeycoCoffeeGrade),
         qualitySegments: form.get('qualitySegments').value?.map(q => ({ type: q }) as ApiBeycoCoffeeQuality),
-        varieties: form.get('varieties').value?.map(v => ({ type: v }) as ApiBeycoCoffeeVariety),
+        varieties: form.get('varieties').value?.map(v => ({ type: v, customVariety: v === ApiBeycoCoffeeGrade.TypeEnum.Other ? form.get('customVariety').value : null }) as ApiBeycoCoffeeVariety),
         name: form.get('name').value,
         cuppingScore: Number(form.get('cuppingScore').value),
         maxScreenSize: Number(form.get('maxScreenSize').value),
