@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {ApiResponseApiBeycoTokenResponse} from '../../api/model/apiResponseApiBeycoTokenResponse';
 import {BeycoOrderControllerService} from '../../api/api/beycoOrderController.service';
 import {ApiBeycoTokenResponse} from '../../api/model/apiBeycoTokenResponse';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +15,20 @@ export class BeycoTokenService {
   ) { }
 
   public requestToken(authCode: string) {
-    return new Promise((resolve, reject) => {
-      this.beycoService.getTokenUsingGET(authCode).subscribe((tokenResp: ApiResponseApiBeycoTokenResponse) => {
-        this.beycoToken = tokenResp.data;
-        resolve();
-      }, (err) => reject(err));
-    });
+    return this.beycoService.getTokenUsingGET(authCode).pipe(
+        tap((tokenResp) => {
+          this.beycoToken = tokenResp.data;
+          console.log(this.beycoToken);
+        })
+    );
   }
 
   public refreshToken() {
-    return new Promise((resolve, reject) => {
-      this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken).subscribe((tokenResp: ApiResponseApiBeycoTokenResponse) => {
-        this.beycoToken = tokenResp.data;
-        resolve();
-      }, (err) => reject(err));
-    });
+    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken).pipe(
+        tap((resp) => {
+          this.beycoToken = resp.data;
+        })
+    );
   }
 
 }

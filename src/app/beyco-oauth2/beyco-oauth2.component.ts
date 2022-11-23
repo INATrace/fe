@@ -33,24 +33,25 @@ export class BeycoOauth2Component implements OnInit {
       }
 
       else {
-        this.beycoTokenService.requestToken(params['code'])
-            .then(() => {
+        this.beycoTokenService.requestToken(params['code']).subscribe(
+            () => {
               this.notificationService.push({
                 action: 'success',
                 notificationType: 'success',
                 title: 'Beyco application authorized',
                 message: 'You can now send Beyco orders!'
               });
-            })
-            .catch((err) => {
+            },
+            (err) => {
               this.notificationService.push({
                 action: 'error',
                 notificationType: 'error',
                 title: 'Error on Beyco authorization',
                 message: this.getErrorMessage(err.error)
               });
-            })
-            .finally(() => this.router.navigate(['my-stock', 'orders', 'tab']));
+            },
+            () => this.router.navigate(['my-stock', 'orders', 'tab'])
+        );
       }
     });
   }
