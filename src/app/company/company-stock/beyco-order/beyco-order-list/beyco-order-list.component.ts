@@ -64,7 +64,9 @@ export class BeycoOrderListComponent implements OnInit {
               res => {
                 this.generalForm = this.buildGeneralForm(res.data);
                 for (const coffeeOrder of res.data.offerCoffees) {
-                  this.coffeeInfoForms.push(this.buildCoffeeInfoForm(coffeeOrder));
+                  const coffeeForm = this.buildCoffeeInfoForm(coffeeOrder);
+                  coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm));
+                  this.coffeeInfoForms.push(coffeeForm);
                 }
               },
               () => this.router.navigate(['my-stock', 'orders', 'tab']),
@@ -200,6 +202,19 @@ export class BeycoOrderListComponent implements OnInit {
     }
 
     return apiObj;
+  }
+
+  isSpecialityCoffee(value: number, form: FormGroup) {
+    if (value >= 80) {
+      const qualitySegmentsControl = form.get('qualitySegments');
+      if (!qualitySegmentsControl.value) {
+        qualitySegmentsControl.setValue(['Specialty']);
+      }
+      else if (!qualitySegmentsControl.value.includes('Specialty')) {
+        qualitySegmentsControl.value.push('Specialty');
+        qualitySegmentsControl.setValue(qualitySegmentsControl.value);
+      }
+    }
   }
 
 }
