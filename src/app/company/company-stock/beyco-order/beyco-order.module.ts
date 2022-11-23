@@ -6,10 +6,12 @@ import {LayoutModule} from '../../../layout/layout.module';
 import {CompanyCommonModule} from '../../company-common/company-common.module';
 import {SharedModule} from '../../../shared/shared.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { WholeNumberDirective } from './whole-number.directive';
 
 @NgModule({
   declarations: [
-      BeycoOrderListComponent
+      BeycoOrderListComponent,
+      WholeNumberDirective
   ],
   imports: [
     CommonModule,
