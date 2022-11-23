@@ -27,7 +27,7 @@ export class BeycoOrderListComponent implements OnInit {
       private beycoOrderService: BeycoOrderControllerService,
       private route: ActivatedRoute,
       private router: Router,
-      private notificationService: GlobalEventManagerService,
+      private globalEventManager: GlobalEventManagerService,
       private beycoTokenService: BeycoTokenService
   ) { }
 
@@ -61,13 +61,18 @@ export class BeycoOrderListComponent implements OnInit {
         return;
       }
 
+      this.globalEventManager.showLoading(true);
       this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']])
-          .subscribe(res => {
-            this.generalForm = this.buildGeneralForm(res.data);
-            for (const coffeeOrder of res.data.offerCoffees) {
-              this.coffeeInfoForms.push(this.buildCoffeeInfoForm(coffeeOrder));
-            }
-          });
+          .subscribe(
+              res => {
+                this.generalForm = this.buildGeneralForm(res.data);
+                for (const coffeeOrder of res.data.offerCoffees) {
+                  this.coffeeInfoForms.push(this.buildCoffeeInfoForm(coffeeOrder));
+                }
+              },
+              () => this.router.navigate(['my-stock', 'orders', 'tab']),
+              () => this.globalEventManager.showLoading(false)
+          );
     });
   }
 
@@ -81,7 +86,7 @@ export class BeycoOrderListComponent implements OnInit {
     }
 
     if (isInvalid) {
-      this.notificationService.push({
+      this.globalEventManager.push({
         action: 'error',
         notificationType: 'error',
         title: 'Invalidated fields',
@@ -91,6 +96,28 @@ export class BeycoOrderListComponent implements OnInit {
     }
 
     console.log(this.buildApiBeycoOrderFields());
+    this.globalEventManager.showLoading(true);
+    this.beycoOrderService.sendBeycoOrderUsingPOST(this.beycoTokenService.beycoToken.accessToken, this.buildApiBeycoOrderFields())
+        .subscribe(
+            () => {
+              this.globalEventManager.push({
+                action: 'success',
+                notificationType: 'success',
+                title: 'Beyco order created',
+                message: 'You successfuly created Beyco order!'
+              });
+              this.router.navigate(['my-stock', 'orders', 'tab']);
+            },
+            (error) => {
+              this.globalEventManager.push({
+                action: 'error',
+                notificationType: 'error',
+                title: 'Beyco order unsuccessful',
+                message: error.error ?? 'There was an error when creating Beyco order! Please, try again!'
+              });
+            },
+            () => this.globalEventManager.showLoading(false)
+        );
   }
 
   buildGeneralForm(fieldValues: ApiBeycoOrderFields): FormGroup {
