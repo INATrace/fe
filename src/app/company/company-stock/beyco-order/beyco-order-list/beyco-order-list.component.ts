@@ -12,7 +12,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiBeycoPortOfExport} from '../../../../../api/model/apiBeycoPortOfExport';
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
-import {$localize} from '@angular/localize/src/localize';
 
 @Component({
   selector: 'app-beyco-order-list',
