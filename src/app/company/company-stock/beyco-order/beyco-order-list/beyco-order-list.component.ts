@@ -161,7 +161,7 @@ export class BeycoOrderListComponent implements OnInit {
       qualitySegments: [coffee?.coffee.qualitySegments?.map(v => v.type), Validators.required],
       grades: [coffee?.coffee.grades?.map(v => v.type), Validators.required],
       certificates: [coffee?.coffee.certificates?.map(v => v.type)]
-    });
+    }, { validators: this.validateScreenSizes });
   }
 
   buildApiBeycoOrderFields(): ApiBeycoOrderFields {
@@ -215,6 +215,17 @@ export class BeycoOrderListComponent implements OnInit {
         qualitySegmentsControl.setValue(qualitySegmentsControl.value);
       }
     }
+  }
+
+  validateScreenSizes: ValidatorFn = (form: FormGroup) => {
+    const minScreenSize = form.get('minScreenSize').value;
+    const maxScreenSize = form.get('maxScreenSize').value;
+
+    if (minScreenSize && maxScreenSize && minScreenSize !== '' &&
+        maxScreenSize !== '' && Number(minScreenSize) > Number(maxScreenSize)) {
+      return { minIsMax: true };
+    }
+    return null;
   }
 
 }

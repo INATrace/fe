@@ -277,6 +277,9 @@
                                             <span *ngIf="errors.max">Min screen size should be 20 or less</span>
                                             <span *ngIf="errors.required">Min screen size is required</span>
                                         </div>
+                                        <div *ngIf="form.errors as errors" class="sc-invalid-feedback">
+                                            <span *ngIf="errors.minIsMax">Min screen size should be lower than max screen size</span>
+                                        </div>
                                     </ng-container>
                                 </textinput>
                             </div>
@@ -292,6 +295,9 @@
                                             <span *ngIf="errors.min">Max screen size should be 8 or more</span>
                                             <span *ngIf="errors.max">Max screen size should be 20 or less</span>
                                             <span *ngIf="errors.required">Max screen size is required</span>
+                                        </div>
+                                        <div *ngIf="form.errors as errors" class="sc-invalid-feedback">
+                                            <span *ngIf="errors.minIsMax">Max screen size should be larger than min screen size</span>
                                         </div>
                                     </ng-container>
                                 </textinput>
