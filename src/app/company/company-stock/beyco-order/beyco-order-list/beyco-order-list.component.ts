@@ -88,8 +88,8 @@ export class BeycoOrderListComponent implements OnInit {
       this.globalEventManager.push({
         action: 'error',
         notificationType: 'error',
-        title: $localize`:@@beycoOrderList.notification.invalidFields.title`,
-        message: $localize`:@@beycoOrderList.notification.invalidFields.message`
+        title: $localize`:@@beycoOrderList.notification.invalidFields.title:Invalidated fields`,
+        message: $localize`:@@beycoOrderList.notification.invalidFields.message:Please, check fields!`
       });
       return;
     }
@@ -102,8 +102,8 @@ export class BeycoOrderListComponent implements OnInit {
               this.globalEventManager.push({
                 action: 'success',
                 notificationType: 'success',
-                title: $localize`:@@beycoOrderList.notification.successfulOrder.title`,
-                message: $localize`:@@beycoOrderList.notification.successfulOrder.message`
+                title: $localize`:@@beycoOrderList.notification.successfulOrder.title:Beyco order created`,
+                message: $localize`:@@beycoOrderList.notification.successfulOrder.message:You successfuly created Beyco order!`
               });
               this.router.navigate(['my-stock', 'orders', 'tab']);
             },
@@ -111,8 +111,8 @@ export class BeycoOrderListComponent implements OnInit {
               this.globalEventManager.push({
                 action: 'error',
                 notificationType: 'error',
-                title: $localize`:@@beycoOrderList.notification.unsuccessfulOrder.title`,
-                message: error.error ?? $localize`:@@beycoOrderList.notification.unsuccessfulOrder.message`
+                title: $localize`:@@beycoOrderList.notification.unsuccessfulOrder.title:Beyco order unsuccessful`,
+                message: error.error ?? $localize`:@@beycoOrderList.notification.unsuccessfulOrder.message:There was an error when creating Beyco order! Please, try again!`
               });
             },
             () => this.globalEventManager.showLoading(false)
