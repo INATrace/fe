@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiBeycoPortOfExport} from '../../../../../api/model/apiBeycoPortOfExport';
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
+import {$localize} from '@angular/localize/src/localize';
 
 @Component({
   selector: 'app-beyco-order-list',
@@ -88,8 +89,8 @@ export class BeycoOrderListComponent implements OnInit {
       this.globalEventManager.push({
         action: 'error',
         notificationType: 'error',
-        title: 'Invalidated fields',
-        message: 'Please, check fields!'
+        title: $localize`:@@beycoOrderList.notification.invalidFields.title`,
+        message: $localize`:@@beycoOrderList.notification.invalidFields.message`
       });
       return;
     }
@@ -102,8 +103,8 @@ export class BeycoOrderListComponent implements OnInit {
               this.globalEventManager.push({
                 action: 'success',
                 notificationType: 'success',
-                title: 'Beyco order created',
-                message: 'You successfuly created Beyco order!'
+                title: $localize`:@@beycoOrderList.notification.successfulOrder.title`,
+                message: $localize`:@@beycoOrderList.notification.successfulOrder.message`
               });
               this.router.navigate(['my-stock', 'orders', 'tab']);
             },
@@ -111,8 +112,8 @@ export class BeycoOrderListComponent implements OnInit {
               this.globalEventManager.push({
                 action: 'error',
                 notificationType: 'error',
-                title: 'Beyco order unsuccessful',
-                message: error.error ?? 'There was an error when creating Beyco order! Please, try again!'
+                title: $localize`:@@beycoOrderList.notification.unsuccessfulOrder.title`,
+                message: error.error ?? $localize`:@@beycoOrderList.notification.unsuccessfulOrder.message`
               });
             },
             () => this.globalEventManager.showLoading(false)
