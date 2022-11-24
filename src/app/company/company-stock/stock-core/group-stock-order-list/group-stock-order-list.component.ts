@@ -69,6 +69,9 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   @Input()
   clickClearCheckboxesPing$ = new BehaviorSubject<boolean>(false);
 
+  @Input()
+  selectedOrders: ApiGroupStockOrder[];
+
   @Output()
   countAll = new EventEmitter<number>();
 
@@ -90,7 +93,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
 
   cbCheckedAll = new FormControl(false);
   private allSelected = false;
-  currentData: ApiStockOrder[];
+  currentData: ApiGroupStockOrder[];
   clearCheckboxesSubscription: Subscription;
 
   orders$: Observable<ApiPaginatedListApiGroupStockOrder>;
@@ -391,7 +394,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
     this.paging$.next(event);
   }
 
-  cbSelected(order: ApiStockOrder, index: number) {
+  cbSelected(order: ApiGroupStockOrder, index: number) {
 
     (this.currentData[index] as any).selected = !(this.currentData[index] as any).selected;
 
@@ -423,7 +426,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
     for (const item of this.currentData) {
       for (const order of this.selectedOrders) {
 
-        if (order.id === item.id) {
+        if (item.groupedIds.filter(v => order.groupedIds.includes(v)).length) {
 
           (item as any).selected = true;
           selectedCount += 1;

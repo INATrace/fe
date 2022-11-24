@@ -11,7 +11,7 @@
             <tbody>
             <tr *ngFor="let order of orders.items; index as i">
                 <td [attr.data-label]="sortOptions[0].name">
-                    <checkbox-input inTable="true"> </checkbox-input>
+                    <checkbox-input inTable="true" (onClick)="cbSelected(order, i)" [checked]="this.currentData[i].selected"> </checkbox-input>
                 </td>
                 <td [attr.data-label]="sortOptions[1].name">{{ formatDate(order.productionDate) }}</td>
                 <td [attr.data-label]="sortOptions[2].name">{{ order.internalLotNumber }}</td>

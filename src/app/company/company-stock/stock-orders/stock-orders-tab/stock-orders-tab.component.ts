@@ -118,4 +118,9 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     window.location.href = 'https://test.beyco.chippr.dev/oauth2/authorize?' + params.join('&');
   }
 
+  openBeycoOrderFieldList() {
+    const stockOrderIds = (this.showGroupView ? this.selectedGroupOrders.map(o => o.groupedIds[0]) : this.selectedOrders.map(o => o.id));
+    this.router.navigate(['my-stock', 'beyco', 'list'], { queryParams: { id: stockOrderIds } });
+  }
+
 }

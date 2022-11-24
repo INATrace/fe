@@ -89,7 +89,7 @@
               </single-choice>
             </div>
 
-            <button *ngIf="isBeycoAuthorized" class="btn ml-2" type="button">Create Beyco order</button>
+            <button *ngIf="isBeycoAuthorized" (click)="openBeycoOrderFieldList()" class="btn ml-2" type="button">Create Beyco order</button>
           </div>
         </div>
       </div>
@@ -121,7 +121,8 @@
               [openBalanceOnly$]="openBalancePing$"
               [purchaseOrderOnly$]="purchaseOrderOnly$"
               [availableOnly$]="availableOnly$"
-              (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+              (selectedIdsChanged)="selectedIdsChanged($event, 'GROUP')"
+              [selectedOrders]="selectedGroupOrders"
       ></app-group-stock-order-list>
 
     </div>

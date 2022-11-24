@@ -21,6 +21,7 @@ import { ApiResponseListApiCompanyUser } from '../../../../../api/model/apiRespo
 import { ApiCompanyUser } from '../../../../../api/model/apiCompanyUser';
 import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import CompanyRoleEnum = ApiCompanyUser.CompanyRoleEnum;
+import {ApiGroupStockOrder} from '../../../../../api/model/apiGroupStockOrder';
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
 
@@ -50,6 +51,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   wayOfPaymentPing$ = new BehaviorSubject<string>(this.filterWayOfPayment.value);
 
   selectedOrders: ApiStockOrder[];
+  selectedGroupOrders: ApiGroupStockOrder[];
   selectedPayments: ApiPayment[];
 
   clickAddPaymentsPing$ = new BehaviorSubject<boolean>(false);
@@ -115,6 +117,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     this.isAuthorisedCompanyRole().then();
 
     this.selectedOrders = [];
+    this.selectedGroupOrders = [];
     this.selectedPayments = [];
 
     this.initFacilityCodebook();
@@ -209,6 +212,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   selectedIdsChanged(event, type?) {
     if (type === 'PURCHASE') { this.selectedOrders = event; }
+    else if (type === 'GROUP') { this.selectedGroupOrders = event; }
     else { this.selectedPayments = event; }
   }
 
