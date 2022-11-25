@@ -16,12 +16,13 @@
     </div>
     <fa-icon *ngIf="modal" class="ml-2 edit-link" [icon]="'pen'" (click)="this.editModal()"></fa-icon>
   </label>
-  <div *ngIf="showInputField">
+  <div *ngIf="showInputField" class="input-wrapper" (click)="focusOnInput()">
+    <div class="prefix" *ngIf="prefix">{{ prefix }}</div>
     <ng-container *ngIf="!textarea">
       <input
         #inputfield
         *ngIf="valueTextInput"
-        class="form-control text-input labelPlaceholder"
+        class="form-control text-input-line labelPlaceholder"
         [id]="id"
         [value]="value"
         [readonly]="modal || readOnly"
@@ -39,7 +40,7 @@
         #inputfield
         *ngIf="!forceNumeric() && form && !languageFormArray && !typeaheadEnabled()"
         [formControl]="form"
-        class="form-control text-input labelPlaceholder"
+        class="form-control text-input-line labelPlaceholder"
         [id]="id"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
@@ -56,7 +57,7 @@
       <input
         #inputfield
         *ngIf="!forceNumeric() && form && !languageFormArray && typeaheadEnabled()"
-        class="form-control text-input labelPlaceholder"
+        class="form-control text-input-line labelPlaceholder"
         [id]="id"
         [value]="form.value"
         [readonly]="modal || readOnly"
@@ -81,7 +82,7 @@
         #inputfield
         *ngIf="!forceNumeric() && !form && languageFormArray"
         [formControl]="languageFormControl"
-        class="form-control text-input labelPlaceholder"
+        class="form-control text-input-line labelPlaceholder"
         [id]="id"
         [value]="languageFormControl.value"
         [readonly]="modal || readOnly"
@@ -96,7 +97,7 @@
       <input
         #inputfield
         name="numericInput"
-        class="form-control text-input labelPlaceholder"
+        class="form-control text-input-line labelPlaceholder"
         *ngIf="forceNumeric()"
         [ngModel]="model"
         (ngModelChange)="onChange($event)"
@@ -112,6 +113,7 @@
         [autocomplete]="autocomplete"
         (keyup.enter)="onKeyUpEnter.next($event)">
     </ng-container>
+    <div class="suffix" *ngIf="suffix">{{ suffix }}</div>
   </div>
   <ng-container *ngIf="textarea && showInputField">
     <ng-container *ngIf="!modal">

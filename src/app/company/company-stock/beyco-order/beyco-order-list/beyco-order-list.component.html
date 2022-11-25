@@ -137,6 +137,7 @@
                                         [form]="fc(form, 'quantity')"
                                         type="number"
                                         i18n-label="@@beycoOrderList.form.coffee.quantity"
+                                        suffix="kg"
                                 >
                                     <ng-container *ngIf="fc(form, 'quantity').touched">
                                         <div *ngIf="fc(form, 'quantity').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.quantity.error.required">
