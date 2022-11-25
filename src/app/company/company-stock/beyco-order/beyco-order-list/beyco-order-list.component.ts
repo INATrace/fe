@@ -160,6 +160,7 @@ export class BeycoOrderListComponent implements OnInit {
       customVariety: [coffee?.coffee.varieties?.find(v => v.type === ApiBeycoCoffeeVariety.TypeEnum.Other)?.customVariety],
       qualitySegments: [coffee?.coffee.qualitySegments?.map(v => v.type), Validators.required],
       grades: [coffee?.coffee.grades?.map(v => v.type), Validators.required],
+      additionalQualityDescriptors: [coffee?.coffee.additionalQualityDescriptors],
       certificates: [coffee?.coffee.certificates?.map(v => v.type)]
     }, { validators: this.validateScreenSizes });
   }
@@ -185,6 +186,7 @@ export class BeycoOrderListComponent implements OnInit {
       apiCoffee.coffee = {
         certificates: form.get('certificates').value?.map(c => ({ type: c }) as ApiBeycoCoffeeCertificate),
         grades: form.get('grades').value?.map(g => ({ type: g }) as ApiBeycoCoffeeGrade),
+        additionalQualityDescriptors: form.get('grades').value?.includes('Other') ? form.get('additionalQualityDescriptors').value : null,
         qualitySegments: form.get('qualitySegments').value?.map(q => ({ type: q }) as ApiBeycoCoffeeQuality),
         varieties: form.get('varieties').value?.map(v => ({ type: v, customVariety: v === ApiBeycoCoffeeGrade.TypeEnum.Other ? form.get('customVariety').value : null }) as ApiBeycoCoffeeVariety),
         name: form.get('name').value,

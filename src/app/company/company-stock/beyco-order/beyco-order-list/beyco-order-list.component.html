@@ -418,6 +418,16 @@
                                 </single-choice>
                             </div>
                         </div>
+
+                        <div class="af-row" *ngIf="fc(form, 'grades').value?.includes('Other')">
+                            <div class="af-c12">
+                                <textinput
+                                        label="Other grade"
+                                        [form]="fc(form, 'additionalQualityDescriptors')"
+                                        i18n-label="@@beycoOrderList.form.coffee.additionalQualityDescriptors"
+                                ></textinput>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
