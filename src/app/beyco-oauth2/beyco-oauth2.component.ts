@@ -17,10 +17,20 @@ export class BeycoOauth2Component implements OnInit {
       private beycoTokenService: BeycoTokenService
   ) { }
 
-  // TODO: add translations
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const state = params['state']; // TODO: check state
+      const state = sessionStorage.getItem('beyco-auth-state');
+      if (!state || params['state'] !== state) {
+        this.notificationService.push({
+          action: 'error',
+          notificationType: 'error',
+          title: 'Error on Beyco authorization',
+          message: this.getErrorMessage('UnknownState')
+        });
+        this.router.navigate(['my-stock', 'orders', 'tab']);
+        return;
+      }
+      sessionStorage.removeItem('beyco-auth-state');
 
       if (params['error']) {
         this.notificationService.push({
@@ -60,6 +70,8 @@ export class BeycoOauth2Component implements OnInit {
     switch (errorField) {
       case 'AccessDenied':
         return  'Access to Beyco was denied! Please, try again later!';
+      case 'UnknownState':
+        return 'Beyco authorization was returned with unknown state! Token is ignored!';
       default:
         return 'Error occurred while authorizing Beyco application. Please, try again later!';
     }

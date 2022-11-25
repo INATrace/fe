@@ -83,7 +83,6 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
 
   sortOptions: SortOption[];
   private sortingParams$ = new BehaviorSubject(null);
-  selectedOrders: ApiStockOrder[];
 
   private allOrders = 0;
   private showedOrders = 0;

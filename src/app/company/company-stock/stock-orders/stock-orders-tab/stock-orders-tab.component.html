@@ -8,7 +8,14 @@
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock orders</div>
         <div *ngIf="!isBeycoAuthorized">
-          <button class="btn" type="button" (click)="getAuthCodeFromBeyco()">Authorize Beyco application</button>
+          <button class="btn" type="button" (click)="getAuthBeyco()">
+            <span i18n="@@productLabelStock.beyco.button.login">Login to Beyco</span>
+          </button>
+        </div>
+        <div *ngIf="isBeycoAuthorized">
+          <button class="btn" type="button" (click)="logoutFromBeyco()">
+            <span i18n="@@productLabelStock.beyco.button.logout">Logout from Beyco</span>
+          </button>
         </div>
       </div>
 
@@ -89,7 +96,9 @@
               </single-choice>
             </div>
 
-            <button *ngIf="isBeycoAuthorized" (click)="openBeycoOrderFieldList()" class="btn ml-2" type="button">Create Beyco order</button>
+            <button *ngIf="isBeycoAuthorized" (click)="openBeycoOrderFieldList()" class="btn ml-2" type="button">
+              <span i18n="@@productLabelStock.beyco.button.export">Export to Beyco</span>
+            </button>
           </div>
         </div>
       </div>

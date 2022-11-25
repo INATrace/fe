@@ -3079,6 +3079,16 @@
     "beycoOrderList.notification.successfulOrder.title": "Beyco order created",
     "beycoOrderList.notification.successfulOrder.message": "You successfuly created Beyco order!",
     "beycoOrderList.notification.unsuccessfulOrder.title": "Beyco order unsuccessful",
-    "beycoOrderList.notification.unsuccessfulOrder.message": "There was an error when creating Beyco order! Please, try again!"
+    "beycoOrderList.notification.unsuccessfulOrder.message": "There was an error when creating Beyco order! Please, try again!",
+    "productLabelStock.beyco.button.login": "Login to Beyco",
+    "productLabelStock.beyco.button.logout": "Logout from Beyco",
+    "productLabelStock.beyco.button.export": "Export to Beyco",
+    "beycoToken.notification.login.success.title": "Beyco application authorized",
+    "beycoToken.notification.login.success.message": "You can now send Beyco orders!",
+    "beycoToken.notification.login.error.title": "Error on Beyco authorization",
+    "beycoToken.notification.login.error.AccessDenied.message": "Access to Beyco was denied! Please, try again later!",
+    "beycoToken.notification.login.error.default.message": "Error occurred while authorizing Beyco application. Please, try again later!",
+    "beycoToken.notification.logout.title": "Logout from Beyco",
+    "beycoToken.notification.logout.message": "You successfully logged out!"
   }
 }

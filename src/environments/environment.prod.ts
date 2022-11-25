@@ -25,7 +25,9 @@ export const environment = {
     tokenForPublicLogRoute: window['env']['tokenForPublicLogRoute'] || '',
     appName: 'INATrace',
     reloadDelay: 500,
-    harcodedLabelForPrivacyOnRegisterPage: ''
+    harcodedLabelForPrivacyOnRegisterPage: '',
+    beycoAuthURL: window['env']['beycoAuthURL'] || '',
+    beycoClientId: ''
 };
 
 /*

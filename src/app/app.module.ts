@@ -74,7 +74,6 @@ import { CompanyDetailProcessingActionsListComponent } from './company/company-d
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
 import { BeycoOauth2Component } from './beyco-oauth2/beyco-oauth2.component';
-import {BeycoTokenInterceptor} from './core/beyco-token.interceptor';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -188,11 +187,6 @@ export function getConfiguration(): Configuration {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BeycoTokenInterceptor,
       multi: true
     },
     {
