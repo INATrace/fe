@@ -112,9 +112,9 @@
             </div>
 
 <!--            Coffee detail fields for each lot selected for Beyco order -->
-            <div class="af-form-row" *ngFor="let form of coffeeInfoForms">
-                <div class="af-form-block--c12">
-                    <h2>{{ fc(form, 'title').value }}</h2>
+            <div class="af-form-row justify-content-between">
+                <div class="af-form-block--c6 ml-0" *ngFor="let form of coffeeInfoForms">
+                    <h2>{{ fc(form, 'title').value }}&nbsp;</h2>
 
                     <div class="af-form-element">
                         <div class="af-row">
@@ -163,21 +163,6 @@
                                     </ng-container>
                                 </textinput>
                             </div>
-                            <div class="af-c4">
-                                <single-choice
-                                        label="Price unit"
-                                        [formControlInput]="fc(form, 'priceUnit')"
-                                        [enumChoices]="PriceUnit"
-                                        [touchedOnBlur]="true"
-                                        i18n-label="@@beycoOrderList.form.coffee.priceUnit"
-                                >
-                                    <ng-container *ngIf="fc(form, 'priceUnit').touched">
-                                        <div *ngIf="fc(form, 'priceUnit').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.priceUnit.errors.required">
-                                            Price unit is required
-                                        </div>
-                                    </ng-container>
-                                </single-choice>
-                            </div>
                             <div class="af-c3">
                                 <single-choice
                                         label="Currency"
@@ -193,23 +178,24 @@
                                     </ng-container>
                                 </single-choice>
                             </div>
+                            <div class="af-c4">
+                                <single-choice
+                                        label="Price unit"
+                                        [formControlInput]="fc(form, 'priceUnit')"
+                                        [enumChoices]="PriceUnit"
+                                        [touchedOnBlur]="true"
+                                        i18n-label="@@beycoOrderList.form.coffee.priceUnit"
+                                >
+                                    <ng-container *ngIf="fc(form, 'priceUnit').touched">
+                                        <div *ngIf="fc(form, 'priceUnit').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.priceUnit.errors.required">
+                                            Price unit is required
+                                        </div>
+                                    </ng-container>
+                                </single-choice>
+                            </div>
                         </div>
 
                         <div class="af-row">
-                            <div class="af-c3">
-                                <app-datepicker
-                                        label="Harvest date"
-                                        [form]="fc(form, 'harvestAt')"
-                                        [touchOnBlur]="true"
-                                        i18n-label="@@beycoOrderList.form.coffee.harvestAt"
-                                >
-                                    <ng-container *ngIf="fc(form, 'harvestAt').touched">
-                                        <div *ngIf="fc(form, 'harvestAt').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.harvestAt.errors.required">
-                                            Harvest date is required
-                                        </div>
-                                    </ng-container>
-                                </app-datepicker>
-                            </div>
                             <div class="af-c5">
                                 <textinput
                                         label="Region"
@@ -229,6 +215,20 @@
                                         </div>
                                     </ng-container>
                                 </textinput>
+                            </div>
+                            <div class="af-c3">
+                                <app-datepicker
+                                        label="Harvest date"
+                                        [form]="fc(form, 'harvestAt')"
+                                        [touchOnBlur]="true"
+                                        i18n-label="@@beycoOrderList.form.coffee.harvestAt"
+                                >
+                                    <ng-container *ngIf="fc(form, 'harvestAt').touched">
+                                        <div *ngIf="fc(form, 'harvestAt').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.harvestAt.errors.required">
+                                            Harvest date is required
+                                        </div>
+                                    </ng-container>
+                                </app-datepicker>
                             </div>
                         </div>
 
