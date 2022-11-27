@@ -84,8 +84,10 @@
               <button ngbDropdownItem (click)="setAvailableOnly(true)" i18n="@@productLabelStock.filter.availableOnly.button">Available only</button>
             </div>
 
-            <input class="toggle-switch-checkbox" type="checkbox" id="switch" [formControl]="groupViewControl" />
-            <label class="toggle-switch-label" for="switch">Toggle</label>
+            <app-toggle-switch
+                    [formControlCheckbox]="groupViewControl"
+                    class="ml-2"
+            ></app-toggle-switch>
 
             <div class="ml-2">
               <single-choice

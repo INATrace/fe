@@ -70,6 +70,7 @@ import { LocationFormNewComponent } from './location-form-new/location-form-new.
 import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.component';
 import { ColorInputComponent } from './color-input/color-input.component';
 import { DocumentPreviewComponent } from './document-preview/document-preview.component';
+import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
 
 @NgModule({
     declarations: [
@@ -128,7 +129,8 @@ import { DocumentPreviewComponent } from './document-preview/document-preview.co
         LocationFormNewComponent,
         GeoaddressFormComponent,
         ColorInputComponent,
-        DocumentPreviewComponent
+        DocumentPreviewComponent,
+        ToggleSwitchComponent
     ],
     entryComponents: [
         TextinputModalComponent,
@@ -200,7 +202,8 @@ import { DocumentPreviewComponent } from './document-preview/document-preview.co
         LocationFormNewComponent,
         GeoaddressFormComponent,
         ColorInputComponent,
-        DocumentPreviewComponent
+        DocumentPreviewComponent,
+        ToggleSwitchComponent
     ]
 })
 export class SharedModule {
