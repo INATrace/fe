@@ -34,37 +34,13 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   facilityId$ = new BehaviorSubject<number>(null);
 
   @Input()
-  openBalanceOnly$ = new BehaviorSubject<boolean>(false);
-
-  @Input()
   purchaseOrderOnly$ = new BehaviorSubject<boolean>(true);
 
   @Input()
   availableOnly$ = new BehaviorSubject<boolean>(false);
 
   @Input()
-  semiProductId$ = new BehaviorSubject<number>(null);
-
-  @Input()
-  companyId: number = null;
-
-  @Input()
-  farmerIdPing$ = new BehaviorSubject<number>(null);
-
-  @Input()
-  representativeOfProducerUserCustomerIdPing$ = new BehaviorSubject<number>(null);
-
-  @Input()
-  wayOfPaymentPing$ = new BehaviorSubject<string>('');
-
-  @Input()
-  womenOnlyPing$ = new BehaviorSubject<boolean>(null);
-
-  @Input()
   deliveryDatesPing$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
-
-  @Input()
-  searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
   @Input()
   clickClearCheckboxesPing$ = new BehaviorSubject<boolean>(false);
@@ -122,48 +98,27 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
       this.paging$,
       this.sortingParams$,
       this.facilityId$,
-      this.farmerIdPing$,
-      this.representativeOfProducerUserCustomerIdPing$,
-      this.openBalanceOnly$,
       this.purchaseOrderOnly$,
       this.availableOnly$,
-      this.semiProductId$,
-      this.wayOfPaymentPing$,
-      this.womenOnlyPing$,
       this.deliveryDatesPing$,
-      this.searchFarmerNameSurnamePing$
     ]).pipe(
         map(([
                ping,
                page,
                sorting,
                facilityId,
-               farmerId,
-               representativeOfProducerUserCustomerId,
-               isOpenBalanceOnly,
                isPurchaseOrderOnly,
                availableOnly,
-               semiProductId,
-               wayOfPayment,
-               isWomenShare,
-               deliveryDates,
-               query]) => {
+               deliveryDates]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
             ...sorting,
             facilityId,
-            farmerId,
-            representativeOfProducerUserCustomerId,
-            isOpenBalanceOnly,
             isPurchaseOrderOnly,
             availableOnly,
-            semiProductId,
-            wayOfPayment,
-            isWomenShare,
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
-            query: query ? query : null
           };
         }),
         tap(() => this.globalEventsManager.showLoading(true)),
@@ -262,10 +217,6 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   }
 
   private loadStockOrders(params): Observable<ApiPaginatedResponseApiGroupStockOrder> {
-    if (!params.isOpenBalanceOnly) {
-      delete params.isOpenBalanceOnly;
-    }
-
     const facilityId = params.facilityId;
     delete params.facilityId;
 
