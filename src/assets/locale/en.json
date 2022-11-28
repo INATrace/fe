@@ -3091,6 +3091,8 @@
     "beycoToken.notification.login.error.default.message": "Error occurred while authorizing Beyco application. Please, try again later!",
     "beycoToken.notification.logout.title": "Logout from Beyco",
     "beycoToken.notification.logout.message": "You successfully logged out!",
-    "breadCrumb.stockOrders.beycoOrder": "Export to Beyco"
+    "breadCrumb.stockOrders.beycoOrder": "Export to Beyco",
+    "companyDetail.beycoIntegration.title": "Beyco Integration",
+    "companyDetail.beycoIntegration.allowConfirmation": "Company is allowed to export stock orders on Beyco platform."
   }
 }
