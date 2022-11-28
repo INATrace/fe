@@ -2941,7 +2941,7 @@
     "productLabel.b2c.price.unit.percentValue": "% agaciro",
     "productLabelStockFacilityModal.checkbox.priceDeterminedLater.label": "Display 'Price determined later'",
     "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Price determined later",
-    "beycoOrderList.title": "Make Beyco order",
+    "beycoOrderList.title": "Export to Beyco",
     "beycoOrderList.form.sharedValues": "General values",
     "beycoOrderList.form.sharedValues.title": "Title of order",
     "beycoOrderList.form.sharedValues.title.error.required": "Title is required",

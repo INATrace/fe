@@ -2944,7 +2944,7 @@
     "productLabelStockPurchaseOrdersModal.checkboxinput.priceDeterminedLater.label": "Precio por determinar",
     "stockOrderItem.pricePerUnitForEndCustomer.textinput.error": "Se requiere precio",
     "productLabelStockPayments.addPricePerUnit.message": "Seleccione 'editar' para añadir el precio por unidad antes de añadir un pago de saldo",
-    "beycoOrderList.title": "Make Beyco order",
+    "beycoOrderList.title": "Export to Beyco",
     "beycoOrderList.form.sharedValues": "General values",
     "beycoOrderList.form.sharedValues.title": "Title of order",
     "beycoOrderList.form.sharedValues.title.error.required": "Title is required",
