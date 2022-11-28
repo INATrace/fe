@@ -6,6 +6,13 @@ const routes: Routes = [
     {
         path: 'list',
         component: BeycoOrderListComponent,
+        data: {
+            drobtinice: {
+                title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.stockOrders.stockOrderView:Stock order details` + ' / ' +
+                $localize`:@@breadCrumb.stockOrders.beycoOrder: Export to Beyco`,
+                route: 'my-stock/orders/tab'
+            }
+        }
     },
     {
         path: '',

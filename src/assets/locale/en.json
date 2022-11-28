@@ -3090,6 +3090,7 @@
     "beycoToken.notification.login.error.AccessDenied.message": "Access to Beyco was denied! Please, try again later!",
     "beycoToken.notification.login.error.default.message": "Error occurred while authorizing Beyco application. Please, try again later!",
     "beycoToken.notification.logout.title": "Logout from Beyco",
-    "beycoToken.notification.logout.message": "You successfully logged out!"
+    "beycoToken.notification.logout.message": "You successfully logged out!",
+    "breadCrumb.stockOrders.beycoOrder": "Export to Beyco"
   }
 }
