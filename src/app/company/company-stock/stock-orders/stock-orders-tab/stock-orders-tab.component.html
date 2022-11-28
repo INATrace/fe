@@ -7,12 +7,12 @@
 
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock orders</div>
-        <div *ngIf="!isBeycoAuthorized">
+        <div *ngIf="isAuthRoleToExportToBeyco && !isBeycoAuthorized">
           <button class="btn" type="button" (click)="getAuthBeyco()">
             <span i18n="@@productLabelStock.beyco.button.login">Login to Beyco</span>
           </button>
         </div>
-        <div *ngIf="isBeycoAuthorized">
+        <div *ngIf="isAuthRoleToExportToBeyco && isBeycoAuthorized">
           <button class="btn" type="button" (click)="logoutFromBeyco()">
             <span i18n="@@productLabelStock.beyco.button.logout">Logout from Beyco</span>
           </button>
@@ -113,7 +113,7 @@
             </div>
 
             <button
-                    *ngIf="isBeycoAuthorized"
+                    *ngIf="isAuthRoleToExportToBeyco && isBeycoAuthorized"
                     [disabled]="!showGroupView  || (showGroupView && selectedGroupOrders.length === 0)"
                     (click)="openBeycoOrderFieldList()"
                     class="btn ml-2"

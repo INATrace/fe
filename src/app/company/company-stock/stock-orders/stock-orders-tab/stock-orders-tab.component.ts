@@ -11,6 +11,7 @@ import { FacilitySemiProductsCodebookService } from '../../../../shared-services
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import {map, startWith, take} from 'rxjs/operators';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
+import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
 
 @Component({
   selector: 'app-stock-orders-tab',
@@ -23,6 +24,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   rootTab = 3;
 
   isBeycoAuthorized = false;
+  isAuthRoleToExportToBeyco = false;
 
   showedOrders = 0;
   allOrders = 0;
@@ -64,6 +66,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   ngOnInit(): void {
     super.ngOnInit();
 
+    this.isAuthorizedForBeyco();
     this.beycoTokenService.tokenAvailable$.subscribe(isAvailable => {
       this.isBeycoAuthorized = isAvailable;
     });
@@ -130,6 +133,17 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
 
   changeShowGroupView(doShow: boolean) {
     this.showGroupView = doShow;
+  }
+
+  private isAuthorizedForBeyco() {
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.companyController.getCompanyUsingGET(companyId).subscribe(
+        (company) => {
+          if (company.status === ApiResponseApiCompanyGet.StatusEnum.OK) {
+            this.isAuthRoleToExportToBeyco = !!company.data.allowBeycoIntegration;
+          }
+        }
+    );
   }
 
 }
