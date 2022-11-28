@@ -98,9 +98,13 @@
               </single-choice>
             </div>
 
-            <button *ngIf="isBeycoAuthorized" (click)="openBeycoOrderFieldList()" class="btn ml-2" type="button">
-              <span i18n="@@productLabelStock.beyco.button.export">Export to Beyco</span>
-            </button>
+            <button
+                    *ngIf="isBeycoAuthorized"
+                    [disabled]="(!showGroupView && selectedOrders.length === 0) || (showGroupView && selectedGroupOrders.length === 0)"
+                    (click)="openBeycoOrderFieldList()"
+                    class="btn ml-2"
+                    type="button"
+            ><span i18n="@@productLabelStock.beyco.button.export">Export to Beyco</span></button>
           </div>
         </div>
       </div>
