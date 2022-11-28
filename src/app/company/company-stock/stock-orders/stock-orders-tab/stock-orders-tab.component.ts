@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import { map, startWith } from 'rxjs/operators';
+import {map, startWith, take} from 'rxjs/operators';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
 
 @Component({
@@ -68,28 +68,11 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
       this.isBeycoAuthorized = isAvailable;
     });
 
-    // this.route.queryParams.subscribe(params => {
-    //   if (params['code'] && params['scope'] && params['state']) {
-    //     this.beycoTokenService.requestToken(params['code']).subscribe(
-    //         () => {
-    //           this.globalEventManager.push({
-    //             action: 'success',
-    //             notificationType: 'success',
-    //             title: $localize`:@@beycoToken.notification.login.success.title:Beyco application authorized`,
-    //             message: $localize`:@@beycoToken.notification.login.success.message:You can now send Beyco orders!`
-    //           });
-    //         },
-    //         (err) => {
-    //           this.globalEventManager.push({
-    //             action: 'error',
-    //             notificationType: 'error',
-    //             title: $localize`:@@beycoToken.notification.login.error.title:Error on Beyco authorization`,
-    //             message: this.getErrorMessage(err.error)
-    //           });
-    //         }
-    //     );
-    //   }
-    // });
+    this.route.queryParams.pipe(take(1)).subscribe(params => {
+      if (((params['code'] && params['scope']) || params['error']) && params['state']) {
+        this.beycoTokenService.getTokenWithAuthenticationCode(params);
+      }
+    });
 
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
   }
@@ -127,8 +110,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   }
 
   getAuthBeyco() {
-    // this.beycoTokenService.redirectToBeycoAuthorization('/my-stock/orders/tab');
-    this.beycoTokenService.redirectToBeycoAuthorization('/oauth2');
+    this.beycoTokenService.redirectToBeycoAuthorization('/my-stock/orders/tab');
   }
 
   logoutFromBeyco() {
@@ -149,16 +131,5 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   changeShowGroupView(doShow: boolean) {
     this.showGroupView = doShow;
   }
-
-  // private getErrorMessage(errorField: string): string {
-  //   switch (errorField) {
-  //     case 'AccessDenied':
-  //       return  $localize`:@@beycoToken.notification.login.error.AccessDenied.message:Access to Beyco was denied! Please, try again later!`;
-  //     case 'UnknownState':
-  //       return 'Beyco authorization was returned with unknown state! Token is ignored!';
-  //     default:
-  //       return $localize`:@@beycoToken.notification.login.error.default.message:Error occurred while authorizing Beyco application. Please, try again later!`;
-  //   }
-  // }
 
 }

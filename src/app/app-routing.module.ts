@@ -39,7 +39,6 @@ import {
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
 import { AdminGuardService } from './shared-services/admin-guard.service';
 import { ActivatedUserGuardService } from './shared-services/activated-user-guard.service';
-import {BeycoOauth2Component} from './beyco-oauth2/beyco-oauth2.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -457,11 +456,6 @@ const routes: Routes = [
   {
     path: 'q-cd/:uuid/:qrTag',
     component: QrCodeRedirectComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'oauth2',
-    component: BeycoOauth2Component,
     pathMatch: 'full'
   }
 ];
