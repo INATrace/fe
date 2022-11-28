@@ -270,6 +270,7 @@
                                         [enumChoices]="Process"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.process"
+                                        [enumFormatter]="titleCaseToSpacedString"
                                 >
                                     <ng-container *ngIf="fc(form, 'process').touched">
                                         <div *ngIf="fc(form, 'process').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.process.errors.required">
@@ -349,6 +350,7 @@
                                         [allowMultiple]="true"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.varieties"
+                                        [enumFormatter]="titleCaseToSpacedString"
                                 >
                                     <ng-container *ngIf="fc(form, 'varieties').touched">
                                         <div *ngIf="fc(form, 'varieties').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.varieties.errors.required">
@@ -365,6 +367,7 @@
                                         [allowMultiple]="true"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.qualitySegments"
+                                        [enumFormatter]="titleCaseToSpacedString"
                                 >
                                     <ng-container *ngIf="fc(form, 'qualitySegments').touched">
                                         <div *ngIf="fc(form, 'qualitySegments').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.qualitySegments.errors.required">
@@ -394,6 +397,7 @@
                                         [allowMultiple]="true"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.grades"
+                                        [enumFormatter]="titleCaseToSpacedString"
                                 >
                                     <ng-container *ngIf="fc(form, 'grades').touched">
                                         <div *ngIf="fc(form, 'grades').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.grades.errors.required">
@@ -410,6 +414,7 @@
                                         [allowMultiple]="true"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.certificates"
+                                        [enumFormatter]="titleCaseToSpacedString"
                                 >
                                     <ng-container *ngIf="fc(form, 'certificates').touched">
                                         <div *ngIf="fc(form, 'certificates').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.certificates.errors.required">

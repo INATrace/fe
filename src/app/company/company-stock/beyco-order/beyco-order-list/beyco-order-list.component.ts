@@ -225,4 +225,11 @@ export class BeycoOrderListComponent implements OnInit {
     return null;
   }
 
+  titleCaseToSpacedString(x: any): string {
+    if (x == null) {
+      return x;
+    }
+    return x.value.split(/(?=[A-Z])|(\d+)/).join(' ');
+  }
+
 }
