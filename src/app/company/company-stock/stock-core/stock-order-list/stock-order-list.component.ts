@@ -82,6 +82,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   @Input()
   pageListingMode: StockOrderListingPageMode = 'PURCHASE_ORDERS';
 
+  @Input()
+  hideCheckbox: boolean = false;
+
   @Output()
   countAll = new EventEmitter<number>();
 
@@ -222,7 +225,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       {
         key: 'cb',
         name: '',
-        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0
+        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
+        hide: this.hideCheckbox
       },
       {
         key: 'date',
