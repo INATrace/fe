@@ -81,7 +81,8 @@ export class BeycoTokenService {
   }
 
   public requestToken(authCode: string) {
-    return this.beycoService.getTokenUsingGET(authCode).pipe(
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    return this.beycoService.getTokenUsingGET(authCode, companyId).pipe(
         tap((tokenResp) => {
           this.tokenAvailable$.next(true);
           this.beycoToken = tokenResp.data;
@@ -93,7 +94,8 @@ export class BeycoTokenService {
   }
 
   public refreshToken() {
-    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken).pipe(
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken, companyId).pipe(
         tap((resp) => {
           this.beycoToken = resp.data;
         })
