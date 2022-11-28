@@ -45,10 +45,29 @@
 
       <!-- FILTERS -->
       <div class="d-flex justify-content-between main-inside-top--row2" *ngIf="this.selectedFacilityId">
-        <div>
-          <div *ngIf="!showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
-          <div *ngIf="showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfGroupedOrders">List of grouped orders</div>
-          <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingOrders">Showing {{ showedOrders }}/{{ allOrders }}</div>
+        <div class="d-flex align-items-center">
+          <div>
+            <div *ngIf="!showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
+            <div *ngIf="showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfGroupedOrders">List of grouped orders</div>
+            <div class="counting-page content-element--counting" i18n="@@productLabelStock.subTitle.showingOrders">Showing {{ showedOrders }}/{{ allOrders }}</div>
+          </div>
+
+          <div class="ml-3">
+            <div class="btn-group btn-group-toggle">
+              <button class="btn"
+                      [class.btn-outlined]="!showGroupView"
+                      [class.no-hover]="showGroupView"
+                      (click)="changeShowGroupView(true)">
+                <span>Group view</span>
+              </button>
+              <button class="btn"
+                      [class.btn-outlined]="showGroupView"
+                      [class.no-hover]="!showGroupView"
+                      (click)="changeShowGroupView(false)">
+                <span>Single view</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="d-flex align-items-top">
@@ -83,11 +102,6 @@
               <button ngbDropdownItem (click)="setPurchaseOrdersOnly(true)" i18n="@@productLabelStock.filter.purchaseOrderOnly.button">Purchase order only</button>
               <button ngbDropdownItem (click)="setAvailableOnly(true)" i18n="@@productLabelStock.filter.availableOnly.button">Available only</button>
             </div>
-
-            <app-toggle-switch
-                    [formControlCheckbox]="groupViewControl"
-                    class="ml-2"
-            ></app-toggle-switch>
 
             <div class="ml-2">
               <single-choice

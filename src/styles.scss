@@ -369,18 +369,35 @@ button.btn {
 }
 
 button.btn:hover {
-    color:$primary;
-    background-color: $very-pale-cyan;
-    border: 1px solid $primary;
-    // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    // background-color: $very-pale-cyan;
+    &.no-hover {
+      color: white;
+      background-color: $primary;
+      border: 1px solid $primary;
 
-    &.btn-link {
+      &.btn-link {
         box-shadow: none;
+      }
+
+      &.btn-outlined {
+        color:$primary;
+        background-color: transparent;
+      }
     }
-    &.btn-outlined {
+
+    &:not(.no-hover) {
+      color:$primary;
+      background-color: $very-pale-cyan;
+      border: 1px solid $primary;
+      // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      // background-color: $very-pale-cyan;
+
+      &.btn-link {
+        box-shadow: none;
+      }
+      &.btn-outlined {
         color:$primary;
         background-color: $very-pale-cyan;
+      }
     }
 }
 

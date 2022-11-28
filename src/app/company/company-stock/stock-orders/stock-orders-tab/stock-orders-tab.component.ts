@@ -19,8 +19,7 @@ import {BeycoTokenService} from '../../../../shared-services/beyco-token.service
 })
 export class StockOrdersTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
-  groupViewControl = new FormControl(false);
-  showGroupView = false;
+  showGroupView = true;
   rootTab = 3;
 
   isBeycoAuthorized = false;
@@ -93,7 +92,6 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     // });
 
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
-    this.groupViewControl.valueChanges.subscribe(state => this.showGroupView = state);
   }
 
   ngOnDestroy(): void {
@@ -146,6 +144,10 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   openBeycoOrderFieldList() {
     const stockOrderIds = (this.showGroupView ? this.selectedGroupOrders.map(o => o.groupedIds[0]) : this.selectedOrders.map(o => o.id));
     this.router.navigate(['my-stock', 'beyco', 'list'], { queryParams: { id: stockOrderIds } });
+  }
+
+  changeShowGroupView(doShow: boolean) {
+    this.showGroupView = doShow;
   }
 
   // private getErrorMessage(errorField: string): string {
