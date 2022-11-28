@@ -47,13 +47,8 @@ export class BeycoOrderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (!this.beycoTokenService.beycoToken) {
-    //   this.router.navigate(['my-stock', 'orders', 'tab']);
-    //   return;
-    // }
-
     this.route.queryParams.subscribe(query => {
-      if (!query || !query['id']) {
+      if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
         this.router.navigate(['my-stock', 'orders', 'tab']);
         return;
       }
