@@ -384,7 +384,13 @@
                                         label="Other variety"
                                         [form]="fc(form, 'customVariety')"
                                         i18n-label="@@beycoOrderList.form.coffee.customVariety"
-                                ></textinput>
+                                >
+                                    <ng-container *ngIf="fc(form, 'customVariety').touched">
+                                        <div *ngIf="fc(form, 'customVariety').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.customVariety.errors.required">
+                                            Other variety field is required, if 'Other' variety is selected
+                                        </div>
+                                    </ng-container>
+                                </textinput>
                             </div>
                         </div>
 
@@ -431,7 +437,13 @@
                                         label="Other grade"
                                         [form]="fc(form, 'additionalQualityDescriptors')"
                                         i18n-label="@@beycoOrderList.form.coffee.additionalQualityDescriptors"
-                                ></textinput>
+                                >
+                                    <ng-container *ngIf="fc(form, 'additionalQualityDescriptors').touched">
+                                        <div *ngIf="fc(form, 'additionalQualityDescriptors').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.additionalQualityDescriptors.errors.required">
+                                            Other grade field is required, if 'Other' grade is selected
+                                        </div>
+                                    </ng-container>
+                                </textinput>
                             </div>
                         </div>
                     </div>

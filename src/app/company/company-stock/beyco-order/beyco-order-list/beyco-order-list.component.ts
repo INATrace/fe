@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {ApiBeycoCoffeeVariety} from '../../../../../api/model/apiBeycoCoffeeVariety';
 import {ApiBeycoCoffeeQuality} from '../../../../../api/model/apiBeycoCoffeeQuality';
@@ -12,13 +12,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiBeycoPortOfExport} from '../../../../../api/model/apiBeycoPortOfExport';
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-beyco-order-list',
   templateUrl: './beyco-order-list.component.html',
   styleUrls: ['./beyco-order-list.component.scss']
 })
-export class BeycoOrderListComponent implements OnInit {
+export class BeycoOrderListComponent implements OnInit, OnDestroy {
 
   constructor(
       private fb: FormBuilder,
@@ -28,6 +29,8 @@ export class BeycoOrderListComponent implements OnInit {
       private globalEventManager: GlobalEventManagerService,
       private beycoTokenService: BeycoTokenService
   ) { }
+
+  subscriptions: Subscription[] = [];
 
   generalForm: FormGroup;
   coffeeInfoForms: FormGroup[] = [];
@@ -47,28 +50,40 @@ export class BeycoOrderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(query => {
-      if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
-        this.router.navigate(['my-stock', 'orders', 'tab']);
-        return;
-      }
+    this.subscriptions.push(
+      this.route.queryParams.subscribe(query => {
+        if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
+          this.router.navigate(['my-stock', 'orders', 'tab']);
+          return;
+        }
 
-      this.globalEventManager.showLoading(true);
-      const companyId = Number(localStorage.getItem('selectedUserCompany'));
-      this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']], companyId)
-          .subscribe(
-              res => {
-                this.generalForm = this.buildGeneralForm(res.data);
-                for (const coffeeOrder of res.data.offerCoffees) {
-                  const coffeeForm = this.buildCoffeeInfoForm(coffeeOrder);
-                  coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm));
-                  this.coffeeInfoForms.push(coffeeForm);
-                }
-              },
-              () => this.router.navigate(['my-stock', 'orders', 'tab']),
-              () => this.globalEventManager.showLoading(false)
-          );
-    });
+        this.globalEventManager.showLoading(true);
+        const companyId = Number(localStorage.getItem('selectedUserCompany'));
+        this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']], companyId)
+            .subscribe(
+                res => {
+                  this.generalForm = this.buildGeneralForm(res.data);
+                  for (const coffeeOrder of res.data.offerCoffees) {
+                    const coffeeForm = this.buildCoffeeInfoForm(coffeeOrder);
+                    this.subscriptions.push(
+                        coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm)),
+                        coffeeForm.get('varieties').valueChanges.subscribe(() => this.resetValidatorOnCustomVariety(coffeeForm)),
+                        coffeeForm.get('grades').valueChanges.subscribe(() => this.resetValidatorOnQualityDescription(coffeeForm))
+                    );
+                    this.coffeeInfoForms.push(coffeeForm);
+                  }
+                },
+                () => this.router.navigate(['my-stock', 'orders', 'tab']),
+                () => this.globalEventManager.showLoading(false)
+            );
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   submit() {
@@ -231,6 +246,24 @@ export class BeycoOrderListComponent implements OnInit {
       return x;
     }
     return x.value.split(/(?=[A-Z])|(\d+)/).join(' ');
+  }
+
+  resetValidatorOnCustomVariety(coffeeForm: FormGroup) {
+    if (coffeeForm.get('varieties').value?.includes('Other')) {
+      coffeeForm.get('customVariety').setValidators(Validators.required);
+    } else {
+      coffeeForm.get('customVariety').clearValidators();
+    }
+    coffeeForm.get('customVariety').updateValueAndValidity();
+  }
+
+  resetValidatorOnQualityDescription(coffeeForm: FormGroup) {
+    if (coffeeForm.get('grades').value?.includes('Other')) {
+      coffeeForm.get('additionalQualityDescriptors').setValidators(Validators.required);
+    } else {
+      coffeeForm.get('additionalQualityDescriptors').clearValidators();
+    }
+    coffeeForm.get('additionalQualityDescriptors').updateValueAndValidity();
   }
 
 }
