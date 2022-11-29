@@ -90,7 +90,6 @@ export class BeycoOrderListComponent implements OnInit {
       return;
     }
 
-    console.log(this.buildApiBeycoOrderFields());
     this.globalEventManager.showLoading(true);
     const companyId = Number(localStorage.getItem('selectedUserCompany'));
     this.beycoOrderService.sendBeycoOrderUsingPOST(this.beycoTokenService.beycoToken.accessToken, companyId, this.buildApiBeycoOrderFields())

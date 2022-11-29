@@ -88,7 +88,6 @@ export class BeycoTokenService {
           this.beycoToken = tokenResp.data;
           // Refresh after 2/3 of token alive time
           this.timeoutId = window.setTimeout(this.refreshToken, (this.beycoToken.expiresIn / 3) * 2);
-          console.log(this.beycoToken);
         })
     );
   }
