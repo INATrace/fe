@@ -48,6 +48,9 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   @Input()
   selectedOrders: ApiGroupStockOrder[];
 
+  @Input()
+  semiProductId$ = new BehaviorSubject<number>(null);
+
   @Output()
   countAll = new EventEmitter<number>();
 
@@ -101,6 +104,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
       this.purchaseOrderOnly$,
       this.availableOnly$,
       this.deliveryDatesPing$,
+      this.semiProductId$,
     ]).pipe(
         map(([
                ping,
@@ -109,7 +113,8 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
                facilityId,
                isPurchaseOrderOnly,
                availableOnly,
-               deliveryDates]) => {
+               deliveryDates,
+               semiProductId]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
@@ -119,6 +124,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
             availableOnly,
             productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
             productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
+            semiProductId
           };
         }),
         tap(() => this.globalEventsManager.showLoading(true)),
