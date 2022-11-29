@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rx
 import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import {map, skip, switchMap, take, tap} from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
@@ -95,6 +95,16 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
     });
 
     this.initSortOptions();
+
+    combineLatest([
+      this.reloadPingList$,
+      this.facilityId$,
+      this.purchaseOrderOnly$,
+      this.availableOnly$,
+      this.deliveryDatesPing$,
+      this.semiProductId$,
+    ]).pipe(skip(1))
+      .subscribe(() => this.selectedOrders = []);
 
     this.orders$ = combineLatest([
       this.reloadPingList$,
