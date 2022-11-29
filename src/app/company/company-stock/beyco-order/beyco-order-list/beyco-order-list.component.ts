@@ -68,7 +68,8 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
                     this.subscriptions.push(
                         coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm)),
                         coffeeForm.get('varieties').valueChanges.subscribe(() => this.resetValidatorOnCustomVariety(coffeeForm)),
-                        coffeeForm.get('grades').valueChanges.subscribe(() => this.resetValidatorOnQualityDescription(coffeeForm))
+                        coffeeForm.get('grades').valueChanges.subscribe(() => this.resetValidatorOnQualityDescription(coffeeForm)),
+                        coffeeForm.get('incoterms').valueChanges.subscribe(() => this.resetValidatorOnCustomIncoterms(coffeeForm))
                     );
                     this.coffeeInfoForms.push(coffeeForm);
                   }
@@ -153,6 +154,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
       region: [coffee?.coffee.region],
       country: [coffee?.coffee.country, Validators.required],
       incoterms: [coffee?.incoterms, Validators.required],
+      customIncoterms: [coffee?.customIncoterms],
       species: [coffee?.coffee.species, Validators.required],
       process: [coffee?.coffee.process],
       minScreenSize: [
@@ -194,6 +196,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
       apiCoffee.price = Number(form.get('price').value);
       apiCoffee.priceUnit = form.get('priceUnit').value;
       apiCoffee.incoterms = form.get('incoterms').value;
+      apiCoffee.customIncoterms = form.get('incoterms').value === 'Other' ? form.get('customIncoterms').value : null;
       apiCoffee.coffee = {
         certificates: form.get('certificates').value?.map(c => ({ type: c }) as ApiBeycoCoffeeCertificate),
         grades: form.get('grades').value?.map(g => ({ type: g }) as ApiBeycoCoffeeGrade),
@@ -264,6 +267,15 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
       coffeeForm.get('additionalQualityDescriptors').clearValidators();
     }
     coffeeForm.get('additionalQualityDescriptors').updateValueAndValidity();
+  }
+
+  resetValidatorOnCustomIncoterms(coffeeForm: FormGroup) {
+    if (coffeeForm.get('incoterms').value === 'Other') {
+      coffeeForm.get('customIncoterms').setValidators(Validators.required);
+    } else {
+      coffeeForm.get('customIncoterms').clearValidators();
+    }
+    coffeeForm.get('customIncoterms').updateValueAndValidity();
   }
 
 }

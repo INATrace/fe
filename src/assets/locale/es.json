@@ -2975,6 +2975,8 @@
     "beycoOrderList.form.coffee.country.errors.required": "Country is required",
     "beycoOrderList.form.coffee.incoterms": "Incoterms",
     "beycoOrderList.form.coffee.incoterms.errors.required": "Incoterms is required",
+    "beycoOrderList.form.coffee.customIncoterms": "Other incoterms",
+    "beycoOrderList.form.coffee.customIncoterms.errors.required": "Other incoterms field is required, if 'Other' incoterms are selected",
     "beycoOrderList.form.coffee.species": "Species",
     "beycoOrderList.form.coffee.species.errors.required": "Species is required",
     "beycoOrderList.form.coffee.process": "Process",
