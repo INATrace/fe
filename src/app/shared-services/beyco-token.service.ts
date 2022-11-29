@@ -97,6 +97,7 @@ export class BeycoTokenService {
     return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken, companyId).pipe(
         tap((resp) => {
           this.beycoToken = resp.data;
+          this.timeoutId = window.setTimeout(this.refreshToken, (this.beycoToken.expiresIn / 3) * 2);
         })
     );
   }
