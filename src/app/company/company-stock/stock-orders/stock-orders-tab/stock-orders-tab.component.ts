@@ -20,6 +20,8 @@ import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiC
 })
 export class StockOrdersTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription[] = [];
+
   showGroupView = true;
   rootTab = 3;
 
@@ -37,7 +39,6 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
 
   semiProductFrom = new FormControl(null);
 
-  private facilityIdChangeSub: Subscription;
   facilitySemiProducts: FacilitySemiProductsCodebookService = null;
 
   reloadStockOrdersPing$ = new BehaviorSubject<boolean>(false);
@@ -67,22 +68,24 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     super.ngOnInit();
 
     this.isAuthorizedForBeyco();
-    this.beycoTokenService.tokenAvailable$.subscribe(isAvailable => {
-      this.isBeycoAuthorized = isAvailable;
-    });
+    this.subscriptions.push(
+        this.beycoTokenService.tokenAvailable$.subscribe(isAvailable => {
+          this.isBeycoAuthorized = isAvailable;
+        }),
 
-    this.route.queryParams.pipe(take(1)).subscribe(params => {
-      if (((params['code'] && params['scope']) || params['error']) && params['state']) {
-        this.beycoTokenService.getTokenWithAuthenticationCode(params);
-      }
-    });
+        this.route.queryParams.pipe(take(1)).subscribe(params => {
+          if (((params['code'] && params['scope']) || params['error']) && params['state']) {
+            this.beycoTokenService.getTokenWithAuthenticationCode(params);
+          }
+        }),
 
-    this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
+        this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId)),
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.facilityIdChangeSub) {
-      this.facilityIdChangeSub.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 

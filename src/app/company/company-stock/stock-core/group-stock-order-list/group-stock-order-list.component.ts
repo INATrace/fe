@@ -60,6 +60,8 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   @Output()
   selectedIdsChanged = new EventEmitter<ApiStockOrder[]>();
 
+  private subscriptions: Subscription[] = [];
+
   sortOptions: SortOption[];
   private sortingParams$ = new BehaviorSubject(null);
 
@@ -72,7 +74,6 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   cbCheckedAll = new FormControl(false);
   private allSelected = false;
   currentData: ApiGroupStockOrder[];
-  clearCheckboxesSubscription: Subscription;
 
   orders$: Observable<ApiPaginatedListApiGroupStockOrder>;
   aggregatedOrders: AggregatedStockItem[];
@@ -88,23 +89,25 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.clearCheckboxesSubscription = this.clickClearCheckboxesPing$.subscribe(val => {
-      if (val) {
-        this.clearCBs();
-      }
-    });
+    this.subscriptions.push(
+        this.clickClearCheckboxesPing$.subscribe(val => {
+          if (val) {
+            this.clearCBs();
+          }
+        }),
+
+        combineLatest([
+          this.reloadPingList$,
+          this.facilityId$,
+          this.purchaseOrderOnly$,
+          this.availableOnly$,
+          this.deliveryDatesPing$,
+          this.semiProductId$,
+        ]).pipe(skip(1))
+            .subscribe(() => this.selectedOrders = [])
+    );
 
     this.initSortOptions();
-
-    combineLatest([
-      this.reloadPingList$,
-      this.facilityId$,
-      this.purchaseOrderOnly$,
-      this.availableOnly$,
-      this.deliveryDatesPing$,
-      this.semiProductId$,
-    ]).pipe(skip(1))
-      .subscribe(() => this.selectedOrders = []);
 
     this.orders$ = combineLatest([
       this.reloadPingList$,
@@ -162,7 +165,9 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.clearCheckboxesSubscription) { this.clearCheckboxesSubscription.unsubscribe(); }
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   private initSortOptions() {
