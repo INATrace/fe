@@ -20,7 +20,7 @@
                         <div class="af-row">
                             <div class="af-c6">
                                 <textinput
-                                        label="Title of order"
+                                        label="Offer title"
                                         [form]="fc(generalForm, 'title')"
                                         i18n-label="@@beycoOrderList.form.sharedValues.title"
                                 >
@@ -175,6 +175,7 @@
                                         [enumChoices]="Currency"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.currency"
+                                        [enumFormatter]="toUpperCase"
                                 >
                                     <ng-container *ngIf="fc(form, 'currency').touched">
                                         <div *ngIf="fc(form, 'currency').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.currency.errors.required">
@@ -223,7 +224,7 @@
                             </div>
                             <div class="af-c3">
                                 <app-datepicker
-                                        label="Harvest date"
+                                        label="Harvest period"
                                         [form]="fc(form, 'harvestAt')"
                                         [touchOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.harvestAt"
@@ -238,13 +239,14 @@
                         </div>
 
                         <div class="af-row">
-                            <div class="af-c2">
+                            <div class="af-c3">
                                 <single-choice
                                         label="Incoterms"
                                         [formControlInput]="fc(form, 'incoterms')"
                                         [enumChoices]="Incoterms"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.incoterms"
+                                        [enumFormatter]="toUpperCase"
                                 >
                                     <ng-container *ngIf="fc(form, 'incoterms').touched">
                                         <div *ngIf="fc(form, 'incoterms').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.incoterms.errors.required">
@@ -253,7 +255,7 @@
                                     </ng-container>
                                 </single-choice>
                             </div>
-                            <div class="af-c5">
+                            <div class="af-c4">
                                 <single-choice
                                         label="Species"
                                         [formControlInput]="fc(form, 'species')"
@@ -424,7 +426,7 @@
                                         [allowMultiple]="true"
                                         [touchedOnBlur]="true"
                                         i18n-label="@@beycoOrderList.form.coffee.grades"
-                                        [enumFormatter]="titleCaseToSpacedString"
+                                        [enumFormatter]="formatGrades"
                                 >
                                     <ng-container *ngIf="fc(form, 'grades').touched">
                                         <div *ngIf="fc(form, 'grades').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.grades.errors.required">

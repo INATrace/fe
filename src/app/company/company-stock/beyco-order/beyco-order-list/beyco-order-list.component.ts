@@ -251,6 +251,20 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
     return x.value.split(/(?=[A-Z])|(\d+)/).join(' ');
   }
 
+  toUpperCase(x: any): string {
+    if (x == null) {
+      return x;
+    }
+    return x.value.toUpperCase();
+  }
+
+  formatGrades(x: any): string {
+    if (x == null) {
+      return x;
+    }
+    return x.value.split(/(?=[A-Z])|(\d+)/).join(' ').toUpperCase();
+  }
+
   resetValidatorOnCustomVariety(coffeeForm: FormGroup) {
     if (coffeeForm.get('varieties').value?.includes('Other')) {
       coffeeForm.get('customVariety').setValidators(Validators.required);
