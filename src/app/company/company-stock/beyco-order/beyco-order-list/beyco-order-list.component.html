@@ -25,8 +25,9 @@
                                         i18n-label="@@beycoOrderList.form.sharedValues.title"
                                 >
                                     <ng-container *ngIf="fc(generalForm, 'title').touched">
-                                        <div *ngIf="fc(generalForm, 'title').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.sharedValues.title.error.required">
-                                            Title is required
+                                        <div *ngIf="fc(generalForm, 'title').errors as errors" class="sc-invalid-feedback">
+                                            <span *ngIf="errors.required" i18n="@@beycoOrderList.form.sharedValues.title.error.required">Title is required</span>
+                                            <span *ngIf="errors.maxlength" i18n="@@beycoOrderList.form.sharedValues.title.error.maxLength">Title should be no longer than 70 characters</span>
                                         </div>
                                     </ng-container>
                                 </textinput>
@@ -140,8 +141,10 @@
                                         suffix="kg"
                                 >
                                     <ng-container *ngIf="fc(form, 'quantity').touched">
-                                        <div *ngIf="fc(form, 'quantity').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.quantity.error.required">
-                                            Quantity is required
+                                        <div *ngIf="fc(form, 'quantity').errors as errors" class="sc-invalid-feedback">
+                                            <span *ngIf="errors.required" i18n="@@beycoOrderList.form.coffee.quantity.error.required">Quantity is required</span>
+                                            <span *ngIf="errors.min" i18n="@@beycoOrderList.form.coffee.quantity.error.min">Quantity must not be negative</span>
+                                            <span *ngIf="errors.max" i18n="@@beycoOrderList.form.coffee.quantity.error.max">Quantity is too large</span>
                                         </div>
                                     </ng-container>
                                 </textinput>
@@ -157,8 +160,10 @@
                                         i18n-label="@@beycoOrderList.form.coffee.price"
                                 >
                                     <ng-container *ngIf="fc(form, 'price').touched">
-                                        <div *ngIf="fc(form, 'price').errors as errors" class="sc-invalid-feedback" i18n="@@beycoOrderList.form.coffee.price.error.required">
-                                            Price is required
+                                        <div *ngIf="fc(form, 'price').errors as errors" class="sc-invalid-feedback">
+                                            <span *ngIf="errors.required" i18n="@@beycoOrderList.form.coffee.price.error.required">Price is required</span>
+                                            <span *ngIf="errors.min" i18n="@@beycoOrderList.form.coffee.price.error.min">Price must not be negative</span>
+                                            <span *ngIf="errors.max" i18n="@@beycoOrderList.form.coffee.price.error.max">Price is too large</span>
                                         </div>
                                     </ng-container>
                                 </textinput>

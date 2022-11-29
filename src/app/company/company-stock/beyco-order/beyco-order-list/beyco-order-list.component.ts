@@ -133,7 +133,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
 
   buildGeneralForm(fieldValues: ApiBeycoOrderFields): FormGroup {
     return this.fb.group({
-      title: [fieldValues?.title, Validators.required],
+      title: [fieldValues?.title, [Validators.required, Validators.maxLength(70)]],
       availableAt: [fieldValues?.availableAt, Validators.required],
       address: [fieldValues?.portOfExport.address, Validators.required],
       country: [fieldValues?.portOfExport.country, Validators.required],
@@ -146,8 +146,8 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
     return this.fb.group({
       title: [coffee?.coffee.name, { disabled: true }],
       name: [coffee?.coffee.name, Validators.required],
-      quantity: [coffee?.coffee.quantity, Validators.required],
-      price: [coffee?.price, Validators.required],
+      quantity: [coffee?.coffee.quantity, [Validators.required, Validators.min(0), Validators.max(999999999999999999)]],
+      price: [coffee?.price, [Validators.required, Validators.min(0), Validators.max(999999999999999999)]],
       priceUnit: [coffee?.priceUnit, Validators.required],
       currency: [coffee?.currency, Validators.required],
       harvestAt: [coffee?.coffee.harvestAt, Validators.required],
