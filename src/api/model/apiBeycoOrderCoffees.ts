@@ -28,11 +28,18 @@ export interface ApiBeycoOrderCoffees {
      * Used currency
      */
     currency?: ApiBeycoOrderCoffees.CurrencyEnum;
-    fixedPrice?: boolean;
+    /**
+     * Custom incoterms
+     */
+    customIncoterms?: string;
     /**
      * Incoterms
      */
     incoterms?: ApiBeycoOrderCoffees.IncotermsEnum;
+    /**
+     * Is fixed price
+     */
+    isFixedPrice?: boolean;
     /**
      * Price of order
      */
@@ -56,11 +63,18 @@ export namespace ApiBeycoOrderCoffees {
          * Used currency
          */
         currency = 'currency',
-        fixedPrice = 'fixedPrice',
+        /**
+         * Custom incoterms
+         */
+        customIncoterms = 'customIncoterms',
         /**
          * Incoterms
          */
         incoterms = 'incoterms',
+        /**
+         * Is fixed price
+         */
+        isFixedPrice = 'isFixedPrice',
         /**
          * Price of order
          */
@@ -143,9 +157,9 @@ export namespace ApiBeycoOrderCoffees {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'fixedPrice',
+                    name: 'customIncoterms',
                     classname: 'ApiBeycoOrderCoffees',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -158,6 +172,17 @@ export namespace ApiBeycoOrderCoffees {
                     name: 'incoterms',
                     classname: 'ApiBeycoOrderCoffees',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isFixedPrice',
+                    classname: 'ApiBeycoOrderCoffees',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -191,9 +216,11 @@ export namespace ApiBeycoOrderCoffees {
                 ],
                 currency: [
                 ],
-                fixedPrice: [
+                customIncoterms: [
                 ],
                 incoterms: [
+                ],
+                isFixedPrice: [
                 ],
                 price: [
                 ],
@@ -212,10 +239,13 @@ export namespace ApiBeycoOrderCoffees {
   //               currency: {
   //                   validators: []
   //               },
-  //               fixedPrice: {
+  //               customIncoterms: {
   //                   validators: []
   //               },
   //               incoterms: {
+  //                   validators: []
+  //               },
+  //               isFixedPrice: {
   //                   validators: []
   //               },
   //               price: {
