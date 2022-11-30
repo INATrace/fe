@@ -27,7 +27,7 @@ export const environment = {
     reloadDelay: 500,
     harcodedLabelForPrivacyOnRegisterPage: '',
     beycoAuthURL: window['env']['beycoAuthURL'] || '',
-    beycoClientId: ''
+    beycoClientId: window['env']['beycoClientId'] || ''
 };
 
 /*
