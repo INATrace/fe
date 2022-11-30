@@ -41,6 +41,10 @@ export interface ApiCompanyGet {
      */
     actions?: Array<ApiCompanyGet.ActionsEnum>;
     /**
+     * Is company allowed to export orders to Beyco platform
+     */
+    allowBeycoIntegration?: boolean;
+    /**
      * company certifications
      */
     certifications?: Array<ApiCertification>;
@@ -117,6 +121,10 @@ export namespace ApiCompanyGet {
          * Possible actions
          */
         actions = 'actions',
+        /**
+         * Is company allowed to export orders to Beyco platform
+         */
+        allowBeycoIntegration = 'allowBeycoIntegration',
         /**
          * company certifications
          */
@@ -226,6 +234,17 @@ export namespace ApiCompanyGet {
                     dataType: 'Array&lt;string&gt;',
                     isPrimitiveType: true,
                     isListContainer: true,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'allowBeycoIntegration',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
                     complexType: ''
                 },
                 {
@@ -418,6 +437,8 @@ export namespace ApiCompanyGet {
                 ],
                 actions: [
                 ],
+                allowBeycoIntegration: [
+                ],
                 certifications: [
                 ],
                 currency: [
@@ -464,6 +485,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               actions: {
+  //                   validators: []
+  //               },
+  //               allowBeycoIntegration: {
   //                   validators: []
   //               },
   //               certifications: {

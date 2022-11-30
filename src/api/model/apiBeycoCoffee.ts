@@ -26,7 +26,10 @@ import { ApiBeycoCoffeeVariety } from './apiBeycoCoffeeVariety';
 
 
 export interface ApiBeycoCoffee { 
-    bulk?: boolean;
+    /**
+     * Additional grade, if selected 'Other' in grades
+     */
+    additionalQualityDescriptors?: string;
     /**
      * Certificates of coffee beans
      */
@@ -47,6 +50,10 @@ export interface ApiBeycoCoffee {
      * Harvest date
      */
     harvestAt?: Date;
+    /**
+     * Is bulk
+     */
+    isBulk?: boolean;
     /**
      * Maximum screen size
      */
@@ -97,7 +104,10 @@ export namespace ApiBeycoCoffee {
      * All properties of ApiBeycoCoffee.
      */
     export enum Properties {
-        bulk = 'bulk',
+        /**
+         * Additional grade, if selected 'Other' in grades
+         */
+        additionalQualityDescriptors = 'additionalQualityDescriptors',
         /**
          * Certificates of coffee beans
          */
@@ -118,6 +128,10 @@ export namespace ApiBeycoCoffee {
          * Harvest date
          */
         harvestAt = 'harvestAt',
+        /**
+         * Is bulk
+         */
+        isBulk = 'isBulk',
         /**
          * Maximum screen size
          */
@@ -206,9 +220,9 @@ export namespace ApiBeycoCoffee {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'bulk',
+                    name: 'additionalQualityDescriptors',
                     classname: 'ApiBeycoCoffee',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -266,6 +280,17 @@ export namespace ApiBeycoCoffee {
                     name: 'harvestAt',
                     classname: 'ApiBeycoCoffee',
                     dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isBulk',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -387,7 +412,7 @@ export namespace ApiBeycoCoffee {
                 },
             ],
             validators: {
-                bulk: [
+                additionalQualityDescriptors: [
                 ],
                 certificates: [
                 ],
@@ -398,6 +423,8 @@ export namespace ApiBeycoCoffee {
                 grades: [
                 ],
                 harvestAt: [
+                ],
+                isBulk: [
                 ],
                 maxScreenSize: [
                 ],
@@ -426,7 +453,7 @@ export namespace ApiBeycoCoffee {
   // export const ApiBeycoCoffeeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               bulk: {
+  //               additionalQualityDescriptors: {
   //                   validators: []
   //               },
   //               certificates: {
@@ -442,6 +469,9 @@ export namespace ApiBeycoCoffee {
   //                   validators: []
   //               },
   //               harvestAt: {
+  //                   validators: []
+  //               },
+  //               isBulk: {
   //                   validators: []
   //               },
   //               maxScreenSize: {

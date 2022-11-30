@@ -29,7 +29,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
+import { ApiBeycoOrderFields } from '../model/apiBeycoOrderFields';
 import { ApiResponseApiBeycoOrderFields } from '../model/apiResponseApiBeycoOrderFields';
+import { ApiResponseApiBeycoTokenResponse } from '../model/apiResponseApiBeycoTokenResponse';
+import { ApiResponseObject } from '../model/apiResponseObject';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -43,9 +46,13 @@ export namespace GetBeycoOrderFieldsForSelectedStockOrdersUsingGET {
      */
     export interface PartialParamMap {
       /**
-       * id
+       * ID's of selected stock orders
        */
       id: Array<number>;
+      /**
+       * ID of company
+       */
+      companyId: number;
     }
 
     /**
@@ -53,9 +60,13 @@ export namespace GetBeycoOrderFieldsForSelectedStockOrdersUsingGET {
      */
     export enum Parameters {
       /**
-       * id
+       * ID's of selected stock orders
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * ID of company
+       */
+      companyId = 'companyId'
     }
 
     /**
@@ -64,6 +75,155 @@ export namespace GetBeycoOrderFieldsForSelectedStockOrdersUsingGET {
      */
     export const ParamValidators: {[K in keyof GetBeycoOrderFieldsForSelectedStockOrdersUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
+              ['required', Validators.required],
+      ],
+      companyId: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getTokenUsingGET.
+ */
+export namespace GetTokenUsingGET {
+    /**
+     * Parameter map for getTokenUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Authorization code from Beyco OAuth2
+       */
+      authCode: string;
+      /**
+       * ID of company
+       */
+      companyId: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getTokenUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Authorization code from Beyco OAuth2
+       */
+      authCode = 'authCode',
+      /**
+       * ID of company
+       */
+      companyId = 'companyId'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getTokenUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetTokenUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      authCode: [
+              ['required', Validators.required],
+      ],
+      companyId: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for refreshTokenUsingGET.
+ */
+export namespace RefreshTokenUsingGET {
+    /**
+     * Parameter map for refreshTokenUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Refresh token
+       */
+      refreshToken: string;
+      /**
+       * ID of company
+       */
+      companyId: number;
+    }
+
+    /**
+     * Enumeration of all parameters for refreshTokenUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Refresh token
+       */
+      refreshToken = 'refreshToken',
+      /**
+       * ID of company
+       */
+      companyId = 'companyId'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of refreshTokenUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof RefreshTokenUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      refreshToken: [
+              ['required', Validators.required],
+      ],
+      companyId: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for sendBeycoOrderUsingPOST.
+ */
+export namespace SendBeycoOrderUsingPOST {
+    /**
+     * Parameter map for sendBeycoOrderUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * JWT token
+       */
+      token: string;
+      /**
+       * ID of company
+       */
+      companyId: number;
+      /**
+       * Beyco offer
+       */
+      ApiBeycoOrderFields: ApiBeycoOrderFields;
+    }
+
+    /**
+     * Enumeration of all parameters for sendBeycoOrderUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * JWT token
+       */
+      token = 'token',
+      /**
+       * ID of company
+       */
+      companyId = 'companyId',
+      /**
+       * Beyco offer
+       */
+      ApiBeycoOrderFields = 'ApiBeycoOrderFields'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of sendBeycoOrderUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof SendBeycoOrderUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      token: [
+              ['required', Validators.required],
+      ],
+      companyId: [
               ['required', Validators.required],
       ],
     };
@@ -131,6 +291,7 @@ export class BeycoOrderControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getBeycoOrderFieldsForSelectedStockOrdersUsingGET(
       map.id,
+      map.companyId,
       observe,
       reportProgress
     );
@@ -140,16 +301,20 @@ export class BeycoOrderControllerService {
     /**
      * Get list of fields necessary for Beyco order for selected Stock Orders
      * 
-     * @param id id
+     * @param id ID&#39;s of selected stock orders
+     * @param companyId ID of company
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoOrderFields>;
-    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoOrderFields>>;
-    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoOrderFields>>;
-    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, companyId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoOrderFields>;
+    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, companyId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoOrderFields>>;
+    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, companyId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoOrderFields>>;
+    public getBeycoOrderFieldsForSelectedStockOrdersUsingGET(id: Array<number>, companyId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getBeycoOrderFieldsForSelectedStockOrdersUsingGET.');
+        }
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getBeycoOrderFieldsForSelectedStockOrdersUsingGET.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -180,7 +345,7 @@ export class BeycoOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiResponseApiBeycoOrderFields>(`${this.configuration.basePath}/api/chain/beyco-order/fields`,
+        const handle = this.httpClient.get<ApiResponseApiBeycoOrderFields>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/fields`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -191,6 +356,296 @@ export class BeycoOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getBeycoOrderFieldsForSelectedStockOrdersUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get OAuth2 token for Beyco integration by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getTokenUsingGETByMap(
+    map: GetTokenUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiBeycoTokenResponse>;
+  public getTokenUsingGETByMap(
+    map: GetTokenUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
+  public getTokenUsingGETByMap(
+    map: GetTokenUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
+  public getTokenUsingGETByMap(
+    map: GetTokenUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getTokenUsingGET(
+      map.authCode,
+      map.companyId,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get OAuth2 token for Beyco integration
+     * 
+     * @param authCode Authorization code from Beyco OAuth2
+     * @param companyId ID of company
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getTokenUsingGET(authCode: string, companyId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoTokenResponse>;
+    public getTokenUsingGET(authCode: string, companyId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
+    public getTokenUsingGET(authCode: string, companyId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
+    public getTokenUsingGET(authCode: string, companyId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (authCode === null || authCode === undefined) {
+            throw new Error('Required parameter authCode was null or undefined when calling getTokenUsingGET.');
+        }
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getTokenUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (authCode !== undefined && authCode !== null) {
+            queryParameters = queryParameters.set('authCode', <any>authCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiBeycoTokenResponse>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/token`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getTokenUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Refresh expired token by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public refreshTokenUsingGETByMap(
+    map: RefreshTokenUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiBeycoTokenResponse>;
+  public refreshTokenUsingGETByMap(
+    map: RefreshTokenUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
+  public refreshTokenUsingGETByMap(
+    map: RefreshTokenUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
+  public refreshTokenUsingGETByMap(
+    map: RefreshTokenUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.refreshTokenUsingGET(
+      map.refreshToken,
+      map.companyId,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Refresh expired token
+     * 
+     * @param refreshToken Refresh token
+     * @param companyId ID of company
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoTokenResponse>;
+    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
+    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
+    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (refreshToken === null || refreshToken === undefined) {
+            throw new Error('Required parameter refreshToken was null or undefined when calling refreshTokenUsingGET.');
+        }
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling refreshTokenUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (refreshToken !== undefined && refreshToken !== null) {
+            queryParameters = queryParameters.set('refreshToken', <any>refreshToken);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiBeycoTokenResponse>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/token/refresh`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'refreshTokenUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Send order to Beyco by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public sendBeycoOrderUsingPOSTByMap(
+    map: SendBeycoOrderUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseObject>;
+  public sendBeycoOrderUsingPOSTByMap(
+    map: SendBeycoOrderUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseObject>>;
+  public sendBeycoOrderUsingPOSTByMap(
+    map: SendBeycoOrderUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseObject>>;
+  public sendBeycoOrderUsingPOSTByMap(
+    map: SendBeycoOrderUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.sendBeycoOrderUsingPOST(
+      map.token,
+      map.companyId,
+      map.ApiBeycoOrderFields,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Send order to Beyco
+     * 
+     * @param token JWT token
+     * @param companyId ID of company
+     * @param ApiBeycoOrderFields Beyco offer
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseObject>;
+    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseObject>>;
+    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseObject>>;
+    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (token === null || token === undefined) {
+            throw new Error('Required parameter token was null or undefined when calling sendBeycoOrderUsingPOST.');
+        }
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling sendBeycoOrderUsingPOST.');
+        }
+        if (ApiBeycoOrderFields === null || ApiBeycoOrderFields === undefined) {
+            throw new Error('Required parameter ApiBeycoOrderFields was null or undefined when calling sendBeycoOrderUsingPOST.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (token !== undefined && token !== null) {
+            queryParameters = queryParameters.set('token', <any>token);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseObject>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/order`,
+            ApiBeycoOrderFields,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'sendBeycoOrderUsingPOST')));
         }
         return handle;
     }

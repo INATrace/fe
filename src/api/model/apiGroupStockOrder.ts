@@ -40,7 +40,11 @@ export interface ApiGroupStockOrder {
      */
     fulfilledQuantity?: number;
     /**
-     * Internal ID
+     * List of stock order ID's, belonging to this group
+     */
+    groupedIds?: Array<number>;
+    /**
+     * Entity id
      */
     id?: number;
     /**
@@ -48,7 +52,7 @@ export interface ApiGroupStockOrder {
      */
     internalLotNumber?: string;
     /**
-     * Internal LOT number
+     * Number of sacs (if the order was repackaged)
      */
     noOfSacs?: number;
     /**
@@ -103,7 +107,11 @@ export namespace ApiGroupStockOrder {
          */
         fulfilledQuantity = 'fulfilledQuantity',
         /**
-         * Internal ID
+         * List of stock order ID's, belonging to this group
+         */
+        groupedIds = 'groupedIds',
+        /**
+         * Entity id
          */
         id = 'id',
         /**
@@ -111,7 +119,7 @@ export namespace ApiGroupStockOrder {
          */
         internalLotNumber = 'internalLotNumber',
         /**
-         * Internal LOT number
+         * Number of sacs (if the order was repackaged)
          */
         noOfSacs = 'noOfSacs',
         /**
@@ -209,6 +217,17 @@ export namespace ApiGroupStockOrder {
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'groupedIds',
+                    classname: 'ApiGroupStockOrder',
+                    dataType: 'Array&lt;number&gt;',
+                    isPrimitiveType: true,
+                    isListContainer: true,
                     complexType: ''
                 },
                 {
@@ -323,6 +342,8 @@ export namespace ApiGroupStockOrder {
                 ],
                 fulfilledQuantity: [
                 ],
+                groupedIds: [
+                ],
                 id: [
                 ],
                 internalLotNumber: [
@@ -361,6 +382,9 @@ export namespace ApiGroupStockOrder {
   //                   validators: []
   //               },
   //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               groupedIds: {
   //                   validators: []
   //               },
   //               id: {

@@ -71,6 +71,14 @@ export namespace GetGroupedStockOrderListUsingGET {
        */
       availableOnly?: boolean;
       /**
+       * Is purchase orders only
+       */
+      isPurchaseOrderOnly?: boolean;
+      /**
+       * Semi-product ID
+       */
+      semiProductId?: number;
+      /**
        * language
        */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
@@ -109,6 +117,14 @@ export namespace GetGroupedStockOrderListUsingGET {
        */
       availableOnly = 'availableOnly',
       /**
+       * Is purchase orders only
+       */
+      isPurchaseOrderOnly = 'isPurchaseOrderOnly',
+      /**
+       * Semi-product ID
+       */
+      semiProductId = 'semiProductId',
+      /**
        * language
        */
       language = 'language'
@@ -133,6 +149,10 @@ export namespace GetGroupedStockOrderListUsingGET {
       sort: [
       ],
       availableOnly: [
+      ],
+      isPurchaseOrderOnly: [
+      ],
+      semiProductId: [
       ],
       language: [
       ],
@@ -207,6 +227,8 @@ export class GroupStockOrderControllerService {
       map.sortBy,
       map.sort,
       map.availableOnly,
+      map.isPurchaseOrderOnly,
+      map.semiProductId,
       map.language,
       observe,
       reportProgress
@@ -224,14 +246,16 @@ export class GroupStockOrderControllerService {
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param availableOnly Available orders only
+     * @param isPurchaseOrderOnly Is purchase orders only
+     * @param semiProductId Semi-product ID
      * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiGroupStockOrder>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiGroupStockOrder>>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiGroupStockOrder>>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiGroupStockOrder>;
+    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiGroupStockOrder>>;
+    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiGroupStockOrder>>;
+    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
             throw new Error('Required parameter facilityId was null or undefined when calling getGroupedStockOrderListUsingGET.');
         }
@@ -254,6 +278,12 @@ export class GroupStockOrderControllerService {
         }
         if (availableOnly !== undefined && availableOnly !== null) {
             queryParameters = queryParameters.set('availableOnly', <any>availableOnly);
+        }
+        if (isPurchaseOrderOnly !== undefined && isPurchaseOrderOnly !== null) {
+            queryParameters = queryParameters.set('isPurchaseOrderOnly', <any>isPurchaseOrderOnly);
+        }
+        if (semiProductId !== undefined && semiProductId !== null) {
+            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
         }
 
         let headers = this.defaultHeaders;
