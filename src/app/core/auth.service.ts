@@ -37,7 +37,10 @@ export class AuthService {
     )),
     map((resp: ApiResponseApiUserGet) => {
       if (resp) {
-        if (resp.data.language) { LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase()); }
+        if (resp.data.language) {
+            LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase());
+            localStorage.setItem('inatraceLocale', resp.data.language.toLowerCase());
+        }
         return resp.data;
       }
       return null;
