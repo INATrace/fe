@@ -270,16 +270,16 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   edit(order: ApiGroupStockOrder) {
     switch (order.orderType as StockOrderType) {
       case 'PURCHASE_ORDER':
-        this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
+        this.router.navigate(['my-stock', 'purchases', 'update', order.groupedIds[0]]).then();
         return;
       case 'GENERAL_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
+        this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.groupedIds[0]]).then();
         return;
       case 'PROCESSING_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.id]).then();
+        this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.groupedIds[0]]).then();
         return;
       case 'TRANSFER_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.id]).then();
+        this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.groupedIds[0]]).then();
         return;
 
       default:
@@ -288,7 +288,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   }
 
   history(item: ApiGroupStockOrder) {
-    this.router.navigate(['orders', 'stock-order', item.id, 'view'],
+    this.router.navigate(['orders', 'stock-order', item.groupedIds[0], 'view'],
         { relativeTo: this.route.parent.parent, queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 
@@ -326,7 +326,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
 
       if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER' || order.orderType === 'GENERAL_ORDER') {
 
-        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(order.id, true).pipe(take(1)).toPromise();
+        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(order.groupedIds[0], true).pipe(take(1)).toPromise();
         if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
           const procOrderResp = await this.processingOrderController.deleteProcessingOrderUsingDELETE(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
           if (procOrderResp && procOrderResp.status === 'OK') {
@@ -338,7 +338,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
       }
 
       // Remove purchase order
-      const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.id).pipe(take(1)).toPromise();
+      const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.groupedIds[0]).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK) {
         this.reloadPingList$.next(true);
         this.clearCBs();
