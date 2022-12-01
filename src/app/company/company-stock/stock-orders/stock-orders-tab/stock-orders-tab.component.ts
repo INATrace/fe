@@ -76,6 +76,7 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
         this.route.queryParams.pipe(take(1)).subscribe(params => {
           if (((params['code'] && params['scope']) || params['error']) && params['state']) {
             this.beycoTokenService.getTokenWithAuthenticationCode(params);
+            this.router.navigate([], { relativeTo: this.route, queryParams: null, replaceUrl: true });
           }
         }),
 
