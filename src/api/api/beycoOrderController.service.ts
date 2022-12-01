@@ -140,7 +140,7 @@ export namespace RefreshTokenUsingGET {
       /**
        * Refresh token
        */
-      refreshToken: string;
+      X_Beyco_Refresh_Token: string;
       /**
        * ID of company
        */
@@ -154,7 +154,7 @@ export namespace RefreshTokenUsingGET {
       /**
        * Refresh token
        */
-      refreshToken = 'refreshToken',
+      X_Beyco_Refresh_Token = 'X_Beyco_Refresh_Token',
       /**
        * ID of company
        */
@@ -166,7 +166,7 @@ export namespace RefreshTokenUsingGET {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof RefreshTokenUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      refreshToken: [
+      X_Beyco_Refresh_Token: [
               ['required', Validators.required],
       ],
       companyId: [
@@ -186,7 +186,7 @@ export namespace SendBeycoOrderUsingPOST {
       /**
        * JWT token
        */
-      token: string;
+      X_Beyco_Token: string;
       /**
        * ID of company
        */
@@ -204,7 +204,7 @@ export namespace SendBeycoOrderUsingPOST {
       /**
        * JWT token
        */
-      token = 'token',
+      X_Beyco_Token = 'X_Beyco_Token',
       /**
        * ID of company
        */
@@ -220,7 +220,7 @@ export namespace SendBeycoOrderUsingPOST {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof SendBeycoOrderUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
-      token: [
+      X_Beyco_Token: [
               ['required', Validators.required],
       ],
       companyId: [
@@ -478,7 +478,7 @@ export class BeycoOrderControllerService {
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
     return this.refreshTokenUsingGET(
-      map.refreshToken,
+      map.X_Beyco_Refresh_Token,
       map.companyId,
       observe,
       reportProgress
@@ -489,28 +489,26 @@ export class BeycoOrderControllerService {
     /**
      * Refresh expired token
      * 
-     * @param refreshToken Refresh token
+     * @param X_Beyco_Refresh_Token Refresh token
      * @param companyId ID of company
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoTokenResponse>;
-    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
-    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
-    public refreshTokenUsingGET(refreshToken: string, companyId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (refreshToken === null || refreshToken === undefined) {
-            throw new Error('Required parameter refreshToken was null or undefined when calling refreshTokenUsingGET.');
+    public refreshTokenUsingGET(X_Beyco_Refresh_Token: string, companyId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBeycoTokenResponse>;
+    public refreshTokenUsingGET(X_Beyco_Refresh_Token: string, companyId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBeycoTokenResponse>>;
+    public refreshTokenUsingGET(X_Beyco_Refresh_Token: string, companyId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBeycoTokenResponse>>;
+    public refreshTokenUsingGET(X_Beyco_Refresh_Token: string, companyId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (X_Beyco_Refresh_Token === null || X_Beyco_Refresh_Token === undefined) {
+            throw new Error('Required parameter X_Beyco_Refresh_Token was null or undefined when calling refreshTokenUsingGET.');
         }
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling refreshTokenUsingGET.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (refreshToken !== undefined && refreshToken !== null) {
-            queryParameters = queryParameters.set('refreshToken', <any>refreshToken);
-        }
-
         let headers = this.defaultHeaders;
+        if (X_Beyco_Refresh_Token !== undefined && X_Beyco_Refresh_Token !== null) {
+            headers = headers.set('X-Beyco-Refresh-Token', String(X_Beyco_Refresh_Token));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -533,7 +531,6 @@ export class BeycoOrderControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiBeycoTokenResponse>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/token/refresh`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -571,7 +568,7 @@ export class BeycoOrderControllerService {
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
     return this.sendBeycoOrderUsingPOST(
-      map.token,
+      map.X_Beyco_Token,
       map.companyId,
       map.ApiBeycoOrderFields,
       observe,
@@ -583,18 +580,18 @@ export class BeycoOrderControllerService {
     /**
      * Send order to Beyco
      * 
-     * @param token JWT token
+     * @param X_Beyco_Token JWT token
      * @param companyId ID of company
      * @param ApiBeycoOrderFields Beyco offer
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseObject>;
-    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseObject>>;
-    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseObject>>;
-    public sendBeycoOrderUsingPOST(token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (token === null || token === undefined) {
-            throw new Error('Required parameter token was null or undefined when calling sendBeycoOrderUsingPOST.');
+    public sendBeycoOrderUsingPOST(X_Beyco_Token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseObject>;
+    public sendBeycoOrderUsingPOST(X_Beyco_Token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseObject>>;
+    public sendBeycoOrderUsingPOST(X_Beyco_Token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseObject>>;
+    public sendBeycoOrderUsingPOST(X_Beyco_Token: string, companyId: number, ApiBeycoOrderFields: ApiBeycoOrderFields, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (X_Beyco_Token === null || X_Beyco_Token === undefined) {
+            throw new Error('Required parameter X_Beyco_Token was null or undefined when calling sendBeycoOrderUsingPOST.');
         }
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling sendBeycoOrderUsingPOST.');
@@ -603,12 +600,10 @@ export class BeycoOrderControllerService {
             throw new Error('Required parameter ApiBeycoOrderFields was null or undefined when calling sendBeycoOrderUsingPOST.');
         }
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (token !== undefined && token !== null) {
-            queryParameters = queryParameters.set('token', <any>token);
-        }
-
         let headers = this.defaultHeaders;
+        if (X_Beyco_Token !== undefined && X_Beyco_Token !== null) {
+            headers = headers.set('X-Beyco-Token', String(X_Beyco_Token));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -637,7 +632,6 @@ export class BeycoOrderControllerService {
         const handle = this.httpClient.post<ApiResponseObject>(`${this.configuration.basePath}/api/chain/beyco-order/company/${encodeURIComponent(String(companyId))}/order`,
             ApiBeycoOrderFields,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
