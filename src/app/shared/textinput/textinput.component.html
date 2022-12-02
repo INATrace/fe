@@ -16,9 +16,8 @@
     </div>
     <fa-icon *ngIf="modal" class="ml-2 edit-link" [icon]="'pen'" (click)="this.editModal()"></fa-icon>
   </label>
-  <div *ngIf="showInputField" class="input-wrapper" (click)="focusOnInput()">
+  <div *ngIf="showInputField && !textarea" class="input-wrapper" (click)="focusOnInput()">
     <div class="prefix" *ngIf="prefix">{{ prefix }}</div>
-    <ng-container *ngIf="!textarea">
       <input
         #inputfield
         *ngIf="valueTextInput"
@@ -112,7 +111,6 @@
         [placeholder]="form.disabled || readOnly || disabled ? '' : placeholder"
         [autocomplete]="autocomplete"
         (keyup.enter)="onKeyUpEnter.next($event)">
-    </ng-container>
     <div class="suffix" *ngIf="suffix">{{ suffix }}</div>
   </div>
   <ng-container *ngIf="textarea && showInputField">
