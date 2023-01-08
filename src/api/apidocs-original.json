@@ -11,123 +11,6 @@
     }
   ],
   "paths": {
-    "/actuator": {
-      "get": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "additionalProperties": {
-                      "$ref": "#/components/schemas/Link"
-                    },
-                    "type": "object"
-                  },
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v2+json": {
-                "schema": {
-                  "additionalProperties": {
-                    "additionalProperties": {
-                      "$ref": "#/components/schemas/Link"
-                    },
-                    "type": "object"
-                  },
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v3+json": {
-                "schema": {
-                  "additionalProperties": {
-                    "additionalProperties": {
-                      "$ref": "#/components/schemas/Link"
-                    },
-                    "type": "object"
-                  },
-                  "type": "object"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "web-mvc-links-handler"
-        ],
-        "operationId": "linksUsingGET",
-        "summary": "links"
-      }
-    },
-    "/actuator/health": {
-      "get": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v2+json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v3+json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "operation-handler"
-        ],
-        "operationId": "handleUsingGET_1",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/handleUsingGET_1Body"
-        },
-        "summary": "handle"
-      }
-    },
-    "/actuator/health/**": {
-      "get": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v2+json": {
-                "schema": {
-                  "type": "object"
-                }
-              },
-              "application/vnd.spring-boot.actuator.v3+json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "operation-handler"
-        ],
-        "operationId": "handleUsingGET",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/handleUsingGET_1Body"
-        },
-        "summary": "handle"
-      }
-    },
     "/api/chain/action-type": {
       "put": {
         "responses": {
@@ -357,8 +240,8 @@
         "parameters": [
           {
             "description": "JWT token",
-            "in": "query",
-            "name": "token",
+            "in": "header",
+            "name": "X-Beyco-Token",
             "required": true,
             "schema": {
               "type": "string"
@@ -452,8 +335,8 @@
         "parameters": [
           {
             "description": "Refresh token",
-            "in": "query",
-            "name": "refreshToken",
+            "in": "header",
+            "name": "X-Beyco-Refresh-Token",
             "required": true,
             "schema": {
               "type": "string"
@@ -1453,103 +1336,6 @@
         ],
         "operationId": "getFacilityTypeUsingGET",
         "summary": "Get a single facility type with the provided ID."
-      }
-    },
-    "/api/chain/facility/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacility_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "facility-controller"
-        ],
-        "operationId": "getFacilityListUsingGET",
-        "summary": "Get a paginated list of facilities."
       }
     },
     "/api/chain/facility/list/collecting/company/{id}": {
@@ -2801,87 +2587,6 @@
         "summary": "Get a single bulk payment with the provided ID."
       }
     },
-    "/api/chain/payment/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "getPaymentListUsingGET",
-        "summary": "Get a paginated list of payments."
-      }
-    },
     "/api/chain/payment/list/bulk-payment/company/{id}": {
       "get": {
         "parameters": [
@@ -3387,103 +3092,6 @@
           "required": true
         },
         "summary": "Create or update processing action. If ID is provided, then the entity with the provided ID is updated."
-      }
-    },
-    "/api/chain/processing-action/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingAction_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "processing-action-controller"
-        ],
-        "operationId": "getProcessingActionListUsingGET",
-        "summary": "Get a paginated list of processing actions."
       }
     },
     "/api/chain/processing-action/list/company/{id}": {
@@ -4429,103 +4037,6 @@
         "summary": "Create or update processing order. If the ID is provided, then the entity with the provided ID is updated."
       }
     },
-    "/api/chain/processing-order/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "processing-order-controller"
-        ],
-        "operationId": "getProcessingOrderUsingGET",
-        "summary": "Get a paginated list of processing orders."
-      }
-    },
     "/api/chain/processing-order/{id}": {
       "delete": {
         "parameters": [
@@ -4602,7 +4113,7 @@
         "tags": [
           "processing-order-controller"
         ],
-        "operationId": "getProcessingOrderUsingGET_1",
+        "operationId": "getProcessingOrderUsingGET",
         "summary": "Get a single processing order with the provided ID."
       }
     },
@@ -5025,103 +4536,6 @@
           "required": true
         },
         "summary": "Creates a list of purchase orders."
-      }
-    },
-    "/api/chain/stock-order/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "getStockOrderListUsingGET",
-        "summary": "Get a paginated list of stock orders."
       }
     },
     "/api/chain/stock-order/list/company/{companyId}": {
@@ -8037,7 +7451,7 @@
           "company-controller"
         ],
         "operationId": "getConnectedCompaniesUsingGET",
-        "summary": "Get list of conneccted companies for the company with the given ID"
+        "summary": "Get list of connected companies for the company with the given ID"
       }
     },
     "/api/final-product/company/{companyId}": {
@@ -8251,226 +7665,6 @@
         ],
         "operationId": "listProductsAdminUsingGET",
         "summary": "Lists all products. Must be admin. Sorting: name or default"
-      }
-    },
-    "/api/product/companyCustomers": {
-      "put": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "updateCompanyCustomerUsingPUT_1",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ApiCompanyCustomer2"
-        },
-        "summary": "Update company customer"
-      }
-    },
-    "/api/product/companyCustomers/add/{productId}/{companyId}": {
-      "post": {
-        "parameters": [
-          {
-            "description": "Product id",
-            "in": "path",
-            "name": "productId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Company id",
-            "in": "path",
-            "name": "companyId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "addCompanyCustomerUsingPOST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiCompanyCustomer"
-              }
-            }
-          },
-          "description": "request",
-          "required": true
-        },
-        "summary": "Add company customer customer"
-      }
-    },
-    "/api/product/companyCustomers/list/{productId}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Product id",
-            "in": "path",
-            "name": "productId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Name",
-            "in": "query",
-            "name": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Phone number",
-            "in": "query",
-            "name": "phone",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiCompanyCustomer_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "getCompanyCustomersListUsingGET_1",
-        "summary": "List company customers for a product"
-      }
-    },
-    "/api/product/companyCustomers/{id}": {
-      "delete": {
-        "parameters": [
-          {
-            "description": "Customer id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "deleteCompanyCustomerUsingDELETE_1",
-        "summary": "Deletes a company customer"
       }
     },
     "/api/product/create": {
@@ -11130,9 +10324,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11142,16 +10339,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11161,16 +10361,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11180,16 +10383,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11199,16 +10405,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11218,16 +10427,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11237,16 +10449,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11256,8 +10471,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -11272,17 +10487,6 @@
           }
         },
         "description": "apiCompanyCustomer",
-        "required": true
-      },
-      "ApiCompanyCustomer2": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ApiCompanyCustomer"
-            }
-          }
-        },
-        "description": "request",
         "required": true
       },
       "ApiKnowledgeBlog": {
@@ -11328,19 +10532,6 @@
         },
         "description": "request",
         "required": true
-      },
-      "handleUsingGET_1Body": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            }
-          }
-        },
-        "description": "body"
       },
       "uploadDocumentUsingPOST": {
         "content": {
@@ -13954,33 +13145,6 @@
         },
         "type": "object"
       },
-      "ApiPaginatedList_ApiProcessingOrder_": {
-        "properties": {
-          "count": {
-            "description": "Count of all items satisfying 'paginatable' request.",
-            "format": "int32",
-            "type": "integer"
-          },
-          "items": {
-            "description": "Response items.",
-            "items": {
-              "$ref": "#/components/schemas/ApiProcessingOrder"
-            },
-            "type": "array"
-          },
-          "limit": {
-            "description": "Limit got from request",
-            "format": "int32",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "Offset got from request",
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
       "ApiPaginatedList_ApiProductLabelBatch_": {
         "properties": {
           "count": {
@@ -14917,49 +14081,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingEvidenceType_",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiPaginatedResponse_ApiProcessingOrder_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingOrder_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -20181,23 +19302,6 @@
         },
         "type": "object"
       },
-      "Link": {
-        "properties": {
-          "href": {
-            "type": "string"
-          },
-          "templated": {
-            "type": "boolean"
-          }
-        },
-        "type": "object"
-      },
-      "Map_string_Link_": {
-        "additionalProperties": {
-          "$ref": "#/components/schemas/Link"
-        },
-        "type": "object"
-      },
       "ModelAndView": {
         "properties": {
           "empty": {
@@ -20322,14 +19426,6 @@
     {
       "description": "Common Controller",
       "name": "common-controller"
-    },
-    {
-      "description": "Web Mvc Links Handler",
-      "name": "web-mvc-links-handler"
-    },
-    {
-      "description": "Operation Handler",
-      "name": "operation-handler"
     },
     {
       "description": "Product Order Controller",

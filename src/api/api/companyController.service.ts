@@ -2207,7 +2207,7 @@ export class CompanyControllerService {
 
 
   /**
-   * Get list of conneccted companies for the company with the given ID by map.
+   * Get list of connected companies for the company with the given ID by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -2243,7 +2243,7 @@ export class CompanyControllerService {
 
 
     /**
-     * Get list of conneccted companies for the company with the given ID
+     * Get list of connected companies for the company with the given ID
      * 
      * @param id Company ID
      * @param requestType Only count, only fetch, or return both values (if null)
