@@ -1,10 +1,8 @@
 import { Component, Host, OnInit, Input } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import _ from 'lodash-es'
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
-import { delay, take } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/api-chain/api/product.service';
 import { AuthorisedLayoutComponent } from '../authorised-layout/authorised-layout.component';
 import { Location } from '@angular/common';
 
@@ -32,8 +30,7 @@ export class AuthorisedTopNavComponent implements OnInit {
     @Host() public authorizedLayout: AuthorisedLayoutComponent,
     private location: Location,
     private route: ActivatedRoute,
-    private router: Router,
-    private chainProductService: ProductService
+    private router: Router
   ) {
   }
 
@@ -64,11 +61,11 @@ export class AuthorisedTopNavComponent implements OnInit {
     this.drobtinice = this.route.snapshot.data.drobtinice;
     if (this.drobtinice) {
       if (this.router.url.startsWith('/product-labels/')) {
-        let res = await this.chainProductService.getProductByAFId(this.route.snapshot.params.id).pipe(take(1)).toPromise();
-        if (res && res.status === "OK" && res.data) {
-          this.productName = res.data.name;
-          this.drobtiniceTitle = this.productName + this.drobtinice.title;
-        }
+        // let res = await this.chainProductService.getProductByAFId(this.route.snapshot.params.id).pipe(take(1)).toPromise();
+        // if (res && res.status === "OK" && res.data) {
+        //   this.productName = res.data.name;
+        //   this.drobtiniceTitle = this.productName + this.drobtinice.title;
+        // }
       }
       if (this.route.snapshot.data.drobtinice.collectorFarmerType) {
         let type = this.route.snapshot.params.type;

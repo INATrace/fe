@@ -13,7 +13,6 @@ import {
   ApiProcessingEvidenceFieldValidationScheme
 } from './validation';
 import _ from 'lodash-es';
-import { ActiveSemiProductsForProductServiceStandalone } from '../../shared-services/active-semi-products-for-product-standalone.service';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measure-unit-types.service';
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
@@ -59,8 +58,6 @@ export class TypeDetailModalComponent implements OnInit {
   submitted = false;
 
   productForm = new FormControl(null, Validators.required);
-
-  activeSemiProductsForProduct: ActiveSemiProductsForProductServiceStandalone;
 
   codebookProcessingEvidenceTypeType = EnumSifrant.fromObject(this.processingEvidenceTypeType);
   codebookProcessingEvidenceFieldType = EnumSifrant.fromObject(this.processingEvidenceFieldType);

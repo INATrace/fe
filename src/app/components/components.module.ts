@@ -14,7 +14,6 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 import { BottomButtonsComponent } from './bottom-buttons/bottom-buttons.component';
 import { CardComponent } from './card/card.component';
-import { DocumentCardComponent } from './document-card/document-card.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { FormDetailsLeftPanelComponent } from './form-details-left-panel/form-details-left-panel.component';
 import { FormPositionBoxComponent } from './form-position-box/form-position-box.component';
@@ -35,6 +34,7 @@ import { FormatPaymentPurposeTypePipe } from './pipes/format-payment-purpose-typ
 import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing-evidence-field-type.pipe';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
+import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,6 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     FormatStockOrderTypePipe,
     RedirectClearCacheComponent,
     CardComponent,
-    DocumentCardComponent,
     FormatTransactionTypePipe,
     FormatTransactionStatusPipe,
     FormatProcessingActionTypePipe,
@@ -60,7 +59,8 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
-    FormatPaymentStatusPipe
+    FormatPaymentStatusPipe,
+    QrCodeRedirectComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +100,6 @@ import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
     TranslateCodebookPipe,
     FormatCompanyCertsPipe,
     GenerateQRCodeModalComponent,
-    DocumentCardComponent,
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,

@@ -19,6 +19,7 @@
 
 
 import { ApiCompanyBase } from './apiCompanyBase';
+import { ApiFacility } from './apiFacility';
 import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiProcessingActionTranslation } from './apiProcessingActionTranslation';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
@@ -95,6 +96,10 @@ export interface ApiProcessingAction {
      * Sort order number. Lower number means first
      */
     sortOrder?: number;
+    /**
+     * List of facilities where this processing starts
+     */
+    supportedFacilities?: Array<ApiFacility>;
     /**
      * Processing action translations
      */
@@ -180,6 +185,10 @@ export namespace ApiProcessingAction {
          * Sort order number. Lower number means first
          */
         sortOrder = 'sortOrder',
+        /**
+         * List of facilities where this processing starts
+         */
+        supportedFacilities = 'supportedFacilities',
         /**
          * Processing action translations
          */
@@ -471,6 +480,18 @@ export namespace ApiProcessingAction {
                     complexType: ''
                 },
                 {
+                    metadata: ApiFacility.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'supportedFacilities',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'Array&lt;ApiFacility&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiFacility'
+                },
+                {
                     metadata: ApiProcessingActionTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -550,6 +571,8 @@ export namespace ApiProcessingAction {
                 ],
                 sortOrder: [
                 ],
+                supportedFacilities: [
+                ],
                 translations: [
                 ],
                 type: [
@@ -624,6 +647,9 @@ export namespace ApiProcessingAction {
   //                   validators: []
   //               },
   //               sortOrder: {
+  //                   validators: []
+  //               },
+  //               supportedFacilities: {
   //                   validators: []
   //               },
   //               translations: {

@@ -1,0 +1,33 @@
+.b2c-container {
+  min-width: 350px;
+}
+
+footer {
+  background-color: #000000;
+}
+
+#copyright {
+  color: #ababab;
+}
+
+.splitter {
+  height: 20px;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: block;
+  height: 32px;
+  width: 22px;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+}

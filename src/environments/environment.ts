@@ -14,7 +14,7 @@ export const environment = {
     relativeFileUploadUrlManualType: window['env']['relativeFileUploadUrlManualType'] || '',
     relativeImageUploadUrl: window['env']['relativeImageUploadUrl'] || '',
     relativeImageUploadUrlAllSizes: window['env']['relativeImageUploadUrlAllSizes'] || '',
-    version: '2.11.0-SNAPSHOT',
+    version: '2.27.0-SNAPSHOT',
 
     googleMapsApiKey: window['env']['googleMapsApiKey'] || '',
     googleAnalyticsId: '',
@@ -25,7 +25,9 @@ export const environment = {
     tokenForPublicLogRoute: window['env']['tokenForPublicLogRoute'] || '',
     appName: 'INATrace',
     reloadDelay: 500,
-    harcodedLabelForPrivacyOnRegisterPage: ''
+    harcodedLabelForPrivacyOnRegisterPage: '',
+    beycoAuthURL: window['env']['beycoAuthURL'] || '',
+    beycoClientId: window['env']['beycoClientId'] || ''
 };
 
 /*

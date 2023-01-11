@@ -126,7 +126,7 @@
       <div class="d-flex">
         <app-datepicker
                 label="From"
-                i18n-label="@@productLabelStock.datepicker.date.from"
+                i18n-label="@@common.filter.from.label"
                 [form]="fromFilterDate"
                 [invalid]="fromFilterDate.invalid"
                 (onChange)="onFilterDateRangeChange()"
@@ -135,7 +135,7 @@
 
         <app-datepicker
                 label="To"
-                i18n-label="@@productLabelStock.datepicker.date.to"
+                i18n-label="@@common.filter.to.label"
                 [form]="toFilterDate"
                 [invalid]="toFilterDate.invalid"
                 (onChange)="onFilterDateRangeChange()"
@@ -194,7 +194,7 @@
 
         <app-datepicker
                 label="From"
-                i18n-label="@@productLabelStock.datepicker.date.from"
+                i18n-label="@@common.filter.from.label"
                 [form]="fromSeasonalFilterDate"
                 [invalid]="this.submitSeasonalData && fromSeasonalFilterDate.invalid"
                 (onChange)="setQuoteOrdersForSeasonal()"
@@ -210,7 +210,7 @@
 
         <app-datepicker
                 label="To"
-                i18n-label="@@productLabelStock.datepicker.date.to"
+                i18n-label="@@common.filter.to.label"
                 [form]="toSeasonalFilterDate"
                 [invalid]="this.submitSeasonalData && toSeasonalFilterDate.invalid"
                 (onChange)="setQuoteOrdersForSeasonal()"
@@ -246,19 +246,19 @@
       <div class="d-flex main-inside-top--row2 justify-content-between">
         <div class="d-flex">
 
-          <single-choice
-                  label="Orders"
-                  i18n-label="@@productLabelStock.label.order"
-                  [formControlInput]="orderListForm"
-                  [codebookService]="quoteOrdersOnOrganizationCodebook"
-                  [readonly]="orderListFormReadOnly"
-                  [isInvalidChoice]="orderListError">
-            <ng-container *ngIf="orderListError">
-              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">
-                Order is required
-              </div>
-            </ng-container>
-          </single-choice>
+<!--          <single-choice-->
+<!--                  label="Orders"-->
+<!--                  i18n-label="@@productLabelStock.label.order"-->
+<!--                  [formControlInput]="orderListForm"-->
+<!--                  [codebookService]="quoteOrdersOnOrganizationCodebook"-->
+<!--                  [readonly]="orderListFormReadOnly"-->
+<!--                  [isInvalidChoice]="orderListError">-->
+<!--            <ng-container *ngIf="orderListError">-->
+<!--              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">-->
+<!--                Order is required-->
+<!--              </div>-->
+<!--            </ng-container>-->
+<!--          </single-choice>-->
 
           <checkbox-input
                   style="margin-left: 1rem; margin-top: 0.4rem"

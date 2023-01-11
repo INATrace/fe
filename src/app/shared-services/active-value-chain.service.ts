@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { ValueChainControllerService } from '../../api/api/valueChainController.service';
-import { ListCompaniesUsingGET } from '../../api/api/companyController.service';
+import { GetValueChainListUsingGET, ValueChainControllerService } from '../../api/api/valueChainController.service';
 import { ApiCompanyListResponse } from '../../api/model/apiCompanyListResponse';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
@@ -17,7 +16,7 @@ export class ActiveValueChainService extends GeneralSifrantService<any> {
     limit: 1000,
     requestType: 'FETCH',
     valueChainStatus: 'ENABLED'
-  } as ListCompaniesUsingGET.PartialParamMap;
+  } as  GetValueChainListUsingGET.PartialParamMap;
 
   constructor(
       private valueChainController: ValueChainControllerService,

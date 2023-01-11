@@ -38,13 +38,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LanguageCodeHelper } from './language-code-helper';
 import { LayoutModule } from './layout/layout.module';
 import { LoginComponent } from './user/login/login.component';
-import { ProductLabelFrontFeedbackComponent } from './product-label-front-page/product-label-front-feedback/product-label-front-feedback.component';
-import { CheckBatchNumberModalComponent } from './product-label-front-page/check-batch-number-modal/check-batch-number-modal.component';
-import { CheckBatchNumberResponseModalComponent } from './product-label-front-page/check-batch-number-response-modal/check-batch-number-response-modal.component';
-import { ProductLabelFrontPageComponent } from './product-label-front-page/product-label-front-page.component';
-import { QrCodeRedirectComponent } from './product-label-front-page/qr-code-redirect/qr-code-redirect.component';
-import { SectionContentPieceComponent } from './product-label-front-page/section-content-piece/section-content-piece.component';
-import { SectionTitleComponent } from './product-label-front-page/section-title/section-title.component';
 import { RegisterActivationComponent } from './user/register-activation/register-activation.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ResetPasswordRequestComponent } from './user/reset-password-request/reset-password-request.component';
@@ -80,7 +73,6 @@ import { CompanyProcessingActionsComponent } from './company/company-detail/comp
 import { CompanyDetailProcessingActionsListComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
-import { FrontPageCommonModule } from './front-page-common/front-page-common.module';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -121,17 +113,10 @@ export function getConfiguration(): Configuration {
     ClearCookieConsentComponent,
     CookieManagementModalComponent,
     CookiesPageComponent,
-    ProductLabelFrontPageComponent,
-    SectionTitleComponent,
-    SectionContentPieceComponent,
-    CheckBatchNumberModalComponent,
-    CheckBatchNumberResponseModalComponent,
     PrivacyPageComponent,
     TermsAndConditionsPageComponent,
-    QrCodeRedirectComponent,
     SystemLeftPanelComponent,
     SettingsComponent,
-    ProductLabelFrontFeedbackComponent,
     KnowledgeBlogFrontComponent,
     TypeDetailModalComponent,
     TypeListComponent,
@@ -173,7 +158,6 @@ export function getConfiguration(): Configuration {
     //////////
     CoreModule,
     ComponentsModule,
-    FrontPageCommonModule,
     LayoutModule,
     FontAwesomeModule,
     SharedModule,

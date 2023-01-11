@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
-import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
+import { DeliveryDates, StockOrderListingPageMode } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
-import { StockOrderListingPageMode } from '../../../../m-product/product-stock/stock-core/stock-tab-core/stock-tab-core.component';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
 import { formatDateWithDots } from '../../../../../shared/utils';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
@@ -20,6 +19,7 @@ import { AggregatedStockItem } from './models';
 import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stock-order-list',
@@ -82,6 +82,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   @Input()
   pageListingMode: StockOrderListingPageMode = 'PURCHASE_ORDERS';
 
+  @Input()
+  hideCheckbox: boolean = false;
+
   @Output()
   countAll = new EventEmitter<number>();
 
@@ -110,13 +113,16 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   addPaymentsSubscription: Subscription;
 
+  private addPricePerUnitMessage: string = $localize`:@@productLabelStockPayments.addPricePerUnit.message:Add price per unit`;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderControllerService: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
-    private modalService: NgbModalImproved
+    private modalService: NgbModalImproved,
+    private toasterService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -219,7 +225,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       {
         key: 'cb',
         name: '',
-        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0
+        selectAllCheckbox: ['PURCHASE_ORDERS'].indexOf(this.pageListingMode) >= 0,
+        hide: this.hideCheckbox
       },
       {
         key: 'date',
@@ -388,6 +395,10 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   payment(order: ApiStockOrder) {
+    if (order.priceDeterminedLater) {
+      this.toasterService.warning(this.addPricePerUnitMessage);
+      return;
+    }
     this.router.navigate(['my-stock', 'payments', 'purchase-order', order.id, 'new']).then();
   }
 
@@ -599,6 +610,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   private addPayments() {
     const poIds = [];
     for (const item of this.selectedOrders) {
+      if (item.priceDeterminedLater) {
+        continue;
+      }
       poIds.push(item.id);
     }
     this.router.navigate(['my-stock', 'payments', 'purchases', 'bulk-payment', poIds.toString(), 'new', 'PO']).then();

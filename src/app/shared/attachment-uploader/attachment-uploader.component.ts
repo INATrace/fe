@@ -8,21 +8,13 @@ import { FileItem, FileUploader, ParsedResponseHeaders, FileUploaderOptions } fr
 import { FileSaverService } from 'ngx-filesaver';
 import { merge, Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay, tap, take } from 'rxjs/operators';
-// import { FeCoreControllerService } from 'src/api/api/feCoreController.service';
-import { ApiDocument } from 'src/api/model/apiDocument';
-import { ApiResponseApiDocument } from 'src/api/model/apiResponseApiDocument';
 import { ImageViewerComponent } from 'src/app/shared/image-viewer/image-viewer.component';
-// import { LoginService } from 'src/app/directives/login.service';
-// import { FileService } from 'src/api/api/file.service';
-// import { FileInfo as ApiDocument } from 'src/api/model/fileInfo';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { environment } from 'src/environments/environment';
 import { formatBytes } from 'src/shared/utils';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { CommonControllerService } from 'src/api/api/commonController.service';
 import { ClosableComponent } from '../closable/closable.component';
-import { ChainFileInfo } from 'src/api-chain/model/chainFileInfo';
-import { DocumentService } from 'src/api-chain/api/document.service';
 
 class UploadResponse {
     // public data: { name: string, originalName: string, contentType: string };
@@ -253,7 +245,6 @@ export class AttachmentUploaderComponent implements OnInit {
 
     constructor(
         public httpClient: HttpClient,
-        public chainFileService: DocumentService,
         public fileService: CommonControllerService,
         private fileSaverService: FileSaverService,
         private modalService: NgbModalImproved,
@@ -473,19 +464,12 @@ export class AttachmentUploaderComponent implements OnInit {
                 chainApi: this.downloadUrl ? true : false
             })
         } else {
-          if (this.mode === 'simpleAsTextField' && this.fileInfo) {
-            if(this.chainFile) {
-              let res = await this.chainFileService.getFile(this.fileInfo.storageKey).pipe(take(1)).toPromise();
-              if (res) {
-                this.fileSaverService.save(res, this.fileInfo.name)
-              }
-            } else {
-              let res = await this.fileService.getDocumentUsingGET(this.fileInfo.storageKey).pipe(take(1)).toPromise();
-              if (res) {
-                this.fileSaverService.save(res, this.fileInfo.name)
-              }
+            if (this.mode === 'simpleAsTextField' && this.fileInfo) {
+                let res = await this.fileService.getDocumentUsingGET(this.fileInfo.storageKey).pipe(take(1)).toPromise();
+                if (res) {
+                    this.fileSaverService.save(res, this.fileInfo.name);
+                }
             }
-          }
         }
     }
 

@@ -18,10 +18,11 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
-import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
+import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
 import { ApiResponsibility } from './apiResponsibility';
@@ -30,8 +31,8 @@ import { ApiSustainability } from './apiSustainability';
 
 
 export interface ApiProductLabelContent { 
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
-    comparisonOfPrice?: ApiComparisonOfPrice;
     /**
      * product description
      */
@@ -48,6 +49,10 @@ export interface ApiProductLabelContent {
      * ingredients - list the ingredients in the product and describe their properties
      */
     ingredients?: string;
+    /**
+     * Product journey path
+     */
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
      * Key Markets, market name - share number map
      */
@@ -89,8 +94,8 @@ export namespace ApiProductLabelContent {
      * All properties of ApiProductLabelContent.
      */
     export enum Properties {
+        businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
-        comparisonOfPrice = 'comparisonOfPrice',
         /**
          * product description
          */
@@ -107,6 +112,10 @@ export namespace ApiProductLabelContent {
          * ingredients - list the ingredients in the product and describe their properties
          */
         ingredients = 'ingredients',
+        /**
+         * Product journey path
+         */
+        journeyMarkers = 'journeyMarkers',
         /**
          * Key Markets, market name - share number map
          */
@@ -147,6 +156,18 @@ export namespace ApiProductLabelContent {
             classname: 'ApiProductLabelContent',
             vars: [
                 {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -157,18 +178,6 @@ export namespace ApiProductLabelContent {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiComparisonOfPrice.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'comparisonOfPrice',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'ApiComparisonOfPrice',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiComparisonOfPrice'
                 },
                 {
                     isReadOnly: false,
@@ -213,6 +222,18 @@ export namespace ApiProductLabelContent {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
                 },
                 {
                     isReadOnly: false,
@@ -366,9 +387,9 @@ export namespace ApiProductLabelContent {
                 },
             ],
             validators: {
-                company: [
+                businessToCustomerSettings: [
                 ],
-                comparisonOfPrice: [
+                company: [
                 ],
                 description: [
                 ],
@@ -377,6 +398,8 @@ export namespace ApiProductLabelContent {
                 id: [
                 ],
                 ingredients: [
+                ],
+                journeyMarkers: [
                 ],
                 keyMarketsShare: [
                 ],
@@ -411,10 +434,10 @@ export namespace ApiProductLabelContent {
   // export const ApiProductLabelContentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               company: {
+  //               businessToCustomerSettings: {
   //                   validators: []
   //               },
-  //               comparisonOfPrice: {
+  //               company: {
   //                   validators: []
   //               },
   //               description: {
@@ -427,6 +450,9 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               ingredients: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //               keyMarketsShare: {

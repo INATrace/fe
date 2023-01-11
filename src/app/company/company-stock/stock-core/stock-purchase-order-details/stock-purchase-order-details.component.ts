@@ -202,6 +202,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.damagedPriceDeduction.label: Deduction` + ` (${this.selectedCurrency}/${this.measureUnit})`;
   }
 
+  get damagedWeightDeductionLabel() {
+    return $localize`:@@productLabelStockPurchaseOrdersModal.textinput.damagedWeightDeduction.label: Deduction` + ` (${this.measureUnit})`;
+  }
+
   get additionalProofsForm(): FormArray {
     return this.stockOrderForm.get('activityProofs') as FormArray;
   }
@@ -417,6 +421,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     if (this.stockOrderForm.get('organic').value != null) {
       this.stockOrderForm.get('organic').setValue(this.stockOrderForm.get('organic').value.toString());
     }
+
+    if (this.stockOrderForm.get('priceDeterminedLater').value) {
+      this.stockOrderForm.get('pricePerUnit').clearValidators();
+      this.stockOrderForm.get('damagedPriceDeduction').clearValidators();
+    }
+    this.stockOrderForm.updateValueAndValidity();
   }
 
   async createOrUpdatePurchaseOrder(close: boolean = true) {
@@ -563,6 +573,10 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         netWeight -= this.stockOrderForm.get('tare').value;
       }
 
+      if (this.stockOrderForm.get('damagedWeightDeduction').value) {
+        netWeight -= this.stockOrderForm.get('damagedWeightDeduction').value;
+      }
+
       if (netWeight < 0) {
         netWeight = 0.00;
       }
@@ -632,21 +646,29 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     return this.facility && this.facility.displayPriceDeductionDamage || this.stockOrderForm.get('damagedPriceDeduction').value;
   }
 
+  get showDamagedWeightDeduction() {
+    return this.facility && this.facility.displayWeightDeductionDamage || this.stockOrderForm.get('damagedWeightDeduction').value;
+  }
+
   get readonlyDamagedPriceDeduction() {
-    return this.facility && !this.facility.displayPriceDeductionDamage;
+    return this.facility && !this.facility.displayPriceDeductionDamage || this.stockOrderForm.get('priceDeterminedLater').value;
+  }
+
+  get readonlyDamagedWeightDeduction() {
+    return this.facility && !this.facility.displayWeightDeductionDamage;
   }
 
   netWeight() {
     if (this.stockOrderForm && this.stockOrderForm.get('totalGrossQuantity').value) {
+      let netWeight = Number(this.stockOrderForm.get('totalGrossQuantity').value);
       if (this.stockOrderForm.get('tare').value) {
-        if (Number(this.stockOrderForm.get('totalGrossQuantity').value) > Number(this.stockOrderForm.get('tare').value)) {
-          this.netWeightForm.setValue(Number(this.stockOrderForm.get('totalGrossQuantity').value - this.stockOrderForm.get('tare').value).toFixed(2));
-        } else {
-          this.netWeightForm.setValue(Number(0).toFixed(2));
-        }
-      } else {
-        this.netWeightForm.setValue(this.stockOrderForm.get('totalGrossQuantity').value);
+        netWeight -= Number(this.stockOrderForm.get('tare').value);
       }
+      if (this.stockOrderForm.get('damagedWeightDeduction').value) {
+        netWeight -= Number(this.stockOrderForm.get('damagedWeightDeduction').value);
+      }
+      netWeight = Math.max(0, netWeight);
+      this.netWeightForm.setValue(netWeight.toFixed(2));
     } else {
       this.netWeightForm.setValue(null);
     }
@@ -687,10 +709,18 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.stockOrderForm.get('damagedPriceDeduction').setValidators(
         this.orderType === 'PURCHASE_ORDER' &&
         this.facility &&
-        this.facility.displayPriceDeductionDamage ?
+        this.facility.displayPriceDeductionDamage &&
+        !this.stockOrderForm.get('priceDeterminedLater').value ?
             [Validators.required] : []
     );
     this.stockOrderForm.get('damagedPriceDeduction').updateValueAndValidity();
+    this.stockOrderForm.get('damagedWeightDeduction').setValidators(
+        this.orderType === 'PURCHASE_ORDER' &&
+        this.facility &&
+        this.facility.displayWeightDeductionDamage ?
+            [Validators.required] : []
+    );
+    this.stockOrderForm.get('damagedWeightDeduction').updateValueAndValidity();
     this.searchWomenCoffeeForm.setValidators(
         this.orderType === 'PURCHASE_ORDER' &&
         this.facility &&
@@ -710,6 +740,12 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     const damagedPriceDeduction: number = Number(this.stockOrderForm.get('damagedPriceDeduction').value).valueOf();
     const pricePerUnit: number = Number(this.stockOrderForm.get('pricePerUnit').value).valueOf();
     return damagedPriceDeduction && pricePerUnit && (damagedPriceDeduction > pricePerUnit);
+  }
+
+  get damagedWeightDeductionInvalidCheck() {
+    const damagedWeightDeduction = Number(this.stockOrderForm.get('damagedWeightDeduction').value).valueOf();
+    const totalQuantity = Number(this.stockOrderForm.get('totalQuantity').value).valueOf();
+    return damagedWeightDeduction && totalQuantity && (damagedWeightDeduction > totalQuantity);
   }
 
   private setQuantities() {
@@ -766,6 +802,25 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   private translateName(obj) {
     return this.codebookTranslations.translate(obj, 'name');
+  }
+
+  get displayPriceDeterminedLater() {
+    return this.facility.displayPriceDeterminedLater;
+  }
+
+  priceDeterminedLaterChanged() {
+    // change validation for price per unit based on
+    if (this.stockOrderForm.get('priceDeterminedLater').value) {
+      this.stockOrderForm.get('pricePerUnit').clearValidators();
+      this.stockOrderForm.get('pricePerUnit').setValue(null);
+      this.stockOrderForm.get('damagedPriceDeduction').setValue(null);
+      this.updateValidators();
+    } else {
+      this.stockOrderForm.get('pricePerUnit').setValidators(ApiStockOrderValidationScheme(this.orderType).fields.pricePerUnit.validators);
+      this.updateValidators();
+    }
+
+    this.stockOrderForm.get('pricePerUnit').updateValueAndValidity();
   }
 
 }

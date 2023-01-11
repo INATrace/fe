@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChildren, ViewChild, Output, EventEmitter, Optional, Host } from '@angular/core';
+import {Component, Input, OnInit, ViewChildren, ViewChild, Output, EventEmitter, Optional, Host, ElementRef} from '@angular/core';
 import { FormControl, AbstractControl, FormArray } from '@angular/forms';
 import cloneDeep from 'lodash/cloneDeep';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
@@ -6,12 +6,11 @@ import { TextinputModalComponent } from '../textinput-modal/textinput-modal.comp
 import { BehaviorSubject, combineLatest, Subscription, Subject, merge, of, Observable } from 'rxjs';
 // import { JezikTekst } from 'src/api/model/jezikTekst';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
-import { map, tap, shareReplay, startWith, distinctUntilChanged, filter, debounceTime, delay } from 'rxjs/operators';
+import { map, shareReplay, startWith, distinctUntilChanged, filter, debounceTime, delay } from 'rxjs/operators';
 import { CodebookHelperService } from 'src/interfaces/CodebookHelperService';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { uuidv4 } from 'src/shared/utils';
 import { ClosableComponent } from '../closable/closable.component';
-import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'textinput',
@@ -19,6 +18,8 @@ import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./textinput.component.scss']
 })
 export class TextinputComponent implements OnInit {
+  @ViewChild('inputfield') input: ElementRef;
+
   @Input()
   label: string;
 
@@ -90,6 +91,12 @@ export class TextinputComponent implements OnInit {
 
   @Input()
   noBottomMargin = false
+
+  @Input()
+  prefix: string | null = null;
+
+  @Input()
+  suffix: string | null = null;
 
   @Output() onKeyUpEnter = new EventEmitter<any>();
   @Output() onFocus = new EventEmitter<any>();
@@ -653,5 +660,9 @@ export class TextinputComponent implements OnInit {
     if (this.pushToFormControlSubscription) this.pushToFormControlSubscription.unsubscribe()
     if (this.closableSub) this.closableSub.unsubscribe()
     if (this.closableSub2) this.closableSub2.unsubscribe()
+  }
+
+  focusOnInput() {
+    this.input.nativeElement.focus();
   }
 }

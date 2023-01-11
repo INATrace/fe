@@ -17,7 +17,8 @@ export class CompanyFacilitiesForStockUnitProductService extends GeneralSifrantS
     private facilityControllerService: FacilityControllerService,
     private companyId: number,
     private semiProductId?: number,
-    private finalProductId?: number
+    private finalProductId?: number,
+    private facilityIds?: number[]
   ) {
     super();
   }
@@ -47,12 +48,22 @@ export class CompanyFacilitiesForStockUnitProductService extends GeneralSifrantS
     return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
-          return {
-           results: res.data.items,
-           offset: 0,
-           limit,
-           totalCount: res.data.count
-          };
+            if (this.facilityIds && this.facilityIds.length > 0) {
+                const filteredItems: ApiFacility[] = res.data.items.filter(facility => this.facilityIds.findIndex(sfId => sfId === facility.id) >= 0);
+                return {
+                    results: filteredItems,
+                    offset: 0,
+                    limit,
+                    totalCount: filteredItems.length
+                };
+            }
+
+            return {
+                results: res.data.items,
+                offset: 0,
+                limit,
+                totalCount: res.data.count
+            };
         })
       );
   }

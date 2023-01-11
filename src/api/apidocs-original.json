@@ -188,6 +188,190 @@
         "summary": "Get a single action type with the provided ID."
       }
     },
+    "/api/chain/beyco-order/company/{companyId}/fields": {
+      "get": {
+        "parameters": [
+          {
+            "description": "ID's of selected stock orders",
+            "explode": true,
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "ID of company",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBeycoOrderFields_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "beyco-order-controller"
+        ],
+        "operationId": "getBeycoOrderFieldsForSelectedStockOrdersUsingGET",
+        "summary": "Get list of fields necessary for Beyco order for selected Stock Orders"
+      }
+    },
+    "/api/chain/beyco-order/company/{companyId}/order": {
+      "post": {
+        "parameters": [
+          {
+            "description": "JWT token",
+            "in": "header",
+            "name": "X-Beyco-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID of company",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_object_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "beyco-order-controller"
+        ],
+        "operationId": "sendBeycoOrderUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiBeycoOrderFields"
+              }
+            }
+          },
+          "description": "Beyco offer",
+          "required": true
+        },
+        "summary": "Send order to Beyco"
+      }
+    },
+    "/api/chain/beyco-order/company/{companyId}/token": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Authorization code from Beyco OAuth2",
+            "in": "query",
+            "name": "authCode",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID of company",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBeycoTokenResponse_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "beyco-order-controller"
+        ],
+        "operationId": "getTokenUsingGET",
+        "summary": "Get OAuth2 token for Beyco integration"
+      }
+    },
+    "/api/chain/beyco-order/company/{companyId}/token/refresh": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Refresh token",
+            "in": "header",
+            "name": "X-Beyco-Refresh-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID of company",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiBeycoTokenResponse_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "beyco-order-controller"
+        ],
+        "operationId": "refreshTokenUsingGET",
+        "summary": "Refresh expired token"
+      }
+    },
     "/api/chain/csv/payments/company/{id}": {
       "post": {
         "parameters": [
@@ -1154,103 +1338,6 @@
         "summary": "Get a single facility type with the provided ID."
       }
     },
-    "/api/chain/facility/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiFacility_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "facility-controller"
-        ],
-        "operationId": "getFacilityListUsingGET",
-        "summary": "Get a paginated list of facilities."
-      }
-    },
     "/api/chain/facility/list/collecting/company/{id}": {
       "get": {
         "parameters": [
@@ -2091,6 +2178,141 @@
         "summary": "Get a single grade abbreviation with the provided ID."
       }
     },
+    "/api/chain/group-stock-order/list/facility/{facilityId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Facility ID",
+            "in": "path",
+            "name": "facilityId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Available orders only",
+            "in": "query",
+            "name": "availableOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Is purchase orders only",
+            "in": "query",
+            "name": "isPurchaseOrderOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiGroupStockOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "group-stock-order-controller"
+        ],
+        "operationId": "getGroupedStockOrderListUsingGET",
+        "summary": "Get a paginated list of grouped stock orders."
+      }
+    },
     "/api/chain/measure-unit-type": {
       "put": {
         "responses": {
@@ -2363,87 +2585,6 @@
         ],
         "operationId": "getBulkPaymentUsingGET",
         "summary": "Get a single bulk payment with the provided ID."
-      }
-    },
-    "/api/chain/payment/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiPayment_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "payment-controller"
-        ],
-        "operationId": "getPaymentListUsingGET",
-        "summary": "Get a paginated list of payments."
       }
     },
     "/api/chain/payment/list/bulk-payment/company/{id}": {
@@ -2951,103 +3092,6 @@
           "required": true
         },
         "summary": "Create or update processing action. If ID is provided, then the entity with the provided ID is updated."
-      }
-    },
-    "/api/chain/processing-action/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingAction_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "processing-action-controller"
-        ],
-        "operationId": "getProcessingActionListUsingGET",
-        "summary": "Get a paginated list of processing actions."
       }
     },
     "/api/chain/processing-action/list/company/{id}": {
@@ -3993,103 +4037,6 @@
         "summary": "Create or update processing order. If the ID is provided, then the entity with the provided ID is updated."
       }
     },
-    "/api/chain/processing-order/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "processing-order-controller"
-        ],
-        "operationId": "getProcessingOrderUsingGET",
-        "summary": "Get a paginated list of processing orders."
-      }
-    },
     "/api/chain/processing-order/{id}": {
       "delete": {
         "parameters": [
@@ -4166,7 +4113,7 @@
         "tags": [
           "processing-order-controller"
         ],
-        "operationId": "getProcessingOrderUsingGET_1",
+        "operationId": "getProcessingOrderUsingGET",
         "summary": "Get a single processing order with the provided ID."
       }
     },
@@ -4589,103 +4536,6 @@
           "required": true
         },
         "summary": "Creates a list of purchase orders."
-      }
-    },
-    "/api/chain/stock-order/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "language",
-            "in": "header",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "enum": [
-                "EN",
-                "DE",
-                "RW",
-                "ES"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiStockOrder_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "getStockOrderListUsingGET",
-        "summary": "Get a paginated list of stock orders."
       }
     },
     "/api/chain/stock-order/list/company/{companyId}": {
@@ -7601,7 +7451,7 @@
           "company-controller"
         ],
         "operationId": "getConnectedCompaniesUsingGET",
-        "summary": "Get list of conneccted companies for the company with the given ID"
+        "summary": "Get list of connected companies for the company with the given ID"
       }
     },
     "/api/final-product/company/{companyId}": {
@@ -7815,226 +7665,6 @@
         ],
         "operationId": "listProductsAdminUsingGET",
         "summary": "Lists all products. Must be admin. Sorting: name or default"
-      }
-    },
-    "/api/product/companyCustomers": {
-      "put": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "updateCompanyCustomerUsingPUT_1",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/ApiCompanyCustomer2"
-        },
-        "summary": "Update company customer"
-      }
-    },
-    "/api/product/companyCustomers/add/{productId}/{companyId}": {
-      "post": {
-        "parameters": [
-          {
-            "description": "Product id",
-            "in": "path",
-            "name": "productId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Company id",
-            "in": "path",
-            "name": "companyId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "addCompanyCustomerUsingPOST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiCompanyCustomer"
-              }
-            }
-          },
-          "description": "request",
-          "required": true
-        },
-        "summary": "Add company customer customer"
-      }
-    },
-    "/api/product/companyCustomers/list/{productId}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Product id",
-            "in": "path",
-            "name": "productId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Name",
-            "in": "query",
-            "name": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Phone number",
-            "in": "query",
-            "name": "phone",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiCompanyCustomer_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "getCompanyCustomersListUsingGET_1",
-        "summary": "List company customers for a product"
-      }
-    },
-    "/api/product/companyCustomers/{id}": {
-      "delete": {
-        "parameters": [
-          {
-            "description": "Customer id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "product-controller"
-        ],
-        "operationId": "deleteCompanyCustomerUsingDELETE_1",
-        "summary": "Deletes a company customer"
       }
     },
     "/api/product/create": {
@@ -8729,6 +8359,84 @@
         "summary": "Get label batches for specified label. Sorting: number or productionDate, expiryDate"
       }
     },
+    "/api/product/label/{id}/documents": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Label id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ApiProductLabelCompanyDocument_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getCompanyDocumentsForProductLabelUsingGET",
+        "summary": "Get selected company documents for product label"
+      },
+      "put": {
+        "parameters": [
+          {
+            "description": "Label ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "updateCompanyDocumentsForProductLabelUsingPUT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ApiProductLabelCompanyDocument"
+                },
+                "type": "array"
+              }
+            }
+          },
+          "description": "Company document list",
+          "required": true
+        },
+        "summary": "Update company document product label list"
+      }
+    },
     "/api/product/label/{id}/instructions": {
       "get": {
         "parameters": [
@@ -9357,49 +9065,6 @@
         ],
         "operationId": "getFinalProductLabelsUsingGET",
         "summary": "Get final product labels."
-      }
-    },
-    "/api/public/company/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "description": "id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "language",
-            "in": "query",
-            "name": "language",
-            "required": false,
-            "schema": {
-              "default": "EN",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiCompanyPublic_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "public-controller"
-        ],
-        "operationId": "getPublicCompanyUsingGET",
-        "summary": "Get public data about company"
       }
     },
     "/api/public/document/{storageKey}": {
@@ -10659,9 +10324,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10671,16 +10339,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10690,16 +10361,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10709,16 +10383,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10728,16 +10405,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10747,16 +10427,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10766,16 +10449,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10785,8 +10471,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -10801,17 +10487,6 @@
           }
         },
         "description": "apiCompanyCustomer",
-        "required": true
-      },
-      "ApiCompanyCustomer2": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ApiCompanyCustomer"
-            }
-          }
-        },
-        "description": "request",
         "required": true
       },
       "ApiKnowledgeBlog": {
@@ -11029,6 +10704,368 @@
         },
         "type": "object"
       },
+      "ApiBeycoCoffee": {
+        "properties": {
+          "additionalQualityDescriptors": {
+            "description": "Additional grade, if selected 'Other' in grades",
+            "type": "string"
+          },
+          "certificates": {
+            "description": "Certificates of coffee beans",
+            "items": {
+              "$ref": "#/components/schemas/ApiBeycoCoffeeCertificate"
+            },
+            "type": "array"
+          },
+          "country": {
+            "description": "Country of coffee beans",
+            "type": "string"
+          },
+          "cuppingScore": {
+            "description": "Cupping score",
+            "format": "int32",
+            "type": "integer"
+          },
+          "grades": {
+            "description": "Grades of coffee beans",
+            "items": {
+              "$ref": "#/components/schemas/ApiBeycoCoffeeGrade"
+            },
+            "type": "array"
+          },
+          "harvestAt": {
+            "description": "Harvest date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "isBulk": {
+            "description": "Is bulk",
+            "example": false,
+            "type": "boolean"
+          },
+          "maxScreenSize": {
+            "description": "Maximum screen size",
+            "format": "int32",
+            "type": "integer"
+          },
+          "minScreenSize": {
+            "description": "Minimal screen size",
+            "format": "int32",
+            "type": "integer"
+          },
+          "name": {
+            "description": "Internal LOT number or name of coffee",
+            "type": "string"
+          },
+          "process": {
+            "description": "Coffee process",
+            "enum": [
+              "FullyWashed",
+              "SemiWashedHoney",
+              "Natural",
+              "Other"
+            ],
+            "type": "string"
+          },
+          "qualitySegments": {
+            "description": "Quality of coffee beans",
+            "items": {
+              "$ref": "#/components/schemas/ApiBeycoCoffeeQuality"
+            },
+            "type": "array"
+          },
+          "quantity": {
+            "description": "Quantity of beans",
+            "type": "number"
+          },
+          "region": {
+            "description": "Region of coffee beans",
+            "type": "string"
+          },
+          "species": {
+            "description": "Coffee species",
+            "enum": [
+              "Arabica",
+              "Robusta"
+            ],
+            "type": "string"
+          },
+          "unit": {
+            "description": "Unit of order",
+            "enum": [
+              "Kg",
+              "Mg",
+              "Bag25",
+              "Bag30",
+              "Bag35",
+              "Bag46",
+              "Bag50",
+              "Bag59",
+              "Bag60",
+              "Bag69",
+              "Bag70",
+              "Bag1000"
+            ],
+            "type": "string"
+          },
+          "varieties": {
+            "description": "Varieties of coffee beans",
+            "items": {
+              "$ref": "#/components/schemas/ApiBeycoCoffeeVariety"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoCoffeeCertificate": {
+        "properties": {
+          "type": {
+            "description": "Certificate of coffee beans",
+            "enum": [
+              "Ra",
+              "Fairtrade",
+              "Organic",
+              "Practices",
+              "FourC"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoCoffeeGrade": {
+        "properties": {
+          "type": {
+            "description": "Grade of coffee beans",
+            "enum": [
+              "Na",
+              "Grade1",
+              "Grade2",
+              "Grade3",
+              "Grade4",
+              "Grade5",
+              "Aa",
+              "A",
+              "Ab",
+              "B",
+              "C",
+              "Pb",
+              "X",
+              "E",
+              "Psc",
+              "Y1",
+              "Y2",
+              "T",
+              "HgHb",
+              "ShgShb",
+              "Other"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoCoffeeQuality": {
+        "properties": {
+          "type": {
+            "description": "Quality of coffee beans",
+            "enum": [
+              "Specialty",
+              "CommodityConventional",
+              "LowGrade"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoCoffeeVariety": {
+        "properties": {
+          "customVariety": {
+            "description": "Optional custom variety of coffee beans",
+            "type": "string"
+          },
+          "type": {
+            "description": "Variety of coffee beans",
+            "enum": [
+              "Bourbon",
+              "Castillo",
+              "Catimor",
+              "Catuai",
+              "Caturra",
+              "Geisha",
+              "Heirloom",
+              "Ih90",
+              "Jackson",
+              "Java",
+              "Lempira",
+              "MundoNovo",
+              "Sl14",
+              "Sl28",
+              "Sl34",
+              "Typica",
+              "Other"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoOrderCoffees": {
+        "properties": {
+          "coffee": {
+            "$ref": "#/components/schemas/ApiBeycoCoffee",
+            "description": "Coffee description fields"
+          },
+          "currency": {
+            "description": "Used currency",
+            "enum": [
+              "Usd",
+              "UsdCt",
+              "Eur"
+            ],
+            "type": "string"
+          },
+          "customIncoterms": {
+            "description": "Custom incoterms",
+            "type": "string"
+          },
+          "incoterms": {
+            "description": "Incoterms",
+            "enum": [
+              "Tbd",
+              "Fob",
+              "Fot",
+              "Fca",
+              "Fas",
+              "Exw",
+              "Cfr",
+              "Cif",
+              "Cpt",
+              "Cip",
+              "Dap",
+              "Dpu",
+              "Ddp",
+              "Other"
+            ],
+            "type": "string"
+          },
+          "isFixedPrice": {
+            "description": "Is fixed price",
+            "example": false,
+            "type": "boolean"
+          },
+          "price": {
+            "description": "Price of order",
+            "type": "number"
+          },
+          "priceUnit": {
+            "description": "Price unit",
+            "enum": [
+              "Mg",
+              "Lb",
+              "Kg"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoOrderFields": {
+        "properties": {
+          "availableAt": {
+            "description": "When order is available",
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "offerCoffees": {
+            "description": "Array of coffee orders",
+            "items": {
+              "$ref": "#/components/schemas/ApiBeycoOrderCoffees"
+            },
+            "type": "array"
+          },
+          "portOfExport": {
+            "$ref": "#/components/schemas/ApiBeycoPortOfExport",
+            "description": "Location of export"
+          },
+          "privacy": {
+            "description": "Privacy of order",
+            "enum": [
+              "Public",
+              "Users",
+              "Connections",
+              "List",
+              "Private",
+              "All"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of Beyco coffee order",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoPortOfExport": {
+        "properties": {
+          "address": {
+            "description": "Address of facility",
+            "type": "string"
+          },
+          "country": {
+            "description": "Country of facility",
+            "type": "string"
+          },
+          "latitude": {
+            "description": "Latitude of facility",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "Longitude of facility",
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "ApiBeycoTokenResponse": {
+        "properties": {
+          "accessToken": {
+            "description": "JWT token for authentication",
+            "type": "string"
+          },
+          "expiresIn": {
+            "description": "Remaining time of token's life",
+            "format": "int64",
+            "type": "integer"
+          },
+          "refreshToken": {
+            "description": "Refresh token",
+            "type": "string"
+          },
+          "scope": {
+            "description": "Scope of the token",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "tokenType": {
+            "description": "Type of token",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiBulkPayment": {
         "properties": {
           "additionalCost": {
@@ -11106,6 +11143,133 @@
         },
         "type": "object"
       },
+      "ApiBusinessToCustomerSettings": {
+        "properties": {
+          "averageRegionFarmGatePrice": {
+            "type": "number"
+          },
+          "containerSize": {
+            "type": "number"
+          },
+          "creationTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "fairTrade": {
+            "type": "number"
+          },
+          "graphicFairPrices": {
+            "type": "boolean"
+          },
+          "graphicFarmGatePrice": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
+          },
+          "graphicIncreaseOfIncome": {
+            "type": "boolean"
+          },
+          "graphicPriceToProducer": {
+            "enum": [
+              "DISABLED",
+              "PER_CONTAINER",
+              "PER_KG",
+              "PERCENT_VALUE"
+            ],
+            "type": "string"
+          },
+          "graphicQuality": {
+            "type": "boolean"
+          },
+          "headerBackgroundImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "headingColor": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "landingPageBackgroundImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "landingPageImage": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "manualFarmGatePrice": {
+            "type": "number"
+          },
+          "manualProducerPrice": {
+            "type": "number"
+          },
+          "orderFairPrices": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderFeedback": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderProducers": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderQuality": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "primaryColor": {
+            "type": "string"
+          },
+          "productFont": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "productTitleColor": {
+            "type": "string"
+          },
+          "quaternaryColor": {
+            "type": "string"
+          },
+          "secondaryColor": {
+            "type": "string"
+          },
+          "tabFairPrices": {
+            "type": "boolean"
+          },
+          "tabFeedback": {
+            "type": "boolean"
+          },
+          "tabProducers": {
+            "type": "boolean"
+          },
+          "tabQuality": {
+            "type": "boolean"
+          },
+          "tertiaryColor": {
+            "type": "string"
+          },
+          "textColor": {
+            "type": "string"
+          },
+          "textFont": {
+            "$ref": "#/components/schemas/ApiDocument"
+          },
+          "updateTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "worldMarket": {
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiCertification": {
         "properties": {
           "certificate": {
@@ -11142,6 +11306,11 @@
           "about": {
             "description": "about the company",
             "type": "string"
+          },
+          "allowBeycoIntegration": {
+            "description": "Is company allowed to export orders to Beyco platform",
+            "example": false,
+            "type": "boolean"
           },
           "certifications": {
             "description": "company certifications",
@@ -11369,6 +11538,11 @@
             "$ref": "#/components/schemas/ApiDocument",
             "description": "document"
           },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
           "link": {
             "description": "link",
             "type": "string"
@@ -11418,6 +11592,11 @@
               "type": "string"
             },
             "type": "array"
+          },
+          "allowBeycoIntegration": {
+            "description": "Is company allowed to export orders to Beyco platform",
+            "example": false,
+            "type": "boolean"
           },
           "certifications": {
             "description": "company certifications",
@@ -11528,44 +11707,6 @@
         },
         "type": "object"
       },
-      "ApiCompanyPublic": {
-        "properties": {
-          "about": {
-            "description": "about the company",
-            "type": "string"
-          },
-          "certifications": {
-            "description": "company certifications",
-            "items": {
-              "$ref": "#/components/schemas/ApiCertification"
-            },
-            "type": "array"
-          },
-          "documents": {
-            "description": "company documents",
-            "items": {
-              "$ref": "#/components/schemas/ApiCompanyDocument"
-            },
-            "type": "array"
-          },
-          "interview": {
-            "description": "interview",
-            "type": "string"
-          },
-          "mediaLinks": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "description": "social media URL links (Facebook, Instagram, Twitter, YouTube, ...)",
-            "type": "object"
-          },
-          "name": {
-            "description": "name",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
       "ApiCompanyUpdate": {
         "properties": {
           "abbreviation": {
@@ -11575,6 +11716,11 @@
           "about": {
             "description": "about the company",
             "type": "string"
+          },
+          "allowBeycoIntegration": {
+            "description": "Is company allowed to export orders to Beyco platform",
+            "example": false,
+            "type": "boolean"
           },
           "certifications": {
             "description": "company certifications",
@@ -11726,23 +11872,6 @@
           "surname": {
             "description": "Surname",
             "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiComparisonOfPrice": {
-        "properties": {
-          "description": {
-            "description": "description",
-            "type": "string"
-          },
-          "prices": {
-            "additionalProperties": {
-              "format": "double",
-              "type": "number"
-            },
-            "description": "prices - string-number map",
-            "type": "object"
           }
         },
         "type": "object"
@@ -11926,8 +12055,18 @@
             "example": false,
             "type": "boolean"
           },
+          "displayPriceDeterminedLater": {
+            "description": "Enable form control 'Price determined later'",
+            "example": false,
+            "type": "boolean"
+          },
           "displayTare": {
             "description": "Enable form control 'Tare'",
+            "example": false,
+            "type": "boolean"
+          },
+          "displayWeightDeductionDamage": {
+            "description": "Enable form control 'Weight deduction damage'",
             "example": false,
             "type": "boolean"
           },
@@ -12218,12 +12357,98 @@
         },
         "type": "object"
       },
+      "ApiGroupStockOrder": {
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "availableQuantity": {
+            "description": "Available quantity",
+            "type": "number"
+          },
+          "deliveryTime": {
+            "description": "Delivery time",
+            "format": "date-time",
+            "type": "string"
+          },
+          "finalProductName": {
+            "description": "Final product name",
+            "type": "string"
+          },
+          "fulfilledQuantity": {
+            "description": "Fulfilled quantity",
+            "type": "number"
+          },
+          "groupedIds": {
+            "description": "List of stock order ID's, belonging to this group",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "internalLotNumber": {
+            "description": "Internal LOT number",
+            "type": "string"
+          },
+          "noOfSacs": {
+            "description": "Number of sacs (if the order was repackaged)",
+            "format": "int64",
+            "type": "integer"
+          },
+          "orderType": {
+            "description": "Order type",
+            "enum": [
+              "PURCHASE_ORDER",
+              "PROCESSING_ORDER",
+              "GENERAL_ORDER",
+              "TRANSFER_ORDER"
+            ],
+            "type": "string"
+          },
+          "productionDate": {
+            "description": "Production date",
+            "format": "date-time",
+            "type": "string"
+          },
+          "semiProductName": {
+            "description": "Semi product name",
+            "type": "string"
+          },
+          "totalQuantity": {
+            "description": "Total quantity",
+            "type": "number"
+          },
+          "unitLabel": {
+            "description": "Measurement unit",
+            "type": "string"
+          },
+          "updateTimestamp": {
+            "description": "Timestamp indicates when process order have been updated",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiHistoryTimeline": {
         "properties": {
           "items": {
             "description": "The items in the history timeline",
             "items": {
               "$ref": "#/components/schemas/ApiHistoryTimelineItem"
+            },
+            "type": "array"
+          },
+          "journeyMarkers": {
+            "description": "The items in the journey of history timeline",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
             },
             "type": "array"
           }
@@ -12246,11 +12471,27 @@
             ],
             "type": "string"
           },
+          "latitude": {
+            "format": "double",
+            "type": "number"
+          },
           "location": {
             "type": "string"
           },
+          "longitude": {
+            "format": "double",
+            "type": "number"
+          },
           "name": {
             "type": "string"
+          },
+          "step": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "steps": {
+            "format": "int32",
+            "type": "integer"
           },
           "type": {
             "type": "string"
@@ -12715,6 +12956,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiGroupStockOrder_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiGroupStockOrder"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiKnowledgeBlogBase_": {
         "properties": {
           "count": {
@@ -12861,33 +13129,6 @@
             "description": "Response items.",
             "items": {
               "$ref": "#/components/schemas/ApiProcessingEvidenceType"
-            },
-            "type": "array"
-          },
-          "limit": {
-            "description": "Limit got from request",
-            "format": "int32",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "Offset got from request",
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
-      "ApiPaginatedList_ApiProcessingOrder_": {
-        "properties": {
-          "count": {
-            "description": "Count of all items satisfying 'paginatable' request.",
-            "format": "int32",
-            "type": "integer"
-          },
-          "items": {
-            "description": "Response items.",
-            "items": {
-              "$ref": "#/components/schemas/ApiProcessingOrder"
             },
             "type": "array"
           },
@@ -13577,6 +13818,49 @@
         ],
         "type": "object"
       },
+      "ApiPaginatedResponse_ApiGroupStockOrder_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiGroupStockOrder_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiPaginatedResponse_ApiKnowledgeBlogBase_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -13797,49 +14081,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingEvidenceType_",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiPaginatedResponse_ApiProcessingOrder_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPaginatedList_ApiProcessingOrder_",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -14567,6 +14808,13 @@
             "format": "int64",
             "type": "integer"
           },
+          "supportedFacilities": {
+            "description": "List of facilities where this processing starts",
+            "items": {
+              "$ref": "#/components/schemas/ApiFacility"
+            },
+            "type": "array"
+          },
           "translations": {
             "description": "Processing action translations",
             "items": {
@@ -14834,13 +15082,13 @@
             },
             "type": "array"
           },
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
-          },
-          "comparisonOfPrice": {
-            "$ref": "#/components/schemas/ApiComparisonOfPrice",
-            "description": "comparison of price"
           },
           "dataSharingAgreements": {
             "description": "Data sharing agreements",
@@ -14865,6 +15113,13 @@
           "ingredients": {
             "description": "ingredients - list the ingredients in the product and describe their properties",
             "type": "string"
+          },
+          "journeyMarkers": {
+            "description": "Product journey path",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
           },
           "keyMarketsShare": {
             "additionalProperties": {
@@ -15017,8 +15272,25 @@
         },
         "type": "object"
       },
+      "ApiProductJourneyMarker": {
+        "properties": {
+          "latitude": {
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiProductLabel": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "fields": {
             "description": "Fields",
             "items": {
@@ -15234,15 +15506,65 @@
         },
         "type": "object"
       },
+      "ApiProductLabelCompanyDocument": {
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "description": "document category",
+            "enum": [
+              "VIDEO",
+              "PRODUCTION_RECORD",
+              "MEET_THE_FARMER"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "description": "description of this document",
+            "type": "string"
+          },
+          "document": {
+            "$ref": "#/components/schemas/ApiDocument",
+            "description": "document"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "link": {
+            "description": "link",
+            "type": "string"
+          },
+          "name": {
+            "description": "name",
+            "type": "string"
+          },
+          "quote": {
+            "description": "quote of this document",
+            "type": "string"
+          },
+          "type": {
+            "description": "type of the document (link, file)",
+            "enum": [
+              "LINK",
+              "FILE"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiProductLabelContent": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "company": {
             "$ref": "#/components/schemas/ApiCompany",
             "description": "company"
-          },
-          "comparisonOfPrice": {
-            "$ref": "#/components/schemas/ApiComparisonOfPrice",
-            "description": "comparison of price"
           },
           "description": {
             "description": "product description",
@@ -15260,6 +15582,13 @@
           "ingredients": {
             "description": "ingredients - list the ingredients in the product and describe their properties",
             "type": "string"
+          },
+          "journeyMarkers": {
+            "description": "Product journey path",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductJourneyMarker"
+            },
+            "type": "array"
           },
           "keyMarketsShare": {
             "additionalProperties": {
@@ -15509,6 +15838,10 @@
       },
       "ApiProductLabelValuesExtended": {
         "properties": {
+          "businessToCustomerSettings": {
+            "$ref": "#/components/schemas/ApiBusinessToCustomerSettings",
+            "description": "B2C settings"
+          },
           "checkAuthenticityCount": {
             "description": "Number of true 'checkAuthenticity' fields over all of batches",
             "format": "int32",
@@ -15541,10 +15874,24 @@
             "format": "int32",
             "type": "integer"
           },
+          "photosMeetTheFarmers": {
+            "description": "Meet the farmers photos",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
+          },
           "productId": {
             "description": "Product id",
             "format": "int64",
             "type": "integer"
+          },
+          "productionRecords": {
+            "description": "Production records",
+            "items": {
+              "$ref": "#/components/schemas/ApiCompanyDocument"
+            },
+            "type": "array"
           },
           "status": {
             "description": "Product label status",
@@ -15566,6 +15913,10 @@
           "uuid": {
             "description": "Product label uuid (for url)",
             "type": "string"
+          },
+          "videoMeetTheFarmers": {
+            "$ref": "#/components/schemas/ApiCompanyDocument",
+            "description": "Meet the farmers video"
           }
         },
         "type": "object"
@@ -15681,11 +16032,6 @@
           "incomeIncreaseDocument": {
             "$ref": "#/components/schemas/ApiDocument",
             "description": "increase in income - document"
-          },
-          "increaseOfCoffee": {
-            "description": "increase of coffee",
-            "format": "double",
-            "type": "number"
           },
           "language": {
             "description": "language",
@@ -15814,6 +16160,10 @@
             "description": "Damaged price deduction",
             "type": "number"
           },
+          "damagedWeightDeduction": {
+            "description": "Damaged weight deduction",
+            "type": "number"
+          },
           "fulfilledQuantity": {
             "description": "Fulfilled quantity",
             "type": "number"
@@ -15866,6 +16216,21 @@
       },
       "ApiQRTagPublic": {
         "properties": {
+          "certificates": {
+            "description": "List of certificates of the participating companies in this Stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiCertification"
+            },
+            "type": "array"
+          },
+          "cuppingFlavour": {
+            "description": "The cupping flavour entered during one of the processing actions",
+            "type": "string"
+          },
+          "cuppingScore": {
+            "description": "The cupping score entered during one of the processing actions",
+            "type": "number"
+          },
           "historyTimeline": {
             "$ref": "#/components/schemas/ApiHistoryTimeline"
           },
@@ -15873,12 +16238,24 @@
             "description": "The global (product) order of the Stock order",
             "type": "string"
           },
+          "priceToFarmer": {
+            "description": "Price paid to farmers in EUR/kg",
+            "type": "number"
+          },
+          "priceToProducer": {
+            "description": "Price paid to producer in EUR/kg",
+            "type": "number"
+          },
           "producerName": {
             "description": "The Producer name",
             "type": "string"
           },
           "qrTag": {
             "description": "The QR code tag",
+            "type": "string"
+          },
+          "roastingProfile": {
+            "description": "The roasting profile entered during one of the processing actions",
             "type": "string"
           }
         },
@@ -15949,6 +16326,92 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiBaseEntity",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiBeycoOrderFields_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiBeycoOrderFields",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiBeycoTokenResponse_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiBeycoTokenResponse",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -16078,49 +16541,6 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiCompanyGet",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
-        "type": "object"
-      },
-      "ApiResponse_ApiCompanyPublic_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiCompanyPublic",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -17587,6 +18007,52 @@
         ],
         "type": "object"
       },
+      "ApiResponse_List_ApiProductLabelCompanyDocument_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "description": "Response body for successful responses.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductLabelCompanyDocument"
+            },
+            "type": "array"
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_boolean_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -17594,6 +18060,49 @@
             "description": "Response body for successful responses.",
             "example": false,
             "type": "boolean"
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_object_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "description": "Response body for successful responses.",
+            "type": "object"
           },
           "errorDetails": {
             "description": "Optional details for unexpected error responses.",
@@ -17796,6 +18305,10 @@
             "description": "Damaged price deduction",
             "type": "number"
           },
+          "damagedWeightDeduction": {
+            "description": "Damaged weight deduction",
+            "type": "number"
+          },
           "deliveryTime": {
             "description": "Delivery time",
             "format": "date-time",
@@ -17877,6 +18390,13 @@
             "description": "Paid",
             "type": "number"
           },
+          "payments": {
+            "description": "Payments for stock order",
+            "items": {
+              "$ref": "#/components/schemas/ApiPayment"
+            },
+            "type": "array"
+          },
           "preferredWayOfPayment": {
             "description": "Preferred way of payment",
             "enum": [
@@ -17888,6 +18408,11 @@
               "UNKNOWN"
             ],
             "type": "string"
+          },
+          "priceDeterminedLater": {
+            "description": "Option to determine price later after taking delivery",
+            "example": false,
+            "type": "boolean"
           },
           "pricePerUnit": {
             "description": "Price per unit",
@@ -18951,6 +19476,10 @@
       "name": "action-type-controller"
     },
     {
+      "description": "Beyco Order Controller",
+      "name": "beyco-order-controller"
+    },
+    {
       "description": "Company Controller",
       "name": "company-controller"
     },
@@ -18965,6 +19494,10 @@
     {
       "description": "Value Chain Controller",
       "name": "value-chain-controller"
+    },
+    {
+      "description": "Group Stock Order Controller",
+      "name": "group-stock-order-controller"
     },
     {
       "description": "Currency Type Controller",

@@ -224,3 +224,14 @@ button.btn-del {
     border: 1px solid $moderate-cyan;
   }
 }
+.markers-form {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.eye-icon {
+  color: $primary;
+  font-size: 1.25rem;
+  cursor: pointer;
+}

@@ -13,8 +13,7 @@ import { GuestLayoutComponent } from './layout/guest/guest-layout/guest-layout.c
 import { LandingPageLayoutComponent } from './layout/landing-page/landing-page-layout/landing-page-layout.component';
 import { ProductLabelFrontLayoutComponent } from './layout/product-label-front/product-label-front-layout/product-label-front-layout.component';
 import { LoginComponent } from './user/login/login.component';
-import { ProductLabelFrontPageComponent } from './product-label-front-page/product-label-front-page.component';
-import { QrCodeRedirectComponent } from './product-label-front-page/qr-code-redirect/qr-code-redirect.component';
+import { QrCodeRedirectComponent } from './components/qr-code-redirect/qr-code-redirect.component';
 import { RegisterActivationComponent } from './user/register-activation/register-activation.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ResetPasswordRequestComponent } from './user/reset-password-request/reset-password-request.component';
@@ -27,8 +26,6 @@ import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { FrontPagePrivacyComponent } from './front-page-common/front-page-privacy/front-page-privacy.component';
-import { FrontPageTermsComponent } from './front-page-common/front-page-terms/front-page-terms.component';
 import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
@@ -429,42 +426,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'p/:uuid',
-    component: ProductLabelFrontLayoutComponent,
-    children: [
-      { path: '', component: ProductLabelFrontPageComponent, pathMatch: 'full' },
-    ]
-  },
-  {
-    path: 'p-cd/:uuid/:qrTag',
-    loadChildren: () => import('./front-page/front-page-module').then(m => m.FrontPageModule)
-  },
-  {
-    path: 's/:uuid/:qrTag/privacy-policy',
-    component: FrontPagePrivacyComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 's/:uuid/:qrTag/terms-of-use',
-    component: FrontPageTermsComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 's/privacy-policy',
-    component: FrontPagePrivacyComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null,
-      action: 'privacy_only'
-    }
-  },
-  {
     path: 'blog/:productId/:type/:knowledgeBlogId',
     component: ProductLabelFrontLayoutComponent,
     children: [
@@ -484,6 +445,10 @@ const routes: Routes = [
     }
   },
   {
+    path: 'p-cd',
+    loadChildren: () => import('./b2c/b2c.module').then(m => m.B2cModule)
+  },
+  {
     path: 'q/:uuid',
     component: QrCodeRedirectComponent,
     pathMatch: 'full'
@@ -492,7 +457,7 @@ const routes: Routes = [
     path: 'q-cd/:uuid/:qrTag',
     component: QrCodeRedirectComponent,
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

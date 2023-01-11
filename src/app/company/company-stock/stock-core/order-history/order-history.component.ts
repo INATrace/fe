@@ -84,7 +84,7 @@ export class OrderHistoryComponent implements OnInit {
 
   processingCreationDate(historyItem: ApiStockOrderHistoryTimelineItem) {
     if (!historyItem.processingOrder) { return null; }
-    return historyItem.processingOrder.creationTimestamp;
+    return historyItem.processingOrder.processingDate;
   }
 
   ngOnInit() {

@@ -18,11 +18,14 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
+import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiProductLabelFieldValue } from './apiProductLabelFieldValue';
 
 
 
 export interface ApiProductLabelValuesExtended { 
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     /**
      * Number of true 'checkAuthenticity' fields over all of batches
      */
@@ -44,9 +47,17 @@ export interface ApiProductLabelValuesExtended {
      */
     numberOfBatches?: number;
     /**
+     * Meet the farmers photos
+     */
+    photosMeetTheFarmers?: Array<ApiCompanyDocument>;
+    /**
      * Product id
      */
     productId?: number;
+    /**
+     * Production records
+     */
+    productionRecords?: Array<ApiCompanyDocument>;
     /**
      * Product label status
      */
@@ -63,6 +74,7 @@ export interface ApiProductLabelValuesExtended {
      * Product label uuid (for url)
      */
     uuid?: string;
+    videoMeetTheFarmers?: ApiCompanyDocument;
 }
 
 /**
@@ -73,6 +85,7 @@ export namespace ApiProductLabelValuesExtended {
      * All properties of ApiProductLabelValuesExtended.
      */
     export enum Properties {
+        businessToCustomerSettings = 'businessToCustomerSettings',
         /**
          * Number of true 'checkAuthenticity' fields over all of batches
          */
@@ -94,9 +107,17 @@ export namespace ApiProductLabelValuesExtended {
          */
         numberOfBatches = 'numberOfBatches',
         /**
+         * Meet the farmers photos
+         */
+        photosMeetTheFarmers = 'photosMeetTheFarmers',
+        /**
          * Product id
          */
         productId = 'productId',
+        /**
+         * Production records
+         */
+        productionRecords = 'productionRecords',
         /**
          * Product label status
          */
@@ -112,7 +133,8 @@ export namespace ApiProductLabelValuesExtended {
         /**
          * Product label uuid (for url)
          */
-        uuid = 'uuid'
+        uuid = 'uuid',
+        videoMeetTheFarmers = 'videoMeetTheFarmers'
     }
 
     /**
@@ -139,6 +161,18 @@ export namespace ApiProductLabelValuesExtended {
             metadata: formMetadata,
             classname: 'ApiProductLabelValuesExtended',
             vars: [
+                {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -197,6 +231,18 @@ export namespace ApiProductLabelValuesExtended {
                     complexType: ''
                 },
                 {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'photosMeetTheFarmers',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCompanyDocument'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -206,6 +252,18 @@ export namespace ApiProductLabelValuesExtended {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionRecords',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCompanyDocument'
                 },
                 {
                     isReadOnly: false,
@@ -252,8 +310,22 @@ export namespace ApiProductLabelValuesExtended {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'videoMeetTheFarmers',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'ApiCompanyDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompanyDocument'
+                },
             ],
             validators: {
+                businessToCustomerSettings: [
+                ],
                 checkAuthenticityCount: [
                 ],
                 fields: [
@@ -264,7 +336,11 @@ export namespace ApiProductLabelValuesExtended {
                 ],
                 numberOfBatches: [
                 ],
+                photosMeetTheFarmers: [
+                ],
                 productId: [
+                ],
+                productionRecords: [
                 ],
                 status: [
                 ],
@@ -274,6 +350,8 @@ export namespace ApiProductLabelValuesExtended {
                 ],
                 uuid: [
                 ],
+                videoMeetTheFarmers: [
+                ],
             }
         }
     }
@@ -281,6 +359,9 @@ export namespace ApiProductLabelValuesExtended {
   // export const ApiProductLabelValuesExtendedValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
   //               checkAuthenticityCount: {
   //                   validators: []
   //               },
@@ -296,7 +377,13 @@ export namespace ApiProductLabelValuesExtended {
   //               numberOfBatches: {
   //                   validators: []
   //               },
+  //               photosMeetTheFarmers: {
+  //                   validators: []
+  //               },
   //               productId: {
+  //                   validators: []
+  //               },
+  //               productionRecords: {
   //                   validators: []
   //               },
   //               status: {
@@ -309,6 +396,9 @@ export namespace ApiProductLabelValuesExtended {
   //                   validators: []
   //               },
   //               uuid: {
+  //                   validators: []
+  //               },
+  //               videoMeetTheFarmers: {
   //                   validators: []
   //               },
   //     }

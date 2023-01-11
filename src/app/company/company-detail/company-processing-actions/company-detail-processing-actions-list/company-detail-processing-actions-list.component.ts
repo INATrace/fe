@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -6,7 +6,6 @@ import { debounceTime, map, shareReplay, startWith, switchMap, take, tap } from 
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { ApiPaginatedResponseApiProcessingAction } from '../../../../../api/model/apiPaginatedResponseApiProcessingAction';
-import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 
 @Component({
@@ -21,6 +20,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
 
   @Output()
   showing = new EventEmitter<number>();
+
   @Output()
   countAll = new EventEmitter<number>();
 

@@ -18,16 +18,37 @@
  */
 
 
+import { ApiCertification } from './apiCertification';
 import { ApiHistoryTimeline } from './apiHistoryTimeline';
 
 
 
 export interface ApiQRTagPublic { 
+    /**
+     * List of certificates of the participating companies in this Stock order
+     */
+    certificates?: Array<ApiCertification>;
+    /**
+     * The cupping flavour entered during one of the processing actions
+     */
+    cuppingFlavour?: string;
+    /**
+     * The cupping score entered during one of the processing actions
+     */
+    cuppingScore?: number;
     historyTimeline?: ApiHistoryTimeline;
     /**
      * The global (product) order of the Stock order
      */
     orderId?: string;
+    /**
+     * Price paid to farmers in EUR/kg
+     */
+    priceToFarmer?: number;
+    /**
+     * Price paid to producer in EUR/kg
+     */
+    priceToProducer?: number;
     /**
      * The Producer name
      */
@@ -36,6 +57,10 @@ export interface ApiQRTagPublic {
      * The QR code tag
      */
     qrTag?: string;
+    /**
+     * The roasting profile entered during one of the processing actions
+     */
+    roastingProfile?: string;
 }
 
 /**
@@ -46,11 +71,31 @@ export namespace ApiQRTagPublic {
      * All properties of ApiQRTagPublic.
      */
     export enum Properties {
+        /**
+         * List of certificates of the participating companies in this Stock order
+         */
+        certificates = 'certificates',
+        /**
+         * The cupping flavour entered during one of the processing actions
+         */
+        cuppingFlavour = 'cuppingFlavour',
+        /**
+         * The cupping score entered during one of the processing actions
+         */
+        cuppingScore = 'cuppingScore',
         historyTimeline = 'historyTimeline',
         /**
          * The global (product) order of the Stock order
          */
         orderId = 'orderId',
+        /**
+         * Price paid to farmers in EUR/kg
+         */
+        priceToFarmer = 'priceToFarmer',
+        /**
+         * Price paid to producer in EUR/kg
+         */
+        priceToProducer = 'priceToProducer',
         /**
          * The Producer name
          */
@@ -58,7 +103,11 @@ export namespace ApiQRTagPublic {
         /**
          * The QR code tag
          */
-        qrTag = 'qrTag'
+        qrTag = 'qrTag',
+        /**
+         * The roasting profile entered during one of the processing actions
+         */
+        roastingProfile = 'roastingProfile'
     }
 
 
@@ -67,6 +116,40 @@ export namespace ApiQRTagPublic {
             metadata: formMetadata,
             classname: 'ApiQRTagPublic',
             vars: [
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certificates',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingFlavour',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingScore',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiHistoryTimeline.formMetadata,
                     isReadOnly: false,
@@ -94,6 +177,28 @@ export namespace ApiQRTagPublic {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'priceToFarmer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'priceToProducer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'producerName',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
@@ -112,15 +217,38 @@ export namespace ApiQRTagPublic {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'roastingProfile',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
+                certificates: [
+                ],
+                cuppingFlavour: [
+                ],
+                cuppingScore: [
+                ],
                 historyTimeline: [
                 ],
                 orderId: [
                 ],
+                priceToFarmer: [
+                ],
+                priceToProducer: [
+                ],
                 producerName: [
                 ],
                 qrTag: [
+                ],
+                roastingProfile: [
                 ],
             }
         }
@@ -129,16 +257,34 @@ export namespace ApiQRTagPublic {
   // export const ApiQRTagPublicValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               certificates: {
+  //                   validators: []
+  //               },
+  //               cuppingFlavour: {
+  //                   validators: []
+  //               },
+  //               cuppingScore: {
+  //                   validators: []
+  //               },
   //               historyTimeline: {
   //                   validators: []
   //               },
   //               orderId: {
   //                   validators: []
   //               },
+  //               priceToFarmer: {
+  //                   validators: []
+  //               },
+  //               priceToProducer: {
+  //                   validators: []
+  //               },
   //               producerName: {
   //                   validators: []
   //               },
   //               qrTag: {
+  //                   validators: []
+  //               },
+  //               roastingProfile: {
   //                   validators: []
   //               },
   //     }

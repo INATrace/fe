@@ -1,0 +1,17 @@
+<google-map
+    *ngIf="isGoogleMapsLoaded"
+    width="100%"
+    height="380px"
+    [options]="{disableDoubleClickZoom: true}"
+    (mapClick)="addJourneyMarker($event)">
+    <map-marker
+        *ngFor="let marker of markersForm.controls; index as i"
+        [position]="{lat: marker.get('latitude').value, lng: marker.get('longitude').value}"
+        (mapRightclick)="removeJourneyMarker(i)"
+        [options]="mapMarkerOption">
+    </map-marker>
+    <map-polyline *ngIf="markersForm.length > 1"
+                  [options]="polylineOptions"
+                  [path]="journeyVertices">
+    </map-polyline>
+</google-map>

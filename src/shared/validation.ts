@@ -1,4 +1,4 @@
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 
 
@@ -95,6 +95,18 @@ export function MaxLengthArrayValidator(max: number): ValidatorFn {
             return null;
         return {'maxLengthArray': {lenght: max}};
     }
+}
+
+export function maxActiveArrayControls(max: number): ValidatorFn {
+    return (control: FormArray): ValidationErrors | null => {
+        const active = control.controls.filter((value: FormGroup) => value.get('active').value).length;
+        return active <= max ? null : {
+            maxActive: {
+                expected: max,
+                actual: active
+            }
+        };
+    };
 }
 
 function validateUndesrcoreAndCapitals(input) {

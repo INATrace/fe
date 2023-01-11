@@ -14,6 +14,8 @@ import { AdditionalProofItemComponent } from './additional-proof-item/additional
 import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-details-bulk/stock-purchase-order-details-bulk.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import {QRCodeModule} from 'angular2-qrcode';
+import { GroupStockOrderListComponent } from './group-stock-order-list/group-stock-order-list.component';
+import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,25 +23,28 @@ import {QRCodeModule} from 'angular2-qrcode';
     StockPurchaseOrderDetailsComponent,
     StockPurchaseOrderDetailsBulkComponent,
     AdditionalProofItemComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    GroupStockOrderListComponent
   ],
-  imports: [
-    CommonModule,
-    CoreModule,
-    ComponentsModule,
-    LayoutModule,
-    FontAwesomeModule,
-    SharedModule,
-    QRCodeModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgSelectModule,
-    DragDropModule
-  ],
-  exports: [
-    StockPurchaseOrderDetailsComponent,
-    StockPurchaseOrderDetailsBulkComponent,
-    AdditionalProofItemComponent
-  ]
+    imports: [
+        CommonModule,
+        CoreModule,
+        ComponentsModule,
+        LayoutModule,
+        FontAwesomeModule,
+        SharedModule,
+        QRCodeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgSelectModule,
+        DragDropModule,
+        NgbPaginationModule
+    ],
+    exports: [
+        StockPurchaseOrderDetailsComponent,
+        StockPurchaseOrderDetailsBulkComponent,
+        AdditionalProofItemComponent,
+        GroupStockOrderListComponent
+    ]
 })
 export class StockCoreModule { }

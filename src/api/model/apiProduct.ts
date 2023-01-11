@@ -18,12 +18,13 @@
  */
 
 
+import { ApiBusinessToCustomerSettings } from './apiBusinessToCustomerSettings';
 import { ApiCompany } from './apiCompany';
-import { ApiComparisonOfPrice } from './apiComparisonOfPrice';
 import { ApiDocument } from './apiDocument';
 import { ApiProcess } from './apiProcess';
 import { ApiProductCompany } from './apiProductCompany';
 import { ApiProductDataSharingAgreement } from './apiProductDataSharingAgreement';
+import { ApiProductJourneyMarker } from './apiProductJourneyMarker';
 import { ApiProductLabelValues } from './apiProductLabelValues';
 import { ApiProductOrigin } from './apiProductOrigin';
 import { ApiProductSettings } from './apiProductSettings';
@@ -38,8 +39,8 @@ export interface ApiProduct {
      * associated companies
      */
     associatedCompanies?: Array<ApiProductCompany>;
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     company?: ApiCompany;
-    comparisonOfPrice?: ApiComparisonOfPrice;
     /**
      * Data sharing agreements
      */
@@ -60,6 +61,10 @@ export interface ApiProduct {
      * ingredients - list the ingredients in the product and describe their properties
      */
     ingredients?: string;
+    /**
+     * Product journey path
+     */
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
      * Key Markets, market name - share number map
      */
@@ -106,8 +111,8 @@ export namespace ApiProduct {
          * associated companies
          */
         associatedCompanies = 'associatedCompanies',
+        businessToCustomerSettings = 'businessToCustomerSettings',
         company = 'company',
-        comparisonOfPrice = 'comparisonOfPrice',
         /**
          * Data sharing agreements
          */
@@ -128,6 +133,10 @@ export namespace ApiProduct {
          * ingredients - list the ingredients in the product and describe their properties
          */
         ingredients = 'ingredients',
+        /**
+         * Product journey path
+         */
+        journeyMarkers = 'journeyMarkers',
         /**
          * Key Markets, market name - share number map
          */
@@ -181,6 +190,18 @@ export namespace ApiProduct {
                     complexType: 'ApiProductCompany'
                 },
                 {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'businessToCustomerSettings',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -191,18 +212,6 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiComparisonOfPrice.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'comparisonOfPrice',
-                    classname: 'ApiProduct',
-                    dataType: 'ApiComparisonOfPrice',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiComparisonOfPrice'
                 },
                 {
                     metadata: ApiProductDataSharingAgreement.formMetadata,
@@ -259,6 +268,18 @@ export namespace ApiProduct {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
                 },
                 {
                     isReadOnly: false,
@@ -427,9 +448,9 @@ export namespace ApiProduct {
             validators: {
                 associatedCompanies: [
                 ],
-                company: [
+                businessToCustomerSettings: [
                 ],
-                comparisonOfPrice: [
+                company: [
                 ],
                 dataSharingAgreements: [
                 ],
@@ -440,6 +461,8 @@ export namespace ApiProduct {
                 id: [
                 ],
                 ingredients: [
+                ],
+                journeyMarkers: [
                 ],
                 keyMarketsShare: [
                 ],
@@ -479,10 +502,10 @@ export namespace ApiProduct {
   //               associatedCompanies: {
   //                   validators: []
   //               },
-  //               company: {
+  //               businessToCustomerSettings: {
   //                   validators: []
   //               },
-  //               comparisonOfPrice: {
+  //               company: {
   //                   validators: []
   //               },
   //               dataSharingAgreements: {
@@ -498,6 +521,9 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               ingredients: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //               keyMarketsShare: {

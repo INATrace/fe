@@ -7,7 +7,7 @@ import { ApiProcessingAction } from '../../../../../api/model/apiProcessingActio
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { dateAtMidnightISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateAtMidnightISOString, dateAtNoonISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
 import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
@@ -711,7 +711,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       try {
 
         respProcessingOrder = await this.processingOrderController
-          .getProcessingOrder(this.outputStockOrder.processingOrder.id).pipe(take(1)).toPromise();
+          .getProcessingOrderUsingGET(this.outputStockOrder.processingOrder.id).pipe(take(1)).toPromise();
 
       } catch (e) {
         throw e;
@@ -870,7 +870,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         processingAction: this.prAction,
         targetStockOrders: outputStockOrderList,
         inputTransactions: [...this.inputTransactions],
-        processingDate: this.processingDateForm.value ? new Date(this.processingDateForm.value) : null
+        processingDate: this.processingDateForm.value ? (dateAtNoonISOString(this.processingDateForm.value) as any) : null
       };
 
       for (const stockOrder of this.selectedInputStockOrders) {
@@ -960,7 +960,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           finalProduct: inputStockOrder.finalProduct,
           internalLotNumber: `${this.outputStockOrderForm.get('internalLotNumber').value}/${index + 1 + existingTargetStockOrdersCount}`,
           creatorId: this.creatorId,
-          productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : new Date(),
+          productionDate: inputStockOrder.productionDate ? inputStockOrder.productionDate : (dateAtNoonISOString(new Date()) as any),
           orderType: OrderTypeEnum.TRANSFERORDER,
           totalQuantity: inputStockOrder.availableQuantity,
           fulfilledQuantity: 0,
@@ -987,7 +987,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             const newStockOrder: ApiStockOrder = {
               ...sharedFields,
               id: outputStockOrder.id,
-              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
+              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value,
               creatorId: this.creatorId,
               semiProduct,
               finalProduct,
@@ -995,7 +995,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               totalQuantity: outputStockOrder.totalQuantity,
               fulfilledQuantity: outputStockOrder.totalQuantity,
               availableQuantity: outputStockOrder.totalQuantity,
-              productionDate: new Date(),
+              productionDate: (dateAtNoonISOString(new Date()) as any),
               sacNumber: outputStockOrder.sacNumber,
               currency: this.outputStockOrderForm.get('pricePerUnit').value ? this.companyProfile.currency.code : null,
               orderType: OrderTypeEnum.PROCESSINGORDER
@@ -1031,7 +1031,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             parseFloat(this.totalQuantity) : 0,
           availableQuantity: (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE') ?
             parseFloat(this.totalQuantity) : 0,
-          productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : new Date(),
+          productionDate: outputStockOrder.productionDate ? outputStockOrder.productionDate : (dateAtNoonISOString(new Date()) as any),
           orderType: this.prAction.type === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
           quoteFacility: this.prAction.type === 'SHIPMENT' ? this.inputFacilityForm.value : null,
           currency: outputStockOrder.currency ? outputStockOrder.currency : (outputStockOrder.pricePerUnit ? this.companyProfile.currency.code : null)
@@ -1461,7 +1461,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (value) {
 
-      const outputQuantity = this.totalQuantity;
+      const outputQuantity = this.totalQuantity as number;
       let tmpQuantity = 0;
 
       for (const tx of this.inputTransactions) {
@@ -1484,7 +1484,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           continue;
         }
 
-        item.selectedQuantity = outputQuantity - tmpQuantity;
+        item.selectedQuantity = Number((outputQuantity - tmpQuantity).toFixed(2));
         tmpQuantity = outputQuantity;
       }
 
@@ -1541,7 +1541,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     if (!this.availableStockOrders[index].selected) {
 
       const outputQuantity = this.totalQuantity as number || 0;
-      const toFill = outputQuantity - this.calcInputQuantity(false);
+      const inputQuantity = this.calcInputQuantity(false);
+
+      const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
 
       const currentAvailable = this.availableStockOrders[index].availableQuantity;
 
@@ -1814,6 +1816,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const outputSemiProductId = this.prAction.outputSemiProduct?.id;
     const outputFinalProductId = this.prAction.outputFinalProduct?.id;
 
+    let supportedFacilitiesIds: number[] | undefined;
+    if (this.prAction.supportedFacilities && this.prAction.supportedFacilities.length > 0) {
+      supportedFacilitiesIds = this.prAction.supportedFacilities.map(f => f.id);
+    }
+
     // If there is input semi-product or input final product set, initialize input facility codebook
     if (inputSemiProductId || inputFinalProductId) {
 
@@ -1823,14 +1830,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       } else {
         this.inputFacilitiesCodebook =
-          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
+          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId, supportedFacilitiesIds);
       }
     }
 
     // If there is output semi-product or output final product set, initialize output facility codebook
     if (outputSemiProductId || outputFinalProductId) {
-      this.outputFacilitiesCodebook =
-        new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+      if (this.actionType === 'SHIPMENT') {
+        this.outputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId, supportedFacilitiesIds);
+      } else {
+        this.outputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+      }
     }
   }
 

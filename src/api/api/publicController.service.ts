@@ -33,7 +33,6 @@ import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiLogRequest } from '../model/apiLogRequest';
 import { ApiPaginatedResponseApiProductLabelFeedback } from '../model/apiPaginatedResponseApiProductLabelFeedback';
 import { ApiProductLabelFeedback } from '../model/apiProductLabelFeedback';
-import { ApiResponseApiCompanyPublic } from '../model/apiResponseApiCompanyPublic';
 import { ApiResponseApiGlobalSettingsValue } from '../model/apiResponseApiGlobalSettingsValue';
 import { ApiResponseApiKnowledgeBlog } from '../model/apiResponseApiKnowledgeBlog';
 import { ApiResponseApiProductLabelBatch } from '../model/apiResponseApiProductLabelBatch';
@@ -214,51 +213,6 @@ export namespace CheckPublicProductLabelBatchOriginUsingGET {
       id: [
       ],
       number: [
-      ],
-    };
-}
-
-/**
- * Namespace for getPublicCompanyUsingGET.
- */
-export namespace GetPublicCompanyUsingGET {
-    /**
-     * Parameter map for getPublicCompanyUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * id
-       */
-      id: number;
-      /**
-       * language
-       */
-      language?: string;
-    }
-
-    /**
-     * Enumeration of all parameters for getPublicCompanyUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * id
-       */
-      id = 'id',
-      /**
-       * language
-       */
-      language = 'language'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicCompanyUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetPublicCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
-      ],
-      language: [
       ],
     };
 }
@@ -1037,96 +991,6 @@ export class PublicControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'checkPublicProductLabelBatchOriginUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get public data about company by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getPublicCompanyUsingGETByMap(
-    map: GetPublicCompanyUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiCompanyPublic>;
-  public getPublicCompanyUsingGETByMap(
-    map: GetPublicCompanyUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyPublic>>;
-  public getPublicCompanyUsingGETByMap(
-    map: GetPublicCompanyUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyPublic>>;
-  public getPublicCompanyUsingGETByMap(
-    map: GetPublicCompanyUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getPublicCompanyUsingGET(
-      map.id,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get public data about company
-     * 
-     * @param id id
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getPublicCompanyUsingGET(id: number, language?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyPublic>;
-    public getPublicCompanyUsingGET(id: number, language?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyPublic>>;
-    public getPublicCompanyUsingGET(id: number, language?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyPublic>>;
-    public getPublicCompanyUsingGET(id: number, language?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getPublicCompanyUsingGET.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (language !== undefined && language !== null) {
-            queryParameters = queryParameters.set('language', <any>language);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiCompanyPublic>(`${this.configuration.basePath}/api/public/company/${encodeURIComponent(String(id))}`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicCompanyUsingGET')));
         }
         return handle;
     }

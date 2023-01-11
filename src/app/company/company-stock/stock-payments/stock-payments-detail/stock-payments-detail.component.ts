@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { PaymentControllerService } from '../../../../../api/api/paymentController.service';
@@ -17,6 +17,7 @@ import { ApiUserCustomerCooperative } from '../../../../../api/model/apiUserCust
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-stock-payments-detail',
@@ -54,13 +55,17 @@ export class StockPaymentsDetailComponent implements OnInit {
   payableFromForm = new FormControl(null);
   orderReferenceForm = new FormControl(null);
 
+  private addPricePerUnitMessage: string = $localize`:@@productLabelStockPayments.addPricePerUnit.message:Add price per unit`;
+
   constructor(
       private location: Location,
       private route: ActivatedRoute,
       private globalEventsManager: GlobalEventManagerService,
       private companyControllerService: CompanyControllerService,
       private stockOrderControllerService: StockOrderControllerService,
-      private paymentControllerService: PaymentControllerService
+      private paymentControllerService: PaymentControllerService,
+      private toasterService: ToastrService,
+      private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -142,6 +147,11 @@ export class StockPaymentsDetailComponent implements OnInit {
   }
 
   private async newPayment() {
+
+    if (this.stockOrder.priceDeterminedLater) {
+      this.toasterService.error(this.addPricePerUnitMessage);
+      this.router.navigate(['my-stock', 'purchases', 'tab']).then();
+    }
 
     this.submitted = false;
 

@@ -43,9 +43,17 @@ export interface ApiFacility {
      */
     displayPriceDeductionDamage?: boolean;
     /**
+     * Enable form control 'Price determined later'
+     */
+    displayPriceDeterminedLater?: boolean;
+    /**
      * Enable form control 'Tare'
      */
     displayTare?: boolean;
+    /**
+     * Enable form control 'Weight deduction damage'
+     */
+    displayWeightDeductionDamage?: boolean;
     /**
      * Enable form control 'Women only'
      */
@@ -105,9 +113,17 @@ export namespace ApiFacility {
          */
         displayPriceDeductionDamage = 'displayPriceDeductionDamage',
         /**
+         * Enable form control 'Price determined later'
+         */
+        displayPriceDeterminedLater = 'displayPriceDeterminedLater',
+        /**
          * Enable form control 'Tare'
          */
         displayTare = 'displayTare',
+        /**
+         * Enable form control 'Weight deduction damage'
+         */
+        displayWeightDeductionDamage = 'displayWeightDeductionDamage',
         /**
          * Enable form control 'Women only'
          */
@@ -210,7 +226,29 @@ export namespace ApiFacility {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'displayPriceDeterminedLater',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'displayTare',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'displayWeightDeductionDamage',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -344,7 +382,11 @@ export namespace ApiFacility {
                 ],
                 displayPriceDeductionDamage: [
                 ],
+                displayPriceDeterminedLater: [
+                ],
                 displayTare: [
+                ],
+                displayWeightDeductionDamage: [
                 ],
                 displayWomenOnly: [
                 ],
@@ -388,7 +430,13 @@ export namespace ApiFacility {
   //               displayPriceDeductionDamage: {
   //                   validators: []
   //               },
+  //               displayPriceDeterminedLater: {
+  //                   validators: []
+  //               },
   //               displayTare: {
+  //                   validators: []
+  //               },
+  //               displayWeightDeductionDamage: {
   //                   validators: []
   //               },
   //               displayWomenOnly: {

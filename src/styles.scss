@@ -10,9 +10,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-
+html {
+  height: 100%;
+}
 
 body {
+  height: 100%;
     margin:0;
     // font-family: 'Signika','Helvetica Neue','sans-serif';
     font-family: 'Poppins', sans-serif;
@@ -366,18 +369,35 @@ button.btn {
 }
 
 button.btn:hover {
-    color:$primary;
-    background-color: $very-pale-cyan;
-    border: 1px solid $primary;
-    // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    // background-color: $very-pale-cyan;
+    &.no-hover {
+      color: white;
+      background-color: $primary;
+      border: 1px solid $primary;
 
-    &.btn-link {
+      &.btn-link {
         box-shadow: none;
+      }
+
+      &.btn-outlined {
+        color:$primary;
+        background-color: transparent;
+      }
     }
-    &.btn-outlined {
+
+    &:not(.no-hover) {
+      color:$primary;
+      background-color: $very-pale-cyan;
+      border: 1px solid $primary;
+      // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      // background-color: $very-pale-cyan;
+
+      &.btn-link {
+        box-shadow: none;
+      }
+      &.btn-outlined {
         color:$primary;
         background-color: $very-pale-cyan;
+      }
     }
 }
 
@@ -3635,41 +3655,34 @@ $af-b2c-arrows-shape: 48px;
 $af-b2c-arrows: 24px;
 
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
-// $af-b2c-font-family: 'Raleway', sans-serif;
-$af-b2c-font-family: 'Montserrat', sans-serif;;
-
-
+//@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+$af-b2c-font-family: 'Open Sans', sans-serif;
 
 .af-b2c {
   &-wrapper {
     background: $af-wrapper;
   }
   &-header {
-    background-color: $af-header;
-    background-image: url(/assets/logo/header-bg-graphics.svg);
-    background-position: 0 -78px;
-    background-repeat: no-repeat;
+    background-color: $secondary;
 
-    border-top: 20px solid #AC1A56;
-    border-top: 20px solid #ac1a56a6;
+    border-top: 20px solid $primary;
     text-align: center;
 
     &--logo {
-      background: inherit;
       text-align: center;
       padding-top: $af-spacing-one-and-a-treequarters;
       padding-bottom: $af-spacing-one-and-a-treequarters;
 
       h1 {
-        color: $white;
+        color: #FFFFFF;
         text-transform: uppercase;
-        font-family: 'graystroke', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
       }
     }
-
   }
 
   &-nav {
@@ -3694,13 +3707,12 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       padding-bottom: $af-spacing-one;
       padding-left: 0;
     }
+
     &--selected {
       border-bottom: 2px solid white;
       border-radius: 1px solid;
     }
   }
-
-
 
   &-main {
     padding-left: 25px;
@@ -3900,13 +3912,14 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       }
     }
   }
+
   &-social {
     &-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       height: calc(96px + 20px);
-      background-color: $af-header;
+      background-color: $secondary;
     }
 
     display: inline-block;
@@ -3924,7 +3937,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       display: inline-block;
       height: 24px;
       width: 24px;
-      background: #5C267B;  // this will be color of icon, default is --BLUE
+      background: $secondary;  // this will be color of icon, default is --BLUE
       mask-size: cover;
       margin-top: 12px;
       margin-left: 12px;
@@ -3949,7 +3962,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
 
   &-splitter {
     height: 20px;
-    background-color: #AC1A56;
+    background-color: $primary;
   }
 
   // &-social {
@@ -4084,13 +4097,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
 //
 .af-b2c {
   &-front {
-    background-color: #AC1A56;
-    background-image: url(/assets/logo/header-bg-graphics.svg), url(/assets/logo/afc-smile70.png);
-    background-position: 0 -78px, center top;
-    background-repeat: no-repeat;
-
-    border-top:  20px solid #EDD200;
-    border-top: 20px solid #edd200cf;
+    border-top:  20px solid $secondary;
     text-align: center;
 
     &--logo {
@@ -4102,7 +4109,7 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       h1 {
         color: $white;
         text-transform: uppercase;
-        font-family: 'graystroke', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
         font-size: 1rem;
 
         span {
@@ -4114,25 +4121,24 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
         }
       }
     }
+
     &--headline {
       font-family: $af-b2c-font-family;
       font-weight: 600;
       font-size: 32px;
       line-height: 1.5;
-      color: #FFFFFF;
-      text-align: left;
+      color: $secondary;
+      text-align: center;
 
       padding-left: 1rem;
       padding-right: 1rem;
-
-      @include media-breakpoint-up(md) {
-        text-align: center;
-      }
     }
+
     &--nope {
       margin-top: 2rem;
       height: 10vh;                   // whole viewport height, you say?
     }
+
     &--cta {
       background: #0FAE94;
       font-family: $af-b2c-font-family;
@@ -4158,7 +4164,9 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
       box-shadow: 0 16px 96px 0 rgba(0,0,0,0.08);
       border-radius: 32px;
       padding: 1rem;
-      margin: 2rem auto;
+      margin-bottom: 2rem;
+      margin-left: auto;
+      margin-right: auto;
       max-width: 360px;
 
       h2 {
@@ -4264,8 +4272,6 @@ $af-b2c-font-family: 'Montserrat', sans-serif;;
     height: 36px;
     width: 36px;
     background: inherit;
-    // background: white;
-    background-image: url(/assets/icons/journey-bg.svg);
     border-radius: 24px;
     z-index: 2;
 
@@ -4509,18 +4515,17 @@ $af-graph-col-bg: inherit;
   &-bar {
     position: relative;
     width: 40px;              // for science, height should come from inline values in template
-    min-height: 40px;
     display: inline-block;
 
     &--pink {
-      background-color: #AC1A56;
+      background-color: $primary;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       font-size: 12px;
       color: #000000;
       text-align: center;
@@ -4594,11 +4599,11 @@ $af-graph-col-bg: inherit;
       background-color: #D8D8D8;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       color: #FFFFFF;
       font-size: 16px;
       text-align: center;
@@ -4681,11 +4686,11 @@ $af-graph-col-bg: inherit;
       background-color: #ABABAB;
     }
     &--purple {
-      background-color: #5C267B;
+      background-color: $secondary;
     }
 
     &-number {
-      font-family: 'graystroke', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       color: #FFFFFF;
       font-size: 16px;
       text-align: center;
@@ -4741,4 +4746,42 @@ $af-graph-col-bg: inherit;
   @include media-breakpoint-up(lg) {
     margin-left: 2rem;
   }
+}
+
+// Toggle switch checkbox
+input[type=checkbox].toggle-switch-checkbox {
+  display: none;
+}
+
+label.toggle-switch-label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 4em;
+  height: 2em;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  margin-bottom: 0px;
+}
+
+label.toggle-switch-label:after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  background: #FFFFFF;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input.toggle-switch-checkbox:checked + label.toggle-switch-label {
+  background: $moderate-cyan;
+}
+
+input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
 }

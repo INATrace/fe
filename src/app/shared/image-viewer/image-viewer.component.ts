@@ -5,7 +5,6 @@ import { distinctUntilChanged, map, shareReplay, switchMap } from 'rxjs/operator
 import { ApiDocument } from 'src/api/model/apiDocument';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { CommonControllerService } from 'src/api/api/commonController.service';
-import { DocumentService } from 'src/api-chain/api/document.service';
 
 @Component({
     selector: 'image-viewer',
@@ -48,7 +47,6 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
 
     constructor(
         private fileService: CommonControllerService,
-        private chainFileService: DocumentService,
         private sanitizer: DomSanitizer
     ) { }
 
@@ -60,15 +58,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     )
 
     private loadImage(fileInfo: ApiDocument): Observable<any> {
-      if(this.chainApi) {
-        return this.chainFileService.getFile(fileInfo.storageKey).pipe(
-          map(x => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(x)))
-        )
-      } else {
         return this.fileService.getDocumentUsingGET(fileInfo.storageKey).pipe(
-          map(x => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(x)))
-        )
-      }
+            map(x => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(x)))
+        );
     }
 
     ngOnInit() {

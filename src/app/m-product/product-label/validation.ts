@@ -11,8 +11,6 @@ import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityF
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
-import { ApiComparisonOfPrice } from 'src/api/model/apiComparisonOfPrice';
-
 
 export const ApiCertificationValidationScheme = {
   validators: [Validators.required],
@@ -251,7 +249,7 @@ export function marketShareFormMetadata() {
         complexType: ''
       },
     ]
-  }
+  };
 }
 
 export const MarketShareValidationScheme = {
@@ -276,7 +274,7 @@ export const MarketShareValidationScheme = {
       validators: []
     }
   }
-}
+};
 
 export const ApiProductOriginValidationScheme = {
   forceExpand: true,
@@ -313,9 +311,6 @@ export const ApiProductSettingsValidationScheme = {
     incomeIncreaseDocument: {
       validators: []
     },
-    increaseOfCoffee: {
-      validators: []
-    },
     language: {
       validators: []
     },
@@ -328,18 +323,23 @@ export const ApiProductSettingsValidationScheme = {
   }
 } as SimpleValidationScheme<ApiProductSettings>;
 
-export const ApiComparisonOfPriceValidationScheme = {
-  forceExpand: true,
+export const ApiBusinessToCustomerSettingsValidationScheme = {
   validators: [],
   fields: {
-    description: {
+    primaryColor: {
       validators: []
     },
-    prices: {
+    secondaryColor: {
       validators: []
     },
+    headingColor: {
+      validators: []
+    },
+    textColor: {
+      validators: []
+    }
   }
-} as SimpleValidationScheme<ApiComparisonOfPrice>;
+};
 
 export const ApiProductValidationScheme = {
   validators: [],
@@ -374,13 +374,20 @@ export const ApiProductValidationScheme = {
     responsibility: ApiResponsibilityValidationScheme,
     sustainability: ApiSustainabilityValidationScheme,
     settings: ApiProductSettingsValidationScheme,
-    comparisonOfPrice: ApiComparisonOfPriceValidationScheme,
     knowledgeBlog: {
       validators: []
+    },
+    businessToCustomerSettings: ApiBusinessToCustomerSettingsValidationScheme,
+    journeyMarkers: {
+      validators: [],
+      forceExpand: true,
+      arrayElementValidators: {
+        validators: [],
+        forceExpand: true,
+      }
     }
   }
 } as SimpleValidationScheme<ApiProduct>;
-
 
 export function pricingTransparencyFormMetadata() {
   return {
@@ -467,7 +474,7 @@ export function pricingTransparencyFormMetadata() {
         complexType: ''
       }
     ]
-  }
+  };
 }
 
 export const pricingTransparencyValidationScheme = {
@@ -498,110 +505,4 @@ export const pricingTransparencyValidationScheme = {
       validators: []
     }
   }
-}
-
-
-export function pricesFormMetadata() {
-  return {
-    metadata: pricesFormMetadata,
-    vars: [
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'worldMarket',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'fairTrade',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'EURtoRWF',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'EURtoUSD',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'poundToKg',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'containerSize',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'estimatedAdditionalPrice',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      }
-    ]
-  }
-}
-
-export const pricesValidationScheme = {
-  validators: [],
-  fields: {
-    worldMarket: {
-      validators: []
-    },
-    fairTrade: {
-      validators: []
-    },
-    EURtoRWF: {
-      validators: []
-    },
-    EURtoUSD: {
-      validators: []
-    },
-    poundToKg: {
-      validators: []
-    },
-    containerSize: {
-      validators: []
-    },
-    estimatedAdditionalPrice: {
-      validators: []
-    }
-  }
-}
+};

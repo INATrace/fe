@@ -13,4 +13,8 @@
     window['env']['googleMapsApiKey'] = '${GOOGLE_MAPS_API_KEY}';
     window['env']['tokenForPublicLogRoute'] = '${TOKEN_FOR_PUBLIC_LOG_ROUTE}';
 
+    // Environment variables for Beyco integration
+    window['env']['beycoAuthURL'] = '${BEYCO_AUTH_URL}'
+    window['env']['beycoClientId'] = '${BEYCO_CLIENT_ID}'
+
 })(this);

@@ -274,6 +274,39 @@
                     </div>
                     <!-- END: Basic information -->
 
+                    <!-- Supported facilities -->
+                    <h2 i18n="@@companyDetailProcessingActions.supportedFacilities">Facilities where this process starts</h2>
+                    <div class="af-form-element">
+
+                        <small i18n="@@companyDetailProcessingActions.hint.supportedFacilities">
+                            Add facilities where this processing action starts.
+                        </small>
+
+                        <div class="spacer-title-section"></div>
+
+                        <div class="search-field" *ngIf="supportedFacilitiesService">
+                            <single-choice
+                                    [formControlInput]="supportedFacilitiesInputForm"
+                                    [codebookService]="supportedFacilitiesService"
+                                    (onChange)="addSelectedSupportedFacility($event)">
+                            </single-choice>
+                        </div>
+
+                        <div class="spacer-title-section"></div>
+
+                        <ng-container *ngIf="this.form.get('supportedFacilities')">
+                            <div *ngFor="let facility of this.form.get('supportedFacilities').value; index as i" class="d-flex justify-content-between">
+                                <div>{{facility?.name}}</div>
+                                <div class="cursor-pointer" (click)="removeSupportedFacility(facility)">
+                                    <fa-icon
+                                            class="del-icon"
+                                            [icon]="faTimes"></fa-icon>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- END: Supported facilities -->
+
                 </div>
 
                 <!-- Right column -->

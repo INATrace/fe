@@ -10,7 +10,7 @@ import { faTimes, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
-import { ProductLabelFrontFeedbackComponent } from 'src/app/product-label-front-page/product-label-front-feedback/product-label-front-feedback.component';
+import { FeedbackModalComponent } from 'src/app/m-product/product-label-feedback-page/feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'app-product-label-feedback-page',
@@ -188,7 +188,7 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
   }
 
   viewFeedback(feedback) {
-    const modalRef = this.modalService.open(ProductLabelFrontFeedbackComponent, {
+    const modalRef = this.modalService.open(FeedbackModalComponent, {
       centered: true
     });
     Object.assign(modalRef.componentInstance, {

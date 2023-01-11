@@ -33,6 +33,10 @@ export interface ApiCompanyDocument {
     description?: string;
     document?: ApiDocument;
     /**
+     * Entity id
+     */
+    id?: number;
+    /**
      * link
      */
     link?: string;
@@ -67,6 +71,10 @@ export namespace ApiCompanyDocument {
          */
         description = 'description',
         document = 'document',
+        /**
+         * Entity id
+         */
+        id = 'id',
         /**
          * link
          */
@@ -147,6 +155,17 @@ export namespace ApiCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiCompanyDocument',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'link',
                     classname: 'ApiCompanyDocument',
                     dataType: 'string',
@@ -196,6 +215,8 @@ export namespace ApiCompanyDocument {
                 ],
                 document: [
                 ],
+                id: [
+                ],
                 link: [
                 ],
                 name: [
@@ -218,6 +239,9 @@ export namespace ApiCompanyDocument {
   //                   validators: []
   //               },
   //               document: {
+  //                   validators: []
+  //               },
+  //               id: {
   //                   validators: []
   //               },
   //               link: {

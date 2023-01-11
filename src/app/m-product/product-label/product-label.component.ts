@@ -1,12 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { CommonControllerService } from 'src/api/api/commonController.service';
@@ -37,23 +36,20 @@ import { UnsubscribeList } from 'src/shared/rxutils';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { PrefillProductSelectionModalComponent } from './prefill-product-selection-modal/prefill-product-selection-modal.component';
 import {
+  ApiBusinessToCustomerSettingsValidationScheme,
   ApiCertificationValidationScheme,
   ApiCompanyValidationScheme,
-  ApiComparisonOfPriceValidationScheme,
   ApiProcessDocumentValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
   ApiResponsibilityFarmerPictureValidationScheme,
   marketShareFormMetadata,
   MarketShareValidationScheme,
-  pricesFormMetadata,
-  pricesValidationScheme,
   pricingTransparencyFormMetadata,
   pricingTransparencyValidationScheme
 } from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
-import { ApiComparisonOfPrice } from 'src/api/model/apiComparisonOfPrice';
 import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
@@ -61,6 +57,10 @@ import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 import { ApiProductCompany } from '../../../api/model/apiProductCompany';
 import { LanguageForLabelModalResult } from './language-for-label-modal/model';
+import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
+import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
+import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
+import { maxActiveArrayControls } from '../../../shared/validation';
 
 @Component({
   selector: 'app-product-label',
@@ -142,29 +142,28 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.productForm.get('origin.locations') as FormArray;
   }
 
-  get isGoogleMapsLoaded() {  // fix of a google maps glitch
+  get isGoogleMapsLoaded() {  // fix of a Google Maps glitch
     return !!window.google;
   }
 
-  get moved() {
-    return this._itemMoved;
-  }
-
   get labelChanged() {
-    return this.moved || (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty;
+    return (this.visibilityForm && this.visibilityForm.dirty) || this.labelTitleForm.dirty;
   }
 
   get productChanged() {
     return this.productForm.dirty;
   }
 
+  get mediaChanged() {
+    return this.mediaForm && this.mediaForm.dirty;
+  }
+
   get changed(): boolean {
-    // console.log("CHG:", this.productChanged, this.labelChanged)
-    return this.productChanged || this.labelChanged;
+    return this.productChanged || this.labelChanged || this.mediaChanged;
   }
 
   get invalid() {
-    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid);
+    return this.productForm.invalid || (this.visibilityForm && this.visibilityForm.invalid) || (this.mediaForm && this.mediaForm.invalid);
   }
   get publishText() {
     if (!this.currentLabel) { return this.publishString; }
@@ -192,12 +191,24 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return obj;
   }
 
+  get graphicFairPriceUnits() {
+    const obj = {};
+
+    obj['DISABLED'] = 'Disabled';
+    obj['PER_CONTAINER'] = 'Per container';
+    obj['PER_KG'] = 'Per kg';
+    obj['PERCENT_VALUE'] = '% value';
+
+    return obj;
+  }
+
   gMap = null;
   gInfoWindow = null;
   gInfoWindowText = '';
   productForm: FormGroup;
   countries: any = [];
   markers: any = [];
+  journeyMarkers: any[] = [];
   defaultCenter = {
     lat: 5.274054,
     lng: 21.514503
@@ -219,6 +230,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   faCompass = faCompass;
   faSlidersH = faSlidersH;
   faQrcode = faQrcode;
+  faArrowDown = faArrowDown;
+  faArrowUp = faArrowUp;
 
   rootImageUrl: string = environment.relativeImageUploadUrlAllSizes;
   submitted = false;
@@ -242,6 +255,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   reloadProductNoLabel = true;
 
   action = this.route.snapshot.data.action;
+
+  availableMedia: ApiProductLabelCompanyDocument[];
+  mediaForm = new FormGroup({});
+
+  viewIcon = faEye;
 
   reloadPing$ = new BehaviorSubject(false);
 
@@ -275,21 +293,26 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }),
     tap(val => { this.globalEventsManager.showLoading(false); }),
     tap((data: ApiProduct) => {
+
       const product = data;
+
       this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
+
       const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
       this.productForm.setControl('keyMarketsShare', marketShareForm);
+
       const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
-      const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-      this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-      const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
-      (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
+
       this.initializeListManagers();
       const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
       const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
       (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
+
+      const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+          product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+      this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
       const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), product.valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
@@ -403,10 +426,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   emptyField = '-';
 
-  // indicator of at least on move
-  _itemMoved = false;
-
-  // PRODUCT
+// PRODUCT
   @ViewChild('productName', { static: false })
   productNameTmpl: TemplateRef<any>;
 
@@ -520,14 +540,71 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   companyElements: any[] = [];
 
-  // COMPARISON OF PRICE
-  @ViewChild('description', { static: false })
-  descriptionTmpl: TemplateRef<any>;
+  // B2C
+  @ViewChild('b2cPrimaryColor', { static: false })
+  b2cPrimaryColor: TemplateRef<any>;
 
-  @ViewChild('prices', { static: false })
-  pricesTmpl: TemplateRef<any>;
+  @ViewChild('b2cSecondaryColor', { static: false })
+  b2cSecondaryColor: TemplateRef<any>;
 
-  comparisonOfPriceElements: any[] = [];
+  @ViewChild('b2cTertiaryColor', { static: false })
+  b2cTertiaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cQuaternaryColor', { static: false })
+  b2cQuaternaryColor: TemplateRef<any>;
+
+  @ViewChild('b2cProductTitleColor', { static: false })
+  b2cProductTitleColor: TemplateRef<any>;
+
+  @ViewChild('b2cHeadingColor', { static: false })
+  b2cHeadingColor: TemplateRef<any>;
+
+  @ViewChild('b2cTextColor', { static: false })
+  b2cTextColor: TemplateRef<any>;
+
+  @ViewChild('b2cTabFairPrices', { static: false })
+  b2cTabFairPrices: TemplateRef<any>;
+
+  @ViewChild('b2cTabProducers', { static: false })
+  b2cTabProducers: TemplateRef<any>;
+
+  @ViewChild('b2cTabQuality', { static: false })
+  b2cTabQuality: TemplateRef<any>;
+
+  @ViewChild('b2cTabFeedback', { static: false })
+  b2cTabFeedback: TemplateRef<any>;
+
+  @ViewChild('b2cProductFont', { static: false })
+  b2cProductFont: TemplateRef<any>;
+
+  @ViewChild('b2cTextFont', { static: false })
+  b2cTextFont: TemplateRef<any>;
+
+  @ViewChild('b2cLandingPageImage', { static: false })
+  b2cLandingPageImage: TemplateRef<any>;
+
+  @ViewChild('b2cLandingPageBackgroundImage', { static: false })
+  b2cLandingPageBackgroundImage: TemplateRef<any>;
+
+  @ViewChild('b2cHeaderBackgroundImage', { static: false })
+  b2cHeaderBackgroundImage: TemplateRef<any>;
+
+  @ViewChild('b2cMedia', { static: false })
+  b2cMedia: TemplateRef<any>;
+
+  @ViewChild('b2cPricePaidToProducerGraphic', { static: false })
+  b2cPricePaidToProducer: TemplateRef<any>;
+
+  @ViewChild('b2cFarmGatePriceGraphic', { static: false })
+  b2cFarmGatePrice: TemplateRef<any>;
+
+  @ViewChild('b2cPrices', { static: false })
+  b2cPrices: TemplateRef<any>;
+
+  @ViewChild('b2cGraphicQuality', { static: false })
+  b2cGraphicQuality: TemplateRef<any>;
+
+  b2cElements: any[] = [];
 
   // SETTINGS
   @ViewChild('language', { static: false })
@@ -588,6 +665,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   fadeInProduct = false;
   codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
+
+  graphicFairPricesCodes = EnumSifrant.fromObject(this.graphicFairPriceUnits);
 
   static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
     const obj = ApiProcessDocument.formMetadata();
@@ -705,18 +784,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), product.comparisonOfPrice, ApiComparisonOfPriceValidationScheme);
-    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-
-    const priceForm = generateFormFromMetadata(pricesFormMetadata(), product.comparisonOfPrice.prices, pricesValidationScheme);
-    (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
-
     this.initializeListManagers();
 
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
+
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+        product.businessToCustomerSettings, ApiBusinessToCustomerSettingsValidationScheme);
+    this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
     this.productForm.updateValueAndValidity();
     this.initializeOriginLocations();
@@ -753,21 +830,42 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async newProduct() {
+
     this.isOwner = true;
 
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme);
+
     const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme);
     this.productForm.setControl('keyMarketsShare', marketShareForm);
+
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), {}, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-    const comparisonOfPriceForm = generateFormFromMetadata(ApiComparisonOfPrice.formMetadata(), {}, ApiComparisonOfPriceValidationScheme);
-    this.productForm.setControl('comparisonOfPrice', comparisonOfPriceForm);
-    const priceForm = generateFormFromMetadata(pricesFormMetadata(), {}, pricesValidationScheme);
-    (this.productForm.get('comparisonOfPrice') as FormGroup).setControl('prices', priceForm);
-
     const originForm = generateFormFromMetadata(ApiProductOrigin.formMetadata(), {}, ApiProductOriginValidationScheme);
     this.productForm.setControl('origin', originForm);
+
+    const businessToCustomerSettings = generateFormFromMetadata(ApiBusinessToCustomerSettings.formMetadata(),
+        {
+          primaryColor: '#25265E',
+          secondaryColor: '#5DBCCF',
+          tertiaryColor: '#F7F7F7',
+          quaternaryColor: '#25265E',
+          headingColor: '#000000',
+          textColor: '#000000',
+          tabFairPrices: true,
+          tabProducers: true,
+          tabQuality: true,
+          tabFeedback: true,
+          orderFairPrices: 1,
+          orderProducers: 2,
+          orderQuality: 3,
+          orderFeedback: 4,
+          graphicFairPrices: true,
+          graphicIncreaseOfIncome: true,
+          graphicQuality: true
+        },
+        ApiBusinessToCustomerSettingsValidationScheme);
+    this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
     this.initializeListManagers();
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
@@ -863,6 +961,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async saveCurrentLabel(reload = false) {
+    this.submitted = true;
+    if (this.mediaForm.invalid) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'error',
+        title: $localize`:@@productLabel.saveProduct.error.title:Error`,
+        message: $localize`:@@productLabel.saveProduct.error.message:Errors on page. Please check!`
+      });
+      return false;
+    }
 
     const labels = this.currentLabelFields();
     const res = await this.productController.updateProductLabelUsingPUT(
@@ -882,10 +990,17 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
       if (resC && resC.status === 'OK') { this.productForm.markAsPristine(); }
 
+      const labelDocuments: ApiProductLabelCompanyDocument[] = this.mediaForm.get('video').value
+          .concat(this.mediaForm.get('farmers').value, this.mediaForm.get('productionRecord').value);
+      const resLD = await this.productController.updateCompanyDocumentsForProductLabelUsingPUT(this.currentLabel.id, labelDocuments).pipe(take(1)).toPromise();
+      if (resLD && resLD.status === 'OK') {
+        this.mediaForm.markAsPristine();
+      }
+
       this.visibilityForm.markAsPristine();
       this.labelTitleForm.setValue(null);
       this.labelTitleForm.markAsPristine();
-      this.resetMoveIndicator();
+
       if (reload) {
         this.reloadLabels();
       }
@@ -1019,6 +1134,54 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.gInfoWindowText = marker.infoText;
     this.gInfoWindow.open(gMarker);
   }
+  
+  addJourneyMarker(event: google.maps.MouseEvent) {
+    this.journeyMarkersCtrl.push(new FormGroup({
+      latitude: new FormControl(event.latLng.lat()),
+      longitude: new FormControl(event.latLng.lng()),
+    }));
+    this.journeyMarkersCtrl.markAsDirty();
+  }
+  
+  removeJourneyMarker(i: number) {
+    this.journeyMarkersCtrl.removeAt(i);
+    this.journeyMarkersCtrl.markAsDirty();
+  }
+  
+  moveJourneyMarkerUp(i: number) {
+    if (i > 0) {
+      const values = this.journeyMarkersCtrl.value;
+      const newValues = this.swapJourneyMarkers(values, i - 1, i);
+      this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
+    }
+  }
+  
+  moveJourneyMarkerDown(i: number) {
+    const values = this.journeyMarkersCtrl.value;
+    if (i < values.length - 1) {
+      const newValues = this.swapJourneyMarkers(values, i, i + 1);
+      this.journeyMarkersCtrl.setValue(newValues);
+      this.journeyMarkersCtrl.markAsDirty();
+    }
+  }
+  
+  private swapJourneyMarkers(arr: any[], index1: number, index2: number) {
+    arr = [...arr];
+    const temp = arr[index1];
+    arr[index1] = arr[index2];
+    arr[index2] = temp;
+    return arr;
+  }
+  
+  getJourneyVertices(): google.maps.LatLngLiteral[] {
+    return this.journeyMarkersCtrl.controls.map(ctrl => {
+      return {
+        lat: ctrl.get('latitude').value,
+        lng: ctrl.get('longitude').value,
+      };
+    });
+  }
 
   onKey(event, index) {
     this.updateInfoWindow(event.target.value, index);
@@ -1061,14 +1224,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return true;
   }
 
-  registerMove() {
-    this._itemMoved = true;
-  }
-
-  resetMoveIndicator() {
-    this._itemMoved = false;
-  }
-
   generateProductElements() {
     this.productElements = [
       { name: 'name', section: 'product', visible: new FormControl(true), template: this.productNameTmpl, disableDrag: true },
@@ -1079,16 +1234,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'howToUse', section: 'product', visible: new FormControl(false), template: this.howToUseTmpl },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
       { name: 'keyMarketsShare', section: 'product', visible: new FormControl(false), template: this.keyMarketsTmpl },
-      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl }
+      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl },
+      { name: 'journeyMarkers', section: 'product', visible: new FormControl(true), disableDrag: true }
     ];
-  }
-
-  onDropProductSection(event) {
-    if (this.productElements[event.previousIndex].disableDrag || this.productElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.productElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
   }
 
   generateProcessElements() {
@@ -1101,14 +1249,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropProcessSection(event) {
-    if (this.processElements[event.previousIndex].disableDrag || this.processElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.processElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
   generateSocialResponsibilityElements() {
     this.socialResponsibilityElements = [
       { name: 'responsibility.laborPolicies', section: 'responsibility', visible: new FormControl(false), template: this.laborPoliciesTmpl },
@@ -1117,28 +1257,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropSocialResponsibilitySection(event) {
-    if (this.socialResponsibilityElements[event.previousIndex].disableDrag || this.socialResponsibilityElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.socialResponsibilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
   generateEnvironmentalSustainabilityElements() {
     this.environmentalSustainabilityElements = [
       { name: 'sustainability.production', section: 'sustainability', visible: new FormControl(false), template: this.environmentalyFriendlyProductionTmpl },
       { name: 'sustainability.packaging', section: 'sustainability', visible: new FormControl(false), template: this.sustainablePackagingTmpl },
       { name: 'sustainability.co2Footprint', section: 'sustainability', visible: new FormControl(false), template: this.co2FootprintTmpl },
     ];
-  }
-
-  onDropEnvironmentalSustainabilitySection(event) {
-    if (this.environmentalSustainabilityElements[event.previousIndex].disableDrag || this.environmentalSustainabilityElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.environmentalSustainabilityElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
   }
 
   generateCompanyElements() {
@@ -1157,29 +1281,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'company.mediaLinks.youtube', section: 'company', visible: new FormControl(false), template: this.youtubeTmpl },
       { name: 'company.mediaLinks.other', section: 'company', visible: new FormControl(false), template: this.otherTmpl },
     ];
-  }
-
-  onDropCompanySection(event) {
-    if (this.companyElements[event.previousIndex].disableDrag || this.companyElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.companyElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
-  }
-
-  generateComparisonOfPriceElementsElements() {
-    this.comparisonOfPriceElements = [
-      { name: 'comparisonOfPrice.prices', section: 'comparisonOfPrice', visible: new FormControl(false), template: this.pricesTmpl },
-      { name: 'comparisonOfPrice.description', section: 'comparisonOfPrice', visible: new FormControl(false), template: this.descriptionTmpl }
-    ];
-  }
-
-  onDropComparisonOfPriceElementsSection(event) {
-    if (this.comparisonOfPriceElements[event.previousIndex].disableDrag || this.comparisonOfPriceElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.comparisonOfPriceElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
-    }
   }
 
   generateSettingsElements() {
@@ -1215,11 +1316,34 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  onDropSettingsSection(event) {
-    if (this.settingsElements[event.previousIndex].disableDrag || this.settingsElements[event.currentIndex].disableDrag) { return; }
-    moveItemInArray(this.settingsElements, event.previousIndex, event.currentIndex);
-    if (event.previousIndex !== event.currentIndex) {
-      this.registerMove();
+  generateBusinessToCustomerSettingsElements() {
+    this.b2cElements = [
+      { name: 'businessToCustomerSettings.primaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrimaryColor },
+      { name: 'businessToCustomerSettings.secondaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cSecondaryColor },
+      { name: 'businessToCustomerSettings.tertiaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTertiaryColor },
+      { name: 'businessToCustomerSettings.quaternaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cQuaternaryColor },
+      { name: 'businessToCustomerSettings.productTitleColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductTitleColor },
+      { name: 'businessToCustomerSettings.headingColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeadingColor },
+      { name: 'businessToCustomerSettings.textColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextColor },
+      { name: 'businessToCustomerSettings.tabFairPrices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFairPrices },
+      { name: 'businessToCustomerSettings.tabProducers', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabProducers },
+      { name: 'businessToCustomerSettings.tabQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabQuality },
+      { name: 'businessToCustomerSettings.tabFeedback', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTabFeedback },
+      { name: 'businessToCustomerSettings.productFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cProductFont },
+      { name: 'businessToCustomerSettings.textFont', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cTextFont },
+      { name: 'businessToCustomerSettings.landingPageImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cLandingPageImage },
+      { name: 'businessToCustomerSettings.landingPageBackgroundImage', section: 'businessToCustomerSettings',
+        visible: new FormControl(false), template: this.b2cLandingPageBackgroundImage },
+      { name: 'businessToCustomerSettings.headerBackgroundImage', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cHeaderBackgroundImage },
+      { name: 'businessToCustomerSettings.graphicPriceToProducer', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPricePaidToProducer },
+      { name: 'businessToCustomerSettings.graphicFarmGatePrice', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cFarmGatePrice },
+      { name: 'businessToCustomerSettings.prices', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrices },
+      { name: 'businessToCustomerSettings.graphicQuality', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cGraphicQuality},
+    ];
+    if (this.action === 'labels') {
+      this.b2cElements.push(
+          { name: 'businessToCustomerSettings.media', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cMedia }
+      );
     }
   }
 
@@ -1229,16 +1353,16 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateSocialResponsibilityElements();
     this.generateEnvironmentalSustainabilityElements();
     this.generatePricingTransparenctElements();
-    this.generateComparisonOfPriceElementsElements();
     this.generateSettingsElements();
     this.generateCompanyElements();
+    this.generateBusinessToCustomerSettingsElements();
 
     this.generateJointVisibilityForm();
   }
 
   generateJointVisibilityForm() {
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
     const formObj = {};
     allList.forEach(element => {
       const fixedKey = element.name.replace(/\./g, '_');
@@ -1248,42 +1372,45 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   generateLabelMaps() {
+
     const productMap = new Map();
     this.processElements.forEach(el => {
       productMap.set(el.name, el);
     });
+
     const processMap = new Map();
     this.processElements.forEach(el => {
       processMap.set(el.name, el);
     });
+
     const socialResponsibilityMap = new Map();
     this.socialResponsibilityElements.forEach(el => {
       socialResponsibilityMap.set(el.name, el);
     });
+
     const environmentalSustainabilityMap = new Map();
     this.environmentalSustainabilityElements.forEach(el => {
       environmentalSustainabilityMap.set(el.name, el);
     });
-    const comparisonOfPriceMap = new Map();
-    this.comparisonOfPriceElements.forEach(el => {
-      comparisonOfPriceMap.set(el.name, el);
-    });
+
     const settingsMap = new Map();
     this.settingsElements.forEach(el => {
       settingsMap.set(el.name, el);
     });
+
     this.pricingTransparencyElements.forEach(el => {
       settingsMap.set(el.name, el);
     });
+
     const companyMap = new Map();
     this.companyElements.forEach(el => {
       companyMap.set(el.name, el);
     });
+
     this.sectionToNameToObj.set('product', productMap);
     this.sectionToNameToObj.set('process', processMap);
     this.sectionToNameToObj.set('responsibility', socialResponsibilityMap);
     this.sectionToNameToObj.set('sustainability', environmentalSustainabilityMap);
-    this.sectionToNameToObj.set('comparisonOPrice', comparisonOfPriceMap);
     this.sectionToNameToObj.set('settings', settingsMap);
     this.sectionToNameToObj.set('company', companyMap);
   }
@@ -1341,11 +1468,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const elts = [];
     this.pricingTransparencyElements.forEach(elt => {
       if (elt.name === 'settings.increaseIncome') {
-        elts.push({
-          name: 'settings.increaseOfCoffee',
-          section: elt.section,
-          visible: elt.visible
-        });
         elts.push({
           name: 'settings.incomeIncreaseDescription',
           section: elt.section,
@@ -1416,20 +1538,74 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const allProductElements = this.prepareProductElements();
     const allPricingTransparencyElements = this.preparePricingTransparencyElements();
     const allList = [allProductElements, this.processElements, allSocialResponsibilityElements,
-      this.environmentalSustainabilityElements, allPricingTransparencyElements, this.comparisonOfPriceElements, this.settingsElements, this.companyElements];
+      this.environmentalSustainabilityElements, allPricingTransparencyElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
-        labels.push({
-          name: val.name,
-          section: val.section,
-          visible: val.visible.value
-        });
+        if (val.name === 'journeyMarkers') {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: true,
+          });
+        } else {
+          labels.push({
+            name: val.name,
+            section: val.section,
+            visible: val.visible.value
+          });
+        }
       });
     });
     return labels;
   }
 
+  get videoList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('video') ? (this.mediaForm.get('video') as FormArray).controls : [];
+  }
+
+  get farmerList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('farmers') ? (this.mediaForm.get('farmers') as FormArray).controls : [];
+  }
+
+  get productionRecordList(): AbstractControl[] {
+    return this.mediaForm && this.mediaForm.get('productionRecord') ? (this.mediaForm.get('productionRecord') as FormArray).controls : [];
+  }
+
+  showImage(storageKey: string) {
+    const modalRef = this.modalService.open(ImageViewerComponent, { centered: true });
+    Object.assign(modalRef.componentInstance, {
+      modal: false,
+      fileInfo: {
+        storageKey
+      },
+      chainApi: false
+    });
+  }
+
   async initializeByLabel(label: ApiProductLabel) {
+
+    const media = await this.productController.getCompanyDocumentsForProductLabelUsingGET(label.id).pipe(take(1)).toPromise();
+    if (media && media.status === 'OK' && media.data) {
+      this.availableMedia = media.data;
+
+      this.mediaForm.setControl('video', new FormArray([], maxActiveArrayControls(1)));
+      this.mediaForm.setControl('farmers', new FormArray([]));
+      this.mediaForm.setControl('productionRecord', new FormArray([]));
+
+      this.availableMedia.map(value => {
+        switch (value.category) {
+          case ApiProductLabelCompanyDocument.CategoryEnum.VIDEO:
+            (this.mediaForm.get('video') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+          case ApiProductLabelCompanyDocument.CategoryEnum.MEETTHEFARMER:
+            (this.mediaForm.get('farmers') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+          case ApiProductLabelCompanyDocument.CategoryEnum.PRODUCTIONRECORD:
+            (this.mediaForm.get('productionRecord') as FormArray).push(generateFormFromMetadata(ApiProductLabelCompanyDocument.formMetadata(), value));
+            break;
+        }
+      });
+    }
 
     if (!this.currentLabel) { this.currentLabel = label; this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true }); }
     const res = await this.productController.getProductLabelContentUsingGET(label.id).pipe(take(1)).toPromise();
@@ -1445,7 +1621,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateDefaultElements();
 
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.comparisonOfPriceElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
     let i = 0;
     allList.forEach(el => {    // default order
       sortOrderMap.set(el.name, i);
@@ -1466,7 +1642,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.socialResponsibilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.environmentalSustainabilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.pricingTransparencyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
-    this.comparisonOfPriceElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.settingsElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.companyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.visibilityMap = new Map();
@@ -1493,7 +1668,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.reorderMode = !this.reorderMode;
   }
 
-  toggleEditTitleMode(mode: boolean) {
+  toggleEditTitleMode(mode?: boolean) {
     if (mode == null) {
       this.editTitleMode = !this.editTitleMode;
     } else {
@@ -1825,4 +2000,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.isOwner;
   }
 
+  public get journeyMarkersCtrl(): FormArray {
+    return this.productForm.get('journeyMarkers') as FormArray;
+  }
 }

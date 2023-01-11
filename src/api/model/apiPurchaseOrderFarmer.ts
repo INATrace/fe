@@ -41,6 +41,10 @@ export interface ApiPurchaseOrderFarmer {
      */
     damagedPriceDeduction?: number;
     /**
+     * Damaged weight deduction
+     */
+    damagedWeightDeduction?: number;
+    /**
      * Fulfilled quantity
      */
     fulfilledQuantity?: number;
@@ -104,6 +108,10 @@ export namespace ApiPurchaseOrderFarmer {
          * Damaged price deduction
          */
         damagedPriceDeduction = 'damagedPriceDeduction',
+        /**
+         * Damaged weight deduction
+         */
+        damagedWeightDeduction = 'damagedWeightDeduction',
         /**
          * Fulfilled quantity
          */
@@ -188,6 +196,17 @@ export namespace ApiPurchaseOrderFarmer {
                     isEnum: false,
                     required: false,
                     name: 'damagedPriceDeduction',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'damagedWeightDeduction',
                     classname: 'ApiPurchaseOrderFarmer',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -327,6 +346,8 @@ export namespace ApiPurchaseOrderFarmer {
                 ],
                 damagedPriceDeduction: [
                 ],
+                damagedWeightDeduction: [
+                ],
                 fulfilledQuantity: [
                 ],
                 id: [
@@ -366,6 +387,9 @@ export namespace ApiPurchaseOrderFarmer {
   //                   validators: []
   //               },
   //               damagedPriceDeduction: {
+  //                   validators: []
+  //               },
+  //               damagedWeightDeduction: {
   //                   validators: []
   //               },
   //               fulfilledQuantity: {

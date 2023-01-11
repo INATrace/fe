@@ -24,6 +24,7 @@ import { ApiCompanyCustomer } from './apiCompanyCustomer';
 import { ApiFacility } from './apiFacility';
 import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
+import { ApiPayment } from './apiPayment';
 import { ApiProcessingOrder } from './apiProcessingOrder';
 import { ApiProductOrder } from './apiProductOrder';
 import { ApiSemiProduct } from './apiSemiProduct';
@@ -81,6 +82,10 @@ export interface ApiStockOrder {
      */
     damagedPriceDeduction?: number;
     /**
+     * Damaged weight deduction
+     */
+    damagedWeightDeduction?: number;
+    /**
      * Delivery time
      */
     deliveryTime?: Date;
@@ -137,9 +142,17 @@ export interface ApiStockOrder {
      */
     paid?: number;
     /**
+     * Payments for stock order
+     */
+    payments?: Array<ApiPayment>;
+    /**
      * Preferred way of payment
      */
     preferredWayOfPayment?: ApiStockOrder.PreferredWayOfPaymentEnum;
+    /**
+     * Option to determine price later after taking delivery
+     */
+    priceDeterminedLater?: boolean;
     /**
      * Price per unit
      */
@@ -254,6 +267,10 @@ export namespace ApiStockOrder {
          */
         damagedPriceDeduction = 'damagedPriceDeduction',
         /**
+         * Damaged weight deduction
+         */
+        damagedWeightDeduction = 'damagedWeightDeduction',
+        /**
          * Delivery time
          */
         deliveryTime = 'deliveryTime',
@@ -310,9 +327,17 @@ export namespace ApiStockOrder {
          */
         paid = 'paid',
         /**
+         * Payments for stock order
+         */
+        payments = 'payments',
+        /**
          * Preferred way of payment
          */
         preferredWayOfPayment = 'preferredWayOfPayment',
+        /**
+         * Option to determine price later after taking delivery
+         */
+        priceDeterminedLater = 'priceDeterminedLater',
         /**
          * Price per unit
          */
@@ -564,6 +589,17 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'damagedWeightDeduction',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'deliveryTime',
                     classname: 'ApiStockOrder',
                     dataType: 'Date',
@@ -753,6 +789,18 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiPayment.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'payments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiPayment&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPayment'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiStockOrder.PreferredWayOfPaymentEnum',
@@ -760,6 +808,17 @@ export namespace ApiStockOrder {
                     name: 'preferredWayOfPayment',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'priceDeterminedLater',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1059,6 +1118,8 @@ export namespace ApiStockOrder {
                 ],
                 damagedPriceDeduction: [
                 ],
+                damagedWeightDeduction: [
+                ],
                 deliveryTime: [
                 ],
                 facility: [
@@ -1093,7 +1154,11 @@ export namespace ApiStockOrder {
                 ],
                 paid: [
                 ],
+                payments: [
+                ],
                 preferredWayOfPayment: [
+                ],
+                priceDeterminedLater: [
                 ],
                 pricePerUnit: [
                 ],
@@ -1190,6 +1255,9 @@ export namespace ApiStockOrder {
   //               damagedPriceDeduction: {
   //                   validators: []
   //               },
+  //               damagedWeightDeduction: {
+  //                   validators: []
+  //               },
   //               deliveryTime: {
   //                   validators: []
   //               },
@@ -1241,7 +1309,13 @@ export namespace ApiStockOrder {
   //               paid: {
   //                   validators: []
   //               },
+  //               payments: {
+  //                   validators: []
+  //               },
   //               preferredWayOfPayment: {
+  //                   validators: []
+  //               },
+  //               priceDeterminedLater: {
   //                   validators: []
   //               },
   //               pricePerUnit: {
