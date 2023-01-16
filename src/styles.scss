@@ -107,14 +107,14 @@ p {
   }
 }
 
-.text-input{
+.text-input {
   padding-top: 11px;
   padding-bottom: 11px;
   border-radius: 5px;
   background-color: #FFFFFF;
 }
 
-.text-input-without-border{
+.text-input-without-border {
   background-color: $body-background;
   border-bottom: 1px solid $secondary;
   border-top: none;
@@ -127,7 +127,8 @@ p {
     padding-top: 0px;
   padding-bottom: 0px;
 }
-.text-input-without-border:focus{
+
+.text-input-without-border:focus {
   background-color: $body-background;
   border-bottom: 1px solid $secondary;
   border-top: none;
@@ -142,7 +143,7 @@ p {
 
 }
 
-.text-input-bigger{
+.text-input-bigger {
   padding-top: 29px;
   padding-bottom: 29px;
   border-radius: 5px;
@@ -394,8 +395,6 @@ button.btn:hover, a.btn:hover {
       color:$primary;
       background-color: $very-pale-cyan;
       border: 1px solid $primary;
-      // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-      // background-color: $very-pale-cyan;
 
       &.btn-link {
         box-shadow: none;
@@ -420,7 +419,10 @@ button.btn, a.btn {
     border: none;
 
     &:hover {
+      color: white;
       background-color: $landing-primary;
+      border: none;
+      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
     }
 
     &:focus {
@@ -2583,16 +2585,16 @@ animation-timing-function: ease-in;
 }
 .news-title {
   margin-top: 72px;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-section-title {
   margin-top: 40px;
   font-weight: 600;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-section-subtitle {
   font-weight: 600;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-summary {
   font-size: 1rem;
@@ -2607,7 +2609,7 @@ animation-timing-function: ease-in;
 .news-content a{
   font-size: 1.125rem;
   font-weight: 300;
-  color: $primary;
+  color: $landing-primary;
   text-decoration: underline;
 }
 

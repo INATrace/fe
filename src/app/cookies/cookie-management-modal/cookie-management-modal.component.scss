@@ -1,5 +1,11 @@
+@import "../../../variables";
+
 .modal-header {
     border-bottom: 0 none;
+
+    .landing-page {
+        color: $landing-primary;
+    }
 }
 .modal-footer {
     border-top: 0 none;
@@ -21,5 +27,20 @@
         font-size: 85%;
         font-style: italic;
         color: #888;
+    }
+}
+
+.modal-container {
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: $landing-primary;
+        background-color: $landing-primary;
+    }
+
+    .custom-control-input:focus ~ .custom-control-label::before {
+        box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+    }
+
+    .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+        border-color: $landing-primary;
     }
 }

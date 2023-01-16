@@ -6,12 +6,11 @@
         <div class="login-title" i18n="@@register.title">Create an account</div>
         <div class="login-big-spacer"></div>
 
-
         <textinput [form]="registerForm.get('name')" label="First name" style="width: 100%" placeholder="Enter your first name" class="register-text-left"
           biggerTextInput="true"
           i18n-label="@@register.textinput.firstname.label"
           i18n-placeholder="@@register.textinput.firstname.placeholder"
-          [isInvalid]="submitted && registerForm.get('name').invalid">
+          [isInvalid]="submitted && registerForm.get('name').invalid" [landingPageStyle]="true">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('name').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.firstname.error">
@@ -26,7 +25,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.surname.label"
           i18n-placeholder="@@register.textinput.surname.placeholder"
-          [isInvalid]="submitted && registerForm.get('surname').invalid">
+          [isInvalid]="submitted && registerForm.get('surname').invalid" [landingPageStyle]="true">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('surname').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.surname.error">
@@ -41,7 +40,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.email.label"
           i18n-placeholder="@@register.textinput.email.placeholder"
-          [isInvalid]="submitted && registerForm.get('email').invalid">
+          [isInvalid]="submitted && registerForm.get('email').invalid" [landingPageStyle]="true">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('email').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.email.errorRequired">
@@ -59,7 +58,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.password.label"
           i18n-placeholder="@@register.textinput.password.placeholder"
-          type="password" [isInvalid]="submitted && registerForm.get('password').invalid">
+          type="password" [isInvalid]="submitted && registerForm.get('password').invalid" [landingPageStyle]="true">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('password').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required || errors.minlength" i18n="@@register.textinput.password.error">
@@ -70,7 +69,7 @@
         </textinput>
 
         <checkbox-input #conditionEl [form]="registerForm.get('condition')"
-          [invalid]="submitted && registerForm.get('condition').invalid">
+          [invalid]="submitted && registerForm.get('condition').invalid" [landingPageStyle]="true">
           <checkbox-input-rich-label style="font-weight: 300;"
             i18n="@@register.checkbox-input">
           </checkbox-input-rich-label>
@@ -105,7 +104,7 @@
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
-        <button class="btn btn-solid round btn-register" (click)="onSubmit()" i18n="@@register.button.register">
+        <button class="btn landing-page btn-register" (click)="onSubmit()" i18n="@@register.button.register">
           <span>Register</span>
         </button>
       </div>
@@ -113,7 +112,7 @@
     <div class="col-sm-0 col-lg-6" style="background-color: rgba(247,247,247,0.56); border-radius: 32px;">
 
       <div class="login-right-side-text">
-        Everything starts with the good coffee.
+        Make agricultural supply chains transparent and fair with INATrace
       </div>
       <div class="login-right-side-subtext">
         <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
