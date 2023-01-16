@@ -374,23 +374,36 @@ button.btn, a.btn {
   }
 }
 
-a.btn {
-  padding: 0.5rem 2rem;
-}
-
 button.btn:hover, a.btn:hover {
-    color:$primary;
-    background-color: $very-pale-cyan;
-    border: 1px solid $primary;
-    // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    // background-color: $very-pale-cyan;
+    &.no-hover {
+      color: white;
+      background-color: $primary;
+      border: 1px solid $primary;
 
-    &.btn-link {
+      &.btn-link {
         box-shadow: none;
+      }
+
+      &.btn-outlined {
+        color:$primary;
+        background-color: transparent;
+      }
     }
-    &.btn-outlined {
+
+    &:not(.no-hover) {
+      color:$primary;
+      background-color: $very-pale-cyan;
+      border: 1px solid $primary;
+      // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      // background-color: $very-pale-cyan;
+
+      &.btn-link {
+        box-shadow: none;
+      }
+      &.btn-outlined {
         color:$primary;
         background-color: $very-pale-cyan;
+      }
     }
 }
 
@@ -4743,4 +4756,42 @@ $af-graph-col-bg: inherit;
   @include media-breakpoint-up(lg) {
     margin-left: 2rem;
   }
+}
+
+// Toggle switch checkbox
+input[type=checkbox].toggle-switch-checkbox {
+  display: none;
+}
+
+label.toggle-switch-label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 4em;
+  height: 2em;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  margin-bottom: 0px;
+}
+
+label.toggle-switch-label:after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  background: #FFFFFF;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input.toggle-switch-checkbox:checked + label.toggle-switch-label {
+  background: $moderate-cyan;
+}
+
+input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
 }

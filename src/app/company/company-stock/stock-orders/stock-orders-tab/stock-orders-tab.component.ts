@@ -9,7 +9,9 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import { map, startWith } from 'rxjs/operators';
+import {map, startWith, take} from 'rxjs/operators';
+import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
+import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
 
 @Component({
   selector: 'app-stock-orders-tab',
@@ -18,7 +20,13 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class StockOrdersTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription[] = [];
+
+  showGroupView = true;
   rootTab = 3;
+
+  isBeycoAuthorized = false;
+  isAuthRoleToExportToBeyco = false;
 
   showedOrders = 0;
   allOrders = 0;
@@ -31,7 +39,6 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
 
   semiProductFrom = new FormControl(null);
 
-  private facilityIdChangeSub: Subscription;
   facilitySemiProducts: FacilitySemiProductsCodebookService = null;
 
   reloadStockOrdersPing$ = new BehaviorSubject<boolean>(false);
@@ -51,7 +58,8 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
-    private codebookTranslations: CodebookTranslations
+    private codebookTranslations: CodebookTranslations,
+    private beycoTokenService: BeycoTokenService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController);
   }
@@ -59,12 +67,26 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   ngOnInit(): void {
     super.ngOnInit();
 
-    this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
+    this.isAuthorizedForBeyco();
+    this.subscriptions.push(
+        this.beycoTokenService.tokenAvailable$.subscribe(isAvailable => {
+          this.isBeycoAuthorized = isAvailable;
+        }),
+
+        this.route.queryParams.pipe(take(1)).subscribe(params => {
+          if (((params['code'] && params['scope']) || params['error']) && params['state']) {
+            this.beycoTokenService.getTokenWithAuthenticationCode(params);
+            this.router.navigate([], { relativeTo: this.route, queryParams: null, replaceUrl: true });
+          }
+        }),
+
+        this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId)),
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.facilityIdChangeSub) {
-      this.facilityIdChangeSub.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
     }
   }
 
@@ -92,6 +114,40 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
 
   onCountAllSO(event) {
     this.allOrders = event;
+  }
+
+  getAuthBeyco() {
+    this.beycoTokenService.redirectToBeycoAuthorization('/my-stock/orders/tab');
+  }
+
+  logoutFromBeyco() {
+    this.beycoTokenService.removeToken();
+    this.globalEventManager.push({
+      action: 'success',
+      notificationType: 'success',
+      title: $localize`:@@beycoToken.notification.logout.title:Logout from Beyco`,
+      message: $localize`:@@beycoToken.notification.logout.message:You successfully logged out!`
+    });
+  }
+
+  openBeycoOrderFieldList() {
+    const stockOrderIds = (this.showGroupView ? this.selectedGroupOrders.map(o => o.groupedIds[0]) : this.selectedOrders.map(o => o.id));
+    this.router.navigate(['my-stock', 'beyco', 'list'], { queryParams: { id: stockOrderIds } });
+  }
+
+  changeShowGroupView(doShow: boolean) {
+    this.showGroupView = doShow;
+  }
+
+  private isAuthorizedForBeyco() {
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.companyController.getCompanyUsingGET(companyId).subscribe(
+        (company) => {
+          if (company.status === ApiResponseApiCompanyGet.StatusEnum.OK) {
+            this.isAuthRoleToExportToBeyco = !!company.data.allowBeycoIntegration;
+          }
+        }
+    );
   }
 
 }

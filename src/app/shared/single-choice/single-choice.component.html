@@ -3,9 +3,10 @@
     <ng-select
         #ngSelect
         *ngIf="codebookService || enumChoices || this.isBooleanSelector()"
+        [multiple]="allowMultiple"
         [items]="this.options"
         [placeholder]="isDisabled() ? '' : (codebookService ? codebookService.placeholder() : (enumChoices ? enumPlaceholder : ''))"
-        [ngModel]="modelChoice"
+        [ngModel]="allowMultiple ? modelChoiceArr : modelChoice"
         (ngModelChange)="onChangeHandler($event)"
         [clearable]="clearable"
         [readonly]="readonly"

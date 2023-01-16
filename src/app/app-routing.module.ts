@@ -457,7 +457,7 @@ const routes: Routes = [
     path: 'q-cd/:uuid/:qrTag',
     component: QrCodeRedirectComponent,
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

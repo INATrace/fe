@@ -30,7 +30,6 @@ import { Observable }                                        from 'rxjs';
 import { catchError }                                        from 'rxjs/operators';
 
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
-import { ApiPaginatedResponseApiProcessingOrder } from '../model/apiPaginatedResponseApiProcessingOrder';
 import { ApiProcessingOrder } from '../model/apiProcessingOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiProcessingOrder } from '../model/apiResponseApiProcessingOrder';
@@ -116,11 +115,11 @@ export namespace DeleteProcessingOrderUsingDELETE {
 }
 
 /**
- * Namespace for getProcessingOrder.
+ * Namespace for getProcessingOrderUsingGET.
  */
-export namespace GetProcessingOrder {
+export namespace GetProcessingOrderUsingGET {
     /**
-     * Parameter map for getProcessingOrder.
+     * Parameter map for getProcessingOrderUsingGET.
      */
     export interface PartialParamMap {
       /**
@@ -134,7 +133,7 @@ export namespace GetProcessingOrder {
     }
 
     /**
-     * Enumeration of all parameters for getProcessingOrder.
+     * Enumeration of all parameters for getProcessingOrderUsingGET.
      */
     export enum Parameters {
       /**
@@ -148,96 +147,12 @@ export namespace GetProcessingOrder {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingOrder
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetProcessingOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
-      ],
-      language: [
-      ],
-    };
-}
-
-/**
- * Namespace for getProcessingOrderUsingGET.
- */
-export namespace GetProcessingOrderUsingGET {
-    /**
-     * Parameter map for getProcessingOrderUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType?: 'COUNT' | 'FETCH';
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit?: number;
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset?: number;
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy?: string;
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort?: 'ASC' | 'DESC';
-      /**
-       * language
-       */
-      language?: 'EN' | 'DE' | 'RW' | 'ES';
-    }
-
-    /**
-     * Enumeration of all parameters for getProcessingOrderUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType = 'requestType',
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit = 'limit',
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset = 'offset',
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy = 'sortBy',
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort = 'sort',
-      /**
-       * language
-       */
-      language = 'language'
-    }
-
-    /**
      * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingOrderUsingGET
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof GetProcessingOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
+      id: [
+              ['required', Validators.required],
       ],
       language: [
       ],
@@ -463,23 +378,23 @@ export class ProcessingOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProcessingOrderByMap(
-    map: GetProcessingOrder.PartialParamMap,
+  public getProcessingOrderUsingGETByMap(
+    map: GetProcessingOrderUsingGET.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProcessingOrder>;
-  public getProcessingOrderByMap(
-    map: GetProcessingOrder.PartialParamMap,
+  public getProcessingOrderUsingGETByMap(
+    map: GetProcessingOrderUsingGET.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-  public getProcessingOrderByMap(
-    map: GetProcessingOrder.PartialParamMap,
+  public getProcessingOrderUsingGETByMap(
+    map: GetProcessingOrderUsingGET.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-  public getProcessingOrderByMap(
-    map: GetProcessingOrder.PartialParamMap,
+  public getProcessingOrderUsingGETByMap(
+    map: GetProcessingOrderUsingGET.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingOrder(
+    return this.getProcessingOrderUsingGET(
       map.id,
       map.language,
       observe,
@@ -496,12 +411,12 @@ export class ProcessingOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
-    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
+    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
+    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
+    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProcessingOrder.');
+            throw new Error('Required parameter id was null or undefined when calling getProcessingOrderUsingGET.');
         }
 
         let headers = this.defaultHeaders;
@@ -530,116 +445,6 @@ export class ProcessingOrderControllerService {
 
         const handle = this.httpClient.get<ApiResponseApiProcessingOrder>(`${this.configuration.basePath}/api/chain/processing-order/${encodeURIComponent(String(id))}`,
             {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingOrder')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a paginated list of processing orders. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiPaginatedResponseApiProcessingOrder>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProcessingOrder>>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProcessingOrder>>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingOrderUsingGET(
-      map.requestType,
-      map.limit,
-      map.offset,
-      map.sortBy,
-      map.sort,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a paginated list of processing orders.
-     * 
-     * @param requestType Only count, only fetch, or return both values (if null)
-     * @param limit Number of records to return. Min: 1, default: 100
-     * @param offset Number of records to skip before returning. Default: 0, min: 0
-     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
-     * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getProcessingOrderUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingOrder>;
-    public getProcessingOrderUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingOrder>>;
-    public getProcessingOrderUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingOrder>>;
-    public getProcessingOrderUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (requestType !== undefined && requestType !== null) {
-            queryParameters = queryParameters.set('requestType', <any>requestType);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-            queryParameters = queryParameters.set('sortBy', <any>sortBy);
-        }
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
-        }
-
-        let headers = this.defaultHeaders;
-        if (language !== undefined && language !== null) {
-            headers = headers.set('language', String(language));
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiPaginatedResponseApiProcessingOrder>(`${this.configuration.basePath}/api/chain/processing-order/list`,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

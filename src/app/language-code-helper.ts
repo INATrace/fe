@@ -22,7 +22,7 @@ export abstract class LanguageCodeHelper {
       }
 
       if (newUrl !== window.location.href) {
-        window.location.href = newUrl;
+        window.history.replaceState(null, '', newUrl);
       }
     }
   }
@@ -42,15 +42,22 @@ export abstract class LanguageCodeHelper {
   }
 
   public static getCurrentLocale(): string {
+
     // Retrieve localeId from the url if any; otherwise, default to 'en-US'.
     // The first time the app loads, check the browser language.
     const storedLocaleId = LanguageCodeHelper.getCultureFromCurrentUrl();
+
     if (storedLocaleId == null) {
       let partialLocaleMatch = null;
       // tslint:disable-next-line:forin
       for (const id in LanguageCodeHelper.implementedLocales) {
         const implemetedLocaleId = LanguageCodeHelper.implementedLocales[id];
-        if (navigator.language === implemetedLocaleId) {
+
+        // Check for stored locale in local storage
+        const inatraceLocale = localStorage.getItem('inatraceLocale');
+        if (inatraceLocale === implemetedLocaleId) {
+          return inatraceLocale;
+        } else if (navigator.language === implemetedLocaleId) {
           // Exact match, return.
           return implemetedLocaleId;
         } else if (navigator.language.startsWith(implemetedLocaleId)) {

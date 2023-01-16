@@ -711,7 +711,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       try {
 
         respProcessingOrder = await this.processingOrderController
-          .getProcessingOrder(this.outputStockOrder.processingOrder.id).pipe(take(1)).toPromise();
+          .getProcessingOrderUsingGET(this.outputStockOrder.processingOrder.id).pipe(take(1)).toPromise();
 
       } catch (e) {
         throw e;
@@ -987,7 +987,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
             const newStockOrder: ApiStockOrder = {
               ...sharedFields,
               id: outputStockOrder.id,
-              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value + `/${ outputStockOrder.sacNumber }`,
+              internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value,
               creatorId: this.creatorId,
               semiProduct,
               finalProduct,

@@ -36,6 +36,10 @@ export interface ApiCompany {
      */
     about?: string;
     /**
+     * Is company allowed to export orders to Beyco platform
+     */
+    allowBeycoIntegration?: boolean;
+    /**
      * company certifications
      */
     certifications?: Array<ApiCertification>;
@@ -104,6 +108,10 @@ export namespace ApiCompany {
          * about the company
          */
         about = 'about',
+        /**
+         * Is company allowed to export orders to Beyco platform
+         */
+        allowBeycoIntegration = 'allowBeycoIntegration',
         /**
          * company certifications
          */
@@ -181,6 +189,17 @@ export namespace ApiCompany {
                     name: 'about',
                     classname: 'ApiCompany',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'allowBeycoIntegration',
+                    classname: 'ApiCompany',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -361,6 +380,8 @@ export namespace ApiCompany {
                 ],
                 about: [
                 ],
+                allowBeycoIntegration: [
+                ],
                 certifications: [
                 ],
                 currency: [
@@ -402,6 +423,9 @@ export namespace ApiCompany {
   //                   validators: []
   //               },
   //               about: {
+  //                   validators: []
+  //               },
+  //               allowBeycoIntegration: {
   //                   validators: []
   //               },
   //               certifications: {

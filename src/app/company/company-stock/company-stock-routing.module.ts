@@ -20,6 +20,10 @@ const routes: Routes = [
   },
   {
     path: 'orders', loadChildren: () => import('./stock-orders/stock-orders.module').then(m => m.StockOrdersModule)
+  },
+  {
+    path: 'beyco',
+    loadChildren: () => import('./beyco-order/beyco-order.module').then(m => m.BeycoOrderModule)
   }
 ];
 

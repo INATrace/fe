@@ -8,6 +8,7 @@ import { ApiResponseApiUserGet } from 'src/api/model/apiResponseApiUserGet';
 import { ApiUserGet } from 'src/api/model/apiUserGet';
 import { GlobalEventManagerService } from './global-event-manager.service';
 import { LanguageCodeHelper } from '../language-code-helper';
+import {BeycoTokenService} from '../shared-services/beyco-token.service';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
         private route: ActivatedRoute,
         private router: Router,
         private userController: UserControllerService,
-        private globalEventManager: GlobalEventManagerService
+        private globalEventManager: GlobalEventManagerService,
+        private beycoTokenService: BeycoTokenService
     ) {
         this.refreshUserProfile();
     }
@@ -35,7 +37,10 @@ export class AuthService {
     )),
     map((resp: ApiResponseApiUserGet) => {
       if (resp) {
-        if (resp.data.language) { LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase()); }
+        if (resp.data.language) {
+            LanguageCodeHelper.setCurrentLocale(resp.data.language.toLowerCase());
+            localStorage.setItem('inatraceLocale', resp.data.language.toLowerCase());
+        }
         return resp.data;
       }
       return null;
@@ -85,6 +90,7 @@ export class AuthService {
         localStorage.removeItem('selectedUserCompany');
         this.globalEventManager.selectedUserCompany(null);
         await this.userController.logoutUsingPOST().pipe(take(1)).toPromise();
+        this.beycoTokenService.removeToken();
         this._currentUserProfile = null;
         this.loggedIn$.next(false);
         if (redirect !== null) {

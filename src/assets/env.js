@@ -13,4 +13,8 @@
     window['env']['googleMapsApiKey'] = '';
     window['env']['tokenForPublicLogRoute'] = '';
 
+    // Environment variables for Beyco integration
+    window['env']['beycoAuthURL'] = ''
+    window['env']['beycoClientId'] = ''
+
 })(this);

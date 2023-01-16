@@ -49,3 +49,44 @@
       color: #c4c3c3;
       z-index:3;
     }
+
+.input-wrapper {
+      display: flex;
+      background-color: #FFFFFF;
+      border-radius: 5px;
+      border: 1px solid #CED4DA;
+}
+
+.input-wrapper:focus-within {
+      box-shadow: 0 0 0 0.2rem rgb(93 188 207 / 25%);
+}
+
+.input-wrapper:hover {
+      cursor: text;
+}
+
+.prefix, .suffix {
+      position: relative;
+      color: #7B7B93;
+}
+
+.prefix {
+      padding: 6px 0 0 8px;
+}
+
+.suffix {
+      padding: 6px 8px 0 0;
+}
+
+.text-input-line{
+      padding-top: 11px;
+      padding-bottom: 11px;
+      border-radius: 5px;
+      background-color: transparent;
+      border: none;
+}
+
+.text-input-line:focus{
+      box-shadow: none;
+}
+

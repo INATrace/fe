@@ -12,6 +12,7 @@ import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ApiUserRole } from 'src/api/model/apiUserRole';
+import {BeycoTokenService} from '../../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -41,7 +42,8 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     protected globalEventsManager: GlobalEventManagerService,
     private route: ActivatedRoute,
     private companyController: CompanyControllerService,
-    private router: Router
+    private router: Router,
+    private beycoTokenService: BeycoTokenService
   ) {
     super();
   }
@@ -136,6 +138,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
         this.globalEventsManager.selectedUserCompany(res.data.name);
         localStorage.setItem('token', 'user-company-changed');
         this.changedCompany = true;
+        this.beycoTokenService.removeToken();
       }
     }
   }
