@@ -415,18 +415,31 @@ button.btn, a.btn {
   &.landing-page {
     color: white;
     background-color: $landing-primary;
+    border-color: $landing-primary;
     transition: background-color 0.4s ease-out 0s;
-    border: none;
 
     &:hover {
       color: white;
       background-color: $landing-primary;
-      border: none;
+      border-color: $landing-primary;
       box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
     }
 
     &:focus {
+      border-color: $landing-primary;
       box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+    }
+  }
+}
+
+button.btn.btn-outlined, a.btn.btn-outlined {
+  &.landing-page {
+    background-color: transparent;
+    color: $landing-primary;
+
+    &:hover {
+      background-color: transparent;
+      color: $landing-primary;
     }
   }
 }
