@@ -11,17 +11,20 @@
     </div>
     <fa-icon *ngIf="modal" class="ml-2 edit-link" [icon]="'pen'" (click)="this.editModal()"></fa-icon>
   </label>
-  <div *ngIf="showInputField && !textarea" class="input-wrapper" (click)="focusOnInput()">
+  <div *ngIf="showInputField && !textarea" class="input-wrapper"
+       (click)="focusOnInput()"
+       [class.prefix-or-suffix-input-wrapper]="prefix != null || suffix != null">
     <div class="prefix" *ngIf="prefix">{{ prefix }}</div>
       <input
         #inputfield
         *ngIf="valueTextInput"
-        class="form-control text-input-line labelPlaceholder"
+        class="form-control labelPlaceholder"
         [id]="id"
         [value]="value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
         [class.landing-page]="landingPageStyle"
+        [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"
         style="margin-bottom: 0;"
@@ -35,11 +38,12 @@
         #inputfield
         *ngIf="!forceNumeric() && form && !languageFormArray && !typeaheadEnabled()"
         [formControl]="form"
-        class="form-control text-input-line labelPlaceholder"
+        class="form-control labelPlaceholder"
         [id]="id"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
         [class.landing-page]="landingPageStyle"
+        [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"
         style="margin-bottom: 0;"
@@ -53,12 +57,13 @@
       <input
         #inputfield
         *ngIf="!forceNumeric() && form && !languageFormArray && typeaheadEnabled()"
-        class="form-control text-input-line labelPlaceholder"
+        class="form-control labelPlaceholder"
         [id]="id"
         [value]="form.value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
         [class.landing-page]="landingPageStyle"
+        [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         #instance="ngbTypeahead"
         [ngbTypeahead]="typeaheadSearch"
         [resultFormatter]="resultFormatter"
@@ -79,12 +84,13 @@
         #inputfield
         *ngIf="!forceNumeric() && !form && languageFormArray"
         [formControl]="languageFormControl"
-        class="form-control text-input-line labelPlaceholder"
+        class="form-control labelPlaceholder"
         [id]="id"
         [value]="languageFormControl.value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
         [class.landing-page]="landingPageStyle"
+        [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         [type]="type"
         [step]="step"
         [min]="min"
@@ -95,7 +101,7 @@
       <input
         #inputfield
         name="numericInput"
-        class="form-control text-input-line labelPlaceholder"
+        class="form-control labelPlaceholder"
         *ngIf="forceNumeric()"
         [ngModel]="model"
         (ngModelChange)="onChange($event)"
@@ -103,6 +109,7 @@
         [readonly]="readOnly"
         [ngClass]="{ 'is-invalid': isInvalid || isNaN() || numericError, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
         [class.landing-page]="landingPageStyle"
+        [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"
         [type]="type"
