@@ -135,8 +135,8 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
             facilityId,
             isPurchaseOrderOnly,
             availableOnly,
-            productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
-            productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
+            productionDateStart: deliveryDates.from,
+            productionDateEnd: deliveryDates.to,
             semiProductId
           };
         }),

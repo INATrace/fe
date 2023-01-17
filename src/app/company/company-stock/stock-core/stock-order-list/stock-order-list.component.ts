@@ -185,8 +185,8 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           semiProductId,
           wayOfPayment,
           isWomenShare,
-          productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
-          productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
+          productionDateStart: deliveryDates.from,
+          productionDateEnd: deliveryDates.to,
           query: query ? query : null
         };
       }),

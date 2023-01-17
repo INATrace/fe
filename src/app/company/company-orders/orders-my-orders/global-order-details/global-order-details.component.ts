@@ -161,7 +161,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
       order.facility = this.outputFacilityForm.value;
       order.fulfilledQuantity = 0;
       order.availableQuantity = 0;
-      order.productionDate = new Date();
+      order.productionDate = new Date().toLocaleDateString();
       order.orderType = OrderTypeEnum.GENERALORDER;
       order.internalLotNumber = `${productOrder.orderId} (${order.finalProduct.name}, ${order.totalQuantity} ${order.finalProduct.measurementUnitType.label})`;
 

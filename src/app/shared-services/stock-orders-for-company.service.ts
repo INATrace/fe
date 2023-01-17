@@ -27,8 +27,8 @@ export class StockOrdersForCompanyService extends GeneralSifrantService<ApiStock
       private isWomenShare: boolean,
       private wayOfPayment: PreferredWayOfPaymentEnum,
       private orderType: OrderTypeEnum,
-      private productionDateStart: Date,
-      private productionDateEnd: Date,
+      private productionDateStart: string,
+      private productionDateEnd: string,
       private producerUserCustomerName: string,
   ) {
     super();

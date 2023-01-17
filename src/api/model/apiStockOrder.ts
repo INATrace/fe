@@ -167,7 +167,7 @@ export interface ApiStockOrder {
     /**
      * Production date
      */
-    productionDate?: Date;
+    productionDate?: string;
     productionLocation?: ApiStockOrderLocation;
     purchaseOrder?: boolean;
     /**
@@ -887,7 +887,7 @@ export namespace ApiStockOrder {
                     required: false,
                     name: 'productionDate',
                     classname: 'ApiStockOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
