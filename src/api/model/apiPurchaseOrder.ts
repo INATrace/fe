@@ -43,7 +43,7 @@ export interface ApiPurchaseOrder {
     /**
      * Delivery date
      */
-    deliveryTime?: Date;
+    deliveryTime?: string;
     facility?: ApiFacility;
     farmers?: Array<ApiPurchaseOrderFarmer>;
     /**
@@ -57,7 +57,7 @@ export interface ApiPurchaseOrder {
     /**
      * Production date
      */
-    productionDate?: Date;
+    productionDate?: string;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
      * Timestamp indicates when purchase order have been updated
@@ -183,7 +183,7 @@ export namespace ApiPurchaseOrder {
                     required: false,
                     name: 'deliveryTime',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -241,7 +241,7 @@ export namespace ApiPurchaseOrder {
                     required: false,
                     name: 'productionDate',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

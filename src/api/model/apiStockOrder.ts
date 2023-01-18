@@ -88,7 +88,7 @@ export interface ApiStockOrder {
     /**
      * Delivery time
      */
-    deliveryTime?: Date;
+    deliveryTime?: string;
     facility?: ApiFacility;
     finalProduct?: ApiFinalProduct;
     /**
@@ -602,7 +602,7 @@ export namespace ApiStockOrder {
                     required: false,
                     name: 'deliveryTime',
                     classname: 'ApiStockOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
