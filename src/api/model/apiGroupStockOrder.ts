@@ -30,7 +30,7 @@ export interface ApiGroupStockOrder {
     /**
      * Delivery time
      */
-    deliveryTime?: Date;
+    deliveryTime?: string;
     /**
      * Final product name
      */
@@ -62,7 +62,7 @@ export interface ApiGroupStockOrder {
     /**
      * Production date
      */
-    productionDate?: Date;
+    productionDate?: string;
     /**
      * Semi product name
      */
@@ -192,7 +192,7 @@ export namespace ApiGroupStockOrder {
                     required: false,
                     name: 'deliveryTime',
                     classname: 'ApiGroupStockOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -281,7 +281,7 @@ export namespace ApiGroupStockOrder {
                     required: false,
                     name: 'productionDate',
                     classname: 'ApiGroupStockOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

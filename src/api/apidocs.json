@@ -12368,7 +12368,7 @@
           },
           "deliveryTime": {
             "description": "Delivery time",
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "finalProductName": {
@@ -12413,7 +12413,7 @@
           },
           "productionDate": {
             "description": "Production date",
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "semiProductName": {
