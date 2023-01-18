@@ -479,7 +479,7 @@
             "name": "productionDateStart",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -489,7 +489,7 @@
             "name": "productionDateEnd",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -2785,7 +2785,7 @@
             "name": "productionDateStart",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -2795,7 +2795,7 @@
             "name": "productionDateEnd",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -2821,7 +2821,7 @@
           {
             "description": "Search by representative of farmer id",
             "in": "query",
-            "name": "representativeOfRecepientUserCustomerId",
+            "name": "representativeOfRecipientUserCustomerId",
             "required": false,
             "schema": {
               "format": "int64",
@@ -2955,7 +2955,7 @@
             "name": "productionDateStart",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -2965,7 +2965,7 @@
             "name": "productionDateEnd",
             "required": false,
             "schema": {
-              "format": "date-time",
+              "format": "date",
               "type": "string"
             }
           },
@@ -14525,8 +14525,8 @@
             "type": "string"
           },
           "formalCreationTime": {
-            "description": "Formal creation time (for example: date on receipt)",
-            "format": "date-time",
+            "description": "Formal creation date (for example: date on receipt)",
+            "format": "date",
             "type": "string"
           },
           "id": {
@@ -14591,7 +14591,7 @@
           },
           "productionDate": {
             "description": "Production date",
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "purchased": {

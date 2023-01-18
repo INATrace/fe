@@ -42,9 +42,9 @@ export interface ApiPayment {
      */
     currency?: string;
     /**
-     * Formal creation time (for example: date on receipt)
+     * Formal creation date (for example: date on receipt)
      */
-    formalCreationTime?: Date;
+    formalCreationTime?: string;
     /**
      * Entity id
      */
@@ -74,7 +74,7 @@ export interface ApiPayment {
     /**
      * Production date
      */
-    productionDate?: Date;
+    productionDate?: string;
     /**
      * Quantity purchased to be paid
      */
@@ -129,7 +129,7 @@ export namespace ApiPayment {
          */
         currency = 'currency',
         /**
-         * Formal creation time (for example: date on receipt)
+         * Formal creation date (for example: date on receipt)
          */
         formalCreationTime = 'formalCreationTime',
         /**
@@ -309,7 +309,7 @@ export namespace ApiPayment {
                     required: false,
                     name: 'formalCreationTime',
                     classname: 'ApiPayment',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -414,7 +414,7 @@ export namespace ApiPayment {
                     required: false,
                     name: 'productionDate',
                     classname: 'ApiPayment',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
