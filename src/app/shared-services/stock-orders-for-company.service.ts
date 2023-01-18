@@ -86,4 +86,5 @@ export class StockOrdersForCompanyService extends GeneralSifrantService<ApiStock
   formatDate(productionDate) {
     return productionDate ? formatDateWithDots(productionDate) : null;
   }
+
 }

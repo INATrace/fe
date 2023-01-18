@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { formatDateWithDots } from 'src/shared/utils';
+import { formatDateTimeWithDots } from 'src/shared/utils';
 
 @Component({
   selector: 'app-last-seen-tag',
@@ -18,13 +18,15 @@ export class LastSeenTagComponent implements OnInit {
 
   date;
   time;
+
   ngOnInit(): void {
     this.formatDateAndHour();
   }
 
   formatDateAndHour() {
     const date = new Date(this.dateFormat);
-    this.date = formatDateWithDots(this.dateFormat);
+    this.date = formatDateTimeWithDots(this.dateFormat);
     this.time = date.getHours() + ':' + date.getMinutes().toString().padStart(2, '0');
   }
+
 }

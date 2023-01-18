@@ -1,8 +1,8 @@
-import { FormArray, FormControl, FormGroup, AbstractControl, ValidatorFn } from '@angular/forms';
-import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { take } from 'rxjs/operators';
-import { GeneralSifrantService } from 'src/app/shared-services/general-sifrant.service';
+import {AbstractControl, FormArray, FormControl, FormGroup} from '@angular/forms';
+import {SimpleValidationScheme} from 'src/interfaces/Validation';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
+import {take} from 'rxjs/operators';
+import {GeneralSifrantService} from 'src/app/shared-services/general-sifrant.service';
 
 /**
  * Like map() on lists, but for js/ts objects.
@@ -446,22 +446,36 @@ export function getPath(route: ActivatedRouteSnapshot): string {
   return pathFromParent
 }
 
-//date and time formatter
+// Date and time formatters
 export function formatDateWithDots(dateToBeFormatted: string): string {
-  let date = new Date(dateToBeFormatted);
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let dt = date.getDate();
+
+  // Create date with time in the local system timezone
+  const date = new Date(dateToBeFormatted + 'T00:00:00');
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const dt = date.getDate();
 
   return dt + '.' + month + '.' + year;
 }
 
-export function formatDateWithDotsAtHour(dateToBeFormatted: string) {
-  let date = formatDateWithDots(dateToBeFormatted);
-  let wholeDate = new Date(dateToBeFormatted);
-  let time = wholeDate.getHours() + ':' + wholeDate.getMinutes().toString().padStart(2, "0");
-  let res = $localize`:@@utsil.dateAndTimeFormatter.at:${ date } at ${ time }`;
-  return res
+export function formatDateTimeWithDots(dateTimeToBeFormatted: string): string {
+
+  const date = new Date(dateTimeToBeFormatted);
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const dt = date.getDate();
+
+  return dt + '.' + month + '.' + year;
+}
+
+export function formatDateWithDotsAtHour(dateTimeToBeFormatted: string) {
+
+  const date = formatDateTimeWithDots(dateTimeToBeFormatted);
+  const wholeDate = new Date(dateTimeToBeFormatted);
+  const time = wholeDate.getHours() + ':' + wholeDate.getMinutes().toString().padStart(2, '0');
+  return $localize`:@@utsil.dateAndTimeFormatter.at:${date} at ${time}`;
 }
 
 export function isEmptyDictionary(dict: any) {

@@ -15,7 +15,6 @@ import { ModeEnum } from '../stock-payments-form/stock-payments-form.component';
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import { ApiPaginatedListApiPayment } from '../../../../../api/model/apiPaginatedListApiPayment';
 
-
 @Component({
   selector: 'app-stock-payments-list',
   templateUrl: './stock-payments-list.component.html',

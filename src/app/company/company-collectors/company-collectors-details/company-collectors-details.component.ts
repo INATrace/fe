@@ -6,7 +6,7 @@ import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
-import { defaultEmptyObject, formatDateWithDots, generateFormFromMetadata } from '../../../../shared/utils';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
 import {
   ApiUserCustomerCooperativeValidationScheme,
   ApiUserCustomerValidationScheme
@@ -374,11 +374,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
 
   deleteAssociation(item, index) {
     this.collectorForm.value.associations.splice(index, 1);
-  }
-
-  formatDate(productionDate) {
-    if (productionDate) { return formatDateWithDots(productionDate); }
-    return '';
   }
 
   changeSort(event, type) {

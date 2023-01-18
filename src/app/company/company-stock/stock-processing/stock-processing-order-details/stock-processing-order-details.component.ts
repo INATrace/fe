@@ -1953,18 +1953,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Prepare date filters
     if (from && to) {
-      requestParams.productionDateStart = new Date(from);
-      requestParams.productionDateEnd = new Date(to);
+      // requestParams.productionDateStart = new Date(from);
+      // requestParams.productionDateEnd = new Date(to);
+      requestParams.productionDateStart = from;
+      requestParams.productionDateEnd = to;
     } else if (from) {
-      requestParams.productionDateStart = new Date(from);
+      // requestParams.productionDateStart = new Date(from);
+      requestParams.productionDateStart = from;
 
-      const tomorrow = new Date();
-      tomorrow.setDate(new Date().getDate() + 1);
-      requestParams.productionDateEnd = tomorrow;
+      // const tomorrow = new Date();
+      // tomorrow.setDate(new Date().getDate() + 1);
+      // requestParams.productionDateEnd = tomorrow;
 
     } else if (to) {
-      requestParams.productionDateStart = new Date(null);
-      requestParams.productionDateEnd = new Date(to);
+      // requestParams.productionDateStart = new Date(null);
+      // requestParams.productionDateEnd = new Date(to);
+
+      requestParams.productionDateEnd = to;
     }
 
     // Get the available stock in the provided facility for the provided semi-product
