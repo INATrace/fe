@@ -15947,7 +15947,7 @@
           },
           "deliveryDeadline": {
             "description": "The delivery deadline of this order",
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "facility": {

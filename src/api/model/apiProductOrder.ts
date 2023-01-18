@@ -29,7 +29,7 @@ export interface ApiProductOrder {
     /**
      * The delivery deadline of this order
      */
-    deliveryDeadline?: Date;
+    deliveryDeadline?: string;
     facility?: ApiFacility;
     /**
      * Entity id
@@ -121,7 +121,7 @@ export namespace ApiProductOrder {
                     required: false,
                     name: 'deliveryDeadline',
                     classname: 'ApiProductOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
