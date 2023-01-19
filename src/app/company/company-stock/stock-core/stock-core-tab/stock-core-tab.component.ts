@@ -6,7 +6,7 @@ import { GeneralSifrantService } from '../../../../shared-services/general-sifra
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { CompanyCollectingFacilitiesService } from '../../../../shared-services/company-collecting-facilities.service';
-import { dateAtMidnightISOString, setNavigationParameter } from '../../../../../shared/utils';
+import {dateISOString, setNavigationParameter} from '../../../../../shared/utils';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -183,17 +183,17 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     }
 
     if (from && to) {
-      from = dateAtMidnightISOString(from);
-      to = dateAtMidnightISOString(to);
+      from = dateISOString(from);
+      to = dateISOString(to);
     } else if (from) {
       const tomorrow = new Date();
       tomorrow.setDate(new Date().getDate() + 1);
-      from = dateAtMidnightISOString(from);
-      to = dateAtMidnightISOString(tomorrow);
+      from = dateISOString(from);
+      to = dateISOString(tomorrow);
     } else if (to) {
-      const fromBeginingOfTime = new Date(null);
-      from = dateAtMidnightISOString(fromBeginingOfTime);
-      to = dateAtMidnightISOString(to);
+      const fromBeginningOfTime = new Date(null);
+      from = dateISOString(fromBeginningOfTime);
+      to = dateISOString(to);
     } else {
       from = null;
       to = null;

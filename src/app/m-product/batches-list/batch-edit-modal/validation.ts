@@ -1,8 +1,8 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { ApiProductLabelBatch } from 'src/api/model/apiProductLabelBatch';
 import { Validators, FormGroup, ValidationErrors } from '@angular/forms';
-import { dateAtNoonISOString } from 'src/shared/utils';
 import { multiFieldValidator } from 'src/shared/validation';
+import {dateISOString} from '../../../../shared/utils';
 
 
 function expiryDateBeforeProductionDate(control: FormGroup): ValidationErrors | null {
@@ -10,8 +10,8 @@ function expiryDateBeforeProductionDate(control: FormGroup): ValidationErrors | 
   if (!productionDate) return null
   let expiryDate = control.value && control.value['expiryDate'];
   if (!expiryDate) return null
-  productionDate = dateAtNoonISOString(productionDate)
-  expiryDate = dateAtNoonISOString(expiryDate)
+  productionDate = dateISOString(productionDate)
+  expiryDate = dateISOString(expiryDate)
   return expiryDate < productionDate
       ? { endBeforeStart: true }
       : null

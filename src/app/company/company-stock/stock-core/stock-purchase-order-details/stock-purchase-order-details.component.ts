@@ -13,7 +13,7 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { ApiUserCustomer } from '../../../../../api/model/apiUserCustomer';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
-import { dateAtMidnightISOString, dateAtNoonISOString, defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
+import {dateISOString, defaultEmptyObject, generateFormFromMetadata} from '../../../../../shared/utils';
 import { ApiStockOrderValidationScheme } from './validation';
 import { Location } from '@angular/common';
 import { AuthService } from '../../../../core/auth.service';
@@ -777,7 +777,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
   }
 
   private setDate() {
-    const today = dateAtMidnightISOString(new Date().toDateString());
+    const today = dateISOString(new Date());
     this.stockOrderForm.get('productionDate').setValue(today);
   }
 
@@ -785,7 +785,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.setQuantities();
     const pd = this.stockOrderForm.get('productionDate').value;
     if (pd != null) {
-      this.stockOrderForm.get('productionDate').setValue(dateAtNoonISOString(pd));
+      this.stockOrderForm.get('productionDate').setValue(dateISOString(pd));
     }
   }
 

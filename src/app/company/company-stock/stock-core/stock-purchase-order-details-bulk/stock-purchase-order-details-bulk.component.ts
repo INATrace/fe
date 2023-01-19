@@ -4,8 +4,7 @@ import {ApiActivityProof} from '../../../../../api/model/apiActivityProof';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ApiActivityProofValidationScheme} from '../additional-proof-item/validation';
 import {
-  dateAtMidnightISOString,
-  dateAtNoonISOString,
+  dateISOString,
   defaultEmptyObject,
   generateFormFromMetadata
 } from '../../../../../shared/utils';
@@ -690,7 +689,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
   }
 
   private setDate() {
-    const today = dateAtMidnightISOString(new Date().toDateString());
+    const today = dateISOString(new Date());
     this.purchaseOrderBulkForm.get('productionDate').setValue(today);
   }
 
@@ -698,7 +697,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit {
     this.setQuantities();
     const pd = this.purchaseOrderBulkForm.get('productionDate').value;
     if (pd != null) {
-      this.purchaseOrderBulkForm.get('productionDate').setValue(dateAtNoonISOString(pd));
+      this.purchaseOrderBulkForm.get('productionDate').setValue(dateISOString(pd));
     }
   }
 

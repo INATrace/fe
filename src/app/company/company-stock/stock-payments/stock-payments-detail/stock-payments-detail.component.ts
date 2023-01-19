@@ -7,7 +7,7 @@ import { PaymentControllerService } from '../../../../../api/api/paymentControll
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
-import { dateAtMidnightISOString, dateAtNoonISOString, generateFormFromMetadata } from '../../../../../shared/utils';
+import {dateISOString, generateFormFromMetadata} from '../../../../../shared/utils';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiPaymentValidationScheme } from '../validation';
 import { Location } from '@angular/common';
@@ -158,7 +158,7 @@ export class StockPaymentsDetailComponent implements OnInit {
     this.paymentForm = generateFormFromMetadata(ApiPayment.formMetadata(), {}, ApiPaymentValidationScheme);
 
     // Formal creation time
-    const today = dateAtMidnightISOString(new Date().toDateString());
+    const today = dateISOString(new Date());
     this.paymentForm.get('formalCreationTime').setValue(today);
 
     // If we are in purchase mode (purchase order from a farmer), set the currency of the payment to be the currency of the stock order
@@ -247,7 +247,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     const formalCreationTime = this.paymentForm.get('formalCreationTime').value;
     if (formalCreationTime) {
-      this.paymentForm.get('formalCreationTime').setValue(dateAtNoonISOString(formalCreationTime));
+      this.paymentForm.get('formalCreationTime').setValue(dateISOString(formalCreationTime));
     }
 
     try {

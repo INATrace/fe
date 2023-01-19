@@ -7,7 +7,6 @@ import { take } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
-import { dateAtMidnightISOString } from '../../../../../shared/utils';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
@@ -17,6 +16,7 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
+import {dateISOString} from '../../../../../shared/utils';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -243,8 +243,8 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     }
 
     if (this.producerListForm.value) {
-      const from = dateAtMidnightISOString(this.fromSeasonalFilterDate.value);
-      const to = dateAtMidnightISOString(this.toSeasonalFilterDate.value);
+      const from = dateISOString(this.fromSeasonalFilterDate.value);
+      const to = dateISOString(this.toSeasonalFilterDate.value);
 
       let resp;
       if (this.orderListForm.value) {

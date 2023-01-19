@@ -10,8 +10,7 @@ import { ApiBulkPayment } from '../../../../../api/model/apiBulkPayment';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { Subscription } from 'rxjs';
 import {
-  dateAtMidnightISOString,
-  dateAtNoonISOString,
+  dateISOString,
   defaultEmptyObject,
   generateFormFromMetadata
 } from '../../../../../shared/utils';
@@ -204,7 +203,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
   async setDateAndOtherFieldsThatCanBeFilled() {
 
-    const today = dateAtMidnightISOString(new Date().toDateString());
+    const today = dateISOString(new Date());
     this.bulkPaymentForm.get('formalCreationTime').setValue(today);
 
     // Paying company is the company in which the user is currently logged in
@@ -385,7 +384,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
 
     const formalCreationTime = this.bulkPaymentForm.get('formalCreationTime').value;
     if (formalCreationTime) {
-      this.bulkPaymentForm.get('formalCreationTime').setValue(dateAtNoonISOString(formalCreationTime));
+      this.bulkPaymentForm.get('formalCreationTime').setValue(dateISOString(formalCreationTime));
     }
 
     (this.bulkPaymentForm.get('payments') as FormArray).clear();

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { dateAtMidnightISOString, generateFormFromMetadata } from 'src/shared/utils';
+import {dateISOString, generateFormFromMetadata} from 'src/shared/utils';
 import { ApiActivityProofValidationScheme } from './validation';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
@@ -74,7 +74,7 @@ export class AdditionalProofItemComponent extends GenericEditableItemComponent<A
   ngOnInit(): void {
 
     if (this.form.value?.id == null) {
-      const today = dateAtMidnightISOString(new Date().toDateString());
+      const today = dateISOString(new Date());
       this.form.get('formalCreationDate').setValue(today);
     }
 

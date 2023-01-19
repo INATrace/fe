@@ -338,38 +338,16 @@ export function formatBytes(bytes, decimals?) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-export function addDays(date, days) {
-  var result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
+export function dateISOString(date: string | Date) {
 
-export function dateAtNoon(date: string | number | Date) {
-  let tmpDt = new Date(date)
-  tmpDt.setHours(12)
-  return tmpDt
-}
-
-export function dateAtMidnight(date: string | number | Date) {
-  let tmpDt = new Date(date)
-  tmpDt.setHours(23)
-  tmpDt.setMinutes(59)
-  tmpDt.setSeconds(59)
-  return tmpDt
-}
-
-export function dateAtNoonISOString(date: string | number | Date) {
-  let tmpDt = new Date(date)
-  tmpDt.setHours(12)
-  return tmpDt.toISOString().slice(0, 10)
-}
-
-export function dateAtMidnightISOString(date: string | number | Date) {
-  let tmpDt = new Date(date)
-  tmpDt.setHours(23)
-  tmpDt.setMinutes(59)
-  tmpDt.setSeconds(59)
-  return tmpDt.toISOString().slice(0, 10)
+  // If it's already correct format
+  if (typeof date === 'string' && date.split('T').length < 2) {
+    return date;
+  } else if (date instanceof Date) {
+    return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+  } else {
+    return null;
+  }
 }
 
 export function fancyNavigate(route: ActivatedRoute, router: Router, link: string) {

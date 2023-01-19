@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ApiProductLabelBatch } from 'src/api/model/apiProductLabelBatch';
-import { generateFormFromMetadata, dateAtNoonISOString } from 'src/shared/utils';
+import {dateISOString, generateFormFromMetadata} from 'src/shared/utils';
 import { ApiProductLabelBatchValidationScheme } from '../batches-list/batch-edit-modal/validation';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { Location } from '@angular/common';
@@ -187,9 +187,9 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
 
   prepareRequest() {
     let pd = this.batchDetailForm.get('productionDate').value;
-    if (pd != null) this.batchDetailForm.get('productionDate').setValue(dateAtNoonISOString(pd));
+    if (pd != null) this.batchDetailForm.get('productionDate').setValue(dateISOString(pd));
     let ed = this.batchDetailForm.get('expiryDate').value;
-    if (ed != null) this.batchDetailForm.get('expiryDate').setValue(dateAtNoonISOString(ed));
+    if (ed != null) this.batchDetailForm.get('expiryDate').setValue(dateISOString(ed));
     if (this.mode == 'create') this.batchDetailForm.get('labelId').setValue(Number(this.route.snapshot.params.labelId));
   }
 
