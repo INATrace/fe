@@ -7,7 +7,7 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { finalize, take, tap } from 'rxjs/operators';
-import { defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ActivatedRoute } from '@angular/router';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { AuthService } from '../../../../core/auth.service';
@@ -149,6 +149,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
     // Set other Product order fields
     const productOrder = _.cloneDeep(this.form.value) as ApiProductOrder;
     productOrder.facility = this.outputFacilityForm.value;
+    productOrder.deliveryDeadline = dateISOString(productOrder.deliveryDeadline);
 
     // Fill the missing data from the stock orders
     productOrder.items.forEach(order => {
@@ -161,7 +162,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
       order.facility = this.outputFacilityForm.value;
       order.fulfilledQuantity = 0;
       order.availableQuantity = 0;
-      order.productionDate = new Date().toLocaleDateString();
+      order.productionDate = dateISOString(new Date());
       order.orderType = OrderTypeEnum.GENERALORDER;
       order.internalLotNumber = `${productOrder.orderId} (${order.finalProduct.name}, ${order.totalQuantity} ${order.finalProduct.measurementUnitType.label})`;
 
