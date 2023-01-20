@@ -12458,7 +12458,7 @@
       "ApiHistoryTimelineItem": {
         "properties": {
           "date": {
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "iconType": {
@@ -15060,7 +15060,7 @@
           },
           "processingDate": {
             "description": "Processing date",
-            "format": "date-time",
+            "format": "date",
             "type": "string"
           },
           "targetStockOrders": {
