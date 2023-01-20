@@ -60,10 +60,6 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   toFilterDate = new FormControl(null);
   deliveryDatesPing$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
 
-  fromFilterDatePayments = new FormControl(null);
-  toFilterDatePayments = new FormControl(null);
-  deliveryDatesPingPayments$ = new BehaviorSubject<DeliveryDates>({ from: null, to: null });
-
   isAuthRoleToSeeProcessing = true;
   isAuthRoleToSeePayments = true;
   isAuthRoleToEditPayments = true;
@@ -174,13 +170,10 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     }).then();
    }
 
-  dateSearch(type: string) {
+  private dateSearch() {
+
     let from = this.fromFilterDate.value;
     let to = this.toFilterDate.value;
-    if (type === 'PAYMENTS') {
-      from = this.fromFilterDatePayments.value;
-      to = this.toFilterDatePayments.value;
-    }
 
     if (from && to) {
       from = dateISOString(from);
@@ -199,15 +192,11 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
       to = null;
     }
 
-    if (type === 'PAYMENTS') {
-      this.deliveryDatesPingPayments$.next({ from, to });
-    } else {
-      this.deliveryDatesPing$.next({ from, to });
-    }
+    this.deliveryDatesPing$.next({ from, to });
   }
 
-  onFilterDateRangeChange(type = 'PURCHASES') {
-    this.dateSearch(type);
+  onFilterDateRangeChange() {
+    this.dateSearch();
   }
 
   selectedIdsChanged(event, type?) {

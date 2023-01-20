@@ -9,7 +9,6 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { AuthService } from '../../../../core/auth.service';
-import { ActionTypesService } from '../../../../shared-services/action-types.service';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { ApiCompanyGetValidationScheme } from '../../../company-detail/validation';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
@@ -177,7 +176,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private companyController: CompanyControllerService,
     private authService: AuthService,
     private codebookTranslations: CodebookTranslations,
-    public actionTypesCodebook: ActionTypesService,
     private modalService: NgbModalImproved
   ) { }
 
@@ -1953,23 +1951,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Prepare date filters
     if (from && to) {
-      // requestParams.productionDateStart = new Date(from);
-      // requestParams.productionDateEnd = new Date(to);
-      requestParams.productionDateStart = from;
-      requestParams.productionDateEnd = to;
+      requestParams.productionDateStart = dateISOString(from);
+      requestParams.productionDateEnd = dateISOString(to);
     } else if (from) {
-      // requestParams.productionDateStart = new Date(from);
-      requestParams.productionDateStart = from;
-
-      // const tomorrow = new Date();
-      // tomorrow.setDate(new Date().getDate() + 1);
-      // requestParams.productionDateEnd = tomorrow;
-
+      requestParams.productionDateStart = dateISOString(from);
     } else if (to) {
-      // requestParams.productionDateStart = new Date(null);
-      // requestParams.productionDateEnd = new Date(to);
-
-      requestParams.productionDateEnd = to;
+      requestParams.productionDateEnd = dateISOString(to);
     }
 
     // Get the available stock in the provided facility for the provided semi-product

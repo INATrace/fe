@@ -114,8 +114,8 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
             limit: this.pageSize,
             ...sorting,
             preferredWayOfPayment: wayOfPayment,
-            productionDateStart: deliveryDates.from ? new Date(deliveryDates.from) : null,
-            productionDateEnd: deliveryDates.to ? new Date(deliveryDates.to) : null,
+            productionDateStart: deliveryDates.from ? deliveryDates.from : null,
+            productionDateEnd: deliveryDates.to ? deliveryDates.to : null,
             query: query ? query : null,
             farmerId,
             representativeOfRecepientUserCustomerId
