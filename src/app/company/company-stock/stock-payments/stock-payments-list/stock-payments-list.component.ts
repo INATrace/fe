@@ -108,7 +108,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       this.deliveryDatesPing$,
       this.searchFarmerNameSurnamePing$
     ]).pipe(
-        map(([ping, page, sorting, wayOfPayment, farmerId, representativeOfRecepientUserCustomerId, deliveryDates, query]) => {
+        map(([ping, page, sorting, wayOfPayment, farmerId, representativeOfRecipientUserCustomerId, deliveryDates, query]) => {
           return {
             offset: (page - 1) * this.pageSize,
             limit: this.pageSize,
@@ -118,7 +118,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
             productionDateEnd: deliveryDates.to ? deliveryDates.to : null,
             query: query ? query : null,
             farmerId,
-            representativeOfRecepientUserCustomerId
+            representativeOfRecipientUserCustomerId
           };
         }),
         tap(() => this.globalEventManager.showLoading(true)),
