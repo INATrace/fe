@@ -22,7 +22,7 @@
 
 
 export interface ApiHistoryTimelineItem { 
-    date?: Date;
+    date?: string;
     iconType?: ApiHistoryTimelineItem.IconTypeEnum;
     latitude?: number;
     location?: string;
@@ -75,7 +75,7 @@ export namespace ApiHistoryTimelineItem {
                     required: false,
                     name: 'date',
                     classname: 'ApiHistoryTimelineItem',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''

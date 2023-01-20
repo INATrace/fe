@@ -49,7 +49,7 @@ export interface ApiProcessingOrder {
     /**
      * Processing date
      */
-    processingDate?: Date;
+    processingDate?: string;
     /**
      * Target stock orders
      */
@@ -176,7 +176,7 @@ export namespace ApiProcessingOrder {
                     required: false,
                     name: 'processingDate',
                     classname: 'ApiProcessingOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
