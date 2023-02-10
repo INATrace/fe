@@ -14753,9 +14753,12 @@
             "$ref": "#/components/schemas/ApiFinalProduct",
             "description": "The output final product"
           },
-          "outputSemiProduct": {
-            "$ref": "#/components/schemas/ApiSemiProduct",
-            "description": "Processing action input semi product"
+          "outputSemiProducts": {
+            "description": "List of supported output semi-products",
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProduct"
+            },
+            "type": "array"
           },
           "prefix": {
             "description": "Processing action prefix",
