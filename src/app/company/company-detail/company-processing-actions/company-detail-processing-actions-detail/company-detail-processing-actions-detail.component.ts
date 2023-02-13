@@ -49,7 +49,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
+  outputSemiProductInputForm: FormControl;
   activeSemiProductService: ActiveSemiProductsService;
+
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
   evidenceDocInputForm: FormControl;
@@ -111,6 +113,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     this.evidenceDocInputForm = new FormControl(null);
     this.evidenceFieldInputForm = new FormControl(null);
     this.supportedFacilitiesInputForm = new FormControl(null);
+    this.outputSemiProductInputForm = new FormControl(null);
 
     this.initInitialData().then(
         () => {
@@ -152,14 +155,20 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   emptyObject() {
+
     const obj = defaultEmptyObject(ApiProcessingAction.formMetadata()) as ApiProcessingAction;
     obj.inputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
-    obj.outputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
+
     obj.finalProductAction = false;
     return obj;
   }
 
   finalizeForm() {
+
+    if (!this.form.contains('outputSemiProducts')) {
+      this.form.addControl('outputSemiProducts', new FormArray([]));
+    }
+
     if (!this.form.contains('requiredEvidenceFields')) {
       this.form.addControl('requiredEvidenceFields', new FormArray([]));
     }
@@ -194,14 +203,15 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   newAction() {
+
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
     this.form.get('inputSemiProduct').setValue(null);
-    this.form.get('outputSemiProduct').setValue(null);
     this.form.get('maxOutputWeight').setValue(null);
     this.form.get('maxOutputWeight').disable();
   }
 
   editAction() {
+
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
 
     if (!this.form.get('repackedOutputs').value) {
@@ -225,7 +235,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     }
   }
 
-  async initInitialData(){
+  async initInitialData() {
     const action = this.route.snapshot.data.action;
 
     if (action === 'new') {
@@ -339,6 +349,36 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (!facility) { return; }
     const formArray = this.form.get('supportedFacilities') as FormArray;
     const index = (formArray.value as ApiFacility[]).findIndex(x => x.id === facility.id);
+    if (index >= 0) {
+      formArray.removeAt(index);
+      formArray.markAsDirty();
+    }
+  }
+
+  async addSelectedOutputSemiProduct(semiProduct: ApiSemiProduct) {
+
+    if (!semiProduct) { return; }
+    const formArray = this.form.get('outputSemiProducts') as FormArray;
+
+    // If selected output semi-product is already present in the array, clear input field and end execution
+    if (formArray.value.some(x => x.id === semiProduct.id)) {
+      setTimeout(() => this.outputSemiProductInputForm.setValue(null));
+      return;
+    }
+
+    // Add selected output semi-product to the array
+    formArray.push(new FormControl({...semiProduct}));
+    formArray.markAsDirty();
+
+    // Clear input field
+    setTimeout(() => this.outputSemiProductInputForm.setValue(null));
+  }
+
+  async removeOutputSemiProduct(semiProduct: ApiSemiProduct) {
+
+    if (!semiProduct) { return; }
+    const formArray = this.form.get('outputSemiProducts') as FormArray;
+    const index = (formArray.value as ApiSemiProduct[]).findIndex(x => x.id === semiProduct.id);
     if (index >= 0) {
       formArray.removeAt(index);
       formArray.markAsDirty();

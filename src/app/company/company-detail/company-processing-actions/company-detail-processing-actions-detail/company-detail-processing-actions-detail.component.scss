@@ -3,6 +3,10 @@
 @import "../../../../../../node_modules/bootstrap/scss/variables";
 @import "../../../../../../node_modules/bootstrap/scss/mixins";
 
+.af-form-element.output-semi-products {
+  padding-top: 14px;
+}
+
 .af-translation-language {
   div {
     cursor: pointer;

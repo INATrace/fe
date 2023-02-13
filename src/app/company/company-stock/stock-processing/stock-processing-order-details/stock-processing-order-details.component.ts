@@ -973,7 +973,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     } else {
 
-      const semiProduct: ApiSemiProduct = this.prAction.outputSemiProduct?.id ? this.prAction.outputSemiProduct : null;
+      // FIXME: refactor this
+      // const semiProduct: ApiSemiProduct = this.prAction.outputSemiProduct?.id ? this.prAction.outputSemiProduct : null;
       const finalProduct: ApiFinalProduct = this.prAction.outputFinalProduct?.id ? this.prAction.outputFinalProduct : null;
 
       // In this case we have multiple destination stock orders because we are repacking outputs
@@ -987,7 +988,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               id: outputStockOrder.id,
               internalLotNumber: this.outputStockOrderForm.get('internalLotNumber').value,
               creatorId: this.creatorId,
-              semiProduct,
+              // FIXME: refactor this
+              // semiProduct,
               finalProduct,
               facility: this.outputFacilityForm.value,
               totalQuantity: outputStockOrder.totalQuantity,
@@ -1021,7 +1023,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           ...outputStockOrder,
           ...sharedFields,
           creatorId: outputStockOrder.creatorId ? outputStockOrder.creatorId : this.creatorId,
-          semiProduct,
+          // FIXME: refactor this
+          // semiProduct,
           finalProduct,
           facility: this.outputFacilityForm.value,
           totalQuantity: parseFloat(this.totalQuantity),
@@ -1255,10 +1258,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     // If we have defined input semi-product, get its definition
-    if (event.outputSemiProduct && event.outputSemiProduct.id) {
-      const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
-      outputSemiProduct = resOutSP && resOutSP.status === 'OK' ? resOutSP.data : null;
-    }
+    // FIXME: refactor this
+    // if (event.outputSemiProduct && event.outputSemiProduct.id) {
+    //   const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
+    //   outputSemiProduct = resOutSP && resOutSP.status === 'OK' ? resOutSP.data : null;
+    // }
 
     // If input final product is provided get its definition
     if (event.inputFinalProduct && event.inputFinalProduct.id) {
@@ -1427,14 +1431,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       if (this.currentOutputStockUnitProduct) {
 
         // If defined semi-product set the semi-product name (if defined final product, set the final product and product name)
-        if (this.prAction.outputSemiProduct?.id) {
-          this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
-
-        } else if (this.prAction.outputFinalProduct?.id) {
-
-          const outputFinalProduct = this.prAction.outputFinalProduct as ApiFinalProduct;
-          this.currentOutputStockUnitNameForm.setValue(`${ outputFinalProduct.name } (${ outputFinalProduct.product.name })`);
-        }
+        // FIXME: refactor this
+        // if (this.prAction.outputSemiProduct?.id) {
+        //   this.currentOutputStockUnitNameForm.setValue(this.currentOutputStockUnitProduct.name);
+        //
+        // } else if (this.prAction.outputFinalProduct?.id) {
+        //
+        //   const outputFinalProduct = this.prAction.outputFinalProduct as ApiFinalProduct;
+        //   this.currentOutputStockUnitNameForm.setValue(`${ outputFinalProduct.name } (${ outputFinalProduct.product.name })`);
+        // }
       }
     }
   }
@@ -1812,8 +1817,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const inputSemiProductId = this.prAction.inputSemiProduct?.id;
     const inputFinalProductId = this.prAction.inputFinalProduct?.id;
 
-    const outputSemiProductId = this.prAction.outputSemiProduct?.id;
-    const outputFinalProductId = this.prAction.outputFinalProduct?.id;
+    // FIXME: refactor this
+    // const outputSemiProductId = this.prAction.outputSemiProduct?.id;
+    // const outputFinalProductId = this.prAction.outputFinalProduct?.id;
 
     let supportedFacilitiesIds: number[] | undefined;
     if (this.prAction.supportedFacilities && this.prAction.supportedFacilities.length > 0) {
@@ -1834,15 +1840,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     // If there is output semi-product or output final product set, initialize output facility codebook
-    if (outputSemiProductId || outputFinalProductId) {
-      if (this.actionType === 'SHIPMENT') {
-        this.outputFacilitiesCodebook =
-            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId, supportedFacilitiesIds);
-      } else {
-        this.outputFacilitiesCodebook =
-            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
-      }
-    }
+    // FIXME: refactor this
+    // if (outputSemiProductId || outputFinalProductId) {
+    //   if (this.actionType === 'SHIPMENT') {
+    //     this.outputFacilitiesCodebook =
+    //         new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId, supportedFacilitiesIds);
+    //   } else {
+    //     this.outputFacilitiesCodebook =
+    //         new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
+    //   }
+    // }
   }
 
   private initializeListManager() {

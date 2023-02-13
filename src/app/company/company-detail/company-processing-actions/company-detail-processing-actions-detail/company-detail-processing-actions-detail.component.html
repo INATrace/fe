@@ -150,21 +150,42 @@
                                 </ng-container>
                             </single-choice>
 
+                            <!-- If action type is processing, we can have selected multiple output semi-products -->
                             <ng-container *ngIf="form.get('type').value === 'PROCESSING'">
-                                <single-choice
-                                        label="Select output semi-product"
-                                        i18n-label="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.label"
-                                        [formControlInput]="form.get('outputSemiProduct')"
-                                        [codebookService]="activeSemiProductService"
-                                        [isInvalidChoice]="submitted && form.get('outputSemiProduct').invalid">
-                                    <ng-container *ngIf="submitted">
-                                        <div *ngIf="form.get('outputSemiProduct').errors as errors" class="sc-invalid-feedback">
-                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.outputSemiProduct.error.required">
-                                                Output semi-product is required
+                                <label i18n="@@companyDetailProcessingActions.outputSemiProducts.title">Output semi-products</label>
+                                <div class="af-form-element output-semi-products">
+
+                                    <small i18n="@@companyDetailProcessingActions.outputSemiProducts.select.label">
+                                        Select output semi-product.
+                                    </small>
+
+                                    <single-choice
+                                            [formControlInput]="outputSemiProductInputForm"
+                                            [codebookService]="activeSemiProductService"
+                                            (onChange)="addSelectedOutputSemiProduct($event)">
+                                    </single-choice>
+
+                                    <ng-container *ngIf="this.form.get('outputSemiProducts')">
+                                        <div *ngFor="let outputSemiProduct of this.form.get('outputSemiProducts').value; index as i" class="d-flex justify-content-between">
+                                            <div>{{ outputSemiProduct?.name }}</div>
+                                            <div class="cursor-pointer" (click)="removeOutputSemiProduct(outputSemiProduct)">
+                                                <fa-icon
+                                                        class="del-icon"
+                                                        [icon]="faTimes"></fa-icon>
                                             </div>
                                         </div>
                                     </ng-container>
-                                </single-choice>
+
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('outputSemiProducts').errors as errors"
+                                             class="sc-invalid-feedback">
+                                            <div *ngIf="errors.atLeastOneIsRequired"
+                                                 i18n="@@companyDetailProcessingActions.outputSemiProducts.error.atLeastOneIsRequired">
+                                                At least one output semi-product is required
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
                             </ng-container>
 
                             <ng-container *ngIf="form.get('type').value === 'FINAL_PROCESSING'">

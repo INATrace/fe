@@ -1,18 +1,20 @@
-import { FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import { FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ApiProcessingAction } from 'src/api/model/apiProcessingAction';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
-import { multiFieldValidator, requiredFieldIfOtherFieldHasValue } from 'src/shared/validation';
+import { multiFieldValidator } from 'src/shared/validation';
 
 export function requireRepackedOutputs(control: FormGroup): ValidationErrors | null {
+
     if (!control || !control.value) {
         return null;
     }
     const type = control.value['type'];
     const repackedOutputs = control.value.repackedOutputs;
     const maxOutputWeight = control.value.maxOutputWeight;
-    if (type !== 'PROCESSING' || type !== 'FINAL_PROCESSING' || !repackedOutputs) {
+    if ((type !== 'PROCESSING' && type !== 'FINAL_PROCESSING') || !repackedOutputs) {
         return null;
     }
+
     if (!maxOutputWeight) {
         return { required: true };
     }
@@ -100,6 +102,29 @@ export function requiredOutputFinalProduct(group: FormGroup): ValidationErrors |
   return null;
 }
 
+export function requiredOutputSemiProducts(group: FormGroup): ValidationErrors | null {
+
+  if (!group || !group.value || !group.contains('outputSemiProducts')) {
+    return null;
+  }
+
+  const type = group.value['type'];
+
+  // If action type is not processing we don't need further validation
+  if (type !== 'PROCESSING') {
+    return null;
+  }
+
+  const outputSemiProducts = group.value['outputSemiProducts'] as [];
+
+  // Check that at least one output semi-product is added
+  if (outputSemiProducts == null || outputSemiProducts.length === 0) {
+    return { atLeastOneIsRequired: true };
+  }
+
+  return null;
+}
+
 export function requiredQRCodeForFinalProduct(group: FormGroup): ValidationErrors | null {
 
   if (!group || !group.value || !group.contains('qrCodeForFinalProduct')) {
@@ -123,7 +148,7 @@ export const ApiProcessingActionValidationScheme = {
     multiFieldValidator(['inputFinalProduct'], (group: FormGroup) => requiredInputFinalProduct(group), ['required']),
     multiFieldValidator(['outputFinalProduct'], (group: FormGroup) => requiredOutputFinalProduct(group), ['required']),
     multiFieldValidator(['qrCodeForFinalProduct'], (group: FormGroup) => requiredQRCodeForFinalProduct(group), ['required']),
-    multiFieldValidator(['outputSemiProduct'], (group: FormGroup) => requiredFieldIfOtherFieldHasValue(group, 'outputSemiProduct', 'type', 'PROCESSING'), ['required']),
+    multiFieldValidator(['outputSemiProducts'], (group: FormGroup) => requiredOutputSemiProducts(group), ['atLeastOneIsRequired']),
     multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
     multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required'])
   ],
@@ -145,9 +170,6 @@ export const ApiProcessingActionValidationScheme = {
     },
     name: {
       validators: []
-    },
-    outputSemiProduct: {
-      validators: [Validators.required]
     },
     prefix: {
       validators: [Validators.required]
