@@ -149,7 +149,7 @@
     "processingActionList.sortOptions.description.name": "Nombre del proceso",
     "processingActionList.sortOptions.type.name": "Tipo",
     "processingActionList.sortOptions.inputSemiProduct.name": "Semiproducto/producto final de entrada",
-    "processingActionList.sortOptions.outputSemiProduct.name": "Semiproducto/producto final de salida",
+    "processingActionList.sortOptions.outputSemiProducts.name": "Output semi-products/final product",
     "processingActionList.sortOptions.actions.name": "Acciones",
     "processingActionList.deleteProcessingAction.error.message": "¿Está seguro de que desea borrarlo?",
     "productLabelStock.title.facilities": "Áreas",

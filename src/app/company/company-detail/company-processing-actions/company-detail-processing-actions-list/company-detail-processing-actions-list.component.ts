@@ -51,8 +51,8 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       inactive: true
     },
     {
-      key: 'outputSemiProduct',
-      name: $localize`:@@processingActionList.sortOptions.outputSemiProduct.name:Output semi-product/final product`,
+      key: 'outputSemiProducts',
+      name: $localize`:@@processingActionList.sortOptions.outputSemiProducts.name:Output semi-products/final product`,
       inactive: true
     },
     {

@@ -1694,7 +1694,7 @@
     "processingActionList.sortOptions.description.name": "Name of process",
     "processingActionList.sortOptions.type.name": "Type",
     "processingActionList.sortOptions.inputSemiProduct.name": "Input semi-product/final product",
-    "processingActionList.sortOptions.outputSemiProduct.name": "Output semi-product/final product",
+    "processingActionList.sortOptions.outputSemiProducts.name": "Output semi-products/final product",
     "processingActionList.sortOptions.actions.name": "Actions",
     "processingActionList.deleteProcessingAction.error.message": "Are you sure you want to delete it?",
     "productLabelStock.title.facilities": "Facilities",
