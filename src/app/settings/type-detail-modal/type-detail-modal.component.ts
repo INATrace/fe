@@ -10,7 +10,7 @@ import {
   ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme,
-  ApiProcessingEvidenceFieldValidationScheme
+  ApiProcessingEvidenceFieldValidationScheme, ApiProductTypeValidationScheme
 } from './validation';
 import _ from 'lodash-es';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
@@ -31,6 +31,8 @@ import { ProcessingEvidenceFieldControllerService } from '../../../api/api/proce
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTranslation';
 import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
+import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
+import {ApiProductType} from '../../../api/model/apiProductType';
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -74,6 +76,7 @@ export class TypeDetailModalComponent implements OnInit {
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductService: SemiProductControllerService,
+    private productTypeService: ProductTypeControllerService,
     public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService
   ) { }
 
@@ -159,6 +162,17 @@ export class TypeDetailModalComponent implements OnInit {
       }
       this.finalizeForm();
     }
+
+    if (this.type === 'product-types') {
+      if (!this.update) {
+        this.form = generateFormFromMetadata(ApiProductType.formMetadata(),
+          defaultEmptyObject(ApiProductType.formMetadata()) as ApiProductType, ApiProductTypeValidationScheme)
+      } else {
+        this.form = generateFormFromMetadata(ApiProductType.formMetadata(), this.typeElement, ApiProductTypeValidationScheme)
+      }
+      this.finalizeForm();
+    }
+
   }
 
   async save() {
@@ -201,6 +215,14 @@ export class TypeDetailModalComponent implements OnInit {
 
     if (this.type === 'semi-products') {
       res = await this.semiProductService.createOrUpdateSemiProductUsingPUT(data).pipe(take(1)).toPromise();
+    }
+
+    if (this.type === 'product-types') {
+      if (data.id) {
+        res = await this.productTypeService.updateProductTypeUsingPUT(data).pipe(take(1)).toPromise();
+      } else {
+        res = await this.productTypeService.createProductTypeUsingPOST(data).pipe(take(1)).toPromise();
+      }
     }
 
     if (res && res.status === 'OK') {

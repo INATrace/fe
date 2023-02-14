@@ -124,7 +124,49 @@
         </checkbox-input>
       </ng-container>
 
-      <ng-container *ngIf="this.type !== 'semi-products'">
+      <ng-container *ngIf="this.type === 'product-types'">
+
+        <textinput
+          label="Name"
+          placeholder="Enter name"
+          i18n-label="@@productTypeDetail.textinput.name.label"
+          i18n-placeholder="@@productTypeDetail.textinput.name.placeholder"
+          [form]="this.form.get('name')"
+          [isInvalid]="submitted && !this.form.get('name').value"
+          style="width: 100%">
+          <ng-container *ngIf="submitted && !this.form.get('name').value">
+            <div *ngIf="this.form.get('name').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n-label="@@productTypeDetail.textinput.name.error">
+                <span>
+                  Name is required
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+
+        <textinput
+          label="Description"
+          helpText="Enter short product type description."
+          [textarea]="true"
+          i18n-label="@@productTypeDetail.textinput.description.label"
+          i18n-helpText="@@productTypeDetail.textinput.description.helpText"
+          [form]="this.form.get('description')"
+          [isInvalid]="submitted && !this.form.get('description').value"
+          style="width: 100%">
+          <ng-container *ngIf="submitted && !this.form.get('description').value">
+            <div *ngIf="this.form.get('description').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n-label="@@productTypeDetail.textinput.description.error">
+                <span>
+                  Description is required
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
+      </ng-container>
+
+      <ng-container *ngIf="this.type !== 'semi-products' && this.type !== 'product-types'">
         <textinput *ngIf="this.type !== 'processing-evidence-fields'"
                 hideAsterisk="true"
                 [form]="form.get('code')"
