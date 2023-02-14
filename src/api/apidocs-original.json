@@ -7629,7 +7629,7 @@
             "name": "id",
             "required": true,
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             }
           }
@@ -7660,7 +7660,7 @@
             "name": "id",
             "required": true,
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             }
           }
