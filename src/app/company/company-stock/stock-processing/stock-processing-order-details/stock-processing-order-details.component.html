@@ -1,58 +1,179 @@
 <app-authorised-layout>
-    <div class="af-layout--authorised">
-        <div class="af-form-wrapper">
+  <div class="af-layout--authorised">
+    <div class="af-form-wrapper">
 
-            <!-- Page title - set dynamically depending on the selected processing action type -->
-            <div class="af-form-row">
-                <div class="af-form-block--c12 d-flex justify-content-between">
-                    <div class="title-page content-element--title">{{ title }}<span></span></div>
-                </div>
-            </div>
-
-            <!-- Display the selected processing action and final product name if action is QR code generation -->
-            <div class="af-form-row">
-                <div class="af-form-block--c6">
-                    <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
-                    <div class="af-form-element">
-
-                        <!-- Dropdown for selecting processing action (if ID present ina path, selected automatically) -->
-                        <div class="af-row">
-                            <div class="af-c12">
-                                <single-choice
-                                        label="Processing"
-                                        i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
-                                        [formControlInput]="processingActionForm"
-                                        [codebookService]="activeProcessingCodebook"
-                                        style="min-width: 150px;"
-                                        (onChange)="setProcessingAction($event)"
-                                        [isInvalidChoice]="submitted && processingActionForm.invalid">
-                                    <ng-container *ngIf="submitted">
-                                        <div *ngIf="processingActionForm.errors as errors" class="sc-invalid-feedback"
-                                             i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
-                                            Action is required
-                                        </div>
-                                    </ng-container>
-                                </single-choice>
-                            </div>
-                        </div>
-
-                        <!-- If action is for QR code generation, display the final product name -->
-                        <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
-                            <div class="af-c12">
-                                <textinput
-                                        [form]="qrCodeForFinalProductForm"
-                                        label="QR code for final product"
-                                        i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
-                                        style="width: 100%"
-                                        [readOnly]="true">
-                                </textinput>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
+      <!-- PAGE TITLE - SET DYNAMICALLY DEPENDING ON THE SELECTED PROCESSING ACTION TYPE -->
+      <div class="af-form-row">
+        <div class="af-form-block--c12 d-flex justify-content-between">
+          <div class="title-page content-element--title">{{ title }}<span></span></div>
         </div>
+      </div>
+
+      <!-- DISPLAY THE SELECTED PROCESSING ACTION AND FINAL PRODUCT NAME IF ACTION IS QR CODE GENERATION -->
+      <div class="af-form-row">
+        <div class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
+          <div class="af-form-element">
+
+            <!-- DROPDOWN FOR SELECTING PROCESSING ACTION (IF ID PRESENT IN PATH, SELECTED AUTOMATICALLY) -->
+            <div class="af-row">
+              <div class="af-c12">
+                <single-choice
+                    label="Processing"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
+                    [formControlInput]="processingActionFormControl"
+                    [codebookService]="processingActionsCodebook"
+                    style="min-width: 150px;"
+                    (onChange)="setProcessingAction($event)"
+                    [isInvalidChoice]="submitted && processingActionFormControl.invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="processingActionFormControl.errors as errors" class="sc-invalid-feedback"
+                         i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
+                      Action is required
+                    </div>
+                  </ng-container>
+                </single-choice>
+              </div>
+            </div>
+
+            <!-- IF ACTION IS FOR QR CODE GENERATION, DISPLAY THE FINAL PRODUCT NAME -->
+            <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
+              <div class="af-c12">
+                <textinput
+                    [form]="qrCodeForFinalProductFormControl"
+                    label="QR code for final product"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
+                    style="width: 100%"
+                    [readOnly]="true">
+                </textinput>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION WHERE WE DISPLAY THE INPUT AND OUTPUT DATA FOR THE PROCESSING -->
+      <!-- THE LEFT REPRESENTS THE INPUT PARAMETERS, AND THE RIGHT SIDE REPRESENTS THE OUTPUTS (THERE CAN BE MORE THAN ONE OUTPUT FROM THE PROCESSING) -->
+      <div class="af-form-row">
+
+        <!-- LEFT SIDE - input data in the processing -->
+        <div class="af-form-block--c6">
+          <!-- TODO -->
+        </div>
+
+        <!-- RIGHT SIDE - output data of the processing -->
+        <div class="af-form-block--c6">
+          <!-- TODO -->
+        </div>
+
+      </div>
+
+      <!-- REQUIRED AND OTHER ADDITIONAL PROCESSING EVIDENCES (DOCUMENTS) -->
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processingEvidence">Processing evidence</h2>
+
+          <div class="af-form-element">
+            <div *ngIf="this.requiredProcessingEvidenceArray.length > 0" class="mb-3">
+              <ng-container *ngFor="let item of requiredProcessingEvidenceArray.controls; index as idx">
+                <div class="d-flex">
+
+                  <div class="af-row">
+                    <div class="af-c4">
+                      <app-datepicker
+                          label="Date"
+                          i18n-label="@@processingEvidenceItem.datepicker.date.label"
+                          [form]="item.get('date')"
+                          [invalid]="submitted && item.get('date').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('date').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
+                              Date is required
+                            </div>
+                          </div>
+                        </ng-container>
+                      </app-datepicker>
+                    </div>
+                    <div class="af-c8">
+                      <textinput
+                          [value]="item.get('evidenceTypeLabel').value"
+                          label="Type"
+                          [valueTextInput]="true"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.label.type"
+                          [readOnly]="true">
+                      </textinput>
+                    </div>
+                  </div>
+
+                  <div class="af-c6">
+                    <attachment-uploader
+                        allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
+                        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+                        mode="simpleAsTextField"
+                        label="Document (JPG, PNG, PDF)"
+                        i18n-label="@@productLabelStockProcessingOrderDetail.attachment-uploader.label"
+                        i18n-allowedMimeTypeErrorMessage="@@productLabelStockProcessingOrderDetail.attachment-uploader.allowedMimeTypeErrorMessage"
+                        [form]="$any(item.get('document'))"
+                        [attachmentUploaderId]="'productLabelStockProcessingOrderDetail'+idx"
+                        [invalid]="submitted && item.get('document').invalid"
+                        [readOnly]="item.get('document').disabled">
+                      <attachment-uploader-content i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.content">
+                        Upload document
+                      </attachment-uploader-content>
+                    </attachment-uploader>
+                    <attachment-uploader-errors>
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="item.get('document').errors as errors" validation-error class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.error">
+                              <span>
+                                Document is required
+                              </span>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </attachment-uploader-errors>
+                  </div>
+
+                </div>
+              </ng-container>
+            </div>
+
+            <list-editor *ngIf="processingEvidenceListManager"
+                         label="Other evidence documents"
+                         [listEditorManager]="processingEvidenceListManager"
+                         addText="Add document"
+                         [canAdd]="showRightSide"
+                         i18n-label="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.label"
+                         i18n-addText="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.addText">
+              <list-editor-items>
+                <div *ngFor="let item of otherProcessingEvidenceArray.controls; let i=index;">
+                  <app-additional-proof-item title="null"
+                                             [evidenceType]="true"
+                                             [formControlInput]="$any(item)"
+                                             [isOpen]="processingEvidenceListManager.isOpen(i)"
+                                             [listEditorManager]="this.processingEvidenceListManager"
+                                             [listEditorManagerPosition]="i">
+                  </app-additional-proof-item>
+                </div>
+              </list-editor-items>
+              <list-editor-errors>
+              </list-editor-errors>
+            </list-editor>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTROL BUTTONS -->
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
+          <div class="af-bottom-buttons" i18n="@@productLabelStockProcessingOrderDetail.footer.buttons">
+            <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
+            <button class="btn" type="button" (click)="!this.saveInProgress && saveProcessingOrder()"><span>Save</span></button>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </app-authorised-layout>
