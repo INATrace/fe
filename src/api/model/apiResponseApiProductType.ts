@@ -18,7 +18,7 @@
  */
 
 
-import { ApiUser } from './apiUser';
+import { ApiProductType } from './apiProductType';
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 
@@ -26,8 +26,8 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
  * Generic API response. See documentation for data type for specific type details.
  */
 
-export interface ApiResponseApiUser { 
-    data?: ApiUser;
+export interface ApiResponseApiProductType { 
+    data?: ApiProductType;
     /**
      * Optional details for unexpected error responses.
      */
@@ -39,16 +39,16 @@ export interface ApiResponseApiUser {
     /**
      * Response status. OK for successful reponses.
      */
-    status: ApiResponseApiUser.StatusEnum;
+    status: ApiResponseApiProductType.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiResponseApiUser.
+ * Namespace for property- and property-value-enumerations of ApiResponseApiProductType.
  */
-export namespace ApiResponseApiUser {
+export namespace ApiResponseApiProductType {
     /**
-     * All properties of ApiResponseApiUser.
+     * All properties of ApiResponseApiProductType.
      */
     export enum Properties {
         data = 'data',
@@ -89,26 +89,26 @@ export namespace ApiResponseApiUser {
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiResponseApiUser',
+            classname: 'ApiResponseApiProductType',
             vars: [
                 {
-                    metadata: ApiUser.formMetadata,
+                    metadata: ApiProductType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'data',
-                    classname: 'ApiResponseApiUser',
-                    dataType: 'ApiUser',
+                    classname: 'ApiResponseApiProductType',
+                    dataType: 'ApiProductType',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiUser'
+                    complexType: 'ApiProductType'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'errorDetails',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -119,7 +119,7 @@ export namespace ApiResponseApiUser {
                     isEnum: false,
                     required: false,
                     name: 'errorMessage',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -128,10 +128,10 @@ export namespace ApiResponseApiUser {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiResponseApiUser.StatusEnum',
+                    datatypeWithEnum: 'ApiResponseApiProductType.StatusEnum',
                     required: true,
                     name: 'status',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -143,7 +143,7 @@ export namespace ApiResponseApiUser {
                     isEnum: false,
                     required: false,
                     name: 'validationErrorDetails',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiResponseApiProductType',
                     dataType: 'ApiValidationErrorDetails',
                     isPrimitiveType: false,
                     isListContainer: false,
@@ -166,7 +166,7 @@ export namespace ApiResponseApiUser {
         }
     }
 
-  // export const ApiResponseApiUserValidationScheme = {
+  // export const ApiResponseApiProductTypeValidationScheme = {
   //     validators: [],
   //     fields: {
   //               data: {
@@ -185,7 +185,7 @@ export namespace ApiResponseApiUser {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiResponseApiUser>;
+  // } as SimpleValidationScheme<ApiResponseApiProductType>;
 
 
 }

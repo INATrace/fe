@@ -18,7 +18,7 @@
  */
 
 
-import { ApiUser } from './apiUser';
+import { ApiPaginatedListApiProductType } from './apiPaginatedListApiProductType';
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 
@@ -26,8 +26,8 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
  * Generic API response. See documentation for data type for specific type details.
  */
 
-export interface ApiResponseApiUser { 
-    data?: ApiUser;
+export interface ApiPaginatedResponseApiProductType { 
+    data?: ApiPaginatedListApiProductType;
     /**
      * Optional details for unexpected error responses.
      */
@@ -39,16 +39,16 @@ export interface ApiResponseApiUser {
     /**
      * Response status. OK for successful reponses.
      */
-    status: ApiResponseApiUser.StatusEnum;
+    status: ApiPaginatedResponseApiProductType.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiResponseApiUser.
+ * Namespace for property- and property-value-enumerations of ApiPaginatedResponseApiProductType.
  */
-export namespace ApiResponseApiUser {
+export namespace ApiPaginatedResponseApiProductType {
     /**
-     * All properties of ApiResponseApiUser.
+     * All properties of ApiPaginatedResponseApiProductType.
      */
     export enum Properties {
         data = 'data',
@@ -89,26 +89,26 @@ export namespace ApiResponseApiUser {
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiResponseApiUser',
+            classname: 'ApiPaginatedResponseApiProductType',
             vars: [
                 {
-                    metadata: ApiUser.formMetadata,
+                    metadata: ApiPaginatedListApiProductType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'data',
-                    classname: 'ApiResponseApiUser',
-                    dataType: 'ApiUser',
+                    classname: 'ApiPaginatedResponseApiProductType',
+                    dataType: 'ApiPaginatedListApiProductType',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiUser'
+                    complexType: 'ApiPaginatedListApiProductType'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'errorDetails',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiPaginatedResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -119,7 +119,7 @@ export namespace ApiResponseApiUser {
                     isEnum: false,
                     required: false,
                     name: 'errorMessage',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiPaginatedResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -128,10 +128,10 @@ export namespace ApiResponseApiUser {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiResponseApiUser.StatusEnum',
+                    datatypeWithEnum: 'ApiPaginatedResponseApiProductType.StatusEnum',
                     required: true,
                     name: 'status',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiPaginatedResponseApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -143,7 +143,7 @@ export namespace ApiResponseApiUser {
                     isEnum: false,
                     required: false,
                     name: 'validationErrorDetails',
-                    classname: 'ApiResponseApiUser',
+                    classname: 'ApiPaginatedResponseApiProductType',
                     dataType: 'ApiValidationErrorDetails',
                     isPrimitiveType: false,
                     isListContainer: false,
@@ -166,7 +166,7 @@ export namespace ApiResponseApiUser {
         }
     }
 
-  // export const ApiResponseApiUserValidationScheme = {
+  // export const ApiPaginatedResponseApiProductTypeValidationScheme = {
   //     validators: [],
   //     fields: {
   //               data: {
@@ -185,7 +185,7 @@ export namespace ApiResponseApiUser {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiResponseApiUser>;
+  // } as SimpleValidationScheme<ApiPaginatedResponseApiProductType>;
 
 
 }

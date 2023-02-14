@@ -23,6 +23,7 @@ import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
+import { ApiProductType } from './apiProductType';
 import { ApiSemiProduct } from './apiSemiProduct';
 
 
@@ -60,6 +61,7 @@ export interface ApiValueChain {
      * list of supported processing evidence types
      */
     processingEvidenceTypes?: Array<ApiProcessingEvidenceType>;
+    productType?: ApiProductType;
     /**
      * list of supported semi-products
      */
@@ -110,6 +112,7 @@ export namespace ApiValueChain {
          * list of supported processing evidence types
          */
         processingEvidenceTypes = 'processingEvidenceTypes',
+        productType = 'productType',
         /**
          * list of supported semi-products
          */
@@ -228,6 +231,18 @@ export namespace ApiValueChain {
                     complexType: 'ApiProcessingEvidenceType'
                 },
                 {
+                    metadata: ApiProductType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productType',
+                    classname: 'ApiValueChain',
+                    dataType: 'ApiProductType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProductType'
+                },
+                {
                     metadata: ApiSemiProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -269,6 +284,8 @@ export namespace ApiValueChain {
                 ],
                 processingEvidenceTypes: [
                 ],
+                productType: [
+                ],
                 semiProducts: [
                 ],
                 valueChainStatus: [
@@ -302,6 +319,9 @@ export namespace ApiValueChain {
   //                   validators: []
   //               },
   //               processingEvidenceTypes: {
+  //                   validators: []
+  //               },
+  //               productType: {
   //                   validators: []
   //               },
   //               semiProducts: {
