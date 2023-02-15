@@ -30,6 +30,8 @@ import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ClipInputTransactionModalComponent } from './clip-input-transaction-modal/clip-input-transaction-modal.component';
 import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
+import { ApiTransaction } from '../../../../../api/model/apiTransaction';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
 
 @Component({
   selector: 'app-stock-processing-order-details',
@@ -166,12 +168,40 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'SHIPMENT') { return false; }
 
-    // FIXME: refactor this
-    // const inTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
-    const inTRCount = 0;
-
+    const inTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
     const selTRCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
+
     return inTRCount + selTRCount === 0;
+  }
+
+  get inputTransactions(): ApiTransaction[] {
+
+    if (this.update) {
+      // FIXME: refactor this
+      // return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
+    }
+    return [];
+  }
+
+  get inputStockOrders(): ApiStockOrder[] {
+
+    if (this.update) {
+      // FIXME: refactor this
+      // return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
+    }
+    return [] as ApiStockOrder[];
+  }
+
+  get isClipOrder(): boolean {
+    // FIXME: refactor this
+    // return !!this.checkboxClipOrderFrom.value;
+    return true;
+  }
+
+  get totalQuantity() {
+    // FIXME: refactor this
+    // return this.outputStockOrderForm.getRawValue().totalQuantity;
+    return 0;
   }
 
   ngOnInit(): void {
@@ -356,7 +386,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
     this.selectedInputStockOrders = tmpSelected;
-    // this.calcInputQuantity(true);
+    this.calcInputQuantity(true);
   }
 
   cbSelectAllClick() {
@@ -373,9 +403,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       this.availableInputStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
 
-      // if (this.isClipOrder) {
-      //   this.clipOrder(true);
-      // }
+      if (this.isClipOrder) {
+        // FIXME: refactor this
+        // this.clipOrder(true);
+      }
 
     } else {
 
@@ -383,7 +414,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.availableInputStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
     }
 
-    // this.calcInputQuantity(true);
+    this.calcInputQuantity(true);
     this.setOrganicAndWomenOnly();
   }
 
@@ -397,30 +428,28 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.availableInputStockOrders[index].selected) {
 
-      // FIXME: refactor this
-      // const outputQuantity = this.totalQuantity as number || 0;
-      // const inputQuantity = this.calcInputQuantity(false);
+      const outputQuantity = this.totalQuantity as number || 0;
+      const inputQuantity = this.calcInputQuantity(false);
 
-      // const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
+      const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
 
       const currentAvailable = this.availableInputStockOrders[index].availableQuantity;
 
-      // if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
-      //   if (toFill > 0 && currentAvailable > 0) {
-      //     this.availableInputStockOrders[index].selected = true;
-      //     this.availableInputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
-      //   } else {
-      //     this.availableInputStockOrders[index].selected = true;
-      //     this.availableInputStockOrders[index].selectedQuantity = 0;
-      //
-      //     this.availableInputStockOrders[index].selected = false;
-      //     this.calcInputQuantity(true);
-      //   }
-      // } else {
-      //   this.availableInputStockOrders[index].selected = true;
-      //   this.availableInputStockOrders[index].selectedQuantity = currentAvailable;
-      // }
+      if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
+        if (toFill > 0 && currentAvailable > 0) {
+          this.availableInputStockOrders[index].selected = true;
+          this.availableInputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
+        } else {
+          this.availableInputStockOrders[index].selected = true;
+          this.availableInputStockOrders[index].selectedQuantity = 0;
 
+          this.availableInputStockOrders[index].selected = false;
+          this.calcInputQuantity(true);
+        }
+      } else {
+        this.availableInputStockOrders[index].selected = true;
+        this.availableInputStockOrders[index].selectedQuantity = currentAvailable;
+      }
     } else {
       this.availableInputStockOrders[index].selected = false;
       this.availableInputStockOrders[index].selectedQuantity = 0;
@@ -482,7 +511,25 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.availableInputStockOrders[index].selectedQuantity = 0;
     }
 
-    // this.calcInputQuantity(true);
+    this.calcInputQuantity(true);
+  }
+
+  deleteTransaction(i: number) {
+
+    if (!this.leftSideEnabled) { return; }
+
+    // FIXME: refactor this
+    // if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT' || this.actionType === 'GENERATE_QR_CODE') {
+    //   this.processingOrderInputTransactions.splice(i, 1);
+    //   this.calcInputQuantity(true);
+    //   return;
+    // }
+    //
+    // if (this.actionType === 'TRANSFER') {
+    //   this.processingOrderInputTransactions.splice(i, 1);
+    //   this.editableProcessingOrder.targetStockOrders.splice(i, 1);
+    //   this.calcInputQuantity(true);
+    // }
   }
 
   private registerInternalLotSearchValueChangeListener() {
@@ -753,8 +800,58 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     } else {
       this.selectedInputStockOrders.push(stockOrder);
     }
-    // this.calcInputQuantity(true);
+
+    this.calcInputQuantity(true);
     this.setOrganicAndWomenOnly();
+  }
+
+  private calcInputQuantity(setValue: boolean) {
+
+    let inputQuantity = 0;
+    if (this.update) {
+      for (const item of this.availableInputStockOrders) {
+        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
+      }
+
+      const txs = this.inputTransactions;
+
+      if (txs) {
+        for (const tx of txs) {
+          if (tx.status !== ApiTransactionStatus.CANCELED) {
+            inputQuantity += tx.outputQuantity;
+          }
+        }
+      }
+    } else {
+      for (const item of this.availableInputStockOrders) {
+        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
+      }
+    }
+
+    // FIXME: refactor this
+    // if (setValue) {
+    //   if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
+    //
+    //     this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
+    //     if (this.isUsingInput) {
+    //       this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
+    //     }
+    //
+    //   } else if (this.actionType === 'GENERATE_QR_CODE') {
+    //
+    //     if (this.form) {
+    //       this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
+    //       this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
+    //     }
+    //   } else {
+    //
+    //     if (this.form) {
+    //       this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
+    //     }
+    //   }
+    // }
+
+    return inputQuantity;
   }
 
 }

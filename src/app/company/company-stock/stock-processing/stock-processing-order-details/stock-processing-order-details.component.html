@@ -178,46 +178,45 @@
               <div *ngIf="inputFacilityControl.value" class="position-relative">
 
                 <!-- Existing input transactions - only applicable when editing stock order -->
-                <!-- FIXME: refactor this -->
-<!--                <div class="af-row">-->
-<!--                  <div class="af-c12">-->
-<!--                    <ng-container *ngIf="inputTransactions && inputTransactions.length">-->
-<!--                      <label class="ml-1">Existing transactions</label>-->
-<!--                      <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">-->
-<!--                        <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">-->
-<!--                          <div class="af-c9 pl-3">-->
-<!--                            <div>-->
-<!--                              <span>{{ inputStockOrder.lotPrefix }} {{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>-->
-<!--                              <span *ngIf="inputStockOrder.qrCodeTag"-->
-<!--                                    (click)="openInputStockOrderQRCode(inputStockOrder)"-->
-<!--                                    class="cursor-pointer">-->
-<!--                                <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>-->
-<!--                              </span>-->
-<!--                              <span *ngIf="inputStockOrder.organic">-->
-<!--                                <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"-->
-<!--                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>-->
-<!--                              </span>-->
-<!--                              <span *ngIf="inputStockOrder.womenShare">-->
-<!--                                <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"-->
-<!--                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>-->
-<!--                              </span>-->
-<!--                            </div>-->
-<!--                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>-->
-<!--                          </div>-->
-<!--                          <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>-->
+                <div class="af-row">
+                  <div class="af-c12">
+                    <ng-container *ngIf="inputTransactions && inputTransactions.length">
+                      <label class="ml-1">Existing transactions</label>
+                      <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
+                        <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
+                          <div class="af-c9 pl-3">
+                            <div>
+                              <span>{{ inputStockOrder.lotPrefix }} {{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
+                              <span *ngIf="inputStockOrder.qrCodeTag"
+                                    (click)="openInputStockOrderQRCode(inputStockOrder)"
+                                    class="cursor-pointer">
+                                <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                              </span>
+                              <span *ngIf="inputStockOrder.organic">
+                                <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
+                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
+                              </span>
+                              <span *ngIf="inputStockOrder.womenShare">
+                                <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
+                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
+                              </span>
+                            </div>
+                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
+                          </div>
+                          <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
 
-<!--                          <div class="af-c1 text-right"-->
-<!--                               [hidden]="tx.status !== 'PENDING'"-->
-<!--                               (click)="deleteTransaction(i)">-->
-<!--                            <fa-icon-->
-<!--                                    class="del-icon cursor-pointer"-->
-<!--                                    [icon]="faTimes"></fa-icon>-->
-<!--                          </div>-->
-<!--                        </ng-container>-->
-<!--                      </div>-->
-<!--                    </ng-container>-->
-<!--                  </div>-->
-<!--                </div>-->
+                          <div class="af-c1 text-right"
+                               [hidden]="tx.status !== 'PENDING'"
+                               (click)="deleteTransaction(i)">
+                            <fa-icon
+                                    class="del-icon cursor-pointer"
+                                    [icon]="faTimes"></fa-icon>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
 
                 <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
                 <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
