@@ -334,6 +334,35 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+
+          <h2 i18n="@@companyDetailValueChainModal.section.value-chains">Company value chains</h2>
+          <div class="af-form-element">
+            <div class="search-field">
+              <textinput
+                label=""
+                [form]="activeValueChainsForm"
+                placeholder="Type value chain ..."
+                i18n-placeholder="@@companyDetailValueChainModal.value-chains.search-field.placeholder"
+                [codebookService]="activeValueChainsCodebook"
+                [resultFormatter]="valueChainResultFormatter"
+                [inputFormatter]="valueChainInputFormatter"
+                (itemMatching)="addSelectedValueChain($event)">
+              </textinput>
+            </div>
+            <div *ngFor="let valueChain of this.activeValueChains; index as idx">
+              <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
+                <div>{{ valueChain.name }}</div>
+                <div (click)="deleteValueChain(valueChain, idx)" style="cursor: pointer;">
+                  <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@companyDetail.base.currency">Base currency</h2>
           <div class="af-form-element">
             <single-choice label="Currency"

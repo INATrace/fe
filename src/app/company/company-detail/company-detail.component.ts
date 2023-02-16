@@ -11,16 +11,24 @@ import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { CountryService } from '../../shared-services/countries.service';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
-import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
+import {
+  ApiCompanyDocumentValidationScheme,
+  ApiCompanyGetValidationScheme,
+} from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
-import { ApiCertificationValidationScheme } from '../../m-product/product-label/validation';
+import {
+  ApiCertificationValidationScheme
+} from '../../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
 import { CurrenciesService } from '../../shared-services/currencies.service';
 import { AuthService } from '../../core/auth.service';
+import {ApiValueChain} from '../../../api/model/apiValueChain';
+import {ActiveValueChainService} from '../../shared-services/active-value-chain.service';
+import {ValueChainControllerService} from '../../../api/api/valueChainController.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -55,6 +63,9 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   title = '';
 
   sub: Subscription;
+  activeValueChainsCodebook: ActiveValueChainService;
+  activeValueChainsForm = new FormControl(null);
+  activeValueChains: Array<ApiValueChain> = [];
 
   certificationListManager = null;
   videosListManager = null;
@@ -86,6 +97,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     protected route: ActivatedRoute,
     private location: Location,
     private companyController: CompanyControllerService,
+    private valueChainController: ValueChainControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
     public currencyCodes: CurrenciesService,
@@ -137,6 +149,8 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       this.title = $localize`:@@companyDetail.title.add:Add company`;
       this.newCompany();
     }
+
+    this.activeValueChainsCodebook = new ActiveValueChainService(this.valueChainController);
   }
 
   ngOnDestroy() {
@@ -150,6 +164,44 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
 
   openOnStart(value: any) {
     return true;
+  }
+
+  valueChainResultFormatter = (value: any) => {
+    return this.activeValueChainsCodebook.textRepresentation(value);
+  }
+
+  valueChainInputFormatter = (value: any) => {
+    return this.activeValueChainsCodebook.textRepresentation(value);
+  }
+
+  async addSelectedValueChain(valueChain: ApiValueChain) {
+    if (!valueChain || this.activeValueChains.some(vch => vch === valueChain)) {
+      setTimeout(() => this.activeValueChainsForm.setValue(null));
+      return;
+    }
+    this.activeValueChains.push(valueChain);
+    setTimeout(() => this.activeValueChainsForm.setValue(null));
+  }
+
+  deleteValueChain(valueChain: ApiValueChain, idx: number) {
+    this.confirmValueChainRemove().then(confirmed => {
+      if (confirmed) {
+        this.activeValueChains.splice(idx, 1);
+      }
+    });
+  }
+
+  private async confirmValueChainRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@companyDetailValueChainModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
   }
 
   get mode() {
@@ -167,6 +219,8 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
         if (!this.company.headquarters) {
           this.company.headquarters = this.emptyObject().headquarters;
         }
+        this.activeValueChains = this.company.valueChains ? this.company.valueChains : [];
+
         this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);
         this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
         (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
