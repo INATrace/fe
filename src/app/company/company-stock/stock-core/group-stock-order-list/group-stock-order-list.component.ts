@@ -273,13 +273,9 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
         this.router.navigate(['my-stock', 'purchases', 'update', order.groupedIds[0]]).then();
         return;
       case 'GENERAL_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.groupedIds[0]]).then();
-        return;
       case 'PROCESSING_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.groupedIds[0]]).then();
-        return;
       case 'TRANSFER_ORDER':
-        this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.groupedIds[0]]).then();
+        this.router.navigate(['my-stock', 'processing', 'update', order.groupedIds[0]]).then();
         return;
 
       default:

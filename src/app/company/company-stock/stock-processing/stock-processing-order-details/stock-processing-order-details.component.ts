@@ -35,6 +35,7 @@ import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { AuthService } from '../../../../core/auth.service';
+import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 
 type PageMode = 'create' | 'edit';
 
@@ -60,6 +61,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // Holds the current company profile which executes the processing action
   companyProfile: ApiCompanyGet;
+
+  // Holds the input facility ID provided as path param in the route (can be null)
+  facilityIdPathParam: number | null = null;
 
   // Properties and controls used for display and selection of processing action
   selectedProcAction: ApiProcessingAction;
@@ -107,6 +111,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
     private stockOrderController: StockOrderControllerService,
+    private processingOrderController: ProcessingOrderControllerService,
     private procActionController: ProcessingActionControllerService,
     private facilityController: FacilityControllerService,
     private semiProductsController: SemiProductControllerService,
@@ -254,12 +259,22 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.initializeFacilitiesCodebooks();
 
       // If there is only one appropriate input facility selected it
-      this.subscriptions.push(this.inputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+      this.subscriptions.push(this.inputFacilitiesCodebook.getAllCandidates().subscribe((facilitates) => {
 
-        // TODO: fi facility ID is provided in path, set that facility if applicable
+        // If facility ID is provided in path, set that facility if applicable
+        if (this.facilityIdPathParam != null) {
 
-        if (val && val.length === 1) {
-          this.inputFacilityControl.setValue(val[0]);
+          // Find the facility with the provided ID and set it
+          const facility = facilitates.find(f => f.id === this.facilityIdPathParam);
+          if (facility) {
+            this.inputFacilityControl.setValue(facility);
+            this.setInputFacility(this.inputFacilityControl.value);
+            return;
+          }
+        }
+
+        if (facilitates && facilitates.length === 1) {
+          this.inputFacilityControl.setValue(facilitates[0]);
           this.setInputFacility(this.inputFacilityControl.value);
         }
       }));
@@ -549,9 +564,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private registerInternalLotSearchValueChangeListener() {
     this.subscriptions.push(
-        this.internalLotNameSearchControl.valueChanges
-            .pipe(debounceTime(350))
-            .subscribe(() => this.dateSearch())
+      this.internalLotNameSearchControl.valueChanges
+        .pipe(debounceTime(350))
+        .subscribe(() => this.dateSearch())
     );
   }
 
@@ -574,7 +589,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Initialize the processing actions codebook
     this.procActionsCodebook =
-        new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
+      new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
 
     if (pageMode === 'create') {
 
@@ -582,18 +597,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
 
       // Get the processing action ID from the route (this is user to load the Processing action)
-      const procActionIdPathParam = this.route.snapshot.params.actionId;
+      const procActionIdPathParam = this.route.snapshot.params.procActionId;
 
       // If the path param is not 'NEW' means that we are provided with Processing action ID (load the Processing action with this ID)
       if (procActionIdPathParam !== 'NEW') {
+        this.facilityIdPathParam = Number(this.route.snapshot.params.inputFacilityId);
         await this.loadProcessingAction(procActionIdPathParam);
       }
-
-      // TODO: add the rest of the initializations
 
     } else if (pageMode === 'edit') {
 
       this.editing = true;
+
+      // Load the processing order that we are editing
+      await this.loadProcessingOrder();
 
       // TODO: handle update case
 
@@ -620,13 +637,34 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private async loadProcessingAction(procActionId: number) {
 
     const respProcAction = await this.procActionController.getProcessingActionUsingGET(procActionId)
-        .pipe(take(1)).toPromise();
+      .pipe(take(1)).toPromise();
     if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
       await this.setProcessingAction(respProcAction.data);
 
       // FIXME: refactor this
       // this.processingActionLotPrefixForm.setValue(this.prAction.prefix);
     }
+  }
+
+  private async loadProcessingOrder() {
+
+    // First get the Stock order ID provided in route (we fetch the Processing order using the Stock order ID)
+    const stockOrderId = this.route.snapshot.params.stockOrderId as string;
+    if (!stockOrderId) { throw Error('No Stock order ID in path!'); }
+
+    // FIXME: add new API endpoint for fetching Proc. order using Stock order ID
+    // Get the Processing order with the provided ID
+    const respProcessingOrder = await this.processingOrderController.getProcessingOrderUsingGET(Number(stockOrderId))
+      .pipe(take(1)).toPromise();
+
+    if (!respProcessingOrder || respProcessingOrder.status !== 'OK') {
+      throw new Error('Cannot retrieve the processing order!');
+    }
+
+    console.log('Proc order: ', respProcessingOrder.data);
+
+    // FIXME: refactor this
+    // this.editableProcessingOrder = respProcessingOrder.data;
   }
 
   private initializeFacilitiesCodebooks() {
@@ -649,10 +687,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // If we have shipment action (quote processing action), get the selling facilities that the current company can order from
       if (this.actionType === 'SHIPMENT') {
         this.inputFacilitiesCodebook =
-            new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
+          new AvailableSellingFacilitiesForCompany(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId);
       } else {
         this.inputFacilitiesCodebook =
-            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId, supportedFacilitiesIds);
+          new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, inputSemiProductId, inputFinalProductId, supportedFacilitiesIds);
       }
     }
 
@@ -693,14 +731,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // If input final product is provided get its definition
     if (procAction.inputFinalProduct && procAction.inputFinalProduct.id) {
       const resInFP = await this.productController
-          .getFinalProductUsingGET(procAction.inputFinalProduct.product.id, procAction.inputFinalProduct.id).pipe(take(1)).toPromise();
+        .getFinalProductUsingGET(procAction.inputFinalProduct.product.id, procAction.inputFinalProduct.id).pipe(take(1)).toPromise();
       inputFinalProduct = resInFP && resInFP.status === 'OK' ? resInFP.data : null;
     }
 
     // If output final product is provided get its definition
     if (procAction.outputFinalProduct && procAction.outputFinalProduct.id) {
       const resOutFP = await this.productController
-          .getFinalProductUsingGET(procAction.outputFinalProduct.product.id, procAction.outputFinalProduct.id).pipe(take(1)).toPromise();
+        .getFinalProductUsingGET(procAction.outputFinalProduct.product.id, procAction.outputFinalProduct.id).pipe(take(1)).toPromise();
       outputFinalProduct = resOutFP && resOutFP.status === 'OK' ? resOutFP.data : null;
     }
 
@@ -799,39 +837,39 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const finalProduct = this.selectedProcAction.outputFinalProduct;
 
     return this.stockOrderController
-        .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
-        .pipe(
-            take(1),
-            map(res => {
-              if (res && res.status === 'OK' && res.data) {
+      .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
+      .pipe(
+        take(1),
+        map(res => {
+          if (res && res.status === 'OK' && res.data) {
 
-                // If we are editing existing order, filter the stock orders that are already present in the proc. order
-                if (this.editing) {
-                  // TODO: if we are editing existing order, filter the stock orders that are already present in the proc. order
-                }
+            // If we are editing existing order, filter the stock orders that are already present in the proc. order
+            if (this.editing) {
+              // TODO: if we are editing existing order, filter the stock orders that are already present in the proc. order
+            }
 
-                return res.data.items;
-              } else {
-                return [];
-              }
-            }),
-            map(availableStockOrders => {
+            return res.data.items;
+          } else {
+            return [];
+          }
+        }),
+        map(availableStockOrders => {
 
-              // If generating QR code, filter all the stock orders that have already generated QR code tag
-              if (this.selectedProcAction.type === 'GENERATE_QR_CODE') {
-                return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
-              } else if (finalProduct) {
+          // If generating QR code, filter all the stock orders that have already generated QR code tag
+          if (this.selectedProcAction.type === 'GENERATE_QR_CODE') {
+            return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
+          } else if (finalProduct) {
 
-                // If final product action (final processing of Quote or Transfer order for a final product)
-                // filter the stock orders that have QR code tag for different final products than the selected one (from the Proc. action)
-                return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag || apiStockOrder.qrCodeTagFinalProduct.id === finalProduct.id);
+            // If final product action (final processing of Quote or Transfer order for a final product)
+            // filter the stock orders that have QR code tag for different final products than the selected one (from the Proc. action)
+            return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag || apiStockOrder.qrCodeTagFinalProduct.id === finalProduct.id);
 
-              } else {
-                return availableStockOrders;
-              }
-            })
-        )
-        .toPromise();
+          } else {
+            return availableStockOrders;
+          }
+        })
+      )
+      .toPromise();
   }
 
   private setOrganicAndWomenOnly() {

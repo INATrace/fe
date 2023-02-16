@@ -83,7 +83,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   pageListingMode: StockOrderListingPageMode = 'PURCHASE_ORDERS';
 
   @Input()
-  hideCheckbox: boolean = false;
+  hideCheckbox = false;
 
   @Output()
   countAll = new EventEmitter<number>();
@@ -374,13 +374,9 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
           this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
           return;
         case 'GENERAL_ORDER':
-          this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
-          return;
         case 'PROCESSING_ORDER':
-          this.router.navigate(['my-stock', 'processing', 'update', 'processing-order', order.id]).then();
-          return;
         case 'TRANSFER_ORDER':
-          this.router.navigate(['my-stock', 'processing', 'update', 'transfer-order', order.id]).then();
+          this.router.navigate(['my-stock', 'processing', 'update', order.id]).then();
           return;
 
         default:

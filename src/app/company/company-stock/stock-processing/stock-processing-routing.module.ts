@@ -17,7 +17,7 @@ const routes: Routes = [
     }
   },
   {
-    path: ':actionId/facility/:inputFacilityId/new',
+    path: ':procActionId/facility/:inputFacilityId/new',
     component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
     data: {
       mode: 'create',
@@ -29,44 +29,17 @@ const routes: Routes = [
     }
   },
   {
-    path: 'update/shipment-order/:orderId',
+    path: 'update/:stockOrderId',
     component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
     data: {
       mode: 'edit',
-      type: 'SHIPMENT',
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
         route: 'my-stock/processing',
         goBack: true
       }
     }
-  },
-  {
-    path: 'update/processing-order/:orderId',
-    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
-    data: {
-      mode: 'edit',
-      type: 'PROCESSING',
-      drobtinice: {
-        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
-        route: 'my-stock/processing',
-        goBack: true
-      }
-    }
-  },
-  {
-    path: 'update/transfer-order/:orderId',
-    component: StockProcessingOrderDetailsComponent, pathMatch: 'full',
-    data: {
-      mode: 'edit',
-      type: 'TRANSFER',
-      drobtinice: {
-        title: ' / ' + $localize`:@@breadCrumb.processing.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.processing.order:Processing order`,
-        route: 'my-stock/processing',
-        goBack: true
-      }
-    }
-  },
+  }
 ];
 
 @NgModule({

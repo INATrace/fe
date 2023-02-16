@@ -102,7 +102,7 @@ export class QuoteOrderListComponent implements OnInit {
   }
 
   edit(order: ApiStockOrder) {
-    this.router.navigate(['my-stock', 'processing', 'update', 'shipment-order', order.id]).then();
+    this.router.navigate(['my-stock', 'processing', 'update', order.id]).then();
   }
 
   history(item: ApiStockOrder) {

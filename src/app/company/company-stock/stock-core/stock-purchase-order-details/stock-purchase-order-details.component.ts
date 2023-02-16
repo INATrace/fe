@@ -498,10 +498,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
         this.stockOrderForm.get('orderType').setValue(type);
         return;
       case 'GENERAL_ORDER':
-        // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'general-order', 'update', this.purchaseOrderId]);
-        return;
       case 'PROCESSING_ORDER':
-        // this.router.navigate(['product-labels', this.productId, 'stock', 'stock-orders', 'processing-order', 'update', this.purchaseOrderId]);
         return;
       default:
         throw Error('Wrong order type: ' + type);
