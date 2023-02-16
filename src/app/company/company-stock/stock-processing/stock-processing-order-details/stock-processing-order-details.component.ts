@@ -32,6 +32,11 @@ import { ClipInputTransactionModalComponent } from './clip-input-transaction-mod
 import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
+import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { AuthService } from '../../../../core/auth.service';
+
+type PageMode = 'create' | 'edit';
 
 @Component({
   selector: 'app-stock-processing-order-details',
@@ -50,7 +55,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   title: string;
 
-  companyId: number;
+  // Holds the ID of the current user that is doing the processing
+  processingUserId: number;
+
+  // Holds the current company profile which executes the processing action
+  companyProfile: ApiCompanyGet;
 
   // Properties and controls used for display and selection of processing action
   selectedProcAction: ApiProcessingAction;
@@ -86,7 +95,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   processingEvidenceListManager = null;
 
   submitted = false;
-  update = false;
+  editing = false;
 
   saveInProgress = false;
 
@@ -103,6 +112,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private semiProductsController: SemiProductControllerService,
     private productController: ProductControllerService,
     private codebookTranslations: CodebookTranslations,
+    private companyController: CompanyControllerService,
+    private authService: AuthService,
     private modalService: NgbModalImproved
   ) { }
 
@@ -130,7 +141,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   get leftSideEnabled() {
     const facility = this.inputFacility;
     if (!facility) { return true; }
-    if (!this.update) { return true; }
+    if (!this.editing) { return true; }
     return this.companyId === facility.company?.id;
   }
 
@@ -176,7 +187,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputTransactions(): ApiTransaction[] {
 
-    if (this.update) {
+    if (this.editing) {
       // FIXME: refactor this
       // return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
     }
@@ -185,7 +196,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputStockOrders(): ApiStockOrder[] {
 
-    if (this.update) {
+    if (this.editing) {
       // FIXME: refactor this
       // return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
     }
@@ -204,21 +215,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  ngOnInit(): void {
+  private get companyId(): number {
+    return this.companyProfile.id;
+  }
 
-    // Get the current user selected company from the local storage
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+  ngOnInit(): void {
 
     // Register value change listeners for input controls
     this.registerInternalLotSearchValueChangeListener();
 
-    this.initInitialData().then(
-      async () => {
-
-        this.procActionsCodebook =
-          new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
-        // TODO: add other initializations
-      },
+    // Start loading of data and prepare form groups
+    this.globalEventsManager.showLoading(true);
+    this.initializeData().then(
+      async () => this.globalEventsManager.showLoading(false),
       reason => {
         this.globalEventsManager.showLoading(false);
         throw reason;
@@ -232,6 +241,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async setProcessingAction(procAction: ApiProcessingAction) {
 
+    this.procActionControl.setValue(procAction);
     this.selectedProcAction = procAction;
     this.setRequiredProcessingEvidence(procAction).then();
     this.clearInputPropsAndControls();
@@ -240,16 +250,21 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (procAction) {
 
+      // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
       this.initializeFacilitiesCodebooks();
 
       // If there is only one appropriate input facility selected it
       this.subscriptions.push(this.inputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+
+        // TODO: fi facility ID is provided in path, set that facility if applicable
+
         if (val && val.length === 1) {
           this.inputFacilityControl.setValue(val[0]);
           this.setInputFacility(this.inputFacilityControl.value);
         }
       }));
 
+      // FIXME: refactor this
       // If there is only one appropriate output facility select it
       // this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
       //   if (val && val.length === 1 && !this.update) { this.outputFacilityForm.setValue(val[0]); }
@@ -258,7 +273,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.defineInputAndOutputStockUnits(procAction).then();
       // this.setRequiredFields(event);
 
-      if (!this.update) {
+      if (!this.editing) {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
         if (this.selectedProcAction.type === 'SHIPMENT') {
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`;
@@ -300,7 +315,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.clearInputFacility();
     }
 
-    if (!this.update) {
+    if (!this.editing) {
       // this.prefillOutputFacility();
     }
 
@@ -540,30 +555,77 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  private async initInitialData() {
+  private async initializeData() {
 
-    const action = this.route.snapshot.data.action;
-    if (!action) {
+    // Get the page mode
+    const pageMode = this.route.snapshot.data.mode as PageMode;
+    if (!pageMode) {
       return;
     }
 
+    // Load and set current user that is doing the processing
+    this.loadProcessingUser();
+
+    // Get the current user selected company from the local storage and load company profile
+    await this.loadCompanyProfile();
+
+    // Initialize list managers
     this.initProcEvidenceListManager();
 
-    if (action === 'new') {
+    // Initialize the processing actions codebook
+    this.procActionsCodebook =
+        new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
 
-      this.update = false;
+    if (pageMode === 'create') {
+
+      this.editing = false;
       this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
 
-      // TODO: handle new case
+      // Get the processing action ID from the route (this is user to load the Processing action)
+      const procActionIdPathParam = this.route.snapshot.params.actionId;
 
-    } else if (action === 'update') {
+      // If the path param is not 'NEW' means that we are provided with Processing action ID (load the Processing action with this ID)
+      if (procActionIdPathParam !== 'NEW') {
+        await this.loadProcessingAction(procActionIdPathParam);
+      }
 
-      this.update = true;
+      // TODO: add the rest of the initializations
+
+    } else if (pageMode === 'edit') {
+
+      this.editing = true;
 
       // TODO: handle update case
 
     } else {
-      throw Error('Wrong action.');
+      throw Error('Unsupported page mode.');
+    }
+  }
+
+  private loadProcessingUser() {
+    this.authService.userProfile$.pipe(take(1)).toPromise().then(profile => this.processingUserId = profile.id);
+  }
+
+  private async loadCompanyProfile() {
+
+    const companyId = Number(localStorage.getItem('selectedUserCompany'));
+    const res = await this.companyController.getCompanyUsingGET(companyId).pipe(take(1)).toPromise();
+    if (res && 'OK' === res.status && res.data) {
+      this.companyProfile = res.data;
+    } else {
+      throw Error('Cannot get company profile.');
+    }
+  }
+
+  private async loadProcessingAction(procActionId: number) {
+
+    const respProcAction = await this.procActionController.getProcessingActionUsingGET(procActionId)
+        .pipe(take(1)).toPromise();
+    if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
+      await this.setProcessingAction(respProcAction.data);
+
+      // FIXME: refactor this
+      // this.processingActionLotPrefixForm.setValue(this.prAction.prefix);
     }
   }
 
@@ -744,7 +806,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
               if (res && res.status === 'OK' && res.data) {
 
                 // If we are editing existing order, filter the stock orders that are already present in the proc. order
-                if (this.update) {
+                if (this.editing) {
                   // TODO: if we are editing existing order, filter the stock orders that are already present in the proc. order
                 }
 
@@ -808,7 +870,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private calcInputQuantity(setValue: boolean) {
 
     let inputQuantity = 0;
-    if (this.update) {
+    if (this.editing) {
       for (const item of this.availableInputStockOrders) {
         inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
       }
