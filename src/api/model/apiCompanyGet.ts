@@ -24,6 +24,7 @@ import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiCompanyUser } from './apiCompanyUser';
 import { ApiCurrencyType } from './apiCurrencyType';
 import { ApiDocument } from './apiDocument';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -95,6 +96,10 @@ export interface ApiCompanyGet {
      * Company users
      */
     users?: Array<ApiCompanyUser>;
+    /**
+     * company value chains
+     */
+    valueChains?: Array<ApiValueChain>;
     /**
      * webpage
      */
@@ -176,6 +181,10 @@ export namespace ApiCompanyGet {
          * Company users
          */
         users = 'users',
+        /**
+         * company value chains
+         */
+        valueChains = 'valueChains',
         /**
          * webpage
          */
@@ -419,6 +428,18 @@ export namespace ApiCompanyGet {
                     complexType: 'ApiCompanyUser'
                 },
                 {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChains',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -468,6 +489,8 @@ export namespace ApiCompanyGet {
                 purchaseProofDocumentMultipleFarmers: [
                 ],
                 users: [
+                ],
+                valueChains: [
                 ],
                 webPage: [
                 ],
@@ -533,6 +556,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               users: {
+  //                   validators: []
+  //               },
+  //               valueChains: {
   //                   validators: []
   //               },
   //               webPage: {

@@ -7464,6 +7464,97 @@
         "summary": "Get list of connected companies for the company with the given ID"
       }
     },
+    "/api/company/{id}/value-chains": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiValueChain_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getCompanyValueChainsUsingGET",
+        "summary": "Get list of value chains for the company with the given ID"
+      }
+    },
     "/api/final-product/company/{companyId}": {
       "get": {
         "parameters": [
@@ -7618,6 +7709,97 @@
           "$ref": "#/components/requestBodies/ApiProductType"
         },
         "summary": "updateProductType"
+      }
+    },
+    "/api/product-type/company/{companyId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "getProductTypesForCompanyUsingGET",
+        "summary": "Get a list of product types that the company with the provided id has acccess to"
       }
     },
     "/api/product-type/{id}": {
@@ -10463,9 +10645,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10475,16 +10660,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10494,16 +10682,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10513,16 +10704,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10532,16 +10726,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10551,16 +10748,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10570,16 +10770,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -10589,8 +10792,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -11509,6 +11712,13 @@
             "example": false,
             "type": "boolean"
           },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
+          },
           "webPage": {
             "description": "webpage",
             "type": "string"
@@ -11802,6 +12012,13 @@
             },
             "type": "array"
           },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
+          },
           "webPage": {
             "description": "webpage",
             "type": "string"
@@ -11933,6 +12150,13 @@
             "description": "Add users with these ids",
             "items": {
               "$ref": "#/components/schemas/ApiBaseEntity"
+            },
+            "type": "array"
+          },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
             },
             "type": "array"
           },

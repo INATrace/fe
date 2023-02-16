@@ -23,6 +23,7 @@ import { ApiCertification } from './apiCertification';
 import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiCurrencyType } from './apiCurrencyType';
 import { ApiDocument } from './apiDocument';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -86,6 +87,10 @@ export interface ApiCompany {
      * Enable adding multiple farmers for one proof document on purchase order form
      */
     purchaseProofDocumentMultipleFarmers?: boolean;
+    /**
+     * company value chains
+     */
+    valueChains?: Array<ApiValueChain>;
     /**
      * webpage
      */
@@ -159,6 +164,10 @@ export namespace ApiCompany {
          * Enable adding multiple farmers for one proof document on purchase order form
          */
         purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
+        /**
+         * company value chains
+         */
+        valueChains = 'valueChains',
         /**
          * webpage
          */
@@ -364,6 +373,18 @@ export namespace ApiCompany {
                     complexType: ''
                 },
                 {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChains',
+                    classname: 'ApiCompany',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -409,6 +430,8 @@ export namespace ApiCompany {
                 phone: [
                 ],
                 purchaseProofDocumentMultipleFarmers: [
+                ],
+                valueChains: [
                 ],
                 webPage: [
                 ],
@@ -468,6 +491,9 @@ export namespace ApiCompany {
   //                   validators: []
   //               },
   //               purchaseProofDocumentMultipleFarmers: {
+  //                   validators: []
+  //               },
+  //               valueChains: {
   //                   validators: []
   //               },
   //               webPage: {
