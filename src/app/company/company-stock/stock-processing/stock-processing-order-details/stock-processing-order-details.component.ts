@@ -36,6 +36,7 @@ import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { AuthService } from '../../../../core/auth.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
+import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 
 type PageMode = 'create' | 'edit';
 
@@ -92,6 +93,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // Input stock unit (Semi-product or Final product)
   currentInputStockUnit: ApiSemiProduct | ApiFinalProduct;
+
+  // Processing orders properties (the Processing order connects the input transactions with the target - to be created Stock orders)
+  // Used when editing existing Processing order
+  processingOrder: ApiProcessingOrder;
 
   // Processing evidence controls
   requiredProcessingEvidenceArray = new FormArray([]);
@@ -255,38 +260,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (procAction) {
 
-      // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
-      this.initializeFacilitiesCodebooks();
-
-      // If there is only one appropriate input facility selected it
-      this.subscriptions.push(this.inputFacilitiesCodebook.getAllCandidates().subscribe((facilitates) => {
-
-        // If facility ID is provided in path, set that facility if applicable
-        if (this.facilityIdPathParam != null) {
-
-          // Find the facility with the provided ID and set it
-          const facility = facilitates.find(f => f.id === this.facilityIdPathParam);
-          if (facility) {
-            this.inputFacilityControl.setValue(facility);
-            this.setInputFacility(this.inputFacilityControl.value);
-            return;
-          }
-        }
-
-        if (facilitates && facilitates.length === 1) {
-          this.inputFacilityControl.setValue(facilitates[0]);
-          this.setInputFacility(this.inputFacilityControl.value);
-        }
-      }));
-
-      // FIXME: refactor this
-      // If there is only one appropriate output facility select it
-      // this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-      //   if (val && val.length === 1 && !this.update) { this.outputFacilityForm.setValue(val[0]); }
-      // }));
-
       this.defineInputAndOutputStockUnits(procAction).then();
       // this.setRequiredFields(event);
+
+      // Load and the facilities that are applicable for the processing action
+      await this.loadFacilities();
 
       if (!this.editing) {
         this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
@@ -652,19 +630,50 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const stockOrderId = this.route.snapshot.params.stockOrderId as string;
     if (!stockOrderId) { throw Error('No Stock order ID in path!'); }
 
-    // FIXME: add new API endpoint for fetching Proc. order using Stock order ID
-    // Get the Processing order with the provided ID
-    const respProcessingOrder = await this.processingOrderController.getProcessingOrderUsingGET(Number(stockOrderId))
-      .pipe(take(1)).toPromise();
+    // Get the Processing order for the Stock order with the provided ID
+    const respProcessingOrder = await this.stockOrderController.getStockOrderProcessingOrderUsingGET(Number(stockOrderId))
+        .pipe(take(1)).toPromise();
 
     if (!respProcessingOrder || respProcessingOrder.status !== 'OK') {
       throw new Error('Cannot retrieve the processing order!');
     }
+    this.processingOrder = respProcessingOrder.data;
 
-    console.log('Proc order: ', respProcessingOrder.data);
+    await this.setProcessingAction(this.processingOrder.processingAction);
+  }
+
+  private async loadFacilities() {
+
+    // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
+    this.initializeFacilitiesCodebooks();
+
+    // Get all the applicable facilities
+    const facilities = await this.inputFacilitiesCodebook.getAllCandidates().toPromise();
+
+    // TODO: handle case when creating new and editing existing (when editing, set facility from the Processing order)
+
+    // If facility ID is provided in path, set that facility if applicable
+    if (this.facilityIdPathParam != null) {
+
+      // Find the facility with the provided ID and set it
+      const facility = facilities.find(f => f.id === this.facilityIdPathParam);
+      if (facility) {
+        this.inputFacilityControl.setValue(facility);
+        await this.setInputFacility(this.inputFacilityControl.value);
+        return;
+      }
+    }
+
+    if (facilities && facilities.length === 1) {
+      this.inputFacilityControl.setValue(facilities[0]);
+      await this.setInputFacility(this.inputFacilityControl.value);
+    }
 
     // FIXME: refactor this
-    // this.editableProcessingOrder = respProcessingOrder.data;
+    // If there is only one appropriate output facility select it
+    // this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
+    //   if (val && val.length === 1 && !this.update) { this.outputFacilityForm.setValue(val[0]); }
+    // }));
   }
 
   private initializeFacilitiesCodebooks() {
