@@ -93,6 +93,10 @@ export namespace GetStockOrderInputTransactionsUsingGET {
        * Company ID
        */
       stockOrderId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -102,7 +106,11 @@ export namespace GetStockOrderInputTransactionsUsingGET {
       /**
        * Company ID
        */
-      stockOrderId = 'stockOrderId'
+      stockOrderId = 'stockOrderId',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -112,6 +120,8 @@ export namespace GetStockOrderInputTransactionsUsingGET {
     export const ParamValidators: {[K in keyof GetStockOrderInputTransactionsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       stockOrderId: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -319,6 +329,7 @@ export class TransactionControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getStockOrderInputTransactionsUsingGET(
       map.stockOrderId,
+      map.language,
       observe,
       reportProgress
     );
@@ -329,18 +340,22 @@ export class TransactionControllerService {
      * Get a paginated list of input transactions for provided stock order ID.
      * 
      * @param stockOrderId Company ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiTransaction>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiTransaction>>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiTransaction>>;
-    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiTransaction>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiTransaction>>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiTransaction>>;
+    public getStockOrderInputTransactionsUsingGET(stockOrderId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (stockOrderId === null || stockOrderId === undefined) {
             throw new Error('Required parameter stockOrderId was null or undefined when calling getStockOrderInputTransactionsUsingGET.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
