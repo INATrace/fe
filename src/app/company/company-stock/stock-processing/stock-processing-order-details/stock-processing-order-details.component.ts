@@ -20,7 +20,7 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import { Subscription } from 'rxjs';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { debounceTime, map, take } from 'rxjs/operators';
-import { faTimes, faTrashAlt, faQrcode, faCut, faLeaf, faFemale } from '@fortawesome/free-solid-svg-icons';
+import { faCut, faFemale, faLeaf, faQrcode, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
@@ -31,12 +31,13 @@ import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-
 import { ClipInputTransactionModalComponent } from './clip-input-transaction-modal/clip-input-transaction-modal.component';
 import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
-import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { AuthService } from '../../../../core/auth.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import TypeEnum = ApiProcessingAction.TypeEnum;
 
 type PageMode = 'create' | 'edit';
 
@@ -266,21 +267,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Load and the facilities that are applicable for the processing action
       await this.loadFacilities();
 
-      if (!this.editing) {
-        this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
-        if (this.selectedProcAction.type === 'SHIPMENT') {
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`;
-        }
-        if (this.selectedProcAction.type === 'TRANSFER') {
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTransferTitle:Add transfer action`;
-        }
-        if (this.selectedProcAction.type === 'PROCESSING') {
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add processing action`;
-        }
-        if (this.selectedProcAction.type === 'FINAL_PROCESSING') {
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newFinalProcessingTitle:Add final processing action`;
-        }
-      }
+      // Set the page title depending on the page mode and the Processing action type
+      this.updatePageTitle();
+
     } else {
 
       // this.setRequiredFields(null);
@@ -590,11 +579,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Load the processing order that we are editing
       await this.loadProcessingOrder();
 
-      // TODO: handle update case
-
     } else {
       throw Error('Unsupported page mode.');
     }
+
+    // Depending on the page mode set some form controls as disabled
+    this.setFormControlsDisabledState();
   }
 
   private loadProcessingUser() {
@@ -647,26 +637,42 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
     this.initializeFacilitiesCodebooks();
 
-    // Get all the applicable facilities
-    const facilities = await this.inputFacilitiesCodebook.getAllCandidates().toPromise();
+    if (this.editing) {
 
-    // TODO: handle case when creating new and editing existing (when editing, set facility from the Processing order)
-
-    // If facility ID is provided in path, set that facility if applicable
-    if (this.facilityIdPathParam != null) {
-
-      // Find the facility with the provided ID and set it
-      const facility = facilities.find(f => f.id === this.facilityIdPathParam);
-      if (facility) {
-        this.inputFacilityControl.setValue(facility);
+      // If Processing action type is 'SHIPMENT' - Quote order, set the input facility from the quote facility set in the target Stock order
+      if (this.selectedProcAction.type === TypeEnum.SHIPMENT) {
+        const quoteFacility = this.processingOrder.targetStockOrders[0].quoteFacility;
+        this.inputFacilityControl.setValue(quoteFacility);
         await this.setInputFacility(this.inputFacilityControl.value);
-        return;
-      }
-    }
+      } else {
 
-    if (facilities && facilities.length === 1) {
-      this.inputFacilityControl.setValue(facilities[0]);
-      await this.setInputFacility(this.inputFacilityControl.value);
+        // In the other case, we set the input facility from the sourceFacility in the first input transaction
+        const sourceFacility = this.processingOrder.inputTransactions[0].sourceFacility;
+        this.inputFacilityControl.setValue(sourceFacility);
+        await this.setInputFacility(this.inputFacilityControl.value);
+      }
+
+    } else {
+
+      // Get all the applicable facilities
+      const facilities = await this.inputFacilitiesCodebook.getAllCandidates().toPromise();
+
+      // If facility ID is provided in path, set that facility if applicable
+      if (this.facilityIdPathParam != null) {
+
+        // Find the facility with the provided ID and set it
+        const facility = facilities.find(f => f.id === this.facilityIdPathParam);
+        if (facility) {
+          this.inputFacilityControl.setValue(facility);
+          await this.setInputFacility(this.inputFacilityControl.value);
+          return;
+        }
+      }
+
+      if (facilities && facilities.length === 1) {
+        this.inputFacilityControl.setValue(facilities[0]);
+        await this.setInputFacility(this.inputFacilityControl.value);
+      }
     }
 
     // FIXME: refactor this
@@ -961,6 +967,55 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // }
 
     return inputQuantity;
+  }
+
+  private updatePageTitle() {
+
+    if (!this.editing) {
+
+      this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
+
+      switch (this.selectedProcAction.type) {
+        case TypeEnum.SHIPMENT:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`;
+          break;
+        case TypeEnum.TRANSFER:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTransferTitle:Add transfer action`;
+          break;
+        case TypeEnum.PROCESSING:
+        case TypeEnum.GENERATEQRCODE:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add processing action`;
+          break;
+        case TypeEnum.FINALPROCESSING:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newFinalProcessingTitle:Add final processing action`;
+          break;
+      }
+    } else {
+
+      switch (this.selectedProcAction.type) {
+        case TypeEnum.SHIPMENT:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+          break;
+        case TypeEnum.TRANSFER:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateTransferTitle:Update transfer action`;
+          break;
+        case TypeEnum.PROCESSING:
+        case TypeEnum.GENERATEQRCODE:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateProcessingTitle:Update processing action`;
+          break;
+        case TypeEnum.FINALPROCESSING:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateFinalProcessingTitle:Update final processing action`;
+          break;
+      }
+    }
+  }
+
+  private setFormControlsDisabledState() {
+
+    if (this.editing) {
+      this.procActionControl.disable();
+      this.inputFacilityControl.disable();
+    }
   }
 
 }
