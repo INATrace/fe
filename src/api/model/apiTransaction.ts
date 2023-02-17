@@ -53,7 +53,6 @@ export interface ApiTransaction {
      * Is order of type processing
      */
     isProcessing?: boolean;
-    outputMeasureUnitType?: ApiMeasureUnitType;
     /**
      * Output quantity
      */
@@ -77,7 +76,6 @@ export interface ApiTransaction {
      * Transaction status
      */
     status?: ApiTransaction.StatusEnum;
-    targetFacility?: ApiFacility;
     targetStockOrder?: ApiStockOrder;
 }
 
@@ -113,7 +111,6 @@ export namespace ApiTransaction {
          * Is order of type processing
          */
         isProcessing = 'isProcessing',
-        outputMeasureUnitType = 'outputMeasureUnitType',
         /**
          * Output quantity
          */
@@ -137,7 +134,6 @@ export namespace ApiTransaction {
          * Transaction status
          */
         status = 'status',
-        targetFacility = 'targetFacility',
         targetStockOrder = 'targetStockOrder'
     }
 
@@ -260,18 +256,6 @@ export namespace ApiTransaction {
                     complexType: ''
                 },
                 {
-                    metadata: ApiMeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'outputMeasureUnitType',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -364,18 +348,6 @@ export namespace ApiTransaction {
                     complexType: ''
                 },
                 {
-                    metadata: ApiFacility.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'targetFacility',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
-                },
-                {
                     metadata: ApiStockOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -407,8 +379,6 @@ export namespace ApiTransaction {
                 ],
                 isProcessing: [
                 ],
-                outputMeasureUnitType: [
-                ],
                 outputQuantity: [
                 ],
                 pricePerUnit: [
@@ -424,8 +394,6 @@ export namespace ApiTransaction {
                 sourceStockOrder: [
                 ],
                 status: [
-                ],
-                targetFacility: [
                 ],
                 targetStockOrder: [
                 ],
@@ -463,9 +431,6 @@ export namespace ApiTransaction {
   //               isProcessing: {
   //                   validators: []
   //               },
-  //               outputMeasureUnitType: {
-  //                   validators: []
-  //               },
   //               outputQuantity: {
   //                   validators: []
   //               },
@@ -488,9 +453,6 @@ export namespace ApiTransaction {
   //                   validators: []
   //               },
   //               status: {
-  //                   validators: []
-  //               },
-  //               targetFacility: {
   //                   validators: []
   //               },
   //               targetStockOrder: {

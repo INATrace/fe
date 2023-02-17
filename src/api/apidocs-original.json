@@ -18816,10 +18816,6 @@
             "example": false,
             "type": "boolean"
           },
-          "outputMeasureUnitType": {
-            "$ref": "#/components/schemas/ApiMeasureUnitType",
-            "description": "Output measurement unit type"
-          },
           "outputQuantity": {
             "description": "Output quantity",
             "type": "number"
@@ -18857,10 +18853,6 @@
               "EXECUTED"
             ],
             "type": "string"
-          },
-          "targetFacility": {
-            "$ref": "#/components/schemas/ApiFacility",
-            "description": "Target facility"
           },
           "targetStockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",
