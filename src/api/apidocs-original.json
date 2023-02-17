@@ -15115,13 +15115,6 @@
             },
             "type": "array"
           },
-          "outputTransactions": {
-            "description": "Output transactions",
-            "items": {
-              "$ref": "#/components/schemas/ApiTransaction"
-            },
-            "type": "array"
-          },
           "processingAction": {
             "$ref": "#/components/schemas/ApiProcessingAction",
             "description": "Processing action"
