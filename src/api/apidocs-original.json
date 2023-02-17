@@ -18789,10 +18789,6 @@
             "$ref": "#/components/schemas/ApiFinalProduct",
             "description": "Final product"
           },
-          "gradeAbbreviation": {
-            "$ref": "#/components/schemas/ApiGradeAbbreviation",
-            "description": "Grade abbreviation"
-          },
           "id": {
             "description": "Entity id",
             "format": "int64",
