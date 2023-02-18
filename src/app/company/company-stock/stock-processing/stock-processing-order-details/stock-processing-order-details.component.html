@@ -1,5 +1,5 @@
 <app-authorised-layout>
-  <div class="af-layout--authorised">
+  <div *ngIf="procOrderGroup" class="af-layout--authorised">
     <div class="af-form-wrapper">
 
       <!-- PAGE TITLE - SET DYNAMICALLY DEPENDING ON THE SELECTED PROCESSING ACTION TYPE -->
@@ -21,13 +21,13 @@
                 <single-choice
                     label="Processing"
                     i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
-                    [formControlInput]="procActionControl"
+                    [formControlInput]="$any(procOrderGroup.get('processingAction'))"
                     [codebookService]="procActionsCodebook"
                     style="min-width: 150px;"
-                    (onChange)="setProcessingAction($event)"
-                    [isInvalidChoice]="submitted && procActionControl.invalid">
+                    (onChange)="processingActionUpdated($event)"
+                    [isInvalidChoice]="submitted && procOrderGroup.get('processingAction').invalid">
                   <ng-container *ngIf="submitted">
-                    <div *ngIf="procActionControl.errors as errors" class="sc-invalid-feedback"
+                    <div *ngIf="procOrderGroup.get('processingAction').errors as errors" class="sc-invalid-feedback"
                          i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
                       Action is required
                     </div>
