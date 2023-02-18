@@ -71,7 +71,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   selectedProcAction: ApiProcessingAction;
   procActionsCodebook: CompanyProcessingActionsService;
   procActionControl = new FormControl(null, Validators.required);
-  qrCodeForFinalProductControl = new FormControl(null);
+  procActionLotPrefixControl = new FormControl({ value: null, disabled: true });
+  qrCodeForFinalProductControl = new FormControl({ value: null, disabled: true });
 
   // Properties and controls used for display and selection of input facility
   selectedInputFacility: ApiFacility = null;
@@ -190,28 +191,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (this.actionType === 'SHIPMENT') { return false; }
 
-    const inTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
-    const selTRCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
+    const existingInputTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
+    const selectedInputSOCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
 
-    return inTRCount + selTRCount === 0;
+    return existingInputTRCount + selectedInputSOCount === 0;
   }
 
   get inputTransactions(): ApiTransaction[] {
-
-    if (this.editing) {
-      // FIXME: refactor this
-      // return this.processingOrderInputTransactions ? this.processingOrderInputTransactions : [];
-    }
-    return [];
-  }
-
-  get inputStockOrders(): ApiStockOrder[] {
-
-    if (this.editing) {
-      // FIXME: refactor this
-      // return this.processingOrderInputOrders ? this.processingOrderInputOrders : [];
-    }
-    return [] as ApiStockOrder[];
+    return this.processingOrder?.inputTransactions ? this.processingOrder.inputTransactions : [];
   }
 
   get isClipOrder(): boolean {
@@ -264,6 +251,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.defineInputAndOutputStockUnits(procAction).then();
       // this.setRequiredFields(event);
 
+      // Set the LOT prefix for the selected Processing action
+      this.procActionLotPrefixControl.setValue(procAction.prefix);
+
+      // If we have Processing action for generating QR code, set the final product form
+      if (procAction && procAction.type === 'GENERATE_QR_CODE' && procAction.qrCodeForFinalProduct) {
+        this.qrCodeForFinalProductControl
+          .setValue(`${ procAction.qrCodeForFinalProduct.name } (${ procAction.qrCodeForFinalProduct.product.name })`);
+      }
+
       // Load and the facilities that are applicable for the processing action
       await this.loadFacilities();
 
@@ -274,6 +270,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       // this.setRequiredFields(null);
       this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
+
+      this.procActionLotPrefixControl.reset();
+      this.qrCodeForFinalProductControl.reset();
     }
   }
 
@@ -342,9 +341,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   async dateSearch() {
 
     if (!this.leftSideEnabled) { return; }
+    if (!this.selectedInputFacility) { return; }
+
     const from = this.dateFromFilterControl.value;
     const to = this.dateToFilterControl.value;
-    if (!this.selectedInputFacility) { return; }
 
     // Prepare initial request params
     const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
@@ -515,18 +515,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.leftSideEnabled) { return; }
 
-    // FIXME: refactor this
-    // if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'SHIPMENT' || this.actionType === 'GENERATE_QR_CODE') {
-    //   this.processingOrderInputTransactions.splice(i, 1);
-    //   this.calcInputQuantity(true);
-    //   return;
-    // }
-    //
-    // if (this.actionType === 'TRANSFER') {
-    //   this.processingOrderInputTransactions.splice(i, 1);
-    //   this.editableProcessingOrder.targetStockOrders.splice(i, 1);
-    //   this.calcInputQuantity(true);
-    // }
+    switch (this.actionType) {
+      case 'PROCESSING':
+      case 'FINAL_PROCESSING':
+      case 'GENERATE_QR_CODE':
+      case 'SHIPMENT':
+        this.inputTransactions.splice(i, 1);
+        this.calcInputQuantity(true);
+        break;
+      case 'TRANSFER':
+        this.inputTransactions.splice(i, 1);
+        this.processingOrder.targetStockOrders.splice(i, 1);
+        this.calcInputQuantity(true);
+    }
   }
 
   private registerInternalLotSearchValueChangeListener() {
@@ -608,9 +609,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       .pipe(take(1)).toPromise();
     if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
       await this.setProcessingAction(respProcAction.data);
-
-      // FIXME: refactor this
-      // this.processingActionLotPrefixForm.setValue(this.prAction.prefix);
     }
   }
 
@@ -860,7 +858,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
             // If we are editing existing order, filter the stock orders that are already present in the proc. order
             if (this.editing) {
-              // TODO: if we are editing existing order, filter the stock orders that are already present in the proc. order
+              const availableStockOrders = res.data.items;
+              this.processingOrder.targetStockOrders.forEach(tso => {
+                const soIndex = availableStockOrders.findIndex(aso => aso.id === tso.id);
+                if (soIndex !== -1) {
+                  availableStockOrders.splice(soIndex, 1);
+                }
+              });
+
+              return availableStockOrders;
             }
 
             return res.data.items;
@@ -975,7 +981,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
 
-      switch (this.selectedProcAction.type) {
+      switch (this.actionType) {
         case TypeEnum.SHIPMENT:
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`;
           break;
@@ -992,7 +998,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     } else {
 
-      switch (this.selectedProcAction.type) {
+      switch (this.actionType) {
         case TypeEnum.SHIPMENT:
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
           break;
