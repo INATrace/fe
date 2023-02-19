@@ -38,8 +38,7 @@ import { ProcessingOrderControllerService } from '../../../../../api/api/process
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import TypeEnum = ApiProcessingAction.TypeEnum;
-import { ApiProcessingOrderValidationScheme } from './validation';
-import { ApiStockOrderValidationScheme } from '../stock-processing-order-details-old/validation';
+import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
@@ -108,6 +107,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Output stock orders properties and controls
   totalOutputQuantityControl = new FormControl({ value: null, disabled: true });
   commentsControl = new FormControl(null);
+  currentOutputFinalProduct: ApiFinalProduct;
+  outputFinalProductNameControl = new FormControl({ value: null, disabled: true });
+
+  // Properties and controls for final product output facilities
+  finalProductOutputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
 
   // Processing evidence controls
   requiredProcessingEvidenceArray = new FormArray([]);
@@ -226,16 +230,16 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.totalOutputQuantityControl.value ? parseFloat(this.totalOutputQuantityControl.value) : 0;
   }
 
+  get targetStockOrdersArray(): FormArray {
+    return this.procOrderGroup.get('targetStockOrders') as FormArray;
+  }
+
   private get companyId(): number {
     return this.companyProfile.id;
   }
 
   private get inputTransactionsArray(): FormArray {
     return this.procOrderGroup.get('inputTransactions') as FormArray;
-  }
-
-  private get targetStockOrdersArray(): FormArray {
-    return this.procOrderGroup.get('targetStockOrders') as FormArray;
   }
 
   get productOrderId(): string | null {
@@ -298,6 +302,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async processingActionUpdated(procAction: ApiProcessingAction) {
 
+    this.submitted = false;
+
     this.setRequiredProcessingEvidence(procAction).then();
     this.clearInputPropsAndControls();
     this.clearInputFacility();
@@ -321,6 +327,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       // Set the page title depending on the page mode and the Processing action type
       this.updatePageTitle();
+
+      // Add new initial output
+      this.addNewOutput().then();
 
     } else {
 
@@ -586,7 +595,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  addNewOutput() {
+  async addNewOutput() {
 
     // If no processing action is selected, exit
     if (!this.selectedProcAction) {
@@ -614,8 +623,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       productionDate: dateISOString(new Date())
     };
 
+    // If we have defined output final product, set it
+    if (this.currentOutputFinalProduct) {
+      defaultStockOrder.finalProduct = this.currentOutputFinalProduct;
+
+      // If there is only one facility available for the output final product, set it
+      const facilities = await this.finalProductOutputFacilitiesCodebook.getAllCandidates().toPromise();
+      if (facilities?.length === 1) { defaultStockOrder.facility = facilities[0]; }
+    }
+
     const targetStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), defaultStockOrder, ApiStockOrderValidationScheme);
-    this.setRequiredFieldsForTSO(targetStockOrderGroup);
+    this.setRequiredFieldsAndListenersForTSO(targetStockOrderGroup);
 
     this.targetStockOrdersArray.push(targetStockOrderGroup);
   }
@@ -729,7 +747,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.calcInputQuantity(true);
 
     // Set required fields for every target Stock order
-    this.targetStockOrdersArray.controls.forEach(tso => this.setRequiredFieldsForTSO(tso as FormGroup));
+    this.targetStockOrdersArray.controls.forEach(tso => this.setRequiredFieldsAndListenersForTSO(tso as FormGroup));
   }
 
   private async loadFacilities() {
@@ -775,12 +793,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         await this.setInputFacility(this.inputFacilityControl.value);
       }
     }
-
-    // FIXME: refactor this
-    // If there is only one appropriate output facility select it
-    // this.subscriptions.push(this.outputFacilitiesCodebook.getAllCandidates().subscribe((val) => {
-    //   if (val && val.length === 1 && !this.update) { this.outputFacilityForm.setValue(val[0]); }
-    // }));
   }
 
   private initializeFacilitiesCodebooks() {
@@ -788,9 +800,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const inputSemiProductId = this.selectedProcAction.inputSemiProduct?.id;
     const inputFinalProductId = this.selectedProcAction.inputFinalProduct?.id;
 
-    // FIXME: refactor this
-    // const outputSemiProductId = this.prAction.outputSemiProduct?.id;
-    // const outputFinalProductId = this.prAction.outputFinalProduct?.id;
+    const outputFinalProductId = this.currentOutputFinalProduct?.id;
 
     let supportedFacilitiesIds: number[] | undefined;
     if (this.selectedProcAction.supportedFacilities?.length > 0) {
@@ -810,39 +820,34 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    // If there is output semi-product or output final product set, initialize output facility codebook
-    // FIXME: refactor this
-    // if (outputSemiProductId || outputFinalProductId) {
-    //   if (this.actionType === 'SHIPMENT') {
-    //     this.outputFacilitiesCodebook =
-    //         new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId, supportedFacilitiesIds);
-    //   } else {
-    //     this.outputFacilitiesCodebook =
-    //         new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, outputSemiProductId, outputFinalProductId);
-    //   }
-    // }
+    // If there is output final product set, initialize output facility codebook for this output final product
+    if (outputFinalProductId) {
+      if (this.actionType === 'SHIPMENT') {
+        this.finalProductOutputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, undefined, outputFinalProductId, supportedFacilitiesIds);
+      } else {
+        this.finalProductOutputFacilitiesCodebook =
+            new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, undefined, outputFinalProductId);
+      }
+    }
   }
 
   private async defineInputAndOutputStockUnits(procAction: ApiProcessingAction) {
 
     let inputSemiProduct: ApiSemiProduct;
-    // let outputSemiProduct: ApiSemiProduct;
 
     let inputFinalProduct: ApiFinalProduct;
     let outputFinalProduct: ApiFinalProduct;
+
+    // First reset the current output final product
+    this.currentOutputFinalProduct = null;
+    this.outputFinalProductNameControl.reset();
 
     // If input semi-product is set, get its definition
     if (procAction.inputSemiProduct && procAction.inputSemiProduct.id) {
       const resInSP = await this.semiProductsController.getSemiProductUsingGET(procAction.inputSemiProduct.id).pipe(take(1)).toPromise();
       inputSemiProduct = resInSP && resInSP.status === 'OK' ? resInSP.data : null;
     }
-
-    // If we have defined input semi-product, get its definition
-    // FIXME: refactor this
-    // if (event.outputSemiProduct && event.outputSemiProduct.id) {
-    //   const resOutSP = await this.semiProductsController.getSemiProductUsingGET(event.outputSemiProduct.id).pipe(take(1)).toPromise();
-    //   outputSemiProduct = resOutSP && resOutSP.status === 'OK' ? resOutSP.data : null;
-    // }
 
     // If input final product is provided get its definition
     if (procAction.inputFinalProduct && procAction.inputFinalProduct.id) {
@@ -863,16 +868,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       case ApiProcessingAction.TypeEnum.GENERATEQRCODE:
 
         this.currentInputStockUnit = inputSemiProduct;
-        // this.currentOutputStockUnitProduct = outputSemiProduct;
-        // this.currentOutputStockUnitNameForm.setValue(outputSemiProduct ? outputSemiProduct.name : null);
         break;
 
       case ApiProcessingAction.TypeEnum.FINALPROCESSING:
 
         this.currentInputStockUnit = inputSemiProduct;
-        // this.currentOutputStockUnitProduct = outputFinalProduct;
-        // this.currentOutputStockUnitNameForm
-        //     .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
+        this.currentOutputFinalProduct = outputFinalProduct;
+        this.outputFinalProductNameControl
+            .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
         break;
 
       case ApiProcessingAction.TypeEnum.TRANSFER:
@@ -882,15 +885,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         if (procAction.finalProductAction) {
 
           this.currentInputStockUnit = inputFinalProduct;
-          // this.currentOutputStockUnitProduct = outputFinalProduct;
-          // this.currentOutputStockUnitNameForm
-          //     .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
+          this.currentOutputFinalProduct = outputFinalProduct;
+          this.outputFinalProductNameControl
+              .setValue(outputFinalProduct ? `${outputFinalProduct.name} (${outputFinalProduct.product.name})` : null);
 
         } else {
 
           this.currentInputStockUnit = inputSemiProduct;
-          // this.currentOutputStockUnitProduct = outputSemiProduct;
-          // this.currentOutputStockUnitNameForm.setValue(outputSemiProduct ? outputSemiProduct.name : null);
         }
     }
   }
@@ -979,9 +980,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.totalOutputQuantityControl.reset();
     this.commentsControl.reset();
-
-    // Add new initial output
-    this.addNewOutput();
   }
 
   private clearInputFacility() {
@@ -1211,11 +1209,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setRequiredFieldsForTSO(targetStockOrderGroup: FormGroup) {
+  private setRequiredFieldsAndListenersForTSO(targetStockOrderGroup: FormGroup) {
 
-    // Set validator on total quantity
-    if ((this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') && !this.selectedProcAction.repackedOutputs) {
-      setTimeout(() => targetStockOrderGroup.get('totalQuantity').setValidators([Validators.required]));
+    // Set validators for specific fields
+    targetStockOrderGroup.get('facility').setValidators([Validators.required]);
+    targetStockOrderGroup.get('facility').updateValueAndValidity();
+
+    targetStockOrderGroup.get('totalQuantity').setValidators([Validators.required]);
+    targetStockOrderGroup.get('totalQuantity').updateValueAndValidity();
+
+    if (this.actionType === 'SHIPMENT') {
+      targetStockOrderGroup.get('deliveryTime').setValidators([Validators.required]);
+      targetStockOrderGroup.get('deliveryTime').updateValueAndValidity();
     }
 
     // Clear the required fields form
@@ -1261,6 +1266,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     });
 
     targetStockOrderGroup.setControl('requiredProcEvidenceFieldGroup', requiredProcEvidenceFieldGroup);
+
+    // Register value change listeners for specific fields
+    this.subscriptions.push(targetStockOrderGroup.get('totalQuantity').valueChanges
+      .subscribe(() => this.targetStockOrderOutputQuantityChange()));
+  }
+
+  private targetStockOrderOutputQuantityChange() {
+    this.calcTotalOutputQuantity();
+    this.calcRemainingQuantity();
   }
 
 }
