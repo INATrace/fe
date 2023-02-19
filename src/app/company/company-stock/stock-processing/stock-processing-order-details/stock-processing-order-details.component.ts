@@ -96,12 +96,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   organicOnlyInputStockOrders = false;
   womenOnlyInputStockOrders = false;
   cbSelectAllControl = new FormControl(false);
+  totalInputQuantityControl = new FormControl({ value: null, disabled: true });
+  remainingQuantityControl = new FormControl({ value: null, disabled: true });
 
   // Input stock unit (Semi-product or Final product)
   currentInputStockUnit: ApiSemiProduct | ApiFinalProduct;
 
   // Processing order properties (the Processing order connects the input transactions with the target - to be created Stock orders)
   procOrderGroup: FormGroup;
+
+  // Output stock orders properties and controls
+  totalOutputQuantityControl = new FormControl({ value: null, disabled: true });
+  commentsControl = new FormControl(null);
 
   // Processing evidence controls
   requiredProcessingEvidenceArray = new FormArray([]);
@@ -160,12 +166,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.companyId === facility.company?.id;
   }
 
-  get rightSideEnabled() {
-    // TODO: implement - if quote order and not owner company, return false
+  get rightSideEnabled(): boolean {
+
+    if (this.targetStockOrdersArray.length > 0) {
+      const tso = this.targetStockOrdersArray.at(0).value as ApiStockOrder;
+      if (!tso.facility) {
+        return true;
+      }
+      return this.companyId === tso.facility.company?.id;
+    }
+
     return true;
-    // const facility = this.outputFacilityForm.value as ApiFacility;
-    // if (!facility) { return true; }
-    // return this.companyId === facility.company?.id;
   }
 
   get disabledLeftFields() {
@@ -211,10 +222,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  get totalQuantity() {
-    // FIXME: refactor this
-    // return this.outputStockOrderForm.getRawValue().totalQuantity;
-    return 0;
+  get totalOutputQuantity() {
+    return this.totalOutputQuantityControl.value ? parseFloat(this.totalOutputQuantityControl.value) : 0;
   }
 
   private get companyId(): number {
@@ -227,6 +236,44 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private get targetStockOrdersArray(): FormArray {
     return this.procOrderGroup.get('targetStockOrders') as FormArray;
+  }
+
+  get productOrderId(): string | null {
+
+    if (this.targetStockOrdersArray.length > 0) {
+      const so = this.targetStockOrdersArray.at(0).value as ApiStockOrder;
+      return so.productOrder?.orderId ?? null;
+    }
+
+    return null;
+  }
+
+  get quoteOrderOwnerCompany(): string | null {
+
+    if (this.targetStockOrdersArray.length > 0) {
+      const so = this.targetStockOrdersArray.at(0).value as ApiStockOrder;
+      return so.facility?.company?.name;
+    }
+
+    return null;
+  }
+
+  get inputQuantityLabel() {
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
+      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+    }`;
+  }
+
+  get remainingQuantityLabel() {
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.remainingQuantityLabelWithUnits.label: Remaining quantity in ${
+      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+    }`;
+  }
+
+  get totalOutputQuantityLabel() {
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.totalOutputQuantityLabelWithUnits.label: Total output quantity in ${
+      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+    }`;
   }
 
   ngOnInit(): void {
@@ -434,7 +481,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!this.availableInputStockOrders[index].selected) {
 
-      const outputQuantity = this.totalQuantity as number || 0;
+      const outputQuantity = this.totalOutputQuantity as number || 0;
       const inputQuantity = this.calcInputQuantity(false);
 
       const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
@@ -677,6 +724,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.prepareEditingProcOrderGroup(respProcessingOrder.data);
     await this.processingActionUpdated(respProcessingOrder.data.processingAction);
 
+    // Calculate and set the total output and total input quantity
+    this.calcTotalOutputQuantity();
+    this.calcInputQuantity(true);
+
     // Set required fields for every target Stock order
     this.targetStockOrdersArray.controls.forEach(tso => this.setRequiredFieldsForTSO(tso as FormGroup));
   }
@@ -911,6 +962,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.organicOnlyInputStockOrders = false;
     this.womenOnlyInputStockOrders = false;
+
+    this.totalInputQuantityControl.reset();
+    this.remainingQuantityControl.reset();
   }
 
   private clearOutputPropsAndControls() {
@@ -920,11 +974,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Clear all the target Stock orders and add new initial Stock order
+    // Clear all the target Stock orders
     this.targetStockOrdersArray.clear();
-    this.addNewOutput();
 
-    // TODO: clear other output controls
+    this.totalOutputQuantityControl.reset();
+    this.commentsControl.reset();
+
+    // Add new initial output
+    this.addNewOutput();
   }
 
   private clearInputFacility() {
@@ -1037,30 +1094,72 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    // FIXME: refactor this
-    // if (setValue) {
-    //   if (this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING') {
-    //
-    //     this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
-    //     if (this.isUsingInput) {
-    //       this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
-    //     }
-    //
-    //   } else if (this.actionType === 'GENERATE_QR_CODE') {
-    //
-    //     if (this.form) {
-    //       this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
-    //       this.outputStockOrderForm.get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
-    //     }
-    //   } else {
-    //
-    //     if (this.form) {
-    //       this.form.get('outputQuantity').setValue(Number(inputQuantity).toFixed(2));
-    //     }
-    //   }
-    // }
+    // Set total input quantity value
+    if (setValue) {
+
+      if (inputQuantity) {
+        switch (this.actionType) {
+          case 'GENERATE_QR_CODE':
+            // If generating QR code, the output is always the same with the input
+            this.totalInputQuantityControl.setValue(Number(inputQuantity).toFixed(2));
+            this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
+            break;
+          default:
+            this.totalInputQuantityControl.setValue(Number(inputQuantity).toFixed(2));
+        }
+      } else {
+        this.totalInputQuantityControl.reset();
+      }
+
+      // Also update the remaining quantity
+      this.calcRemainingQuantity();
+    }
 
     return inputQuantity;
+  }
+
+  private calcRemainingQuantity() {
+
+    const inputQuantity = this.totalInputQuantityControl.value ? parseFloat(this.totalInputQuantityControl.value) : null;
+    const outputQuantity = this.totalOutputQuantity;
+
+    if (inputQuantity != null) {
+      const remainingQuantity = inputQuantity - outputQuantity;
+      this.remainingQuantityControl.setValue(Number(remainingQuantity).toFixed(2));
+      return;
+    }
+
+    this.remainingQuantityControl.reset();
+  }
+
+  /**
+   * Calculates the total output quantity normalized in the input measuring unit (from current input stock unit).
+   */
+  private calcTotalOutputQuantity() {
+
+    let sumInKGs = 0;
+    (this.targetStockOrdersArray.value as ApiStockOrder[]).forEach(tso => {
+
+      const measuringUnit = tso.measureUnitType;
+      const quantityInMeasureUnit = tso.totalQuantity != null ? tso.totalQuantity : null;
+
+      if (measuringUnit != null && quantityInMeasureUnit != null) {
+
+        // Calculate the quantity in KGs
+        const quantityInKGs = quantityInMeasureUnit * measuringUnit.weight;
+        sumInKGs += quantityInKGs;
+      }
+    });
+
+    // Convert the sum in the input stock unit measure unit
+    if (sumInKGs) {
+
+      const sumInInputMeasureUnit = sumInKGs / this.currentInputStockUnit.measurementUnitType.weight;
+      this.totalOutputQuantityControl.setValue(Number(sumInInputMeasureUnit).toFixed(2));
+      return;
+    }
+
+    this.totalOutputQuantityControl.reset();
   }
 
   private updatePageTitle() {
