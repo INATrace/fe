@@ -217,8 +217,7 @@
               <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
                 <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
                 <div class="af-c12" style="margin-top: -1rem;">
-                  <checkbox-input (onClick)="cbSelectAllClick()" [form]="cbSelectAllControl" [disabled]="disabledLeftFields"
-                                  style="margin-bottom: 1rem; margin-top: -1rem;">
+                  <checkbox-input (onClick)="cbSelectAllClick()" [form]="cbSelectAllControl" style="margin-bottom: 1rem; margin-top: -1rem;">
                     <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
                       Select all ({{ currentInputStockUnit.name }})
                     </checkbox-input-rich-label>
@@ -233,7 +232,8 @@
               <ng-container *ngFor="let item of availableInputStockOrders; index as i">
                 <div class="af-row">
                   <div class="af-c1">
-                    <checkbox-input inTable="true" (onClick)="cbSelectClick(item, i)" [disabled]="disabledLeftFields"
+                    <checkbox-input inTable="true" (onClick)="cbSelectClick(item, i)"
+                                    [disabled]="disabledLeftFields"
                                     [checked]="this.availableInputStockOrders[i].selected"></checkbox-input>
                   </div>
                   <div class="af-c8">
@@ -422,26 +422,23 @@
 
             <!-- CONTROLS FOR SELECTING OUTPUT FACILITY -->
             <div class="af-row">
-              <ng-container *ngIf="currentOutputFinalProduct; else semiProductFacility">
-                <div class="af-c12">
-                  <single-choice
-                      label="Facility"
-                      i18n-label="@@productLabelStockProcessingOrderDetail.outputFacilityForm.label"
-                      [formControlInput]="$any(tsoGroup.get('facility'))"
-                      [codebookService]="finalProductOutputFacilitiesCodebook"
-                      style="min-width: 150px;"
-                      [isInvalidChoice]="submitted && tsoGroup.get('facility').invalid">
-                    <ng-container *ngIf="submitted">
-                      <div *ngIf="tsoGroup.get('facility').errors as errors" class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.outputFacilityForm.error">
-                        Output facility is required
-                      </div>
-                    </ng-container>
-                  </single-choice>
-                </div>
-              </ng-container>
-              <ng-template #semiProductFacility>
-                <!-- TODO -->
-              </ng-template>
+              <div class="af-c12">
+                <single-choice
+                    *ngIf="currentOutputFinalProduct || tsoGroup.get('semiProduct').value"
+                    label="Facility"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.outputFacilityForm.label"
+                    [formControlInput]="$any(tsoGroup.get('facility'))"
+                    [codebookService]="getOutputFacilityCodebook($any(tsoGroup))"
+                    style="min-width: 150px;"
+                    [isInvalidChoice]="submitted && tsoGroup.get('facility').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="tsoGroup.get('facility').errors as errors" class="sc-invalid-feedback"
+                         i18n="@@productLabelStockProcessingOrderDetail.outputFacilityForm.error">
+                      Output facility is required
+                    </div>
+                  </ng-container>
+                </single-choice>
+              </div>
             </div>
 
             <!-- THE USER ENTERED ORDER ID - RELEVANT FOR QUOTE ORDER AND CAN BE SET ONLY WHEN NO PRODUCT ORDER IS PRESENT -->
@@ -460,7 +457,7 @@
 
             <!-- THE INTERNAL LOT NUMBER -->
             <div class="af-row">
-              <div class="af-c2">
+              <div class="af-c3">
                 <textinput
                     [form]="procActionLotPrefixControl"
                     label="Prefix"
@@ -468,7 +465,7 @@
                     i18n-label="@@productLabelStockProcessingOrderDetail.textinput.lotPrefix.label">
                 </textinput>
               </div>
-              <div class="af-c10">
+              <div class="af-c9">
                 <textinput
                     [form]="$any(tsoGroup.get('internalLotNumber'))"
                     label="Internal lot name"
@@ -578,8 +575,7 @@
                           [value]="item.get('evidenceTypeLabel').value"
                           label="Type"
                           [valueTextInput]="true"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.label.type"
-                          [readOnly]="true">
+                          i18n-label="@@productLabelStockProcessingOrderDetail.label.type">
                       </textinput>
                     </div>
                   </div>
@@ -594,8 +590,7 @@
                         i18n-allowedMimeTypeErrorMessage="@@productLabelStockProcessingOrderDetail.attachment-uploader.allowedMimeTypeErrorMessage"
                         [form]="$any(item.get('document'))"
                         [attachmentUploaderId]="'productLabelStockProcessingOrderDetail'+idx"
-                        [invalid]="submitted && item.get('document').invalid"
-                        [readOnly]="item.get('document').disabled">
+                        [invalid]="submitted && item.get('document').invalid">
                       <attachment-uploader-content i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.content">
                         Upload document
                       </attachment-uploader-content>

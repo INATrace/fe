@@ -115,6 +115,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   outputFinalProductNameControl = new FormControl({ value: null, disabled: true });
 
   outputSemiProductsCodebook: StaticSemiProductsService;
+  semiProductOutputFacilitiesCodebooks: Map<number, CompanyFacilitiesForStockUnitProductService>;
 
   // Processing evidence controls
   requiredProcessingEvidenceArray = new FormArray([]);
@@ -365,10 +366,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       this.availableInputStockOrders = await this.fetchAvailableStockOrders(requestParams);
     } else {
       this.clearInputFacility();
-    }
-
-    if (!this.editing) {
-      // this.prefillOutputFacility();
     }
 
     if (this.disabledLeftFields) {
@@ -641,7 +638,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       // If there is only one facility available for the output final product, set it in the target Stock order form group
       const facilities = await this.finalProductOutputFacilitiesCodebook.getAllCandidates().toPromise();
-      if (facilities?.length === 1) { targetStockOrderGroup.get('facility').setValue(facilities[0]); }
+      if (facilities?.length === 1) {
+        targetStockOrderGroup.get('facility').setValue(facilities[0]);
+        targetStockOrderGroup.get('facility').disable();
+      }
 
     } else if (this.selectedProcAction.outputSemiProducts?.length === 1) {
 
@@ -655,6 +655,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.targetStockOrdersArray.removeAt(index);
     this.calcTotalOutputQuantity();
     this.calcRemainingQuantity();
+  }
+
+  getOutputFacilityCodebook(tsoGroup: FormGroup): CompanyFacilitiesForStockUnitProductService | null {
+
+    if (this.finalProductOutputFacilitiesCodebook) {
+      return this.finalProductOutputFacilitiesCodebook;
+    }
+
+    const semiProduct = (tsoGroup.get('semiProduct').value as ApiSemiProduct);
+    if (semiProduct) {
+      return this.semiProductOutputFacilitiesCodebooks.get(semiProduct.id);
+    }
+
+    return null;
   }
 
   private registerInternalLotSearchValueChangeListener() {
@@ -816,6 +830,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private initializeFacilitiesCodebooks() {
 
+    // Reset the hashmap that's holding the facilities codebooks per output semi-product and also reset the
+    // codebook for the output final product facility
+    this.semiProductOutputFacilitiesCodebooks = null;
+    this.finalProductOutputFacilitiesCodebook = null;
+
     const inputSemiProductId = this.selectedProcAction.inputSemiProduct?.id;
     const inputFinalProductId = this.selectedProcAction.inputFinalProduct?.id;
 
@@ -848,6 +867,24 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         this.finalProductOutputFacilitiesCodebook =
             new CompanyFacilitiesForStockUnitProductService(this.facilityController, this.companyId, undefined, outputFinalProductId);
       }
+    }
+
+    // If the selected Processing action has defined output semi-product, we need to create facility codebook instance per semi-product
+    if (this.selectedProcAction.outputSemiProducts?.length > 0) {
+
+      this.semiProductOutputFacilitiesCodebooks = new Map<number, CompanyFacilitiesForStockUnitProductService>();
+      this.selectedProcAction.outputSemiProducts.forEach(osp => {
+        let facilityCodebook;
+        if (this.actionType === 'SHIPMENT') {
+          facilityCodebook = new CompanyFacilitiesForStockUnitProductService(this.facilityController,
+            this.companyId, osp.id, undefined, supportedFacilitiesIds);
+        } else {
+          facilityCodebook = new CompanyFacilitiesForStockUnitProductService(this.facilityController,
+            this.companyId, osp.id);
+        }
+
+        this.semiProductOutputFacilitiesCodebooks.set(osp.id, facilityCodebook);
+      });
     }
   }
 
@@ -905,7 +942,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         this.requiredProcessingEvidenceArray.push(new FormGroup({
           evidenceTypeId: new FormControl(requiredDocumentType.id),
           evidenceTypeCode: new FormControl(requiredDocumentType.code),
-          evidenceTypeLabel: new FormControl(requiredDocumentType.label),
+          evidenceTypeLabel: new FormControl({ value: requiredDocumentType.label, disabled: true }),
           date: new FormControl(new Date(), requiredDocumentType.mandatory ? Validators.required : null),
           document: new FormControl(null, requiredDocumentType.mandatory ? Validators.required : null)
         }));
@@ -1298,10 +1335,24 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private targetStockOrderSemiProductChange(semiProduct: ApiSemiProduct | null, targetStockOrderGroup: FormGroup) {
+
     if (semiProduct) {
       targetStockOrderGroup.get('measureUnitType').setValue(semiProduct.measurementUnitType);
       targetStockOrderGroup.get('totalQuantity').enable({ emitEvent: false });
+
+      // If there is only one facility available for this semi-product set it by default
+      const facilitiesCodebook = this.semiProductOutputFacilitiesCodebooks.get(semiProduct.id);
+      facilitiesCodebook.getAllCandidates().pipe(take(1)).subscribe(facilities => {
+        if (facilities.length === 1) {
+          setTimeout(() => {
+            targetStockOrderGroup.get('facility').setValue(facilities[0]);
+            targetStockOrderGroup.get('facility').disable();
+          });
+        }
+      });
+
     } else {
+      targetStockOrderGroup.get('facility').setValue(null);
       targetStockOrderGroup.get('measureUnitType').setValue(null);
       targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
     }
