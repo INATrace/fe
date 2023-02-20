@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, forkJoin, Subscription} from 'rxjs';
 import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiCompany } from 'src/api/model/apiCompany';
@@ -65,7 +65,9 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   sub: Subscription;
   activeValueChainsCodebook: ActiveValueChainService;
   activeValueChainsForm = new FormControl(null);
+
   activeValueChains: Array<ApiValueChain> = [];
+  selectedCompanyValueChainsForm = new FormControl(null);
 
   certificationListManager = null;
   videosListManager = null;
@@ -175,18 +177,24 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   }
 
   async addSelectedValueChain(valueChain: ApiValueChain) {
-    if (!valueChain || this.activeValueChains.some(vch => vch === valueChain)) {
+    if (!valueChain || this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
       setTimeout(() => this.activeValueChainsForm.setValue(null));
       return;
     }
     this.activeValueChains.push(valueChain);
-    setTimeout(() => this.activeValueChainsForm.setValue(null));
+    setTimeout(() => {
+      this.selectedCompanyValueChainsForm.setValue(this.activeValueChains);
+      this.companyDetailForm.markAsDirty();
+      this.activeValueChainsForm.setValue(null);
+    });
   }
 
   deleteValueChain(valueChain: ApiValueChain, idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
         this.activeValueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsForm.setValue(this.activeValueChains));
+        this.companyDetailForm.markAsDirty();
       }
     });
   }
@@ -213,27 +221,37 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this._companyErrorStatus$.next('');
     this.globalEventsManager.showLoading(true);
     const id = +this.route.snapshot.paramMap.get('id');
-    this.sub = this.companyController.getCompanyUsingGET(id)
-      .subscribe(company => {
+
+    this.sub = forkJoin([
+      this.companyController.getCompanyUsingGET(id).pipe(take(1)),
+      this.companyController.getCompanyValueChainsUsingGET(id).pipe(take(1))
+    ]).subscribe({
+      next: ([company, valueChains]) => {
         this.company = company.data;
         if (!this.company.headquarters) {
           this.company.headquarters = this.emptyObject().headquarters;
         }
-        this.activeValueChains = this.company.valueChains ? this.company.valueChains : [];
+
+        if (valueChains && valueChains.data) {
+          this.activeValueChains = valueChains.data.items ? valueChains.data.items : [];
+          this.selectedCompanyValueChainsForm.setValue(this.activeValueChains);
+        }
 
         this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);
         this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
         (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+        (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsForm);
         this.companyDetailForm.updateValueAndValidity();
 
         this.fillWebPageAndSocialMediaForm();
         this.initializeListManagers();
         this.globalEventsManager.showLoading(false);
       },
-        error => {
-          this._companyErrorStatus$.next(error.error.status);
-          this.globalEventsManager.showLoading(false);
-        });
+      error: (error) => {
+        this._companyErrorStatus$.next(error.error.status);
+        this.globalEventsManager.showLoading(false);
+      }
+    });
   }
 
   emptyObject() {
@@ -252,6 +270,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.emptyObject(), ApiCompanyGetValidationScheme);
     this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
     (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+    (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsForm);
     this.companyDetailForm.updateValueAndValidity();
     this.initializeListManagers();
   }
