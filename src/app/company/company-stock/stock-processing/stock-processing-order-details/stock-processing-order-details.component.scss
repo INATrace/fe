@@ -28,3 +28,16 @@
 .outputs-bottom-spacing {
   margin-bottom: 25px;
 }
+
+.delete-output-icon {
+  margin-top: 1.9rem;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: default;
+    pointer-events: none;
+    .del-icon {
+      color: $gray;
+    }
+  }
+}

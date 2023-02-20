@@ -391,7 +391,31 @@
                 </div>
               </ng-container>
               <ng-template #outputSemiProduct>
-                <!-- TODO -->
+                <div class="af-c12 d-flex">
+                  <div class="flex-fill">
+                    <single-choice
+                            label="Semi-product type"
+                            i18n-label="@@productLabelStockProcessingOrderDetail.outputsSemiProductForm.label"
+                            [formControlInput]="$any(tsoGroup.get('semiProduct'))"
+                            [codebookService]="outputSemiProductsCodebook"
+                            style="min-width: 150px;"
+                            [isInvalidChoice]="submitted && tsoGroup.get('semiProduct').invalid">
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="tsoGroup.get('semiProduct').errors as errors" class="sc-invalid-feedback"
+                             i18n="@@productLabelStockProcessingOrderDetail.outputsSemiProductForm.error">
+                          Output Semi-product is required
+                        </div>
+                      </ng-container>
+                    </single-choice>
+                  </div>
+                  <div class="ml-4">
+                    <div class="delete-output-icon"
+                         [class.disabled]="targetStockOrdersArray.length < 2"
+                         (click)="removeOutput(i)">
+                      <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
+                    </div>
+                  </div>
+                </div>
               </ng-template>
 
             </div>
@@ -469,7 +493,7 @@
               <div class="af-c6">
                 <textinput
                     [form]="$any(tsoGroup.get('totalQuantity'))"
-                    [label]="'Output quantity'"
+                    label="{{ targetStockOrderOutputQuantityLabel + ' ' + (tsoGroup.get('measureUnitType')?.value ? tsoGroup.get('measureUnitType').value.label : '-') }}"
                     style="width: 100%"
                     placeholder="Enter quantity"
                     i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder">
