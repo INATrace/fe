@@ -325,37 +325,6 @@
               </div>
             </div>
 
-            <!-- DISPLAY THE TOTAL SELECTED INPUT QUANTITY - EXISTING INPUT TRANSACTIONS AND SELECTED INPUT STOCK ORDERS -->
-            <div class="af-row">
-              <div class="af-c6">
-                <textinput
-                    [form]="totalInputQuantityControl"
-                    [label]="inputQuantityLabel"
-                    style="width: 100%">
-                </textinput>
-              </div>
-
-              <!-- DISPLAY THE DIFFERENCE QUANTITY BETWEEN THE TOTAL INPUT AND THE TOTAL (ENTERED IN TARGET STOCK ORDERS) OUTPUT -->
-              <div class="af-c6" *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'">
-                <textinput
-                    [form]="remainingQuantityControl"
-                    [label]="remainingQuantityLabel"
-                    style="width: 100%">
-                </textinput>
-              </div>
-            </div>
-
-            <!-- DISPLAY THE TOTAL OUTPUT QUANTITY - SUM OF TOTAL QUANTITY ENTERED FOR EVERY TARGET STOCK ORDER -->
-            <div class="af-row">
-              <div class="af-c12">
-                <textinput
-                    [form]="totalOutputQuantityControl"
-                    [label]="totalOutputQuantityLabel"
-                    style="width: 100%">
-                </textinput>
-              </div>
-            </div>
-
             <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
             <div class="af-row">
               <div class="af-c12">
@@ -372,7 +341,7 @@
             <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
           </div>
 
-          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h2>
+          <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h3>
           <div class="af-form-element position-relative outputs-bottom-spacing"
                *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as i">
 
@@ -398,6 +367,7 @@
                             i18n-label="@@productLabelStockProcessingOrderDetail.outputsSemiProductForm.label"
                             [formControlInput]="$any(tsoGroup.get('semiProduct'))"
                             [codebookService]="outputSemiProductsCodebook"
+                            [clearable]="false"
                             style="min-width: 150px;"
                             [isInvalidChoice]="submitted && tsoGroup.get('semiProduct').invalid">
                       <ng-container *ngIf="submitted">
@@ -429,6 +399,7 @@
                     i18n-label="@@productLabelStockProcessingOrderDetail.outputFacilityForm.label"
                     [formControlInput]="$any(tsoGroup.get('facility'))"
                     [codebookService]="getOutputFacilityCodebook($any(tsoGroup))"
+                    [clearable]="false"
                     style="min-width: 150px;"
                     [isInvalidChoice]="submitted && tsoGroup.get('facility').invalid">
                   <ng-container *ngIf="submitted">
@@ -494,7 +465,17 @@
                     style="width: 100%"
                     placeholder="Enter quantity"
                     i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder">
-                  <!-- TODO: handle validation -->
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="tsoGroup.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required">
+                        <span *ngIf="actionType != 'SHIPMENT'; else quoteQuantityRequired"
+                              i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required">Quantity is required</span>
+                        <ng-template #quoteQuantityRequired>
+                          <span i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.requiredOnQuote">Enter the desired output quantity</span>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </ng-container>
                 </textinput>
               </div>
             </div>
@@ -535,13 +516,61 @@
             <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
           </div>
 
-          <div class="d-flex justify-content-end">
+          <div class="d-flex justify-content-end outputs-bottom-spacing">
             <button class="btn" type="button" (click)="addNewOutput()">
               <span>Add additional output</span>
             </button>
           </div>
-        </div>
 
+          <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.totalQuantitiesSectionTitle">Total quantities</h3>
+          <div class="af-form-element position-relative">
+
+            <!-- DISPLAY THE TOTAL SELECTED INPUT QUANTITY - EXISTING INPUT TRANSACTIONS AND SELECTED INPUT STOCK ORDERS -->
+            <div class="af-row">
+              <div class="af-c6">
+                <textinput
+                        [form]="totalInputQuantityControl"
+                        [label]="inputQuantityLabel"
+                        style="width: 100%">
+                </textinput>
+              </div>
+
+              <!-- DISPLAY THE DIFFERENCE QUANTITY BETWEEN THE TOTAL INPUT AND THE TOTAL (ENTERED IN TARGET STOCK ORDERS) OUTPUT -->
+              <div class="af-c6" *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'">
+                <textinput
+                        [form]="remainingQuantityControl"
+                        [label]="remainingQuantityLabel"
+                        style="width: 100%">
+                </textinput>
+              </div>
+            </div>
+
+            <!-- DISPLAY THE TOTAL OUTPUT QUANTITY - SUM OF TOTAL QUANTITY ENTERED FOR EVERY TARGET STOCK ORDER -->
+            <div class="af-row">
+              <div class="af-c12">
+                <textinput
+                        [form]="totalOutputQuantityControl"
+                        [label]="totalOutputQuantityLabel"
+                        [helpText]="expectedOutputQuantityHelpText"
+                        style="width: 100%">
+                  <div *ngIf="totalOutputQuantityTooLarge"
+                       i18n="@@productLabelStockProcessingOrderDetail.totalOutputQuantity.textinput.error.quantityTooLarge"
+                       class="sc-warning-feedback">
+                    Output quantity exceeds input quantity. Would you like to proceed?
+                  </div>
+                  <div *ngIf="outputQuantityNotInRange"
+                       i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
+                       class="sc-warning-feedback">
+                    Output quantity not in expected range
+                  </div>
+                </textinput>
+              </div>
+            </div>
+
+            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
+          </div>
+
+        </div>
       </div>
 
       <!-- REQUIRED AND OTHER ADDITIONAL PROCESSING EVIDENCES (DOCUMENTS) -->

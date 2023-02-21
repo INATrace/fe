@@ -3109,7 +3109,7 @@ tr:nth-child(odd) {
   &-block--c6,
   &-block--c8,
   &-block--c12 {
-    h2 {
+    h2, h3 {
       font-family: Poppins-Regular, sans-serif;
       font-size: 20px;
       color: #181B31;
@@ -3124,6 +3124,10 @@ tr:nth-child(odd) {
         // background-color: red;
         display: inline;
       }
+    }
+
+    h3 {
+      font-size: 18px;
     }
   }
   // &-element {

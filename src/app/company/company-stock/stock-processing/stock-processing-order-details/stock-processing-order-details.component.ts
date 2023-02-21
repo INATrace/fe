@@ -108,6 +108,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // Output stock orders properties and controls
   totalOutputQuantityControl = new FormControl({ value: null, disabled: true });
   commentsControl = new FormControl(null);
+  private totalOutQuantityRangeLow: number = null;
+  private totalOutQuantityRangeHigh: number = null;
 
   // Properties and controls for displaying output final-product and output semi-product
   finalProductOutputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
@@ -234,6 +236,63 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.totalOutputQuantityControl.value ? parseFloat(this.totalOutputQuantityControl.value) : 0;
   }
 
+  get totalInputQuantity() {
+    return this.totalInputQuantityControl.value ? parseFloat(this.totalInputQuantityControl.value) : 0;
+  }
+
+  get totalOutputQuantityTooLarge() {
+    if (this.actionType === 'SHIPMENT' || this.totalInputQuantityControl.value == null) {
+      return false;
+    }
+
+    return this.totalOutputQuantity > this.totalInputQuantity;
+  }
+
+  get outputQuantityNotInRange() {
+
+    if (this.actionType !== 'PROCESSING' || !this.selectedProcAction?.estimatedOutputQuantityPerUnit ||
+        !this.totalOutQuantityRangeLow || !this.totalOutQuantityRangeHigh) {
+      return false;
+    }
+
+    if (!this.totalOutputQuantity) {
+      return false;
+    }
+
+    if (!(this.totalOutputQuantity >= this.totalOutQuantityRangeLow && this.totalOutputQuantity <= this.totalOutQuantityRangeHigh)) {
+      return true;
+    }
+  }
+
+  get expectedOutputQuantityHelpText() {
+
+    if (this.actionType !== 'PROCESSING' || !this.selectedProcAction?.estimatedOutputQuantityPerUnit) {
+      return null;
+    }
+
+    let quantityFrom = '/';
+    let quantityTo = '/';
+
+    if (this.totalInputQuantity) {
+
+      let expectedOutputQuantity;
+      expectedOutputQuantity = this.totalInputQuantity * this.selectedProcAction.estimatedOutputQuantityPerUnit;
+
+      this.totalOutQuantityRangeLow = Number(expectedOutputQuantity * 0.8);
+      this.totalOutQuantityRangeHigh = Math.min(Number(expectedOutputQuantity * 1.2), this.totalInputQuantity);
+
+      quantityFrom = this.totalOutQuantityRangeLow.toFixed(2);
+      quantityTo = this.totalOutQuantityRangeHigh.toFixed(2);
+    } else {
+
+      this.totalOutQuantityRangeLow = null;
+      this.totalOutQuantityRangeHigh = null;
+    }
+
+    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.expectedOutputHelpText:Expected output quantity range:` +
+        ` ${quantityFrom} ~ ${quantityTo} (${this.currentInputStockUnit.measurementUnitType.label})`;
+  }
+
   get targetStockOrdersArray(): FormArray {
     return this.procOrderGroup.get('targetStockOrders') as FormArray;
   }
@@ -336,8 +395,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Set the page title depending on the page mode and the Processing action type
       this.updatePageTitle();
 
-      // Add new initial output
-      this.addNewOutput().then();
+      // Add new initial output (if not in edit mode)
+      if (!this.editing) {
+        this.addNewOutput().then();
+      }
 
     } else {
 
@@ -640,14 +701,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const facilities = await this.finalProductOutputFacilitiesCodebook.getAllCandidates().toPromise();
       if (facilities?.length === 1) {
         targetStockOrderGroup.get('facility').setValue(facilities[0]);
-        targetStockOrderGroup.get('facility').disable();
       }
 
     } else if (this.selectedProcAction.outputSemiProducts?.length === 1) {
 
       // If we have output semi-products, and there is only one defined in the Processing action, set it automatically
       targetStockOrderGroup.get('semiProduct').setValue(this.selectedProcAction.outputSemiProducts[0]);
-      targetStockOrderGroup.get('semiProduct').disable();
     }
   }
 
@@ -1157,8 +1216,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     const inputQuantity = this.totalInputQuantityControl.value ? parseFloat(this.totalInputQuantityControl.value) : null;
     const outputQuantity = this.totalOutputQuantity;
 
-    if (inputQuantity != null) {
-      const remainingQuantity = inputQuantity - outputQuantity;
+    if (this.actionType === 'SHIPMENT') {
+
+      this.remainingQuantityControl.setValue(Number(this.totalOutputQuantity - inputQuantity ?? 0).toFixed(2));
+      return;
+
+    } else if (inputQuantity != null) {
+      let remainingQuantity = inputQuantity - outputQuantity;
+      remainingQuantity = Math.max(0, remainingQuantity);
       this.remainingQuantityControl.setValue(Number(remainingQuantity).toFixed(2));
       return;
     }
@@ -1172,7 +1237,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private calcTotalOutputQuantity() {
 
     let sumInKGs = 0;
-    (this.targetStockOrdersArray.value as ApiStockOrder[]).forEach(tso => {
+    (this.targetStockOrdersArray.getRawValue() as ApiStockOrder[]).forEach(tso => {
 
       const measuringUnit = tso.measureUnitType;
       const quantityInMeasureUnit = tso.totalQuantity != null ? tso.totalQuantity : null;
@@ -1247,17 +1312,33 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private setRequiredFieldsAndListenersForTSO(targetStockOrderGroup: FormGroup) {
 
-    // Set validators for specific fields
+    // Set validators for specific fields depending on the Processing action type
+    switch (this.actionType) {
+      case 'PROCESSING':
+      case 'GENERATE_QR_CODE':
+        targetStockOrderGroup.get('semiProduct').setValidators(Validators.required);
+        targetStockOrderGroup.get('semiProduct').updateValueAndValidity();
+        break;
+      case 'SHIPMENT':
+        targetStockOrderGroup.get('deliveryTime').setValidators([Validators.required]);
+        targetStockOrderGroup.get('deliveryTime').updateValueAndValidity();
+      // tslint:disable-next-line:no-switch-case-fall-through
+      case 'TRANSFER':
+        if (this.selectedProcAction.finalProductAction) {
+          targetStockOrderGroup.get('finalProduct').setValidators(Validators.required);
+          targetStockOrderGroup.get('finalProduct').updateValueAndValidity();
+        } else {
+          targetStockOrderGroup.get('semiProduct').setValidators(Validators.required);
+          targetStockOrderGroup.get('semiProduct').updateValueAndValidity();
+        }
+        break;
+    }
+
     targetStockOrderGroup.get('facility').setValidators([Validators.required]);
     targetStockOrderGroup.get('facility').updateValueAndValidity();
 
     targetStockOrderGroup.get('totalQuantity').setValidators([Validators.required]);
     targetStockOrderGroup.get('totalQuantity').updateValueAndValidity();
-
-    if (this.actionType === 'SHIPMENT') {
-      targetStockOrderGroup.get('deliveryTime').setValidators([Validators.required]);
-      targetStockOrderGroup.get('deliveryTime').updateValueAndValidity();
-    }
 
     // Clear the required fields form
     const requiredProcEvidenceFieldGroup = new FormGroup({});
@@ -1305,7 +1386,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Register value change listeners for specific fields
     this.subscriptions.push(targetStockOrderGroup.get('totalQuantity').valueChanges
-        .pipe(debounceTime(400))
+        .pipe(debounceTime(350))
         .subscribe(() => setTimeout(() => this.targetStockOrderOutputQuantityChange())));
 
     this.subscriptions.push(targetStockOrderGroup.get('finalProduct').valueChanges
@@ -1315,7 +1396,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderSemiProductChange(value, targetStockOrderGroup)));
 
     // Set specific fields to default disabled state
-    targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
+    if (!this.editing) {
+      targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
+    }
   }
 
   private targetStockOrderOutputQuantityChange() {
@@ -1346,7 +1429,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         if (facilities.length === 1) {
           setTimeout(() => {
             targetStockOrderGroup.get('facility').setValue(facilities[0]);
-            targetStockOrderGroup.get('facility').disable();
           });
         }
       });
