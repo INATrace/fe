@@ -226,12 +226,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.inputTransactionsArray.value ? this.inputTransactionsArray.value : [];
   }
 
-  get isClipOrder(): boolean {
-    // FIXME: refactor this
-    // return !!this.checkboxClipOrderFrom.value;
-    return true;
-  }
-
   get totalOutputQuantity() {
     return this.totalOutputQuantityControl.value ? parseFloat(this.totalOutputQuantityControl.value) : 0;
   }
@@ -530,9 +524,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       this.availableInputStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
 
-      if (this.isClipOrder) {
-        // FIXME: refactor this
-        // this.clipOrder(true);
+      if (this.actionType === 'SHIPMENT') {
+        this.clipInputQuantity();
       }
 
     } else {
@@ -562,7 +555,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       const currentAvailable = this.availableInputStockOrders[index].availableQuantity;
 
-      if (this.actionType === 'SHIPMENT' && this.isClipOrder) {
+      if (this.actionType === 'SHIPMENT') {
+
+        // In case of 'SHIPMENT' we always clip the input quantity
         if (toFill > 0 && currentAvailable > 0) {
           this.availableInputStockOrders[index].selected = true;
           this.availableInputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
@@ -1259,6 +1254,39 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.totalOutputQuantityControl.reset();
+  }
+
+  private clipInputQuantity() {
+
+    const outputQuantity = this.totalOutputQuantity;
+    let tmpQuantity = 0;
+
+    for (const tx of this.inputTransactions) {
+      tmpQuantity += tx.outputQuantity;
+    }
+
+    for (const item of this.availableInputStockOrders) {
+
+      if (!item.selected) { continue; }
+
+      if (tmpQuantity + item.availableQuantity <= outputQuantity) {
+        tmpQuantity += item.availableQuantity;
+        item.selectedQuantity = item.availableQuantity;
+        continue;
+      }
+
+      if (tmpQuantity >= outputQuantity) {
+        item.selected = false;
+        item.selectedQuantity = 0;
+        continue;
+      }
+
+      item.selectedQuantity = Number((outputQuantity - tmpQuantity).toFixed(2));
+      tmpQuantity = outputQuantity;
+    }
+
+    // Filter all selected Stock orders that are no longer selected (after clipping)
+    this.selectedInputStockOrders = this.selectedInputStockOrders.filter(so => so.selected);
   }
 
   private updatePageTitle() {
