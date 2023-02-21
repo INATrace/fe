@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
-import { dateISOString, defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { CompanyFacilitiesForStockUnitProductService } from '../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
@@ -36,14 +36,17 @@ import { CompanyControllerService } from '../../../../../api/api/companyControll
 import { AuthService } from '../../../../core/auth.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
-import ApiTransactionStatus = ApiTransaction.StatusEnum;
-import TypeEnum = ApiProcessingAction.TypeEnum;
 import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
-import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
-import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import { StaticSemiProductsService } from './static-semi-products.service';
+import ApiTransactionStatus = ApiTransaction.StatusEnum;
+import TypeEnum = ApiProcessingAction.TypeEnum;
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
+import StatusEnum = ApiTransaction.StatusEnum;
+import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
+import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
 
 type PageMode = 'create' | 'edit';
 
@@ -453,9 +456,45 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   async saveProcessingOrder() {
-    // TODO: implement
+
+    if (this.saveInProgress) {
+      return;
+    }
+
     this.submitted = true;
-    console.log('Proc order: ', this.procOrderGroup);
+
+    console.log('Proc order form: ', this.procOrderGroup); // FIXME: remove
+
+    if (this.procOrderGroup.invalid || this.oneInputStockOrderRequired) {
+      return;
+    }
+
+    this.saveInProgress = true;
+    this.globalEventsManager.showLoading(true);
+    try {
+
+      // Get the raw value from the form group
+      const processingOrder = this.procOrderGroup.getRawValue() as ApiProcessingOrder;
+
+      // Create input transactions from the selected Stock orders
+      processingOrder.inputTransactions.push(...this.prepInputTransactionsFromStockOrders());
+
+      // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
+      this.enrichTargetStockOrders(processingOrder.targetStockOrders);
+
+      const res = await this.processingOrderController
+        .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+
+      if (!res || res.status !== 'OK') {
+        throw Error('Error while creating processing order for order type: ' + this.actionType);
+      } else {
+        this.dismiss();
+      }
+
+    } finally {
+      this.saveInProgress = false;
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   dismiss() {
@@ -1467,6 +1506,130 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
     }
     targetStockOrderGroup.get('totalQuantity').setValue(null);
+  }
+
+  private prepInputTransactionsFromStockOrders(): ApiTransaction[] {
+
+    const inputTransactions: ApiTransaction[] = [];
+
+    // Common computed properties used in every transaction
+    const isProcessing = this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE';
+    const status: ApiTransaction.StatusEnum = this.actionType === 'SHIPMENT' ? StatusEnum.PENDING : StatusEnum.EXECUTED;
+
+    for (const stockOrder of this.selectedInputStockOrders) {
+
+      // Create transaction for current stock order from the list of selected stock orders
+      const transaction: ApiTransaction = {
+        isProcessing,
+        company: { id: this.companyId },
+        initiationUserId: this.processingUserId,
+        sourceStockOrder: stockOrder,
+        status,
+        inputQuantity: stockOrder.selectedQuantity,
+        outputQuantity: stockOrder.selectedQuantity
+      };
+
+      inputTransactions.push(transaction);
+    }
+
+    return inputTransactions;
+  }
+
+  private enrichTargetStockOrders(targetStockOrders: ApiStockOrder[]) {
+
+    // Common computed properties
+    const requiredEvidenceTypeValues = this.prepareRequiredEvidenceTypeValues();
+    const otherEvidenceDocuments = this.prepareOtherEvidenceDocuments();
+
+    targetStockOrders.forEach(tso => {
+
+      // Set shared properties
+      tso.requiredEvidenceTypeValues = requiredEvidenceTypeValues;
+      tso.otherEvidenceDocuments = otherEvidenceDocuments;
+      tso.comments = this.commentsControl.value;
+      tso.fulfilledQuantity = 0;
+      tso.availableQuantity = 0;
+
+      // Set specific properties
+      tso.requiredEvidenceFieldValues = this.prepareRequiredEvidenceFieldValues(tso['requiredProcEvidenceFieldGroup']);
+
+      // Delete null and not need properties
+      delete tso['requiredProcEvidenceFieldGroup'];
+      deleteNullFields(tso);
+    });
+
+  }
+
+  private prepareRequiredEvidenceTypeValues(): ApiStockOrderEvidenceTypeValue[] {
+
+    const evidenceTypesValues: ApiStockOrderEvidenceTypeValue[] = [];
+
+    for (const control of this.requiredProcessingEvidenceArray.controls) {
+      const controlValue: ApiStockOrderEvidenceTypeValue =  control.value;
+      if (controlValue && controlValue.document && controlValue.document.id) {
+        evidenceTypesValues.push(controlValue);
+      }
+    }
+
+    return evidenceTypesValues;
+  }
+
+  private prepareOtherEvidenceDocuments(): ApiStockOrderEvidenceTypeValue[] {
+
+    const otherEvidenceDocuments: ApiStockOrderEvidenceTypeValue[] = [];
+
+    for (const control of this.otherProcessingEvidenceArray.controls) {
+
+      const evidenceType: ApiProcessingEvidenceType = control.value.type;
+
+      otherEvidenceDocuments.push({
+        evidenceTypeId: evidenceType.id,
+        evidenceTypeCode: evidenceType.code,
+        date: control.value.formalCreationDate,
+        document: control.value.document
+      });
+    }
+
+    return otherEvidenceDocuments;
+  }
+
+  private prepareRequiredEvidenceFieldValues(stockOrderEvidenceFields): ApiStockOrderEvidenceFieldValue[] {
+
+    const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] = [];
+
+    // Create stock order evidence field instances (values) for every form control
+    Object.keys(stockOrderEvidenceFields).forEach(key => {
+
+      const procEvidenceField = this.selectedProcAction.requiredEvidenceFields.find(pef => pef.fieldName === key);
+
+      const evidenceFieldValue: ApiStockOrderEvidenceFieldValue = {
+        evidenceFieldId: procEvidenceField.id,
+        evidenceFieldName: procEvidenceField.fieldName
+      };
+
+      switch (procEvidenceField.type) {
+        case ProcessingEvidenceField.NUMBER:
+        case ProcessingEvidenceField.INTEGER:
+        case ProcessingEvidenceField.EXCHANGERATE:
+        case ProcessingEvidenceField.PRICE:
+          evidenceFieldValue.numericValue = stockOrderEvidenceFields[key];
+          break;
+        case ProcessingEvidenceField.DATE:
+        case ProcessingEvidenceField.TIMESTAMP:
+          evidenceFieldValue.dateValue = stockOrderEvidenceFields[key];
+          break;
+        case ProcessingEvidenceField.STRING:
+        case ProcessingEvidenceField.TEXT:
+          evidenceFieldValue.stringValue = stockOrderEvidenceFields[key];
+          break;
+        default:
+          evidenceFieldValue.stringValue = stockOrderEvidenceFields[key];
+      }
+
+      evidenceFieldsValues.push(evidenceFieldValue);
+    });
+
+    return evidenceFieldsValues;
   }
 
 }

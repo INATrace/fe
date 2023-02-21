@@ -10,7 +10,7 @@ export const ApiProcessingOrderValidationScheme = {
       validators: [Validators.required]
     },
     inputTransactions: {
-      validators: [Validators.required]
+      validators: []
     },
     processingAction: {
       validators: [Validators.required]
