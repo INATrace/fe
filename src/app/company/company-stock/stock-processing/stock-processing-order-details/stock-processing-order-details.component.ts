@@ -567,11 +567,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           this.availableInputStockOrders[index].selected = true;
           this.availableInputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
         } else {
+
+          // We have to set first to true due tu change detection in checkbox component
           this.availableInputStockOrders[index].selected = true;
           this.availableInputStockOrders[index].selectedQuantity = 0;
-
-          this.availableInputStockOrders[index].selected = false;
-          this.calcInputQuantity(true);
+          setTimeout(() => this.availableInputStockOrders[index].selected = false);
         }
       } else {
         this.availableInputStockOrders[index].selected = true;
