@@ -880,7 +880,6 @@
     "productLabelStockProcessingOrderDetail.datepicker.date.error": "Se requiere la fecha de entrega",
     "productLabelStockProcessingOrderDetail.checkbox.selectAll": "Seleccione todo ({$INTERPOLATION})",
     "productLabelStockProcessingOrderDetail.noStock": "No hay existencias relevantes para añadir transacciones en el área",
-    "productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error": "Determine primero el área de salida y la cantidad de salida",
     "productLabelStockProcessingOrderDetail.inputSemiProducts.error": "Se requiere al menos una entrada de semiproducto",
     "productLabelStockProcessingOrderDetail.outputFacilityForm.label": "Área",
     "productLabelStockProcessingOrderDetail.outputFacilityForm.error": "Se requiere el área de salida",

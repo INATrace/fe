@@ -1565,7 +1565,6 @@
     "processingActionList.sortOptions.type.name": "Ubwoko",
     "processingActionList.sortOptions.inputSemiProduct.name": "Igicuruza cyigitunganywa cyinjira",
     "processingActionList.sortOptions.outputSemiProducts.name": "Output semi-products/final product",
-    "productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error": "Banza ushyireho ahifashishwa ku bigiye gutunganywa n'ahifashishwa ku bimaze gutunganywa",
     "processingOrderList.tableCol.view": "Kureba",
     "processingOrderList.tableCol.edit": "Guhindura",
     "processingOrderList.tableCol.delete": "Gusiba",

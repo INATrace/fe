@@ -1526,7 +1526,6 @@
     "productLabelStockProcessingOrderDetail.addNewTransactions": "Add new transactions",
     "productLabelStockProcessingOrderDetail.checkbox.selectAll": "Select all ({$INTERPOLATION})",
     "productLabelStockProcessingOrderDetail.noStock": "No relevant stock to add transactions in facility",
-    "productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error": "Set output facility and output quantity first",
     "productLabelStockProcessingOrderDetail.inputSemiProducts.error": "At least one input semi-product is required",
     "productLabelStockProcessingOrderDetail.datepicker.date.processingDate": "Processing date",
     "productLabelStockProcessingOrderDetail.outputsSemiProductForm.label": "Semi-product type",

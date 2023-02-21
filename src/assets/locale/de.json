@@ -1564,7 +1564,6 @@
     "processingActionList.sortOptions.type.name": "Art",
     "processingActionList.sortOptions.inputSemiProduct.name": "Input Halbprodukt/Endprodukt",
     "processingActionList.sortOptions.outputSemiProducts.name": "Output semi-products/final product",
-    "productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error": "Zuerst Output-Anlage und Output-Menge festlegen",
     "processingOrderList.tableCol.view": "Ansehen",
     "processingOrderList.tableCol.edit": "Bearbeiten",
     "processingOrderList.tableCol.delete": "Löschen",

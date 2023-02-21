@@ -172,7 +172,7 @@
             </div>
 
             <!-- EXISTING INPUT TRANSACTIONS AND AVAIALBLE STOCK ORDERS THAT CAN BE ADDED TO THIS PROECSSING ORDER -->
-            <div *ngIf="inputFacilityControl.value" class="position-relative">
+            <div *ngIf="inputFacilityControl.value">
 
               <!-- Existing input transactions - only applicable when editing stock order -->
               <div class="af-row">
@@ -213,67 +213,64 @@
                 </div>
               </div>
 
-              <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
-              <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
-                <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
-                <div class="af-c12" style="margin-top: -1rem;">
-                  <checkbox-input (onClick)="cbSelectAllClick()" [form]="cbSelectAllControl" style="margin-bottom: 1rem; margin-top: -1rem;">
-                    <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
-                      Select all ({{ currentInputStockUnit.name }})
-                    </checkbox-input-rich-label>
-                  </checkbox-input>
-                </div>
-              </div>
-              <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length === 0">
-                <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
-              </div>
+              <!-- WRAPPER FOR AVAILABLE STOCK ORDER SECTION (we use this so we can overlay when controls should be disabled) -->
+              <div class="position-relative">
 
-              <!-- LIST OF AVAILABLE STOCK ORDERS TO BE USED IN THE PROCESSING ACTION -->
-              <ng-container *ngFor="let item of availableInputStockOrders; index as i">
-                <div class="af-row">
-                  <div class="af-c1">
-                    <checkbox-input inTable="true" (onClick)="cbSelectClick(item, i)"
-                                    [disabled]="disabledLeftFields"
-                                    [checked]="this.availableInputStockOrders[i].selected"></checkbox-input>
+                <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
+                <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
+                  <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
+                  <div class="af-c12" style="margin-top: -1rem;">
+                    <checkbox-input (onClick)="cbSelectAllClick()" [form]="cbSelectAllControl" style="margin-bottom: 1rem; margin-top: -1rem;">
+                      <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
+                        Select all ({{ currentInputStockUnit.name }})
+                      </checkbox-input-rich-label>
+                    </checkbox-input>
                   </div>
-                  <div class="af-c8">
-                    <ng-container *ngIf="item.orderType === 'PURCHASE_ORDER'">
-                      <span>{{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})</span>
-                    </ng-container>
-                    <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
-                      <span>{{ item.lotPrefix }} {{ item.identifier }} {{ item.internalLotNumber }}</span>
-                      <span *ngIf="item.qrCodeTag"
-                            (click)="openInputStockOrderQRCode(item)"
-                            class="cursor-pointer">
+                </div>
+                <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length === 0">
+                  <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
+                </div>
+
+                <!-- LIST OF AVAILABLE STOCK ORDERS TO BE USED IN THE PROCESSING ACTION -->
+                <ng-container *ngFor="let item of availableInputStockOrders; index as i">
+                  <div class="af-row">
+                    <div class="af-c1">
+                      <checkbox-input inTable="true" (onClick)="cbSelectClick(item, i)"
+                                      [checked]="this.availableInputStockOrders[i].selected"></checkbox-input>
+                    </div>
+                    <div class="af-c8">
+                      <ng-container *ngIf="item.orderType === 'PURCHASE_ORDER'">
+                        <span>{{ item.identifier }} ({{ item.producerUserCustomer.name }} {{ item.producerUserCustomer.surname }})</span>
+                      </ng-container>
+                      <ng-container *ngIf="item.orderType != 'PURCHASE_ORDER'">
+                        <span>{{ item.lotPrefix }} {{ item.identifier }} {{ item.internalLotNumber }}</span>
+                        <span *ngIf="item.qrCodeTag"
+                              (click)="openInputStockOrderQRCode(item)"
+                              class="cursor-pointer">
                         <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
                       </span>
-                    </ng-container>
-                    <span *ngIf="item.organic">
+                      </ng-container>
+                      <span *ngIf="item.organic">
                       <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
                                i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
                     </span>
-                    <span *ngIf="item.womenShare">
+                      <span *ngIf="item.womenShare">
                       <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
                                i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
                     </span>
-                  </div>
-                  <div class="af-c3 text-right">
+                    </div>
+                    <div class="af-c3 text-right">
                     <span *ngIf="actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING'"
                           (click)="clipInputTransaction(item, i)" class="cursor-pointer">
                       <fa-icon [icon]="faCut" class="pr-2"></fa-icon>
                     </span>
-                    <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnit.measurementUnitType.label }}
+                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnit.measurementUnitType.label }}
+                    </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
 
-              <!-- FIXME: refactor this -->
-<!--                <ng-container *ngIf="inputQuantityOrOutputFacilityNotSet">-->
-<!--                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error">-->
-<!--                    Set output quantity first-->
-<!--                  </small>-->
-<!--                </ng-container>-->
-<!--                <div *ngIf="inputQuantityOrOutputFacilityNotSet" class="disabled-section-overlay"></div>-->
+                <div *ngIf="disabledLeftFields && leftSideEnabled" class="disabled-section-overlay"></div>
+              </div>
 
               <ng-container *ngIf="submitted && oneInputStockOrderRequired">
                 <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputSemiProducts.error">
