@@ -869,6 +869,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.prepareEditingProcOrderGroup(respProcessingOrder.data);
     await this.processingActionUpdated(respProcessingOrder.data.processingAction);
 
+    // After Processing order and Processing action are loaded and initialized, set the existing evidence documents
+    const firstTSO = this.targetStockOrdersArray.at(0) as FormGroup;
+    StockProcessingOrderDetailsHelper.loadExistingOtherEvidenceDocuments(firstTSO, this.otherProcessingEvidenceArray);
+    StockProcessingOrderDetailsHelper.loadExistingRequiredEvidenceDocuments(firstTSO, this.requiredProcessingEvidenceArray);
+
     // Calculate and set the total output and total input quantity
     this.calcTotalOutputQuantity();
     this.calcInputQuantity(true);
@@ -1029,7 +1034,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private initProcEvidenceListManager() {
 
     this.processingEvidenceListManager = new ListEditorManager<ApiActivityProof>(
-      this.otherProcessingEvidenceArray as FormArray,
+      this.otherProcessingEvidenceArray,
       StockProcessingOrderDetailsHelper.ApiActivityProofEmptyObjectFormFactory(),
       ApiActivityProofValidationScheme
     );
@@ -1536,7 +1541,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       delete tso['requiredProcEvidenceFieldGroup'];
       deleteNullFields(tso);
     });
-
   }
 
 }

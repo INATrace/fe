@@ -6,8 +6,9 @@ import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessin
 import ProcessingEvidenceFieldType = ApiProcessingEvidenceField.TypeEnum;
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
-import { defaultEmptyObject } from '../../../../../shared/utils';
+import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
+import { ApiDocument } from '../../../../../api/model/apiDocument';
 
 export class StockProcessingOrderDetailsHelper {
 
@@ -108,6 +109,33 @@ export class StockProcessingOrderDetailsHelper {
     });
 
     return evidenceFieldsValues;
+  }
+
+  public static loadExistingOtherEvidenceDocuments(firstTSO: FormGroup, otherProcessingEvidenceArray: FormArray) {
+
+    ((firstTSO.get('otherEvidenceDocuments') as FormArray).value as ApiStockOrderEvidenceTypeValue[]).forEach(evidenceTypeValue => {
+      otherProcessingEvidenceArray.push(new FormGroup({
+        formalCreationDate: new FormControl(evidenceTypeValue.date),
+        document: new FormControl(evidenceTypeValue.document),
+        type: new FormGroup({
+          id: new FormControl(evidenceTypeValue.evidenceTypeId),
+          code: new FormControl(evidenceTypeValue.evidenceTypeCode),
+          label: new FormControl(evidenceTypeValue.evidenceTypeLabel)
+        })
+      }));
+    });
+  }
+
+  public static loadExistingRequiredEvidenceDocuments(firstTSO: FormGroup, requiredProcessingEvidenceArray: FormArray) {
+
+    ((firstTSO.get('requiredEvidenceTypeValues') as FormArray).value as ApiStockOrderEvidenceTypeValue[]).forEach(evidenceTypeValue => {
+      const evidenceTypeControl = requiredProcessingEvidenceArray.controls
+        .find(control => control.get('evidenceTypeId').value === evidenceTypeValue.evidenceTypeId) as FormGroup;
+      setTimeout(() => {
+        evidenceTypeControl.get('date').setValue(evidenceTypeValue.date);
+        evidenceTypeControl.setControl('document', generateFormFromMetadata(ApiDocument.formMetadata(), evidenceTypeValue.document));
+      });
+    });
   }
 
   // Create form control for use in activity proofs list manager

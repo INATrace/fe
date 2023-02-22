@@ -598,9 +598,8 @@
                     </div>
                     <div class="af-c8">
                       <textinput
-                          [value]="item.get('evidenceTypeLabel').value"
+                          [form]="$any(item.get('evidenceTypeLabel'))"
                           label="Type"
-                          [valueTextInput]="true"
                           i18n-label="@@productLabelStockProcessingOrderDetail.label.type">
                       </textinput>
                     </div>
