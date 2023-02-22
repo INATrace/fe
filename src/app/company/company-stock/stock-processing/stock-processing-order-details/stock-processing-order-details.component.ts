@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { ApiActivityProofValidationScheme } from '../../stock-core/additional-proof-item/validation';
-import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
+import { dateISOString, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { CompanyFacilitiesForStockUnitProductService } from '../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
@@ -45,8 +45,7 @@ import TypeEnum = ApiProcessingAction.TypeEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import StatusEnum = ApiTransaction.StatusEnum;
-import { ApiStockOrderEvidenceTypeValue } from '../../../../../api/model/apiStockOrderEvidenceTypeValue';
-import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
+import { StockProcessingOrderDetailsHelper } from './stock-processing-order-details.helper';
 
 type PageMode = 'create' | 'edit';
 
@@ -150,19 +149,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private modalService: NgbModalImproved
   ) { }
-
-  // Create form control for use in activity proofs list manager
-  static ApiActivityProofCreateEmptyObject(): ApiActivityProof {
-    const obj = ApiActivityProof.formMetadata();
-    return defaultEmptyObject(obj) as ApiActivityProof;
-  }
-
-  static ApiActivityProofEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(StockProcessingOrderDetailsComponent.ApiActivityProofCreateEmptyObject(),
-        ApiActivityProofValidationScheme.validators);
-    };
-  }
 
   get selectedProcAction(): ApiProcessingAction {
     return this.procOrderGroup?.get('processingAction')?.value as ApiProcessingAction ?? null;
@@ -348,6 +334,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Register value change listeners for input controls
     this.registerInternalLotSearchValueChangeListener();
+    this.registerInputFacilityValueChangeListener();
 
     // Start loading of data and prepare form groups
     this.globalEventsManager.showLoading(true);
@@ -368,7 +355,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.submitted = false;
 
-    this.setRequiredProcessingEvidence(procAction).then();
+    StockProcessingOrderDetailsHelper.setRequiredProcessingEvidence(procAction, this.requiredProcessingEvidenceArray).then();
     this.clearInputPropsAndControls();
     this.clearInputFacility();
     this.clearOutputPropsAndControls();
@@ -772,6 +759,18 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  private registerInputFacilityValueChangeListener() {
+    this.subscriptions.push(
+      this.inputFacilityControl.valueChanges.subscribe((facility: ApiFacility) => {
+
+        // If we are creating new Quote order, set the quoteFacility when input facility is selected
+        if (!this.editing && this.actionType === 'SHIPMENT' && this.targetStockOrdersArray?.length > 0) {
+          this.targetStockOrdersArray.at(0).get('quoteFacility').setValue(facility);
+        }
+    })
+    );
+  }
+
   private async initializeData() {
 
     // Get the page mode
@@ -862,6 +861,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     if (!respProcessingOrder || respProcessingOrder.status !== 'OK') {
       throw new Error('Cannot retrieve the processing order!');
+    } else if (respProcessingOrder.data.targetStockOrders?.length === 0) {
+      throw new Error('Processing order does not contain any target Stock orders!');
     }
 
     // Initialize the Processing order group using the fetched data
@@ -1025,32 +1026,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async setRequiredProcessingEvidence(action: ApiProcessingAction) {
-
-    (this.requiredProcessingEvidenceArray as FormArray).clear();
-
-    if (action && action.requiredDocumentTypes && action.requiredDocumentTypes.length > 0) {
-
-      for (const requiredDocumentType of action.requiredDocumentTypes) {
-        this.requiredProcessingEvidenceArray.push(new FormGroup({
-          evidenceTypeId: new FormControl(requiredDocumentType.id),
-          evidenceTypeCode: new FormControl(requiredDocumentType.code),
-          evidenceTypeLabel: new FormControl({ value: requiredDocumentType.label, disabled: true }),
-          date: new FormControl(new Date(), requiredDocumentType.mandatory ? Validators.required : null),
-          document: new FormControl(null, requiredDocumentType.mandatory ? Validators.required : null)
-        }));
-      }
-
-    } else {
-      (this.requiredProcessingEvidenceArray as FormArray).clear();
-    }
-  }
-
   private initProcEvidenceListManager() {
 
     this.processingEvidenceListManager = new ListEditorManager<ApiActivityProof>(
       this.otherProcessingEvidenceArray as FormArray,
-      StockProcessingOrderDetailsComponent.ApiActivityProofEmptyObjectFormFactory(),
+      StockProcessingOrderDetailsHelper.ApiActivityProofEmptyObjectFormFactory(),
       ApiActivityProofValidationScheme
     );
   }
@@ -1072,8 +1052,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
     this.targetStockOrdersArray.clear();
-    processingOrder.targetStockOrders.forEach(tso => {
+    processingOrder.targetStockOrders.forEach((tso, index) => {
       this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+
+      // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+      if (index === 0) {
+        this.commentsControl.setValue(tso.comments);
+      }
     });
   }
 
@@ -1377,43 +1362,37 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setRequiredFieldsAndListenersForTSO(targetStockOrderGroup: FormGroup) {
+  private setRequiredFieldsAndListenersForTSO(tsoGroup: FormGroup) {
 
     // Set validators for specific fields depending on the Processing action type
     switch (this.actionType) {
       case 'PROCESSING':
       case 'GENERATE_QR_CODE':
-        targetStockOrderGroup.get('semiProduct').setValidators(Validators.required);
-        targetStockOrderGroup.get('semiProduct').updateValueAndValidity();
+        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'semiProduct', [Validators.required]);
         break;
       case 'SHIPMENT':
-        targetStockOrderGroup.get('deliveryTime').setValidators([Validators.required]);
-        targetStockOrderGroup.get('deliveryTime').updateValueAndValidity();
+        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'deliveryTime', [Validators.required]);
+        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'quoteFacility', [Validators.required]);
       // tslint:disable-next-line:no-switch-case-fall-through
       case 'TRANSFER':
         if (this.selectedProcAction.finalProductAction) {
-          targetStockOrderGroup.get('finalProduct').setValidators(Validators.required);
-          targetStockOrderGroup.get('finalProduct').updateValueAndValidity();
+          StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'finalProduct', [Validators.required]);
         } else {
-          targetStockOrderGroup.get('semiProduct').setValidators(Validators.required);
-          targetStockOrderGroup.get('semiProduct').updateValueAndValidity();
+          StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'semiProduct', [Validators.required]);
         }
         break;
     }
 
-    targetStockOrderGroup.get('facility').setValidators([Validators.required]);
-    targetStockOrderGroup.get('facility').updateValueAndValidity();
-
-    targetStockOrderGroup.get('totalQuantity').setValidators([Validators.required]);
-    targetStockOrderGroup.get('totalQuantity').updateValueAndValidity();
+    StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'facility', [Validators.required]);
+    StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
 
     // Clear the required fields form
     const requiredProcEvidenceFieldGroup = new FormGroup({});
 
     // Set required fields form group
     const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] =
-      targetStockOrderGroup.get('requiredEvidenceFieldValues')?.value ?
-        targetStockOrderGroup.get('requiredEvidenceFieldValues').value : [];
+      tsoGroup.get('requiredEvidenceFieldValues')?.value ?
+        tsoGroup.get('requiredEvidenceFieldValues').value : [];
 
     this.selectedProcAction.requiredEvidenceFields.forEach(field => {
 
@@ -1449,22 +1428,22 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    targetStockOrderGroup.setControl('requiredProcEvidenceFieldGroup', requiredProcEvidenceFieldGroup);
+    tsoGroup.setControl('requiredProcEvidenceFieldGroup', requiredProcEvidenceFieldGroup);
 
     // Register value change listeners for specific fields
-    this.subscriptions.push(targetStockOrderGroup.get('totalQuantity').valueChanges
+    this.subscriptions.push(tsoGroup.get('totalQuantity').valueChanges
         .pipe(debounceTime(350))
         .subscribe(() => setTimeout(() => this.targetStockOrderOutputQuantityChange())));
 
-    this.subscriptions.push(targetStockOrderGroup.get('finalProduct').valueChanges
-        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderFinalProductChange(value, targetStockOrderGroup)));
+    this.subscriptions.push(tsoGroup.get('finalProduct').valueChanges
+        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderFinalProductChange(value, tsoGroup)));
 
-    this.subscriptions.push(targetStockOrderGroup.get('semiProduct').valueChanges
-        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderSemiProductChange(value, targetStockOrderGroup)));
+    this.subscriptions.push(tsoGroup.get('semiProduct').valueChanges
+        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderSemiProductChange(value, tsoGroup)));
 
     // Set specific fields to default disabled state
     if (!this.editing) {
-      targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
+      tsoGroup.get('totalQuantity').disable({ emitEvent: false });
     }
   }
 
@@ -1538,8 +1517,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private enrichTargetStockOrders(targetStockOrders: ApiStockOrder[]) {
 
     // Common computed properties
-    const requiredEvidenceTypeValues = this.prepareRequiredEvidenceTypeValues();
-    const otherEvidenceDocuments = this.prepareOtherEvidenceDocuments();
+    const requiredEvidenceTypeValues = StockProcessingOrderDetailsHelper.prepareRequiredEvidenceTypeValues(this.requiredProcessingEvidenceArray);
+    const otherEvidenceDocuments = StockProcessingOrderDetailsHelper.prepareOtherEvidenceDocuments(this.otherProcessingEvidenceArray);
 
     targetStockOrders.forEach(tso => {
 
@@ -1551,85 +1530,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       tso.availableQuantity = 0;
 
       // Set specific properties
-      tso.requiredEvidenceFieldValues = this.prepareRequiredEvidenceFieldValues(tso['requiredProcEvidenceFieldGroup']);
+      tso.requiredEvidenceFieldValues = StockProcessingOrderDetailsHelper.prepareRequiredEvidenceFieldValues(tso['requiredProcEvidenceFieldGroup'], this.selectedProcAction);
 
       // Delete null and not need properties
       delete tso['requiredProcEvidenceFieldGroup'];
       deleteNullFields(tso);
     });
 
-  }
-
-  private prepareRequiredEvidenceTypeValues(): ApiStockOrderEvidenceTypeValue[] {
-
-    const evidenceTypesValues: ApiStockOrderEvidenceTypeValue[] = [];
-
-    for (const control of this.requiredProcessingEvidenceArray.controls) {
-      const controlValue: ApiStockOrderEvidenceTypeValue =  control.value;
-      if (controlValue && controlValue.document && controlValue.document.id) {
-        evidenceTypesValues.push(controlValue);
-      }
-    }
-
-    return evidenceTypesValues;
-  }
-
-  private prepareOtherEvidenceDocuments(): ApiStockOrderEvidenceTypeValue[] {
-
-    const otherEvidenceDocuments: ApiStockOrderEvidenceTypeValue[] = [];
-
-    for (const control of this.otherProcessingEvidenceArray.controls) {
-
-      const evidenceType: ApiProcessingEvidenceType = control.value.type;
-
-      otherEvidenceDocuments.push({
-        evidenceTypeId: evidenceType.id,
-        evidenceTypeCode: evidenceType.code,
-        date: control.value.formalCreationDate,
-        document: control.value.document
-      });
-    }
-
-    return otherEvidenceDocuments;
-  }
-
-  private prepareRequiredEvidenceFieldValues(stockOrderEvidenceFields): ApiStockOrderEvidenceFieldValue[] {
-
-    const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] = [];
-
-    // Create stock order evidence field instances (values) for every form control
-    Object.keys(stockOrderEvidenceFields).forEach(key => {
-
-      const procEvidenceField = this.selectedProcAction.requiredEvidenceFields.find(pef => pef.fieldName === key);
-
-      const evidenceFieldValue: ApiStockOrderEvidenceFieldValue = {
-        evidenceFieldId: procEvidenceField.id,
-        evidenceFieldName: procEvidenceField.fieldName
-      };
-
-      switch (procEvidenceField.type) {
-        case ProcessingEvidenceField.NUMBER:
-        case ProcessingEvidenceField.INTEGER:
-        case ProcessingEvidenceField.EXCHANGERATE:
-        case ProcessingEvidenceField.PRICE:
-          evidenceFieldValue.numericValue = stockOrderEvidenceFields[key];
-          break;
-        case ProcessingEvidenceField.DATE:
-        case ProcessingEvidenceField.TIMESTAMP:
-          evidenceFieldValue.dateValue = stockOrderEvidenceFields[key];
-          break;
-        case ProcessingEvidenceField.STRING:
-        case ProcessingEvidenceField.TEXT:
-          evidenceFieldValue.stringValue = stockOrderEvidenceFields[key];
-          break;
-        default:
-          evidenceFieldValue.stringValue = stockOrderEvidenceFields[key];
-      }
-
-      evidenceFieldsValues.push(evidenceFieldValue);
-    });
-
-    return evidenceFieldsValues;
   }
 
 }
