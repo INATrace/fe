@@ -40,12 +40,12 @@ import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } fro
 import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
 import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 import { StaticSemiProductsService } from './static-semi-products.service';
+import { StockProcessingOrderDetailsHelper } from './stock-processing-order-details.helper';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import TypeEnum = ApiProcessingAction.TypeEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import StatusEnum = ApiTransaction.StatusEnum;
-import { StockProcessingOrderDetailsHelper } from './stock-processing-order-details.helper';
 
 type PageMode = 'create' | 'edit';
 
@@ -470,6 +470,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Create input transactions from the selected Stock orders
       processingOrder.inputTransactions.push(...this.prepInputTransactionsFromStockOrders());
 
+      // If we have 'TRANSFER' order, the target Stock order present is just temporary (holds entered info)
+      // We need to create the actual target Stock orders from the selected input Stock orders
+      if (this.actionType === 'TRANSFER') {
+        processingOrder.targetStockOrders = this.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
+      }
+
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
 
@@ -695,8 +701,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // Validate if we can add new output
     switch (this.actionType) {
       case 'TRANSFER':
-        // If Processing action type is 'TRANSFER' exit (these are handled differently)
-        return;
       case 'SHIPMENT':
       case 'GENERATE_QR_CODE':
       case 'FINAL_PROCESSING':
@@ -1376,10 +1380,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // Set validators for specific fields depending on the Processing action type
     switch (this.actionType) {
       case 'PROCESSING':
+        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
+      // tslint:disable-next-line:no-switch-case-fall-through
       case 'GENERATE_QR_CODE':
         StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'semiProduct', [Validators.required]);
         break;
       case 'SHIPMENT':
+        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
         StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'deliveryTime', [Validators.required]);
         StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'quoteFacility', [Validators.required]);
       // tslint:disable-next-line:no-switch-case-fall-through
@@ -1393,7 +1400,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'facility', [Validators.required]);
-    StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
 
     // Clear the required fields form
     const requiredProcEvidenceFieldGroup = new FormGroup({});
@@ -1521,6 +1527,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return inputTransactions;
+  }
+
+  private prepareTransferTargetStockOrders(sourceStockOrder: ApiStockOrder): ApiStockOrder[] {
+
+    const targetStockOrders: ApiStockOrder[] = [];
+
+    for (const [index, selectedStockOrder] of this.selectedInputStockOrders.entries()) {
+      const newStockOrder: ApiStockOrder = {
+        facility: sourceStockOrder.facility,
+        semiProduct: selectedStockOrder.semiProduct,
+        finalProduct: selectedStockOrder.finalProduct,
+        internalLotNumber: `${sourceStockOrder.internalLotNumber}/${index + 1 + 0}`,
+        creatorId: this.processingUserId,
+        productionDate: selectedStockOrder.productionDate ? selectedStockOrder.productionDate : (dateISOString(new Date()) as any),
+        orderType: OrderTypeEnum.TRANSFERORDER,
+        totalQuantity: selectedStockOrder.availableQuantity,
+        fulfilledQuantity: 0,
+        availableQuantity: 0
+      };
+      targetStockOrders.push(newStockOrder);
+    }
+
+    return targetStockOrders;
   }
 
   private enrichTargetStockOrders(targetStockOrders: ApiStockOrder[]) {

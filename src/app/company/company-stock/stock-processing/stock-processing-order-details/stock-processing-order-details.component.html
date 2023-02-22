@@ -454,7 +454,7 @@
             </div>
 
             <!-- FORM CONTROLS FOR DEFINING OUTPUT QUANTITY -->
-            <div class="af-row">
+            <div *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'" class="af-row">
               <div class="af-c6">
                 <textinput
                     [form]="$any(tsoGroup.get('totalQuantity'))"
@@ -543,7 +543,7 @@
             </div>
 
             <!-- DISPLAY THE TOTAL OUTPUT QUANTITY - SUM OF TOTAL QUANTITY ENTERED FOR EVERY TARGET STOCK ORDER -->
-            <div class="af-row">
+            <div *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'" class="af-row">
               <div class="af-c12">
                 <textinput
                         [form]="totalOutputQuantityControl"
