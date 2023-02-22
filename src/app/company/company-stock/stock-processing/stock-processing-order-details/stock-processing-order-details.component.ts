@@ -454,8 +454,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.submitted = true;
 
-    console.log('Proc order form: ', this.procOrderGroup); // FIXME: remove
-
     if (this.procOrderGroup.invalid || this.oneInputStockOrderRequired) {
       return;
     }
@@ -1546,6 +1544,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         fulfilledQuantity: 0,
         availableQuantity: 0
       };
+
+      // Set the temporary object that holds the processing evidence fields
+      newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
+
       targetStockOrders.push(newStockOrder);
     }
 
