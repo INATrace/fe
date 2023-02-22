@@ -330,6 +330,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in`;
   }
 
+  get showAddNewOutputButton() {
+    return this.actionType === 'PROCESSING';
+  }
+
   ngOnInit(): void {
 
     // Register value change listeners for input controls

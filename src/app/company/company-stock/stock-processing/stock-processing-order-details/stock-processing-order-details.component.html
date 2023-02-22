@@ -513,7 +513,7 @@
             <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
           </div>
 
-          <div class="d-flex justify-content-end outputs-bottom-spacing">
+          <div *ngIf="showAddNewOutputButton" class="d-flex justify-content-end outputs-bottom-spacing">
             <button class="btn" type="button" (click)="addNewOutput()">
               <span>Add additional output</span>
             </button>
