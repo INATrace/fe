@@ -18643,13 +18643,17 @@
             "description": "The attached document reference of the processing evidence"
           },
           "evidenceTypeCode": {
-            "description": "The field name of the Processing evidence type from the codebook",
+            "description": "The field code of the Processing evidence type from the codebook",
             "type": "string"
           },
           "evidenceTypeId": {
             "description": "The id of the Processing evidence type from the codebook",
             "format": "int64",
             "type": "integer"
+          },
+          "evidenceTypeLabel": {
+            "description": "The field label of the Processing evidence type from the codebook",
+            "type": "string"
           }
         },
         "type": "object"
