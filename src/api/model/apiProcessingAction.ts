@@ -108,7 +108,10 @@ export interface ApiProcessingAction {
      * Processing action type
      */
     type?: ApiProcessingAction.TypeEnum;
-    valueChain?: ApiValueChain;
+    /**
+     * List of value chains for this processing action
+     */
+    valueChains?: Array<ApiValueChain>;
 }
 
 /**
@@ -197,7 +200,10 @@ export namespace ApiProcessingAction {
          * Processing action type
          */
         type = 'type',
-        valueChain = 'valueChain'
+        /**
+         * List of value chains for this processing action
+         */
+        valueChains = 'valueChains'
     }
 
     /**
@@ -520,11 +526,11 @@ export namespace ApiProcessingAction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'valueChain',
+                    name: 'valueChains',
                     classname: 'ApiProcessingAction',
-                    dataType: 'ApiValueChain',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
                     isPrimitiveType: false,
-                    isListContainer: false,
+                    isListContainer: true,
                     complexType: 'ApiValueChain'
                 },
             ],
@@ -577,7 +583,7 @@ export namespace ApiProcessingAction {
                 ],
                 type: [
                 ],
-                valueChain: [
+                valueChains: [
                 ],
             }
         }
@@ -658,7 +664,7 @@ export namespace ApiProcessingAction {
   //               type: {
   //                   validators: []
   //               },
-  //               valueChain: {
+  //               valueChains: {
   //                   validators: []
   //               },
   //     }

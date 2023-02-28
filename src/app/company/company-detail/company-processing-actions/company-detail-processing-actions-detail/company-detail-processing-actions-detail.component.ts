@@ -29,6 +29,7 @@ import { ApiValueChain } from '../../../../../api/model/apiValueChain';
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -60,6 +61,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   finalProductsForCompanyCodebook: FinalProductsForCompanyService;
 
+  activeValueChainsCodebook: ActiveValueChainService;
+  activeValueChainsForm = new FormControl(null);
+  activeValueChains: Array<ApiValueChain> = [];
+
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
   faTimes = faTimes;
@@ -88,6 +93,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
       private finalProductController: FinalProductControllerService,
+      private valueChainController: ValueChainControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
   ) {
@@ -124,15 +130,18 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
           // Initialize codebook service for company facilities
           this.supportedFacilitiesService = new CompanyFacilitiesService(this.facilitiesController, this.companyId);
 
-          this.valueChainSubs = this.form.get('valueChain').valueChanges.subscribe((valueChain: ApiValueChain) => {
+          this.activeValueChainsCodebook = new ActiveValueChainService(this.valueChainController);
 
-            if (valueChain) {
+          this.valueChainSubs = this.form.get('valueChains').valueChanges.subscribe((valueChains: ApiValueChain[]) => {
+
+            if (valueChains && valueChains.length > 0) {
+              const valueChainIds = valueChains?.map(valueChain => valueChain.id);
 
               // Initialize codebook services for proc. evidence types and proc. evidence fields
               this.processingEvidenceTypeService =
-                new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
+                new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
               this.processingEvidenceFieldService =
-                new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+                new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
 
             } else {
 
@@ -160,6 +169,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   finalizeForm() {
+    if (!this.form.contains('valueChains')) {
+      this.form.addControl('valueChains', new FormArray([]));
+    }
+
     if (!this.form.contains('requiredEvidenceFields')) {
       this.form.addControl('requiredEvidenceFields', new FormArray([]));
     }
@@ -213,15 +226,18 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.form.get('type').setValue('PROCESSING');
     }
 
-    if (this.form.get('valueChain').value) {
+    if (this.form.get('valueChains').value) {
 
-      const valueChain = this.form.get('valueChain').value as ApiValueChain;
+      const valueChains = this.form.get('valueChains').value as ApiValueChain[];
+      const valueChainIds = valueChains?.map(valueChain => valueChain.id);
 
-      // Initialize codebook services for proc. evidence types and proc. evidence fields
-      this.processingEvidenceTypeService =
-        new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
-      this.processingEvidenceFieldService =
-        new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+      if (valueChainIds && valueChainIds.length > 0) {
+        // Initialize codebook services for proc. evidence types and proc. evidence fields
+        this.processingEvidenceTypeService =
+          new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
+        this.processingEvidenceFieldService =
+          new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
+      }
     }
   }
 
@@ -248,6 +264,59 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     } else {
       throw Error('Wrong action.');
     }
+  }
+
+  async addSelectedValueChain(valueChain: ApiValueChain) {
+
+    if (!valueChain || this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
+      setTimeout(() => this.activeValueChainsForm.setValue(null));
+      return;
+    }
+
+    const formArray = this.form.get('valueChains') as FormArray;
+
+    // Add selected element to array
+    formArray.push(new FormControl({...valueChain}));
+    formArray.markAsDirty();
+
+    this.activeValueChains.push(valueChain);
+
+    setTimeout(() => this.activeValueChainsForm.setValue(null));
+
+  }
+
+  deleteValueChain(idx: number) {
+    this.confirmValueChainRemove().then(confirmed => {
+      if (confirmed) {
+        const formArray = this.form.get('valueChains') as FormArray;
+        const index = (formArray.value as ApiFacility[]).findIndex(x => x.id === idx);
+
+        this.activeValueChains.splice(index, 1);
+
+        if (index >= 0) {
+          formArray.removeAt(index);
+          formArray.markAsDirty();
+
+          // also remove already selected fields and document types
+          this.removeAllEvidenceFields();
+          this.removeAllEvidenceDocs();
+        }
+      }
+    });
+
+  }
+
+  private async confirmValueChainRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@productLabelStockFacilityModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
   }
 
   async addSelectedEvidenceDoc(doc: ApiProcessingEvidenceType) {
@@ -283,6 +352,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     }
   }
 
+  private removeAllEvidenceDocs() {
+    const formArray = this.form.get('requiredDocumentTypes') as FormArray;
+    formArray.clear();
+  }
+
   async addSelectedEvidenceField(field: ApiProcessingEvidenceField) {
     if (!field) { return; }
     const formArray = this.form.get('requiredEvidenceFields') as FormArray;
@@ -313,6 +387,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       formArray.removeAt(index);
       formArray.markAsDirty();
     }
+  }
+
+  private removeAllEvidenceFields() {
+    const formArray = this.form.get('requiredEvidenceFields') as FormArray;
+    formArray.clear();
   }
 
   async addSelectedSupportedFacility(facility: ApiFacility) {
@@ -383,6 +462,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   selectLanguage(lang: string) {
     this.selectedLanguage = lang;
+  }
+
+  valueChainResultFormatter = (value: any) => {
+    return this.activeValueChainsCodebook.textRepresentation(value);
+  }
+
+  valueChainInputFormatter = (value: any) => {
+    return this.activeValueChainsCodebook.textRepresentation(value);
   }
 
   repackedFormatter(x: any) {

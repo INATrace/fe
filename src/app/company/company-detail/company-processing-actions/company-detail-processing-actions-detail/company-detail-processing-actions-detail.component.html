@@ -30,20 +30,20 @@
 
                         <div class="spacer-title-section"></div>
 
-                        <single-choice
-                                label="Value chain"
-                                i18n-label="@@companyDetailProcessingActions.singleChoice.valueChain.label"
-                                [formControlInput]="form.get('valueChain')"
-                                [codebookService]="valueChainCodebook"
-                                [isInvalidChoice]="submitted && form.get('valueChain').invalid">
-                            <ng-container *ngIf="submitted">
-                                <div *ngIf="form.get('valueChain').errors as errors" class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.valueChain.error.required">
-                                        Value chain is required
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </single-choice>
+<!--                        <single-choice-->
+<!--                                label="Value chain"-->
+<!--                                i18n-label="@@companyDetailProcessingActions.singleChoice.valueChain.label"-->
+<!--                                [formControlInput]="form.get('valueChain')"-->
+<!--                                [codebookService]="valueChainCodebook"-->
+<!--                                [isInvalidChoice]="submitted && form.get('valueChain').invalid">-->
+<!--                            <ng-container *ngIf="submitted">-->
+<!--                                <div *ngIf="form.get('valueChain').errors as errors" class="sc-invalid-feedback">-->
+<!--                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.valueChain.error.required">-->
+<!--                                        Value chain is required-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </ng-container>-->
+<!--                        </single-choice>-->
 
                         <single-choice
                                 label="Action type"
@@ -273,6 +273,32 @@
                         </textinput>
                     </div>
                     <!-- END: Basic information -->
+
+                    <!-- Value chains  -->
+                    <h2 i18n="@@companyDetailProcessingActions.section.value-chains">Value chains</h2>
+                    <div class="af-form-element">
+                        <div class="search-field">
+                            <textinput
+                              label=""
+                              [form]="activeValueChainsForm"
+                              placeholder="Type value chain ..."
+                              i18n-placeholder="@@companyDetailProcessingActions.valueChain.search-field.placeholder"
+                              [codebookService]="activeValueChainsCodebook"
+                              [resultFormatter]="valueChainResultFormatter"
+                              [inputFormatter]="valueChainInputFormatter"
+                              (itemMatching)="addSelectedValueChain($event)">
+                            </textinput>
+                        </div>
+                        <div *ngFor="let sp of this.activeValueChains; index as idx">
+                            <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                                <div>{{ sp.name }}</div>
+                                <div (click)="deleteValueChain(sp.id)" style="cursor: pointer;">
+                                    <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Value chains -->
 
                     <!-- Supported facilities -->
                     <h2 i18n="@@companyDetailProcessingActions.supportedFacilities">Facilities where this process starts</h2>
