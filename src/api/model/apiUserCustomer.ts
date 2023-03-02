@@ -21,6 +21,7 @@
 import { ApiBankInformation } from './apiBankInformation';
 import { ApiCertification } from './apiCertification';
 import { ApiFarmInformation } from './apiFarmInformation';
+import { ApiProductType } from './apiProductType';
 import { ApiUserCustomerAssociation } from './apiUserCustomerAssociation';
 import { ApiUserCustomerCooperative } from './apiUserCustomerCooperative';
 import { ApiUserCustomerLocation } from './apiUserCustomerLocation';
@@ -75,6 +76,10 @@ export interface ApiUserCustomer {
      * Phone
      */
     phone?: string;
+    /**
+     * User customer product types
+     */
+    productTypes?: Array<ApiProductType>;
     /**
      * Surname
      */
@@ -140,6 +145,10 @@ export namespace ApiUserCustomer {
          * Phone
          */
         phone = 'phone',
+        /**
+         * User customer product types
+         */
+        productTypes = 'productTypes',
         /**
          * Surname
          */
@@ -334,6 +343,18 @@ export namespace ApiUserCustomer {
                     complexType: ''
                 },
                 {
+                    metadata: ApiProductType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productTypes',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiProductType&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductType'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -386,6 +407,8 @@ export namespace ApiUserCustomer {
                 ],
                 phone: [
                 ],
+                productTypes: [
+                ],
                 surname: [
                 ],
                 type: [
@@ -437,6 +460,9 @@ export namespace ApiUserCustomer {
   //                   validators: []
   //               },
   //               phone: {
+  //                   validators: []
+  //               },
+  //               productTypes: {
   //                   validators: []
   //               },
   //               surname: {

@@ -24,6 +24,7 @@ import { ApiFacilityTranslation } from './apiFacilityTranslation';
 import { ApiFacilityType } from './apiFacilityType';
 import { ApiFinalProduct } from './apiFinalProduct';
 import { ApiSemiProduct } from './apiSemiProduct';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -68,6 +69,10 @@ export interface ApiFacility {
      */
     facilitySemiProductList?: Array<ApiSemiProduct>;
     facilityType?: ApiFacilityType;
+    /**
+     * List of value chains for this facility
+     */
+    facilityValueChains?: Array<ApiValueChain>;
     /**
      * Entity id
      */
@@ -138,6 +143,10 @@ export namespace ApiFacility {
          */
         facilitySemiProductList = 'facilitySemiProductList',
         facilityType = 'facilityType',
+        /**
+         * List of value chains for this facility
+         */
+        facilityValueChains = 'facilityValueChains',
         /**
          * Entity id
          */
@@ -315,6 +324,18 @@ export namespace ApiFacility {
                     complexType: 'ApiFacilityType'
                 },
                 {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilityValueChains',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -398,6 +419,8 @@ export namespace ApiFacility {
                 ],
                 facilityType: [
                 ],
+                facilityValueChains: [
+                ],
                 id: [
                 ],
                 isCollectionFacility: [
@@ -452,6 +475,9 @@ export namespace ApiFacility {
   //                   validators: []
   //               },
   //               facilityType: {
+  //                   validators: []
+  //               },
+  //               facilityValueChains: {
   //                   validators: []
   //               },
   //               id: {
