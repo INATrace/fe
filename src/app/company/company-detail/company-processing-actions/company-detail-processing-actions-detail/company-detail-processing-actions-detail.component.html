@@ -79,25 +79,6 @@
                             </ng-container>
                         </single-choice>
 
-                        <!-- If we have Shipment, Transfer or Generate QR code proc. action of semi-products (both input and output are the same) -->
-                        <ng-container
-                                *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER' || form.get('type').value === 'GENERATE_QR_CODE')">
-                            <single-choice
-                                    label="Select semi-product"
-                                    i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
-                                    [formControlInput]="form.get('inputSemiProduct')"
-                                    [codebookService]="activeSemiProductService"
-                                    [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
-                                <ng-container *ngIf="submitted">
-                                    <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
-                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.semiProduct.error.required">
-                                            Semi-product is required
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </single-choice>
-                        </ng-container>
-
                         <!-- If we have Generate QR code proc. action, we have Final product selection for which the QR code will be generated -->
                         <ng-container *ngIf="form.get('type').value === 'GENERATE_QR_CODE'">
                             <single-choice
@@ -278,16 +259,11 @@
                     <h2 i18n="@@companyDetailProcessingActions.section.value-chains">Value chains</h2>
                     <div class="af-form-element">
                         <div class="search-field">
-                            <textinput
-                              label=""
-                              [form]="activeValueChainsForm"
-                              placeholder="Type value chain ..."
-                              i18n-placeholder="@@companyDetailProcessingActions.valueChain.search-field.placeholder"
+                            <single-choice
+                              [formControlInput]="activeValueChainsForm"
                               [codebookService]="activeValueChainsCodebook"
-                              [resultFormatter]="valueChainResultFormatter"
-                              [inputFormatter]="valueChainInputFormatter"
-                              (itemMatching)="addSelectedValueChain($event)">
-                            </textinput>
+                              (onChange)="addSelectedValueChain($event)">
+                            </single-choice>
                         </div>
                         <div *ngFor="let sp of this.activeValueChains; index as idx">
                             <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
@@ -299,6 +275,33 @@
                         </div>
                     </div>
                     <!-- END: Value chains -->
+
+                    <!-- If we have Shipment, Transfer or Generate QR code proc. action of semi-products (both input and output are the same) -->
+                    <ng-container
+                            *ngIf="!form.get('finalProductAction').value && (form.get('type').value === 'SHIPMENT' || form.get('type').value === 'TRANSFER' || form.get('type').value === 'GENERATE_QR_CODE')">
+                        <h2 i18n="@@companyDetailProcessingActions.section.semi-products">Semi products</h2>
+                        <div class="af-form-element">
+                            <div class="search-field" *ngIf="activeValueChainSemiProductService">
+                                <single-choice
+                                        label="Select semi-product"
+                                        i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
+                                        [formControlInput]="form.get('inputSemiProduct')"
+                                        [codebookService]="activeValueChainSemiProductService"
+                                        [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.semiProduct.error.required">
+                                                Semi-product is required
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </single-choice>
+                            </div>
+                            <div *ngIf="!activeValueChainSemiProductService">
+                                <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
+                            </div>
+                        </div>
+                    </ng-container>
 
                     <!-- Supported facilities -->
                     <h2 i18n="@@companyDetailProcessingActions.supportedFacilities">Facilities where this process starts</h2>

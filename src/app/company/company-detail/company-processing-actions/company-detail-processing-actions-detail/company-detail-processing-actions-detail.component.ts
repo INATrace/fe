@@ -30,6 +30,7 @@ import { CompanyFacilitiesService } from '../../../../shared-services/company-fa
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
+import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -51,6 +52,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   activeSemiProductService: ActiveSemiProductsService;
+  activeValueChainSemiProductService: ValueChainsSemiProductsService;
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
   evidenceDocInputForm: FormControl;
@@ -142,11 +144,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
                 new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
               this.processingEvidenceFieldService =
                 new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
+              this.activeValueChainSemiProductService =
+                new ValueChainsSemiProductsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
 
             } else {
 
               this.processingEvidenceTypeService = null;
               this.processingEvidenceFieldService = null;
+              this.activeValueChainSemiProductService = null;
             }
           });
         }
@@ -268,7 +273,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   async addSelectedValueChain(valueChain: ApiValueChain) {
 
-    if (!valueChain || this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
+    if (!valueChain) {
+      return;
+    }
+
+    if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
       setTimeout(() => this.activeValueChainsForm.setValue(null));
       return;
     }
@@ -462,14 +471,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   selectLanguage(lang: string) {
     this.selectedLanguage = lang;
-  }
-
-  valueChainResultFormatter = (value: any) => {
-    return this.activeValueChainsCodebook.textRepresentation(value);
-  }
-
-  valueChainInputFormatter = (value: any) => {
-    return this.activeValueChainsCodebook.textRepresentation(value);
   }
 
   repackedFormatter(x: any) {
