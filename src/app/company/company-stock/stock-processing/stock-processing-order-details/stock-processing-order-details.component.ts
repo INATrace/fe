@@ -113,6 +113,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private totalOutQuantityRangeLow: number = null;
   private totalOutQuantityRangeHigh: number = null;
 
+  // Repacked output stock orders
+  repackedOutputStockOrdersArray = new FormArray([]);
+
   // Properties and controls for displaying output final-product and output semi-product
   finalProductOutputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
   currentOutputFinalProduct: ApiFinalProduct;
@@ -133,6 +136,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // List for holding references to observable subscriptions
   subscriptions: Subscription[] = [];
+  repackedOutQuantitySubscription: Subscription;
 
   constructor(
     private location: Location,
@@ -331,7 +335,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showAddNewOutputButton() {
-    return this.actionType === 'PROCESSING';
+    return this.actionType === 'PROCESSING' && !this.selectedProcAction.repackedOutputs;
   }
 
   ngOnInit(): void {
@@ -353,6 +357,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+
+    if (this.repackedOutQuantitySubscription) {
+      this.repackedOutQuantitySubscription.unsubscribe();
+    }
   }
 
   async processingActionUpdated(procAction: ApiProcessingAction) {
@@ -385,7 +393,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       // Add new initial output (if not in edit mode)
       if (!this.editing) {
-        this.addNewOutput().then();
+        this.addNewOutput().then(() => this.registerRepackedOutQuantityVCListener());
       }
 
     } else {
@@ -775,6 +783,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         }
     })
     );
+  }
+
+  private registerRepackedOutQuantityVCListener() {
+
+    if (this.repackedOutQuantitySubscription) {
+      this.repackedOutQuantitySubscription.unsubscribe();
+      this.repackedOutQuantitySubscription = null;
+    }
+
+    // When the total output quantity changes we need to re/generate the output stock order that are
+    // being repacked as part of this processing; This is only applicable when we have Processing action
+    // that has selected the option 'repackedOutputs' and set 'maxOutputWeight'
+    if (this.selectedProcAction.repackedOutputs && this.selectedProcAction.maxOutputWeight > 0) {
+      this.repackedOutQuantitySubscription = this.targetStockOrdersArray.at(0).get('totalQuantity').valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((totalQuantity: number) => this.generateRepackedOutputStockOrders(totalQuantity));
+    }
   }
 
   private async initializeData() {
@@ -1576,6 +1601,39 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       delete tso['requiredProcEvidenceFieldGroup'];
       deleteNullFields(tso);
     });
+  }
+
+  private generateRepackedOutputStockOrders(totalOutputQuantity: number): void {
+
+    // If we are updating a processing order, do not regenerate the output stock orders
+    if (this.editing) {
+      return;
+    }
+
+    const maxOutputWeight = this.selectedProcAction.maxOutputWeight;
+
+    this.repackedOutputStockOrdersArray.clear();
+
+    const outputStockOrdersSize = Math.ceil(totalOutputQuantity / maxOutputWeight);
+    for (let i = 0; i < outputStockOrdersSize; i++) {
+      this.repackedOutputStockOrdersArray.push(new FormGroup({
+        id: new FormControl(null),
+        totalQuantity: new FormControl(null, Validators.max(maxOutputWeight)),
+        sacNumber: new FormControl(i + 1, [Validators.required])
+      }));
+    }
+  }
+
+  prefillRepackedOutputSOQuantities() {
+    // TODO: implement
+  }
+
+  addRepackedOutputStockOrder() {
+    // TODO: implement
+  }
+
+  removeRepackedOutputStockOrder(index) {
+    this.repackedOutputStockOrdersArray.removeAt(index);
   }
 
 }

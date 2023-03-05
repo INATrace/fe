@@ -499,6 +499,37 @@
               </app-stock-processing-order-fields>
             </ng-container>
 
+            <!-- IF THE PROCESSING ACTION HAS SET 'repackedOutputs', DISPLAY LIST OF OUTPUT STOCK ORDERS -->
+            <ng-container *ngIf="selectedProcAction.repackedOutputs && repackedOutputStockOrdersArray.length > 0">
+              <div class="af-row mt-4">
+                <div class="af-c9">
+                  <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
+                </div>
+
+                <div class="af-c3 text-right">
+                  <button class="btn btn-solid round mr-2"
+                          (click)="prefillRepackedOutputSOQuantities()"
+                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
+                    <span>Prefill</span>
+                  </button>
+                  <button class="btn btn-solid round"
+                          (click)="addRepackedOutputStockOrder()"
+                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
+                    <span>+</span>
+                  </button>
+                </div>
+              </div>
+
+              <div *ngFor="let item of repackedOutputStockOrdersArray.controls; index as idx" class="af-row">
+                <div class="af-c12">
+                  <div class="row">
+                    <span>Test</span>
+                    <!-- TODO: generated repacked output stock orders -->
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
             <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
           </div>
 
