@@ -50,6 +50,47 @@
 
           </div>
         </div>
+
+        <div *ngIf="selectedProcAction" class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle">Results of recording</h2>
+          <div class="af-form-element position-relative outputs-bottom-spacing">
+
+            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE COMPANY NAME THAT IS CREATING THE ORDER -->
+            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && quoteOrderOwnerCompany">
+              <div class="af-c12">
+                {{ quoteOrderOwnerCompany }}
+              </div>
+            </div>
+
+            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE PRODUCT ORDER IF SET; THIS IS APPLICABLE IN QUOTE ORDERS FOR FINAL PRODUCTS -->
+            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
+              <div class="af-c12">
+                <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
+              </div>
+            </div>
+
+            <div class="af-row">
+              <div class="af-c12">
+                <app-datepicker
+                    label="Processing date"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
+                    [form]="$any(procOrderGroup.get('processingDate'))"
+                    [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
+                    style="width: 130px; margin-right: 1rem;">
+                  <ng-container>
+                    <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
+                        Processing date is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-datepicker>
+              </div>
+            </div>
+
+            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
+          </div>
+        </div>
       </div>
 
       <!-- SECTION WHERE WE DISPLAY THE INPUT AND OUTPUT DATA FOR THE PROCESSING -->
@@ -286,58 +327,6 @@
         <!-- RIGHT SIDE - OUTPUT DATA OF THE PROCESSING -->
         <div *ngIf="selectedProcAction" class="af-form-block--c6">
 
-          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle">Results of recording</h2>
-          <div class="af-form-element position-relative outputs-bottom-spacing">
-
-            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE COMPANY NAME THAT IS CREATING THE ORDER -->
-            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && quoteOrderOwnerCompany">
-              <div class="af-c12">
-                {{ quoteOrderOwnerCompany }}
-              </div>
-            </div>
-
-            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE PRODUCT ORDER IF SET; THIS IS APPLICABLE IN QUOTE ORDERS FOR FINAL PRODUCTS -->
-            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
-              <div class="af-c12">
-                <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
-              </div>
-            </div>
-
-            <div class="af-row">
-              <div class="af-c12">
-                <app-datepicker
-                    label="Processing date"
-                    i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
-                    [form]="$any(procOrderGroup.get('processingDate'))"
-                    [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
-                    style="width: 130px; margin-right: 1rem;">
-                  <ng-container>
-                    <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
-                      <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
-                        Processing date is required
-                      </div>
-                    </div>
-                  </ng-container>
-                </app-datepicker>
-              </div>
-            </div>
-
-            <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
-            <div class="af-row">
-              <div class="af-c12">
-                <textinput
-                    [form]="commentsControl"
-                    label="Comments"
-                    style="width: 100%"
-                    [textarea]="true"
-                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.comments.label">
-                </textinput>
-              </div>
-            </div>
-
-            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
-          </div>
-
           <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h3>
           <div class="af-form-element position-relative outputs-bottom-spacing"
                *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as i">
@@ -560,6 +549,19 @@
                        class="sc-warning-feedback">
                     Output quantity not in expected range
                   </div>
+                </textinput>
+              </div>
+            </div>
+
+            <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
+            <div class="af-row">
+              <div class="af-c12">
+                <textinput
+                    [form]="commentsControl"
+                    label="Comments"
+                    style="width: 100%"
+                    [textarea]="true"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.comments.label">
                 </textinput>
               </div>
             </div>
