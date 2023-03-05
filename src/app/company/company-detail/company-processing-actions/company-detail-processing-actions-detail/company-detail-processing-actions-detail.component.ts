@@ -29,6 +29,7 @@ import { ApiValueChain } from '../../../../../api/model/apiValueChain';
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
+import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -106,26 +107,36 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     return obj;
   }
 
-  get outputMeasurementUnit() {
-    if (!this.form || !this.form.get('outputSemiProduct')) {
-      return;
-    }
-    const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
-    return semi && semi.measurementUnitType;
-  }
-
   get maxOutputQuantityLabel() {
     if (!this.outputMeasurementUnit) {
       return ' ';
     }
-    // Weight in kg
     return $localize`:@@companyDetailProcessingActions.field.maxOutputQuantity.label:Max output quantity in ${this.outputMeasurementUnit.label}`;
   }
 
   get estimatedOutputQuantityLabel() {
-    const outputMeasureUnitLabel = this.outputMeasurementUnit?.label;
+    const outputMeasureUnitLabel = this.inputMeasurementUnit?.label;
     return $localize`:@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.label:Estimated output quantity per` +
       ` ${outputMeasureUnitLabel ? outputMeasureUnitLabel : '-'}`;
+  }
+
+  private get inputMeasurementUnit(): ApiMeasureUnitType {
+
+    if (!this.inputSemiProductControl?.value) {
+      return;
+    }
+
+    return (this.inputSemiProductControl.value as ApiSemiProduct).measurementUnitType;
+  }
+
+  private get outputMeasurementUnit(): ApiMeasureUnitType {
+
+    if (!this.outputSemiProductsArray || this.outputSemiProductsArray.length === 0) {
+      return;
+    }
+
+    const semiProduct = this.outputSemiProductsArray.at(0).value as ApiSemiProduct;
+    return semiProduct && semiProduct.measurementUnitType;
   }
 
   private get outputSemiProductsArray(): FormArray {
@@ -138,6 +149,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   private get maxOutputWeightControl(): FormControl {
     return this.form.get('maxOutputWeight') as FormControl;
+  }
+
+  private get inputSemiProductControl(): FormControl {
+    return this.form.get('inputSemiProduct') as FormControl;
   }
 
   ngOnInit(): void {
@@ -249,7 +264,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   newAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
-    this.form.get('inputSemiProduct').setValue(null);
+    this.inputSemiProductControl.setValue(null);
     this.maxOutputWeightControl.setValue(null);
     this.maxOutputWeightControl.disable();
   }
