@@ -1771,6 +1771,7 @@
     "companyDetailProcessingActions.outputSemiProducts.title": "Output semi-products",
     "companyDetailProcessingActions.outputSemiProducts.select.label": "Select output semi-product.",
     "companyDetailProcessingActions.outputSemiProducts.error.atLeastOneIsRequired": "At least one output semi-product is required",
+    "companyDetailProcessingActions.outputSemiProducts.warning.onlyOneAllowed": "Only one output semi-product is allowed when 'Repacked outputs' is selected.",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.label": "Umgepackte Outputs",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.yes": "Ja",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.no": "Nein",

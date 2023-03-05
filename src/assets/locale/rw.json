@@ -1772,6 +1772,7 @@
     "companyDetailProcessingActions.outputSemiProducts.title": "Output semi-products",
     "companyDetailProcessingActions.outputSemiProducts.select.label": "Select output semi-product.",
     "companyDetailProcessingActions.outputSemiProducts.error.atLeastOneIsRequired": "At least one output semi-product is required",
+    "companyDetailProcessingActions.outputSemiProducts.warning.onlyOneAllowed": "Only one output semi-product is allowed when 'Repacked outputs' is selected.",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.label": "Ibyongeye gupakirwa bisohoka",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.yes": "Yego",
     "companyDetailProcessingActions.singleChoice.repackedOutputs.no": "Oya",
