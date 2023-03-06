@@ -22,6 +22,8 @@ import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseE
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
+import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
+import {ProductTypesService} from '../../shared-services/product-types.service';
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -43,11 +45,14 @@ export class ValueChainDetailComponent implements OnInit {
   processingEvidenceFieldListManger: ListEditorManager<ApiProcessingEvidenceField>;
   semiProductsListManager: ListEditorManager<ApiSemiProduct>;
 
+  productTypeCodebook: ProductTypesService;
+
   constructor(
     protected route: ActivatedRoute,
     private router: Router,
     private valueChainService: ValueChainControllerService,
-    private globalEventsManager: GlobalEventManagerService
+    private globalEventsManager: GlobalEventManagerService,
+    private productControllerService: ProductTypeControllerService
   ) { }
 
   // Facility type form factory methods (used when creating ListEditorManager)
@@ -169,10 +174,16 @@ export class ValueChainDetailComponent implements OnInit {
       this.title = $localize`:@@valueChainDetail.title.add:Create new value chain`;
       this.newValueChain();
     }
+
+    this.productTypeCodebook = new ProductTypesService(this.productControllerService);
   }
 
   public canDeactivate(): boolean {
     return !this.valueChainDetailForm || !this.valueChainDetailForm.dirty;
+  }
+
+  public getProductTypeFromControl(): FormControl {
+    return this.valueChainDetailForm.get('productType') as FormControl;
   }
 
   private getValueChain() {

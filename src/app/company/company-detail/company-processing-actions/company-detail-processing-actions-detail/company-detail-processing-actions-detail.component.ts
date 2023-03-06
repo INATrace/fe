@@ -94,7 +94,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingEvidenceFieldControllerService: ProcessingEvidenceFieldControllerService,
       private facilitiesController: FacilityControllerService,
       private processingActionControllerService: ProcessingActionControllerService,
-      public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
       private finalProductController: FinalProductControllerService,
       private valueChainController: ValueChainControllerService,
