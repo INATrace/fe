@@ -188,11 +188,19 @@
                                   [codebookService]="activeValueChainsCodebook"
                                   (onChange)="addSelectedValueChain($event)">
                                 </single-choice>
+                                <div *ngIf="submitted && selectedCompanyValueChainsControl.errors as errors"
+                                     class="sc-invalid-feedback">
+                                    <div *ngIf="errors.required" i18n="@@productLabelStockFacilityModal.textinput.valueChains.error">
+                                        <span>
+                                          At least one value chain is required
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div *ngFor="let sp of this.activeValueChains; index as idx">
                                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
                                     <div>{{ sp.name }}</div>
-                                    <div (click)="deleteValueChain(sp.id)" style="cursor: pointer;">
+                                    <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
                                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                     </div>
                                 </div>
@@ -203,16 +211,6 @@
                         <h2 i18n="@@productLabelStockFacilityModal.section.semi-products">Contained semi-products</h2>
                         <div class="af-form-element">
                             <div class="search-field">
-<!--                                <textinput #semiProductsTextInput-->
-<!--                                        label=""-->
-<!--                                        [form]="semiProductsForm"-->
-<!--                                        placeholder="Type semi-product ..."-->
-<!--                                        i18n-placeholder="@@productLabelStockFacilityModal.textinput.search-field.placeholder"-->
-<!--                                        [codebookService]="activeSemiProductsService"-->
-<!--                                        [resultFormatter]="spResultFormatter"-->
-<!--                                        [inputFormatter]="spInputFormatter"-->
-<!--                                        (itemMatching)="addSelectedSemiProduct($event)">-->
-<!--                                </textinput>-->
                                 <single-choice
                                   [formControlInput]="semiProductsForm"
                                   [codebookService]="activeSemiProductsService"
@@ -226,6 +224,9 @@
                                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                     </div>
                                 </div>
+                            </div>
+                            <div *ngIf="!activeSemiProductsService">
+                                <small><em i18n="@@productLabelStockFacilityModal.hint.selectValueChain">Please select Value chain</em></small>
                             </div>
                         </div>
                     </div>

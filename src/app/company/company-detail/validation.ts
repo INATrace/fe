@@ -1,6 +1,6 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import { EmailValidator } from 'src/shared/validation';
+import {CheckSelectedValueChainsValidator, EmailValidator} from 'src/shared/validation';
 import { ApiAddress } from 'src/api/model/apiAddress';
 import { Validators } from '@angular/forms';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
@@ -124,6 +124,9 @@ export const ApiCompanyGetValidationScheme = {
     },
     mediaLinks: {
       validators: []
+    },
+    valueChains: {
+      validators: [Validators.required]
     },
     name: {
       validators: [Validators.required]

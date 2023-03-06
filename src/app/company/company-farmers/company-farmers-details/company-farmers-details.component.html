@@ -366,6 +366,28 @@
                             </list-editor-errors>
                         </list-editor>
                     </div>
+
+                    <h2 i18n="@@collectorDetail.section.productTypes">Product types</h2>
+                    <div class="af-form-element">
+                        <div class="search-field" *ngIf="company?.valueChains?.length > 0">
+                            <single-choice
+                              [formControlInput]="productTypesForm"
+                              [codebookService]="productTypesCodebook"
+                              (onChange)="addSelectedProductType($event)">
+                            </single-choice>
+                        </div>
+                        <div *ngIf="!company?.valueChains || company.valueChains.length === 0">
+                            <small><em i18n="@@collectorDetail.hint.selectCompanyValueChain">Please select at least one value chain for the company</em></small>
+                        </div>
+                        <div *ngFor="let productType of this.productTypes; index as idx">
+                            <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
+                                <div>{{ productType.name }}</div>
+                                <div (click)="deleteProductType(idx)" style="cursor: pointer;">
+                                    <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

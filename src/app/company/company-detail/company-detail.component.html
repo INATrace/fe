@@ -335,24 +335,27 @@
       <div class="af-form-row">
         <div class="af-form-block--c12">
 
-          <h2 i18n="@@companyDetailValueChainModal.section.value-chains">Company value chains</h2>
+          <h2 i18n="@@companyDetail.section.value-chains">Company value chains</h2>
           <div class="af-form-element">
             <div class="search-field">
-              <textinput
-                label=""
-                [form]="activeValueChainsForm"
-                placeholder="Type value chain ..."
-                i18n-placeholder="@@companyDetailValueChainModal.value-chains.search-field.placeholder"
+              <single-choice
+                [formControlInput]="activeValueChainsForm"
                 [codebookService]="activeValueChainsCodebook"
-                [resultFormatter]="valueChainResultFormatter"
-                [inputFormatter]="valueChainInputFormatter"
-                (itemMatching)="addSelectedValueChain($event)">
-              </textinput>
+                (onChange)="addSelectedValueChain($event)">
+              </single-choice>
+              <div *ngIf="submitted && selectedCompanyValueChainsControl.errors as errors"
+                   class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@companyDetail.textinput.valueChains.error">
+                    <span>
+                      At least one value chain is required
+                    </span>
+                </div>
+              </div>
             </div>
             <div *ngFor="let valueChain of this.activeValueChains; index as idx">
               <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                 <div>{{ valueChain.name }}</div>
-                <div (click)="deleteValueChain(valueChain, idx)" style="cursor: pointer;">
+                <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
                   <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                 </div>
               </div>

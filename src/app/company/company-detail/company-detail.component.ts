@@ -29,6 +29,7 @@ import { AuthService } from '../../core/auth.service';
 import {ApiValueChain} from '../../../api/model/apiValueChain';
 import {ActiveValueChainService} from '../../shared-services/active-value-chain.service';
 import {ValueChainControllerService} from '../../../api/api/valueChainController.service';
+import {CheckSelectedValueChainsValidator} from '../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail',
@@ -67,7 +68,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   activeValueChainsForm = new FormControl(null);
 
   activeValueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsForm = new FormControl(null);
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckSelectedValueChainsValidator()]);
 
   certificationListManager = null;
   videosListManager = null;
@@ -168,32 +169,27 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     return true;
   }
 
-  valueChainResultFormatter = (value: any) => {
-    return this.activeValueChainsCodebook.textRepresentation(value);
-  }
-
-  valueChainInputFormatter = (value: any) => {
-    return this.activeValueChainsCodebook.textRepresentation(value);
-  }
-
   async addSelectedValueChain(valueChain: ApiValueChain) {
-    if (!valueChain || this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
+    if (!valueChain) {
+      return;
+    }
+    if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
       setTimeout(() => this.activeValueChainsForm.setValue(null));
       return;
     }
     this.activeValueChains.push(valueChain);
     setTimeout(() => {
-      this.selectedCompanyValueChainsForm.setValue(this.activeValueChains);
+      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
       this.companyDetailForm.markAsDirty();
       this.activeValueChainsForm.setValue(null);
     });
   }
 
-  deleteValueChain(valueChain: ApiValueChain, idx: number) {
+  deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
         this.activeValueChains.splice(idx, 1);
-        setTimeout(() => this.selectedCompanyValueChainsForm.setValue(this.activeValueChains));
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
         this.companyDetailForm.markAsDirty();
       }
     });
@@ -234,13 +230,13 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
 
         if (valueChains && valueChains.data) {
           this.activeValueChains = valueChains.data.items ? valueChains.data.items : [];
-          this.selectedCompanyValueChainsForm.setValue(this.activeValueChains);
+          this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
         }
 
         this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);
         this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
         (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
-        (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsForm);
+        (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
         this.companyDetailForm.updateValueAndValidity();
 
         this.fillWebPageAndSocialMediaForm();
@@ -270,7 +266,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.emptyObject(), ApiCompanyGetValidationScheme);
     this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
     (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
-    (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsForm);
+    (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.companyDetailForm.updateValueAndValidity();
     this.initializeListManagers();
   }

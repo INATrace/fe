@@ -30,21 +30,6 @@
 
                         <div class="spacer-title-section"></div>
 
-<!--                        <single-choice-->
-<!--                                label="Value chain"-->
-<!--                                i18n-label="@@companyDetailProcessingActions.singleChoice.valueChain.label"-->
-<!--                                [formControlInput]="form.get('valueChain')"-->
-<!--                                [codebookService]="valueChainCodebook"-->
-<!--                                [isInvalidChoice]="submitted && form.get('valueChain').invalid">-->
-<!--                            <ng-container *ngIf="submitted">-->
-<!--                                <div *ngIf="form.get('valueChain').errors as errors" class="sc-invalid-feedback">-->
-<!--                                    <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.valueChain.error.required">-->
-<!--                                        Value chain is required-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </ng-container>-->
-<!--                        </single-choice>-->
-
                         <single-choice
                                 label="Action type"
                                 i18n-label="@@companyDetailProcessingActions.singleChoice.type.label"
@@ -264,11 +249,19 @@
                               [codebookService]="activeValueChainsCodebook"
                               (onChange)="addSelectedValueChain($event)">
                             </single-choice>
+                            <div *ngIf="submitted && selectedCompanyValueChainsControl.errors as errors"
+                                 class="sc-invalid-feedback">
+                                <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.textinput.valueChains.error">
+                                        <span>
+                                          At least one value chain is required
+                                        </span>
+                                </div>
+                            </div>
                         </div>
                         <div *ngFor="let sp of this.activeValueChains; index as idx">
                             <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
                                 <div>{{ sp.name }}</div>
-                                <div (click)="deleteValueChain(sp.id)" style="cursor: pointer;">
+                                <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
                                     <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                 </div>
                             </div>

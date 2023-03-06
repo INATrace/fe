@@ -31,6 +31,7 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
 import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
+import {CheckSelectedValueChainsValidator} from '../../../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -66,6 +67,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   activeValueChainsCodebook: ActiveValueChainService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckSelectedValueChainsValidator()]);
 
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
@@ -213,6 +215,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   newAction() {
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
+    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.form.get('inputSemiProduct').setValue(null);
     this.form.get('outputSemiProduct').setValue(null);
     this.form.get('maxOutputWeight').setValue(null);
@@ -221,6 +224,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   editAction() {
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
+    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
 
     if (!this.form.get('repackedOutputs').value) {
       this.form.get('maxOutputWeight').setValue(null);
@@ -233,7 +237,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     if (this.form.get('valueChains').value) {
 
-      const valueChains = this.form.get('valueChains').value as ApiValueChain[];
+      const valueChains = this.selectedCompanyValueChainsControl.value as ApiValueChain[];
       const valueChainIds = valueChains?.map(valueChain => valueChain.id);
 
       if (valueChainIds && valueChainIds.length > 0) {
@@ -264,6 +268,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
       if (resp && resp.status === 'OK') {
         this.action = resp.data;
+        const valueChains = this.action?.valueChains ? this.action?.valueChains : [];
+        this.selectedCompanyValueChainsControl.setValue(valueChains);
       }
 
     } else {
@@ -272,47 +278,34 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   async addSelectedValueChain(valueChain: ApiValueChain) {
-
     if (!valueChain) {
       return;
     }
-
     if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
       setTimeout(() => this.activeValueChainsForm.setValue(null));
       return;
     }
-
-    const formArray = this.form.get('valueChains') as FormArray;
-
-    // Add selected element to array
-    formArray.push(new FormControl({...valueChain}));
-    formArray.markAsDirty();
-
     this.activeValueChains.push(valueChain);
-
-    setTimeout(() => this.activeValueChainsForm.setValue(null));
-
+    setTimeout(() => {
+      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      this.form.markAsDirty();
+      this.activeValueChainsForm.setValue(null);
+    });
   }
 
   deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
-        const formArray = this.form.get('valueChains') as FormArray;
-        const index = (formArray.value as ApiFacility[]).findIndex(x => x.id === idx);
-
-        this.activeValueChains.splice(index, 1);
-
-        if (index >= 0) {
-          formArray.removeAt(index);
-          formArray.markAsDirty();
-
+        this.activeValueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+        this.form.markAsDirty();
+        if (idx >= 0) {
           // also remove already selected fields and document types
           this.removeAllEvidenceFields();
           this.removeAllEvidenceDocs();
         }
       }
     });
-
   }
 
   private async confirmValueChainRemove(): Promise<boolean> {

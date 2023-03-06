@@ -28,6 +28,7 @@ import {SemiProductControllerService} from '../../../../api/api/semiProductContr
 import {CodebookTranslations} from '../../../shared-services/codebook-translations';
 import {ValueChainsSemiProductsService} from '../../../shared-services/value-chains-semi-products.service';
 import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
+import {CheckSelectedValueChainsValidator} from '../../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -49,6 +50,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   activeValueChainsCodebook: ActiveValueChainService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckSelectedValueChainsValidator()]);
 
   codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
   semiProductsForm = new FormControl(null);
@@ -95,7 +97,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   }
 
   private registerValueChainSubs() {
-    this.valueChainSubs = this.form.get('facilityValueChains').valueChanges.subscribe((valueChains: ApiValueChain[]) => {
+    this.valueChainSubs = this.form.get('valueChains').valueChanges.subscribe((valueChains: ApiValueChain[]) => {
 
       if (valueChains && valueChains.length > 0) {
         const valueChainIds = valueChains?.map(valueChain => valueChain.id);
@@ -127,6 +129,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   initializeNew() {
     this.title = $localize `:@@productLabelStockFacilityModal.newFacility.newTitle:New facility`;
     this.form = generateFormFromMetadata(ApiFacility.formMetadata(), this.emptyObject(), ApiFacilityValidationScheme);
+    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.finalizeForm();
     this.registerValidatorsOnUpdate();
     this.registerValueChainSubs();
@@ -139,10 +142,13 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.facilityControllerService.getFacilityDetailUsingGET(facilityId).pipe(first()).subscribe(res => {
 
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
+      (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
 
       this.activeValueChains = res.data.facilityValueChains ? res.data.facilityValueChains : [];
       this.semiProducts = res.data.facilitySemiProductList;
       this.finalProducts = res.data.facilityFinalProducts;
+
+      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
 
       const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }
@@ -203,13 +209,13 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       setTimeout(() => this.activeValueChainsForm.setValue(null));
       return;
     }
-    // Add selected element to array
-    const formArray = this.form.get('facilityValueChains') as FormArray;
-    formArray.push(new FormControl({...valueChain}));
-    formArray.markAsDirty();
 
     this.activeValueChains.push(valueChain);
-    setTimeout(() => this.activeValueChainsForm.setValue(null));
+    setTimeout(() => {
+      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      this.form.markAsDirty();
+      this.activeValueChainsForm.setValue(null);
+    });
   }
 
   async addSelectedSemiProduct(sp: ApiSemiProduct) {
@@ -243,15 +249,10 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
-        const formArray = this.form.get('facilityValueChains') as FormArray;
-        const index = (formArray.value as ApiFacility[]).findIndex(x => x.id === idx);
+        this.activeValueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
 
-        this.activeValueChains.splice(index, 1);
-
-        if (index >= 0) {
-          formArray.removeAt(index);
-          formArray.markAsDirty();
-
+        if (idx >= 0) {
           // also remove already selected fields and document types
           this.removeAllSemiProducts();
         }
