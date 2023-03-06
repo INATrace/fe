@@ -461,6 +461,9 @@
                         </ng-template>
                       </div>
                     </div>
+                    <div *ngIf="selectedProcAction.repackedOutputs && notAllOutputQuantityIsUsed" class="sc-invalid-feedback">
+                      <span i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notAllOutputQuantityIsUsed">Entered output quantity is not used completely</span>
+                    </div>
                   </ng-container>
                 </textinput>
               </div>
@@ -523,8 +526,51 @@
               <div *ngFor="let item of repackedOutputStockOrdersArray.controls; index as idx" class="af-row">
                 <div class="af-c12">
                   <div class="row">
-                    <span>Test</span>
-                    <!-- TODO: generated repacked output stock orders -->
+
+                    <div class="col-3">
+                      <textinput
+                              [form]="$any(item.get('sacNumber'))"
+                              type="number"
+                              min="0"
+                              step="1"
+                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
+                              label="Sac number"
+                              [isInvalid]="submitted && item.get('sacNumber').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('sacNumber').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
+                              Sac number is required
+                            </div>
+                          </div>
+                        </ng-container>
+                      </textinput>
+                    </div>
+
+                    <div class="col-8">
+                      <textinput
+                              [form]="$any(item.get('totalQuantity'))"
+                              [label]="sacQuantityLabel"
+                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacTotalQuantity"
+                              [isInvalid]="submitted && item.get('totalQuantity').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.required.error">
+                              Quantity is required
+                            </div>
+                            <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
+                              Input exceeds the max value
+                            </div>
+                          </div>
+                        </ng-container>
+                      </textinput>
+                    </div>
+
+                    <div class="col-1">
+                      <div class="delete-output-icon" (click)="removeRepackedOutputStockOrder(idx)">
+                        <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
