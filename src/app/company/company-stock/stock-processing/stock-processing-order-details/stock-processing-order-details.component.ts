@@ -43,9 +43,9 @@ import { StaticSemiProductsService } from './static-semi-products.service';
 import { StockProcessingOrderDetailsHelper } from './stock-processing-order-details.helper';
 import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import TypeEnum = ApiProcessingAction.TypeEnum;
-import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import StatusEnum = ApiTransaction.StatusEnum;
+import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 
 type PageMode = 'create' | 'edit';
 
@@ -304,14 +304,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return this.procOrderGroup.get('targetStockOrders') as FormArray;
   }
 
-  private get companyId(): number {
-    return this.companyProfile.id;
-  }
-
-  private get inputTransactionsArray(): FormArray {
-    return this.procOrderGroup.get('inputTransactions') as FormArray;
-  }
-
   get productOrderId(): string | null {
 
     if (this.targetStockOrdersArray.length > 0) {
@@ -368,6 +360,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.selectedProcAction.maxOutputWeight } ${ unit })`;
+  }
+
+  private get companyId(): number {
+    return this.companyProfile.id;
+  }
+
+  private get inputTransactionsArray(): FormArray {
+    return this.procOrderGroup.get('inputTransactions') as FormArray;
   }
 
   ngOnInit(): void {
@@ -512,6 +512,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // We need to create the actual target Stock orders from the selected input Stock orders
       if (this.actionType === 'TRANSFER') {
         processingOrder.targetStockOrders = this.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
+      } else if (this.selectedProcAction.repackedOutputs) {
+
+        // If we have processing with repacking, the target Stock order present is just temporary (holds entered info)
+        // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputStockOrdersArray)
+        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0]);
       }
 
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
@@ -1628,9 +1633,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         creatorId: this.processingUserId,
         productionDate: selectedStockOrder.productionDate ? selectedStockOrder.productionDate : (dateISOString(new Date()) as any),
         orderType: OrderTypeEnum.TRANSFERORDER,
-        totalQuantity: selectedStockOrder.availableQuantity,
-        fulfilledQuantity: 0,
-        availableQuantity: 0
+        totalQuantity: selectedStockOrder.availableQuantity
       };
 
       // Set the temporary object that holds the processing evidence fields
@@ -1640,6 +1643,26 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return targetStockOrders;
+  }
+
+  private prepareRepackedTargetStockOrders(sourceStockOrder: ApiStockOrder): ApiStockOrder[] {
+
+    return this.repackedOutputStockOrdersArray.controls.map((repackedOutputSOGroup: FormGroup) => {
+
+      const newStockOrder = repackedOutputSOGroup.getRawValue() as ApiStockOrder;
+      newStockOrder.creatorId = sourceStockOrder.creatorId;
+      newStockOrder.internalLotNumber = sourceStockOrder.internalLotNumber;
+      newStockOrder.facility = sourceStockOrder.facility;
+      newStockOrder.semiProduct = sourceStockOrder.semiProduct;
+      newStockOrder.finalProduct = sourceStockOrder.finalProduct;
+      newStockOrder.productionDate = sourceStockOrder.productionDate;
+      newStockOrder.orderType = OrderTypeEnum.PROCESSINGORDER;
+
+      // Add the injected FormGroup for processing evidence fields
+      newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
+
+      return newStockOrder;
+    });
   }
 
   private enrichTargetStockOrders(targetStockOrders: ApiStockOrder[]) {
