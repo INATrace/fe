@@ -187,15 +187,18 @@
                                   [formControlInput]="activeValueChainsForm"
                                   [codebookService]="activeValueChainsCodebook"
                                   (onChange)="addSelectedValueChain($event)">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="selectedCompanyValueChainsControl.errors as errors"
+                                             class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required"
+                                                 i18n="@@productLabelStockFacilityModal.textinput.valueChains.error">
+                                            <span>
+                                              At least one value chain is required
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
                                 </single-choice>
-                                <div *ngIf="submitted && selectedCompanyValueChainsControl.errors as errors"
-                                     class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n="@@productLabelStockFacilityModal.textinput.valueChains.error">
-                                        <span>
-                                          At least one value chain is required
-                                        </span>
-                                    </div>
-                                </div>
                             </div>
                             <div *ngFor="let sp of this.activeValueChains; index as idx">
                                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">

@@ -374,14 +374,14 @@
                               [formControlInput]="productTypesForm"
                               [codebookService]="productTypesCodebook"
                               (onChange)="addSelectedProductType($event)">
-                            </single-choice>
-                            <ng-container *ngIf="submitted">
-                                <div *ngIf="farmerForm.get('productTypes').errors as errors" class="sc-invalid-feedback">
-                                    <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.productTypes.error">
-                                        <span>Product types are required</span>
+                                <ng-container *ngIf="submitted">
+                                    <div *ngIf="farmerForm.get('productTypes').errors as errors" class="sc-invalid-feedback">
+                                        <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.productTypes.error">
+                                            <span>Product types are required</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
+                            </single-choice>
                         </div>
                         <div *ngIf="!company?.valueChains || company.valueChains.length === 0">
                             <small><em i18n="@@collectorDetail.hint.selectCompanyValueChain">Please select at least one value chain for the company</em></small>
