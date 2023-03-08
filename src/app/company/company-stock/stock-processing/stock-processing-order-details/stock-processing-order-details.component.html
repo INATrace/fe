@@ -1,35 +1,33 @@
 <app-authorised-layout>
-  <div *ngIf="form" class="af-layout--authorised">
-
+  <div *ngIf="procOrderGroup" class="af-layout--authorised">
     <div class="af-form-wrapper">
 
+      <!-- PAGE TITLE - SET DYNAMICALLY DEPENDING ON THE SELECTED PROCESSING ACTION TYPE -->
       <div class="af-form-row">
         <div class="af-form-block--c12 d-flex justify-content-between">
           <div class="title-page content-element--title">{{ title }}<span></span></div>
         </div>
       </div>
 
-      <!-- row 1 -->
+      <!-- DISPLAY THE SELECTED PROCESSING ACTION AND FINAL PRODUCT NAME IF ACTION IS QR CODE GENERATION -->
       <div class="af-form-row">
-
-        <!-- row 1, col 1 -->
-        <!-- PROCESSING ACTION SELECTION DROPDOWN -->
         <div class="af-form-block--c6">
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
           <div class="af-form-element">
 
+            <!-- DROPDOWN FOR SELECTING PROCESSING ACTION (IF ID PRESENT IN PATH, SELECTED AUTOMATICALLY) -->
             <div class="af-row">
               <div class="af-c12">
                 <single-choice
-                        label="Processing"
-                        i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
-                        [formControlInput]="processingActionForm"
-                        [codebookService]="activeProcessingCodebook"
-                        style="min-width: 150px;"
-                        (onChange)="setProcessingAction($event)"
-                        [isInvalidChoice]="submitted && processingActionForm.invalid">
+                    label="Processing"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
+                    [formControlInput]="$any(procOrderGroup.get('processingAction'))"
+                    [codebookService]="procActionsCodebook"
+                    style="min-width: 150px;"
+                    (onChange)="processingActionUpdated($event)"
+                    [isInvalidChoice]="submitted && procOrderGroup.get('processingAction').invalid">
                   <ng-container *ngIf="submitted">
-                    <div *ngIf="processingActionForm.errors as errors" class="sc-invalid-feedback"
+                    <div *ngIf="procOrderGroup.get('processingAction').errors as errors" class="sc-invalid-feedback"
                          i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
                       Action is required
                     </div>
@@ -38,205 +36,248 @@
               </div>
             </div>
 
+            <!-- IF ACTION IS FOR QR CODE GENERATION, DISPLAY THE FINAL PRODUCT NAME -->
             <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
               <div class="af-c12">
                 <textinput
-                        [form]="qrCodeForFinalProductForm"
-                        label="QR code for final product"
-                        i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
-                        style="width: 100%"
-                        [readOnly]="true">
+                    [form]="qrCodeForFinalProductControl"
+                    label="QR code for final product"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
+                    style="width: 100%">
                 </textinput>
               </div>
             </div>
 
           </div>
         </div>
+
+        <div *ngIf="selectedProcAction" class="af-form-block--c6">
+          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle">Results of recording</h2>
+          <div class="af-form-element position-relative outputs-bottom-spacing">
+
+            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE COMPANY NAME THAT IS CREATING THE ORDER -->
+            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && quoteOrderOwnerCompany">
+              <div class="af-c12">
+                {{ quoteOrderOwnerCompany }}
+              </div>
+            </div>
+
+            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE PRODUCT ORDER IF SET; THIS IS APPLICABLE IN QUOTE ORDERS FOR FINAL PRODUCTS -->
+            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
+              <div class="af-c12">
+                <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
+              </div>
+            </div>
+
+            <div class="af-row">
+              <div class="af-c12">
+                <app-datepicker
+                    label="Processing date"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
+                    [form]="$any(procOrderGroup.get('processingDate'))"
+                    [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
+                    style="width: 130px; margin-right: 1rem;">
+                  <ng-container>
+                    <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
+                        Processing date is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </app-datepicker>
+              </div>
+            </div>
+
+            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- row 2 -->
+      <!-- SECTION WHERE WE DISPLAY THE INPUT AND OUTPUT DATA FOR THE PROCESSING -->
+      <!-- THE LEFT REPRESENTS THE INPUT PARAMETERS, AND THE RIGHT SIDE REPRESENTS THE OUTPUTS (THERE CAN BE MORE THAN ONE OUTPUT FROM THE PROCESSING) -->
       <div class="af-form-row">
 
-        <!-- row 2, col 1 -->
-        <div class="af-form-block--c6">
+        <!-- LEFT SIDE - input data in the processing -->
+        <div *ngIf="selectedProcAction" class="af-form-block--c6">
+
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.input">Material to be recorded</h2>
-
-          <div class="af-form-element" style="position: relative;">
-            <ng-container *ngIf="this.prAction">
-
-              <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT'">
-                <div class="af-c12">
-                  {{ inputFacilityForm?.value?.company?.name }}
-                </div>
+          <div class="af-form-element position-relative">
+            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT'">
+              <div class="af-c12">
+                {{ inputFacilityControl?.value?.company?.name }}
               </div>
+            </div>
 
-              <!-- INPUT FACILITY SELECTION DROPDOWN -->
+            <!-- INPUT FACILITY SELECTION DROPDOWN -->
+            <div class="af-row">
+              <div class="af-c12">
+                <single-choice
+                        *ngIf="inputFacilitiesCodebook"
+                        label="Facility"
+                        i18n-label="@@productLabelStockProcessingOrderDetail.inputFacilityForm.label"
+                        [formControlInput]="inputFacilityControl"
+                        [codebookService]="inputFacilitiesCodebook"
+                        style="min-width: 150px;"
+                        (onChange)="setInputFacility($event)"
+                        [isInvalidChoice]="submitted && inputFacilityControl.invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="inputFacilityControl.errors as errors"
+                         class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputFacilityForm.error">
+                      Input facility is required
+                    </div>
+                  </ng-container>
+                </single-choice>
+              </div>
+            </div>
+
+            <!-- DATE AND INTERNAL LOT NAME SEARCH FOR AVAILABLE STOCK AT SELECTED FACILITY FOR THE SELECTED SEMI-PRODUCT -->
+            <div *ngIf="inputFacilityControl.value" class="d-flex justify-content-between"
+                 ngbDropdown placement="bottom-right" display="dynamic" container="body">
+
               <div class="af-row">
                 <div class="af-c12">
-                  <single-choice
-                          *ngIf="inputFacilitiesCodebook"
-                          label="Facility"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.inputFacilityForm.label"
-                          [formControlInput]="inputFacilityForm"
-                          [codebookService]="inputFacilitiesCodebook"
-                          style="min-width: 150px;"
-                          (onChange)="setInputFacility($event)"
-                          [isInvalidChoice]="submitted && inputFacilityForm.invalid">
-                    <ng-container *ngIf="submitted">
-                      <div *ngIf="inputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputFacilityForm.error">
-                        Input facility is required
-                      </div>
-                    </ng-container>
-                  </single-choice>
+                  <div class="d-flex">
+
+                    <app-datepicker
+                            label="From"
+                            i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.from"
+                            [form]="dateFromFilterControl"
+                            [invalid]="submitted && dateFromFilterControl.invalid"
+                            style="width: 130px; margin-right: 1rem;"
+                            (onChange)="dateSearch()">
+                      <ng-container>
+                        <div *ngIf="dateFromFilterControl.errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
+                            Delivery date is required
+                          </div>
+                        </div>
+                      </ng-container>
+                    </app-datepicker>
+
+                    <app-datepicker
+                            label="To"
+                            i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.to"
+                            [form]="dateToFilterControl"
+                            [invalid]="submitted && dateToFilterControl.invalid"
+                            style="width: 130px"
+                            (onChange)="dateSearch()">
+                      <ng-container>
+                        <div *ngIf="dateToFilterControl.errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
+                            Delivery date is required
+                          </div>
+                        </div>
+                      </ng-container>
+                    </app-datepicker>
+
+                  </div>
                 </div>
               </div>
 
-              <!-- DATE AND INTERNAL LOT NAME SEARCH FOR AVAILABLE STOCK AT SELECTED FACILITY FOR THE SELECTED SEMI-PRODUCT -->
-              <div *ngIf="showInputTransactions" class="d-flex justify-content-between"
-                   ngbDropdown placement="bottom-right" display="dynamic" container="body">
+              <div class="d-flex">
+                <app-search-textinput [form]="internalLotNameSearchControl" style="margin-top: 1.55rem;">
+                </app-search-textinput>
+              </div>
+            </div>
 
-                <div class="af-row">
-                  <div class="af-c12">
-                    <div class="d-flex">
+            <!-- ORGANIC AND WOMEN'S COFFE FILTERS DROPDOWN -->
+            <div *ngIf="inputFacilityControl.value"
+                 class="d-flex justify-content-end" ngbDropdown placement="bottom-right" display="dynamic" container="body">
+              <div *ngIf="womenOnlyFilterControl.value != null" (click)="setWomenOnlyStatus(null)"
+                   class="d-flex filter-text cursor-pointer" style="margin-top: 0.55rem;"> {{ womenOnlyStatusValue }}
+                <div style="margin-left: 0.5rem;">
+                  <fa-icon [icon]="faTimes" size="xs"></fa-icon>
+                </div>
+              </div>
+              <div *ngIf="organicOnlyFilterControl.value != null" (click)="setOrganicOnlyStatus(null)"
+                   class="d-flex filter-text cursor-pointer" style="margin-left: 1rem; margin-top: 0.55rem;"> {{ organicOnlyStatusValue }}
+                <div style="margin-left: 0.5rem;">
+                  <fa-icon [icon]="faTimes" size="xs"></fa-icon>
+                </div>
+              </div>
 
-                      <app-datepicker
-                              label="From"
-                              i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.from"
-                              [form]="fromFilterDate"
-                              [invalid]="submitted && fromFilterDate.invalid"
-                              style="width: 130px; margin-right: 1rem;"
-                              (onChange)="dateSearch()">
-                        <ng-container>
-                          <div *ngIf="fromFilterDate.errors as errors" class="sc-invalid-feedback">
-                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
-                              Delivery date is required
-                            </div>
-                          </div>
-                        </ng-container>
-                      </app-datepicker>
+              <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;">
+                  <span class="button-icon">
+                    <span class="button-icon-shape button-icon-shape--filter"></span>
+                  </span>
+                <span i18n="@@productLabelStockProcessingOrderDetail.filter" class="button-icon-label">Filter</span>
+              </button>
 
-                      <app-datepicker
-                              label="To"
-                              i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.to"
-                              [form]="toFilterDate"
-                              [invalid]="submitted && toFilterDate.invalid"
-                              style="width: 130px"
-                              (onChange)="dateSearch()">
-                        <ng-container>
-                          <div *ngIf="toFilterDate.errors as errors" class="sc-invalid-feedback">
-                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
-                              Delivery date is required
-                            </div>
-                          </div>
-                        </ng-container>
-                      </app-datepicker>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem (click)="setWomenOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.womensOnlyCoffee">Women's only coffee</button>
+                <button ngbDropdownItem (click)="setWomenOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee">Non-women's only coffee</button>
+                <div class="line"></div>
+                <button ngbDropdownItem (click)="setOrganicOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.organicOnlyCoffee">Organic only coffee</button>
+                <button ngbDropdownItem (click)="setOrganicOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonOrganicOnlyCoffee">Non-organic only coffee</button>
+              </div>
+            </div>
 
+            <!-- EXISTING INPUT TRANSACTIONS AND AVAIALBLE STOCK ORDERS THAT CAN BE ADDED TO THIS PROECSSING ORDER -->
+            <div *ngIf="inputFacilityControl.value">
+
+              <!-- Existing input transactions - only applicable when editing stock order -->
+              <div class="af-row">
+                <div class="af-c12">
+                  <ng-container *ngIf="inputTransactions && inputTransactions.length">
+                    <label class="ml-1">Existing transactions</label>
+                    <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
+                      <div class="af-c9 pl-3">
+                        <div>
+                          <span>{{ tx.sourceStockOrder.lotPrefix }} {{ tx.sourceStockOrder.identifier }} {{ tx.sourceStockOrder.internalLotNumber }} ({{ tx.status }})</span>
+                          <span *ngIf="tx.sourceStockOrder.qrCodeTag"
+                                (click)="openInputStockOrderQRCode(tx.sourceStockOrder)"
+                                class="cursor-pointer">
+                            <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                          </span>
+                          <span *ngIf="tx.sourceStockOrder.organic">
+                            <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
+                                     i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
+                          </span>
+                          <span *ngIf="tx.sourceStockOrder.womenShare">
+                            <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
+                                     i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
+                          </span>
+                        </div>
+                        <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
+                      </div>
+                      <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
+
+                      <div class="af-c1 text-right"
+                           [hidden]="tx.status !== 'PENDING'"
+                           (click)="deleteTransaction(i)">
+                        <fa-icon
+                                class="del-icon cursor-pointer"
+                                [icon]="faTimes"></fa-icon>
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="d-flex">
-                  <app-search-textinput [form]="searchInternalLotName" style="margin-top: 1.55rem;">
-                  </app-search-textinput>
+                  </ng-container>
                 </div>
               </div>
 
-              <!-- ORGANIC AND WOMEN'S COFFE FILTERS DROPDOWN -->
-              <div class="d-flex justify-content-end" ngbDropdown placement="bottom-right" display="dynamic" container="body">
-                <div *ngIf="womenOnlyStatus.value != null" (click)="setWomenOnlyStatus(null)"
-                     class="d-flex filter-text cursor-pointer" style="margin-top: 0.55rem;"> {{ womenOnlyStatusValue }}
-                  <div style="margin-left: 0.5rem;">
-                    <fa-icon [icon]="faTimes" size="xs"></fa-icon>
-                  </div>
-                </div>
-                <div *ngIf="organicOnlyStatus.value != null" (click)="setOrganicOnlyStatus(null)"
-                     class="d-flex filter-text cursor-pointer" style="margin-left: 1rem; margin-top: 0.55rem;"> {{ organicOnlyStatusValue }}
-                  <div style="margin-left: 0.5rem;">
-                    <fa-icon [icon]="faTimes" size="xs"></fa-icon>
-                  </div>
-                </div>
-
-                <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;">
-                    <span class="button-icon">
-                      <span class="button-icon-shape button-icon-shape--filter"></span>
-                    </span>
-                  <span i18n="@@productLabelStockProcessingOrderDetail.filter" class="button-icon-label">Filter</span>
-                </button>
-
-                <div class="dropdown-menu" ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="setWomenOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.womensOnlyCoffee">Women's only coffee</button>
-                  <button ngbDropdownItem (click)="setWomenOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonWomensOnlyCoffee">Non-women's only coffee</button>
-                  <div class="line"></div>
-                  <button ngbDropdownItem (click)="setOrganicOnlyStatus(true)" i18n="@@productLabelStockProcessingOrderDetail.filter.organicOnlyCoffee">Organic only coffee</button>
-                  <button ngbDropdownItem (click)="setOrganicOnlyStatus(false)" i18n="@@productLabelStockProcessingOrderDetail.filter.nonOrganicOnlyCoffee">Non-organic only coffee</button>
-                </div>
-              </div>
-
-              <!-- EXISTING INPUT TRANSACTIONS AND AVAIALBLE STOCK ORDERS THAT CAN BE ADDED TO THIS PROECSSING ORDER -->
-              <div *ngIf="showInputTransactions" style="position: relative;">
-
-                <div class="af-row">
-                  <div class="af-c12">
-                    <ng-container *ngIf="inputTransactions && inputTransactions.length">
-                      <label class="ml-1">Existing transactions</label>
-                      <div *ngFor="let tx of inputTransactions; index as i" class="af-row pb-2">
-                        <ng-container *ngIf="inputStockOrders[i] as inputStockOrder">
-                          <div class="af-c9 pl-3">
-                            <div>
-                              <span>{{ inputStockOrder.lotPrefix }} {{ inputStockOrder.identifier }} {{ inputStockOrder.internalLotNumber }} ({{ tx.status }})</span>
-                              <span *ngIf="inputStockOrder.qrCodeTag"
-                                    (click)="openInputStockOrderQRCode(inputStockOrder)"
-                                    class="cursor-pointer">
-                                <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
-                              </span>
-                              <span *ngIf="inputStockOrder.organic">
-                                <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
-                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
-                              </span>
-                                      <span *ngIf="inputStockOrder.womenShare">
-                                <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
-                                         i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
-                              </span>
-                            </div>
-                            <div *ngIf="tx.status === 'CANCELED'" class="canceled">{{ tx.rejectComment }}</div>
-                          </div>
-                          <div class="af-c2 text-right">{{ tx.outputQuantity }} {{ tx.inputMeasureUnitType?.label }}</div>
-
-                          <div class="af-c1 text-right"
-                               [hidden]="tx.status !== 'PENDING'"
-                               (click)="deleteTransaction(i)">
-                            <fa-icon
-                                    class="del-icon cursor-pointer"
-                                    [icon]="faTimes"></fa-icon>
-                          </div>
-                        </ng-container>
-                      </div>
-                    </ng-container>
-                  </div>
-                </div>
+              <!-- WRAPPER FOR AVAILABLE STOCK ORDER SECTION (we use this so we can overlay when controls should be disabled) -->
+              <div class="position-relative">
 
                 <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength > 0">
+                <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
                   <label i18n="@@productLabelStockProcessingOrderDetail.addNewTransactions" class="ml-1 mt-2">Add new transactions</label>
                   <div class="af-c12" style="margin-top: -1rem;">
-                    <checkbox-input (onClick)="selectAll()" [form]="cbSelectAllForm" [disabled]="disabledLeftFields" style="margin-bottom: 1rem; margin-top: -1rem;">
+                    <checkbox-input (onClick)="cbSelectAllClick()" [form]="cbSelectAllControl" style="margin-bottom: 1rem; margin-top: -1rem;">
                       <checkbox-input-rich-label i18n="@@productLabelStockProcessingOrderDetail.checkbox.selectAll">
-                        Select all ({{ currentInputStockUnitProduct.name }})
+                        Select all ({{ currentInputStockUnit.name }})
                       </checkbox-input-rich-label>
                     </checkbox-input>
                   </div>
                 </div>
-
-                <div class="af-row" *ngIf="inputFacilityForm.value && nonOutputStockOrdersInputStockOrdersLength == 0">
+                <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length === 0">
                   <label class="ml-1 mt-2" i18n="@@productLabelStockProcessingOrderDetail.noStock">No relevant stock to add transactions in facility</label>
                 </div>
 
                 <!-- LIST OF AVAILABLE STOCK ORDERS TO BE USED IN THE PROCESSING ACTION -->
-                <ng-container *ngFor="let item of availableStockOrders; index as i">
-                  <div class="af-row" *ngIf="!isOutputStockOrder(item)">
+                <ng-container *ngFor="let item of availableInputStockOrders; index as i">
+                  <div class="af-row">
                     <div class="af-c1">
-                      <checkbox-input inTable="true" (onClick)="cbSelected(item, i)" [disabled]="disabledLeftFields"
-                                      [checked]="this.availableStockOrders[i].selected"></checkbox-input>
+                      <checkbox-input inTable="true" (onClick)="cbSelectClick(item, i)"
+                                      [checked]="this.availableInputStockOrders[i].selected"></checkbox-input>
                     </div>
                     <div class="af-c8">
                       <ng-container *ngIf="item.orderType === 'PURCHASE_ORDER'">
@@ -247,411 +288,368 @@
                         <span *ngIf="item.qrCodeTag"
                               (click)="openInputStockOrderQRCode(item)"
                               class="cursor-pointer">
-                          <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
-                        </span>
+                        <fa-icon [icon]="faQrcode" class="sorter-icon pl-2"></fa-icon>
+                      </span>
                       </ng-container>
                       <span *ngIf="item.organic">
-                        <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
-                                 i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
-                      </span>
+                      <fa-icon [icon]="faLeaf" class="sorter-icon pl-2" title="Organic coffee"
+                               i18n-title="@@productLabelStockProcessingOrderDetail.icon.organicCoffee.title"></fa-icon>
+                    </span>
                       <span *ngIf="item.womenShare">
-                        <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
-                                 i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
-                      </span>
+                      <fa-icon [icon]="faFemale" class="sorter-icon pl-2" title="Women's coffee"
+                               i18n-title="@@productLabelStockProcessingOrderDetail.icon.womensCoffee.title"></fa-icon>
+                    </span>
                     </div>
                     <div class="af-c3 text-right">
-                      <span *ngIf="actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING'"
-                            (click)="clipInputTransaction(item, i)" class="cursor-pointer">
-                        <fa-icon [icon]="faCut" class="pr-2"></fa-icon>
-                      </span>
-                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnitProduct.measurementUnitType.label }}
+                    <span *ngIf="actionType === 'PROCESSING' || actionType === 'FINAL_PROCESSING'"
+                          (click)="clipInputTransaction(item, i)" class="cursor-pointer">
+                      <fa-icon [icon]="faCut" class="pr-2"></fa-icon>
+                    </span>
+                      <span *ngIf="item.selected">{{ item.selectedQuantity }} / </span>{{ item.availableQuantity }} {{ currentInputStockUnit.measurementUnitType.label }}
                     </div>
                   </div>
                 </ng-container>
 
-                <ng-container *ngIf="inputQuantityOrOutputFacilityNotSet">
-                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputQuantityOrOutputFacilityNotSet.error">
-                    Set output quantity first
-                  </small>
-                </ng-container>
-
-                <ng-container *ngIf="submitted && oneInputStockOrderRequired">
-                  <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputSemiProducts.error">
-                    At least one input semi-product is required
-                  </small>
-                </ng-container>
-                <div *ngIf="inputQuantityOrOutputFacilityNotSet" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
+                <div *ngIf="disabledLeftFields && leftSideEnabled" class="disabled-section-overlay"></div>
               </div>
 
-              <!-- TODO: check and rethink this -->
-<!--              <ng-container *ngIf="this.prAction && this.prAction.requiredEvidenceFields">-->
-<!--                <app-stock-processing-order-fields-->
-<!--                        *ngFor="let fieldInfo of this.prAction.requiredEvidenceFields"-->
-<!--                        side="left"-->
-<!--                        [disabled]="disabledLeftFields"-->
-<!--                        [isQuote]="actionType === 'SHIPMENT'"-->
-<!--                        [fieldInfo]="fieldInfo"-->
-<!--                        [formGroup]="outputStockOrderForm"-->
-<!--                        [submitted]="submitted">-->
-<!--                </app-stock-processing-order-fields>-->
-<!--              </ng-container>-->
+              <ng-container *ngIf="submitted && oneInputStockOrderRequired">
+                <small class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.inputSemiProducts.error">
+                  At least one input semi-product is required
+                </small>
+              </ng-container>
+            </div>
 
-              <div *ngIf="!showLeftSide" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
-
-            </ng-container>
+            <div *ngIf="!leftSideEnabled" class="disabled-section-overlay"></div>
           </div>
         </div>
 
-        <!-- row 2, col 2 -->
-        <div class="af-form-block--c6">
-          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output">Results of recording</h2>
+        <!-- RIGHT SIDE - OUTPUT DATA OF THE PROCESSING -->
+        <div *ngIf="selectedProcAction" class="af-form-block--c6">
 
-          <div class="af-form-element" style="position: relative;">
-            <ng-container *ngIf="this.prAction">
+          <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h3>
+          <div class="af-form-element position-relative outputs-bottom-spacing"
+               *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as i">
 
-              <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT'">
-                <div class="af-c12">
-                  {{ outputFacilityForm?.value?.company?.name }}
-                </div>
-              </div>
+            <!-- CONTROLS FOR DISPLAYING AND SELECTING OUTPUT STOCK UNIT -->
+            <div class="af-row">
 
-              <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
-                <div class="af-c12">
-                  <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
-                </div>
-              </div>
-
-              <!-- THE OUTPUT FACILITY -->
-              <div class="af-row">
-                <div class="af-c12">
-                  <single-choice
-                          *ngIf="outputFacilitiesCodebook"
-                          label="Facility"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.outputFacilityForm.label"
-                          [formControlInput]="outputFacilityForm"
-                          [codebookService]="outputFacilitiesCodebook"
-                          style="min-width: 150px;"
-                          (onChange)="setOutputFacility($event, false)"
-                          [isInvalidChoice]="submitted && outputFacilityForm.invalid">
-                    <ng-container *ngIf="submitted">
-                      <div *ngIf="outputFacilityForm.errors as errors" class="sc-invalid-feedback" i18n="@@productLabelStockProcessingOrderDetail.outputFacilityForm.error">
-                        Output facility is required
-                      </div>
-                    </ng-container>
-                  </single-choice>
-                </div>
-              </div>
-
-              <!-- THE USER ENTERED ORDER ID - RELEVANT FOR QUOTE ORDER AND CAN BE SET ONLY WHEN NO PRODUCT ORDER IS PRESENT -->
-              <div class="af-row" *ngIf="actionType === 'SHIPMENT' && !productOrderId">
+              <!-- HANDLE CASE WHEN WE HAVE OUTPUT FINAL PRODUCT INSTEAD OF OUTPUT SEMI-PRODUCTS -->
+              <ng-container *ngIf="currentOutputFinalProduct; else outputSemiProduct">
                 <div class="af-c12">
                   <textinput
-                          [form]="outputStockOrderForm.get('orderId')"
-                          label="Order ID"
-                          placeholder="Enter the order ID"
-                          style="width: 100%"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.orderId.label"
-                          i18n-placeholder="productLabelStockProcessingOrderDetail.textinput.orderId.placeholder">
+                      [form]="outputFinalProductNameControl"
+                      label="Final product type"
+                      i18n-label="@@productLabelStockProcessingOrderDetail.textinput.finalProductType.label"
+                      style="width: 100%">
                   </textinput>
-                </div>
-              </div>
-
-              <!-- THE INTERNAL LOT NUMBER -->
-              <div class="af-row">
-                <div class="af-c2">
-                  <textinput
-                          [form]="processingActionLotPrefixForm"
-                          label="Prefix"
-                          style="width: 100%"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.lotPrefix.label">
-                  </textinput>
-                </div>
-                <div class="af-c10">
-                  <textinput
-                          [form]="outputStockOrderForm.get('internalLotNumber')"
-                          label="Internal lot name"
-                          style="width: 100%"
-                          placeholder="Enter internal lot name"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label"
-                          i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder"
-                          [isInvalid]="submitted && outputStockOrderForm.get('internalLotNumber').invalid">
-                    <ng-container *ngIf="submitted">
-                      <div *ngIf="outputStockOrderForm.get('internalLotNumber').errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.internalLotNumber.textinput.error">
-                          Internal lot name is required
-                        </div>
-                      </div>
-                    </ng-container>
-                  </textinput>
-                </div>
-              </div>
-
-              <div class="af-row">
-                <div class="af-c12">
-                  <app-datepicker
-                          label="Processing date"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
-                          [form]="processingDateForm"
-                          [invalid]="submitted && processingDateForm.invalid"
-                          style="width: 130px; margin-right: 1rem;">
-                    <ng-container>
-                      <div *ngIf="processingDateForm.errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
-                          Processing date is required
-                        </div>
-                      </div>
-                    </ng-container>
-                  </app-datepicker>
-                </div>
-              </div>
-
-              <!-- THE OUTPUT STOCK UNIT -->
-              <div class="af-row">
-                <div class="af-c12">
-                  <textinput
-                          [form]="currentOutputStockUnitNameForm"
-                          [label]="outputStockUnitLabel"
-                          style="width: 100%"
-                          [readOnly]="true">
-                  </textinput>
-                </div>
-              </div>
-
-              <div class="af-row">
-                <div class="af-c6 d-flex">
-                  <textinput
-                          [form]="form.get('outputQuantity')"
-                          [label]="inputQuantityLabel"
-                          style="width: 100%"
-                          placeholder="Enter quantity"
-                          i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.inputQuantity.placeholder"
-                          [readOnly]="true">
-                  </textinput>
-                </div>
-
-                <div class="af-c6" *ngIf="showRemainingForm">
-                  <textinput
-                          [form]="remainingForm"
-                          label="Remaining"
-                          style="width: 100%"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.remaining.label"
-                          [value]="setRemaining()"
-                          [readOnly]=true>
-                  </textinput>
-                </div>
-              </div>
-
-              <!-- FORM CONTROLS FOR DEFINING OUTPUT QUANTITY -->
-              <div class="af-row" *ngIf="showTotalQuantityForm">
-                <div class="af-c6">
-                  <textinput
-                          [form]="outputStockOrderForm.get('totalQuantity')"
-                          [label]="outputQuantityLabel"
-                          [helpText]="expectedOutputQuantityHelpText"
-                          style="width: 100%"
-                          placeholder="Enter quantity"
-                          i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder"
-                          [readOnly]="isUsingInput"
-                          [isInvalid]="(submitted && (outputStockOrderForm.get('totalQuantity').invalid || invalidOutputQuantity)) || invalidOutputQuantityForShipment || invalidFormat">
-                    <ng-container>
-                      <ng-container *ngIf="submitted">
-                        <div *ngIf="outputStockOrderForm.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
-                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error">
-                            Quantity is required
-                          </div>
-                          <div *ngIf="errors.tooSmall as inputQuantity" i18n="@@productLabelStockProcessingOrderDetail.outputQuantityTooSmall.textinput.error">
-                            Quantity is too small. The sum of input transactions is {{ inputQuantity }}.
-                          </div>
-                        </div>
-                        <div *ngIf="invalidOutputQuantity && !(outputStockOrderForm.get('totalQuantity').errors && outputStockOrderForm.get('totalQuantity').errors.required)"
-                             i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required2" class="sc-invalid-feedback">
-                          Quantity is required
-                        </div>
-                      </ng-container>
-                      <div *ngIf="outputQuantityNotInRange"
-                           i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
-                           class="sc-warning-feedback">
-                        Output quantity not in expected range
-                      </div>
-                      <div *ngIf="invalidOutputQuantityForShipment"
-                           i18n="@@productLabelStockProcessingOrderDetail.outputQuantityDesiredFirst.textinput.error"
-                           class="sc-invalid-feedback">
-                        Enter the desired output quantity first
-                      </div>
-                      <div *ngIf="outputQuantityTooLargeValue"
-                           i18n="@@productLabelStockProcessingOrderDetail.outputQuantityTooLargeValue.textinput.error"
-                           class="sc-warning-feedback">
-                        Output quantity exceeds input quantity. Would you like to proceed?
-                      </div>
-                      <div *ngIf="invalidFormat"
-                           i18n="@@productLabelStockProcessingOrderDetail.invalidFormat.textinput.error"
-                           class="sc-invalid-feedback">
-                        Invalid number format
-                      </div>
-                    </ng-container>
-                  </textinput>
-                </div>
-                <div class="af-c6 d-flex align-items-end mb-2">
-                  <checkbox-input
-                          *ngIf="showUseInput"
-                          [form]="checkboxUseInputFrom"
-                          (onClick)="useInput($event)">
-                    <checkbox-input-rich-label
-                            i18n="@@productLabelStockProcessingOrderDetail.checkbox.useInput.label">
-                      Use input
-                    </checkbox-input-rich-label>
-                  </checkbox-input>
-                  <checkbox-input
-                          *ngIf="showClipOrder"
-                          [form]="checkboxClipOrderFrom"
-                          (onClick)="clipOrder($event)">
-                    <checkbox-input-rich-label
-                            i18n="@@productLabelStockProcessingOrderDetail.checkbox.clipOrder.label">
-                      Clip input quantity
-                    </checkbox-input-rich-label>
-                  </checkbox-input>
-                </div>
-              </div>
-
-              <div class="af-row" *ngIf="showDeliveryData">
-                <div class="af-c6">
-                  <app-datepicker
-                          label="Preferred delivery date"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.preferedDeliveryDate.label"
-                          [form]="outputStockOrderForm.get('deliveryTime')"
-                          [invalid]="submitted && outputStockOrderForm.get('deliveryTime').invalid">
-                    <ng-container>
-                      <ng-container *ngIf="submitted">
-                        <div *ngIf="outputStockOrderForm.get('deliveryTime').errors as errors" class="sc-invalid-feedback">
-                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.preferedDeliveryDate.textinput.error">
-                            Preferred delivery date is required
-                          </div>
-                        </div>
-                      </ng-container>
-                    </ng-container>
-                  </app-datepicker>
-                </div>
-              </div>
-
-              <ng-container *ngIf="this.prAction && this.prAction.requiredEvidenceFields">
-                <app-stock-processing-order-fields
-                        *ngFor="let fieldInfo of this.prAction.requiredEvidenceFields"
-                        side="right"
-                        [isQuote]="actionType === 'SHIPMENT'"
-                        [fieldInfo]="fieldInfo"
-                        [formGroup]="requiredProcEvidenceFieldsForm"
-                        [submitted]="submitted">
-                </app-stock-processing-order-fields>
-              </ng-container>
-
-              <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
-              <div class="af-row">
-                <div class="af-c12">
-                  <textinput
-                          [form]="outputStockOrderForm.get('comments')"
-                          label="Comments"
-                          style="width: 100%"
-                          [textarea]="true"
-                          i18n-label="@@productLabelStockProcessingOrderDetail.textinput.comments.label">
-                  </textinput>
-                </div>
-              </div>
-
-              <!-- OUTPUT STOCK ORDER (SHOWN IF MULTIPLE OUTPUT STOCK ORDERS ARE PRESENT) -->
-              <ng-container *ngIf="outputStockOrders.length > 0">
-                <div class="af-row" style="margin-top: 1rem;">
-                  <div class="af-c9">
-                    <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
-                  </div>
-
-                  <div class="af-c3 text-right">
-                    <button class="btn btn-solid round mr-2"
-                            (click)="prefillOutputStockOrdersQuantities()"
-                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
-                      <span>Prefill</span>
-                    </button>
-                    <button class="btn btn-solid round"
-                            (click)="addOutputStockOrder()"
-                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
-                      <span>+</span>
-                    </button>
-                  </div>
                 </div>
               </ng-container>
-
-              <!-- LIST OF OUTPPUT STOCK ORDERS -->
-              <ng-container *ngFor="let item of outputStockOrders.controls; index as idx">
-                <div class="af-row">
-                  <div class="af-c12">
-                    <div class="row">
-                      <div class="col-3">
-                        <textinput
-                                [form]="item.get('sacNumber')"
-                                type="number"
-                                min="0"
-                                step="1"
-                                i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
-                                label="Sac number"
-                                [isInvalid]="submitted && item.get('sacNumber').invalid">
-                          <ng-container *ngIf="submitted">
-                            <div *ngIf="item.get('sacNumber').errors as errors" class="sc-invalid-feedback">
-                              <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
-                                Sac number is required
-                              </div>
-                            </div>
-                          </ng-container>
-                        </textinput>
-                      </div>
-
-                      <div class="col-8">
-                        <textinput
-                                [form]="item.get('totalQuantity')"
-                                i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacTotalQuantity"
-                                [label]="sacNetWLabel"
-                                [isInvalid]="submitted && item.get('totalQuantity').invalid">
-                          <ng-container *ngIf="submitted">
-                            <div *ngIf="item.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
-                              <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
-                                Input exceeds the max value
-                              </div>
-                              <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.min.error">
-                                Input is too small. Stock order is already partially used.
-                              </div>
-                            </div>
-                          </ng-container>
-                        </textinput>
-                      </div>
-
-                      <div class="col-1">
-                        <div style="margin-top: 1.75rem; cursor: pointer" (click)="removeOutputStockOrder(idx)">
-                          <fa-icon
-                                  class="del-icon"
-                                  [icon]="faTrashAlt">
-                          </fa-icon>
+              <ng-template #outputSemiProduct>
+                <div class="af-c12 d-flex">
+                  <div class="flex-fill">
+                    <single-choice
+                            label="Semi-product type"
+                            i18n-label="@@productLabelStockProcessingOrderDetail.outputsSemiProductForm.label"
+                            [formControlInput]="$any(tsoGroup.get('semiProduct'))"
+                            [codebookService]="outputSemiProductsCodebook"
+                            [clearable]="false"
+                            style="min-width: 150px;"
+                            [isInvalidChoice]="submitted && tsoGroup.get('semiProduct').invalid">
+                      <ng-container *ngIf="submitted">
+                        <div *ngIf="tsoGroup.get('semiProduct').errors as errors" class="sc-invalid-feedback"
+                             i18n="@@productLabelStockProcessingOrderDetail.outputsSemiProductForm.error">
+                          Output Semi-product is required
                         </div>
-                      </div>
-
+                      </ng-container>
+                    </single-choice>
+                  </div>
+                  <div class="ml-4">
+                    <div class="delete-output-icon"
+                         [class.disabled]="targetStockOrdersArray.length < 2"
+                         (click)="removeOutput(i)">
+                      <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
                     </div>
                   </div>
                 </div>
-              </ng-container>
+              </ng-template>
 
-              <!-- VALIDATION MESSAGE -->
-              <ng-container *ngIf="submitted && this.outputStockOrders.value.length > 0">
-                <div *ngIf="outputStockOrders.errors as errors" class="sc-invalid-feedback"
-                     i18n="@@productLabelStockProcessingOrderDetail.outputs.atLeastOne.error">
-                  At least one non-empty field is required
-                </div>
-              </ng-container>
+            </div>
 
-              <div *ngIf="!showRightSide" style="position: absolute; top:0; bottom: 0; left: 0; right: 0; background-color: white; opacity: 0.5;"></div>
+            <!-- CONTROLS FOR SELECTING OUTPUT FACILITY -->
+            <div class="af-row">
+              <div class="af-c12">
+                <single-choice
+                    *ngIf="currentOutputFinalProduct || tsoGroup.get('semiProduct').value"
+                    label="Facility"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.outputFacilityForm.label"
+                    [formControlInput]="$any(tsoGroup.get('facility'))"
+                    [codebookService]="getOutputFacilityCodebook($any(tsoGroup))"
+                    [clearable]="false"
+                    style="min-width: 150px;"
+                    [isInvalidChoice]="submitted && tsoGroup.get('facility').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="tsoGroup.get('facility').errors as errors" class="sc-invalid-feedback"
+                         i18n="@@productLabelStockProcessingOrderDetail.outputFacilityForm.error">
+                      Output facility is required
+                    </div>
+                  </ng-container>
+                </single-choice>
+              </div>
+            </div>
 
+            <!-- THE USER ENTERED ORDER ID - RELEVANT FOR QUOTE ORDER AND CAN BE SET ONLY WHEN NO PRODUCT ORDER IS PRESENT -->
+            <div class="af-row" *ngIf="actionType === 'SHIPMENT' && !productOrderId">
+              <div class="af-c12">
+                <textinput
+                    [form]="$any(tsoGroup.get('orderId'))"
+                    label="Order ID"
+                    placeholder="Enter the order ID"
+                    style="width: 100%"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.orderId.label"
+                    i18n-placeholder="productLabelStockProcessingOrderDetail.textinput.orderId.placeholder">
+                </textinput>
+              </div>
+            </div>
+
+            <!-- THE INTERNAL LOT NUMBER -->
+            <div class="af-row">
+              <div class="af-c3">
+                <textinput
+                    [form]="procActionLotPrefixControl"
+                    label="Prefix"
+                    style="width: 100%"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.lotPrefix.label">
+                </textinput>
+              </div>
+              <div class="af-c9">
+                <textinput
+                    [form]="$any(tsoGroup.get('internalLotNumber'))"
+                    label="Internal lot name"
+                    style="width: 100%"
+                    placeholder="Enter internal lot name"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label"
+                    i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder"
+                    [isInvalid]="submitted && tsoGroup.get('internalLotNumber').invalid">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="tsoGroup.get('internalLotNumber').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.internalLotNumber.textinput.error">
+                        Internal lot name is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
+            <!-- FORM CONTROLS FOR DEFINING OUTPUT QUANTITY -->
+            <div *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'" class="af-row">
+              <div class="af-c6">
+                <textinput
+                    [form]="$any(tsoGroup.get('totalQuantity'))"
+                    label="{{ targetStockOrderOutputQuantityLabel + ' ' + (tsoGroup.get('measureUnitType')?.value ? tsoGroup.get('measureUnitType').value.label : '-') }}"
+                    style="width: 100%"
+                    placeholder="Enter quantity"
+                    i18n-placeholder="@@productLabelStockProcessingOrderDetail.textinput.outputQuantity.placeholder">
+                  <ng-container *ngIf="submitted">
+                    <div *ngIf="tsoGroup.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="errors.required">
+                        <span *ngIf="actionType != 'SHIPMENT'; else quoteQuantityRequired"
+                              i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.required">Quantity is required</span>
+                        <ng-template #quoteQuantityRequired>
+                          <span i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.requiredOnQuote">Enter the desired output quantity</span>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div *ngIf="selectedProcAction.repackedOutputs && notAllOutputQuantityIsUsed" class="sc-invalid-feedback">
+                      <span i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notAllOutputQuantityIsUsed">Entered output quantity is not used completely</span>
+                    </div>
+                  </ng-container>
+                </textinput>
+              </div>
+            </div>
+
+            <!-- IF PROCESSING ACTION IS OF TYPE 'SHIPMENT' SHOW CONTROL FOR DELIVERY TIME -->
+            <div class="af-row" *ngIf="actionType === 'SHIPMENT'">
+              <div class="af-c6">
+                <app-datepicker
+                    label="Preferred delivery date"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.preferedDeliveryDate.label"
+                    [form]="tsoGroup.get('deliveryTime')"
+                    [invalid]="submitted && tsoGroup.get('deliveryTime').invalid">
+                  <ng-container>
+                    <ng-container *ngIf="submitted">
+                      <div *ngIf="tsoGroup.get('deliveryTime').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.preferedDeliveryDate.textinput.error">
+                          Preferred delivery date is required
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </app-datepicker>
+              </div>
+            </div>
+
+            <!-- DISPLAY THE PROCESSING EVIDENCE FIELDS -->
+            <ng-container *ngIf="selectedProcAction.requiredEvidenceFields">
+              <app-stock-processing-order-fields
+                  *ngFor="let fieldInfo of selectedProcAction.requiredEvidenceFields"
+                  side="right"
+                  [isQuote]="actionType === 'SHIPMENT'"
+                  [fieldInfo]="fieldInfo"
+                  [formGroup]="$any(tsoGroup.get('requiredProcEvidenceFieldGroup'))"
+                  [submitted]="submitted">
+              </app-stock-processing-order-fields>
             </ng-container>
+
+            <!-- IF THE PROCESSING ACTION HAS SET 'repackedOutputs', DISPLAY LIST OF OUTPUT STOCK ORDERS -->
+            <ng-container *ngIf="selectedProcAction.repackedOutputs && repackedOutputStockOrdersArray.length > 0">
+              <div class="af-row mt-4">
+                <div class="af-c9">
+                  <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
+                </div>
+
+                <div class="af-c3 text-right">
+                  <button class="btn btn-solid round mr-2"
+                          (click)="prefillRepackedOutputSOQuantities()"
+                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
+                    <span>Prefill</span>
+                  </button>
+                  <button class="btn btn-solid round"
+                          (click)="addRepackedOutputStockOrder()"
+                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
+                    <span>+</span>
+                  </button>
+                </div>
+              </div>
+
+              <div *ngFor="let item of repackedOutputStockOrdersArray.controls; index as idx" class="af-row">
+                <div class="af-c12">
+                  <div class="row">
+
+                    <div class="col-3">
+                      <textinput
+                              [form]="$any(item.get('sacNumber'))"
+                              type="number"
+                              min="0"
+                              step="1"
+                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
+                              label="Sac number"
+                              [isInvalid]="submitted && item.get('sacNumber').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('sacNumber').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
+                              Sac number is required
+                            </div>
+                          </div>
+                        </ng-container>
+                      </textinput>
+                    </div>
+
+                    <div class="col-8">
+                      <textinput
+                              [form]="$any(item.get('totalQuantity'))"
+                              [label]="sacQuantityLabel"
+                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacTotalQuantity"
+                              [isInvalid]="submitted && item.get('totalQuantity').invalid">
+                        <ng-container *ngIf="submitted">
+                          <div *ngIf="item.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.required.error">
+                              Quantity is required
+                            </div>
+                            <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
+                              Input exceeds the max value
+                            </div>
+                          </div>
+                        </ng-container>
+                      </textinput>
+                    </div>
+
+                    <div class="col-1">
+                      <div class="delete-output-icon" (click)="removeRepackedOutputStockOrder(idx)">
+                        <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
           </div>
+
+          <div *ngIf="showAddNewOutputButton" class="d-flex justify-content-end outputs-bottom-spacing">
+            <button class="btn" type="button" (click)="addNewOutput()">
+              <span>Add additional output</span>
+            </button>
+          </div>
+
+          <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.totalQuantitiesSectionTitle">Total quantities</h3>
+          <div class="af-form-element position-relative">
+
+            <!-- DISPLAY THE TOTAL SELECTED INPUT QUANTITY - EXISTING INPUT TRANSACTIONS AND SELECTED INPUT STOCK ORDERS -->
+            <div class="af-row">
+              <div class="af-c6">
+                <textinput
+                        [form]="totalInputQuantityControl"
+                        [label]="inputQuantityLabel"
+                        style="width: 100%">
+                </textinput>
+              </div>
+
+              <!-- DISPLAY THE DIFFERENCE QUANTITY BETWEEN THE TOTAL INPUT AND THE TOTAL (ENTERED IN TARGET STOCK ORDERS) OUTPUT -->
+              <div class="af-c6" *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'">
+                <textinput
+                        [form]="remainingQuantityControl"
+                        [label]="remainingQuantityLabel"
+                        style="width: 100%">
+                </textinput>
+              </div>
+            </div>
+
+            <!-- DISPLAY THE TOTAL OUTPUT QUANTITY - SUM OF TOTAL QUANTITY ENTERED FOR EVERY TARGET STOCK ORDER -->
+            <div *ngIf="actionType !== 'TRANSFER' && actionType !== 'GENERATE_QR_CODE'" class="af-row">
+              <div class="af-c12">
+                <textinput
+                        [form]="totalOutputQuantityControl"
+                        [label]="totalOutputQuantityLabel"
+                        [helpText]="expectedOutputQuantityHelpText"
+                        style="width: 100%">
+                  <div *ngIf="totalOutputQuantityTooLarge"
+                       i18n="@@productLabelStockProcessingOrderDetail.totalOutputQuantity.textinput.error.quantityTooLarge"
+                       class="sc-warning-feedback">
+                    Output quantity exceeds input quantity. Would you like to proceed?
+                  </div>
+                  <div *ngIf="outputQuantityNotInRange"
+                       i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notInExpectedRange"
+                       class="sc-warning-feedback">
+                    Output quantity not in expected range
+                  </div>
+                </textinput>
+              </div>
+            </div>
+
+            <!-- FILED FOR PROVIDING GENERAL COMMENT (PRESENT ALWAYS) -->
+            <div class="af-row">
+              <div class="af-c12">
+                <textinput
+                    [form]="commentsControl"
+                    label="Comments"
+                    style="width: 100%"
+                    [textarea]="true"
+                    i18n-label="@@productLabelStockProcessingOrderDetail.textinput.comments.label">
+                </textinput>
+              </div>
+            </div>
+
+            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
+          </div>
+
         </div>
       </div>
 
-      <!-- REQUIRED AND OTHER ADDITIONAL PROCESSING EVIDENCES -->
+      <!-- REQUIRED AND OTHER ADDITIONAL PROCESSING EVIDENCES (DOCUMENTS) -->
       <div class="af-form-row">
         <div class="af-form-block--c12">
           <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processingEvidence">Processing evidence</h2>
@@ -664,10 +662,10 @@
                   <div class="af-row">
                     <div class="af-c4">
                       <app-datepicker
-                              label="Date"
-                              i18n-label="@@processingEvidenceItem.datepicker.date.label"
-                              [form]="item.get('date')"
-                              [invalid]="submitted && item.get('date').invalid">
+                          label="Date"
+                          i18n-label="@@processingEvidenceItem.datepicker.date.label"
+                          [form]="item.get('date')"
+                          [invalid]="submitted && item.get('date').invalid">
                         <ng-container *ngIf="submitted">
                           <div *ngIf="item.get('date').errors as errors" class="sc-invalid-feedback">
                             <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.date.error">
@@ -679,27 +677,24 @@
                     </div>
                     <div class="af-c8">
                       <textinput
-                              [value]="item.get('evidenceTypeLabel').value"
-                              label="Type"
-                              [valueTextInput]="true"
-                              i18n-label="@@productLabelStockProcessingOrderDetail.label.type"
-                              [readOnly]="true">
+                          [form]="$any(item.get('evidenceTypeLabel'))"
+                          label="Type"
+                          i18n-label="@@productLabelStockProcessingOrderDetail.label.type">
                       </textinput>
                     </div>
                   </div>
 
                   <div class="af-c6">
                     <attachment-uploader
-                            allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
-                            allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
-                            mode="simpleAsTextField"
-                            label="Document (JPG, PNG, PDF)"
-                            i18n-label="@@productLabelStockProcessingOrderDetail.attachment-uploader.label"
-                            i18n-allowedMimeTypeErrorMessage="@@productLabelStockProcessingOrderDetail.attachment-uploader.allowedMimeTypeErrorMessage"
-                            [form]="item.get('document')"
-                            [attachmentUploaderId]="'productLabelStockProcessingOrderDetail'+idx"
-                            [invalid]="submitted && item.get('document').invalid"
-                            [readOnly]="item.get('document').disabled">
+                        allowedMimeType="[image/png', 'image/jpeg', 'application/pdf']"
+                        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
+                        mode="simpleAsTextField"
+                        label="Document (JPG, PNG, PDF)"
+                        i18n-label="@@productLabelStockProcessingOrderDetail.attachment-uploader.label"
+                        i18n-allowedMimeTypeErrorMessage="@@productLabelStockProcessingOrderDetail.attachment-uploader.allowedMimeTypeErrorMessage"
+                        [form]="$any(item.get('document'))"
+                        [attachmentUploaderId]="'productLabelStockProcessingOrderDetail'+idx"
+                        [invalid]="submitted && item.get('document').invalid">
                       <attachment-uploader-content i18n="@@productLabelStockProcessingOrderDetail.attachment-uploader.content">
                         Upload document
                       </attachment-uploader-content>
@@ -725,14 +720,14 @@
                          label="Other evidence documents"
                          [listEditorManager]="processingEvidenceListManager"
                          addText="Add document"
-                         [canAdd]="showRightSide"
+                         [canAdd]="rightSideEnabled"
                          i18n-label="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.label"
                          i18n-addText="@@productLabelStockProcessingOrderDetail.list-editor.processingEvidence.addText">
               <list-editor-items>
                 <div *ngFor="let item of otherProcessingEvidenceArray.controls; let i=index;">
                   <app-additional-proof-item title="null"
                                              [evidenceType]="true"
-                                             [formControlInput]="item"
+                                             [formControlInput]="$any(item)"
                                              [isOpen]="processingEvidenceListManager.isOpen(i)"
                                              [listEditorManager]="this.processingEvidenceListManager"
                                              [listEditorManagerPosition]="i">
@@ -742,52 +737,16 @@
               <list-editor-errors>
               </list-editor-errors>
             </list-editor>
-
           </div>
         </div>
       </div>
-
-      <!-- CERTIFICATES AND STANDARDS -->
-      <ng-container *ngIf="showCertificatesIds">
-        <div class="af-form-row">
-          <div class="af-form-block--c12">
-            <h2 i18n="@@productLabelStockProcessingOrderDetail.section.certificationId">Certificates</h2>
-
-            <div class="af-form-element">
-              <list-editor
-                      label="Certificates"
-                      [listEditorManager]="certificationListManager"
-                      addText="Add document"
-                      [canAdd]="false"
-                      i18n-label="@@productLabelStockProcessingOrderDetail.section.certificationId.label"
-                      i18n-addText="@@productLabelStockProcessingOrderDetail.section.certificationId.addText">
-                <list-editor-items>
-                  <div *ngFor="let item of stockOrderCertificatedForm?.controls; let i=index;">
-                    <app-certification-and-standard-item
-                            title="Certification"
-                            i18n-title="@@roductLabelStockProcessingOrderDetail.section.certificationId.title"
-                            [formControlInput]="item"
-                            [isOpen]="certificationListManager.isOpen(i)"
-                            [listEditorManager]="this.certificationListManager"
-                            [listEditorManagerPosition]="i">
-                    </app-certification-and-standard-item>
-                  </div>
-                </list-editor-items>
-                <list-editor-errors>
-                </list-editor-errors>
-              </list-editor>
-            </div>
-
-          </div>
-        </div>
-      </ng-container>
 
       <!-- CONTROL BUTTONS -->
       <div class="af-form-row">
         <div class="af-form-block--c12">
           <div class="af-bottom-buttons" i18n="@@productLabelStockProcessingOrderDetail.footer.buttons">
             <button class="btn btn-outlined mr-2" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
-            <button class="btn" type="button" (click)="!this.saveProcessingOrderInProgress && saveProcessingOrder()"><span>Save</span></button>
+            <button class="btn" type="button" (click)="!this.saveInProgress && saveProcessingOrder()"><span>Save</span></button>
           </div>
         </div>
       </div>

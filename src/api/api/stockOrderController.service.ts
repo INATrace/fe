@@ -33,6 +33,7 @@ import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiStockOrder } from '../model/apiPaginatedResponseApiStockOrder';
 import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
+import { ApiResponseApiProcessingOrder } from '../model/apiResponseApiProcessingOrder';
 import { ApiResponseApiPurchaseOrder } from '../model/apiResponseApiPurchaseOrder';
 import { ApiResponseApiStockOrder } from '../model/apiResponseApiStockOrder';
 import { ApiResponseApiStockOrderHistory } from '../model/apiResponseApiStockOrderHistory';
@@ -869,6 +870,51 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
       productionDateEnd: [
       ],
       query: [
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getStockOrderProcessingOrderUsingGET.
+ */
+export namespace GetStockOrderProcessingOrderUsingGET {
+    /**
+     * Parameter map for getStockOrderProcessingOrderUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * StockOrder ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getStockOrderProcessingOrderUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * StockOrder ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderProcessingOrderUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetStockOrderProcessingOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
       ],
       language: [
       ],
@@ -2047,6 +2093,93 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderListByFacilityIdUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get the Processing order that contains the Stock order with the provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStockOrderProcessingOrderUsingGETByMap(
+    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingOrder>;
+  public getStockOrderProcessingOrderUsingGETByMap(
+    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
+  public getStockOrderProcessingOrderUsingGETByMap(
+    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
+  public getStockOrderProcessingOrderUsingGETByMap(
+    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getStockOrderProcessingOrderUsingGET(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get the Processing order that contains the Stock order with the provided ID.
+     * 
+     * @param id StockOrder ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
+    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
+    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
+    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getStockOrderProcessingOrderUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiProcessingOrder>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/processing-order`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderProcessingOrderUsingGET')));
         }
         return handle;
     }

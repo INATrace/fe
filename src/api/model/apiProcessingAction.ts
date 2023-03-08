@@ -62,7 +62,10 @@ export interface ApiProcessingAction {
      */
     name?: string;
     outputFinalProduct?: ApiFinalProduct;
-    outputSemiProduct?: ApiSemiProduct;
+    /**
+     * List of supported output semi-products
+     */
+    outputSemiProducts?: Array<ApiSemiProduct>;
     /**
      * Processing action prefix
      */
@@ -154,7 +157,10 @@ export namespace ApiProcessingAction {
          */
         name = 'name',
         outputFinalProduct = 'outputFinalProduct',
-        outputSemiProduct = 'outputSemiProduct',
+        /**
+         * List of supported output semi-products
+         */
+        outputSemiProducts = 'outputSemiProducts',
         /**
          * Processing action prefix
          */
@@ -375,11 +381,11 @@ export namespace ApiProcessingAction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'outputSemiProduct',
+                    name: 'outputSemiProducts',
                     classname: 'ApiProcessingAction',
-                    dataType: 'ApiSemiProduct',
+                    dataType: 'Array&lt;ApiSemiProduct&gt;',
                     isPrimitiveType: false,
-                    isListContainer: false,
+                    isListContainer: true,
                     complexType: 'ApiSemiProduct'
                 },
                 {
@@ -557,7 +563,7 @@ export namespace ApiProcessingAction {
                 ],
                 outputFinalProduct: [
                 ],
-                outputSemiProduct: [
+                outputSemiProducts: [
                 ],
                 prefix: [
                 ],
@@ -625,7 +631,7 @@ export namespace ApiProcessingAction {
   //               outputFinalProduct: {
   //                   validators: []
   //               },
-  //               outputSemiProduct: {
+  //               outputSemiProducts: {
   //                   validators: []
   //               },
   //               prefix: {

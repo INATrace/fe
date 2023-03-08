@@ -32,6 +32,7 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
 import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
 import {CheckListNotEmptyValidator} from '../../../../../shared/validation';
+import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -52,8 +53,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
+  outputSemiProductInputForm: FormControl;
   activeSemiProductService: ActiveSemiProductsService;
   activeValueChainSemiProductService: ValueChainsSemiProductsService;
+
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
   evidenceDocInputForm: FormControl;
@@ -103,6 +106,64 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     super(router, route, authService);
   }
 
+  get processingActionType() {
+    const obj = {};
+    obj['SHIPMENT'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.quote:Quote`;
+    obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
+    obj['FINAL_PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.finalProcessing:Final processing`;
+    obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
+    obj['GENERATE_QR_CODE'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.generateQrCode:Generate QR code`;
+    return obj;
+  }
+
+  get maxOutputQuantityLabel() {
+    if (!this.outputMeasurementUnit) {
+      return ' ';
+    }
+    return $localize`:@@companyDetailProcessingActions.field.maxOutputQuantity.label:Max output quantity in ${this.outputMeasurementUnit.label}`;
+  }
+
+  get estimatedOutputQuantityLabel() {
+    const outputMeasureUnitLabel = this.inputMeasurementUnit?.label;
+    return $localize`:@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.label:Estimated output quantity per` +
+      ` ${outputMeasureUnitLabel ? outputMeasureUnitLabel : '-'}`;
+  }
+
+  private get inputMeasurementUnit(): ApiMeasureUnitType {
+
+    if (!this.inputSemiProductControl?.value) {
+      return;
+    }
+
+    return (this.inputSemiProductControl.value as ApiSemiProduct).measurementUnitType;
+  }
+
+  private get outputMeasurementUnit(): ApiMeasureUnitType {
+
+    if (!this.outputSemiProductsArray || this.outputSemiProductsArray.length === 0) {
+      return;
+    }
+
+    const semiProduct = this.outputSemiProductsArray.at(0).value as ApiSemiProduct;
+    return semiProduct && semiProduct.measurementUnitType;
+  }
+
+  private get outputSemiProductsArray(): FormArray {
+    return this.form.get('outputSemiProducts') as FormArray;
+  }
+
+  private get repackedOutputsControl(): FormControl {
+    return this.form.get('repackedOutputs') as FormControl;
+  }
+
+  private get maxOutputWeightControl(): FormControl {
+    return this.form.get('maxOutputWeight') as FormControl;
+  }
+
+  private get inputSemiProductControl(): FormControl {
+    return this.form.get('inputSemiProduct') as FormControl;
+  }
+
   ngOnInit(): void {
 
     super.ngOnInit();
@@ -120,6 +181,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     this.evidenceDocInputForm = new FormControl(null);
     this.evidenceFieldInputForm = new FormControl(null);
     this.supportedFacilitiesInputForm = new FormControl(null);
+    this.outputSemiProductInputForm = new FormControl(null);
 
     this.initInitialData().then(
         () => {
@@ -167,14 +229,20 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   emptyObject() {
+
     const obj = defaultEmptyObject(ApiProcessingAction.formMetadata()) as ApiProcessingAction;
     obj.inputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
-    obj.outputSemiProduct = defaultEmptyObject(ApiSemiProduct.formMetadata()) as ApiSemiProduct;
+
     obj.finalProductAction = false;
     return obj;
   }
 
   finalizeForm() {
+
+    if (!this.form.contains('outputSemiProducts')) {
+      this.form.addControl('outputSemiProducts', new FormArray([]));
+    }
+
     if (!this.form.contains('requiredEvidenceFields')) {
       this.form.addControl('requiredEvidenceFields', new FormArray([]));
     }
@@ -209,8 +277,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   newAction() {
+
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
-    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.form.get('inputSemiProduct').setValue(null);
     this.form.get('outputSemiProduct').setValue(null);
     this.form.get('maxOutputWeight').setValue(null);
@@ -218,13 +286,16 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   editAction() {
+
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
     (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
 
-    if (!this.form.get('repackedOutputs').value) {
-      this.form.get('maxOutputWeight').setValue(null);
-      this.form.get('maxOutputWeight').disable();
+    if (!this.repackedOutputsControl.value) {
+      this.maxOutputWeightControl.setValue(null);
+      this.maxOutputWeightControl.disable();
     }
+
+    this.updateRepackedOutputsDisabledState();
 
     if (!this.form.get('type').value) {
       this.form.get('type').setValue('PROCESSING');
@@ -245,7 +316,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     }
   }
 
-  async initInitialData(){
+  async initInitialData() {
     const action = this.route.snapshot.data.action;
 
     if (action === 'new') {
@@ -421,6 +492,53 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     }
   }
 
+  async addSelectedOutputSemiProduct(semiProduct: ApiSemiProduct) {
+
+    if (!semiProduct) { return; }
+
+    const formArray = this.outputSemiProductsArray;
+
+    // If we have selected repackaging outputs, don't allow more than one output semi-product
+    if (this.repackedOutputsControl.value && formArray.length >= 1) {
+      this.globalEventsManager.push({
+        action: 'error',
+        notificationType: 'warning' ,
+        title: $localize`:@@companyDetailProcessingActions.outputSemiProducts.title:Output semi-products`,
+        message: $localize`:@@companyDetailProcessingActions.outputSemiProducts.warning.onlyOneAllowed:Only one output semi-product is allowed when 'Repacked outputs' is selected.`
+      });
+      setTimeout(() => this.outputSemiProductInputForm.setValue(null));
+      return;
+    }
+
+    // If selected output semi-product is already present in the array, clear input field and end execution
+    if (formArray.value.some(x => x.id === semiProduct.id)) {
+      setTimeout(() => this.outputSemiProductInputForm.setValue(null));
+      return;
+    }
+
+    // Add selected output semi-product to the array
+    formArray.push(new FormControl({...semiProduct}));
+    formArray.markAsDirty();
+
+    this.updateRepackedOutputsDisabledState();
+
+    // Clear input field
+    setTimeout(() => this.outputSemiProductInputForm.setValue(null));
+  }
+
+  async removeOutputSemiProduct(semiProduct: ApiSemiProduct) {
+
+    if (!semiProduct) { return; }
+    const formArray = this.outputSemiProductsArray;
+    const index = (formArray.value as ApiSemiProduct[]).findIndex(x => x.id === semiProduct.id);
+    if (index >= 0) {
+      formArray.removeAt(index);
+      formArray.markAsDirty();
+    }
+
+    this.updateRepackedOutputsDisabledState();
+  }
+
   groupDecided(doc: ApiProcessingEvidenceType) {
     if (doc.requiredOneOfGroupIdForQuote) {
       doc.requiredOneOfGroupIdForQuote = null;
@@ -475,50 +593,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   repackedOutputsSet(x: any) {
     if (!x || !x.value) {
-      this.form.get('maxOutputWeight').setValue(null);
-      this.form.get('maxOutputWeight').disable();
+      this.maxOutputWeightControl.setValue(null);
+      this.maxOutputWeightControl.disable();
     } else {
-      this.form.get('maxOutputWeight').enable();
+      this.maxOutputWeightControl.enable();
     }
-  }
-
-  get repackedOutputs() {
-    const obj = {};
-    obj['YES'] = $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.yes:Yes`;
-    obj['NO'] = $localize`:@@companyDetailProcessingActions.singleChoice.repackedOutputs.no:No`;
-    return obj;
-  }
-
-  get processingActionType() {
-    const obj = {};
-    obj['SHIPMENT'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.quote:Quote`;
-    obj['PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.processing:Processing`;
-    obj['FINAL_PROCESSING'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.finalProcessing:Final processing`;
-    obj['TRANSFER'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.transfer:Transfer`;
-    obj['GENERATE_QR_CODE'] = $localize`:@@companyDetailProcessingActions.singleChoice.type.generateQrCode:Generate QR code`;
-    return obj;
-  }
-
-  get outputMeasurementUnit() {
-    if (!this.form || !this.form.get('outputSemiProduct')) {
-      return;
-    }
-    const semi = this.form.get('outputSemiProduct').value as ApiSemiProduct;
-    return semi && semi.measurementUnitType;
-  }
-
-  get maxOutputQuantityLabel() {
-    if (!this.outputMeasurementUnit) {
-      return ' ';
-    }
-    // Weight in kg
-    return $localize`:@@companyDetailProcessingActions.field.maxOutputQuantity.label:Max output quantity in ${this.outputMeasurementUnit.label}`;
-  }
-
-  get estimatedOutputQuantityLabel() {
-    const outputMeasureUnitLabel = this.outputMeasurementUnit?.label;
-    return $localize`:@@companyDetailProcessingActions.textInput.estimatedOutputQuantity.label:Estimated output quantity per` +
-      ` ${outputMeasureUnitLabel ? outputMeasureUnitLabel : '-'}`;
   }
 
   async saveProcessingAction() {
@@ -554,6 +633,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   canDeactivate(): boolean {
     return true;
+  }
+
+  private updateRepackedOutputsDisabledState(): void {
+    if (this.outputSemiProductsArray?.length > 1) {
+      this.repackedOutputsControl.disable();
+    } else {
+      this.repackedOutputsControl.enable();
+    }
   }
 
 }

@@ -29,13 +29,17 @@ export interface ApiStockOrderEvidenceTypeValue {
     date?: Date;
     document?: ApiDocument;
     /**
-     * The field name of the Processing evidence type from the codebook
+     * The field code of the Processing evidence type from the codebook
      */
     evidenceTypeCode?: string;
     /**
      * The id of the Processing evidence type from the codebook
      */
     evidenceTypeId?: number;
+    /**
+     * The field label of the Processing evidence type from the codebook
+     */
+    evidenceTypeLabel?: string;
 }
 
 /**
@@ -52,13 +56,17 @@ export namespace ApiStockOrderEvidenceTypeValue {
         date = 'date',
         document = 'document',
         /**
-         * The field name of the Processing evidence type from the codebook
+         * The field code of the Processing evidence type from the codebook
          */
         evidenceTypeCode = 'evidenceTypeCode',
         /**
          * The id of the Processing evidence type from the codebook
          */
-        evidenceTypeId = 'evidenceTypeId'
+        evidenceTypeId = 'evidenceTypeId',
+        /**
+         * The field label of the Processing evidence type from the codebook
+         */
+        evidenceTypeLabel = 'evidenceTypeLabel'
     }
 
 
@@ -112,6 +120,17 @@ export namespace ApiStockOrderEvidenceTypeValue {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'evidenceTypeLabel',
+                    classname: 'ApiStockOrderEvidenceTypeValue',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 date: [
@@ -121,6 +140,8 @@ export namespace ApiStockOrderEvidenceTypeValue {
                 evidenceTypeCode: [
                 ],
                 evidenceTypeId: [
+                ],
+                evidenceTypeLabel: [
                 ],
             }
         }
@@ -139,6 +160,9 @@ export namespace ApiStockOrderEvidenceTypeValue {
   //                   validators: []
   //               },
   //               evidenceTypeId: {
+  //                   validators: []
+  //               },
+  //               evidenceTypeLabel: {
   //                   validators: []
   //               },
   //     }

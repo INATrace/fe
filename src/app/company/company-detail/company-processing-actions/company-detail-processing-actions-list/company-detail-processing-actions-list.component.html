@@ -17,7 +17,10 @@
                         <span *ngIf="pa.inputFinalProduct">{{ pa.inputFinalProduct.name }} ({{ pa.inputFinalProduct.product.name }})</span>
                     </td>
                     <td *ngIf="!sortOptions[3].hide" [attr.data-label]="sortOptions[3].name">
-                        <span *ngIf="pa.outputSemiProduct">{{ pa.outputSemiProduct.name }}</span>
+                        <ng-container *ngIf="pa.outputSemiProducts?.length > 0">
+                            <span *ngFor="let outputSemiProduct of pa.outputSemiProducts; let i=index;">
+                                {{ outputSemiProduct.name }}{{ i === pa.outputSemiProducts.length - 1 ? '' : ', ' }}</span>
+                        </ng-container>
                         <span *ngIf="pa.outputFinalProduct">{{ pa.outputFinalProduct.name }} ({{ pa.outputFinalProduct.product.name }})</span>
                     </td>
                     <td [attr.data-label]="sortOptions[4].name">

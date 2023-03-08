@@ -5890,6 +5890,55 @@
         "summary": "getStockOrderAggregatedHistory"
       }
     },
+    "/api/chain/stock-order/{id}/processing-order": {
+      "get": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingOrder_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "getStockOrderProcessingOrderUsingGET",
+        "summary": "Get the Processing order that contains the Stock order with the provided ID."
+      }
+    },
     "/api/chain/transaction/list/input/stock-order/{stockOrderId}": {
       "get": {
         "parameters": [
@@ -5901,6 +5950,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -15707,9 +15772,12 @@
             "$ref": "#/components/schemas/ApiFinalProduct",
             "description": "The output final product"
           },
-          "outputSemiProduct": {
-            "$ref": "#/components/schemas/ApiSemiProduct",
-            "description": "Processing action input semi product"
+          "outputSemiProducts": {
+            "description": "List of supported output semi-products",
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProduct"
+            },
+            "type": "array"
           },
           "prefix": {
             "description": "Processing action prefix",
@@ -15999,13 +16067,6 @@
           },
           "inputTransactions": {
             "description": "Input transactions",
-            "items": {
-              "$ref": "#/components/schemas/ApiTransaction"
-            },
-            "type": "array"
-          },
-          "outputTransactions": {
-            "description": "Output transactions",
             "items": {
               "$ref": "#/components/schemas/ApiTransaction"
             },
@@ -19650,13 +19711,17 @@
             "description": "The attached document reference of the processing evidence"
           },
           "evidenceTypeCode": {
-            "description": "The field name of the Processing evidence type from the codebook",
+            "description": "The field code of the Processing evidence type from the codebook",
             "type": "string"
           },
           "evidenceTypeId": {
             "description": "The id of the Processing evidence type from the codebook",
             "format": "int64",
             "type": "integer"
+          },
+          "evidenceTypeLabel": {
+            "description": "The field label of the Processing evidence type from the codebook",
+            "type": "string"
           }
         },
         "type": "object"
@@ -19796,10 +19861,6 @@
             "$ref": "#/components/schemas/ApiFinalProduct",
             "description": "Final product"
           },
-          "gradeAbbreviation": {
-            "$ref": "#/components/schemas/ApiGradeAbbreviation",
-            "description": "Grade abbreviation"
-          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -19822,10 +19883,6 @@
             "description": "Is order of type processing",
             "example": false,
             "type": "boolean"
-          },
-          "outputMeasureUnitType": {
-            "$ref": "#/components/schemas/ApiMeasureUnitType",
-            "description": "Output measurement unit type"
           },
           "outputQuantity": {
             "description": "Output quantity",
@@ -19864,10 +19921,6 @@
               "EXECUTED"
             ],
             "type": "string"
-          },
-          "targetFacility": {
-            "$ref": "#/components/schemas/ApiFacility",
-            "description": "Target facility"
           },
           "targetStockOrder": {
             "$ref": "#/components/schemas/ApiStockOrder",

@@ -21,7 +21,6 @@
 import { ApiCompany } from './apiCompany';
 import { ApiFacility } from './apiFacility';
 import { ApiFinalProduct } from './apiFinalProduct';
-import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiStockOrder } from './apiStockOrder';
@@ -35,7 +34,6 @@ export interface ApiTransaction {
      */
     currency?: string;
     finalProduct?: ApiFinalProduct;
-    gradeAbbreviation?: ApiGradeAbbreviation;
     /**
      * Entity id
      */
@@ -53,7 +51,6 @@ export interface ApiTransaction {
      * Is order of type processing
      */
     isProcessing?: boolean;
-    outputMeasureUnitType?: ApiMeasureUnitType;
     /**
      * Output quantity
      */
@@ -77,7 +74,6 @@ export interface ApiTransaction {
      * Transaction status
      */
     status?: ApiTransaction.StatusEnum;
-    targetFacility?: ApiFacility;
     targetStockOrder?: ApiStockOrder;
 }
 
@@ -95,7 +91,6 @@ export namespace ApiTransaction {
          */
         currency = 'currency',
         finalProduct = 'finalProduct',
-        gradeAbbreviation = 'gradeAbbreviation',
         /**
          * Entity id
          */
@@ -113,7 +108,6 @@ export namespace ApiTransaction {
          * Is order of type processing
          */
         isProcessing = 'isProcessing',
-        outputMeasureUnitType = 'outputMeasureUnitType',
         /**
          * Output quantity
          */
@@ -137,7 +131,6 @@ export namespace ApiTransaction {
          * Transaction status
          */
         status = 'status',
-        targetFacility = 'targetFacility',
         targetStockOrder = 'targetStockOrder'
     }
 
@@ -190,18 +183,6 @@ export namespace ApiTransaction {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiFinalProduct'
-                },
-                {
-                    metadata: ApiGradeAbbreviation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'gradeAbbreviation',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiGradeAbbreviation',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiGradeAbbreviation'
                 },
                 {
                     isReadOnly: false,
@@ -258,18 +239,6 @@ export namespace ApiTransaction {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiMeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'outputMeasureUnitType',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
                 },
                 {
                     isReadOnly: false,
@@ -364,18 +333,6 @@ export namespace ApiTransaction {
                     complexType: ''
                 },
                 {
-                    metadata: ApiFacility.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'targetFacility',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
-                },
-                {
                     metadata: ApiStockOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -395,8 +352,6 @@ export namespace ApiTransaction {
                 ],
                 finalProduct: [
                 ],
-                gradeAbbreviation: [
-                ],
                 id: [
                 ],
                 initiationUserId: [
@@ -406,8 +361,6 @@ export namespace ApiTransaction {
                 inputQuantity: [
                 ],
                 isProcessing: [
-                ],
-                outputMeasureUnitType: [
                 ],
                 outputQuantity: [
                 ],
@@ -424,8 +377,6 @@ export namespace ApiTransaction {
                 sourceStockOrder: [
                 ],
                 status: [
-                ],
-                targetFacility: [
                 ],
                 targetStockOrder: [
                 ],
@@ -445,9 +396,6 @@ export namespace ApiTransaction {
   //               finalProduct: {
   //                   validators: []
   //               },
-  //               gradeAbbreviation: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
@@ -461,9 +409,6 @@ export namespace ApiTransaction {
   //                   validators: []
   //               },
   //               isProcessing: {
-  //                   validators: []
-  //               },
-  //               outputMeasureUnitType: {
   //                   validators: []
   //               },
   //               outputQuantity: {
@@ -488,9 +433,6 @@ export namespace ApiTransaction {
   //                   validators: []
   //               },
   //               status: {
-  //                   validators: []
-  //               },
-  //               targetFacility: {
   //                   validators: []
   //               },
   //               targetStockOrder: {
