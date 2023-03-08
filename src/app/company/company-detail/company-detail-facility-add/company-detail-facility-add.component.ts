@@ -28,7 +28,7 @@ import {SemiProductControllerService} from '../../../../api/api/semiProductContr
 import {CodebookTranslations} from '../../../shared-services/codebook-translations';
 import {ValueChainsSemiProductsService} from '../../../shared-services/value-chains-semi-products.service';
 import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
-import {CheckSelectedValueChainsValidator} from '../../../../shared/validation';
+import {CheckListNotEmptyValidator} from '../../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -50,7 +50,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   activeValueChainsCodebook: ActiveValueChainService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsControl = new FormControl(null, [CheckSelectedValueChainsValidator()]);
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
   semiProductsForm = new FormControl(null);
@@ -148,7 +148,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       this.semiProducts = res.data.facilitySemiProductList;
       this.finalProducts = res.data.facilityFinalProducts;
 
-      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
 
       const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }

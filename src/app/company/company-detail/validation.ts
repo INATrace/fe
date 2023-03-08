@@ -1,6 +1,6 @@
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
-import {CheckSelectedValueChainsValidator, EmailValidator} from 'src/shared/validation';
+import { EmailValidator } from 'src/shared/validation';
 import { ApiAddress } from 'src/api/model/apiAddress';
 import { Validators } from '@angular/forms';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';

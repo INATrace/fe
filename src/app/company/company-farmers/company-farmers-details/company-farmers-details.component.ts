@@ -30,7 +30,7 @@ import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
 import {ApiProductType} from '../../../../api/model/apiProductType';
-import {UserControllerService} from '../../../../api/api/userController.service';
+import {CheckListNotEmptyValidator} from '../../../../shared/validation';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -87,7 +87,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   productTypesForm = new FormControl(null);
   productTypes: Array<ApiProductType> = [];
   productTypesCodebook: CompanyProductTypesService;
-  selectedProductTypesForm = new FormControl(null);
+  selectedProductTypesForm = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   // purchase table parameters
   showedPurchaseOrders = 0;
@@ -209,6 +209,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         this.editFarmer();
       }
 
+      this.farmerForm.setControl('productTypes', this.selectedProductTypesForm);
+
+      this.selectedProductTypesForm.setValue(this.productTypes);
+
       this.productTypesCodebook = new CompanyProductTypesService(this.companyService, this.companyId);
 
       this.initializeListManager();
@@ -238,6 +242,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
+          this.productTypes = uc.data.productTypes;
         }
         break;
       default:

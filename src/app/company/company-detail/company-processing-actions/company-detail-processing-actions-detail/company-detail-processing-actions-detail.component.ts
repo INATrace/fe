@@ -31,7 +31,7 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
 import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
-import {CheckSelectedValueChainsValidator} from '../../../../../shared/validation';
+import {CheckListNotEmptyValidator} from '../../../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -67,7 +67,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   activeValueChainsCodebook: ActiveValueChainService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsControl = new FormControl(null, [CheckSelectedValueChainsValidator()]);
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
@@ -175,10 +175,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   }
 
   finalizeForm() {
-    if (!this.form.contains('valueChains')) {
-      this.form.addControl('valueChains', new FormArray([]));
-    }
-
     if (!this.form.contains('requiredEvidenceFields')) {
       this.form.addControl('requiredEvidenceFields', new FormArray([]));
     }
@@ -267,8 +263,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
       if (resp && resp.status === 'OK') {
         this.action = resp.data;
-        const valueChains = this.action?.valueChains ? this.action?.valueChains : [];
-        this.selectedCompanyValueChainsControl.setValue(valueChains);
+        this.activeValueChains = this.action?.valueChains ? this.action?.valueChains : [];
+        this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
       }
 
     } else {
