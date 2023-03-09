@@ -29,6 +29,8 @@ import {CodebookTranslations} from '../../../shared-services/codebook-translatio
 import {ValueChainsSemiProductsService} from '../../../shared-services/value-chains-semi-products.service';
 import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
 import {CheckListNotEmptyValidator} from '../../../../shared/validation';
+import {CompanyValueChainsService} from '../../../shared-services/company-value-chains.service';
+import {CompanyControllerService} from '../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -47,7 +49,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
   activeSemiProductsService: ValueChainsSemiProductsService;
 
-  activeValueChainsCodebook: ActiveValueChainService;
+  companyValueChainsCodebook: CompanyValueChainsService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
   selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
@@ -75,7 +77,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       public activeFacilityTypeService: ActiveFacilityTypeService,
       private semiProductControllerService: SemiProductControllerService,
       private codebookTranslations: CodebookTranslations,
-      private valueChainController: ValueChainControllerService,
+      private companyController: CompanyControllerService,
       private finalProductController: FinalProductControllerService
   ) { }
 
@@ -92,7 +94,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       this.initializeEdit();
     }
 
-    this.activeValueChainsCodebook = new ActiveValueChainService(this.valueChainController);
+    this.companyValueChainsCodebook = new CompanyValueChainsService(this.companyController, Number(this.companyId));
 
   }
 

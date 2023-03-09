@@ -185,7 +185,7 @@
                             <div class="search-field">
                                 <single-choice
                                   [formControlInput]="activeValueChainsForm"
-                                  [codebookService]="activeValueChainsCodebook"
+                                  [codebookService]="companyValueChainsCodebook"
                                   (onChange)="addSelectedValueChain($event)">
                                     <ng-container *ngIf="submitted">
                                         <div *ngIf="selectedCompanyValueChainsControl.errors as errors"

@@ -32,7 +32,7 @@
                         <div class="af-form-element">
                             <single-choice
                               [formControlInput]="activeValueChainsForm"
-                              [codebookService]="activeValueChainsCodebook"
+                              [codebookService]="companyValueChainsCodebook"
                               (onChange)="addSelectedValueChain($event)">
                                 <ng-container *ngIf="submitted">
                                      <div *ngIf="selectedCompanyValueChainsControl.errors as errors" class="sc-invalid-feedback">

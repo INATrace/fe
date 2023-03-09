@@ -33,6 +33,8 @@ import {ValueChainControllerService} from '../../../../../api/api/valueChainCont
 import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
 import {CheckListNotEmptyValidator} from '../../../../../shared/validation';
 import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
+import {CompanyControllerService} from '../../../../../api/api/companyController.service';
+import {CompanyValueChainsService} from '../../../../shared-services/company-value-chains.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -67,7 +69,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   finalProductsForCompanyCodebook: FinalProductsForCompanyService;
 
-  activeValueChainsCodebook: ActiveValueChainService;
+  companyValueChainsCodebook: CompanyValueChainsService;
   activeValueChainsForm = new FormControl(null);
   activeValueChains: Array<ApiValueChain> = [];
   selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
@@ -99,7 +101,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingActionControllerService: ProcessingActionControllerService,
       private semiProductControllerService: SemiProductControllerService,
       private finalProductController: FinalProductControllerService,
-      private valueChainController: ValueChainControllerService,
+      private companyController: CompanyControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
   ) {
@@ -195,7 +197,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
           // Initialize codebook service for company facilities
           this.supportedFacilitiesService = new CompanyFacilitiesService(this.facilitiesController, this.companyId);
 
-          this.activeValueChainsCodebook = new ActiveValueChainService(this.valueChainController);
+          this.companyValueChainsCodebook = new CompanyValueChainsService(this.companyController, this.companyId);
 
           this.valueChainSubs = this.form.get('valueChains').valueChanges.subscribe((valueChains: ApiValueChain[]) => {
 
