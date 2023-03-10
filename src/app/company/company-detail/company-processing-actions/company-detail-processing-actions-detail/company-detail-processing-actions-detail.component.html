@@ -114,7 +114,7 @@
                                     label="Select semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
                                     [formControlInput]="$any(form.get('inputSemiProduct'))"
-                                    [codebookService]="activeSemiProductService"
+                                    [codebookService]="valueChainSemiProductService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
@@ -167,7 +167,7 @@
                                     label="Select input semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.inputSemiProduct.label"
                                     [formControlInput]="$any(form.get('inputSemiProduct'))"
-                                    [codebookService]="activeSemiProductService"
+                                    [codebookService]="valueChainSemiProductService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
@@ -189,7 +189,7 @@
 
                                     <single-choice
                                             [formControlInput]="outputSemiProductInputForm"
-                                            [codebookService]="activeSemiProductService"
+                                            [codebookService]="valueChainSemiProductService"
                                             (onChange)="addSelectedOutputSemiProduct($event)">
                                     </single-choice>
 

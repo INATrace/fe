@@ -56,8 +56,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   outputSemiProductInputForm: FormControl;
-  activeSemiProductService: ActiveSemiProductsService;
-  activeValueChainSemiProductService: ValueChainsSemiProductsService;
+  valueChainSemiProductService: ValueChainsSemiProductsService;
 
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
@@ -177,9 +176,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     // Initialize codebook service for final products for the selected company
     this.finalProductsForCompanyCodebook = new FinalProductsForCompanyService(this.finalProductController, this.companyId);
 
-    this.activeSemiProductService =
-        new ActiveSemiProductsService(this.semiProductControllerService, this.codebookTranslations);
-
     this.evidenceDocInputForm = new FormControl(null);
     this.evidenceFieldInputForm = new FormControl(null);
     this.supportedFacilitiesInputForm = new FormControl(null);
@@ -209,14 +205,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
                 new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
               this.processingEvidenceFieldService =
                 new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
-              this.activeValueChainSemiProductService =
+              this.valueChainSemiProductService =
                 new ValueChainsSemiProductsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
 
             } else {
 
               this.processingEvidenceTypeService = null;
               this.processingEvidenceFieldService = null;
-              this.activeValueChainSemiProductService = null;
+              this.valueChainSemiProductService = null;
             }
           });
         }
@@ -337,7 +333,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       if (resp && resp.status === 'OK') {
         this.action = resp.data;
         this.activeValueChains = this.action?.valueChains ? this.action?.valueChains : [];
-        this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
       }
 
     } else {
