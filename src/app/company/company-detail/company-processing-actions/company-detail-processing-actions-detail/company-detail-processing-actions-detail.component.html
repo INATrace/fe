@@ -176,6 +176,9 @@
                                         </div>
                                     </div>
                                 </ng-container>
+                                <div *ngIf="!valueChainSemiProductService">
+                                    <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
+                                </div>
                             </single-choice>
 
                             <!-- If action type is processing, we can have selected multiple output semi-products -->
@@ -183,35 +186,44 @@
                                 <label i18n="@@companyDetailProcessingActions.outputSemiProducts.title">Output semi-products</label>
                                 <div class="af-form-element output-semi-products">
 
-                                    <small i18n="@@companyDetailProcessingActions.outputSemiProducts.select.label">
-                                        Select output semi-product.
-                                    </small>
+                                    <ng-container *ngIf="valueChainSemiProductService">
+                                        <small i18n="@@companyDetailProcessingActions.outputSemiProducts.select.label">
+                                            Select output semi-product.
+                                        </small>
 
-                                    <single-choice
-                                            [formControlInput]="outputSemiProductInputForm"
-                                            [codebookService]="valueChainSemiProductService"
-                                            (onChange)="addSelectedOutputSemiProduct($event)">
-                                    </single-choice>
+                                        <single-choice
+                                          [formControlInput]="outputSemiProductInputForm"
+                                          [codebookService]="valueChainSemiProductService"
+                                          (onChange)="addSelectedOutputSemiProduct($event)">
+                                        </single-choice>
 
-                                    <ng-container *ngIf="this.form.get('outputSemiProducts')">
-                                        <div *ngFor="let outputSemiProduct of this.form.get('outputSemiProducts').value; index as i" class="d-flex justify-content-between">
-                                            <div>{{ outputSemiProduct?.name }}</div>
-                                            <div class="cursor-pointer" (click)="removeOutputSemiProduct(outputSemiProduct)">
-                                                <fa-icon
-                                                        class="del-icon"
-                                                        [icon]="faTimes"></fa-icon>
+                                        <ng-container *ngIf="this.form.get('outputSemiProducts')">
+                                            <div
+                                              *ngFor="let outputSemiProduct of this.form.get('outputSemiProducts').value; index as i"
+                                              class="d-flex justify-content-between">
+                                                <div>{{ outputSemiProduct?.name }}</div>
+                                                <div class="cursor-pointer"
+                                                     (click)="removeOutputSemiProduct(outputSemiProduct)">
+                                                    <fa-icon
+                                                      class="del-icon"
+                                                      [icon]="faTimes"></fa-icon>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="submitted">
+                                            <div *ngIf="form.get('outputSemiProducts').errors as errors"
+                                                 class="sc-invalid-feedback">
+                                                <div *ngIf="errors.atLeastOneIsRequired"
+                                                     i18n="@@companyDetailProcessingActions.outputSemiProducts.error.atLeastOneIsRequired">
+                                                    At least one output semi-product is required
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
                                     </ng-container>
-
-                                    <ng-container *ngIf="submitted">
-                                        <div *ngIf="form.get('outputSemiProducts').errors as errors"
-                                             class="sc-invalid-feedback">
-                                            <div *ngIf="errors.atLeastOneIsRequired"
-                                                 i18n="@@companyDetailProcessingActions.outputSemiProducts.error.atLeastOneIsRequired">
-                                                At least one output semi-product is required
-                                            </div>
-                                        </div>
+                                    <ng-container *ngIf="!valueChainSemiProductService">
+                                        <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
                                     </ng-container>
                                 </div>
                             </ng-container>
@@ -500,7 +512,7 @@
                             </single-choice>
                         </div>
                         <div *ngIf="!processingEvidenceFieldService">
-                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
@@ -569,7 +581,7 @@
                             </single-choice>
                         </div>
                         <div *ngIf="!processingEvidenceTypeService">
-                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select Value chain</em></small>
+                            <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
                         </div>
 
                         <div class="spacer-title-section"></div>
