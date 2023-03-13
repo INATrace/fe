@@ -772,7 +772,7 @@ export class SemiProductControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiPaginatedResponseApiSemiProduct>(`${this.configuration.basePath}/api/chain/semi-product/list/value-chains`,
+        const handle = this.httpClient.get<ApiPaginatedResponseApiSemiProduct>(`${this.configuration.basePath}/api/chain/semi-product/list/by-value-chains`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

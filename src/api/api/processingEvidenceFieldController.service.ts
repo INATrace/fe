@@ -1047,7 +1047,7 @@ export class ProcessingEvidenceFieldControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<ApiPaginatedResponseApiProcessingEvidenceField>(`${this.configuration.basePath}/api/chain/processing-evidence-field/list/value-chain`,
+        const handle = this.httpClient.get<ApiPaginatedResponseApiProcessingEvidenceField>(`${this.configuration.basePath}/api/chain/processing-evidence-field/list/by-value-chains`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
