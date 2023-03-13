@@ -408,12 +408,6 @@ export class TypeListComponent implements OnInit, OnChanges {
           this.reloadPage();
         }
       }
-      if (this.type === 'product-types') {
-        const res = await this.productTypesService.deleteProductTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
-        if (res && res.status === 'OK') {
-          this.reloadPage();
-        }
-      }
     } catch (e) {
     } finally {
       this.globalEventsManager.showLoading(false);
