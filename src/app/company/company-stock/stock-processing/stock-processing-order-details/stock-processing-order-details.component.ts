@@ -522,14 +522,15 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
 
-      const res = await this.processingOrderController
-        .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
-
-      if (!res || res.status !== 'OK') {
-        throw Error('Error while creating processing order for order type: ' + this.actionType);
-      } else {
-        this.dismiss();
-      }
+      // FIXME: uncomment this when done testing
+      // const res = await this.processingOrderController
+      //   .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+      //
+      // if (!res || res.status !== 'OK') {
+      //   throw Error('Error while creating processing order for order type: ' + this.actionType);
+      // } else {
+      //   this.dismiss();
+      // }
 
     } finally {
       this.saveInProgress = false;
@@ -1154,16 +1155,45 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.procOrderGroup =
       generateFormFromMetadata(ApiProcessingOrder.formMetadata(), processingOrder, ApiProcessingOrderValidationScheme);
 
-    // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
-    this.targetStockOrdersArray.clear();
-    processingOrder.targetStockOrders.forEach((tso, index) => {
-      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+    if (processingOrder.processingAction?.repackedOutputs) {
 
-      // Get the comment content from the first target Stock order (all Stock orders have same comments content)
-      if (index === 0) {
-        this.commentsControl.setValue(tso.comments);
-      }
-    });
+      this.targetStockOrdersArray.clear();
+      this.repackedOutputStockOrdersArray.clear();
+
+      const firstTSO = processingOrder.targetStockOrders[0];
+      this.commentsControl.setValue(firstTSO.comments);
+
+      // Set the first Stock order as a target Stock order in the target Stock orders array
+      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
+
+      // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
+      let totalOutputQuantity = 0;
+      processingOrder.targetStockOrders.forEach(tso => {
+
+        // TODO: set validation for repacked stock orders form group
+
+        this.repackedOutputStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+        totalOutputQuantity += tso.totalQuantity;
+      });
+
+      // Set the total output quantity (calculated above) to the target Stock order
+      this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
+
+      // TODO: set the internal LOT number without the / for the sac number separation
+
+    } else {
+
+      // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
+      this.targetStockOrdersArray.clear();
+      processingOrder.targetStockOrders.forEach((tso, index) => {
+        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+
+        // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+        if (index === 0) {
+          this.commentsControl.setValue(tso.comments);
+        }
+      });
+    }
   }
 
   private clearInputPropsAndControls() {
