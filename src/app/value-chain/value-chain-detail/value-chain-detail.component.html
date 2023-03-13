@@ -74,7 +74,8 @@
               i18n-label="@@valueChainDetail.textinput.productType.label"
               [formControlInput]="getProductTypeFromControl()"
               [codebookService]="productTypeCodebook"
-              [isInvalidChoice]="submitted && valueChainDetailForm.get('productType').invalid">
+              [readonly]="mode === 'update'"
+              [isInvalidChoice]="submitted && mode === 'create' && valueChainDetailForm.get('productType').invalid">
               <ng-container *ngIf="submitted">
                 <div *ngIf="valueChainDetailForm.get('productType').errors as errors" class="sc-invalid-feedback">
                   <div *ngIf="errors.required" i18n="@@valueChainDetail.textinput.productType.error">
