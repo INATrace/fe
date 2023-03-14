@@ -38,55 +38,49 @@
 // }
 
 
-
 .icon-inside {
       position: absolute;
       right: 10px;
       top: calc(50% - 12px);
       pointer-events: none;
-      font-size: 16px;
       font-size: 1.125rem;
       color: #c4c3c3;
-      z-index:3;
-    }
+      z-index: 3;
+}
 
-.input-wrapper {
+.prefix-or-suffix-input-wrapper {
       display: flex;
       background-color: #FFFFFF;
-      border-radius: 5px;
       border: 1px solid #CED4DA;
+      border-radius: 5px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &:focus-within {
+            border-color: #bfe5ec;
+            box-shadow: 0 0 0 0.2rem rgb(93 188 207 / 25%);
+      }
 }
 
-.input-wrapper:focus-within {
-      box-shadow: 0 0 0 0.2rem rgb(93 188 207 / 25%);
-}
+.prefix-or-suffix-text-input {
+      border: none;
+      transition: none;
 
-.input-wrapper:hover {
-      cursor: text;
+      &:focus {
+            box-shadow: none;
+      }
 }
 
 .prefix, .suffix {
       position: relative;
+      display: flex;
+      align-items: center;
       color: #7B7B93;
 }
 
 .prefix {
-      padding: 6px 0 0 8px;
+      padding-left: 8px;
 }
 
 .suffix {
-      padding: 6px 8px 0 0;
+      padding-right: 8px;
 }
-
-.text-input-line{
-      padding-top: 11px;
-      padding-bottom: 11px;
-      border-radius: 5px;
-      background-color: transparent;
-      border: none;
-}
-
-.text-input-line:focus{
-      box-shadow: none;
-}
-

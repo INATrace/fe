@@ -2,12 +2,12 @@
 
   <div class="d-flex af-user" ngbDropdownToggle>
 
-    <div class="d-flex whole-name" [class.white-texts]="whitetexts">
-      <div class="user-box-name af-user--displayname" [class.white-texts]="whitetexts">{{displayName}}</div>
+    <div class="d-flex whole-name" [class.landing-page]="landingPageView">
+      <div class="user-box-name af-user--displayname" [class.landing-page]="landingPageView">{{displayName}}</div>
       <div class="d-flex af-user--displaycompany">
-        <div class="user-box-name" [class.white-texts]="whitetexts">&nbsp;(</div>
-        <div class="user-box-company" [class.white-texts]="whitetexts">{{displayCompany}}</div>
-        <div class="user-box-name" [class.white-texts]="whitetexts">)</div>
+        <div class="user-box-name" [class.landing-page]="landingPageView">&nbsp;(</div>
+        <div class="user-box-company" [class.landing-page]="landingPageView">{{displayCompany}}</div>
+        <div class="user-box-name" [class.landing-page]="landingPageView">)</div>
       </div>
     </div>
 
@@ -80,7 +80,7 @@
     <div class="af-user-caret-box">
       <fa-icon
         class="af-user-caret-box--icon"
-        [class.white-texts]="whitetexts"
+        [class.landing-page]="landingPageView"
         [icon]="faBars"></fa-icon>
     </div>
 

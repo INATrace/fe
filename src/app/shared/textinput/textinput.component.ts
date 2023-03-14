@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChildren, ViewChild, Output, EventEmitter, Optional, Host, ElementRef} from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, ViewChild, Output, EventEmitter, Optional, Host, ElementRef } from '@angular/core';
 import { FormControl, AbstractControl, FormArray } from '@angular/forms';
 import cloneDeep from 'lodash/cloneDeep';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
@@ -18,6 +18,7 @@ import { ClosableComponent } from '../closable/closable.component';
   styleUrls: ['./textinput.component.scss']
 })
 export class TextinputComponent implements OnInit {
+
   @ViewChild('inputfield') input: ElementRef;
 
   @Input()
@@ -25,6 +26,10 @@ export class TextinputComponent implements OnInit {
 
   @Input()
   htmlLabel: string;
+
+  // If this text input should be styled with the landing page theme
+  @Input()
+  landingPageStyle = false;
 
   _form = null
   @Input() set form(value: FormControl) {

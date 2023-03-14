@@ -91,10 +91,6 @@
   right: -3.5rem;
 }
 
-// .white-texts {
-//   color: white;
-// }
-
 .line{
   height: 1px;
   background-color: $gray-semi;
@@ -141,8 +137,8 @@
 }
 
 .af-user {
-  .white-texts {
-    color: white;
+  .landing-page {
+    color: $landing-text-color;
 
     &:hover {
       text-decoration: underline;

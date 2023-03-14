@@ -6,9 +6,10 @@
 @import 'scss/fontawesome.scss';
 @import 'scss/solid.scss';
 @import 'scss/signika-font.scss';
-
+@import 'scss/pathway-gothic-one-regular';
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap");
 
 html {
   height: 100%;
@@ -67,6 +68,11 @@ p {
 }
 
 
+.font-pathway-gothic-one {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
 
 .container{
     width:100%;
@@ -96,21 +102,25 @@ p {
     }
 }
 
-.text-input-label{
+.text-input-label {
   size: 13px;
   line-height: 20px;
   letter-spacing: 0.5px;
   color: $secondary;
+
+  &.landing-page {
+    color: $landing-primary;
+  }
 }
 
-.text-input{
+.text-input {
   padding-top: 11px;
   padding-bottom: 11px;
   border-radius: 5px;
   background-color: #FFFFFF;
 }
 
-.text-input-without-border{
+.text-input-without-border {
   background-color: $body-background;
   border-bottom: 1px solid $secondary;
   border-top: none;
@@ -123,7 +133,8 @@ p {
     padding-top: 0px;
   padding-bottom: 0px;
 }
-.text-input-without-border:focus{
+
+.text-input-without-border:focus {
   background-color: $body-background;
   border-bottom: 1px solid $secondary;
   border-top: none;
@@ -138,7 +149,7 @@ p {
 
 }
 
-.text-input-bigger{
+.text-input-bigger {
   padding-top: 29px;
   padding-bottom: 29px;
   border-radius: 5px;
@@ -146,11 +157,12 @@ p {
   font-weight: 300;
 }
 
-.login-title{
-  font-size: 22px;
+.login-title {
+  font-size: 2rem;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
+  color: $landing-primary;
 }
 .login-subtitle{
   color: $login-title-color;
@@ -174,6 +186,7 @@ p {
   font-weight: 500;
   letter-spacing: 0;
   line-height: 36px;
+  color: $landing-primary;
 
   margin-top: 0;
   margin-right: 80px;
@@ -314,7 +327,7 @@ p {
 // //// Button style override
 // /////////////////////////////////////////
 
-button.btn {
+button.btn, a.btn {
   color: white;
   background-color: $primary;
   font-size: 1rem;
@@ -368,7 +381,7 @@ button.btn {
   }
 }
 
-button.btn:hover {
+button.btn:hover, a.btn:hover {
     &.no-hover {
       color: white;
       background-color: $primary;
@@ -388,8 +401,6 @@ button.btn:hover {
       color:$primary;
       background-color: $very-pale-cyan;
       border: 1px solid $primary;
-      // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-      // background-color: $very-pale-cyan;
 
       &.btn-link {
         box-shadow: none;
@@ -403,6 +414,40 @@ button.btn:hover {
 
 button.no-shadow {
     box-shadow: none !important;
+}
+
+// Button styles used on landing page
+button.btn, a.btn {
+  &.landing-page {
+    color: white;
+    background-color: $landing-primary;
+    border-color: $landing-primary;
+    transition: background-color 0.4s ease-out 0s;
+
+    &:hover {
+      color: white;
+      background-color: $landing-primary;
+      border-color: $landing-primary;
+      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+    }
+
+    &:focus {
+      border-color: $landing-primary;
+      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+    }
+  }
+}
+
+button.btn.btn-outlined, a.btn.btn-outlined {
+  &.landing-page {
+    background-color: transparent;
+    color: $landing-primary;
+
+    &:hover {
+      background-color: transparent;
+      color: $landing-primary;
+    }
+  }
 }
 
 // ///////////////////////////////////////
@@ -1085,36 +1130,30 @@ a:hover{
 }
 
 
+#content {
+  padding-top: 150px;
+  padding-bottom: 150px;
+  background-image: url(assets/landing-page/landing-background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 50%;
+  min-height: 100vh
+}
 
+#content #landing-h2 {
+  font-size: 68px;
+  color: $landing-text-color;
+  font-weight: 700;
+  margin-bottom: 26px
+}
 
-.btn-landing{
-  width: 150px;
-  height: 50px;
-  background-color: $primary;
-  color:white;
-}
-#content{
-    padding-top:150px;
-    padding-bottom:150px;
-    background-image:url(assets/landing-page/home.jpg);
-    background-repeat:no-repeat;
-    background-size:cover;
-    background-attachment:fixed;
-    background-position:50%;
-    min-height:100vh
-}
-#content #landing-h2{
-    font-size:52px;
-    color:#fff;
-    font-weight:700;
-    margin-bottom:26px
-}
-#content #landing-h4{
-    font-size:20px;
-    color:#fff;
-    font-weight:700;
-    line-height:1.764em;
-    margin-bottom:60px
+#content #landing-h4 {
+  font-size: 20px;
+  color: $landing-text-color;
+  font-weight: 700;
+  line-height: 1.764em;
+  margin-bottom: 60px
 }
 
 #main-header-overlay{
@@ -1130,8 +1169,13 @@ a:hover{
     padding:35px 0
 }
 #main-header-overlay .navbar-brand.white img{
-    max-width:170px
+    max-width:230px
 }
+
+#main-header .navbar-brand.white img {
+  height: 40px;
+}
+
 .btn:not(.dropdown-toggle).btn-bordered-gradient{
     border:none
 }
@@ -1324,16 +1368,24 @@ a:hover{
     font-size:20px;
     font-weight:700
 }
-footer.main-footer{
-    background-color:$tertiary;
-    color:$gray;
-    padding-top:40px;
-    padding-bottom:40px;
+
+footer.main-footer {
+  background-color: white;
+  color: $landing-text-color;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-footer.main-footer a{
-    color: $gray;
-    font-size: 1rem;
-    font-weight: 400;
+
+footer.main-footer a {
+  color: $gray;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+footer.main-footer .logos {
+  img {
+    height: 100px;
+  }
 }
 
 .navbar-collapse{
@@ -1361,27 +1413,7 @@ footer.main-footer a{
     background:no-repeat 50%;
     background-size:100% 100%
 }
-.titlebar{
-    background-color:transparent;
-    background-image:url(/assets/landing-page/steps.jpg);
-    position:relative;
-    color:#fff
-}
-.titlebar h1{
-    font-size:80px;
-    font-weight:300;
-    line-height:1.15em;
-    margin:0 0 .5em;
-    color:#fff
-}
-.titlebar-inner{
-    padding-top:70px;
-    padding-bottom:70px;
-    color:#fff
-}
-.titlebar>.ld-overlay{
-    background:rgba(0,0,0,.6)
-}
+
 .ld-overlay{
     position:absolute;
     top:0;
@@ -1389,14 +1421,6 @@ footer.main-footer a{
     width:100%;
     height:100%
 }
-.titlebar-scroll-link{
-    margin-top:40px;
-    color:#fff;
-    font-size:30px;
-}
-
-
-
 
 //
 // //sidebar
@@ -2579,17 +2603,20 @@ animation-timing-function: ease-in;
   height: 24px;
 }
 .news-title {
+  font-size: 48px;
   margin-top: 72px;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-section-title {
   margin-top: 40px;
+  font-size: 2rem;
   font-weight: 600;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-section-subtitle {
+  font-size: 1.5rem;
   font-weight: 600;
-  color: $secondary;
+  color: $landing-primary;
 }
 .news-summary {
   font-size: 1rem;
@@ -2604,7 +2631,7 @@ animation-timing-function: ease-in;
 .news-content a{
   font-size: 1.125rem;
   font-weight: 300;
-  color: $primary;
+  color: $landing-primary;
   text-decoration: underline;
 }
 
@@ -3543,7 +3570,14 @@ $chechboxSize-1: 1rem !important;
   top: -1rem;
 }
 
-
+.form-control {
+  &.landing-page {
+    &:focus {
+      border-color: $landing-primary-lightest;
+      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+    }
+  }
+}
 
 // HERE BE PLACEHOLDER
 // ADJUSTERS OF THE

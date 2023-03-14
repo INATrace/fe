@@ -21,9 +21,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
   displayCompany = '';
   productId = this.route.snapshot.params.id;
 
-  @Input()
-  whitetexts = false;
-
   faUser = faUser;
   faBars = faBars;
 
@@ -39,6 +36,9 @@ export class UserBoxComponent implements OnInit, OnDestroy {
 
   showSettingsTabs = false;
   showCompaniesTabs = false;
+
+  @Input()
+  landingPageView = false;
 
   constructor(
     private route: ActivatedRoute,

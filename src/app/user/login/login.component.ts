@@ -15,6 +15,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   submitted: boolean = false;
   biggerTextInput: boolean = true;
   _loginErrorStatus$: BehaviorSubject<string>;
@@ -29,7 +30,6 @@ export class LoginComponent implements OnInit {
     username: new FormControl(null, [Validators.required, EmailValidator()]),
     password: new FormControl(null, Validators.required),
   })
-
 
   constructor(
     private userController: UserControllerService,
@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
   }
 
   showPassword() {
-    // console.log(this.showPass);
     this.showPass = !this.showPass
   }
 
