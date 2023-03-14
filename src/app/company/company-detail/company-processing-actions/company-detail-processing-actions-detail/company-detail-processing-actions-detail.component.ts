@@ -367,6 +367,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
           // also remove already selected fields and document types
           this.removeAllEvidenceFields();
           this.removeAllEvidenceDocs();
+          this.removeAllSemiProducts();
         }
       }
     });
@@ -376,7 +377,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@productLabelStockFacilityModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.`,
+      message: $localize`:@@companyDetailProcessingActions.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Proceeding will reset the selected semi-products, evidence fields and types.`,
       options: {
         centered: true
       }
@@ -406,6 +407,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
     // Clear input field
     setTimeout(() => this.evidenceDocInputForm.setValue(null));
+  }
+
+  private removeAllSemiProducts() {
+    const formArray = this.outputSemiProductsArray;
+    formArray.clear(); // delete  all elements
   }
 
   async removeEvidenceDoc(doc: ApiProcessingEvidenceType) {

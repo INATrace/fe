@@ -375,7 +375,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@companyDetailProductTypeModal.removeProductType.confirm.message:Are you sure you want to remove the product type? Processing on these product types will not work anymore.`,
+      message: $localize`:@@companyDetailProductTypeModal.removeProductType.confirm.message:Are you sure you want to remove the product type?`,
       options: {
         centered: true
       }

@@ -284,7 +284,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@productLabelStockFacilityModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.`,
+      message: $localize`:@@productLabelStockFacilityModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Proceeding will reset the selected semi-products.`,
       options: {
         centered: true
       }
