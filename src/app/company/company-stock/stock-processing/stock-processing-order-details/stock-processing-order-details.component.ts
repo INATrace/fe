@@ -488,6 +488,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   async saveProcessingOrder() {
 
+    console.log('Proc. order form group: ', this.procOrderGroup);
+    console.log('One input stock order required: ', this.oneInputStockOrderRequired);
+    console.log('Not all output quantity is used: ', this.notAllOutputQuantityIsUsed);
+
     if (this.saveInProgress) {
       return;
     }
