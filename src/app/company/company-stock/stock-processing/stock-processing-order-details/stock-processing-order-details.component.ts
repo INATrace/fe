@@ -417,16 +417,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       await this.defineInputAndOutputStockUnits(procAction);
 
-      // Load and the facilities that are applicable for the processing action
-      await this.loadFacilities();
+      // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
+      this.initializeFacilitiesCodebooks();
 
       // Set the page title depending on the page mode and the Processing action type
       this.updatePageTitle();
 
       // Add new initial output (if not in edit mode)
       if (!this.editing) {
-        this.addNewOutput().then(() => this.registerRepackedOutQuantityVCListener());
+        await this.addNewOutput();
+        this.registerRepackedOutQuantityVCListener();
       }
+
+      // Load and the facilities that are applicable for the processing action
+      await this.loadFacilities();
 
     } else {
 
@@ -986,9 +990,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private async loadFacilities() {
-
-    // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
-    this.initializeFacilitiesCodebooks();
 
     if (this.editing) {
 
