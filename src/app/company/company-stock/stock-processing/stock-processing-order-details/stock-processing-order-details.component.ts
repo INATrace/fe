@@ -522,15 +522,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
 
-      // FIXME: uncomment this when done testing
-      // const res = await this.processingOrderController
-      //   .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
-      //
-      // if (!res || res.status !== 'OK') {
-      //   throw Error('Error while creating processing order for order type: ' + this.actionType);
-      // } else {
-      //   this.dismiss();
-      // }
+      const res = await this.processingOrderController
+        .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+
+      if (!res || res.status !== 'OK') {
+        throw Error('Error while creating processing order for order type: ' + this.actionType);
+      } else {
+        this.dismiss();
+      }
 
     } finally {
       this.saveInProgress = false;
@@ -1170,16 +1169,21 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       let totalOutputQuantity = 0;
       processingOrder.targetStockOrders.forEach(tso => {
 
-        // TODO: set validation for repacked stock orders form group
+        const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
+        repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
+        repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
 
-        this.repackedOutputStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+        this.repackedOutputStockOrdersArray.push(repackedStockOrder);
         totalOutputQuantity += tso.totalQuantity;
       });
 
       // Set the total output quantity (calculated above) to the target Stock order
       this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
 
-      // TODO: set the internal LOT number without the / for the sac number separation
+      const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
+      if (lastSlashIndex !== -1) {
+        this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
+      }
 
     } else {
 
