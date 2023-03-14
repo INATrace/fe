@@ -2222,6 +2222,8 @@
     "languageForLabelModal.modal.button.confirm": "{$START_TAG_SPAN}Emeza{$CLOSE_TAG_SPAN}",
     "languageForLabelModal.languageCodes.en": "EN",
     "languageForLabelModal.languageCodes.de": "DE",
+    "languageForLabelModal.languageCodes.es": "ES",
+    "languageForLabelModal.languageCodes.rw": "RW",
     "productLabel.newLabelModal.title": "Ururimi rw'ikirango",
     "productLabelPurchaseOrder.sortOptions.production.name": "Itariki yo gukoreraho",
     "productLabelPurchaseOrder.sortOptions.quantityFiledAvailable.name": "Ingano / Iyuzujwe / Iboneka",

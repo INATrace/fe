@@ -2221,6 +2221,8 @@
     "languageForLabelModal.modal.button.confirm": "{$START_TAG_SPAN}Bestätigen{$CLOSE_TAG_SPAN}",
     "languageForLabelModal.languageCodes.en": "EN",
     "languageForLabelModal.languageCodes.de": "DE",
+    "languageForLabelModal.languageCodes.es": "ES",
+    "languageForLabelModal.languageCodes.rw": "RW",
     "productLabel.newLabelModal.title": "Label-Sprache",
     "productLabelPurchaseOrder.sortOptions.production.name": "Produktionsdatum",
     "productLabelPurchaseOrder.sortOptions.quantityFiledAvailable.name": "Menge / Gefüllt / Verfügbar",

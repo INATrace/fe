@@ -2314,6 +2314,8 @@
     "languageForLabelModal.modal.button.confirm": "{$START_TAG_SPAN}Confirmar{$CLOSE_TAG_SPAN}",
     "languageForLabelModal.languageCodes.en": "EN",
     "languageForLabelModal.languageCodes.de": "DE",
+    "languageForLabelModal.languageCodes.es": "ES",
+    "languageForLabelModal.languageCodes.rw": "RW",
     "productLabel.newLabelModal.title": "Crear nueva etiqueta",
     "productLabelPurchaseOrder.sortOptions.production.name": "Fecha de producción",
     "productLabelPurchaseOrder.sortOptions.quantityFiledAvailable.name": "Cantidad / Realizado / Disponible",
