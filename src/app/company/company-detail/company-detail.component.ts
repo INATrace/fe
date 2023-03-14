@@ -64,10 +64,10 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   title = '';
 
   sub: Subscription;
-  activeValueChainsCodebook: ActiveValueChainService;
-  activeValueChainsForm = new FormControl(null);
+  valueChainsCodebook: ActiveValueChainService;
+  valueChainsForm = new FormControl(null);
 
-  activeValueChains: Array<ApiValueChain> = [];
+  valueChains: Array<ApiValueChain> = [];
   selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   certificationListManager = null;
@@ -153,7 +153,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       this.newCompany();
     }
 
-    this.activeValueChainsCodebook = new ActiveValueChainService(this.valueChainController);
+    this.valueChainsCodebook = new ActiveValueChainService(this.valueChainController);
   }
 
   ngOnDestroy() {
@@ -173,23 +173,23 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     if (!valueChain) {
       return;
     }
-    if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
-      setTimeout(() => this.activeValueChainsForm.setValue(null));
+    if (this.valueChains.some(vch => vch?.id === valueChain?.id)) {
+      setTimeout(() => this.valueChainsForm.setValue(null));
       return;
     }
-    this.activeValueChains.push(valueChain);
+    this.valueChains.push(valueChain);
     setTimeout(() => {
-      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      this.selectedCompanyValueChainsControl.setValue(this.valueChains);
       this.companyDetailForm.markAsDirty();
-      this.activeValueChainsForm.setValue(null);
+      this.valueChainsForm.setValue(null);
     });
   }
 
   deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
-        this.activeValueChains.splice(idx, 1);
-        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+        this.valueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
         this.companyDetailForm.markAsDirty();
       }
     });
@@ -229,8 +229,8 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
         }
 
         if (valueChains && valueChains.data) {
-          this.activeValueChains = valueChains.data.items ? valueChains.data.items : [];
-          this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+          this.valueChains = valueChains.data.items ? valueChains.data.items : [];
+          this.selectedCompanyValueChainsControl.setValue(this.valueChains);
         }
 
         this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);

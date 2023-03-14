@@ -54,7 +54,7 @@ export class CompanyValueChainsService extends GeneralSifrantService<any> {
   }
 
   public placeholder(): string {
-    return $localize`:@@activeValueChain.input.placehoder:Type value chain name ...`;
+    return $localize`:@@valueChainInCompany.input.placehoder:Type value chain name ...`;
   }
 
 }

@@ -136,7 +136,7 @@
           style="width: 100%">
           <ng-container *ngIf="submitted && !this.form.get('name').value">
             <div *ngIf="this.form.get('name').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n-label="@@productTypeDetail.textinput.name.error">
+              <div *ngIf="errors.required" i18n="@@productTypeDetail.textinput.name.error">
                 <span>
                   Name is required
                 </span>
@@ -156,7 +156,7 @@
           style="width: 100%">
           <ng-container *ngIf="submitted && !this.form.get('description').value">
             <div *ngIf="this.form.get('description').errors as errors" class="sc-invalid-feedback">
-              <div *ngIf="errors.required" i18n-label="@@productTypeDetail.textinput.description.error">
+              <div *ngIf="errors.required" i18n="@@productTypeDetail.textinput.description.error">
                 <span>
                   Description is required
                 </span>

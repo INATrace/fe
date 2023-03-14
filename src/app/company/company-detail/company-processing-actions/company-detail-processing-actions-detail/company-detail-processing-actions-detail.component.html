@@ -28,16 +28,16 @@
                     <h2 i18n="@@companyDetailProcessingActions.section0.translations">Basic information</h2>
                     <div class="af-form-element">
 
-                        <label i18n="@@companyDetailProcessingActions.section.value-chains">Value chains</label>
+                        <label i18n="@@companyDetailProcessingActions.valueChains">Value chains</label>
                         <div class="af-form-element">
                             <single-choice
-                              [formControlInput]="activeValueChainsForm"
+                              [formControlInput]="valueChainsForm"
                               [codebookService]="companyValueChainsCodebook"
                               (onChange)="addSelectedValueChain($event)">
                                 <ng-container *ngIf="submitted">
                                      <div *ngIf="selectedCompanyValueChainsControl.errors as errors" class="sc-invalid-feedback">
                                         <div *ngIf="errors.required"
-                                             i18n="@@companyDetailProcessingActions.textinput.valueChains.error">
+                                             i18n="@@companyDetailProcessingActions.singleChoice.valueChains.error">
                                             <span>
                                               At least one value chain is required
                                             </span>
@@ -45,7 +45,7 @@
                                      </div>
                                 </ng-container>
                             </single-choice>
-                            <div *ngFor="let sp of this.activeValueChains; index as idx">
+                            <div *ngFor="let sp of this.valueChains; index as idx">
                                 <div class="d-flex justify-content-between user-line mb-1">
                                     <div>{{ sp.name }}</div>
                                     <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
@@ -114,7 +114,7 @@
                                     label="Select semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.semiProduct.label"
                                     [formControlInput]="$any(form.get('inputSemiProduct'))"
-                                    [codebookService]="valueChainSemiProductService"
+                                    [codebookService]="semiProductsForValueChainsService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
@@ -167,7 +167,7 @@
                                     label="Select input semi-product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.inputSemiProduct.label"
                                     [formControlInput]="$any(form.get('inputSemiProduct'))"
-                                    [codebookService]="valueChainSemiProductService"
+                                    [codebookService]="semiProductsForValueChainsService"
                                     [isInvalidChoice]="submitted && form.get('inputSemiProduct').invalid">
                                 <ng-container *ngIf="submitted">
                                     <div *ngIf="form.get('inputSemiProduct').errors as errors" class="sc-invalid-feedback">
@@ -176,7 +176,7 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                                <div *ngIf="!valueChainSemiProductService">
+                                <div *ngIf="!semiProductsForValueChainsService">
                                     <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
                                 </div>
                             </single-choice>
@@ -186,14 +186,14 @@
                                 <label i18n="@@companyDetailProcessingActions.outputSemiProducts.title">Output semi-products</label>
                                 <div class="af-form-element output-semi-products">
 
-                                    <ng-container *ngIf="valueChainSemiProductService">
+                                    <ng-container *ngIf="semiProductsForValueChainsService">
                                         <small i18n="@@companyDetailProcessingActions.outputSemiProducts.select.label">
                                             Select output semi-product.
                                         </small>
 
                                         <single-choice
                                           [formControlInput]="outputSemiProductInputForm"
-                                          [codebookService]="valueChainSemiProductService"
+                                          [codebookService]="semiProductsForValueChainsService"
                                           (onChange)="addSelectedOutputSemiProduct($event)">
                                         </single-choice>
 
@@ -222,7 +222,7 @@
                                         </ng-container>
 
                                     </ng-container>
-                                    <ng-container *ngIf="!valueChainSemiProductService">
+                                    <ng-container *ngIf="!semiProductsForValueChainsService">
                                         <small><em i18n="@@companyDetailProcessingActions.hint.selectValueChain">Please select at least one value chain</em></small>
                                     </ng-container>
                                 </div>

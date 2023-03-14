@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ApiPaginatedResponseApiSemiProduct} from '../../api/model/apiPaginatedResponseApiSemiProduct';
 
-export class ValueChainsSemiProductsService extends GeneralSifrantService<ApiSemiProduct> {
+export class SemiProductsForValueChainsService extends GeneralSifrantService<ApiSemiProduct> {
   constructor(
     private codebookService: SemiProductControllerService,
     private codebookTranslations: CodebookTranslations,
@@ -49,7 +49,7 @@ export class ValueChainsSemiProductsService extends GeneralSifrantService<ApiSem
   }
 
   public placeholder(): string {
-    return $localize`:@@activeSemiProduct.input.placehoder:Select Semi-product`;
+    return $localize`:@@semiProductForValueChains.input.placehoder:Select semi-product`;
   }
 
 

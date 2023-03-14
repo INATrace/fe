@@ -21,16 +21,14 @@ import {FinalProductControllerService} from '../../../../api/api/finalProductCon
 import {ApiFinalProduct} from '../../../../api/model/apiFinalProduct';
 import {GlobalEventManagerService} from '../../../core/global-event-manager.service';
 import {ApiValueChain} from '../../../../api/model/apiValueChain';
-import {ActiveValueChainService} from '../../../shared-services/active-value-chain.service';
-import {ValueChainControllerService} from '../../../../api/api/valueChainController.service';
 import {Subscription} from 'rxjs';
 import {SemiProductControllerService} from '../../../../api/api/semiProductController.service';
 import {CodebookTranslations} from '../../../shared-services/codebook-translations';
-import {ValueChainsSemiProductsService} from '../../../shared-services/value-chains-semi-products.service';
-import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
+import {SemiProductsForValueChainsService} from '../../../shared-services/semi-products-for-value-chains.service';
 import {CheckListNotEmptyValidator} from '../../../../shared/validation';
 import {CompanyValueChainsService} from '../../../shared-services/company-value-chains.service';
 import {CompanyControllerService} from '../../../../api/api/companyController.service';
+import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
 
 @Component({
   selector: 'app-company-detail-facility-add',
@@ -47,11 +45,11 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   public submitted = false;
   public companyId: string;
 
-  activeSemiProductsService: ValueChainsSemiProductsService;
+  semiProductsForValueChainsService: SemiProductsForValueChainsService;
 
   companyValueChainsCodebook: CompanyValueChainsService;
-  activeValueChainsForm = new FormControl(null);
-  activeValueChains: Array<ApiValueChain> = [];
+  valueChainsForm = new FormControl(null);
+  valueChains: Array<ApiValueChain> = [];
   selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
@@ -104,10 +102,10 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       if (valueChains && valueChains.length > 0) {
         const valueChainIds = valueChains?.map(valueChain => valueChain.id);
         // Initialize codebook services for semi-products
-        this.activeSemiProductsService = new ValueChainsSemiProductsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
+        this.semiProductsForValueChainsService = new SemiProductsForValueChainsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
 
       } else {
-        this.activeSemiProductsService = null;
+        this.semiProductsForValueChainsService = null;
       }
     });
   }
@@ -146,11 +144,11 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
       (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
 
-      this.activeValueChains = res.data.facilityValueChains ? res.data.facilityValueChains : [];
+      this.valueChains = res.data.facilityValueChains ? res.data.facilityValueChains : [];
       this.semiProducts = res.data.facilitySemiProductList;
       this.finalProducts = res.data.facilityFinalProducts;
 
-      setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+      setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
 
       const tmpVis = this.form.get('facilityLocation.publiclyVisible').value;
       if (tmpVis != null) { this.form.get('facilityLocation.publiclyVisible').setValue(tmpVis.toString()); }
@@ -186,7 +184,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     if (!this.edit) {
       facility.company.id = this.route.snapshot.params.id;
     }
-    facility.facilityValueChains = this.activeValueChains;
+    facility.facilityValueChains = this.valueChains;
     facility.facilitySemiProductList = this.semiProducts;
     facility.facilityFinalProducts = this.finalProducts;
     this.facilityControllerService.createOrUpdateFacilityUsingPUT(facility).pipe(first()).subscribe(() => {
@@ -206,17 +204,17 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
       // no element is selected, only user input
       return;
     }
-    if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
+    if (this.valueChains.some(vch => vch?.id === valueChain?.id)) {
       // same element. do not add new, just refresh input form
-      setTimeout(() => this.activeValueChainsForm.setValue(null));
+      setTimeout(() => this.valueChainsForm.setValue(null));
       return;
     }
 
-    this.activeValueChains.push(valueChain);
+    this.valueChains.push(valueChain);
     setTimeout(() => {
-      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      this.selectedCompanyValueChainsControl.setValue(this.valueChains);
       this.form.markAsDirty();
-      this.activeValueChainsForm.setValue(null);
+      this.valueChainsForm.setValue(null);
     });
   }
 
@@ -251,8 +249,8 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
-        this.activeValueChains.splice(idx, 1);
-        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+        this.valueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
 
         if (idx >= 0) {
           // also remove already selected fields and document types

@@ -1,38 +1,37 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CompanyDetailTabManagerComponent } from '../../company-detail-tab-manager/company-detail-tab-manager.component';
-import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
-import { ProcessingEvidenceTypeService } from '../../../../shared-services/processing-evidence-types.service';
-import { ProcessingEvidenceTypeControllerService } from '../../../../../api/api/processingEvidenceTypeController.service';
-import { ProcessingEvidenceFieldsService } from '../../../../shared-services/processing-evidence-fields.service';
-import { ProcessingEvidenceFieldControllerService } from '../../../../../api/api/processingEvidenceFieldController.service';
-import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
-import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
-import { take } from 'rxjs/operators';
-import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
-import { ApiProcessingActionValidationScheme } from './validation';
-import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
-import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
-import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
-import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
-import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
-import { AuthService } from '../../../../core/auth.service';
-import { ActiveValueChainService } from '../../../../shared-services/active-value-chain.service';
-import { FinalProductsForCompanyService } from '../../../../shared-services/final-products-for-company.service';
-import { FinalProductControllerService } from '../../../../../api/api/finalProductController.service';
-import { Subscription } from 'rxjs';
-import { ApiValueChain } from '../../../../../api/model/apiValueChain';
-import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
-import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
-import {ValueChainControllerService} from '../../../../../api/api/valueChainController.service';
-import {ValueChainsSemiProductsService} from '../../../../shared-services/value-chains-semi-products.service';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CompanyDetailTabManagerComponent} from '../../company-detail-tab-manager/company-detail-tab-manager.component';
+import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {EnumSifrant} from '../../../../shared-services/enum-sifrant';
+import {ProcessingEvidenceTypeService} from '../../../../shared-services/processing-evidence-types.service';
+import {ProcessingEvidenceTypeControllerService} from '../../../../../api/api/processingEvidenceTypeController.service';
+import {ProcessingEvidenceFieldsService} from '../../../../shared-services/processing-evidence-fields.service';
+import {
+  ProcessingEvidenceFieldControllerService
+} from '../../../../../api/api/processingEvidenceFieldController.service';
+import {ProcessingActionControllerService} from '../../../../../api/api/processingActionController.service';
+import {CodebookTranslations} from '../../../../shared-services/codebook-translations';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {ApiProcessingAction} from '../../../../../api/model/apiProcessingAction';
+import {take} from 'rxjs/operators';
+import {defaultEmptyObject, generateFormFromMetadata} from '../../../../../shared/utils';
+import {ApiProcessingActionValidationScheme} from './validation';
+import {ApiSemiProduct} from '../../../../../api/model/apiSemiProduct';
+import {ApiProcessingEvidenceType} from '../../../../../api/model/apiProcessingEvidenceType';
+import {SemiProductControllerService} from '../../../../../api/api/semiProductController.service';
+import {ApiProcessingEvidenceField} from '../../../../../api/model/apiProcessingEvidenceField';
+import {AuthService} from '../../../../core/auth.service';
+import {FinalProductsForCompanyService} from '../../../../shared-services/final-products-for-company.service';
+import {FinalProductControllerService} from '../../../../../api/api/finalProductController.service';
+import {Subscription} from 'rxjs';
+import {ApiValueChain} from '../../../../../api/model/apiValueChain';
+import {CompanyFacilitiesService} from '../../../../shared-services/company-facilities.service';
+import {ApiFacility} from '../../../../../api/model/apiFacility';
+import {FacilityControllerService} from '../../../../../api/api/facilityController.service';
+import {SemiProductsForValueChainsService} from '../../../../shared-services/semi-products-for-value-chains.service';
 import {CheckListNotEmptyValidator} from '../../../../../shared/validation';
-import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
+import {ApiMeasureUnitType} from '../../../../../api/model/apiMeasureUnitType';
 import {CompanyControllerService} from '../../../../../api/api/companyController.service';
 import {CompanyValueChainsService} from '../../../../shared-services/company-value-chains.service';
 
@@ -56,7 +55,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   outputSemiProductInputForm: FormControl;
-  valueChainSemiProductService: ValueChainsSemiProductsService;
+  semiProductsForValueChainsService: SemiProductsForValueChainsService;
 
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
@@ -69,8 +68,8 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   finalProductsForCompanyCodebook: FinalProductsForCompanyService;
 
   companyValueChainsCodebook: CompanyValueChainsService;
-  activeValueChainsForm = new FormControl(null);
-  activeValueChains: Array<ApiValueChain> = [];
+  valueChainsForm = new FormControl(null);
+  valueChains: Array<ApiValueChain> = [];
   selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   languages = ['EN', 'DE', 'RW', 'ES'];
@@ -205,14 +204,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
                 new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
               this.processingEvidenceFieldService =
                 new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
-              this.valueChainSemiProductService =
-                new ValueChainsSemiProductsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
+              this.semiProductsForValueChainsService =
+                new SemiProductsForValueChainsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
 
             } else {
 
               this.processingEvidenceTypeService = null;
               this.processingEvidenceFieldService = null;
-              this.valueChainSemiProductService = null;
+              this.semiProductsForValueChainsService = null;
             }
           });
         }
@@ -332,9 +331,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
       if (resp && resp.status === 'OK') {
         this.action = resp.data;
-        this.activeValueChains = this.action?.valueChains ? this.action?.valueChains : [];
+        this.valueChains = this.action?.valueChains ? this.action?.valueChains : [];
 
-        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
       }
 
     } else {
@@ -346,23 +345,23 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (!valueChain) {
       return;
     }
-    if (this.activeValueChains.some(vch => vch?.id === valueChain?.id)) {
-      setTimeout(() => this.activeValueChainsForm.setValue(null));
+    if (this.valueChains.some(vch => vch?.id === valueChain?.id)) {
+      setTimeout(() => this.valueChainsForm.setValue(null));
       return;
     }
-    this.activeValueChains.push(valueChain);
+    this.valueChains.push(valueChain);
     setTimeout(() => {
-      this.selectedCompanyValueChainsControl.setValue(this.activeValueChains);
+      this.selectedCompanyValueChainsControl.setValue(this.valueChains);
       this.form.markAsDirty();
-      this.activeValueChainsForm.setValue(null);
+      this.valueChainsForm.setValue(null);
     });
   }
 
   deleteValueChain(idx: number) {
     this.confirmValueChainRemove().then(confirmed => {
       if (confirmed) {
-        this.activeValueChains.splice(idx, 1);
-        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.activeValueChains));
+        this.valueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
         this.form.markAsDirty();
         if (idx >= 0) {
           // also remove already selected fields and document types

@@ -384,7 +384,7 @@
                             </single-choice>
                         </div>
                         <div *ngIf="!company?.valueChains || company.valueChains.length === 0">
-                            <small><em i18n="@@collectorDetail.hint.selectCompanyValueChain">Please select at least one value chain for the company</em></small>
+                            <small><em i18n="@@collectorDetail.list-editor.hint.selectValueChain">Please select at least one value chain</em></small>
                         </div>
                         <div *ngFor="let productType of this.productTypes; index as idx">
                             <div class="d-flex justify-content-between pl-3 pr-3 mb-1">

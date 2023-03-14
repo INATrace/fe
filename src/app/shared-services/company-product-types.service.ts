@@ -53,7 +53,7 @@ export class CompanyProductTypesService extends GeneralSifrantService<ApiProduct
   }
 
   public placeholder(): string {
-    return $localize`:@@userCustomerProductTypes.input.placehoder:Select product types`;
+    return $localize`:@@productTypeInCompany.input.placehoder:Select product types`;
   }
 
 }
