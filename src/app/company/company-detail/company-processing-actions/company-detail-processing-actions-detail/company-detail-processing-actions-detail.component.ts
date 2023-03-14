@@ -320,6 +320,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.title = $localize`:@@companyDetailProcessingActions.title.new:New processing action`;
       this.editMode = false;
 
+      const defaultValChainCheck = await this.companyController.getCompanyValueChainsUsingGET(this.companyId).pipe(take(1)).toPromise();
+      if (defaultValChainCheck && defaultValChainCheck.status === 'OK') {
+        if (defaultValChainCheck.data.count === 1) {
+          this.valueChains = defaultValChainCheck.data.items;
+          setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
+        }
+      }
+
     } else if (action === 'edit') {
       this.title = $localize`:@@companyDetailProcessingActions.title.edit:Edit processing action`;
       this.editMode = true;

@@ -31,6 +31,7 @@ import { ApiCertificationValidationScheme } from '../../../m-product/product-lab
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
 import {ApiProductType} from '../../../../api/model/apiProductType';
 import {CheckListNotEmptyValidator} from '../../../../shared/validation';
+import {ApiPaginatedResponseApiProductType} from '../../../../api/model/apiPaginatedResponseApiProductType';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -235,6 +236,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       case 'new':
         this.title = $localize`:@@collectorDetail.newFarmer.title:New farmer`;
         this.update = false;
+        // this code sets the default product type, when only 1 is available
+        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypesUsingGET(this.companyId).pipe(take(1)).toPromise();
+        if (defaultProdTypeCheck && defaultProdTypeCheck.status === 'OK') {
+          if (defaultProdTypeCheck.data.count === 1) {
+            this.productTypes = defaultProdTypeCheck.data.items;
+          }
+        }
         break;
       case 'update':
         this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;

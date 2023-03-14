@@ -7,7 +7,7 @@ import {ApiFacility} from '../../../../api/model/apiFacility';
 import {ApiFacilityLocation} from '../../../../api/model/apiFacilityLocation';
 import {ApiFacilityValidationScheme} from './validation';
 import {FacilityControllerService} from '../../../../api/api/facilityController.service';
-import {first, takeUntil} from 'rxjs/operators';
+import {first, take, takeUntil} from 'rxjs/operators';
 import {ActiveFacilityTypeService} from '../../../shared-services/active-facility-types.service';
 import {ApiAddress} from '../../../../api/model/apiAddress';
 import {ApiCompanyBase} from '../../../../api/model/apiCompanyBase';
@@ -87,13 +87,28 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     this.finalProductsForCompanyCodebook = new FinalProductsForCompanyService(this.finalProductController, Number(this.companyId));
 
     if (!this.edit) {
-      this.initializeNew();
+      this.initValueChainData().then(() => {
+        this.initializeNew();
+      });
     } else {
       this.initializeEdit();
     }
 
     this.companyValueChainsCodebook = new CompanyValueChainsService(this.companyController, Number(this.companyId));
 
+  }
+
+  async initValueChainData() {
+    const companyId = this.route.snapshot.params.id;
+    // this code sets the default value-chain, when only 1 is available
+    const defaultValChainCheck = await this.companyController.getCompanyValueChainsUsingGET(companyId).pipe(take(1)).toPromise();
+    if (defaultValChainCheck && defaultValChainCheck.status === 'OK') {
+      if (defaultValChainCheck.data.count === 1) {
+        this.valueChains = defaultValChainCheck.data.items;
+
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
+      }
+    }
   }
 
   private registerValueChainSubs() {
