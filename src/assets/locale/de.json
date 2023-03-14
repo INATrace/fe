@@ -1599,7 +1599,7 @@
     "productLabelPurchaseOrder.deleteProcessingOrder.error.message": "Sind Sie sicher, dass Sie den Vorgang löschen möchten? Dies wird den Prozess-Vorgang und möglicherweise alle daraus generierten Vorgänge löschen.",
     "front-page.footer.termsOfUse": "Nutzungsbedingungen",
     "front-page.footer.privacyPolicy": "Datenschutzrichtlinie",
-    "front-page.footer.copyright": "Copyright © 2022 INATrace.",
+    "front-page.footer.copyright": "Copyright © 2023 INATrace.",
     "front-page.footer.allrightsreserved": "Alle Rechte vorbehalten.",
     "front-page.button.productJourney": "PRODUKTREISE",
     "frontPage.journey.title": "Produktreise",

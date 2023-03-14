@@ -256,7 +256,7 @@ Project INATrace welcomes contribution from everyone. See CONTRIBUTING.md for he
 
 ## License 
 
-Copyright (c) 2022 Antje ECG d.o.o., GIZ - Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH, Sunesis ltd.
+Copyright (c) 2023 Antje ECG d.o.o., GIZ - Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH, Sunesis ltd.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
