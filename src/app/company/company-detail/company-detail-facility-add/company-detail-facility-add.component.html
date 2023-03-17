@@ -180,19 +180,45 @@
                 </div>
                 <div class="af-form-block--c6">
                     <div>
+                        <h2 i18n="@@productLabelStockFacilityModal.section.valueChains">Value chains</h2>
+                        <div class="af-form-element">
+                            <div class="search-field">
+                                <single-choice
+                                  [formControlInput]="valueChainsForm"
+                                  [codebookService]="companyValueChainsCodebook"
+                                  (onChange)="addSelectedValueChain($event)">
+                                    <ng-container *ngIf="submitted">
+                                        <div *ngIf="selectedCompanyValueChainsControl.errors as errors"
+                                             class="sc-invalid-feedback">
+                                            <div *ngIf="errors.required"
+                                                 i18n="@@productLabelStockFacilityModal.singleChoice.valueChains.error">
+                                            <span>
+                                              At least one value chain is required
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </single-choice>
+                            </div>
+                            <div *ngFor="let sp of this.valueChains; index as idx">
+                                <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                                    <div>{{ sp.name }}</div>
+                                    <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
+                                        <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
                         <h2 i18n="@@productLabelStockFacilityModal.section.semi-products">Contained semi-products</h2>
                         <div class="af-form-element">
                             <div class="search-field">
-                                <textinput
-                                        label=""
-                                        [form]="semiProductsForm"
-                                        placeholder="Type semi-product ..."
-                                        i18n-placeholder="@@productLabelStockFacilityModal.textinput.search-field.placeholder"
-                                        [codebookService]="activeSemiProductsService"
-                                        [resultFormatter]="spResultFormatter"
-                                        [inputFormatter]="spInputFormatter"
-                                        (itemMatching)="addSelectedSemiProduct($event)">
-                                </textinput>
+                                <single-choice
+                                  [formControlInput]="semiProductsForm"
+                                  [codebookService]="semiProductsForValueChainsService"
+                                  (onChange)="addSelectedSemiProduct($event)">
+                                </single-choice>
                             </div>
                             <div *ngFor="let sp of this.semiProducts; index as idx">
                                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
@@ -202,22 +228,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div *ngIf="!semiProductsForValueChainsService">
+                                <small><em i18n="@@productLabelStockFacilityModal.hint.selectValueChain">Please select at least one value chain</em></small>
+                            </div>
                         </div>
                     </div>
                     <div>
                         <h2 i18n="@@productLabelStockFacilityModal.section.final-products">Contained final products</h2>
                         <div class="af-form-element">
                             <div class="search-field">
-                                <textinput
-                                        label=""
-                                        [form]="finalProductForm"
-                                        placeholder="Type final product ..."
-                                        i18n-placeholder="@@productLabelStockFacilityModal.finalProduct.search-field.placeholder"
-                                        [codebookService]="finalProductsForCompanyCodebook"
-                                        [resultFormatter]="fpResultFormatter"
-                                        [inputFormatter]="fpInputFormatter"
-                                        (itemMatching)="addSelectedFinalProduct($event)">
-                                </textinput>
+                                <single-choice
+                                  [formControlInput]="finalProductForm"
+                                  [codebookService]="finalProductsForCompanyCodebook"
+                                  (onChange)="addSelectedFinalProduct($event)">
+                                </single-choice>
                             </div>
                             <div *ngFor="let fp of this.finalProducts; index as idx">
                                 <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">

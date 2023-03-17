@@ -67,6 +67,29 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+          <h2 i18n="@@valueChainDetail.section.productType.title">Product type</h2>
+          <div class="af-form-element">
+            <single-choice
+              label="Value chain product type"
+              i18n-label="@@valueChainDetail.textinput.productType.label"
+              [formControlInput]="getProductTypeFromControl()"
+              [codebookService]="productTypeCodebook"
+              [readonly]="mode === 'update'"
+              [isInvalidChoice]="submitted && mode === 'create' && valueChainDetailForm.get('productType').invalid">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="valueChainDetailForm.get('productType').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@valueChainDetail.textinput.productType.error">
+                    Product type is required.
+                  </div>
+                </div>
+              </ng-container>
+            </single-choice>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@valueChainDetail.section.facilityTypes.title">Facility types</h2>
           <div class="af-form-element">
             <list-editor label="Value chain facility types"

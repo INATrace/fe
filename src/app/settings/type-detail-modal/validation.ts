@@ -10,6 +10,7 @@ import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTranslation';
 import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
+import {ApiProductType} from '../../../api/model/apiProductType';
 
 export const ApiSemiProductValidationScheme = {
   validators: [
@@ -43,6 +44,21 @@ export const ApiSemiProductValidationScheme = {
     }
   }
 } as SimpleValidationScheme<ApiSemiProduct>;
+
+export const ApiProductTypeValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: []
+    },
+    name: {
+      validators: [Validators.required]
+    },
+    description: {
+      validators: []
+    }
+  }
+} as SimpleValidationScheme<ApiProductType>;
 
 export const ApiFacilityTypeValidationScheme = {
   validators: [],

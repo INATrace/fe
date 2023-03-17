@@ -261,6 +261,12 @@ function functionDatesInOrder(group: FormGroup, startControlName, endControlName
     return null
 }
 
+export function CheckListNotEmptyValidator(): ValidatorFn {
+    return (control: FormControl): ValidationErrors | null => {
+        return (control.value && control.value.length > 0) ? null : {'required': true};
+    }
+}
+
 export function DatesInOrder(startControlName, endControlName): ValidatorFn {
     return multiFieldValidator([startControlName, endControlName], (group: FormGroup) => functionDatesInOrder(group, startControlName, endControlName), ['startLaterThanEnd'])
 }

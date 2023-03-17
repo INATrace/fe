@@ -1,35 +1,39 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CompanyDetailTabManagerComponent } from '../../company-detail-tab-manager/company-detail-tab-manager.component';
-import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
-import { ProcessingEvidenceTypeService } from '../../../../shared-services/processing-evidence-types.service';
-import { ProcessingEvidenceTypeControllerService } from '../../../../../api/api/processingEvidenceTypeController.service';
-import { ProcessingEvidenceFieldsService } from '../../../../shared-services/processing-evidence-fields.service';
-import { ProcessingEvidenceFieldControllerService } from '../../../../../api/api/processingEvidenceFieldController.service';
-import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
-import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
-import { take } from 'rxjs/operators';
-import { defaultEmptyObject, generateFormFromMetadata } from '../../../../../shared/utils';
-import { ApiProcessingActionValidationScheme } from './validation';
-import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
-import { ApiProcessingEvidenceType } from '../../../../../api/model/apiProcessingEvidenceType';
-import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
-import { ActiveSemiProductsService } from '../../../../shared-services/active-semi-products.service';
-import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
-import { AuthService } from '../../../../core/auth.service';
-import { ActiveValueChainService } from '../../../../shared-services/active-value-chain.service';
-import { FinalProductsForCompanyService } from '../../../../shared-services/final-products-for-company.service';
-import { FinalProductControllerService } from '../../../../../api/api/finalProductController.service';
-import { Subscription } from 'rxjs';
-import { ApiValueChain } from '../../../../../api/model/apiValueChain';
-import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
-import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
-import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CompanyDetailTabManagerComponent} from '../../company-detail-tab-manager/company-detail-tab-manager.component';
+import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {EnumSifrant} from '../../../../shared-services/enum-sifrant';
+import {ProcessingEvidenceTypeService} from '../../../../shared-services/processing-evidence-types.service';
+import {ProcessingEvidenceTypeControllerService} from '../../../../../api/api/processingEvidenceTypeController.service';
+import {ProcessingEvidenceFieldsService} from '../../../../shared-services/processing-evidence-fields.service';
+import {
+  ProcessingEvidenceFieldControllerService
+} from '../../../../../api/api/processingEvidenceFieldController.service';
+import {ProcessingActionControllerService} from '../../../../../api/api/processingActionController.service';
+import {CodebookTranslations} from '../../../../shared-services/codebook-translations';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {ApiProcessingAction} from '../../../../../api/model/apiProcessingAction';
+import {take} from 'rxjs/operators';
+import {defaultEmptyObject, generateFormFromMetadata} from '../../../../../shared/utils';
+import {ApiProcessingActionValidationScheme} from './validation';
+import {ApiSemiProduct} from '../../../../../api/model/apiSemiProduct';
+import {ApiProcessingEvidenceType} from '../../../../../api/model/apiProcessingEvidenceType';
+import {SemiProductControllerService} from '../../../../../api/api/semiProductController.service';
+import {ApiProcessingEvidenceField} from '../../../../../api/model/apiProcessingEvidenceField';
+import {AuthService} from '../../../../core/auth.service';
+import {FinalProductsForCompanyService} from '../../../../shared-services/final-products-for-company.service';
+import {FinalProductControllerService} from '../../../../../api/api/finalProductController.service';
+import {Subscription} from 'rxjs';
+import {ApiValueChain} from '../../../../../api/model/apiValueChain';
+import {CompanyFacilitiesService} from '../../../../shared-services/company-facilities.service';
+import {ApiFacility} from '../../../../../api/model/apiFacility';
+import {FacilityControllerService} from '../../../../../api/api/facilityController.service';
+import {SemiProductsForValueChainsService} from '../../../../shared-services/semi-products-for-value-chains.service';
+import {CheckListNotEmptyValidator} from '../../../../../shared/validation';
+import {ApiMeasureUnitType} from '../../../../../api/model/apiMeasureUnitType';
+import {CompanyControllerService} from '../../../../../api/api/companyController.service';
+import {CompanyValueChainsService} from '../../../../shared-services/company-value-chains.service';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -51,7 +55,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   codebookProcessingTransaction = EnumSifrant.fromObject(this.processingActionType);
 
   outputSemiProductInputForm: FormControl;
-  activeSemiProductService: ActiveSemiProductsService;
+  semiProductsForValueChainsService: SemiProductsForValueChainsService;
 
   processingEvidenceTypeService: ProcessingEvidenceTypeService;
   processingEvidenceFieldService: ProcessingEvidenceFieldsService;
@@ -62,6 +66,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   supportedFacilitiesService: CompanyFacilitiesService;
 
   finalProductsForCompanyCodebook: FinalProductsForCompanyService;
+
+  companyValueChainsCodebook: CompanyValueChainsService;
+  valueChainsForm = new FormControl(null);
+  valueChains: Array<ApiValueChain> = [];
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
@@ -88,9 +97,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingEvidenceFieldControllerService: ProcessingEvidenceFieldControllerService,
       private facilitiesController: FacilityControllerService,
       private processingActionControllerService: ProcessingActionControllerService,
-      public valueChainCodebook: ActiveValueChainService,
       private semiProductControllerService: SemiProductControllerService,
       private finalProductController: FinalProductControllerService,
+      private companyController: CompanyControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
   ) {
@@ -166,9 +175,6 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     // Initialize codebook service for final products for the selected company
     this.finalProductsForCompanyCodebook = new FinalProductsForCompanyService(this.finalProductController, this.companyId);
 
-    this.activeSemiProductService =
-        new ActiveSemiProductsService(this.semiProductControllerService, this.codebookTranslations);
-
     this.evidenceDocInputForm = new FormControl(null);
     this.evidenceFieldInputForm = new FormControl(null);
     this.supportedFacilitiesInputForm = new FormControl(null);
@@ -186,20 +192,26 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
           // Initialize codebook service for company facilities
           this.supportedFacilitiesService = new CompanyFacilitiesService(this.facilitiesController, this.companyId);
 
-          this.valueChainSubs = this.form.get('valueChain').valueChanges.subscribe((valueChain: ApiValueChain) => {
+          this.companyValueChainsCodebook = new CompanyValueChainsService(this.companyController, this.companyId);
 
-            if (valueChain) {
+          this.valueChainSubs = this.form.get('valueChains').valueChanges.subscribe((valueChains: ApiValueChain[]) => {
+
+            if (valueChains && valueChains.length > 0) {
+              const valueChainIds = valueChains?.map(valueChain => valueChain.id);
 
               // Initialize codebook services for proc. evidence types and proc. evidence fields
               this.processingEvidenceTypeService =
-                new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
+                new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
               this.processingEvidenceFieldService =
-                new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+                new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
+              this.semiProductsForValueChainsService =
+                new SemiProductsForValueChainsService(this.semiProductControllerService, this.codebookTranslations, valueChainIds);
 
             } else {
 
               this.processingEvidenceTypeService = null;
               this.processingEvidenceFieldService = null;
+              this.semiProductsForValueChainsService = null;
             }
           });
         }
@@ -264,14 +276,16 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   newAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
-    this.inputSemiProductControl.setValue(null);
-    this.maxOutputWeightControl.setValue(null);
-    this.maxOutputWeightControl.disable();
+    this.form.get('inputSemiProduct').setValue(null);
+    this.form.get('outputSemiProduct').setValue(null);
+    this.form.get('maxOutputWeight').setValue(null);
+    this.form.get('maxOutputWeight').disable();
   }
 
   editAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
+    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
 
     if (!this.repackedOutputsControl.value) {
       this.maxOutputWeightControl.setValue(null);
@@ -284,15 +298,18 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.form.get('type').setValue('PROCESSING');
     }
 
-    if (this.form.get('valueChain').value) {
+    if (this.form.get('valueChains').value) {
 
-      const valueChain = this.form.get('valueChain').value as ApiValueChain;
+      const valueChains = this.selectedCompanyValueChainsControl.value as ApiValueChain[];
+      const valueChainIds = valueChains?.map(valueChain => valueChain.id);
 
-      // Initialize codebook services for proc. evidence types and proc. evidence fields
-      this.processingEvidenceTypeService =
-        new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChain.id);
-      this.processingEvidenceFieldService =
-        new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChain.id);
+      if (valueChainIds && valueChainIds.length > 0) {
+        // Initialize codebook services for proc. evidence types and proc. evidence fields
+        this.processingEvidenceTypeService =
+          new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
+        this.processingEvidenceFieldService =
+          new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
+      }
     }
   }
 
@@ -302,6 +319,14 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     if (action === 'new') {
       this.title = $localize`:@@companyDetailProcessingActions.title.new:New processing action`;
       this.editMode = false;
+
+      const defaultValChainCheck = await this.companyController.getCompanyValueChainsUsingGET(this.companyId).pipe(take(1)).toPromise();
+      if (defaultValChainCheck && defaultValChainCheck.status === 'OK') {
+        if (defaultValChainCheck.data.count === 1) {
+          this.valueChains = defaultValChainCheck.data.items;
+          setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
+        }
+      }
 
     } else if (action === 'edit') {
       this.title = $localize`:@@companyDetailProcessingActions.title.edit:Edit processing action`;
@@ -314,11 +339,59 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
       if (resp && resp.status === 'OK') {
         this.action = resp.data;
+        this.valueChains = this.action?.valueChains ? this.action?.valueChains : [];
+
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
       }
 
     } else {
       throw Error('Wrong action.');
     }
+  }
+
+  async addSelectedValueChain(valueChain: ApiValueChain) {
+    if (!valueChain) {
+      return;
+    }
+    if (this.valueChains.some(vch => vch?.id === valueChain?.id)) {
+      setTimeout(() => this.valueChainsForm.setValue(null));
+      return;
+    }
+    this.valueChains.push(valueChain);
+    setTimeout(() => {
+      this.selectedCompanyValueChainsControl.setValue(this.valueChains);
+      this.form.markAsDirty();
+      this.valueChainsForm.setValue(null);
+    });
+  }
+
+  deleteValueChain(idx: number) {
+    this.confirmValueChainRemove().then(confirmed => {
+      if (confirmed) {
+        this.valueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
+        this.form.markAsDirty();
+        if (idx >= 0) {
+          // also remove already selected fields and document types
+          this.removeAllEvidenceFields();
+          this.removeAllEvidenceDocs();
+          this.removeAllSemiProducts();
+        }
+      }
+    });
+  }
+
+  private async confirmValueChainRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@companyDetailProcessingActions.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Proceeding will reset the selected semi-products, evidence fields and types.`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
   }
 
   async addSelectedEvidenceDoc(doc: ApiProcessingEvidenceType) {
@@ -344,6 +417,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     setTimeout(() => this.evidenceDocInputForm.setValue(null));
   }
 
+  private removeAllSemiProducts() {
+    const formArray = this.outputSemiProductsArray;
+    formArray.clear(); // delete  all elements
+  }
+
   async removeEvidenceDoc(doc: ApiProcessingEvidenceType) {
     if (!doc) { return; }
     const formArray = this.form.get('requiredDocumentTypes') as FormArray;
@@ -352,6 +430,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       formArray.removeAt(index);
       formArray.markAsDirty();
     }
+  }
+
+  private removeAllEvidenceDocs() {
+    const formArray = this.form.get('requiredDocumentTypes') as FormArray;
+    formArray.clear();
   }
 
   async addSelectedEvidenceField(field: ApiProcessingEvidenceField) {
@@ -384,6 +467,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       formArray.removeAt(index);
       formArray.markAsDirty();
     }
+  }
+
+  private removeAllEvidenceFields() {
+    const formArray = this.form.get('requiredEvidenceFields') as FormArray;
+    formArray.clear();
   }
 
   async addSelectedSupportedFacility(facility: ApiFacility) {

@@ -211,6 +211,10 @@ export namespace GetValueChainListUsingGET {
        * Value chain status
        */
       valueChainStatus?: 'ENABLED' | 'DISABLED';
+      /**
+       * Value chain product type ID
+       */
+      productTypeId?: number;
     }
 
     /**
@@ -244,7 +248,11 @@ export namespace GetValueChainListUsingGET {
       /**
        * Value chain status
        */
-      valueChainStatus = 'valueChainStatus'
+      valueChainStatus = 'valueChainStatus',
+      /**
+       * Value chain product type ID
+       */
+      productTypeId = 'productTypeId'
     }
 
     /**
@@ -265,6 +273,8 @@ export namespace GetValueChainListUsingGET {
       name: [
       ],
       valueChainStatus: [
+      ],
+      productTypeId: [
       ],
     };
 }
@@ -718,6 +728,7 @@ export class ValueChainControllerService {
       map.sort,
       map.name,
       map.valueChainStatus,
+      map.productTypeId,
       observe,
       reportProgress
     );
@@ -734,13 +745,14 @@ export class ValueChainControllerService {
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param name Value chain name
      * @param valueChainStatus Value chain status
+     * @param productTypeId Value chain product type ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiValueChain>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiValueChain>>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiValueChain>>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiValueChain>;
+    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiValueChain>>;
+    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiValueChain>>;
+    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -763,6 +775,9 @@ export class ValueChainControllerService {
         }
         if (valueChainStatus !== undefined && valueChainStatus !== null) {
             queryParameters = queryParameters.set('valueChainStatus', <any>valueChainStatus);
+        }
+        if (productTypeId !== undefined && productTypeId !== null) {
+            queryParameters = queryParameters.set('productTypeId', <any>productTypeId);
         }
 
         let headers = this.defaultHeaders;

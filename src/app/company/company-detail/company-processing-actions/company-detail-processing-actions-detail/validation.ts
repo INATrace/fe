@@ -192,7 +192,7 @@ export const ApiProcessingActionValidationScheme = {
     translations: {
       validators: [Validators.required]
     },
-    valueChain: {
+    valueChains: {
       validators: [Validators.required]
     },
     type: {

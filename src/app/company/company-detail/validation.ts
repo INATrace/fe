@@ -125,6 +125,9 @@ export const ApiCompanyGetValidationScheme = {
     mediaLinks: {
       validators: []
     },
+    valueChains: {
+      validators: [Validators.required]
+    },
     name: {
       validators: [Validators.required]
     },

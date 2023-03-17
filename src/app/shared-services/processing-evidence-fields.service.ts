@@ -15,7 +15,7 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
   constructor(
       private codebookService: ProcessingEvidenceFieldControllerService,
       protected codebookTranslations: CodebookTranslations,
-      private valueChainId?: number
+      private valueChainIdList?: Array<number>
   ) {
     super();
   }
@@ -41,7 +41,7 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
     };
 
     const lkey = key ? key.toLocaleLowerCase() : null;
-    return this.fetchProcessingEvidenceFields(reqPars, this.valueChainId).pipe(
+    return this.fetchProcessingEvidenceFields(reqPars, this.valueChainIdList).pipe(
         map((res: ApiPaginatedResponseApiProcessingEvidenceField) => {
           const results = res.data.items;
 
@@ -59,9 +59,9 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
     return $localize`:@@processingEvidenceField.input.placeholder:Select evidence field`;
   }
 
-  private fetchProcessingEvidenceFields(reqParams, valueChainId?: number): Observable<ApiPaginatedResponseApiProcessingEvidenceField> {
-    if (valueChainId !== null && valueChainId !== undefined) {
-      return this.codebookService.listProcessingEvidenceFieldsByValueChainUsingGETByMap({ id: valueChainId, ...reqParams });
+  private fetchProcessingEvidenceFields(reqParams, valueChainIdList?: Array<number>): Observable<ApiPaginatedResponseApiProcessingEvidenceField> {
+    if (valueChainIdList !== null && valueChainIdList !== undefined) {
+      return this.codebookService.listProcessingEvidenceFieldsByValueChainsUsingGETByMap({ valueChainIds: valueChainIdList, ...reqParams });
     } else {
       return this.codebookService.getProcessingEvidenceFieldListUsingGETByMap(reqParams);
     }

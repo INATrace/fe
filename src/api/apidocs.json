@@ -3484,6 +3484,117 @@
         "summary": "Get a paginated list of processing evidence fields."
       }
     },
+    "/api/chain/processing-evidence-field/list/by-value-chains": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain IDs",
+            "explode": true,
+            "in": "query",
+            "name": "valueChainIds",
+            "required": true,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceField_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-field-controller"
+        ],
+        "operationId": "listProcessingEvidenceFieldsByValueChainsUsingGET",
+        "summary": "Get a list of processing evidence fields by value chain ID list."
+      }
+    },
     "/api/chain/processing-evidence-field/list/value-chain/{id}": {
       "get": {
         "parameters": [
@@ -3587,6 +3698,7 @@
         "tags": [
           "processing-evidence-field-controller"
         ],
+        "deprecated": true,
         "operationId": "listProcessingEvidenceFieldsByValueChainUsingGET",
         "summary": "Get a list of processing evidence fields by value chain ID."
       }
@@ -3800,6 +3912,117 @@
         "summary": "Get a paginated list of processing evidence types."
       }
     },
+    "/api/chain/processing-evidence-type/list/by-value-chains": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain IDs",
+            "explode": true,
+            "in": "query",
+            "name": "valueChainIds",
+            "required": true,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProcessingEvidenceType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "processing-evidence-type-controller"
+        ],
+        "operationId": "listProcessingEvidenceTypesByValueChainsUsingGET",
+        "summary": "Get a list of processing evidence types by value chain ID list."
+      }
+    },
     "/api/chain/processing-evidence-type/list/value-chain/{id}": {
       "get": {
         "parameters": [
@@ -3903,6 +4126,7 @@
         "tags": [
           "processing-evidence-type-controller"
         ],
+        "deprecated": true,
         "operationId": "listProcessingEvidenceTypesByValueChainUsingGET",
         "summary": "Get a list of processing evidence types by value chain ID."
       }
@@ -4343,6 +4567,117 @@
         ],
         "operationId": "getSemiProductListUsingGET",
         "summary": "Get a paginated list of semi products."
+      }
+    },
+    "/api/chain/semi-product/list/by-value-chains": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Value chain IDs",
+            "explode": true,
+            "in": "query",
+            "name": "valueChainIds",
+            "required": true,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiSemiProduct_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "semi-product-controller"
+        ],
+        "operationId": "getSemiProductListByValueChainsUsingGET",
+        "summary": "Get a paginated list of semi products for given value-chain list"
       }
     },
     "/api/chain/semi-product/{id}": {
@@ -5875,6 +6210,16 @@
                 "DISABLED"
               ],
               "type": "string"
+            }
+          },
+          {
+            "description": "Value chain product type ID",
+            "in": "query",
+            "name": "productTypeId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
             }
           }
         ],
@@ -7519,6 +7864,188 @@
         "summary": "Get list of connected companies for the company with the given ID"
       }
     },
+    "/api/company/{id}/product-types": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getCompanyProductTypesUsingGET",
+        "summary": "Get list of product types for the company with the given ID"
+      }
+    },
+    "/api/company/{id}/value-chains": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Only count, only fetch, or return both values (if null)",
+            "in": "query",
+            "name": "requestType",
+            "required": false,
+            "schema": {
+              "enum": [
+                "COUNT",
+                "FETCH"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of records to return. Min: 1, default: 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Number of records to skip before returning. Default: 0, min: 0",
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Column name to be sorted by, varies for each endpoint, default is id",
+            "in": "query",
+            "name": "sortBy",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Direction of sorting (ASC or DESC). Default DESC.",
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "DESC",
+              "enum": [
+                "ASC",
+                "DESC"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiValueChain_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getCompanyValueChainsUsingGET",
+        "summary": "Get list of value chains for the company with the given ID"
+      }
+    },
     "/api/final-product/company/{companyId}": {
       "get": {
         "parameters": [
@@ -7608,6 +8135,135 @@
         ],
         "operationId": "getFinalProductsForCompanyUsingGET",
         "summary": "Get a list of final products that the company with the provided ID has access to"
+      }
+    },
+    "/api/product-type": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "getProductTypesUsingGET",
+        "summary": "getProductTypes"
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "createProductTypeUsingPOST",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProductType"
+        },
+        "summary": "createProductType"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "updateProductTypeUsingPUT",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProductType"
+        },
+        "summary": "updateProductType"
+      }
+    },
+    "/api/product-type/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "description": "id",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "deleteProductTypeUsingDELETE",
+        "summary": "deleteProductType"
+      },
+      "get": {
+        "parameters": [
+          {
+            "description": "id",
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProductType_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "product-type-controller"
+        ],
+        "operationId": "getProductTypeUsingGET",
+        "summary": "getProductType"
       }
     },
     "/api/product/": {
@@ -10389,12 +11045,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10404,19 +11057,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10426,19 +11076,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10448,19 +11095,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10470,19 +11114,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10492,19 +11133,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10514,19 +11152,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10536,8 +11171,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -10585,6 +11220,17 @@
           }
         },
         "description": "request",
+        "required": true
+      },
+      "ApiProductType": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiProductType"
+            }
+          }
+        },
+        "description": "apiProductType",
         "required": true
       },
       "ApiUserCustomer": {
@@ -11445,6 +12091,13 @@
             "example": false,
             "type": "boolean"
           },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
+          },
           "webPage": {
             "description": "webpage",
             "type": "string"
@@ -11738,6 +12391,13 @@
             },
             "type": "array"
           },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
+          },
           "webPage": {
             "description": "webpage",
             "type": "string"
@@ -11869,6 +12529,13 @@
             "description": "Add users with these ids",
             "items": {
               "$ref": "#/components/schemas/ApiBaseEntity"
+            },
+            "type": "array"
+          },
+          "valueChains": {
+            "description": "company value chains",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
             },
             "type": "array"
           },
@@ -12045,7 +12712,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -12161,6 +12829,13 @@
           "facilityType": {
             "$ref": "#/components/schemas/ApiFacilityType",
             "description": "Facility type"
+          },
+          "facilityValueChains": {
+            "description": "List of value chains for this facility",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
           },
           "id": {
             "description": "Entity id",
@@ -13291,6 +13966,33 @@
         },
         "type": "object"
       },
+      "ApiPaginatedList_ApiProductType_": {
+        "properties": {
+          "count": {
+            "description": "Count of all items satisfying 'paginatable' request.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "items": {
+            "description": "Response items.",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductType"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "description": "Limit got from request",
+            "format": "int32",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "Offset got from request",
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiPaginatedList_ApiSemiProduct_": {
         "properties": {
           "count": {
@@ -13481,7 +14183,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13524,7 +14227,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13567,7 +14271,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13610,7 +14315,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13653,7 +14359,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13696,7 +14403,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13739,7 +14447,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13782,7 +14491,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13825,7 +14535,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13868,7 +14579,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13911,7 +14623,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13954,7 +14667,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -13997,7 +14711,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14040,7 +14755,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14083,7 +14799,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14126,7 +14843,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14169,7 +14887,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14212,7 +14931,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14255,7 +14975,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14298,7 +15019,52 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiPaginatedResponse_ApiProductType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPaginatedList_ApiProductType_",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14341,7 +15107,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14384,7 +15151,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14427,7 +15195,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14470,7 +15239,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14513,7 +15283,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14556,7 +15327,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -14901,9 +15673,12 @@
             ],
             "type": "string"
           },
-          "valueChain": {
-            "$ref": "#/components/schemas/ApiValueChain",
-            "description": "The value chain that this Processing action supports"
+          "valueChains": {
+            "description": "List of value chains for this processing action",
+            "items": {
+              "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
           }
         },
         "type": "object"
@@ -16128,6 +16903,30 @@
         },
         "type": "object"
       },
+      "ApiProductType": {
+        "properties": {
+          "creationTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updateTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiPurchaseOrder": {
         "properties": {
           "activityProofs": {
@@ -16367,7 +17166,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16410,7 +17210,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16453,7 +17254,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16496,7 +17298,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16539,7 +17342,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16582,7 +17386,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16625,7 +17430,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16668,7 +17474,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16711,7 +17518,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16754,7 +17562,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16797,7 +17606,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16840,7 +17650,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16883,7 +17694,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16926,7 +17738,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -16969,7 +17782,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17012,7 +17826,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17055,7 +17870,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17098,7 +17914,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17141,7 +17958,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17184,7 +18002,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17227,7 +18046,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17270,7 +18090,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17313,7 +18134,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17356,7 +18178,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17399,7 +18222,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17442,7 +18266,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17485,7 +18310,52 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProductType_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProductType",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17528,7 +18398,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17571,7 +18442,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17614,7 +18486,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17657,7 +18530,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17700,7 +18574,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17743,7 +18618,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17786,7 +18662,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17829,7 +18706,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17872,7 +18750,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17915,7 +18794,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -17961,7 +18841,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -18007,7 +18888,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -18053,7 +18935,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -18099,7 +18982,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -18143,7 +19027,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -18186,7 +19071,8 @@
               "UPSTREAM_HTTP_ERROR",
               "INVALID_REQUEST",
               "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED"
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
             ],
             "example": "OK",
             "type": "string"
@@ -19039,6 +19925,13 @@
             "description": "Phone",
             "type": "string"
           },
+          "productTypes": {
+            "description": "User customer product types",
+            "items": {
+              "$ref": "#/components/schemas/ApiProductType"
+            },
+            "type": "array"
+          },
           "surname": {
             "description": "Surname",
             "type": "string"
@@ -19337,6 +20230,10 @@
             },
             "type": "array"
           },
+          "productType": {
+            "$ref": "#/components/schemas/ApiProductType",
+            "description": "Selected product type"
+          },
           "semiProducts": {
             "description": "list of supported semi-products",
             "items": {
@@ -19575,6 +20472,10 @@
     {
       "description": "User Controller",
       "name": "user-controller"
+    },
+    {
+      "description": "Product Type Controller",
+      "name": "product-type-controller"
     },
     {
       "description": "Common Csv Controller",

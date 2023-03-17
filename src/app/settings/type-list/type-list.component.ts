@@ -22,6 +22,8 @@ import { SemiProductControllerService } from '../../../api/api/semiProductContro
 import { ApiPaginatedResponseApiSemiProduct } from '../../../api/model/apiPaginatedResponseApiSemiProduct';
 import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
 import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
+import {ApiPaginatedResponseApiProductType} from '../../../api/model/apiPaginatedResponseApiProductType';
+import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
 
 @Component({
   selector: 'app-type-list',
@@ -38,6 +40,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductsService: SemiProductControllerService,
+    private productTypesService: ProductTypeControllerService,
     private route: ActivatedRoute,
     private modalService: NgbModalImproved,
     protected globalEventsManager: GlobalEventManagerService
@@ -218,6 +221,22 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
   ];
 
+  sortOptionsProductTypes: SortOption[] = [
+    {
+      key: 'name',
+      name: $localize`:@@settingsTypes.sortOptions.productTypes.name:Name`
+    },
+    {
+      key: 'description',
+      name: $localize`:@@settingsTypes.sortOptions.productTypes.description:Description`
+    },
+    {
+      key: 'actions',
+      name: $localize`:@@settingsTypes.sortOptions.actions.name:Actions`,
+      inactive: true
+    }
+  ];
+
   ngOnInit(): void {
     this.setAll().then();
     if (this.type === 'facility-types') { this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`; }
@@ -227,6 +246,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'processing-evidence-types') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`; }
     if (this.type === 'processing-evidence-fields') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceFields:Processing evidence fields`; }
     if (this.type === 'semi-products') { this.title = $localize`:@@settingsTypes.typeList.title.semiProducts:Semi-products`; }
+    if (this.type === 'product-types') { this.title = $localize`:@@settingsTypes.typeList.title.productTypes:Product types`; }
   }
 
   ngOnChanges() {
@@ -275,6 +295,9 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'semi-products') {
       return this.semiProductsService.getSemiProductListUsingGETByMap({ ...params });
     }
+    if (this.type === 'product-types') {
+      return this.productTypesService.getProductTypesUsingGETByMap({ ...params });
+    }
   }
 
   paginatedType() {
@@ -285,6 +308,7 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'processing-evidence-types') { return ApiPaginatedResponseApiProcessingEvidenceType; }
     if (this.type === 'processing-evidence-fields') { return ApiPaginatedResponseApiProcessingEvidenceField; }
     if (this.type === 'semi-products') { return ApiPaginatedResponseApiSemiProduct; }
+    if (this.type === 'product-types') { return ApiPaginatedResponseApiProductType; }
   }
 
   edit(type) {
@@ -310,6 +334,9 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'semi-products') {
       editTitle = $localize`:@@settingsTypes.editSemiProduct.editTitle:Edit semi-product`;
     }
+    if (this.type === 'product-types') {
+      editTitle = $localize`:@@settingsTypes.editProductType.editTitle:Edit product type`;
+    }
 
     this.modalService.open(TypeDetailModalComponent, {
       centered: true
@@ -325,9 +352,13 @@ export class TypeListComponent implements OnInit, OnChanges {
   }
 
   async delete(type) {
+
+    // fallback if type.label not available
+    const label = type.label ? type.label : type.name;
+
     const result = await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@settingsTypes.remove.warning.message:Are you sure you want to remove ${ type.label }?`,
+      message: $localize`:@@settingsTypes.remove.warning.message:Are you sure you want to remove ${ label }?`,
       options: { centered: true },
       dismissable: false
     });
@@ -433,6 +464,13 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'semi-products') {
       const res = await this.semiProductsService.getSemiProductListUsingGET().pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
+        this.all = res.data.count;
+        this.countAll.emit(res.data.count);
+      }
+    }
+    if (this.type === 'product-types') {
+      const res = await this.productTypesService.getProductTypesUsingGET().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);

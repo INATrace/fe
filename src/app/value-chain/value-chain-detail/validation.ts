@@ -36,6 +36,9 @@ export const ApiValueChainValidationScheme = {
     processingEvidenceFields: {
       validators: []
     },
+    productType:  {
+      validators: [Validators.required]
+    },
     semiProducts: {
       validators: []
     }

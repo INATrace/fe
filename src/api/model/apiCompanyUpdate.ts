@@ -24,6 +24,7 @@ import { ApiCertification } from './apiCertification';
 import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiCurrencyType } from './apiCurrencyType';
 import { ApiDocument } from './apiDocument';
+import { ApiValueChain } from './apiValueChain';
 
 
 
@@ -95,6 +96,10 @@ export interface ApiCompanyUpdate {
      * Add users with these ids
      */
     users?: Array<ApiBaseEntity>;
+    /**
+     * company value chains
+     */
+    valueChains?: Array<ApiValueChain>;
     /**
      * webpage
      */
@@ -176,6 +181,10 @@ export namespace ApiCompanyUpdate {
          * Add users with these ids
          */
         users = 'users',
+        /**
+         * company value chains
+         */
+        valueChains = 'valueChains',
         /**
          * webpage
          */
@@ -415,6 +424,18 @@ export namespace ApiCompanyUpdate {
                     complexType: 'ApiBaseEntity'
                 },
                 {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChains',
+                    classname: 'ApiCompanyUpdate',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -464,6 +485,8 @@ export namespace ApiCompanyUpdate {
                 purchaseProofDocumentMultipleFarmers: [
                 ],
                 users: [
+                ],
+                valueChains: [
                 ],
                 webPage: [
                 ],
@@ -529,6 +552,9 @@ export namespace ApiCompanyUpdate {
   //                   validators: []
   //               },
   //               users: {
+  //                   validators: []
+  //               },
+  //               valueChains: {
   //                   validators: []
   //               },
   //               webPage: {

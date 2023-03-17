@@ -141,5 +141,28 @@
             (showing)="onShow($event, 'processing-evidence-fields')">
     </app-type-list>
 
+
+    <!-- PRODUCT TYPES CODEBOOK -->
+    <div class="main-inside-top content-element">
+      <div class="d-flex justify-content-between main-inside-top--row1">
+        <div class="title-page content-element--title" i18n="@@settingsPage.title.productTypes">Product types</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('product-types')" i18n="@@settingsPage.button.newProductType">
+          <span>+ Add</span>
+        </button>
+      </div>
+      <div class="d-flex align-items-start main-inside-top--row2">
+        <div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfProductTypes">List of product types</div>
+          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingProductTypes">Showing {{showedProductTypes}}/{{allProductTypes}}</div>
+        </div>
+      </div>
+    </div>
+    <app-type-list
+      [parentReload]="parentReloadProductTypes"
+      type='product-types'
+      (countAll)="onCountAll($event, 'product-types')"
+      (showing)="onShow($event, 'product-types')">
+    </app-type-list>
+
   </div>
 </app-authorised-layout>

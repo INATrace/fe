@@ -334,6 +334,38 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
+
+          <h2 i18n="@@companyDetail.section.valueChains">Company value chains</h2>
+          <div class="af-form-element">
+            <div class="search-field">
+              <single-choice
+                [formControlInput]="valueChainsForm"
+                [codebookService]="valueChainsCodebook"
+                (onChange)="addSelectedValueChain($event)">
+              </single-choice>
+              <div *ngIf="submitted && selectedCompanyValueChainsControl.errors as errors"
+                   class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@companyDetail.textinput.valueChains.error">
+                    <span>
+                      At least one value chain is required
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div *ngFor="let valueChain of this.valueChains; index as idx">
+              <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
+                <div>{{ valueChain.name }}</div>
+                <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
+                  <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="af-form-row">
+        <div class="af-form-block--c12">
           <h2 i18n="@@companyDetail.base.currency">Base currency</h2>
           <div class="af-form-element">
             <single-choice label="Currency"

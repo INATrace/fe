@@ -28,6 +28,10 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
 import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
+import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
+import {ApiProductType} from '../../../../api/model/apiProductType';
+import {CheckListNotEmptyValidator} from '../../../../shared/validation';
+import {ApiPaginatedResponseApiProductType} from '../../../../api/model/apiPaginatedResponseApiProductType';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -81,6 +85,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   codebookStatus = EnumSifrant.fromObject(this.roles);
 
   farmerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
+  productTypesForm = new FormControl(null);
+  productTypes: Array<ApiProductType> = [];
+  productTypesCodebook: CompanyProductTypesService;
+  selectedProductTypesForm = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   // purchase table parameters
   showedPurchaseOrders = 0;
@@ -201,6 +209,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.editFarmer();
       }
+
+      this.farmerForm.setControl('productTypes', this.selectedProductTypesForm);
+
+      this.selectedProductTypesForm.setValue(this.productTypes);
+
+      this.productTypesCodebook = new CompanyProductTypesService(this.companyService, this.companyId);
+
       this.initializeListManager();
       this.updateAreaUnitValidators();
       this.initValueChangeListeners();
@@ -221,6 +236,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       case 'new':
         this.title = $localize`:@@collectorDetail.newFarmer.title:New farmer`;
         this.update = false;
+        // this code sets the default product type, when only 1 is available
+        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypesUsingGET(this.companyId).pipe(take(1)).toPromise();
+        if (defaultProdTypeCheck && defaultProdTypeCheck.status === 'OK') {
+          if (defaultProdTypeCheck.data.count === 1) {
+            this.productTypes = defaultProdTypeCheck.data.items;
+          }
+        }
         break;
       case 'update':
         this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
@@ -228,6 +250,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
+          this.productTypes = uc.data.productTypes;
         }
         break;
       default:
@@ -328,6 +351,45 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   dismiss() {
     this.location.back();
+  }
+
+  async addSelectedProductType(productType: ApiProductType) {
+    if (!productType) {
+      return;
+    }
+    if (this.productTypes.some(pt => pt?.id === productType?.id)) {
+      setTimeout(() => this.productTypesForm.setValue(null));
+      return;
+    }
+    this.productTypes.push(productType);
+    setTimeout(() => {
+      this.selectedProductTypesForm.setValue(this.productTypes);
+      this.farmerForm.markAsDirty();
+      this.productTypesForm.setValue(null);
+    });
+  }
+
+  deleteProductType(idx: number) {
+    this.confirmProductTypeRemove().then(confirmed => {
+      if (confirmed) {
+        this.productTypes.splice(idx, 1);
+        setTimeout(() => this.selectedProductTypesForm.setValue(this.productTypes));
+        this.farmerForm.markAsDirty();
+      }
+    });
+  }
+
+  private async confirmProductTypeRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@companyDetailProductTypeModal.removeProductType.confirm.message:Are you sure you want to remove the product type?`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
   }
 
   async save() {

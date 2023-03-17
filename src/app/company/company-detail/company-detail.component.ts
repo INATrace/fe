@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import {BehaviorSubject, forkJoin, Subscription} from 'rxjs';
 import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiCompany } from 'src/api/model/apiCompany';
@@ -11,16 +11,25 @@ import { ApiCompanyGet } from 'src/api/model/apiCompanyGet';
 import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { CountryService } from '../../shared-services/countries.service';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
-import { ApiCompanyDocumentValidationScheme, ApiCompanyGetValidationScheme } from './validation';
+import {
+  ApiCompanyDocumentValidationScheme,
+  ApiCompanyGetValidationScheme,
+} from './validation';
 import { environment } from 'src/environments/environment';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
-import { ApiCertificationValidationScheme } from '../../m-product/product-label/validation';
+import {
+  ApiCertificationValidationScheme
+} from '../../m-product/product-label/validation';
 import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
 import { CurrenciesService } from '../../shared-services/currencies.service';
 import { AuthService } from '../../core/auth.service';
+import {ApiValueChain} from '../../../api/model/apiValueChain';
+import {ActiveValueChainService} from '../../shared-services/active-value-chain.service';
+import {ValueChainControllerService} from '../../../api/api/valueChainController.service';
+import {CheckListNotEmptyValidator} from '../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail',
@@ -55,6 +64,11 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   title = '';
 
   sub: Subscription;
+  valueChainsCodebook: ActiveValueChainService;
+  valueChainsForm = new FormControl(null);
+
+  valueChains: Array<ApiValueChain> = [];
+  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
 
   certificationListManager = null;
   videosListManager = null;
@@ -86,6 +100,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     protected route: ActivatedRoute,
     private location: Location,
     private companyController: CompanyControllerService,
+    private valueChainController: ValueChainControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
     public currencyCodes: CurrenciesService,
@@ -137,6 +152,8 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       this.title = $localize`:@@companyDetail.title.add:Add company`;
       this.newCompany();
     }
+
+    this.valueChainsCodebook = new ActiveValueChainService(this.valueChainController);
   }
 
   ngOnDestroy() {
@@ -152,6 +169,45 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     return true;
   }
 
+  async addSelectedValueChain(valueChain: ApiValueChain) {
+    if (!valueChain) {
+      return;
+    }
+    if (this.valueChains.some(vch => vch?.id === valueChain?.id)) {
+      setTimeout(() => this.valueChainsForm.setValue(null));
+      return;
+    }
+    this.valueChains.push(valueChain);
+    setTimeout(() => {
+      this.selectedCompanyValueChainsControl.setValue(this.valueChains);
+      this.companyDetailForm.markAsDirty();
+      this.valueChainsForm.setValue(null);
+    });
+  }
+
+  deleteValueChain(idx: number) {
+    this.confirmValueChainRemove().then(confirmed => {
+      if (confirmed) {
+        this.valueChains.splice(idx, 1);
+        setTimeout(() => this.selectedCompanyValueChainsControl.setValue(this.valueChains));
+        this.companyDetailForm.markAsDirty();
+      }
+    });
+  }
+
+  private async confirmValueChainRemove(): Promise<boolean> {
+
+    const result = await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@companyDetailValueChainModal.removeValueChain.confirm.message:Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.`,
+      options: {
+        centered: true
+      }
+    });
+
+    return result === 'ok';
+  }
+
   get mode() {
     const id = this.route.snapshot.params.id;
     return id == null ? 'create' : 'update';
@@ -161,25 +217,37 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this._companyErrorStatus$.next('');
     this.globalEventsManager.showLoading(true);
     const id = +this.route.snapshot.paramMap.get('id');
-    this.sub = this.companyController.getCompanyUsingGET(id)
-      .subscribe(company => {
+
+    this.sub = forkJoin([
+      this.companyController.getCompanyUsingGET(id).pipe(take(1)),
+      this.companyController.getCompanyValueChainsUsingGET(id).pipe(take(1))
+    ]).subscribe({
+      next: ([company, valueChains]) => {
         this.company = company.data;
         if (!this.company.headquarters) {
           this.company.headquarters = this.emptyObject().headquarters;
         }
+
+        if (valueChains && valueChains.data) {
+          this.valueChains = valueChains.data.items ? valueChains.data.items : [];
+          this.selectedCompanyValueChainsControl.setValue(this.valueChains);
+        }
+
         this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), company.data, ApiCompanyGetValidationScheme);
         this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
         (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+        (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
         this.companyDetailForm.updateValueAndValidity();
 
         this.fillWebPageAndSocialMediaForm();
         this.initializeListManagers();
         this.globalEventsManager.showLoading(false);
       },
-        error => {
-          this._companyErrorStatus$.next(error.error.status);
-          this.globalEventsManager.showLoading(false);
-        });
+      error: (error) => {
+        this._companyErrorStatus$.next(error.error.status);
+        this.globalEventsManager.showLoading(false);
+      }
+    });
   }
 
   emptyObject() {
@@ -198,6 +266,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     this.companyDetailForm = generateFormFromMetadata(ApiCompanyGet.formMetadata(), this.emptyObject(), ApiCompanyGetValidationScheme);
     this.socialMediaForm = CompanyDetailComponent.generateSocialMediaForm();
     (this.companyDetailForm as FormGroup).setControl('mediaLinks', this.socialMediaForm);
+    (this.companyDetailForm as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.companyDetailForm.updateValueAndValidity();
     this.initializeListManagers();
   }
