@@ -1,16 +1,17 @@
-import {GeneralSifrantService} from './general-sifrant.service';
-import {ApiSemiProduct} from '../../api/model/apiSemiProduct';
+import { GeneralSifrantService } from './general-sifrant.service';
+import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 import {
   GetSemiProductListByValueChainsUsingGET,
   SemiProductControllerService
 } from '../../api/api/semiProductController.service';
-import {CodebookTranslations} from './codebook-translations';
-import {PagedSearchResults} from '../../interfaces/CodebookHelperService';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {ApiPaginatedResponseApiSemiProduct} from '../../api/model/apiPaginatedResponseApiSemiProduct';
+import { CodebookTranslations } from './codebook-translations';
+import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiPaginatedResponseApiSemiProduct } from '../../api/model/apiPaginatedResponseApiSemiProduct';
 
 export class SemiProductsForValueChainsService extends GeneralSifrantService<ApiSemiProduct> {
+
   constructor(
     private codebookService: SemiProductControllerService,
     private codebookTranslations: CodebookTranslations,
@@ -51,6 +52,5 @@ export class SemiProductsForValueChainsService extends GeneralSifrantService<Api
   public placeholder(): string {
     return $localize`:@@semiProductForValueChains.input.placehoder:Select semi-product`;
   }
-
 
 }

@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {PagedSearchResults} from 'src/interfaces/CodebookHelperService';
-import {GeneralSifrantService} from './general-sifrant.service';
-import {ApiProductType} from '../../api/model/apiProductType';
-import {ApiPaginatedResponseApiProductType} from '../../api/model/apiPaginatedResponseApiProductType';
-import {CompanyControllerService, GetCompanyProductTypesUsingGET} from '../../api/api/companyController.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
+import { GeneralSifrantService } from './general-sifrant.service';
+import { ApiProductType } from '../../api/model/apiProductType';
+import { ApiPaginatedResponseApiProductType } from '../../api/model/apiPaginatedResponseApiProductType';
+import { CompanyControllerService, GetCompanyProductTypesUsingGET } from '../../api/api/companyController.service';
 
 @Injectable({
   providedIn: 'root'

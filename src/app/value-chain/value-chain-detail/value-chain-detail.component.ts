@@ -6,8 +6,10 @@ import { finalize } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme,
-  ApiVCProcessingEvidenceFieldValidationScheme, ApiVCProcessingEvidenceTypeValidationScheme} from './validation';
+import {
+  ApiSemiProductValidationScheme, ApiValueChainValidationScheme, ApiVCMeasureUnitTypeValidationScheme,
+  ApiVCProcessingEvidenceFieldValidationScheme, ApiVCProcessingEvidenceTypeValidationScheme
+} from './validation';
 import { ListEditorManager } from '../../shared/list-editor/list-editor-manager';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
@@ -22,8 +24,8 @@ import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseE
 import StatusEnum = ApiResponseApiBaseEntity.StatusEnum;
 import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
-import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
-import {ProductTypesService} from '../../shared-services/product-types.service';
+import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
+import { ProductTypesService } from '../../shared-services/product-types.service';
 
 @Component({
   selector: 'app-value-chain-detail',

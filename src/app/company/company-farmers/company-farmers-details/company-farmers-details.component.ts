@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,10 +28,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
 import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
-import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
-import {ApiProductType} from '../../../../api/model/apiProductType';
-import {CheckListNotEmptyValidator} from '../../../../shared/validation';
-import {ApiPaginatedResponseApiProductType} from '../../../../api/model/apiPaginatedResponseApiProductType';
+import { CompanyProductTypesService } from '../../../shared-services/company-product-types.service';
+import { ApiProductType } from '../../../../api/model/apiProductType';
+import { CheckListNotEmptyValidator } from '../../../../shared/validation';
 
 @Component({
   selector: 'app-company-farmers-details',

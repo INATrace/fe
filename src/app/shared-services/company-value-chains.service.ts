@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {GeneralSifrantService} from './general-sifrant.service';
-import {ApiCompanyListResponse} from '../../api/model/apiCompanyListResponse';
-import {Observable} from 'rxjs';
-import {PagedSearchResults} from '../../interfaces/CodebookHelperService';
-import {map} from 'rxjs/operators';
-import {ApiPaginatedResponseApiValueChain} from '../../api/model/apiPaginatedResponseApiValueChain';
-import {CompanyControllerService, GetCompanyValueChainsUsingGET} from '../../api/api/companyController.service';
+import { Injectable } from '@angular/core';
+import { GeneralSifrantService } from './general-sifrant.service';
+import { ApiCompanyListResponse } from '../../api/model/apiCompanyListResponse';
+import { Observable } from 'rxjs';
+import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+import { map } from 'rxjs/operators';
+import { ApiPaginatedResponseApiValueChain } from '../../api/model/apiPaginatedResponseApiValueChain';
+import { CompanyControllerService, GetCompanyValueChainsUsingGET } from '../../api/api/companyController.service';
 
 @Injectable({
   providedIn: 'root'

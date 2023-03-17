@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {BehaviorSubject, forkJoin, Subscription} from 'rxjs';
+import { BehaviorSubject, forkJoin, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { ApiCompany } from 'src/api/model/apiCompany';
@@ -26,10 +26,10 @@ import { ApiCompanyDocument } from 'src/api/model/apiCompanyDocument';
 import { CompanyDetailTabManagerComponent } from './company-detail-tab-manager/company-detail-tab-manager.component';
 import { CurrenciesService } from '../../shared-services/currencies.service';
 import { AuthService } from '../../core/auth.service';
-import {ApiValueChain} from '../../../api/model/apiValueChain';
-import {ActiveValueChainService} from '../../shared-services/active-value-chain.service';
-import {ValueChainControllerService} from '../../../api/api/valueChainController.service';
-import {CheckListNotEmptyValidator} from '../../../shared/validation';
+import { ApiValueChain } from '../../../api/model/apiValueChain';
+import { ActiveValueChainService } from '../../shared-services/active-value-chain.service';
+import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
+import { CheckListNotEmptyValidator } from '../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail',
