@@ -276,10 +276,9 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   newAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
-    this.form.get('inputSemiProduct').setValue(null);
-    this.form.get('outputSemiProduct').setValue(null);
-    this.form.get('maxOutputWeight').setValue(null);
-    this.form.get('maxOutputWeight').disable();
+    this.inputSemiProductControl.setValue(null);
+    this.maxOutputWeightControl.setValue(null);
+    this.maxOutputWeightControl.disable();
   }
 
   editAction() {
