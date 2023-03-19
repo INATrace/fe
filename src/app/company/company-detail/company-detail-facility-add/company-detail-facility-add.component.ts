@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
 import { SemiProductControllerService } from '../../../../api/api/semiProductController.service';
 import { CodebookTranslations } from '../../../shared-services/codebook-translations';
 import { SemiProductsForValueChainsService } from '../../../shared-services/semi-products-for-value-chains.service';
-import { CheckListNotEmptyValidator } from '../../../../shared/validation';
+import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { CompanyValueChainsService } from '../../../shared-services/company-value-chains.service';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
 import LanguageEnum = ApiFacilityTranslation.LanguageEnum;
@@ -50,7 +50,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   companyValueChainsCodebook: CompanyValueChainsService;
   valueChainsForm = new FormControl(null);
   valueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
+  selectedCompanyValueChainsControl = new FormControl(null, [ListNotEmptyValidator()]);
 
   codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
   semiProductsForm = new FormControl(null);

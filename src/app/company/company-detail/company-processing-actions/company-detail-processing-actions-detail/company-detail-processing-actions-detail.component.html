@@ -30,6 +30,11 @@
 
                         <label i18n="@@companyDetailProcessingActions.valueChains">Value chains</label>
                         <div class="af-form-element">
+
+                            <small i18n="@@companyDetailProcessingActions.valueChains.select.label">
+                                Select value chain
+                            </small>
+
                             <single-choice
                               [formControlInput]="valueChainsForm"
                               [codebookService]="companyValueChainsCodebook"
@@ -94,7 +99,7 @@
                             <single-choice
                                     label="QR code for final product"
                                     i18n-label="@@companyDetailProcessingActions.singleChoice.qrCodeForFinalProduct.label"
-                                    [formControlInput]="form.get('qrCodeForFinalProduct')"
+                                    [formControlInput]="$any(form.get('qrCodeForFinalProduct'))"
                                     [codebookService]="finalProductsForCompanyCodebook"
                                     [isInvalidChoice]="submitted && form.get('qrCodeForFinalProduct').invalid">
                                 <ng-container *ngIf="submitted">

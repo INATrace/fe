@@ -30,7 +30,7 @@ import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
 import { CompanyProductTypesService } from '../../../shared-services/company-product-types.service';
 import { ApiProductType } from '../../../../api/model/apiProductType';
-import { CheckListNotEmptyValidator } from '../../../../shared/validation';
+import { ListNotEmptyValidator } from '../../../../shared/validation';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -87,7 +87,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   productTypesForm = new FormControl(null);
   productTypes: Array<ApiProductType> = [];
   productTypesCodebook: CompanyProductTypesService;
-  selectedProductTypesForm = new FormControl(null, [CheckListNotEmptyValidator()]);
+  selectedProductTypesForm = new FormControl(null, [ListNotEmptyValidator()]);
 
   // purchase table parameters
   showedPurchaseOrders = 0;

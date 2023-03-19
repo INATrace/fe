@@ -261,7 +261,7 @@ function functionDatesInOrder(group: FormGroup, startControlName, endControlName
     return null
 }
 
-export function CheckListNotEmptyValidator(): ValidatorFn {
+export function ListNotEmptyValidator(): ValidatorFn {
     return (control: FormControl): ValidationErrors | null => {
         return (control.value && control.value.length > 0) ? null : {'required': true};
     }

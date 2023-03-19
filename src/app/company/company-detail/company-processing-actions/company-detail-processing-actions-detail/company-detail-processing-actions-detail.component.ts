@@ -30,7 +30,7 @@ import { CompanyFacilitiesService } from '../../../../shared-services/company-fa
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { SemiProductsForValueChainsService } from '../../../../shared-services/semi-products-for-value-chains.service';
-import { CheckListNotEmptyValidator } from '../../../../../shared/validation';
+import { ListNotEmptyValidator } from '../../../../../shared/validation';
 import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyValueChainsService } from '../../../../shared-services/company-value-chains.service';
@@ -70,7 +70,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   companyValueChainsCodebook: CompanyValueChainsService;
   valueChainsForm = new FormControl(null);
   valueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
+  selectedCompanyValueChainsControl = new FormControl(null, [ListNotEmptyValidator()]);
 
   languages = ['EN', 'DE', 'RW', 'ES'];
   selectedLanguage = 'EN';
@@ -276,6 +276,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   newAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.emptyObject(), ApiProcessingActionValidationScheme);
+    this.form.setControl('valueChains', this.selectedCompanyValueChainsControl);
     this.inputSemiProductControl.setValue(null);
     this.maxOutputWeightControl.setValue(null);
     this.maxOutputWeightControl.disable();
@@ -284,7 +285,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
   editAction() {
 
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
-    (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
+    this.form.setControl('valueChains', this.selectedCompanyValueChainsControl);
 
     if (!this.repackedOutputsControl.value) {
       this.maxOutputWeightControl.setValue(null);

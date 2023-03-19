@@ -29,7 +29,7 @@ import { AuthService } from '../../core/auth.service';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
 import { ActiveValueChainService } from '../../shared-services/active-value-chain.service';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
-import { CheckListNotEmptyValidator } from '../../../shared/validation';
+import { ListNotEmptyValidator } from '../../../shared/validation';
 
 @Component({
   selector: 'app-company-detail',
@@ -68,7 +68,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   valueChainsForm = new FormControl(null);
 
   valueChains: Array<ApiValueChain> = [];
-  selectedCompanyValueChainsControl = new FormControl(null, [CheckListNotEmptyValidator()]);
+  selectedCompanyValueChainsControl = new FormControl(null, [ListNotEmptyValidator()]);
 
   certificationListManager = null;
   videosListManager = null;

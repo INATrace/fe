@@ -1123,7 +1123,7 @@
     "companyDetailProcessingActions.hint.processingEvidenceDocuments": "Add processing evidence documents that have to be specified after this processing action has been performed.",
     "companyDetailProcessingActions.hint.processingEvidenceDocuments.checkBox": "mandatory / required on quote / required in a group on quote",
     "companyDetailProcessingActions.textInput.search-field.processingEvidenceDocuments.placeholder": "Select evidence document...",
-    "companyDetailProcessingActions.hint.selectValueChain": "Please select Value chain",
+    "companyDetailProcessingActions.hint.selectValueChain": "Please select at least one value chain",
     "companyDetailProcessingActions.button.cancel": "Cancel",
     "companyDetailProcessingActions.button.save": "Save",
     "companyDetailProcessingActions.supportedFacilities": "Facilities where this process starts",
@@ -3109,6 +3109,7 @@
     "companyDetail.beycoIntegration.title": "Beyco Integration",
     "companyDetail.beycoIntegration.allowConfirmation": "Company is allowed to export stock orders on Beyco platform.",
     "common.filter.from.label": "From",
-    "common.filter.to.label": "To"
+    "common.filter.to.label": "To",
+    "companyDetailProcessingActions.valueChains.select.label": "Select value chain"
   }
 }

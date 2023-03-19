@@ -2863,7 +2863,7 @@
     "companyDetailProcessingActions.singleChoice.finalProductAction.yes": "Sí",
     "companyDetailProcessingActions.singleChoice.finalProductAction.no": "No",
     "companyDetailProcessingActions.singleChoice.finalProductAction.error.required": "Se requiere producto final",
-    "companyDetailProcessingActions.hint.selectValueChain": "Seleccione cadena de valor",
+    "companyDetailProcessingActions.hint.selectValueChain": "Please select at least one value chain",
     "productLabelStockFacilityModal.section.final-products": "Productos finales contenidos",
     "productLabelStockFacilityModal.finalProduct.search-field.placeholder": "Ingrese producto final...",
     "finalProduct.input.placeholder": "Seleccione producto final",
@@ -3055,6 +3055,7 @@
     "beycoOrderList.form.coffee.price.error.min": "Precio no puede ser negativo",
     "beycoOrderList.form.coffee.price.error.max": "Precio es demasiado alto",
     "common.filter.from.label": "Desde",
-    "common.filter.to.label": "Hasta"
+    "common.filter.to.label": "Hasta",
+    "companyDetailProcessingActions.valueChains.select.label": "Select value chain"
   }
 }
