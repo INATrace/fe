@@ -4,7 +4,6 @@ import { FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import { ApiActionType } from '../../../api/model/apiActionType';
-import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
@@ -110,21 +109,6 @@ export const ApiActionTypeValidationScheme = {
     },
   }
 } as SimpleValidationScheme<ApiActionType>;
-
-export const ApiGradeAbbreviationValidationScheme = {
-  validators: [],
-  fields: {
-    id: {
-      validators: []
-    },
-    code: {
-      validators: [UndesrcoreAndCapitalsValidator(), Validators.required]
-    },
-    label: {
-      validators: [Validators.required]
-    },
-  }
-} as SimpleValidationScheme<ApiGradeAbbreviation>;
 
 export const ApiProcessingEvidenceTypeValidationScheme = {
   validators: [

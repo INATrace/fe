@@ -5,16 +5,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiFacilityType } from '../../../../api/model/apiFacilityType';
 import {
-  ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme
+  ApiFacilityTypeValidationScheme
 } from '../../../settings/type-detail-modal/validation';
 import { ActiveFacilityTypeService } from '../../../shared-services/active-facility-types.service';
 import { ApiMeasureUnitType } from '../../../../api/model/apiMeasureUnitType';
 import { ActiveMeasureUnitTypeService } from '../../../shared-services/active-measure-unit-types.service';
 import { ApiSemiProductValidationScheme, ApiVCMeasureUnitTypeValidationScheme, ApiVCProcessingEvidenceFieldValidationScheme,
   ApiVCProcessingEvidenceTypeValidationScheme, } from '../validation';
-import { ApiGradeAbbreviation } from '../../../../api/model/apiGradeAbbreviation';
-import { GradeAbbreviationCodebook } from '../../../shared-services/grade-abbreviation-codebook';
 import { ApiProcessingEvidenceType } from '../../../../api/model/apiProcessingEvidenceType';
 import { ProcessingEvidenceTypeService } from '../../../shared-services/processing-evidence-types.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../../api/api/processingEvidenceTypeController.service';
@@ -53,7 +50,6 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
     protected globalEventsManager: GlobalEventManagerService,
     public facilityTypesCodebook: ActiveFacilityTypeService,
     public measureUnitTypesCodebook: ActiveMeasureUnitTypeService,
-    public gradeAbbreviationTypesCodebook: GradeAbbreviationCodebook,
     public semiProductsCodebook: ActiveSemiProductsService
   ) {
     super(globalEventsManager);
@@ -72,10 +68,6 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
 
     if (this.configItemType === 'measure-unit-types') {
       return generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), value, ApiVCMeasureUnitTypeValidationScheme);
-    }
-
-    if (this.configItemType === 'grade-abbreviation-types') {
-      return generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), value, ApiGradeAbbreviationValidationScheme);
     }
 
     if (this.configItemType === 'processing-evidence-types') {
@@ -100,7 +92,7 @@ export class ValueChainConfigItemComponent extends GenericEditableItemComponent<
         return;
       }
 
-      if (this.configItemType === 'facility-types' || this.configItemType === 'grade-abbreviation-types') {
+      if (this.configItemType === 'facility-types') {
         this.form.setValue({...$event});
       }
 

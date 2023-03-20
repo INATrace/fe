@@ -14,10 +14,8 @@ import { ListEditorManager } from '../../shared/list-editor/list-editor-manager'
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import {
-  ApiFacilityTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme
+  ApiFacilityTypeValidationScheme
 } from '../../settings/type-detail-modal/validation';
-import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { ApiResponseApiBaseEntity } from '../../../api/model/apiResponseApiBaseEntity';
@@ -42,7 +40,6 @@ export class ValueChainDetailComponent implements OnInit {
 
   facilityTypeListManager: ListEditorManager<ApiFacilityType>;
   measureUnitTypeListManager: ListEditorManager<ApiMeasureUnitType>;
-  gradeAbbreviationTypeListManager: ListEditorManager<ApiGradeAbbreviation>;
   processingEvidenceTypeListManger: ListEditorManager<ApiProcessingEvidenceType>;
   processingEvidenceFieldListManger: ListEditorManager<ApiProcessingEvidenceField>;
   semiProductsListManager: ListEditorManager<ApiSemiProduct>;
@@ -80,19 +77,6 @@ export class ValueChainDetailComponent implements OnInit {
     return () => {
       return new FormControl(ValueChainDetailComponent.ApiVCMeasureUnitTypeCreateEmptyObject(),
         ApiVCMeasureUnitTypeValidationScheme.validators);
-    };
-  }
-
-  // Grade abbreviation type form factory methods (used when creating ListEditorManager)
-  static ApiVCGradeAbbreviationTypeCreateEmptyObject(): ApiGradeAbbreviation {
-    const obj = ApiGradeAbbreviation.formMetadata();
-    return defaultEmptyObject(obj) as ApiGradeAbbreviation;
-  }
-
-  static ApiVCGradeAbbreviationTypeEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(ValueChainDetailComponent.ApiVCGradeAbbreviationTypeCreateEmptyObject(),
-        ApiGradeAbbreviationValidationScheme.validators);
     };
   }
 
@@ -150,10 +134,6 @@ export class ValueChainDetailComponent implements OnInit {
 
   get vcMeasureUnitTypes(): FormControl[] {
     return (this.valueChainDetailForm.get('measureUnitTypes') as FormArray).controls as FormControl[];
-  }
-
-  get vcGradeAbbreviationTypes(): FormControl[] {
-    return (this.valueChainDetailForm.get('gradeAbbreviations') as FormArray).controls as FormControl[];
   }
 
   get vcProcEvidenceTypes(): FormControl[] {
@@ -279,11 +259,6 @@ export class ValueChainDetailComponent implements OnInit {
       this.valueChainDetailForm.get('measureUnitTypes') as FormArray,
       ValueChainDetailComponent.ApiVCMeasureUnitTypeEmptyObjectFormFactory(),
       ApiVCMeasureUnitTypeValidationScheme);
-
-    this.gradeAbbreviationTypeListManager = new ListEditorManager<ApiGradeAbbreviation>(
-      this.valueChainDetailForm.get('gradeAbbreviations') as FormArray,
-      ValueChainDetailComponent.ApiVCGradeAbbreviationTypeEmptyObjectFormFactory(),
-      ApiGradeAbbreviationValidationScheme);
 
     this.processingEvidenceTypeListManger = new ListEditorManager<ApiProcessingEvidenceType>(
       this.valueChainDetailForm.get('processingEvidenceTypes') as FormArray,

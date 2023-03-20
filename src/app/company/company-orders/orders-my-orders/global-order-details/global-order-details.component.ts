@@ -4,7 +4,6 @@ import { CompanyCustomersService } from '../../../../shared-services/company-cus
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
-import { GradeAbbreviationControllerService } from '../../../../../api/api/gradeAbbreviationController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { finalize, take, tap } from 'rxjs/operators';
 import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
@@ -36,7 +35,6 @@ export class GlobalOrderDetailsComponent implements OnInit {
 
   companyId: number;
 
-  userLastChanged = null;
   creatorId: number;
 
   companyCustomerCodebook: CompanyCustomersService;
@@ -51,7 +49,6 @@ export class GlobalOrderDetailsComponent implements OnInit {
     private location: Location,
     private globalEventsManager: GlobalEventManagerService,
     private companyCustomerController: CompanyControllerService,
-    private gradeAbbreviationController: GradeAbbreviationControllerService,
     private facilityController: FacilityControllerService,
     private companyController: CompanyControllerService,
     private codebookTranslations: CodebookTranslations,

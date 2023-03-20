@@ -10,20 +10,18 @@ import { environment } from 'src/environments/environment';
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
 import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
-import { GradeAbbreviationControllerService } from '../../../api/api/gradeAbbreviationController.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
 import { ApiPaginatedResponseApiFacilityType } from '../../../api/model/apiPaginatedResponseApiFacilityType';
 import { ApiPaginatedResponseApiMeasureUnitType } from '../../../api/model/apiPaginatedResponseApiMeasureUnitType';
 import { ApiPaginatedResponseApiActionType } from '../../../api/model/apiPaginatedResponseApiActionType';
-import { ApiPaginatedResponseApiGradeAbbreviation } from '../../../api/model/apiPaginatedResponseApiGradeAbbreviation';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
 import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
 import { ApiPaginatedResponseApiSemiProduct } from '../../../api/model/apiPaginatedResponseApiSemiProduct';
 import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
 import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
-import {ApiPaginatedResponseApiProductType} from '../../../api/model/apiPaginatedResponseApiProductType';
-import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
+import { ApiPaginatedResponseApiProductType } from '../../../api/model/apiPaginatedResponseApiProductType';
+import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
 
 @Component({
   selector: 'app-type-list',
@@ -36,7 +34,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     private facilityTypeService: FacilityTypeControllerService,
     private measureUnitTypeService: MeasureUnitTypeControllerService,
     private actionTypeService: ActionTypeControllerService,
-    private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductsService: SemiProductControllerService,
@@ -242,7 +239,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'facility-types') { this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`; }
     if (this.type === 'measurement-unit-types') { this.title = $localize`:@@settingsTypes.typeList.title.measurement:Measurement unit types`; }
     if (this.type === 'action-types') { this.title = $localize`:@@settingsTypes.typeList.title.actions:Action types`; }
-    if (this.type === 'grade-abbreviation') { this.title = $localize`:@@settingsTypes.typeList.title.grades:Grade abbreviations`; }
     if (this.type === 'processing-evidence-types') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceTypes:Processing evidence types`; }
     if (this.type === 'processing-evidence-fields') { this.title = $localize`:@@settingsTypes.typeList.title.processingEvidenceFields:Processing evidence fields`; }
     if (this.type === 'semi-products') { this.title = $localize`:@@settingsTypes.typeList.title.semiProducts:Semi-products`; }
@@ -283,9 +279,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'action-types') {
       return this.actionTypeService.getActionTypeListUsingGETByMap({ ...params });
     }
-    if (this.type === 'grade-abbreviation') {
-      return this.gradeAbbreviationService.getGradeAbbreviationListUsingGETByMap({ ...params });
-    }
     if (this.type === 'processing-evidence-types') {
       return this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGETByMap({ ...params });
     }
@@ -304,7 +297,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'facility-types') { return ApiPaginatedResponseApiFacilityType; }
     if (this.type === 'measurement-unit-types') { return ApiPaginatedResponseApiMeasureUnitType; }
     if (this.type === 'action-types') { return ApiPaginatedResponseApiActionType; }
-    if (this.type === 'grade-abbreviation') { return ApiPaginatedResponseApiGradeAbbreviation; }
     if (this.type === 'processing-evidence-types') { return ApiPaginatedResponseApiProcessingEvidenceType; }
     if (this.type === 'processing-evidence-fields') { return ApiPaginatedResponseApiProcessingEvidenceField; }
     if (this.type === 'semi-products') { return ApiPaginatedResponseApiSemiProduct; }
@@ -321,9 +313,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'action-types') {
       editTitle = $localize`:@@settingsTypes.editActionType.editTitle:Edit action type`;
-    }
-    if (this.type === 'grade-abbreviation') {
-      editTitle = $localize`:@@settingsTypes.editGradeAbbreviation.editTitle:Edit grade abbreviation`;
     }
     if (this.type === 'processing-evidence-types') {
       editTitle = $localize`:@@settingsTypes.editProcessingEvidenceType.editTitle:Edit processing evidence type`;
@@ -384,12 +373,6 @@ export class TypeListComponent implements OnInit, OnChanges {
           this.reloadPage();
         }
       }
-      if (this.type === 'grade-abbreviation') {
-        const res = await this.gradeAbbreviationService.deleteGradeAbbreviationUsingDELETE(type.id).pipe(take(1)).toPromise();
-        if (res && res.status === 'OK') {
-          this.reloadPage();
-        }
-      }
       if (this.type === 'processing-evidence-types') {
         const res = await this.processingEvidenceTypeService.deleteProcessingEvidenceTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
@@ -436,13 +419,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'action-types') {
       const res = await this.actionTypeService.getActionTypeListUsingGET().pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
-        this.all = res.data.count;
-        this.countAll.emit(res.data.count);
-      }
-    }
-    if (this.type === 'grade-abbreviation') {
-      const res = await this.gradeAbbreviationService.getGradeAbbreviationListUsingGET().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);

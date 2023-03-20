@@ -27,9 +27,6 @@ export const ApiValueChainValidationScheme = {
     measureUnitTypes: {
       validators: []
     },
-    gradeAbbreviations: {
-      validators: []
-    },
     processingEvidenceTypes: {
       validators: []
     },

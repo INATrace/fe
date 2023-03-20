@@ -214,7 +214,7 @@ Users who confirmed their emails can be activated by clicking "Activate". After 
 
 #### Settings
 
-Under the "Settings" page and "Types" tab, we find constants and system-level values like semi-products, facility types, measurement units, grade abbreviations, processing evidence types and processing evidence fields. Add, edit or remove any of these values to fit your use case.
+Under the "Settings" page and "Types" tab, we find constants and system-level values like semi-products, facility types, measurement units, processing evidence types and processing evidence fields. Add, edit or remove any of these values to fit your use case.
 
 ![INAtrace_settings](docs/images/inatrace_settings_types.png)
 

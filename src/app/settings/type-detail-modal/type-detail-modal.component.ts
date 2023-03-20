@@ -7,7 +7,6 @@ import {
   ApiFacilityTypeValidationScheme,
   ApiMeasureUnitTypeValidationScheme,
   ApiActionTypeValidationScheme,
-  ApiGradeAbbreviationValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme,
   ApiProcessingEvidenceFieldValidationScheme, ApiProductTypeValidationScheme
@@ -18,12 +17,10 @@ import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measu
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
 import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
-import { GradeAbbreviationControllerService } from '../../../api/api/gradeAbbreviationController.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
 import { ApiActionType } from '../../../api/model/apiActionType';
-import { ApiGradeAbbreviation } from '../../../api/model/apiGradeAbbreviation';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
@@ -31,8 +28,8 @@ import { ProcessingEvidenceFieldControllerService } from '../../../api/api/proce
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTranslation';
 import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
-import {ProductTypeControllerService} from '../../../api/api/productTypeController.service';
-import {ApiProductType} from '../../../api/model/apiProductType';
+import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
+import { ApiProductType } from '../../../api/model/apiProductType';
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -72,7 +69,6 @@ export class TypeDetailModalComponent implements OnInit {
     private facilityTypeService: FacilityTypeControllerService,
     private measureUnitTypeService: MeasureUnitTypeControllerService,
     private actionTypeService: ActionTypeControllerService,
-    private gradeAbbreviationService: GradeAbbreviationControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductService: SemiProductControllerService,
@@ -117,16 +113,6 @@ export class TypeDetailModalComponent implements OnInit {
       }
     }
 
-    if (this.type === 'grade-abbreviation') {
-      if (!this.update) {
-        this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(),
-          defaultEmptyObject(ApiGradeAbbreviation.formMetadata()) as ApiGradeAbbreviation, ApiGradeAbbreviationValidationScheme);
-      }
-      else {
-        this.form = generateFormFromMetadata(ApiGradeAbbreviation.formMetadata(), this.typeElement, ApiGradeAbbreviationValidationScheme);
-      }
-    }
-
     if (this.type === 'processing-evidence-types') {
       if (!this.update) {
         this.form = generateFormFromMetadata(
@@ -166,9 +152,9 @@ export class TypeDetailModalComponent implements OnInit {
     if (this.type === 'product-types') {
       if (!this.update) {
         this.form = generateFormFromMetadata(ApiProductType.formMetadata(),
-          defaultEmptyObject(ApiProductType.formMetadata()) as ApiProductType, ApiProductTypeValidationScheme)
+          defaultEmptyObject(ApiProductType.formMetadata()) as ApiProductType, ApiProductTypeValidationScheme);
       } else {
-        this.form = generateFormFromMetadata(ApiProductType.formMetadata(), this.typeElement, ApiProductTypeValidationScheme)
+        this.form = generateFormFromMetadata(ApiProductType.formMetadata(), this.typeElement, ApiProductTypeValidationScheme);
       }
       this.finalizeForm();
     }
@@ -199,10 +185,6 @@ export class TypeDetailModalComponent implements OnInit {
 
     if (this.type === 'action-types') {
       res = await this.actionTypeService.createOrUpdateActionTypeUsingPUT(data).pipe(take(1)).toPromise();
-    }
-
-    if (this.type === 'grade-abbreviation') {
-      res = await this.gradeAbbreviationService.createOrUpdateGradeAbbreviationUsingPUT(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'processing-evidence-types') {

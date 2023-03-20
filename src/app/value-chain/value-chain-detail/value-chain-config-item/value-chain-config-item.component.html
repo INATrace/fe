@@ -57,26 +57,6 @@
           </single-choice>
         </ng-container>
 
-        <ng-container *ngIf="configItemType === 'grade-abbreviation-types'">
-          <single-choice
-                  label="Grade abbreviation type"
-                  i18n-label="@@valueChainDetail.section.gradeAbbreviations.add.label"
-                  [formControlInput]="configItemForm"
-                  [codebookService]="gradeAbbreviationTypesCodebook"
-                  [isInvalidChoice]="submitted && configItemForm.invalid"
-                  [readonly]="readOnly"
-                  (onChange)="setSelectedValue($event)">
-            <ng-container *ngIf="submitted">
-              <div *ngIf="configItemForm.errors as errors" class="sc-invalid-feedback">
-                <div *ngIf="errors.required" i18n="@@valueChainDetail.section.gradeAbbreviations.add.error">
-                  Grade abbreviation type is required
-                </div>
-              </div>
-            </ng-container>
-
-          </single-choice>
-        </ng-container>
-
         <ng-container *ngIf="configItemType === 'processing-evidence-types'">
           <single-choice
                   label="Processing evidence type"

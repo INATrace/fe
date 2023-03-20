@@ -122,9 +122,6 @@ export const ApiStockOrderValidationScheme = {
     orderType: {
       validators: []
     },
-    gradeAbbreviationId: {
-      validators: []
-    },
     internalLotNumber: {
       validators: [Validators.required]
     },
@@ -186,9 +183,6 @@ export const ApiStockOrderValidationScheme = {
       validators: []
     },
     processingAction: {
-      validators: []
-    },
-    gradeAbbreviation: {
       validators: []
     },
     processingOrderId: {
@@ -329,12 +323,6 @@ export const ApiTransactionValidationScheme = {
     currency: {
       validators: []
     },
-    gradeAbbreviationId: {
-      validators: []
-    },
-    gradeAbbreviation: {
-      validators: []
-    }
   }
 } as SimpleValidationScheme<ApiTransaction>;
 

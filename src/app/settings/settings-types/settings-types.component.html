@@ -75,28 +75,6 @@
       (showing)="onShow($event, 'measurement-unit-types')">
     </app-type-list>
 
-    <!-- GRADE ABBREVIATIONS CODEBOOK -->
-    <div class="main-inside-top content-element">
-      <div class="d-flex justify-content-between main-inside-top--row1">
-        <div class="title-page content-element--title" i18n="@@settingsPage.title.GradeAbbreviations">Grade abbreviations</div>
-        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newType('grade-abbreviation')" i18n="@@settingsPage.button.newGradeAbbreviation">
-          <span>+ Add</span>
-        </button>
-      </div>
-      <div class="d-flex align-items-start main-inside-top--row2">
-        <div>
-          <div class="sub-title-page content-element--subtitle" i18n="@@settingsPage.subTitle.listOfGradeAbbreviations">List of grade abbreviaions</div>
-          <div class="counting-page content-element--counting" i18n="@@settingsPage.subTitle.showingGradeAbbreviations">Showing {{showedGrades}}/{{allGrades}}</div>
-        </div>
-      </div>
-    </div>
-    <app-type-list
-      [parentReload]="parentReloadGrade"
-      type='grade-abbreviation'
-      (countAll)="onCountAll($event, 'grade-abbreviation')"
-      (showing)="onShow($event, 'grade-abbreviation')">
-    </app-type-list>
-
     <!-- PROCESSING EVIDENCE TYPES CODEBOOK -->
     <div class="main-inside-top content-element">
       <div class="d-flex justify-content-between main-inside-top--row1">

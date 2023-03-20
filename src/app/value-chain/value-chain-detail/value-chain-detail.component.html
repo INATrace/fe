@@ -25,7 +25,7 @@
                          placeholder="Enter value chain name"
                          i18n-label="@@valueChainDetail.section.basicInfo.field.valueChainName.label"
                          i18n-placeholder="@@valueChainDetail.section.basicInfo.field.valueChainName.placeholder"
-                         [form]="valueChainDetailForm.get('name')"
+                         [form]="$any(valueChainDetailForm.get('name'))"
                          [isInvalid]="submitted && valueChainDetailForm.get('name').invalid">
                 <div *ngIf="submitted && valueChainDetailForm.get('name').invalid" class="sc-invalid-feedback">
                   <div *ngIf="valueChainDetailForm.get('name').errors.required"
@@ -42,7 +42,7 @@
                          i18n-label="@@valueChainDetail.section.basicInfo.field.description.label"
                          i18n-placeholder="@@valueChainDetail.section.basicInfo.field.description.placeholder"
                          [textarea]="true"
-                         [form]="valueChainDetailForm.get('description')"
+                         [form]="$any(valueChainDetailForm.get('description'))"
                          [isInvalid]="submitted && valueChainDetailForm.get('description').invalid">
                 <div *ngIf="submitted && valueChainDetailForm.get('description').invalid" class="sc-invalid-feedback">
                   <div *ngIf="valueChainDetailForm.get('description').errors.required"
@@ -57,7 +57,7 @@
               <textinput label="Status"
                          hideAsterisk="true"
                          i18n-label="@@valueChainDetail.section.basicInfo.field.status.label"
-                         [form]="valueChainDetailForm.get('valueChainStatus')"
+                         [form]="$any(valueChainDetailForm.get('valueChainStatus'))"
                          [readOnly]="true">
               </textinput>
             </app-closable>
@@ -132,32 +132,6 @@
                                                [listEditorManager]="measureUnitTypeListManager"
                                                [listEditorManagerPosition]="i"
                                                [isOpen]="measureUnitTypeListManager.isOpen(i)">
-                  </app-value-chain-config-item>
-                </div>
-              </list-editor-items>
-            </list-editor>
-          </div>
-        </div>
-      </div>
-
-      <div class="af-form-row">
-        <div class="af-form-block--c12">
-          <h2 i18n="@@valueChainDetail.section.gradeAbbreviations.title">Grade abbreviations</h2>
-          <div class="af-form-element">
-            <list-editor label="Value chain grade abbreviations"
-                         i18n-label="@@valueChainDetail.section.gradeAbbreviations.add.title"
-                         addText="Add new"
-                         [listEditorManager]="gradeAbbreviationTypeListManager"
-                         [canAdd]="true">
-              <list-editor-items>
-                <div *ngFor="let item of vcGradeAbbreviationTypes; let i=index;">
-                  <app-value-chain-config-item configItemType="grade-abbreviation-types"
-                                               title="Value chain grade abbreviations"
-                                               i18n-title="@@valueChainDetail.section.gradeAbbreviations.add.title"
-                                               [formControlInput]="item"
-                                               [listEditorManager]="gradeAbbreviationTypeListManager"
-                                               [listEditorManagerPosition]="i"
-                                               [isOpen]="gradeAbbreviationTypeListManager.isOpen(i)">
                   </app-value-chain-config-item>
                 </div>
               </list-editor-items>
