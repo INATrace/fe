@@ -12,7 +12,7 @@
                     <h2 i18n="@@collectorDetail.section.basicInfo">Basic information</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="collectorForm.get('name')"
+                                [form]="$any(collectorForm.get('name'))"
                                 label="First name"
                                 style="width: 100%"
                                 placeholder="Enter first name"
@@ -29,7 +29,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="collectorForm.get('surname')"
+                                [form]="$any(collectorForm.get('surname'))"
                                 label="Last name"
                                 style="width: 100%"
                                 placeholder="Enter last name"
@@ -48,7 +48,7 @@
                         <single-choice
                                 label="Gender"
                                 i18n-label="@@collectorDetail.label.gender"
-                                [formControlInput]="collectorForm.get('gender')"
+                                [formControlInput]="$any(collectorForm.get('gender'))"
                                 [codebookService]="genderCodebook"
                                 [isInvalidChoice]="submitted && collectorForm.get('gender').invalid">
                             <ng-container *ngIf="submitted">
@@ -64,7 +64,7 @@
                         <textinput
                                 *ngIf="update"
                                 [readOnly]=true
-                                [form]="collectorForm.get('id')"
+                                [form]="$any(collectorForm.get('id'))"
                                 label="User ID"
                                 style="width: 100%"
                                 placeholder=""
@@ -76,7 +76,7 @@
                 <div class="af-form-block--c6" *ngIf="update">
                     <div class="d-flex justify-content-center align-items-center" style="margin-top: 32px;">
                         <div class="label-card">
-                            <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image">
+                            <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image" alt="Logo image">
                             <div class="name-sector">{{collectorForm.get('name').value}} {{collectorForm.get('surname').value}}</div>
                             <div class="location-sector">{{collectorForm.get('location.address.village').value}}, {{collectorForm.get('location.address.cell').value}}, {{collectorForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
@@ -98,7 +98,7 @@
                     <h2 i18n="@@collectorDetail.section.location">Location</h2>
                     <div class="af-form-element">
                         <location-form
-                                [form]="collectorForm.get('location')"
+                                [form]="$any(collectorForm.get('location'))"
                                 [submitted]="submitted"></location-form>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     <h2 i18n="@@collectorDetail.section.additionalInfo">Additional information about user</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="collectorForm.get('phone')"
+                                [form]="$any(collectorForm.get('phone'))"
                                 label="Phone number"
                                 style="width: 100%"
                                 placeholder="Enter phone number"
@@ -118,7 +118,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="collectorForm.get('email')"
+                                [form]="$any(collectorForm.get('email'))"
                                 label="E-mail"
                                 style="width: 100%"
                                 placeholder="Enter e-mail address"
@@ -126,8 +126,7 @@
                                 i18n-placeholder="@@collectorDetail.textinput.email.placeholder">
                         </textinput>
 
-                        <checkbox-input [form]="collectorForm.get('hasSmartphone')"
-                                        [invalid]="submitted && collectorForm.get('hasSmartphone')">
+                        <checkbox-input [form]="$any(collectorForm.get('hasSmartphone'))">
                             <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
                                 Smart phone
                             </checkbox-input-rich-label>
@@ -139,7 +138,7 @@
                     <h2 i18n="@@collectorDetail.section.bankInfo">Bank information</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="collectorForm.get('bank.accountHolderName')"
+                                [form]="$any(collectorForm.get('bank.accountHolderName'))"
                                 label="Account holder's name"
                                 style="width: 100%"
                                 placeholder="Enter account holder's name"
@@ -148,7 +147,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="collectorForm.get('bank.accountNumber')"
+                                [form]="$any(collectorForm.get('bank.accountNumber'))"
                                 label="Account number"
                                 style="width: 100%"
                                 placeholder="Enter account number"
@@ -157,7 +156,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="collectorForm.get('bank.bankName')"
+                                [form]="$any(collectorForm.get('bank.bankName'))"
                                 label="Bank name"
                                 style="width: 100%"
                                 placeholder="Enter bank name"
@@ -166,7 +165,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="collectorForm.get('bank.additionalInformation')"
+                                [form]="$any(collectorForm.get('bank.additionalInformation'))"
                                 label="Additional information"
                                 style="width: 100%"
                                 placeholder="Enter additional information"
@@ -244,102 +243,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="af-form-row">
-                <div class="af-form-block--c6">
-                    <h2 i18n="@@collectorDetail.section.farmInfo">Additional information about the farm</h2>
-                    <div class="af-form-element">
-
-                        <textinput
-                            [form]="collectorForm.get('farm.areaUnit')"
-                            label="Area unit"
-                            i18n-label="@@collectorDetail.textinput.areaUnit.label"
-                            style="width: 100%"
-                            placeholder="Enter area unit"
-                            i18n-placeholder="@@collectorDetail.textinput.areaUnit.placeholder">
-                        </textinput>
-
-                        <textinput
-                                [form]="collectorForm.get('farm.totalCultivatedArea')"
-                                [label]="appendAreaUnit(areaTranslations.totalCultivatedLabel, areaUnit.value)"
-                                [placeholder]="appendAreaUnit(areaTranslations.totalCultivatedPlaceholder, areaUnit.value)"
-                                style="width: 100%">
-                        </textinput>
-
-                        <textinput
-                                [form]="collectorForm.get('farm.coffeeCultivatedArea')"
-                                [label]="appendAreaUnit(areaTranslations.coffeeCultivatedLabel, areaUnit.value)"
-                                [placeholder]="appendAreaUnit(areaTranslations.coffeeCultivatedPlaceholder, areaUnit.value)"
-                                style="width: 100%">
-                        </textinput>
-
-                        <textinput
-                                [form]="collectorForm.get('farm.numberOfTrees')"
-                                label="Number of trees"
-                                style="width: 100%"
-                                placeholder="Enter number of trees"
-                                i18n-label="@@collectorDetail.textinput.numberOfTrees.label"
-                                i18n-placeholder="@@collectorDetail.textinput.numberOfTrees.placeholder">
-                        </textinput>
-
-                        <checkbox-input [form]="collectorForm.get('farm.organic')">
-                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">
-                                Organic farm
-                            </checkbox-input-rich-label>
-                        </checkbox-input>
-
-                        <textinput
-                                [form]="collectorForm.get('farm.areaOrganicCertified')"
-                                [label]="appendAreaUnit(areaTranslations.organicCertifiedLabel, areaUnit.value)"
-                                [placeholder]="appendAreaUnit(areaTranslations.organicCertifiedPlaceholder, areaUnit.value)"
-                                style="width: 100%">
-                        </textinput>
-
-                        <app-datepicker
-                                [form]="collectorForm.get('farm.startTransitionToOrganic')"
-                                label="Start transition to organic"
-                                style="width: 100%"
-                                i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label">
-                        </app-datepicker>
-                    </div>
-                </div>
-
-                <div class="af-form-block--c6">
-                    <h2 i18n="@@companyDetail.section.certification">Certification</h2>
-                    <div class="af-form-element">
-                        <list-editor
-                                label="Certification"
-                                [listEditorManager]="certificationListManager"
-                                addText="Add new"
-                                [canAdd]="true"
-                                i18n-label="@@companyDetail.list-editor.certificationsAndStandards.label"
-                                i18n-addText="@@companyDetail.list-editor.certificationsAndStandards.addText"
-                                [invalid]="submitted && collectorForm.get('certifications')?.invalid">
-                            <list-editor-items>
-                                <div *ngFor="let item of certifications; let i = index;">
-                                    <app-certification-and-standard-item
-                                            title="Certification"
-                                            i18n-title="@@companyDetail.list-editor.certificationsAndStandards.title"
-                                            [formControlInput]="item"
-                                            [isOpen]="certificationListManager.isOpen(i)"
-                                            [listEditorManager]="this.certificationListManager"
-                                            [listEditorManagerPosition]="i">
-                                    </app-certification-and-standard-item>
-                                </div>
-                            </list-editor-items>
-                            <list-editor-errors>
-                                <ng-container *ngIf="submitted">
-                                    <div *ngIf="collectorForm.get('certifications').errors as errors" class="sc-invalid-feedback">
-                                        <div *ngIf="errors.required" i18n-title="@@companyDetail.list-editor.certificationsAndStandards.error">
-                                            <span>Certifications are required</span>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </list-editor-errors>
-                        </list-editor>
                     </div>
                 </div>
             </div>

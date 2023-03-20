@@ -31,6 +31,7 @@ import { ApiCertificationValidationScheme } from '../../../m-product/product-lab
 import { CompanyProductTypesService } from '../../../shared-services/company-product-types.service';
 import { ApiProductType } from '../../../../api/model/apiProductType';
 import { ListNotEmptyValidator } from '../../../../shared/validation';
+import { ApiPayment } from '../../../../api/model/apiPayment';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -79,7 +80,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   // payments table parameters
   showedPaymentOrders = 0;
   allPaymentOrders = 0;
-  selectedPayments: ApiStockOrder[];
+  selectedPayments: ApiPayment[];
 
   codebookStatus = EnumSifrant.fromObject(this.roles);
 

@@ -12,7 +12,7 @@
                     <h2 i18n="@@collectorDetail.section.basicInfo">Basic information</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="farmerForm.get('name')"
+                                [form]="$any(farmerForm.get('name'))"
                                 label="First name"
                                 style="width: 100%"
                                 placeholder="Enter first name"
@@ -29,7 +29,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('surname')"
+                                [form]="$any(farmerForm.get('surname'))"
                                 label="Last name"
                                 style="width: 100%"
                                 placeholder="Enter last name"
@@ -48,7 +48,7 @@
                         <single-choice
                                 label="Gender"
                                 i18n-label="@@collectorDetail.label.gender"
-                                [formControlInput]="farmerForm.get('gender')"
+                                [formControlInput]="$any(farmerForm.get('gender'))"
                                 [codebookService]="genderCodebook"
                                 [isInvalidChoice]="submitted && farmerForm.get('gender').invalid">
                             <ng-container *ngIf="submitted">
@@ -64,7 +64,7 @@
                         <textinput
                                 *ngIf="update"
                                 [readOnly]=true
-                                [form]="farmerForm.get('id')"
+                                [form]="$any(farmerForm.get('id'))"
                                 label="User ID"
                                 style="width: 100%"
                                 placeholder=""
@@ -72,13 +72,12 @@
                         </textinput>
 
                         <textinput
-                            [form]="farmerForm.get('farmerCompanyInternalId')"
+                            [form]="$any(farmerForm.get('farmerCompanyInternalId'))"
                             label="Company internal ID"
                             style="width: 100%"
                             placeholder="Enter company internal ID"
                             i18n-label="@@collectorDetail.textinput.farmerCompanyInternalId.label"
-                            i18n-placeholder="@@collectorDetail.textinput.farmerCompanyInternalId.placeholder"
-                            [isInvalid]="submitted && farmerForm.get('farmerComnapyInternalId')">
+                            i18n-placeholder="@@collectorDetail.textinput.farmerCompanyInternalId.placeholder">
                             <ng-container *ngIf="submitted">
                                 <div *ngIf="farmerForm.get('farmerCompanyInternalId').errors as errors" class="sc-invalid-feedback">
                                     <div *ngIf="errors.required" i18n="@@collectorDetail.textinput.farmerCompanyInternalId.error">
@@ -93,7 +92,7 @@
                 <div class="af-form-block--c6" *ngIf="update">
                     <div class="d-flex justify-content-center align-items-center" style="margin-top: 32px;">
                         <div class="label-card">
-                            <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image">
+                            <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image" alt="Logo">
                             <div class="name-sector">{{farmerForm.get('name').value}} {{farmerForm.get('surname').value}}</div>
                             <div class="location-sector">{{farmerForm.get('location.address.village').value}}, {{farmerForm.get('location.address.cell').value}}, {{farmerForm.get('location.address.sector').value}}</div>
                             <div class="qr-code-container">
@@ -115,7 +114,7 @@
                     <h2 i18n="@@collectorDetail.section.location">Location</h2>
                     <div class="af-form-element">
                         <location-form
-                                [form]="farmerForm.get('location')"
+                                [form]="$any(farmerForm.get('location'))"
                                 [submitted]="submitted"></location-form>
                     </div>
                 </div>
@@ -126,7 +125,7 @@
                     <h2 i18n="@@collectorDetail.section.additionalInfo">Additional information about user</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="farmerForm.get('phone')"
+                                [form]="$any(farmerForm.get('phone'))"
                                 label="Phone number"
                                 style="width: 100%"
                                 placeholder="Enter phone number"
@@ -135,7 +134,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('email')"
+                                [form]="$any(farmerForm.get('email'))"
                                 label="E-mail"
                                 style="width: 100%"
                                 placeholder="Enter e-mail address"
@@ -143,8 +142,7 @@
                                 i18n-placeholder="@@collectorDetail.textinput.email.placeholder">
                         </textinput>
 
-                        <checkbox-input [form]="farmerForm.get('hasSmartphone')"
-                                        [invalid]="submitted && farmerForm.get('hasSmartphone')">
+                        <checkbox-input [form]="$any(farmerForm.get('hasSmartphone'))">
                             <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
                                 Smart phone
                             </checkbox-input-rich-label>
@@ -156,7 +154,7 @@
                     <h2 i18n="@@collectorDetail.section.bankInfo">Bank information</h2>
                     <div class="af-form-element">
                         <textinput
-                                [form]="farmerForm.get('bank.accountHolderName')"
+                                [form]="$any(farmerForm.get('bank.accountHolderName'))"
                                 label="Account holder's name"
                                 style="width: 100%"
                                 placeholder="Enter account holder's name"
@@ -165,7 +163,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('bank.accountNumber')"
+                                [form]="$any(farmerForm.get('bank.accountNumber'))"
                                 label="Account number"
                                 style="width: 100%"
                                 placeholder="Enter account number"
@@ -174,7 +172,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('bank.bankName')"
+                                [form]="$any(farmerForm.get('bank.bankName'))"
                                 label="Bank name"
                                 style="width: 100%"
                                 placeholder="Enter bank name"
@@ -183,7 +181,7 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('bank.additionalInformation')"
+                                [form]="$any(farmerForm.get('bank.additionalInformation'))"
                                 label="Additional information"
                                 style="width: 100%"
                                 placeholder="Enter additional information"

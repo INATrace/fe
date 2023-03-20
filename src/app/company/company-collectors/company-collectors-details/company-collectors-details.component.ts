@@ -24,10 +24,11 @@ import { ApiCompany } from '../../../../api/model/apiCompany';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiUserCustomerCooperative } from '../../../../api/model/apiUserCustomerCooperative';
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
-import {ApiStockOrder} from '../../../../api/model/apiStockOrder';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
+import { ApiPayment } from '../../../../api/model/apiPayment';
 
 @Component({
   selector: 'app-company-collectors-details',
@@ -57,7 +58,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   // payments table parameters
   showedPaymentOrders = 0;
   allPaymentOrders = 0;
-  selectedPayments: ApiStockOrder[];
+  selectedPayments: ApiPayment[];
 
   representativeOfUserCustomerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
 
