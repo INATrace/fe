@@ -19,7 +19,6 @@
 
 
 import { ApiFacilityType } from './apiFacilityType';
-import { ApiGradeAbbreviation } from './apiGradeAbbreviation';
 import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
@@ -37,10 +36,6 @@ export interface ApiValueChain {
      * list of supported facility types
      */
     facilityTypes?: Array<ApiFacilityType>;
-    /**
-     * list of supported grade abbreviations
-     */
-    gradeAbbreviations?: Array<ApiGradeAbbreviation>;
     /**
      * Entity id
      */
@@ -88,10 +83,6 @@ export namespace ApiValueChain {
          * list of supported facility types
          */
         facilityTypes = 'facilityTypes',
-        /**
-         * list of supported grade abbreviations
-         */
-        gradeAbbreviations = 'gradeAbbreviations',
         /**
          * Entity id
          */
@@ -159,18 +150,6 @@ export namespace ApiValueChain {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiFacilityType'
-                },
-                {
-                    metadata: ApiGradeAbbreviation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'gradeAbbreviations',
-                    classname: 'ApiValueChain',
-                    dataType: 'Array&lt;ApiGradeAbbreviation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiGradeAbbreviation'
                 },
                 {
                     isReadOnly: false,
@@ -272,8 +251,6 @@ export namespace ApiValueChain {
                 ],
                 facilityTypes: [
                 ],
-                gradeAbbreviations: [
-                ],
                 id: [
                 ],
                 measureUnitTypes: [
@@ -301,9 +278,6 @@ export namespace ApiValueChain {
   //                   validators: []
   //               },
   //               facilityTypes: {
-  //                   validators: []
-  //               },
-  //               gradeAbbreviations: {
   //                   validators: []
   //               },
   //               id: {
