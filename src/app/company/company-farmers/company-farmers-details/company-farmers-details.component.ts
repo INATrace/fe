@@ -159,10 +159,12 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   public areaTranslations = {
     totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
     totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
-    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
-    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
+    plantCultivatedLabel: $localize`:@@collectorDetail.textinput.plantCultivatedArea.label:Area cultivated with`,
+    plantCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.plantCultivatedArea.placeholder:Enter area cultivated with`,
     organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
     organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
+    numberOfPlantsLabel: $localize`:@@collectorDetail.textinput.numberOfPlants.label:Number of plants`,
+    numberOfPlantsPlaceholder: $localize`:@@collectorDetail.textinput.numberOfPlants.placeholder:Enter number of plants`,
   };
 
   constructor(
@@ -280,7 +282,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         }
       }
     ));
-    this.subscriptions.push(this.coffeeCultivatedArea.valueChanges.pipe(
+    this.subscriptions.push(this.plantCultivatedArea.valueChanges.pipe(
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
@@ -504,7 +506,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   checkAreaFieldsRequired() {
     return (!this.checkNullEmpty(this.totalCultivatedArea) ||
-      !this.checkNullEmpty(this.coffeeCultivatedArea) || !this.checkNullEmpty(this.areaOrganicCertified));
+      !this.checkNullEmpty(this.plantCultivatedArea) || !this.checkNullEmpty(this.areaOrganicCertified));
   }
 
   checkNullEmpty(control: FormControl){
@@ -519,8 +521,8 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return this.farmerForm.get('farm.totalCultivatedArea') as FormControl;
   }
 
-  public get coffeeCultivatedArea(): FormControl {
-    return this.farmerForm.get('farm.coffeeCultivatedArea') as FormControl;
+  public get plantCultivatedArea(): FormControl {
+    return this.farmerForm.get('farm.plantCultivatedArea') as FormControl;
   }
 
   public get areaOrganicCertified(): FormControl {
@@ -532,6 +534,19 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       return message + ` (${unit})`;
     }
     return message;
+  }
+
+  appendAreaUnitAndProductType(message: string, unit: string): string {
+    const productTypeName = (this.productTypes && this.productTypes[0]) ? this.productTypes[0].name : '';
+    if (unit && unit.length > 0) {
+      return message + ` ${productTypeName} (${unit})`;
+    }
+    return message + ` ${productTypeName}`;
+  }
+
+  appendProductType(message: string): string {
+    const productTypeName = (this.productTypes && this.productTypes[0]) ? `(${this.productTypes[0].name})` : '';
+    return message + ` ${productTypeName}`;
   }
 
   selectedIdsChanged(event, type?) {
