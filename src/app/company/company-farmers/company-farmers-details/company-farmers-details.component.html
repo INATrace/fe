@@ -293,19 +293,17 @@
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('farm.coffeeCultivatedArea')"
+                                [form]="farmerForm.get('farm.plantCultivatedArea')"
                                 style="width: 100%"
-                                [label]="appendAreaUnit(areaTranslations.coffeeCultivatedLabel, areaUnit.value)"
-                                [placeholder]="appendAreaUnit(areaTranslations.coffeeCultivatedPlaceholder, areaUnit.value)">
+                                [label]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedLabel, areaUnit.value)"
+                                [placeholder]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedPlaceholder, areaUnit.value)">
                         </textinput>
 
                         <textinput
-                                [form]="farmerForm.get('farm.numberOfTrees')"
-                                label="Number of trees"
+                                [form]="farmerForm.get('farm.numberOfPlants')"
                                 style="width: 100%"
-                                placeholder="Enter number of trees"
-                                i18n-label="@@collectorDetail.textinput.numberOfTrees.label"
-                                i18n-placeholder="@@collectorDetail.textinput.numberOfTrees.placeholder">
+                                [label]="appendProductType(areaTranslations.numberOfPlantsLabel)"
+                                [placeholder]="appendProductType(areaTranslations.numberOfPlantsPlaceholder)">
                         </textinput>
 
                         <checkbox-input [form]="farmerForm.get('farm.organic')">

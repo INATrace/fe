@@ -31,17 +31,17 @@ export interface ApiFarmInformation {
      */
     areaUnit?: string;
     /**
-     * Area cultivated with coffee (ha)
+     * Number of plants
      */
-    coffeeCultivatedArea?: number;
-    /**
-     * Number of trees
-     */
-    numberOfTrees?: number;
+    numberOfPlants?: number;
     /**
      * Organic
      */
     organic?: boolean;
+    /**
+     * Area cultivated with plant (ha)
+     */
+    plantCultivatedArea?: number;
     /**
      * Start date of transition to organic
      */
@@ -69,17 +69,17 @@ export namespace ApiFarmInformation {
          */
         areaUnit = 'areaUnit',
         /**
-         * Area cultivated with coffee (ha)
+         * Number of plants
          */
-        coffeeCultivatedArea = 'coffeeCultivatedArea',
-        /**
-         * Number of trees
-         */
-        numberOfTrees = 'numberOfTrees',
+        numberOfPlants = 'numberOfPlants',
         /**
          * Organic
          */
         organic = 'organic',
+        /**
+         * Area cultivated with plant (ha)
+         */
+        plantCultivatedArea = 'plantCultivatedArea',
         /**
          * Start date of transition to organic
          */
@@ -122,18 +122,7 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'coffeeCultivatedArea',
-                    classname: 'ApiFarmInformation',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'numberOfTrees',
+                    name: 'numberOfPlants',
                     classname: 'ApiFarmInformation',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -147,6 +136,17 @@ export namespace ApiFarmInformation {
                     name: 'organic',
                     classname: 'ApiFarmInformation',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'plantCultivatedArea',
+                    classname: 'ApiFarmInformation',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -179,11 +179,11 @@ export namespace ApiFarmInformation {
                 ],
                 areaUnit: [
                 ],
-                coffeeCultivatedArea: [
-                ],
-                numberOfTrees: [
+                numberOfPlants: [
                 ],
                 organic: [
+                ],
+                plantCultivatedArea: [
                 ],
                 startTransitionToOrganic: [
                 ],
@@ -202,13 +202,13 @@ export namespace ApiFarmInformation {
   //               areaUnit: {
   //                   validators: []
   //               },
-  //               coffeeCultivatedArea: {
-  //                   validators: []
-  //               },
-  //               numberOfTrees: {
+  //               numberOfPlants: {
   //                   validators: []
   //               },
   //               organic: {
+  //                   validators: []
+  //               },
+  //               plantCultivatedArea: {
   //                   validators: []
   //               },
   //               startTransitionToOrganic: {

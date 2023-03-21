@@ -12788,12 +12788,8 @@
             "description": "Area unit",
             "type": "string"
           },
-          "coffeeCultivatedArea": {
-            "description": "Area cultivated with coffee (ha)",
-            "type": "number"
-          },
-          "numberOfTrees": {
-            "description": "Number of trees",
+          "numberOfPlants": {
+            "description": "Number of plants",
             "format": "int32",
             "type": "integer"
           },
@@ -12801,6 +12797,10 @@
             "description": "Organic",
             "example": false,
             "type": "boolean"
+          },
+          "plantCultivatedArea": {
+            "description": "Area cultivated with plant (ha)",
+            "type": "number"
           },
           "startTransitionToOrganic": {
             "description": "Start date of transition to organic",
