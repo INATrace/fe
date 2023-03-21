@@ -10,8 +10,8 @@
       (mouseenter)="enter($event)"
       (mouseleave)="leave($event)"
       [class.selected-card]="isSelected">
-      <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image" *ngIf="isSelected">
-      <img src="assets/logo-INATrace/logo-INATrace-symbol.svg" class="logo-image-inactive" *ngIf="!isSelected">
+      <img src="assets/logo-INATrace/logo-INA.png" class="logo-image" *ngIf="isSelected" alt="Logo icon when selected">
+      <img src="assets/logo-INATrace/logo-INA.png" class="logo-image-inactive" *ngIf="!isSelected" alt="Logo icon when not selected">
       <div class="scan-me" [class.label-active]="isSelected" [class.label-inactive]="!isSelected" i18n="@@productLabel.labelSelectorCard.tryMeLabel">TRY ME!</div>
       <div class="qr-code-container" [class.qr-code-container-active]="isSelected" [class.qr-code-container-inactive]="!isSelected">
         <div class="qr-code-cropper">

@@ -11,6 +11,7 @@
   height: 50px;
   background-color: white;
   border-radius: 6px;
+  padding: 4px;
 }
 
 .left-border-active{
@@ -36,16 +37,6 @@ button.btn-icon-sidebar{
   height: 50px;
 }
 
-img {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
-}
-
-// button.btn-icon-sidebar.active,
-// button.btn-icon-sidebar:hover {
-//     border-left: 4px solid $side-nav-active-bar;
-// }
-
 #info_sidebar_button {
     font-size:1rem;
     position: absolute;
@@ -53,12 +44,3 @@ img {
     bottom: 0;
     left: 0;
 }
-
-// @import 'src/_variables';
-// @import '~bootstrap/scss/functions';
-// @import '~bootstrap/scss/variables';
-// @import '~bootstrap/scss/mixins';
-
-
-
-
