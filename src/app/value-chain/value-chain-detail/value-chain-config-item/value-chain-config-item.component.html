@@ -7,7 +7,7 @@
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
         <span *ngIf="configItemType !== 'semi-products' && configItemType !== 'processing-evidence-fields'">{{ contentObject.code }} - {{ contentObject.label }}</span>
-        <span *ngIf="configItemType === 'semi-products'">{{ contentObject.name }}</span>
+        <span *ngIf="configItemType === 'semi-products'">{{ contentObject.name }} ({{ contentObject.measurementUnitType?.label }})</span>
         <span *ngIf="configItemType === 'processing-evidence-fields'">{{ contentObject.fieldName }} - {{ contentObject.label }}</span>
       </div>
     </div>

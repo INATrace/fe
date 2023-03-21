@@ -30,7 +30,7 @@ export class ActiveSemiProductsService extends GeneralSifrantService<ApiSemiProd
   }
 
   public textRepresentation(el: ApiSemiProduct) {
-    return this.codebookTranslations.translate(el, 'name');
+    return `${el.name} (${el.measurementUnitType?.label ?? '/'})`;
   }
 
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiSemiProduct>> {
