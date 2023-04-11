@@ -32,6 +32,7 @@ import { CompanyProductTypesService } from '../../../shared-services/company-pro
 import { ApiProductType } from '../../../../api/model/apiProductType';
 import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
+import {ApiPlantInformation} from '../../../../api/model/apiPlantInformation';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -204,6 +205,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return (this.farmerForm.get('certifications') as FormArray).controls;
   }
 
+  get farmPlantInfos(): AbstractControl[] {
+    return (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+  }
+
   ngOnInit(): void {
     this.initData().then(() => {
       if (!this.update) {
@@ -263,6 +268,59 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     this.listOfOrgAssociation().then();
   }
 
+  private prefillFarmPlantInformation(): void {
+    const listControls = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+    const newListControls: AbstractControl[] = [];
+    listControls.forEach(control => {
+      const plantInformation = control.value as ApiPlantInformation;
+
+      const formGroup = new FormGroup({
+        productType: new FormControl(plantInformation.productType),
+        plantCultivatedArea: new FormControl(plantInformation.plantCultivatedArea),
+        numberOfPlants: new FormControl(plantInformation.numberOfPlants)
+      });
+
+      this.addControlValueChangeListener(formGroup.get('plantCultivatedArea') as FormControl);
+
+      newListControls.push(formGroup);
+    });
+
+    (this.farmerForm.get('farm.plantInformationList') as FormArray).clear();
+
+    newListControls.forEach(newControl => {
+      (this.farmerForm.get('farm.plantInformationList') as FormArray).push(newControl);
+    });
+  }
+
+  private initFarmPlantInformation(): void {
+
+    this.addNewFarmPlantInformation(null);
+  }
+
+  private addNewFarmPlantInformation(productType: ApiProductType): void {
+
+    const formGroup = new FormGroup({
+      productType: new FormControl(productType),
+      plantCultivatedArea: new FormControl(null),
+      numberOfPlants: new FormControl(null)
+    });
+
+    this.addControlValueChangeListener(formGroup.get('plantCultivatedArea') as FormControl);
+
+    (this.farmerForm.get('farm.plantInformationList') as FormArray).push(formGroup);
+  }
+
+  private removeFarmPlantInformation(productType: ApiProductType): void {
+
+    const plantInfoListArray = this.farmerForm.get('farm.plantInformationList') as FormArray;
+
+    const resultArrayControls = plantInfoListArray.controls.filter(control => control.get('productType').value.id !== productType.id);
+
+    plantInfoListArray.clear();
+    resultArrayControls.forEach(res => plantInfoListArray.push(res));
+  }
+
+
   initValueChangeListeners() {
     this.subscriptions.push(this.areaUnit.valueChanges.pipe(
       startWith(null),
@@ -282,7 +340,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         }
       }
     ));
-    this.subscriptions.push(this.plantCultivatedArea.valueChanges.pipe(
+    this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
@@ -291,7 +349,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         }
       }
     ));
-    this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
+  }
+
+  private addControlValueChangeListener(control: FormControl) {
+    this.subscriptions.push(control.valueChanges.pipe(
       startWith(null),
       debounceTime(100)).subscribe(
       val => {
@@ -304,11 +365,15 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   newFarmer() {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyFarmer(), ApiUserCustomerValidationScheme);
+
+    this.initFarmPlantInformation();
   }
 
   editFarmer() {
     this.prepareEdit();
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.farmer, ApiUserCustomerValidationScheme);
+
+    this.prefillFarmPlantInformation();
   }
 
   emptyFarmer() {
@@ -368,15 +433,18 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       this.selectedProductTypesForm.setValue(this.productTypes);
       this.farmerForm.markAsDirty();
       this.productTypesForm.setValue(null);
+      this.addNewFarmPlantInformation(productType);
     });
   }
 
   deleteProductType(idx: number) {
     this.confirmProductTypeRemove().then(confirmed => {
       if (confirmed) {
+        const productType = this.productTypes[idx];
         this.productTypes.splice(idx, 1);
         setTimeout(() => this.selectedProductTypesForm.setValue(this.productTypes));
         this.farmerForm.markAsDirty();
+        this.removeFarmPlantInformation(productType);
       }
     });
   }
@@ -506,11 +574,17 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   checkAreaFieldsRequired() {
     return (!this.checkNullEmpty(this.totalCultivatedArea) ||
-      !this.checkNullEmpty(this.plantCultivatedArea) || !this.checkNullEmpty(this.areaOrganicCertified));
+      this.checkPlantsCutivatedAreaFields() ||
+      !this.checkNullEmpty(this.areaOrganicCertified));
   }
 
   checkNullEmpty(control: FormControl){
     return control.value === null || control.value === undefined || control.value === '';
+  }
+
+  checkPlantsCutivatedAreaFields() {
+    const controls = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+    return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
   }
 
   public get areaUnit(): FormControl {
@@ -519,10 +593,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   public get totalCultivatedArea(): FormControl {
     return this.farmerForm.get('farm.totalCultivatedArea') as FormControl;
-  }
-
-  public get plantCultivatedArea(): FormControl {
-    return this.farmerForm.get('farm.plantCultivatedArea') as FormControl;
   }
 
   public get areaOrganicCertified(): FormControl {
@@ -536,16 +606,20 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return message;
   }
 
-  appendAreaUnitAndProductType(message: string, unit: string): string {
-    const productTypeName = (this.productTypes && this.productTypes[0]) ? this.productTypes[0].name : '';
+  appendAreaUnitAndProductType(message: string, unit: string, index: number): string {
+    const selectedControl = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls[index];
+    const productType = selectedControl.get('productType')?.value;
+    const productTypeName = (productType) ? productType.name : '';
     if (unit && unit.length > 0) {
       return message + ` ${productTypeName} (${unit})`;
     }
     return message + ` ${productTypeName}`;
   }
 
-  appendProductType(message: string): string {
-    const productTypeName = (this.productTypes && this.productTypes[0]) ? `(${this.productTypes[0].name})` : '';
+  appendProductType(message: string, index: number): string {
+    const selectedControl = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls[index];
+    const productType = selectedControl.get('productType')?.value;
+    const productTypeName = (productType) ? `(${productType.name})` : '';
     return message + ` ${productTypeName}`;
   }
 

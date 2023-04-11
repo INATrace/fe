@@ -292,19 +292,23 @@
                             [placeholder]="appendAreaUnit(areaTranslations.totalCultivatedPlaceholder, areaUnit.value)">
                         </textinput>
 
-                        <textinput
-                                [form]="farmerForm.get('farm.plantCultivatedArea')"
-                                style="width: 100%"
-                                [label]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedLabel, areaUnit.value)"
-                                [placeholder]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedPlaceholder, areaUnit.value)">
-                        </textinput>
+                        <ng-container *ngFor="let farmPlantInfo of farmPlantInfos; let i= index">
+                            <div class="af-form-element">
+                                <textinput
+                                        [form]="farmPlantInfo.get('plantCultivatedArea')"
+                                        style="width: 100%"
+                                        [label]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedLabel, areaUnit.value, i)"
+                                        [placeholder]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedPlaceholder, areaUnit.value, i)">
+                                </textinput>
 
-                        <textinput
-                                [form]="farmerForm.get('farm.numberOfPlants')"
-                                style="width: 100%"
-                                [label]="appendProductType(areaTranslations.numberOfPlantsLabel)"
-                                [placeholder]="appendProductType(areaTranslations.numberOfPlantsPlaceholder)">
-                        </textinput>
+                                <textinput
+                                        [form]="farmPlantInfo.get('numberOfPlants')"
+                                        style="width: 100%"
+                                        [label]="appendProductType(areaTranslations.numberOfPlantsLabel, i)"
+                                        [placeholder]="appendProductType(areaTranslations.numberOfPlantsPlaceholder, i)">
+                                </textinput>
+                            </div>
+                        </ng-container>
 
                         <checkbox-input [form]="farmerForm.get('farm.organic')">
                             <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">

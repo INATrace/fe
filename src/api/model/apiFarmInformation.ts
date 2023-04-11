@@ -18,6 +18,7 @@
  */
 
 
+import { ApiPlantInformation } from './apiPlantInformation';
 
 
 
@@ -31,17 +32,13 @@ export interface ApiFarmInformation {
      */
     areaUnit?: string;
     /**
-     * Number of plants
-     */
-    numberOfPlants?: number;
-    /**
      * Organic
      */
     organic?: boolean;
     /**
-     * Area cultivated with plant (ha)
+     * List of plant information
      */
-    plantCultivatedArea?: number;
+    plantInformationList?: Array<ApiPlantInformation>;
     /**
      * Start date of transition to organic
      */
@@ -69,17 +66,13 @@ export namespace ApiFarmInformation {
          */
         areaUnit = 'areaUnit',
         /**
-         * Number of plants
-         */
-        numberOfPlants = 'numberOfPlants',
-        /**
          * Organic
          */
         organic = 'organic',
         /**
-         * Area cultivated with plant (ha)
+         * List of plant information
          */
-        plantCultivatedArea = 'plantCultivatedArea',
+        plantInformationList = 'plantInformationList',
         /**
          * Start date of transition to organic
          */
@@ -122,17 +115,6 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'numberOfPlants',
-                    classname: 'ApiFarmInformation',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'organic',
                     classname: 'ApiFarmInformation',
                     dataType: 'boolean',
@@ -141,15 +123,16 @@ export namespace ApiFarmInformation {
                     complexType: ''
                 },
                 {
+                    metadata: ApiPlantInformation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'plantCultivatedArea',
+                    name: 'plantInformationList',
                     classname: 'ApiFarmInformation',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
+                    dataType: 'Array&lt;ApiPlantInformation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPlantInformation'
                 },
                 {
                     isReadOnly: false,
@@ -179,11 +162,9 @@ export namespace ApiFarmInformation {
                 ],
                 areaUnit: [
                 ],
-                numberOfPlants: [
-                ],
                 organic: [
                 ],
-                plantCultivatedArea: [
+                plantInformationList: [
                 ],
                 startTransitionToOrganic: [
                 ],
@@ -202,13 +183,10 @@ export namespace ApiFarmInformation {
   //               areaUnit: {
   //                   validators: []
   //               },
-  //               numberOfPlants: {
-  //                   validators: []
-  //               },
   //               organic: {
   //                   validators: []
   //               },
-  //               plantCultivatedArea: {
+  //               plantInformationList: {
   //                   validators: []
   //               },
   //               startTransitionToOrganic: {
