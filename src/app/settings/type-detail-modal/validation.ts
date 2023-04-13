@@ -45,16 +45,21 @@ export const ApiSemiProductValidationScheme = {
 } as SimpleValidationScheme<ApiSemiProduct>;
 
 export const ApiProductTypeValidationScheme = {
-  validators: [],
+  validators: [
+    multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslationsProductType(group), ['required'])
+  ],
   fields: {
     id: {
       validators: []
     },
     name: {
-      validators: [Validators.required]
+      validators: []
     },
     description: {
       validators: []
+    },
+    translations: {
+      validators: [Validators.required]
     }
   }
 } as SimpleValidationScheme<ApiProductType>;
@@ -189,6 +194,23 @@ export function requiredTranslationsSemiProduct(control: FormGroup): ValidationE
   // English translation is required, other are optional
   const englishTranslation = translations.find(t => t.language === LanguageEnum.EN);
   if (!englishTranslation || !englishTranslation.name) {
+    return {required: true};
+  }
+  return null;
+}
+
+export function requiredTranslationsProductType(control: FormGroup): ValidationErrors | null {
+  if (!control || !control.value || !control.contains('translations')) {
+    return null;
+  }
+  const translations = control.value['translations'];
+  if (translations.length === 0) {
+    return { required: true };
+  }
+
+  // English translation is required, other are optional
+  const englishTranslation = translations.find(t => t.language === LanguageEnum.EN);
+  if (!englishTranslation || !englishTranslation.name || !englishTranslation.description) {
     return {required: true};
   }
   return null;

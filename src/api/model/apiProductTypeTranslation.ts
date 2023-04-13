@@ -18,64 +18,76 @@
  */
 
 
-import { ApiProductTypeTranslation } from './apiProductTypeTranslation';
 
 
 
-export interface ApiProductType { 
-    creationTimestamp?: Date;
+export interface ApiProductTypeTranslation { 
+    /**
+     * Product type description
+     */
     description?: string;
     /**
      * Entity id
      */
     id?: number;
+    /**
+     * Product type language
+     */
+    language?: ApiProductTypeTranslation.LanguageEnum;
+    /**
+     * Product type name
+     */
     name?: string;
-    translations?: Array<ApiProductTypeTranslation>;
-    updateTimestamp?: Date;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiProductType.
+ * Namespace for property- and property-value-enumerations of ApiProductTypeTranslation.
  */
-export namespace ApiProductType {
+export namespace ApiProductTypeTranslation {
     /**
-     * All properties of ApiProductType.
+     * All properties of ApiProductTypeTranslation.
      */
     export enum Properties {
-        creationTimestamp = 'creationTimestamp',
+        /**
+         * Product type description
+         */
         description = 'description',
         /**
          * Entity id
          */
         id = 'id',
-        name = 'name',
-        translations = 'translations',
-        updateTimestamp = 'updateTimestamp'
+        /**
+         * Product type language
+         */
+        language = 'language',
+        /**
+         * Product type name
+         */
+        name = 'name'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiProductType',
+            classname: 'ApiProductTypeTranslation',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'creationTimestamp',
-                    classname: 'ApiProductType',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'description',
-                    classname: 'ApiProductType',
+                    classname: 'ApiProductTypeTranslation',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -86,8 +98,20 @@ export namespace ApiProductType {
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiProductType',
+                    classname: 'ApiProductTypeTranslation',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductTypeTranslation.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProductTypeTranslation',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -97,76 +121,43 @@ export namespace ApiProductType {
                     isEnum: false,
                     required: false,
                     name: 'name',
-                    classname: 'ApiProductType',
+                    classname: 'ApiProductTypeTranslation',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProductTypeTranslation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'translations',
-                    classname: 'ApiProductType',
-                    dataType: 'Array&lt;ApiProductTypeTranslation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductTypeTranslation'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updateTimestamp',
-                    classname: 'ApiProductType',
-                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                creationTimestamp: [
-                ],
                 description: [
                 ],
                 id: [
                 ],
+                language: [
+                ],
                 name: [
-                ],
-                translations: [
-                ],
-                updateTimestamp: [
                 ],
             }
         }
     }
 
-  // export const ApiProductTypeValidationScheme = {
+  // export const ApiProductTypeTranslationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               creationTimestamp: {
-  //                   validators: []
-  //               },
   //               description: {
   //                   validators: []
   //               },
   //               id: {
   //                   validators: []
   //               },
+  //               language: {
+  //                   validators: []
+  //               },
   //               name: {
   //                   validators: []
   //               },
-  //               translations: {
-  //                   validators: []
-  //               },
-  //               updateTimestamp: {
-  //                   validators: []
-  //               },
   //     }
-  // } as SimpleValidationScheme<ApiProductType>;
+  // } as SimpleValidationScheme<ApiProductTypeTranslation>;
 
 
 }

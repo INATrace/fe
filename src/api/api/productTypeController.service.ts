@@ -32,6 +32,7 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiProductType } from '../model/apiPaginatedResponseApiProductType';
 import { ApiProductType } from '../model/apiProductType';
+import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiProductType } from '../model/apiResponseApiProductType';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -116,6 +117,10 @@ export namespace GetProductTypeUsingGET {
        * id
        */
       id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -125,7 +130,11 @@ export namespace GetProductTypeUsingGET {
       /**
        * id
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -135,6 +144,8 @@ export namespace GetProductTypeUsingGET {
     export const ParamValidators: {[K in keyof GetProductTypeUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -147,12 +158,20 @@ export namespace GetProductTypesUsingGET {
      * Parameter map for getProductTypesUsingGET.
      */
     export interface PartialParamMap {
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
      * Enumeration of all parameters for getProductTypesUsingGET.
      */
     export enum Parameters {
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -160,6 +179,8 @@ export namespace GetProductTypesUsingGET {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof GetProductTypesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      language: [
+      ],
     };
 }
 
@@ -233,7 +254,7 @@ export class ProductTypeControllerService {
 
 
   /**
-   * createProductType by map.
+   * Create a new product type by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -242,15 +263,15 @@ export class ProductTypeControllerService {
   public createProductTypeUsingPOSTByMap(
     map: CreateProductTypeUsingPOST.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProductType>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public createProductTypeUsingPOSTByMap(
     map: CreateProductTypeUsingPOST.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProductType>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public createProductTypeUsingPOSTByMap(
     map: CreateProductTypeUsingPOST.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProductType>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public createProductTypeUsingPOSTByMap(
     map: CreateProductTypeUsingPOST.PartialParamMap,
     observe: any = 'body',
@@ -264,15 +285,15 @@ export class ProductTypeControllerService {
 
 
     /**
-     * createProductType
+     * Create a new product type
      * 
      * @param ApiProductType apiProductType
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductType>;
-    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductType>>;
-    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductType>>;
+    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public createProductTypeUsingPOST(ApiProductType: ApiProductType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProductType === null || ApiProductType === undefined) {
             throw new Error('Required parameter ApiProductType was null or undefined when calling createProductTypeUsingPOST.');
@@ -304,7 +325,7 @@ export class ProductTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.post<ApiResponseApiProductType>(`${this.configuration.basePath}/api/product-type`,
+        const handle = this.httpClient.post<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/product-type`,
             ApiProductType,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -321,7 +342,7 @@ export class ProductTypeControllerService {
 
 
   /**
-   * deleteProductType by map.
+   * Delete a product type by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -352,7 +373,7 @@ export class ProductTypeControllerService {
 
 
     /**
-     * deleteProductType
+     * Delete a product type
      * 
      * @param id id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -409,7 +430,7 @@ export class ProductTypeControllerService {
 
 
   /**
-   * getProductType by map.
+   * Get product type details by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -433,6 +454,7 @@ export class ProductTypeControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getProductTypeUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -440,16 +462,17 @@ export class ProductTypeControllerService {
 
 
     /**
-     * getProductType
+     * Get product type details
      * 
      * @param id id
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProductTypeUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductType>;
-    public getProductTypeUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductType>>;
-    public getProductTypeUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductType>>;
-    public getProductTypeUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProductTypeUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductType>;
+    public getProductTypeUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductType>>;
+    public getProductTypeUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductType>>;
+    public getProductTypeUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getProductTypeUsingGET.');
         }
@@ -460,6 +483,9 @@ export class ProductTypeControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -497,7 +523,7 @@ export class ProductTypeControllerService {
 
 
   /**
-   * getProductTypes by map.
+   * Get a list of product types by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -520,6 +546,7 @@ export class ProductTypeControllerService {
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
     return this.getProductTypesUsingGET(
+      map.language,
       observe,
       reportProgress
     );
@@ -527,17 +554,21 @@ export class ProductTypeControllerService {
 
 
     /**
-     * getProductTypes
+     * Get a list of product types
      * 
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProductTypesUsingGET(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductType>;
-    public getProductTypesUsingGET(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductType>>;
-    public getProductTypesUsingGET(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductType>>;
-    public getProductTypesUsingGET(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProductTypesUsingGET(language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductType>;
+    public getProductTypesUsingGET(language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductType>>;
+    public getProductTypesUsingGET(language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductType>>;
+    public getProductTypesUsingGET(language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -574,7 +605,7 @@ export class ProductTypeControllerService {
 
 
   /**
-   * updateProductType by map.
+   * Update a product type by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -583,15 +614,15 @@ export class ProductTypeControllerService {
   public updateProductTypeUsingPUTByMap(
     map: UpdateProductTypeUsingPUT.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProductType>;
+    reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
   public updateProductTypeUsingPUTByMap(
     map: UpdateProductTypeUsingPUT.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProductType>>;
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
   public updateProductTypeUsingPUTByMap(
     map: UpdateProductTypeUsingPUT.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProductType>>;
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
   public updateProductTypeUsingPUTByMap(
     map: UpdateProductTypeUsingPUT.PartialParamMap,
     observe: any = 'body',
@@ -605,15 +636,15 @@ export class ProductTypeControllerService {
 
 
     /**
-     * updateProductType
+     * Update a product type
      * 
      * @param ApiProductType apiProductType
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductType>;
-    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductType>>;
-    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductType>>;
+    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
     public updateProductTypeUsingPUT(ApiProductType: ApiProductType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProductType === null || ApiProductType === undefined) {
             throw new Error('Required parameter ApiProductType was null or undefined when calling updateProductTypeUsingPUT.');
@@ -645,7 +676,7 @@ export class ProductTypeControllerService {
                 }
             }
 
-        const handle = this.httpClient.put<ApiResponseApiProductType>(`${this.configuration.basePath}/api/product-type`,
+        const handle = this.httpClient.put<ApiResponseApiBaseEntity>(`${this.configuration.basePath}/api/product-type`,
             ApiProductType,
             {
                 withCredentials: this.configuration.withCredentials,

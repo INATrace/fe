@@ -7311,6 +7311,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -7345,6 +7361,24 @@
     },
     "/api/company/userCustomers/edit": {
       "put": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -7389,6 +7423,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -7432,6 +7482,22 @@
               "enum": [
                 "COLLECTOR",
                 "FARMER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
               ],
               "type": "string"
             }
@@ -7575,6 +7641,22 @@
               "format": "int64",
               "type": "integer"
             }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -7698,6 +7780,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           },
           {
@@ -7962,6 +8060,24 @@
     },
     "/api/product-type": {
       "get": {
+        "parameters": [
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -7978,7 +8094,7 @@
           "product-type-controller"
         ],
         "operationId": "getProductTypesUsingGET",
-        "summary": "getProductTypes"
+        "summary": "Get a list of product types"
       },
       "post": {
         "responses": {
@@ -7986,7 +8102,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiProductType_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -8000,7 +8116,7 @@
         "requestBody": {
           "$ref": "#/components/requestBodies/ApiProductType"
         },
-        "summary": "createProductType"
+        "summary": "Create a new product type"
       },
       "put": {
         "responses": {
@@ -8008,7 +8124,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiProductType_"
+                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
                 }
               }
             },
@@ -8022,7 +8138,7 @@
         "requestBody": {
           "$ref": "#/components/requestBodies/ApiProductType"
         },
-        "summary": "updateProductType"
+        "summary": "Update a product type"
       }
     },
     "/api/product-type/{id}": {
@@ -8055,7 +8171,7 @@
           "product-type-controller"
         ],
         "operationId": "deleteProductTypeUsingDELETE",
-        "summary": "deleteProductType"
+        "summary": "Delete a product type"
       },
       "get": {
         "parameters": [
@@ -8067,6 +8183,22 @@
             "schema": {
               "format": "int64",
               "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
             }
           }
         ],
@@ -8086,7 +8218,7 @@
           "product-type-controller"
         ],
         "operationId": "getProductTypeUsingGET",
-        "summary": "getProductType"
+        "summary": "Get product type details"
       }
     },
     "/api/product/": {
@@ -16670,8 +16802,42 @@
           "name": {
             "type": "string"
           },
+          "translations": {
+            "items": {
+              "$ref": "#/components/schemas/ApiProductTypeTranslation"
+            },
+            "type": "array"
+          },
           "updateTimestamp": {
             "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProductTypeTranslation": {
+        "properties": {
+          "description": {
+            "description": "Product type description",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "language": {
+            "description": "Product type language",
+            "enum": [
+              "EN",
+              "DE",
+              "RW",
+              "ES"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "description": "Product type name",
             "type": "string"
           }
         },

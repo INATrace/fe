@@ -66,6 +66,10 @@ export namespace AddUserCustomerUsingPOST {
        * request
        */
       ApiUserCustomer: ApiUserCustomer;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -79,7 +83,11 @@ export namespace AddUserCustomerUsingPOST {
       /**
        * request
        */
-      ApiUserCustomer = 'ApiUserCustomer'
+      ApiUserCustomer = 'ApiUserCustomer',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -89,6 +97,8 @@ export namespace AddUserCustomerUsingPOST {
     export const ParamValidators: {[K in keyof AddUserCustomerUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -508,6 +518,10 @@ export namespace GetCompanyProductTypesUsingGET {
        */
       id: number;
       /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType?: 'COUNT' | 'FETCH';
@@ -538,6 +552,10 @@ export namespace GetCompanyProductTypesUsingGET {
        */
       id = 'id',
       /**
+       * language
+       */
+      language = 'language',
+      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType = 'requestType',
@@ -566,6 +584,8 @@ export namespace GetCompanyProductTypesUsingGET {
     export const ParamValidators: {[K in keyof GetCompanyProductTypesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
       requestType: [
       ],
@@ -842,6 +862,10 @@ export namespace GetUserCustomerUsingGET {
        * User customer ID
        */
       id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -851,7 +875,11 @@ export namespace GetUserCustomerUsingGET {
       /**
        * User customer ID
        */
-      id = 'id'
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -861,6 +889,8 @@ export namespace GetUserCustomerUsingGET {
     export const ParamValidators: {[K in keyof GetUserCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -881,6 +911,10 @@ export namespace GetUserCustomersForCompanyAndTypeUsingGET {
        * Type of user customer (collector, farmer)
        */
       type: 'COLLECTOR' | 'FARMER';
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -924,6 +958,10 @@ export namespace GetUserCustomersForCompanyAndTypeUsingGET {
        */
       type = 'type',
       /**
+       * language
+       */
+      language = 'language',
+      /**
        * Only count, only fetch, or return both values (if null)
        */
       requestType = 'requestType',
@@ -964,6 +1002,8 @@ export namespace GetUserCustomersForCompanyAndTypeUsingGET {
       type: [
               ['required', Validators.required],
       ],
+      language: [
+      ],
       requestType: [
       ],
       limit: [
@@ -997,6 +1037,10 @@ export namespace ImportFarmersSpreadsheetUsingPOST {
        * Document ID
        */
       documentId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -1010,7 +1054,11 @@ export namespace ImportFarmersSpreadsheetUsingPOST {
       /**
        * Document ID
        */
-      documentId = 'documentId'
+      documentId = 'documentId',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -1023,6 +1071,8 @@ export namespace ImportFarmersSpreadsheetUsingPOST {
       ],
       documentId: [
               ['required', Validators.required],
+      ],
+      language: [
       ],
     };
 }
@@ -1311,6 +1361,10 @@ export namespace UpdateUserCustomerUsingPUT {
        * request
        */
       ApiUserCustomer: ApiUserCustomer;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -1320,7 +1374,11 @@ export namespace UpdateUserCustomerUsingPUT {
       /**
        * request
        */
-      ApiUserCustomer = 'ApiUserCustomer'
+      ApiUserCustomer = 'ApiUserCustomer',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -1328,6 +1386,8 @@ export namespace UpdateUserCustomerUsingPUT {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof UpdateUserCustomerUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+      language: [
+      ],
     };
 }
 
@@ -1394,6 +1454,7 @@ export class CompanyControllerService {
     return this.addUserCustomerUsingPOST(
       map.companyId,
       map.ApiUserCustomer,
+      map.language,
       observe,
       reportProgress
     );
@@ -1405,13 +1466,14 @@ export class CompanyControllerService {
      * 
      * @param companyId Company ID
      * @param ApiUserCustomer request
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
-    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
-    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
-    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
+    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+    public addUserCustomerUsingPOST(companyId: number, ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling addUserCustomerUsingPOST.');
         }
@@ -1420,6 +1482,9 @@ export class CompanyControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -2231,6 +2296,7 @@ export class CompanyControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getCompanyProductTypesUsingGET(
       map.id,
+      map.language,
       map.requestType,
       map.limit,
       map.offset,
@@ -2246,6 +2312,7 @@ export class CompanyControllerService {
      * Get list of product types for the company with the given ID
      * 
      * @param id Company ID
+     * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -2254,10 +2321,10 @@ export class CompanyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCompanyProductTypesUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductType>;
-    public getCompanyProductTypesUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductType>>;
-    public getCompanyProductTypesUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductType>>;
-    public getCompanyProductTypesUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getCompanyProductTypesUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductType>;
+    public getCompanyProductTypesUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductType>>;
+    public getCompanyProductTypesUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductType>>;
+    public getCompanyProductTypesUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getCompanyProductTypesUsingGET.');
         }
@@ -2280,6 +2347,9 @@ export class CompanyControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -2733,6 +2803,7 @@ export class CompanyControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.getUserCustomerUsingGET(
       map.id,
+      map.language,
       observe,
       reportProgress
     );
@@ -2743,18 +2814,22 @@ export class CompanyControllerService {
      * Get user customer by id
      * 
      * @param id User customer ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserCustomerUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
-    public getUserCustomerUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
-    public getUserCustomerUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
-    public getUserCustomerUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getUserCustomerUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
+    public getUserCustomerUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+    public getUserCustomerUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getUserCustomerUsingGET.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -2816,6 +2891,7 @@ export class CompanyControllerService {
     return this.getUserCustomersForCompanyAndTypeUsingGET(
       map.companyId,
       map.type,
+      map.language,
       map.requestType,
       map.limit,
       map.offset,
@@ -2834,6 +2910,7 @@ export class CompanyControllerService {
      * 
      * @param companyId Company ID
      * @param type Type of user customer (collector, farmer)
+     * @param language language
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -2844,10 +2921,10 @@ export class CompanyControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
-    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
-    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserCustomer>;
+    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserCustomer>>;
+    public getUserCustomersForCompanyAndTypeUsingGET(companyId: number, type: 'COLLECTOR' | 'FARMER', language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, searchBy?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling getUserCustomersForCompanyAndTypeUsingGET.');
         }
@@ -2879,6 +2956,9 @@ export class CompanyControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -2941,6 +3021,7 @@ export class CompanyControllerService {
     return this.importFarmersSpreadsheetUsingPOST(
       map.companyId,
       map.documentId,
+      map.language,
       observe,
       reportProgress
     );
@@ -2952,13 +3033,14 @@ export class CompanyControllerService {
      * 
      * @param companyId Company ID
      * @param documentId Document ID
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiUserCustomerImportResponse>;
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiUserCustomerImportResponse>>;
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiUserCustomerImportResponse>>;
-    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiUserCustomerImportResponse>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiUserCustomerImportResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiUserCustomerImportResponse>>;
+    public importFarmersSpreadsheetUsingPOST(companyId: number, documentId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling importFarmersSpreadsheetUsingPOST.');
         }
@@ -2967,6 +3049,9 @@ export class CompanyControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -3444,6 +3529,7 @@ export class CompanyControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.updateUserCustomerUsingPUT(
       map.ApiUserCustomer,
+      map.language,
       observe,
       reportProgress
     );
@@ -3454,18 +3540,22 @@ export class CompanyControllerService {
      * Update user customer with given ID
      * 
      * @param ApiUserCustomer request
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
-    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
-    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
-    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserCustomer>;
+    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserCustomer>>;
+    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserCustomer>>;
+    public updateUserCustomerUsingPUT(ApiUserCustomer: ApiUserCustomer, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiUserCustomer === null || ApiUserCustomer === undefined) {
             throw new Error('Required parameter ApiUserCustomer was null or undefined when calling updateUserCustomerUsingPUT.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [

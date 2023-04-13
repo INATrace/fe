@@ -3124,6 +3124,7 @@
     "productTypeDetail.textinput.description.label": "Description",
     "productTypeDetail.textinput.description.helpText": "Enter short product type description.",
     "productTypeDetail.textinput.description.error": "Description is required",
+    "productTypeDetail.hint.translations": "Specify name in English and add translations for all used languages.",
     "productTypeInCompany.input.placehoder": "Select product types",
     "valueChainInCompany.input.placehoder": "Type value chain name",
     "productTypes.input.placehoder": "Select product types",
