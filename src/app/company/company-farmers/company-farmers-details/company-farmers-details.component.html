@@ -292,7 +292,10 @@
                             [placeholder]="appendAreaUnit(areaTranslations.totalCultivatedPlaceholder, areaUnit.value)">
                         </textinput>
 
+                        <div class="farm-info-spacer"></div>
+
                         <ng-container *ngFor="let farmPlantInfo of farmPlantInfos; let i= index">
+                            <label>{{ getProductTypeName(i) }}</label>
                             <div class="af-form-element">
                                 <textinput
                                         [form]="farmPlantInfo.get('plantCultivatedArea')"
@@ -309,6 +312,10 @@
                                 </textinput>
                             </div>
                         </ng-container>
+                        <ng-container *ngIf="farmPlantInfos.length === 0">
+                            <small><em i18n="@@collectorDetail.list-editor.productTypes.error">Product types are required</em></small>
+                        </ng-container>
+
 
                         <checkbox-input [form]="farmerForm.get('farm.organic')">
                             <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">

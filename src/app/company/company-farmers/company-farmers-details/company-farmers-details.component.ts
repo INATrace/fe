@@ -606,10 +606,14 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return message;
   }
 
-  appendAreaUnitAndProductType(message: string, unit: string, index: number): string {
+  getProductTypeName(index: number): string {
     const selectedControl = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls[index];
     const productType = selectedControl.get('productType')?.value;
-    const productTypeName = (productType) ? productType.name : '';
+    return (productType) ? productType.name : '';
+  }
+
+  appendAreaUnitAndProductType(message: string, unit: string, index: number): string {
+    const productTypeName = this.getProductTypeName(index);
     if (unit && unit.length > 0) {
       return message + ` ${productTypeName} (${unit})`;
     }
