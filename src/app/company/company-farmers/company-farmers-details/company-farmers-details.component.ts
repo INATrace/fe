@@ -292,11 +292,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private initFarmPlantInformation(): void {
-
-    this.addNewFarmPlantInformation(null);
-  }
-
   private addNewFarmPlantInformation(productType: ApiProductType): void {
 
     const formGroup = new FormGroup({
@@ -365,8 +360,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   newFarmer() {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyFarmer(), ApiUserCustomerValidationScheme);
-
-    this.initFarmPlantInformation();
   }
 
   editFarmer() {
