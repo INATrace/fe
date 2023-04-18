@@ -16794,6 +16794,9 @@
           "description": {
             "type": "string"
           },
+          "fieldName": {
+            "type": "string"
+          },
           "id": {
             "description": "Entity id",
             "format": "int64",

@@ -3130,6 +3130,7 @@
     "productTypes.input.placehoder": "Select product types",
     "semiProductForValueChains.input.placehoder": "Select semi-product",
     "settingsTypes.sortOptions.productTypes.name": "Name",
+    "settingsTypes.sortOptions.productTypes.fieldName": "Field name",
     "settingsTypes.sortOptions.productTypes.description": "Description",
     "settingsTypes.typeList.title.productTypes": "Product types",
     "settingsTypes.editProductType.editTitle": "Edit product type",
