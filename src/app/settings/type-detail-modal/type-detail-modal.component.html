@@ -182,6 +182,25 @@
             </textinput>
 
             <textinput
+              label="Field name"
+              placeholder="Enter field name"
+              i18n-label="@@productTypeDetail.textinput.fieldName.label"
+              i18n-placeholder="@@productTypeDetail.textinput.fieldName.placeholder"
+              [form]="this.form.get('fieldName')"
+              [isInvalid]="submitted && form.get('fieldName').invalid"
+              style="width: 100%">
+              <ng-container *ngIf="submitted">
+                <div *ngIf="form.get('fieldName').errors as errors" class="sc-invalid-feedback">
+                  <div *ngIf="errors.required" i18n="@@productTypeDetail.textinput.fieldName.error">
+                    <span>
+                      Field name is required
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </textinput>
+
+            <textinput
               label="Description"
               helpText="Enter short product type description."
               [textarea]="true"

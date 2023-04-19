@@ -55,6 +55,9 @@ export const ApiProductTypeValidationScheme = {
     name: {
       validators: []
     },
+    fieldName: {
+      validators: [Validators.required]
+    },
     description: {
       validators: []
     },
