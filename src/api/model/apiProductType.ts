@@ -23,9 +23,9 @@ import { ApiProductTypeTranslation } from './apiProductTypeTranslation';
 
 
 export interface ApiProductType { 
+    code?: string;
     creationTimestamp?: Date;
     description?: string;
-    fieldName?: string;
     /**
      * Entity id
      */
@@ -43,9 +43,9 @@ export namespace ApiProductType {
      * All properties of ApiProductType.
      */
     export enum Properties {
+        code = 'code',
         creationTimestamp = 'creationTimestamp',
         description = 'description',
-        fieldName = 'fieldName',
         /**
          * Entity id
          */
@@ -65,6 +65,17 @@ export namespace ApiProductType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'code',
+                    classname: 'ApiProductType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'creationTimestamp',
                     classname: 'ApiProductType',
                     dataType: 'Date',
@@ -77,17 +88,6 @@ export namespace ApiProductType {
                     isEnum: false,
                     required: false,
                     name: 'description',
-                    classname: 'ApiProductType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fieldName',
                     classname: 'ApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -141,11 +141,11 @@ export namespace ApiProductType {
                 },
             ],
             validators: {
+                code: [
+                ],
                 creationTimestamp: [
                 ],
                 description: [
-                ],
-                fieldName: [
                 ],
                 id: [
                 ],
@@ -162,13 +162,13 @@ export namespace ApiProductType {
   // export const ApiProductTypeValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               code: {
+  //                   validators: []
+  //               },
   //               creationTimestamp: {
   //                   validators: []
   //               },
   //               description: {
-  //                   validators: []
-  //               },
-  //               fieldName: {
   //                   validators: []
   //               },
   //               id: {

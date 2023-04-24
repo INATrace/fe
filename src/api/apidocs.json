@@ -16787,14 +16787,14 @@
       },
       "ApiProductType": {
         "properties": {
+          "code": {
+            "type": "string"
+          },
           "creationTimestamp": {
             "format": "date-time",
             "type": "string"
           },
           "description": {
-            "type": "string"
-          },
-          "fieldName": {
             "type": "string"
           },
           "id": {
