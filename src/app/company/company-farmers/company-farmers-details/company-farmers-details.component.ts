@@ -285,6 +285,25 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       newListControls.push(formGroup);
     });
 
+    // add missing product type in lists
+    const listProductTypeControls = (this.farmerForm.get('productTypes') as FormArray).controls;
+    listProductTypeControls.forEach(ptControl =>  {
+      const productType = ptControl.value as ApiProductType;
+
+      const productFound = listControls.find(plantInfo => plantInfo.value.productType.id === productType.id);
+      if ( productFound === undefined ) {
+        const formGroup = new FormGroup({
+          productType: new FormControl(productType),
+          plantCultivatedArea: new FormControl(null),
+          numberOfPlants: new FormControl(null)
+        });
+
+        this.addControlValueChangeListener(formGroup.get('plantCultivatedArea') as FormControl);
+
+        newListControls.push(formGroup);
+      }
+    });
+
     (this.farmerForm.get('farm.plantInformationList') as FormArray).clear();
 
     newListControls.forEach(newControl => {
