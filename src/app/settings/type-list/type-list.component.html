@@ -98,7 +98,7 @@
 
         <ng-container *ngIf="type === 'product-types'">
           <tr *ngFor="let type of types.items">
-            <td [attr.data-label]="sortOptionsProductTypes[0].name"><span>{{ type.fieldName }}</span></td>
+            <td [attr.data-label]="sortOptionsProductTypes[0].name"><span>{{ type.code }}</span></td>
             <td [attr.data-label]="sortOptionsProductTypes[1].name"><span>{{ type.name }}</span></td>
             <td [attr.data-label]="sortOptionsProductTypes[2].name"><span>{{ type.description }}</span></td>
             <td [attr.data-label]="sortOptionsProductTypes[3].name">

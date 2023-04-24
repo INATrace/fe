@@ -50,7 +50,7 @@
                     placeholder="Enter name"
                     i18n-label="@@semiProductDetail.textinput.name.label"
                     i18n-placeholder="@@semiProductDetail.textinput.name.placeholder"
-                    [form]="this.form.get('translations.' + i + '.name')"
+                    [form]="$any(this.form.get('translations.' + i + '.name'))"
                     [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.name').value"
                     [markRequired]="translation.value.language === languageEnum.EN"
                     style="width: 100%">
@@ -72,7 +72,7 @@
                     [textarea]="true"
                     i18n-label="@@semiProductDetail.textinput.description.label"
                     i18n-helpText="@@semiProductDetail.textinput.description.helpText"
-                    [form]="this.form.get('translations.' + i + '.description')"
+                    [form]="$any(this.form.get('translations.' + i + '.description'))"
                     [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.description').value"
                     [markRequired]="translation.value.language === languageEnum.EN"
                     style="width: 100%">
@@ -93,7 +93,7 @@
         <single-choice
                 label="Measurement unit type"
                 i18n-label="@@productLabelStockSKUModal.measurementUnitType.label"
-                [formControlInput]="form.get('measurementUnitType')"
+                [formControlInput]="$any(form.get('measurementUnitType'))"
                 [codebookService]="activeMeasureUnitTypeService"
                 [isInvalidChoice]="submitted && form.get('measurementUnitType').invalid">
           <ng-container *ngIf="submitted">
@@ -105,19 +105,19 @@
           </ng-container>
         </single-choice>
 
-        <checkbox-input [form]="form.get('buyable')">
+        <checkbox-input [form]="$any(form.get('buyable'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductBuyable">
             Is buyable at producer
           </checkbox-input-rich-label>
         </checkbox-input>
 
-        <checkbox-input [form]="form.get('sku')">
+        <checkbox-input [form]="$any(form.get('sku'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductSKU">
             Is stock keeping unit at producer
           </checkbox-input-rich-label>
         </checkbox-input>
 
-        <checkbox-input [form]="form.get('skuendCustomer')">
+        <checkbox-input [form]="$any(form.get('skuendCustomer'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@semiProductDetail.checkbox-input.isSemiProductSKUEndCustomer">
             Is stock keeping unit at end customer
           </checkbox-input-rich-label>
@@ -125,6 +125,26 @@
       </ng-container>
 
       <ng-container *ngIf="this.type === 'product-types'">
+
+        <textinput
+            label="Code"
+            placeholder="Enter product type code"
+            i18n-label="@@productTypeDetail.textinput.code.label"
+            i18n-placeholder="@@productTypeDetail.textinput.code.placeholder"
+            [form]="$any(this.form.get('code'))"
+            [isInvalid]="submitted && form.get('code').invalid"
+            [readOnly]="this.update"
+            style="width: 100%">
+          <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('code').errors as errors" class="sc-invalid-feedback">
+              <div *ngIf="errors.required" i18n="@@productTypeDetail.textinput.code.error">
+                    <span>
+                      Code is required
+                    </span>
+              </div>
+            </div>
+          </ng-container>
+        </textinput>
 
         <small i18n="@@productTypeDetail.hint.translations">
           Specify name in English and add translations for all used languages.
@@ -163,10 +183,10 @@
           <ng-container *ngIf="translation.value.language === selectedLanguage">
             <textinput
               label="Name"
-              placeholder="Enter name"
+              placeholder="Enter product type name"
               i18n-label="@@productTypeDetail.textinput.name.label"
               i18n-placeholder="@@productTypeDetail.textinput.name.placeholder"
-              [form]="this.form.get('translations.' + i + '.name')"
+              [form]="$any(this.form.get('translations.' + i + '.name'))"
               [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.name').value"
               [markRequired]="translation.value.language === languageEnum.EN"
               style="width: 100%">
@@ -182,31 +202,12 @@
             </textinput>
 
             <textinput
-              label="Field name"
-              placeholder="Enter field name"
-              i18n-label="@@productTypeDetail.textinput.fieldName.label"
-              i18n-placeholder="@@productTypeDetail.textinput.fieldName.placeholder"
-              [form]="this.form.get('fieldName')"
-              [isInvalid]="submitted && form.get('fieldName').invalid"
-              style="width: 100%">
-              <ng-container *ngIf="submitted">
-                <div *ngIf="form.get('fieldName').errors as errors" class="sc-invalid-feedback">
-                  <div *ngIf="errors.required" i18n="@@productTypeDetail.textinput.fieldName.error">
-                    <span>
-                      Field name is required
-                    </span>
-                  </div>
-                </div>
-              </ng-container>
-            </textinput>
-
-            <textinput
               label="Description"
               helpText="Enter short product type description."
               [textarea]="true"
               i18n-label="@@productTypeDetail.textinput.description.label"
               i18n-helpText="@@productTypeDetail.textinput.description.helpText"
-              [form]="this.form.get('translations.' + i + '.description')"
+              [form]="$any(this.form.get('translations.' + i + '.description'))"
               [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.description').value"
               [markRequired]="translation.value.language === languageEnum.EN"
               style="width: 100%">
@@ -227,7 +228,7 @@
       <ng-container *ngIf="this.type !== 'semi-products' && this.type !== 'product-types'">
         <textinput *ngIf="this.type !== 'processing-evidence-fields'"
                 hideAsterisk="true"
-                [form]="form.get('code')"
+                [form]="$any(form.get('code'))"
                 label="Id"
                 [disabled]="update"
                 style="width: 100%"
@@ -251,7 +252,7 @@
         <textinput
                 *ngIf="this.type !== 'processing-evidence-fields' && this.type !== 'processing-evidence-types'"
                 hideAsterisk="true"
-                [form]="form.get('label')"
+                [form]="$any(form.get('label'))"
                 label="Label"
                 style="width: 100%"
                 placeholder="Enter label"
@@ -271,7 +272,7 @@
       <ng-container *ngIf="this.type === 'measurement-unit-types'">
         <textinput
           hideAsterisk="true"
-          [form]="form.get('weight')"
+          [form]="$any(form.get('weight'))"
           label="Weight (in kg)"
           style="width: 100%"
           placeholder="Enter weight"
@@ -284,7 +285,7 @@
         <single-choice
           label="Underlying measure unit"
           i18n-label="@@facilityTypeDetail.single-choice.underlyingMeasurementUnit.label"
-          [formControlInput]="form.get('underlyingMeasurementUnitType')"
+          [formControlInput]="$any(form.get('underlyingMeasurementUnitType'))"
           [codebookService]="activeMeasureUnitTypeService">
         </single-choice>
       </ng-container>
@@ -330,7 +331,7 @@
                     placeholder="Enter label"
                     i18n-label="@@facilityTypeDetail.textinput.label.label"
                     i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
-                    [form]="this.form.get('translations.' + i + '.label')"
+                    [form]="$any(this.form.get('translations.' + i + '.label'))"
                     [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.label').value"
                     [markRequired]="translation.value.language === languageEnum.EN"
                     style="width: 100%">
@@ -350,7 +351,7 @@
         <single-choice
           label="Type"
           i18n-label="@@productLabelProcessingAction.transactionType.label"
-          [formControlInput]="form.get('type')"
+          [formControlInput]="$any(form.get('type'))"
           [codebookService]="codebookProcessingEvidenceTypeType"
           [isInvalidChoice]="submitted && form.get('type').invalid">
           <ng-container *ngIf="submitted">
@@ -365,19 +366,19 @@
         <label class="mb-0 mt-3">
           Indicators
         </label>
-        <checkbox-input [form]="form.get('fairness')">
+        <checkbox-input [form]="$any(form.get('fairness'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.fairness">
             Fairness
           </checkbox-input-rich-label>
         </checkbox-input>
 
-        <checkbox-input [form]="form.get('provenance')">
+        <checkbox-input [form]="$any(form.get('provenance'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.provenance">
             Provenance
           </checkbox-input-rich-label>
         </checkbox-input>
 
-        <checkbox-input [form]="form.get('quality')">
+        <checkbox-input [form]="$any(form.get('quality'))">
           <checkbox-input-rich-label style="font-weight: 300;" i18n="@@typeDetailModal.processingEvidenceType.checkbox.quality">
             Quality
           </checkbox-input-rich-label>
@@ -425,7 +426,7 @@
                     placeholder="Enter label"
                     i18n-label="@@facilityTypeDetail.textinput.label.label"
                     i18n-placeholder="@@facilityTypeDetail.textinput.label.placeholder"
-                    [form]="this.form.get('translations.' + i + '.label')"
+                    [form]="$any(this.form.get('translations.' + i + '.label'))"
                     [isInvalid]="translation.value.language === languageEnum.EN && submitted && !this.form.get('translations.' + i + '.label').value"
                     [markRequired]="translation.value.language === languageEnum.EN"
                     style="width: 100%">
@@ -443,7 +444,7 @@
         </ng-container>
 
         <textinput
-                [form]="form.get('fieldName')"
+                [form]="$any(form.get('fieldName'))"
                 label="Field name"
                 style="width: 100%"
                 placeholder="Enter field name"
@@ -465,7 +466,7 @@
         <single-choice
                 label="Type"
                 i18n-label="@@productLabelProcessingAction.evidenceFieldType.label"
-                [formControlInput]="form.get('type')"
+                [formControlInput]="$any(form.get('type'))"
                 [codebookService]="codebookProcessingEvidenceFieldType"
                 [isInvalidChoice]="submitted && form.get('type').invalid">
           <ng-container *ngIf="submitted">

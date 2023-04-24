@@ -220,8 +220,8 @@ export class TypeListComponent implements OnInit, OnChanges {
 
   sortOptionsProductTypes: SortOption[] = [
     {
-      key: 'fieldName',
-      name: $localize`:@@settingsTypes.sortOptions.productTypes.fieldName:Field name`
+      key: 'code',
+      name: $localize`:@@settingsTypes.sortOptions.productTypes.code:Code`
     },
     {
       key: 'name',
