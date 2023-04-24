@@ -379,6 +379,16 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   newFarmer() {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyFarmer(), ApiUserCustomerValidationScheme);
+
+    // in case of 1 product (auto selection), also add empty fields in form
+    if (this.productTypes?.length > 0) {
+      setTimeout(() => {
+        this.selectedProductTypesForm.setValue(this.productTypes);
+        this.farmerForm.markAsDirty();
+        this.productTypesForm.setValue(null);
+        this.addNewFarmPlantInformation(this.productTypes[0]);
+      });
+    }
   }
 
   editFarmer() {
