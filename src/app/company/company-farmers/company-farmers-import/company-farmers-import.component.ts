@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { faFileExcel} from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
+import { LanguageCodeHelper } from '../../../language-code-helper';
 
 @Component({
   selector: 'app-company-farmers-import',
@@ -26,12 +27,21 @@ export class CompanyFarmersImportComponent implements OnInit {
 
   importInProgress = false;
 
+  farmerImportTemplateHref = '';
+
   constructor(
       private companyControllerService: CompanyControllerService,
       private toastService: ToastrService,
       private location: Location,
       private globalEventsManager: GlobalEventManagerService
-  ) { }
+  ) {
+
+    if (LanguageCodeHelper.getCurrentLocale() === 'es') {
+      this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado%20de%20agricultores_es.xlsx';
+    } else {
+      this.farmerImportTemplateHref = '/assets/farmer-import/Template_list%20of%20farmers_en.xlsx';
+    }
+  }
 
   ngOnInit(): void {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
