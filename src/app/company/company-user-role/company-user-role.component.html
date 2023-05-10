@@ -39,7 +39,7 @@
         <single-choice
           label="Company role"
           i18n-label="@@companyUserRole.label.role"
-          [formControlInput]="form.get('companyRole')"
+          [formControlInput]="$any(form.get('companyRole'))"
           [codebookService]="codebookRoles"
           [isInvalidChoice]="submitted && form.get('companyRole').invalid">
           <ng-container *ngIf="submitted">
