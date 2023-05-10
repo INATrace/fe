@@ -219,17 +219,16 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.sub = forkJoin([
-      this.companyController.getCompanyUsingGET(id).pipe(take(1)),
-      this.companyController.getCompanyValueChainsUsingGET(id).pipe(take(1))
+      this.companyController.getCompanyUsingGET(id).pipe(take(1))
     ]).subscribe({
-      next: ([company, valueChains]) => {
+      next: ([company]) => {
         this.company = company.data;
         if (!this.company.headquarters) {
           this.company.headquarters = this.emptyObject().headquarters;
         }
 
-        if (valueChains && valueChains.data) {
-          this.valueChains = valueChains.data.items ? valueChains.data.items : [];
+        if (company.data.valueChains) {
+          this.valueChains = company.data.valueChains ? company.data.valueChains : [];
           this.selectedCompanyValueChainsControl.setValue(this.valueChains);
         }
 
