@@ -308,10 +308,10 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   }
 
   goBack(): void {
-    this.router.navigate(['companies']).then();
+    this.router.navigate(['companies']).then(() => window.location.reload());
   }
 
-  async saveCompany(goBack = true) {
+  async saveCompany() {
     this.submitted = true;
     if (this.companyDetailForm.invalid) {
       this.globalEventsManager.push({
@@ -328,9 +328,8 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       const params = this.route.snapshot.params;
       const res: ApiResponseApiBaseEntity = await this.companyController
           .updateCompanyUsingPUT({ ...params, ...this.companyDetailForm.value }).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && goBack) {
+      if (res && res.status === 'OK') {
         this.companyDetailForm.markAsPristine();
-        this.goBack();
       }
     } catch (e) {
 
