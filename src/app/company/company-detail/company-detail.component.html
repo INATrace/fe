@@ -31,7 +31,7 @@
 
             <app-closable
               [nonClosable]="true">
-              <textinput [form]="companyDetailForm.get('name')" label="Company name"
+              <textinput [form]="$any(companyDetailForm.get('name'))" label="Company name"
                 style="width: 100%"
                 hideAsterisk="true"
                 placeholder="Enter company name"
@@ -51,7 +51,7 @@
 
             <app-closable
               [nonClosable]="true">
-              <textinput [form]="companyDetailForm.get('abbreviation')" label="Company abbreviation"
+              <textinput [form]="$any(companyDetailForm.get('abbreviation'))" label="Company abbreviation"
                 style="width: 100%"
                 hideAsterisk="true"
                 placeholder="Enter company abbreviation in 3-6 characters"
@@ -78,7 +78,7 @@
               i18n-label="@@companyDetail.attachment-uploader.companyLogo.label"
               i18n-placeholder="@@companyDetail.attachment-uploader.companyLogo.allowedMimeTypeErrorMessage"
               (onFileInfoLoad)="onFileUpload($event)"
-              [form]="companyDetailForm.get('logo')"
+              [form]="$any(companyDetailForm.get('logo'))"
               [attachmentUploaderId]="'company_logo'"
               [readOnly]="companyDetailForm.disabled">
               <attachment-uploader-content i18n="@@companyDetail.attachment-uploader.companyLogo.content">
@@ -108,7 +108,7 @@
               [nonClosable]="true">
               <div class="row">
                 <div class="col-sm-0 col-lg-6">
-                  <textinput [form]="companyDetailForm.get('headquarters.address')"
+                  <textinput [form]="$any(companyDetailForm.get('headquarters.address'))"
                     label="Street address" style="width: 100%"
                     placeholder="Enter street address"
                     i18n-label="@@companyDetail.textinput.companyAddress.label"
@@ -125,13 +125,13 @@
                       </div>
                     </ng-container>
                   </textinput>
-                  <textinput [form]="companyDetailForm.get('headquarters.city')"
+                  <textinput [form]="$any(companyDetailForm.get('headquarters.city'))"
                     label="City" style="width: 100%"
                     placeholder="Enter city"
                     i18n-label="@@companyDetail.textinput.companyCity.label"
                     i18n-placeholder="@@companyDetail.textinput.companyCity.placeholder">
                   </textinput>
-                  <textinput [form]="companyDetailForm.get('headquarters.state')"
+                  <textinput [form]="$any(companyDetailForm.get('headquarters.state'))"
                     label="State / Province / Region"
                     style="width: 100%" placeholder="Enter State / Province / Region"
                     i18n-label="@@companyDetail.textinput.companyState.label"
@@ -140,7 +140,7 @@
                 </div>
                 <div class="col-sm-0 col-lg-6 d-flex justify-content-end" style="flex-direction:
                   column">
-                  <textinput [form]="companyDetailForm.get('headquarters.zip')"
+                  <textinput [form]="$any(companyDetailForm.get('headquarters.zip'))"
                     label="Zip / Postal Code / P.O. Box"
                     style="width: 100%" placeholder="Enter Zip / Postal Code / P.O. Box"
                     i18n-label="@@companyDetail.textinput.companyZip.label"
@@ -158,7 +158,7 @@
                   </textinput>
                   <single-choice label="Country"
                     i18n-label="@@companyDetail.textinput.companyCountry.label"
-                    [formControlInput]="companyDetailForm.get('headquarters.country')"
+                    [formControlInput]="$any(companyDetailForm.get('headquarters.country'))"
                     [codebookService]="countryCodes">
                   </single-choice>
                 </div>
@@ -176,7 +176,7 @@
 
             <app-closable
               [nonClosable]="true">
-              <textinput [form]="companyDetailForm.get('about')" label="About company"
+              <textinput [form]="$any(companyDetailForm.get('about'))" label="About company"
                 style="width: 100%" [textarea]="true"
                 hideAsterisk="true"
                 helpText="Briefly describe your company and its history. Include the company mission and vision as well as core values. (max 2000 characters)"
@@ -201,7 +201,7 @@
             </app-closable>
 
             <app-closable>
-              <textinput [form]="companyDetailForm.get('manager')" label="Name of manager / CEO" style="width: 100%"
+              <textinput [form]="$any(companyDetailForm.get('manager'))" label="Name of manager / CEO" style="width: 100%"
                 placeholder="Enter name of manager / CEO"
                 i18n-label="@@companyDetail.textinput.companyManager.label"
                 i18n-helpText="@@companyDetail.textinput.companyManager.helpText">
@@ -209,7 +209,7 @@
             </app-closable>
             <app-closable
               [openOnValueChange]="openOnStart">
-              <textinput [form]="companyDetailForm.get('email')" label="Contact E-mail"
+              <textinput [form]="$any(companyDetailForm.get('email'))" label="Contact E-mail"
                 style="width: 100%"
                 hideAsterisk="true"
                 placeholder="Enter contact e-mail"
@@ -232,7 +232,7 @@
             </app-closable>
             <app-closable
               [openOnValueChange]="openOnStart">
-              <textinput [form]="companyDetailForm.get('phone')" label="Contact phone number"
+              <textinput [form]="$any(companyDetailForm.get('phone'))" label="Contact phone number"
                 style="width: 100%"
                 hideAsterisk="true"
                 placeholder="Enter phone number"
@@ -252,7 +252,7 @@
 
             <app-closable>
               <textinput
-                [form]="companyDetailForm.get('webPage')"
+                [form]="$any(companyDetailForm.get('webPage'))"
                 label="Company webpage URL"
                 style="width: 100%; color: #939393"
                 placeholder="Enter company webpage URL"
@@ -262,7 +262,7 @@
             </app-closable>
 
             <app-closable>
-              <textinput [form]="companyDetailForm.get('interview')" label="Interview"
+              <textinput [form]="$any(companyDetailForm.get('interview'))" label="Interview"
                 style="width: 100%" [textarea]="true"
                 hideAsterisk="true"
                 helpText="Briefly describe your company - PR statement. (max 2000 characters)"
@@ -370,7 +370,7 @@
           <div class="af-form-element">
             <single-choice label="Currency"
                            i18n-label="@@companyDetail.currency"
-                           [formControlInput]="companyDetailForm.get('currency')"
+                           [formControlInput]="$any(companyDetailForm.get('currency'))"
                            [codebookService]="currencyCodes">
             </single-choice>
             <ng-container *ngIf="submitted">
@@ -390,7 +390,7 @@
         <div class="af-form-block--c12">
           <h2 i18n="@@companyDetail.beycoIntegration.title">Beyco Integration</h2>
           <div class="af-form-element pt-0">
-            <checkbox-input [form]="companyDetailForm.get('allowBeycoIntegration')">
+            <checkbox-input [form]="$any(companyDetailForm.get('allowBeycoIntegration'))">
               <checkbox-input-rich-label i18n="@@companyDetail.beycoIntegration.allowConfirmation">
                 Company is allowed to export stock orders on Beyco platform.
               </checkbox-input-rich-label>
@@ -556,7 +556,7 @@
 
             <app-closable>
               <textinput
-                [form]="socialMediaForm.get('facebook')"
+                [form]="$any(socialMediaForm.get('facebook'))"
                 label="Facebook webpage URL"
                 placeholder="Enter Facebook URL"
                 i18n-label="@@companyDetail.textinput.facebook.label"
@@ -566,7 +566,7 @@
             </app-closable>
             <app-closable>
               <textinput
-                [form]="socialMediaForm.get('instagram')"
+                [form]="$any(socialMediaForm.get('instagram'))"
                 label="Instagram webpage URL"
                 placeholder="Enter Instagram URL"
                 i18n-label="@@companyDetail.textinput.instagram.label"
@@ -576,7 +576,7 @@
             </app-closable>
             <app-closable>
               <textinput
-                [form]="socialMediaForm.get('twitter')"
+                [form]="$any(socialMediaForm.get('twitter'))"
                 label="Twitter webpage URL"
                 placeholder="Enter Twitter URL"
                 i18n-label="@@companyDetail.textinput.twitter.label"
@@ -586,7 +586,7 @@
             </app-closable>
             <app-closable>
               <textinput
-                [form]="socialMediaForm.get('youtube')"
+                [form]="$any(socialMediaForm.get('youtube'))"
                 label="YouTube webpage URL"
                 placeholder="Enter YouTube URL"
                 i18n-label="@@companyDetail.textinput.youtube.label"
@@ -596,7 +596,7 @@
             </app-closable>
             <app-closable>
               <textinput
-                [form]="socialMediaForm.get('other')"
+                [form]="$any(socialMediaForm.get('other'))"
                 label="Other webpage URL"
                 placeholder="Enter Other URL"
                 i18n-label="@@companyDetail.textinput.other.label"

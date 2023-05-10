@@ -240,6 +240,12 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
 
         this.fillWebPageAndSocialMediaForm();
         this.initializeListManagers();
+
+        // If user is not enrolled in company enrolled, disable the form
+        if (!this.isCompanyEnrolled) {
+          this.companyDetailForm.disable();
+        }
+
         this.globalEventsManager.showLoading(false);
       },
       error: (error) => {
