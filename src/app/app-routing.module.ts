@@ -26,7 +26,6 @@ import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
 import { ValueChainDetailComponent } from './value-chain/value-chain-detail/value-chain-detail.component';
 import { CompanyDetailUsersComponent } from './company/company-detail/company-detail-users/company-detail-users.component';
@@ -37,8 +36,9 @@ import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
-import { AdminGuardService } from './shared-services/admin-guard.service';
+import { AdminOrCompanyAdminGuardService } from './shared-services/admin-or-company-admin-guard.service';
 import { ActivatedUserGuardService } from './shared-services/activated-user-guard.service';
+import { CompanyAdminGuardService } from './shared-services/company-admin-guard.service';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -215,17 +215,7 @@ const routes: Routes = [
     path: 'companies/:id/company',
     component: CompanyDetailComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
-    canDeactivate: [DeactivateGuardService],
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 'companies/:id/translate',
-    component: CompanyDetailTranslateComponent,
-    pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [AdminOrCompanyAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -235,7 +225,7 @@ const routes: Routes = [
     path: 'companies/:id/processingActions',
     component: CompanyProcessingActionsComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [CompanyAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -245,8 +235,8 @@ const routes: Routes = [
     path: 'companies/:id/processingActions/new',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
-    // canDeactivate: [DeactivateGuardService],
+    canActivate: [CompanyAdminGuardService],
+    canDeactivate: [DeactivateGuardService],
     data: {
       action: 'new',
       drobtinice: null
@@ -256,8 +246,8 @@ const routes: Routes = [
   path: 'companies/:id/processingActions/:paId/edit',
     component: CompanyDetailProcessingActionsDetailComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
-    // canDeactivate: [DeactivateGuardService],
+    canActivate: [CompanyAdminGuardService],
+    canDeactivate: [DeactivateGuardService],
     data: {
       action: 'edit',
       drobtinice: null
@@ -267,7 +257,7 @@ const routes: Routes = [
     path: 'companies/:id/users',
     component: CompanyDetailUsersComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [AdminOrCompanyAdminGuardService],
     data: {
       drobtinice: null
     }
@@ -276,7 +266,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities',
     component: CompanyDetailFacilitiesComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [CompanyAdminGuardService],
     data: {
       drobtinice: null
     }
@@ -285,7 +275,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/add',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [CompanyAdminGuardService],
     data: {
       drobtinice: {
         title: '',
@@ -297,7 +287,7 @@ const routes: Routes = [
     path: 'companies/:id/facilities/:facilityId/edit',
     component: CompanyDetailFacilityAddComponent,
     pathMatch: 'full',
-    canActivate: [AdminGuardService],
+    canActivate: [CompanyAdminGuardService],
     data: {
       drobtinice: {
         title: '',

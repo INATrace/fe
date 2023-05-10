@@ -22,22 +22,23 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
     $localize`:@@companyDetailTab.tab0.title:Company`,
     $localize`:@@companyDetailTab.tab2.title:Users`,
     $localize`:@@companyDetailTab.tab3.title:Facilities`,
-    $localize`:@@companyDetailTab.tab4.title:Processing actions`,
-    $localize`:@@companyDetailTab.tab1.title:Translations`
+    $localize`:@@companyDetailTab.tab4.title:Processing actions`
   ];
 
   tabNames = [
     'company',
     'users',
     'facilities',
-    'processingActions',
-    'translate'
+    'processingActions'
   ];
+
+  lockedTabs: string[] = [];
 
   cId = this.route.snapshot.params.id;
   selectedTab: Subscription;
 
   isAdmin = false;
+  isCompanyEnrolled = false;
   userProfileSubscription: Subscription;
 
   constructor(
@@ -54,7 +55,21 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
     this.userProfileSubscription = this.authService.userProfile$
       .subscribe(userProfile => {
         if (userProfile) {
+
+          // Set flag if this user is System admin
           this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.ADMIN;
+
+          // Set flag if this user is enrolled in the selected company (if not enrolled in the company,
+          // cannot see tabs: facilities and processing actions)
+          this.isCompanyEnrolled = userProfile.companyIds.findIndex(id => String(id) === this.cId) !== -1;
+
+          // If not company enrolled, lock the facilities and processing actions tabs
+          if (!this.isCompanyEnrolled) {
+            this.lockedTabs = [
+              'facilities',
+              'processingActions'
+            ];
+          }
         }
       });
   }
@@ -66,7 +81,12 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   }
 
   ngAfterViewInit() {
-    this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
+    this.selectedTab = this.tabCommunicationService.subscribe(
+      this.tabs, 
+      this.tabNames, 
+      this.rootTab, 
+      this.targetNavigate.bind(this),
+      this.lockedTabs);
   }
 
   canDeactivate(): boolean {

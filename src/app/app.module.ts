@@ -58,7 +58,6 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { WelcomeScreenUnconfirmedComponent } from './welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
 import * as Hammer from 'hammerjs';
 import { ChartsModule } from 'ng2-charts';
-import { CompanyDetailTranslateComponent } from './company/company-detail/company-detail-translate/company-detail-translate.component';
 import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
 import { CompanyUserRoleComponent } from './company/company-user-role/company-user-role.component';
 import { ValueChainListComponent } from './value-chain/value-chain-list/value-chain-list.component';
@@ -123,7 +122,6 @@ export function getConfiguration(): Configuration {
     SelectedUserCompanyModalComponent,
     SettingsAdditionalComponent,
     SettingsTypesComponent,
-    CompanyDetailTranslateComponent,
     CompanyDetailTabManagerComponent,
     CompanyUserRoleComponent,
     ValueChainListComponent,

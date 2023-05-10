@@ -4,10 +4,13 @@ import { AuthService } from '../core/auth.service';
 import { take } from 'rxjs/operators';
 import { ApiUserGet } from '../../api/model/apiUserGet';
 
+/**
+ * Guard that checks if the current user is either Company admin or a System admin.
+ */
 @Injectable({
     providedIn: 'root'
 })
-export class AdminGuardService implements CanActivate {
+export class AdminOrCompanyAdminGuardService implements CanActivate {
 
     constructor(
         private router: Router,
@@ -15,10 +18,11 @@ export class AdminGuardService implements CanActivate {
     ) { }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+
         const companyId = Number(route.params.id);
 
-        const res = await this.authService.userProfile$.pipe(take(1)).toPromise();
-        if (res && (res.role === ApiUserGet.RoleEnum.ADMIN || res.companyIdsAdmin.includes(companyId))) {
+        const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
+        if (userProfile && (userProfile.role === ApiUserGet.RoleEnum.ADMIN || userProfile.companyIdsAdmin.includes(companyId))) {
             return true;
         }
 
