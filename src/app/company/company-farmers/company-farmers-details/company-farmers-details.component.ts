@@ -32,7 +32,7 @@ import { CompanyProductTypesService } from '../../../shared-services/company-pro
 import { ApiProductType } from '../../../../api/model/apiProductType';
 import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
-import {ApiPlantInformation} from '../../../../api/model/apiPlantInformation';
+import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInformation';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -206,7 +206,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   get farmPlantInfos(): AbstractControl[] {
-    return (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+    return (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
   }
 
   ngOnInit(): void {
@@ -269,15 +269,15 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   private prefillFarmPlantInformation(): void {
-    const listControls = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+    const listControls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
     const newListControls: AbstractControl[] = [];
     listControls.forEach(control => {
-      const plantInformation = control.value as ApiPlantInformation;
+      const farmPlantInformation = control.value as ApiFarmPlantInformation;
 
       const formGroup = new FormGroup({
-        productType: new FormControl(plantInformation.productType),
-        plantCultivatedArea: new FormControl(plantInformation.plantCultivatedArea),
-        numberOfPlants: new FormControl(plantInformation.numberOfPlants)
+        productType: new FormControl(farmPlantInformation.productType),
+        plantCultivatedArea: new FormControl(farmPlantInformation.plantCultivatedArea),
+        numberOfPlants: new FormControl(farmPlantInformation.numberOfPlants)
       });
 
       this.addControlValueChangeListener(formGroup.get('plantCultivatedArea') as FormControl);
@@ -304,10 +304,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    (this.farmerForm.get('farm.plantInformationList') as FormArray).clear();
+    (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).clear();
 
     newListControls.forEach(newControl => {
-      (this.farmerForm.get('farm.plantInformationList') as FormArray).push(newControl);
+      (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).push(newControl);
     });
   }
 
@@ -321,12 +321,12 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
     this.addControlValueChangeListener(formGroup.get('plantCultivatedArea') as FormControl);
 
-    (this.farmerForm.get('farm.plantInformationList') as FormArray).push(formGroup);
+    (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).push(formGroup);
   }
 
   private removeFarmPlantInformation(productType: ApiProductType): void {
 
-    const plantInfoListArray = this.farmerForm.get('farm.plantInformationList') as FormArray;
+    const plantInfoListArray = this.farmerForm.get('farm.farmPlantInformationList') as FormArray;
 
     const resultArrayControls = plantInfoListArray.controls.filter(control => control.get('productType').value.id !== productType.id);
 
@@ -605,7 +605,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   checkPlantsCutivatedAreaFields() {
-    const controls = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls;
+    const controls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
     return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
   }
 
@@ -629,7 +629,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   getProductTypeName(index: number): string {
-    const selectedControl = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls[index];
+    const selectedControl = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls[index];
     const productType = selectedControl.get('productType')?.value;
     return (productType) ? productType.name : '';
   }
@@ -643,7 +643,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   appendProductType(message: string, index: number): string {
-    const selectedControl = (this.farmerForm.get('farm.plantInformationList') as FormArray).controls[index];
+    const selectedControl = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls[index];
     const productType = selectedControl.get('productType')?.value;
     const productTypeName = (productType) ? `(${productType.name})` : '';
     return message + ` ${productTypeName}`;

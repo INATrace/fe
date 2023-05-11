@@ -22,7 +22,7 @@ import { ApiProductType } from './apiProductType';
 
 
 
-export interface ApiPlantInformation { 
+export interface ApiFarmPlantInformation { 
     /**
      * Number of plants
      */
@@ -35,11 +35,11 @@ export interface ApiPlantInformation {
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiPlantInformation.
+ * Namespace for property- and property-value-enumerations of ApiFarmPlantInformation.
  */
-export namespace ApiPlantInformation {
+export namespace ApiFarmPlantInformation {
     /**
-     * All properties of ApiPlantInformation.
+     * All properties of ApiFarmPlantInformation.
      */
     export enum Properties {
         /**
@@ -57,14 +57,14 @@ export namespace ApiPlantInformation {
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiPlantInformation',
+            classname: 'ApiFarmPlantInformation',
             vars: [
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'numberOfPlants',
-                    classname: 'ApiPlantInformation',
+                    classname: 'ApiFarmPlantInformation',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -75,7 +75,7 @@ export namespace ApiPlantInformation {
                     isEnum: false,
                     required: false,
                     name: 'plantCultivatedArea',
-                    classname: 'ApiPlantInformation',
+                    classname: 'ApiFarmPlantInformation',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -87,7 +87,7 @@ export namespace ApiPlantInformation {
                     isEnum: false,
                     required: false,
                     name: 'productType',
-                    classname: 'ApiPlantInformation',
+                    classname: 'ApiFarmPlantInformation',
                     dataType: 'ApiProductType',
                     isPrimitiveType: false,
                     isListContainer: false,
@@ -105,7 +105,7 @@ export namespace ApiPlantInformation {
         }
     }
 
-  // export const ApiPlantInformationValidationScheme = {
+  // export const ApiFarmPlantInformationValidationScheme = {
   //     validators: [],
   //     fields: {
   //               numberOfPlants: {
@@ -118,7 +118,7 @@ export namespace ApiPlantInformation {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiPlantInformation>;
+  // } as SimpleValidationScheme<ApiFarmPlantInformation>;
 
 
 }
