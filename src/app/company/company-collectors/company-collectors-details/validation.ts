@@ -87,7 +87,7 @@ export const ApiFarmInformationValidationScheme = {
     organic: {
       validators: []
     },
-    plantInformationList: {
+    farmPlantInformationList: {
       validators: []
     },
     areaOrganicCertified: {

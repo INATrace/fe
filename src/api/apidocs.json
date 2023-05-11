@@ -12899,17 +12899,17 @@
             "description": "Area unit",
             "type": "string"
           },
+          "farmPlantInformationList": {
+            "description": "List of plant information",
+            "items": {
+              "$ref": "#/components/schemas/ApiFarmPlantInformation"
+            },
+            "type": "array"
+          },
           "organic": {
             "description": "Organic",
             "example": false,
             "type": "boolean"
-          },
-          "plantInformationList": {
-            "description": "List of plant information",
-            "items": {
-              "$ref": "#/components/schemas/ApiPlantInformation"
-            },
-            "type": "array"
           },
           "startTransitionToOrganic": {
             "description": "Start date of transition to organic",
@@ -12919,6 +12919,24 @@
           "totalCultivatedArea": {
             "description": "Total cultivated area (ha)",
             "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "ApiFarmPlantInformation": {
+        "properties": {
+          "numberOfPlants": {
+            "description": "Number of plants",
+            "format": "int32",
+            "type": "integer"
+          },
+          "plantCultivatedArea": {
+            "description": "Area cultivated with plant (ha)",
+            "type": "number"
+          },
+          "productType": {
+            "$ref": "#/components/schemas/ApiProductType",
+            "description": "Product type"
           }
         },
         "type": "object"
@@ -15352,24 +15370,6 @@
             "description": "Last updated timestamp",
             "format": "date-time",
             "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiPlantInformation": {
-        "properties": {
-          "numberOfPlants": {
-            "description": "Number of plants",
-            "format": "int32",
-            "type": "integer"
-          },
-          "plantCultivatedArea": {
-            "description": "Area cultivated with plant (ha)",
-            "type": "number"
-          },
-          "productType": {
-            "$ref": "#/components/schemas/ApiProductType",
-            "description": "Product type"
           }
         },
         "type": "object"
