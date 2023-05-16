@@ -254,9 +254,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get notAllOutputQuantityIsUsed() {
 
-    if (!this.selectedProcAction?.repackedOutputs) {
-      return false;
-    }
+    // TODO: refactor this after added support for repacking multiple outputs
+    // if (!this.selectedProcAction?.repackedOutputs) {
+    //   return false;
+    // }
 
     const enteredOutputQuantity = this.targetStockOrdersArray.at(0).get('totalQuantity').value;
     if (!enteredOutputQuantity) {
@@ -347,7 +348,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showAddNewOutputButton() {
-    return this.actionType === 'PROCESSING' && !this.selectedProcAction.repackedOutputs;
+    return this.actionType === 'PROCESSING';
   }
 
   get sacQuantityLabel() {
@@ -516,12 +517,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // We need to create the actual target Stock orders from the selected input Stock orders
       if (this.actionType === 'TRANSFER') {
         processingOrder.targetStockOrders = this.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
-      } else if (this.selectedProcAction.repackedOutputs) {
-
-        // If we have processing with repacking, the target Stock order present is just temporary (holds entered info)
-        // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputStockOrdersArray)
-        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0]);
       }
+      // TODO: refactor this after support for repacked multiple outputs is added
+      // else if (this.selectedProcAction.repackedOutputs) {
+      //
+      //   // If we have processing with repacking, the target Stock order present is just temporary (holds entered info)
+      //   // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputStockOrdersArray)
+      //   processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0]);
+      // }
 
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
@@ -859,19 +862,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private registerRepackedOutQuantityVCListener() {
 
-    if (this.repackedOutQuantitySubscription) {
-      this.repackedOutQuantitySubscription.unsubscribe();
-      this.repackedOutQuantitySubscription = null;
-    }
-
-    // When the total output quantity changes we need to re/generate the output stock order that are
-    // being repacked as part of this processing; This is only applicable when we have Processing action
-    // that has selected the option 'repackedOutputs' and set 'maxOutputWeight'
-    if (this.selectedProcAction.repackedOutputs && this.selectedProcAction.maxOutputWeight > 0) {
-      this.repackedOutQuantitySubscription = this.targetStockOrdersArray.at(0).get('totalQuantity').valueChanges
-        .pipe(debounceTime(300))
-        .subscribe((totalQuantity: number) => this.generateRepackedOutputStockOrders(totalQuantity));
-    }
+    // TODO: refactor for supporting repacked multiple outputs
+    // if (this.repackedOutQuantitySubscription) {
+    //   this.repackedOutQuantitySubscription.unsubscribe();
+    //   this.repackedOutQuantitySubscription = null;
+    // }
+    //
+    // // When the total output quantity changes we need to re/generate the output stock order that are
+    // // being repacked as part of this processing; This is only applicable when we have Processing action
+    // // that has selected the option 'repackedOutputs' and set 'maxOutputWeight'
+    // if (this.selectedProcAction.repackedOutputs && this.selectedProcAction.maxOutputWeight > 0) {
+    //   this.repackedOutQuantitySubscription = this.targetStockOrdersArray.at(0).get('totalQuantity').valueChanges
+    //     .pipe(debounceTime(300))
+    //     .subscribe((totalQuantity: number) => this.generateRepackedOutputStockOrders(totalQuantity));
+    // }
   }
 
   private async initializeData() {
@@ -1155,50 +1159,51 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.procOrderGroup =
       generateFormFromMetadata(ApiProcessingOrder.formMetadata(), processingOrder, ApiProcessingOrderValidationScheme);
 
-    if (processingOrder.processingAction?.repackedOutputs) {
-
-      this.targetStockOrdersArray.clear();
-      this.repackedOutputStockOrdersArray.clear();
-
-      const firstTSO = processingOrder.targetStockOrders[0];
-      this.commentsControl.setValue(firstTSO.comments);
-
-      // Set the first Stock order as a target Stock order in the target Stock orders array
-      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
-
-      // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
-      let totalOutputQuantity = 0;
-      processingOrder.targetStockOrders.forEach(tso => {
-
-        const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
-        repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
-        repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
-
-        this.repackedOutputStockOrdersArray.push(repackedStockOrder);
-        totalOutputQuantity += tso.totalQuantity;
-      });
-
-      // Set the total output quantity (calculated above) to the target Stock order
-      this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
-
-      const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
-      if (lastSlashIndex !== -1) {
-        this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
-      }
-
-    } else {
-
-      // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
-      this.targetStockOrdersArray.clear();
-      processingOrder.targetStockOrders.forEach((tso, index) => {
-        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
-
-        // Get the comment content from the first target Stock order (all Stock orders have same comments content)
-        if (index === 0) {
-          this.commentsControl.setValue(tso.comments);
-        }
-      });
-    }
+    // TODO: refactor for supporting repacking multiple outputs
+    // if (processingOrder.processingAction?.repackedOutputs) {
+    //
+    //   this.targetStockOrdersArray.clear();
+    //   this.repackedOutputStockOrdersArray.clear();
+    //
+    //   const firstTSO = processingOrder.targetStockOrders[0];
+    //   this.commentsControl.setValue(firstTSO.comments);
+    //
+    //   // Set the first Stock order as a target Stock order in the target Stock orders array
+    //   this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
+    //
+    //   // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
+    //   let totalOutputQuantity = 0;
+    //   processingOrder.targetStockOrders.forEach(tso => {
+    //
+    //     const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
+    //     repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
+    //     repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
+    //
+    //     this.repackedOutputStockOrdersArray.push(repackedStockOrder);
+    //     totalOutputQuantity += tso.totalQuantity;
+    //   });
+    //
+    //   // Set the total output quantity (calculated above) to the target Stock order
+    //   this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
+    //
+    //   const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
+    //   if (lastSlashIndex !== -1) {
+    //     this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
+    //   }
+    //
+    // } else {
+    //
+    //   // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
+    //   this.targetStockOrdersArray.clear();
+    //   processingOrder.targetStockOrders.forEach((tso, index) => {
+    //     this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+    //
+    //     // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+    //     if (index === 0) {
+    //       this.commentsControl.setValue(tso.comments);
+    //     }
+    //   });
+    // }
   }
 
   private clearInputPropsAndControls() {
