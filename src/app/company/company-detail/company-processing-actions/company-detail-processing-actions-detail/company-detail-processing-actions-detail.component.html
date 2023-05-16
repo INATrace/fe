@@ -248,41 +248,41 @@
                                         </div>
                                     </ng-container>
                                 </single-choice>
-                            </ng-container>
 
-                            <div class="d-flex">
-                                <div class="af-c6">
-                                    <single-choice
-                                            label="Repacked outputs"
-                                            i18n-label="@@companyDetailProcessingActions.singleChoice.repackedOutputs.label"
-                                            [formControlInput]="$any(form.get('repackedOutputs'))"
-                                            [enumFormatter]="repackedFormatter"
-                                            [booleanTrue]="booleanTrue"
-                                            [booleanFalse]="booleanFalse"
-                                            (onChange)="repackedOutputsSet($event)">
-                                    </single-choice>
-                                </div>
-                                <div class="af-c6 center">
-                                    <textinput
-                                            [label]="maxOutputQuantityLabel"
-                                            placeholder="Enter max output quantity"
-                                            i18n-placeholder="@@companyDetailProcessingActions.textInput.maxOutputWeight.placeholder"
-                                            type="number"
-                                            step="0.01"
-                                            [form]="$any(form.get('maxOutputWeight'))"
-                                            [isInvalid]="submitted && form.get('maxOutputWeight').invalid">
-                                        <ng-container *ngIf="submitted">
-                                            <div *ngIf="form.get('maxOutputWeight').errors as errors" class="sc-invalid-feedback">
-                                                <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.textInput.maxOutputWeight.error">
+                                <div class="d-flex">
+                                    <div class="af-c6">
+                                        <single-choice
+                                                label="Repacked outputs"
+                                                i18n-label="@@companyDetailProcessingActions.singleChoice.repackedOutputFinalProducts.label"
+                                                [formControlInput]="$any(form.get('repackedOutputFinalProducts'))"
+                                                [enumFormatter]="repackedOutputFinalProductsFormatter"
+                                                [booleanTrue]="booleanTrue"
+                                                [booleanFalse]="booleanFalse"
+                                                (onChange)="repackedOutputFinalProductsSet($event)">
+                                        </single-choice>
+                                    </div>
+                                    <div class="af-c6 center">
+                                        <textinput
+                                                [label]="maxOutputFinalProductQuantityLabel"
+                                                placeholder="Enter max output quantity"
+                                                i18n-placeholder="@@companyDetailProcessingActions.field.maxOutputWeight.placeholder"
+                                                type="number"
+                                                step="0.01"
+                                                [form]="$any(form.get('maxOutputWeight'))"
+                                                [isInvalid]="submitted && form.get('maxOutputWeight').invalid">
+                                            <ng-container *ngIf="submitted">
+                                                <div *ngIf="form.get('maxOutputWeight').errors as errors" class="sc-invalid-feedback">
+                                                    <div *ngIf="errors.required" i18n-label="@@companyDetailProcessingActions.field.maxOutputWeight.error">
                                                 <span>
                                                   Max output weight is required
                                                 </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-container>
-                                    </textinput>
+                                            </ng-container>
+                                        </textinput>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
 
                             <textinput
                                     *ngIf="form.get('type').value === 'PROCESSING'"

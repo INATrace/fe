@@ -3,19 +3,19 @@ import { ApiProcessingAction } from 'src/api/model/apiProcessingAction';
 import { SimpleValidationScheme } from 'src/interfaces/Validation';
 import { multiFieldValidator } from 'src/shared/validation';
 
-export function requireRepackedOutputs(control: FormGroup): ValidationErrors | null {
+export function requireMaxOutputFinalProductsWeight(control: FormGroup): ValidationErrors | null {
 
     if (!control || !control.value) {
         return null;
     }
     const type = control.value['type'];
-    const repackedOutputs = control.value.repackedOutputs;
-    const maxOutputWeight = control.value.maxOutputWeight;
-    if ((type !== 'PROCESSING' && type !== 'FINAL_PROCESSING') || !repackedOutputs) {
+    const repackedOutputFinalProducts = control.value.repackedOutputFinalProducts;
+    const maxOutputFinalProductsWeight = control.value.maxOutputWeight;
+    if (type !== 'FINAL_PROCESSING' || !repackedOutputFinalProducts) {
         return null;
     }
 
-    if (!maxOutputWeight) {
+    if (!maxOutputFinalProductsWeight) {
         return { required: true };
     }
     return null;
@@ -149,7 +149,7 @@ export const ApiProcessingActionValidationScheme = {
     multiFieldValidator(['outputFinalProduct'], (group: FormGroup) => requiredOutputFinalProduct(group), ['required']),
     multiFieldValidator(['qrCodeForFinalProduct'], (group: FormGroup) => requiredQRCodeForFinalProduct(group), ['required']),
     multiFieldValidator(['outputSemiProducts'], (group: FormGroup) => requiredOutputSemiProducts(group), ['atLeastOneIsRequired']),
-    multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireRepackedOutputs(group), ['required']),
+    multiFieldValidator(['maxOutputWeight'], (group: FormGroup) => requireMaxOutputFinalProductsWeight(group), ['required']),
     multiFieldValidator(['translations'], (group: FormGroup) => requiredTranslations(group), ['required'])
   ],
   fields: {
@@ -183,7 +183,7 @@ export const ApiProcessingActionValidationScheme = {
     publicTimelineLocation: {
       validators: []
     },
-    repackedOutputs: {
+    repackedOutputFinalProducts: {
       validators: []
     },
     requiredDocumentTypes: {
