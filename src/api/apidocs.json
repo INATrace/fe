@@ -11000,9 +11000,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11012,16 +11015,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11031,16 +11037,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11050,16 +11059,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11069,16 +11081,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11088,16 +11103,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11107,16 +11125,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11126,8 +11147,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -15461,7 +15482,7 @@
             "type": "string"
           },
           "maxOutputWeight": {
-            "description": "Processing action maximum output weight",
+            "description": "Processing action maximum output weight when repacked outputs for final product is set to 'true'",
             "type": "number"
           },
           "name": {
@@ -15475,7 +15496,7 @@
           "outputSemiProducts": {
             "description": "List of supported output semi-products",
             "items": {
-              "$ref": "#/components/schemas/ApiSemiProduct"
+              "$ref": "#/components/schemas/ApiProcessingActionOutputSemiProduct"
             },
             "type": "array"
           },
@@ -15506,8 +15527,8 @@
             "$ref": "#/components/schemas/ApiFinalProduct",
             "description": "The Final product for which the QR code tag will be generated (used with action type GENERATE_QR_CODE)"
           },
-          "repackedOutputs": {
-            "description": "Processing action repacked outputs",
+          "repackedOutputFinalProducts": {
+            "description": "Processing action repacked outputs when using output final product",
             "example": false,
             "type": "boolean"
           },
@@ -15559,6 +15580,49 @@
             "description": "List of value chains for this processing action",
             "items": {
               "$ref": "#/components/schemas/ApiValueChain"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingActionOutputSemiProduct": {
+        "properties": {
+          "buyable": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "maxOutputWeight": {
+            "description": "Maximum output weight when repacked outputs",
+            "type": "number"
+          },
+          "measurementUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "repackedOutput": {
+            "description": "Repacked outputs of this output semi-product",
+            "example": false,
+            "type": "boolean"
+          },
+          "sku": {
+            "type": "boolean"
+          },
+          "skuendCustomer": {
+            "type": "boolean"
+          },
+          "translations": {
+            "items": {
+              "$ref": "#/components/schemas/ApiSemiProductTranslation"
             },
             "type": "array"
           }
