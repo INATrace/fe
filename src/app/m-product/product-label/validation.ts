@@ -11,6 +11,7 @@ import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityF
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
+import { ApiValueChain } from '../../../api/model/apiValueChain';
 
 export const ApiCertificationValidationScheme = {
   validators: [Validators.required],
@@ -53,6 +54,15 @@ export const ApiResponsibilityFarmerPictureValidationScheme = {
     },
   }
 } as SimpleValidationScheme<ApiResponsibilityFarmerPicture>;
+
+export const ApiValueChainValidationScheme = {
+  validators: [],
+  fields: {
+    id: {
+      validators: [Validators.required]
+    }
+  }
+} as SimpleValidationScheme<ApiValueChain>;
 
 const ApiResponsibilityValidationScheme = {
   forceExpand: true,

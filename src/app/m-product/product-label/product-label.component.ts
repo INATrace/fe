@@ -42,7 +42,7 @@ import {
   ApiProcessDocumentValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
-  ApiResponsibilityFarmerPictureValidationScheme,
+  ApiResponsibilityFarmerPictureValidationScheme, ApiValueChainValidationScheme,
   marketShareFormMetadata,
   MarketShareValidationScheme,
   pricingTransparencyFormMetadata,
@@ -54,7 +54,6 @@ import { ApiProductLabelContent } from 'src/api/model/apiProductLabelContent';
 import { LanguageForLabelModalComponent } from './language-for-label-modal/language-for-label-modal.component';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
-import { ApiValueChainValidationScheme } from '../../value-chain/value-chain-detail/validation';
 import { ApiProductCompany } from '../../../api/model/apiProductCompany';
 import { LanguageForLabelModalResult } from './language-for-label-modal/model';
 import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToCustomerSettings';
