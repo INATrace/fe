@@ -36,13 +36,13 @@
                   </div>
                   <div *ngIf="searchRole && searchRole?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.showRole"> Show {{searchRole.value | lowercase}}
                     <div (click)="clearValue(searchRole)" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
                     </div>
                   </div>
                   <div *ngIf="myUsers && myUsers.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.myUsers">My users
                     <div (click)="clearValue(myUsers, true)" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
                     </div>
                   </div>

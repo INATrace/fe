@@ -79,7 +79,7 @@
                         <span>{{ pl.title }}</span>
                         <span *ngIf="pl.status === 'UNPUBLISHED'"> (<span i18n="@@productLabelFinalProduct.modal.singleChoice.productLabels.status.unpublished">Unpublished</span>)</span>
                     </div>
-                    <div (click)="removeSelectedProductLabel(idx)" style="cursor: pointer;">
+                    <div (click)="removeSelectedProductLabel(idx)" class="cursor-pointer">
                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                     </div>
                 </div>

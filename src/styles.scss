@@ -67,14 +67,17 @@ p {
     font-size:1rem
 }
 
-
 .font-pathway-gothic-one {
   font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-weight: normal;
   font-style: normal;
 }
 
-.container{
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.container {
     width:100%;
     padding-right:15px;
     padding-left:15px;

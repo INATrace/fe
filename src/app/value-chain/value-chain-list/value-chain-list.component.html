@@ -31,7 +31,7 @@
                 <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
                   <div *ngIf="filterStatus?.value" class="d-flex filter-text" style="margin-left: 0.75rem"> Show {{ filterStatus.value | lowercase }}
                     <div (click)="clearFilter()" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs"></fa-icon>
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs"></fa-icon>
                     </div>
                   </div>
 

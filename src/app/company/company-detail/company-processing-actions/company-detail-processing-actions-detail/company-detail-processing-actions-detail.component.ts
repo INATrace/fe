@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { ProcessingEvidenceTypeService } from '../../../../shared-services/processing-evidence-types.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../../../api/api/processingEvidenceTypeController.service';
@@ -35,6 +35,7 @@ import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType'
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyValueChainsService } from '../../../../shared-services/company-value-chains.service';
 import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
+import { ApiProcessingActionOutputSemiProduct } from '../../../../../api/model/apiProcessingActionOutputSemiProduct';
 
 @Component({
   selector: 'app-company-detail-processing-actions',
@@ -137,7 +138,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     return (this.inputSemiProductControl.value as ApiSemiProduct).measurementUnitType;
   }
 
-  private get outputSemiProductsArray(): FormArray {
+  public get outputSemiProductsArray(): FormArray {
     return this.form.get('outputSemiProducts') as FormArray;
   }
 
@@ -507,22 +508,34 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       return;
     }
 
+    const semiProductForm = generateFormFromMetadata(ApiProcessingActionOutputSemiProduct.formMetadata(), semiProduct);
+    semiProductForm.get('maxOutputWeight').disable();
+    semiProductForm.get('maxOutputWeight').setValidators(Validators.required);
+
     // Add selected output semi-product to the array
-    formArray.push(new FormControl({...semiProduct}));
+    formArray.push(semiProductForm);
     formArray.markAsDirty();
 
     // Clear input field
     setTimeout(() => this.outputSemiProductInputForm.setValue(null));
   }
 
-  async removeOutputSemiProduct(semiProduct: ApiSemiProduct) {
+  async removeOutputSemiProduct(index: number) {
+    this.outputSemiProductsArray.removeAt(index);
+    this.outputSemiProductsArray.markAsDirty();
+  }
 
-    if (!semiProduct) { return; }
-    const formArray = this.outputSemiProductsArray;
-    const index = (formArray.value as ApiSemiProduct[]).findIndex(x => x.id === semiProduct.id);
-    if (index >= 0) {
-      formArray.removeAt(index);
-      formArray.markAsDirty();
+  repackOutputSemiProductChecked(index: number) {
+
+    const repackChecked: boolean = this.outputSemiProductsArray.at(index).get('repackedOutput').value;
+
+    const maxOutputWeightControl = this.outputSemiProductsArray.at(index).get('maxOutputWeight');
+
+    if (repackChecked) {
+      maxOutputWeightControl.enable();
+    } else {
+      maxOutputWeightControl.disable();
+      maxOutputWeightControl.setValue(null);
     }
   }
 

@@ -396,7 +396,7 @@
                         <div *ngFor="let productType of this.productTypes; index as idx">
                             <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                                 <div>{{ productType.name }}</div>
-                                <div (click)="deleteProductType(idx)" style="cursor: pointer;">
+                                <div (click)="deleteProductType(idx)" class="cursor-pointer">
                                     <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                                 </div>
                             </div>
