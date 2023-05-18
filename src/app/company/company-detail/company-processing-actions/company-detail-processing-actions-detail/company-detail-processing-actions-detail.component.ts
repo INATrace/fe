@@ -120,7 +120,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   get maxOutputFinalProductQuantityLabel() {
     const outputMeasurementUnit: string = (this.outputFinalProductControl.value as ApiFinalProduct)?.measurementUnitType?.label ?? '';
-    return $localize`:@@companyDetailProcessingActions.field.maxOutputQuantity.label:Max output quantity in ${outputMeasurementUnit}`;
+    return $localize`:@@companyDetailProcessingActions.field.maxOutputWeight.label:Max output quantity in ${outputMeasurementUnit}`;
   }
 
   get estimatedOutputQuantityLabel() {
