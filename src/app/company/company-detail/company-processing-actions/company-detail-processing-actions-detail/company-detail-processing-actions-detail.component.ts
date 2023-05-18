@@ -278,7 +278,10 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
 
   editAction() {
 
+    // Generate form group from the Processing action data
     this.form = generateFormFromMetadata(ApiProcessingAction.formMetadata(), this.action, ApiProcessingActionValidationScheme);
+
+    // Set form control for the Value chains (we overwrite the existing one with separate form control where we are going to subscribe later)
     this.form.setControl('valueChains', this.selectedCompanyValueChainsControl);
 
     if (!this.repackedOutputFinalProductsControl.value) {
@@ -286,22 +289,23 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.maxOutputFinalProductsWeightControl.disable();
     }
 
-    if (!this.form.get('type').value) {
-      this.form.get('type').setValue('PROCESSING');
-    }
+    // If the Processing action has output semi-products set, initialize the form array with form groups
+    if (this.action.outputSemiProducts?.length > 0) {
+      this.outputSemiProductsArray.clear();
 
-    if (this.form.get('valueChains').value) {
+      this.action.outputSemiProducts.forEach(apiPaOSM => {
+        const apiPaOSMFormGroup = generateFormFromMetadata(ApiProcessingActionOutputSemiProduct.formMetadata(), apiPaOSM);
+        apiPaOSMFormGroup.get('maxOutputWeight').setValidators(Validators.required);
+        apiPaOSMFormGroup.get('maxOutputWeight').disable({ emitEvent: false });
+        if (apiPaOSM.repackedOutput) {
+          apiPaOSMFormGroup.get('maxOutputWeight').enable({ emitEvent: false });
+        }
 
-      const valueChains = this.selectedCompanyValueChainsControl.value as ApiValueChain[];
-      const valueChainIds = valueChains?.map(valueChain => valueChain.id);
+        // Add selected output semi-product to the array
+        this.outputSemiProductsArray.push(apiPaOSMFormGroup);
+      });
 
-      if (valueChainIds && valueChainIds.length > 0) {
-        // Initialize codebook services for proc. evidence types and proc. evidence fields
-        this.processingEvidenceTypeService =
-          new ProcessingEvidenceTypeService(this.processingEvidenceTypeControllerService, this.codebookTranslations, 'DOCUMENT', valueChainIds);
-        this.processingEvidenceFieldService =
-          new ProcessingEvidenceFieldsService(this.processingEvidenceFieldControllerService, this.codebookTranslations, valueChainIds);
-      }
+      this.outputSemiProductsArray.markAsPristine();
     }
   }
 
