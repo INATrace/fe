@@ -5,7 +5,7 @@
                type="number"
                min="0"
                step="0.01"
-               [form]="formGroup.get(fieldInfo.fieldName)"
+               [form]="$any(formGroup.get(fieldInfo.fieldName))"
                [label]="fieldInfo.label"
                style="width: 100%"
                [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
@@ -19,7 +19,7 @@
     </textinput>
 
     <textinput *ngIf="fieldInfo.type === 'STRING'"
-               [form]="formGroup.get(fieldInfo.fieldName)"
+               [form]="$any(formGroup.get(fieldInfo.fieldName))"
                [label]="fieldInfo.label"
                style="width: 100%"
                [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
@@ -44,7 +44,7 @@
     <textinput *ngIf="fieldInfo.type === 'TEXT'"
                style="width: 100%"
                [textarea]="true"
-               [form]="formGroup.get(fieldInfo.fieldName)"
+               [form]="$any(formGroup.get(fieldInfo.fieldName))"
                [label]="fieldInfo.label"
                [isInvalid]="submitted && formGroup.get(fieldInfo.fieldName).invalid">
       <ng-container *ngIf="submitted">

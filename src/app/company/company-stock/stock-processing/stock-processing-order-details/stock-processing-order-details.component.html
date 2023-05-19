@@ -329,7 +329,7 @@
 
           <h3 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h3>
           <div class="af-form-element position-relative outputs-bottom-spacing"
-               *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as i">
+               *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as tsoGroupIndex">
 
             <!-- CONTROLS FOR DISPLAYING AND SELECTING OUTPUT STOCK UNIT -->
             <div class="af-row">
@@ -367,7 +367,7 @@
                   <div class="ml-4">
                     <div class="delete-output-icon"
                          [class.disabled]="targetStockOrdersArray.length < 2"
-                         (click)="removeOutput(i)">
+                         (click)="removeOutput(tsoGroupIndex)">
                       <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
                     </div>
                   </div>
@@ -461,7 +461,7 @@
                         </ng-template>
                       </div>
                     </div>
-                    <div *ngIf="selectedProcAction.repackedOutputs && notAllOutputQuantityIsUsed" class="sc-invalid-feedback">
+                    <div *ngIf="notAllOutputQuantityIsUsed(tsoGroup)" class="sc-invalid-feedback">
                       <span i18n="@@productLabelStockProcessingOrderDetail.outputQuantity.textinput.error.notAllOutputQuantityIsUsed">Entered output quantity is not used completely</span>
                     </div>
                   </ng-container>
@@ -503,77 +503,78 @@
             </ng-container>
 
             <!-- IF THE PROCESSING ACTION HAS SET 'repackedOutputs', DISPLAY LIST OF OUTPUT STOCK ORDERS -->
-            <ng-container *ngIf="selectedProcAction.repackedOutputs && repackedOutputStockOrdersArray.length > 0">
-              <div class="af-row mt-4">
-                <div class="af-c9">
-                  <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
-                </div>
+            <ng-container *ngIf="getTSOGroupRepackedOutputsArray(tsoGroup) as repackedOutputsArray">
+              <ng-container *ngIf="repackedOutputsArray.length > 0">
+                <div class="af-row mt-4">
+                  <div class="af-c9">
+                    <label i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.outputs.label">Outputs</label>
+                  </div>
 
-                <div class="af-c3 text-right">
-                  <button class="btn btn-solid round mr-2"
-                          (click)="prefillRepackedOutputSOQuantities()"
-                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
-                    <span>Prefill</span>
-                  </button>
-                  <button class="btn btn-solid round"
-                          (click)="addRepackedOutputStockOrder()"
-                          i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
-                    <span>+</span>
-                  </button>
-                </div>
-              </div>
-
-              <div *ngFor="let item of repackedOutputStockOrdersArray.controls; index as idx" class="af-row">
-                <div class="af-c12">
-                  <div class="row">
-
-                    <div class="col-3">
-                      <textinput
-                              [form]="$any(item.get('sacNumber'))"
-                              type="number"
-                              min="0"
-                              step="1"
-                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
-                              label="Sac number"
-                              [isInvalid]="submitted && item.get('sacNumber').invalid">
-                        <ng-container *ngIf="submitted">
-                          <div *ngIf="item.get('sacNumber').errors as errors" class="sc-invalid-feedback">
-                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
-                              Sac number is required
-                            </div>
-                          </div>
-                        </ng-container>
-                      </textinput>
-                    </div>
-
-                    <div class="col-8">
-                      <textinput
-                              [form]="$any(item.get('totalQuantity'))"
-                              [label]="sacQuantityLabel"
-                              i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacTotalQuantity"
-                              [isInvalid]="submitted && item.get('totalQuantity').invalid">
-                        <ng-container *ngIf="submitted">
-                          <div *ngIf="item.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
-                            <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.required.error">
-                              Quantity is required
-                            </div>
-                            <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
-                              Input exceeds the max value
-                            </div>
-                          </div>
-                        </ng-container>
-                      </textinput>
-                    </div>
-
-                    <div class="col-1">
-                      <div class="delete-output-icon" (click)="removeRepackedOutputStockOrder(idx)">
-                        <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
-                      </div>
-                    </div>
-
+                  <div class="af-c3 text-right">
+                    <button class="btn btn-solid round mr-2"
+                            (click)="prefillRepackedOutputSOQuantities(tsoGroup)"
+                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.prefill">
+                      <span>Prefill</span>
+                    </button>
+                    <button class="btn btn-solid round"
+                            (click)="addRepackedOutputStockOrder(tsoGroup)"
+                            i18n="@@productLabelStockProcessingOrderDetail.outputStockOrders.add">
+                      <span>+</span>
+                    </button>
                   </div>
                 </div>
-              </div>
+
+                <div *ngFor="let repackedGroup of repackedOutputsArray.controls; index as repackedGroupIndex" class="af-row">
+                  <div class="af-c12">
+                    <div class="row">
+
+                      <div class="col-3">
+                        <textinput
+                                [form]="$any(repackedGroup.get('sacNumber'))"
+                                type="number"
+                                min="0"
+                                step="1"
+                                i18n-label="@@productLabelStockProcessingOrderDetail.textinput.sacNumber"
+                                label="Sac number"
+                                [isInvalid]="submitted && repackedGroup.get('sacNumber').invalid">
+                          <ng-container *ngIf="submitted">
+                            <div *ngIf="repackedGroup.get('sacNumber').errors as errors" class="sc-invalid-feedback">
+                              <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.sacNumber.required.error">
+                                Sac number is required
+                              </div>
+                            </div>
+                          </ng-container>
+                        </textinput>
+                      </div>
+
+                      <div class="col-8">
+                        <textinput
+                                [form]="$any(repackedGroup.get('totalQuantity'))"
+                                [label]="getRepackedSacQuantityLabel(tsoGroup)"
+                                [isInvalid]="submitted && repackedGroup.get('totalQuantity').invalid">
+                          <ng-container *ngIf="submitted">
+                            <div *ngIf="repackedGroup.get('totalQuantity').errors as errors" class="sc-invalid-feedback">
+                              <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.required.error">
+                                Quantity is required
+                              </div>
+                              <div *ngIf="errors.max" i18n="@@productLabelStockProcessingOrderDetail.textinput.quantity.max.error">
+                                Input exceeds the max value
+                              </div>
+                            </div>
+                          </ng-container>
+                        </textinput>
+                      </div>
+
+                      <div class="col-1">
+                        <div class="delete-output-icon" (click)="removeRepackedOutputStockOrder(tsoGroup, repackedGroupIndex)">
+                          <fa-icon class="del-icon" [icon]="faTrashAlt"></fa-icon>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
             </ng-container>
 
             <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
