@@ -177,6 +177,10 @@ export interface ApiStockOrder {
     qrCodeTagFinalProduct?: ApiFinalProduct;
     quoteCompany?: ApiCompany;
     quoteFacility?: ApiFacility;
+    /**
+     * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
+     */
+    repackedOriginStockOrderId?: string;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
      * Processing evidence fields stored values for this stock order
@@ -362,6 +366,10 @@ export namespace ApiStockOrder {
         qrCodeTagFinalProduct = 'qrCodeTagFinalProduct',
         quoteCompany = 'quoteCompany',
         quoteFacility = 'quoteFacility',
+        /**
+         * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
+         */
+        repackedOriginStockOrderId = 'repackedOriginStockOrderId',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         /**
          * Processing evidence fields stored values for this stock order
@@ -963,6 +971,17 @@ export namespace ApiStockOrder {
                     complexType: 'ApiFacility'
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'repackedOriginStockOrderId',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiUserCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -1184,6 +1203,8 @@ export namespace ApiStockOrder {
                 ],
                 quoteFacility: [
                 ],
+                repackedOriginStockOrderId: [
+                ],
                 representativeOfProducerUserCustomer: [
                 ],
                 requiredEvidenceFieldValues: [
@@ -1352,6 +1373,9 @@ export namespace ApiStockOrder {
   //                   validators: []
   //               },
   //               quoteFacility: {
+  //                   validators: []
+  //               },
+  //               repackedOriginStockOrderId: {
   //                   validators: []
   //               },
   //               representativeOfProducerUserCustomer: {
