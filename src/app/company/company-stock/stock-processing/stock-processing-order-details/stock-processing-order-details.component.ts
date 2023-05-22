@@ -47,8 +47,13 @@ import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import StatusEnum = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import { ApiProcessingActionOutputSemiProduct } from '../../../../../api/model/apiProcessingActionOutputSemiProduct';
+import { uuidv4 } from 'src/shared/utils';
 
 type PageMode = 'create' | 'edit';
+
+interface RepackedTargetStockOrder extends ApiStockOrder {
+  repackedOutputsArray: ApiStockOrder[];
+}
 
 @Component({
   selector: 'app-stock-processing-order-details',
@@ -495,24 +500,34 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         // If we have processing with repacking, the target Stock order present is just temporary (holds entered info)
         // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputsArray)
-        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0]);
+        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0] as RepackedTargetStockOrder);
       } else {
 
-        // TODO: check if we have target stock order that is repacked and handle it accordingly
+        const processedTargetStockOrders: ApiStockOrder[] = [];
+
+        processingOrder.targetStockOrders.forEach(targetStockOrder => {
+
+          if ((targetStockOrder as RepackedTargetStockOrder).repackedOutputsArray?.length > 0) {
+            processedTargetStockOrders.push(...this.prepareRepackedTargetStockOrders(targetStockOrder as RepackedTargetStockOrder));
+          } else {
+            processedTargetStockOrders.push(targetStockOrder);
+          }
+        });
+
+        processingOrder.targetStockOrders = processedTargetStockOrders;
       }
 
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
 
-      // FIXME: uncomment this after finished testing
-      // const res = await this.processingOrderController
-      //   .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
-      //
-      // if (!res || res.status !== 'OK') {
-      //   throw Error('Error while creating processing order for order type: ' + this.actionType);
-      // } else {
-      //   this.dismiss();
-      // }
+      const res = await this.processingOrderController
+        .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+
+      if (!res || res.status !== 'OK') {
+        throw Error('Error while creating processing order for order type: ' + this.actionType);
+      } else {
+        this.dismiss();
+      }
 
     } finally {
       this.saveInProgress = false;
@@ -1175,51 +1190,51 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.procOrderGroup =
       generateFormFromMetadata(ApiProcessingOrder.formMetadata(), processingOrder, ApiProcessingOrderValidationScheme);
 
-    // TODO: refactor for supporting repacking multiple outputs
-    // if (processingOrder.processingAction?.repackedOutputs) {
-    //
-    //   this.targetStockOrdersArray.clear();
-    //   this.repackedOutputStockOrdersArray.clear();
-    //
-    //   const firstTSO = processingOrder.targetStockOrders[0];
-    //   this.commentsControl.setValue(firstTSO.comments);
-    //
-    //   // Set the first Stock order as a target Stock order in the target Stock orders array
-    //   this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
-    //
-    //   // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
-    //   let totalOutputQuantity = 0;
-    //   processingOrder.targetStockOrders.forEach(tso => {
-    //
-    //     const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
-    //     repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
-    //     repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
-    //
-    //     this.repackedOutputStockOrdersArray.push(repackedStockOrder);
-    //     totalOutputQuantity += tso.totalQuantity;
-    //   });
-    //
-    //   // Set the total output quantity (calculated above) to the target Stock order
-    //   this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
-    //
-    //   const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
-    //   if (lastSlashIndex !== -1) {
-    //     this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
-    //   }
-    //
-    // } else {
-    //
-    //   // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
-    //   this.targetStockOrdersArray.clear();
-    //   processingOrder.targetStockOrders.forEach((tso, index) => {
-    //     this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
-    //
-    //     // Get the comment content from the first target Stock order (all Stock orders have same comments content)
-    //     if (index === 0) {
-    //       this.commentsControl.setValue(tso.comments);
-    //     }
-    //   });
-    // }
+    // TODO: finish this part
+    if (processingOrder.processingAction?.repackedOutputs) {
+
+      this.targetStockOrdersArray.clear();
+      this.repackedOutputStockOrdersArray.clear();
+
+      const firstTSO = processingOrder.targetStockOrders[0];
+      this.commentsControl.setValue(firstTSO.comments);
+
+      // Set the first Stock order as a target Stock order in the target Stock orders array
+      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
+
+      // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
+      let totalOutputQuantity = 0;
+      processingOrder.targetStockOrders.forEach(tso => {
+
+        const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
+        repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
+        repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
+
+        this.repackedOutputStockOrdersArray.push(repackedStockOrder);
+        totalOutputQuantity += tso.totalQuantity;
+      });
+
+      // Set the total output quantity (calculated above) to the target Stock order
+      this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
+
+      const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
+      if (lastSlashIndex !== -1) {
+        this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
+      }
+
+    } else {
+
+      // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
+      this.targetStockOrdersArray.clear();
+      processingOrder.targetStockOrders.forEach((tso, index) => {
+        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+
+        // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+        if (index === 0) {
+          this.commentsControl.setValue(tso.comments);
+        }
+      });
+    }
   }
 
   private clearInputPropsAndControls() {
@@ -1726,26 +1741,29 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return targetStockOrders;
   }
 
-  private prepareRepackedTargetStockOrders(sourceStockOrder: ApiStockOrder): ApiStockOrder[] {
+  private prepareRepackedTargetStockOrders(sourceStockOrder: RepackedTargetStockOrder): ApiStockOrder[] {
 
-    // FIXME: uncomment this after added support for repacking multiple outputs
-    // return this.repackedOutputStockOrdersArray.controls.map((repackedOutputSOGroup: FormGroup) => {
-    //
-    //   const newStockOrder = repackedOutputSOGroup.getRawValue() as ApiStockOrder;
-    //   newStockOrder.creatorId = sourceStockOrder.creatorId;
-    //   newStockOrder.internalLotNumber = sourceStockOrder.internalLotNumber;
-    //   newStockOrder.facility = sourceStockOrder.facility;
-    //   newStockOrder.semiProduct = sourceStockOrder.semiProduct;
-    //   newStockOrder.finalProduct = sourceStockOrder.finalProduct;
-    //   newStockOrder.productionDate = sourceStockOrder.productionDate;
-    //   newStockOrder.orderType = OrderTypeEnum.PROCESSINGORDER;
-    //
-    //   // Add the injected FormGroup for processing evidence fields
-    //   newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
-    //
-    //   return newStockOrder;
-    // });
-    return null;
+    const repackedTSOId = uuidv4();
+
+    return sourceStockOrder.repackedOutputsArray.map(repackedSacUnit => {
+
+      const newStockOrder = {...repackedSacUnit};
+      newStockOrder.creatorId = sourceStockOrder.creatorId;
+      newStockOrder.internalLotNumber = sourceStockOrder.internalLotNumber;
+      newStockOrder.facility = sourceStockOrder.facility;
+      newStockOrder.semiProduct = sourceStockOrder.semiProduct;
+      newStockOrder.finalProduct = sourceStockOrder.finalProduct;
+      newStockOrder.productionDate = sourceStockOrder.productionDate;
+      newStockOrder.orderType = OrderTypeEnum.PROCESSINGORDER;
+
+      // Set generated ID, so we can group the repacked stock orders when viewing or editing the Processing order
+      newStockOrder.repackedOriginStockOrderId = repackedTSOId;
+
+      // Add the injected FormGroup for processing evidence fields
+      newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
+
+      return newStockOrder;
+    });
   }
 
   private enrichTargetStockOrders(targetStockOrders: ApiStockOrder[]) {
