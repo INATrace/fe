@@ -1190,50 +1190,77 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.procOrderGroup =
       generateFormFromMetadata(ApiProcessingOrder.formMetadata(), processingOrder, ApiProcessingOrderValidationScheme);
 
-    // TODO: finish this part
-    if (processingOrder.processingAction?.repackedOutputs) {
+    // First clear the target stock orders array, we have to prepare and push FormGroups for each Stock order
+    this.targetStockOrdersArray.clear();
 
-      this.targetStockOrdersArray.clear();
-      this.repackedOutputStockOrdersArray.clear();
+    // Iterate over the target stock orders in the Processing order and group stock orders that are repacked (have the same 'repackedOriginStockOrderId')
+    const repackedStockOrdersMap: Map<string, ApiStockOrder[]> = new Map<string, ApiStockOrder[]>();
 
-      const firstTSO = processingOrder.targetStockOrders[0];
-      this.commentsControl.setValue(firstTSO.comments);
+    processingOrder.targetStockOrders.forEach((tso, index) => {
+
+      // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+      if (index === 0) {
+        this.commentsControl.setValue(tso.comments);
+      }
+
+      if (tso.repackedOriginStockOrderId != null) {
+        const repackedTSOs = repackedStockOrdersMap.get(tso.repackedOriginStockOrderId);
+        if (repackedTSOs) {
+          repackedTSOs.push(tso);
+        } else {
+          repackedStockOrdersMap.set(tso.repackedOriginStockOrderId, [tso]);
+        }
+      } else {
+
+        // Push new FormGroup created from the target Stock order data
+        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+      }
+    });
+
+    // For each repacked grouped of target Stock orders, prepare form group and push them repackedOutputsArray
+    for (const repackedOriginStockOrderId of repackedStockOrdersMap.keys()) {
+
+      const repackedTargetStockOrders = repackedStockOrdersMap.get(repackedOriginStockOrderId);
+
+      // Find the maximum allowed weight for the repacked Stock orders
+      let maxOutputWeight: number | undefined = this.selectedProcAction.maxOutputWeight;
+      if (maxOutputWeight == null) {
+        processingOrder.processingAction.outputSemiProducts.forEach(apiProcActionOSM => {
+          if (apiProcActionOSM.id === repackedTargetStockOrders[0].semiProduct?.id) {
+            maxOutputWeight = apiProcActionOSM.maxOutputWeight;
+            repackedTargetStockOrders[0].semiProduct = apiProcActionOSM;
+          }
+        });
+      }
+
+      // Create target Stock order FormGroup from the first repacked Stock order
+      const targetStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), repackedTargetStockOrders[0], ApiStockOrderValidationScheme);
+
+      // Add repacked outputs FormArray
+      targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
 
       // Set the first Stock order as a target Stock order in the target Stock orders array
-      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
+      this.targetStockOrdersArray.push(targetStockOrderGroup);
 
       // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
       let totalOutputQuantity = 0;
-      processingOrder.targetStockOrders.forEach(tso => {
+      repackedTargetStockOrders.forEach(tso => {
 
-        const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
-        repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
-        repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
+        const repackedStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
+        repackedStockOrderGroup.get('totalQuantity').setValidators([Validators.required, Validators.max(maxOutputWeight)]);
+        repackedStockOrderGroup.get('sacNumber').setValidators([Validators.required]);
 
-        this.repackedOutputStockOrdersArray.push(repackedStockOrder);
+        (targetStockOrderGroup.get('repackedOutputsArray') as FormArray).push(repackedStockOrderGroup);
         totalOutputQuantity += tso.totalQuantity;
       });
 
       // Set the total output quantity (calculated above) to the target Stock order
-      this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
+      targetStockOrderGroup.get('totalQuantity').setValue(totalOutputQuantity);
 
-      const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
+      const lastSlashIndex = repackedTargetStockOrders[0].internalLotNumber.lastIndexOf('/');
       if (lastSlashIndex !== -1) {
-        this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
+        targetStockOrderGroup.get('internalLotNumber').setValue(repackedTargetStockOrders[0].internalLotNumber.substring(0, lastSlashIndex));
       }
-
-    } else {
-
-      // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
-      this.targetStockOrdersArray.clear();
-      processingOrder.targetStockOrders.forEach((tso, index) => {
-        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
-
-        // Get the comment content from the first target Stock order (all Stock orders have same comments content)
-        if (index === 0) {
-          this.commentsControl.setValue(tso.comments);
-        }
-      });
     }
   }
 
@@ -1743,7 +1770,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private prepareRepackedTargetStockOrders(sourceStockOrder: RepackedTargetStockOrder): ApiStockOrder[] {
 
-    const repackedTSOId = uuidv4();
+    const repackedTSOId = sourceStockOrder.repackedOriginStockOrderId ?? uuidv4();
 
     return sourceStockOrder.repackedOutputsArray.map(repackedSacUnit => {
 
