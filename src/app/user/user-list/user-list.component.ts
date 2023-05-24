@@ -95,7 +95,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   );
 
   codebookStatus = EnumSifrant.fromObject(this.statusList);
-  codebookRole = EnumSifrant.fromObject(this.roleList);
 
   sortOptions: SortOption[] = [
     {
@@ -174,14 +173,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     return obj;
   }
 
-  get roleList() {
-    const obj = {};
-    obj[''] = $localize`:@@userList.roleList.all:All`;
-    obj['USER'] = $localize`:@@userList.roleList.user:User`;
-    obj['ADMIN'] = $localize`:@@userList.roleList.admin:Admin`;
-    return obj;
-  }
-
   changeSort(event) {
     this.sortingParams$.next({ sortBy: event.key, sort: event.sortOrder });
   }
@@ -229,7 +220,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN';
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
   editUser(userId) {
@@ -249,7 +240,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     try {
       this.globalEventsManager.showLoading(true);
       await this.userController
-        .activateUserUsingPOST(role === 'ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
+        .activateUserUsingPOST(role === 'SYSTEM_ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({

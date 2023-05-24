@@ -57,7 +57,7 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
         if (userProfile) {
 
           // Set flag if this user is System admin
-          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.ADMIN;
+          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
 
           if (this.cId != null) {
 

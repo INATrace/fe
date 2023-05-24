@@ -23,7 +23,7 @@ import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import CompanyRoleEnum = ApiCompanyUser.CompanyRoleEnum;
 import {ApiGroupStockOrder} from '../../../../../api/model/apiGroupStockOrder';
 
-export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'ADMIN';
+export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'SYSTEM_ADMIN';
 
 export interface DeliveryDates {
   from: string;
@@ -125,7 +125,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   private initFacilityCodebook(): void {
     switch (this.pageMode) {
-      case 'ADMIN':
+      case 'SYSTEM_ADMIN':
       case 'COMPANY_ADMIN':
         this.facilityCodebook = new CompanyFacilitiesService(this.facilityControllerService, this.companyId);
         break;

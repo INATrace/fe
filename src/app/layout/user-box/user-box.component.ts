@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
+import { ApiUserGet } from '../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-user-box',
@@ -16,7 +17,7 @@ import { CompanyControllerService } from '../../../api/api/companyController.ser
 })
 export class UserBoxComponent implements OnInit, OnDestroy {
 
-  userProfile = null;
+  userProfile: ApiUserGet = null;
   displayName = '';
   displayCompany = '';
   productId = this.route.snapshot.params.id;
@@ -76,7 +77,7 @@ export class UserBoxComponent implements OnInit, OnDestroy {
         this.userProfile = val;
         if (this.userProfile) {
           this.isConfirmedOnly = 'CONFIRMED_EMAIL' === this.userProfile.status;
-          this.isAdmin = 'ADMIN' === this.userProfile.role;
+          this.isAdmin = 'SYSTEM_ADMIN' === this.userProfile.role;
           this.isCompanyAdmin = this.userProfile.companyIdsAdmin.includes(this.companyId);
           this.displayName = this.userProfile.name;
           this.setDisplayCompany().then();

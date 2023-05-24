@@ -186,7 +186,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     this.reload();
 
     this.authService.userProfile$.subscribe(value => {
-      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.ADMIN;
+      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
     });
   }
 

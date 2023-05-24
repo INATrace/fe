@@ -60,6 +60,7 @@ import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToC
 import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
 import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 import { maxActiveArrayControls } from '../../../shared/validation';
+import { ApiUserGet } from '../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-product-label',
@@ -249,7 +250,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   currentLabel: ApiProductLabel = null;
 
-  userProfile = null;
+  userProfile: ApiUserGet = null;
   showLabelInfoLink = false;
   reloadProductNoLabel = true;
 
@@ -695,7 +696,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.userProfile = this.authService.currentUserProfile;
     const subUserProfile = this.authService.userProfile$.subscribe(val => {
       this.userProfile = val;
-      if (this.userProfile) { this.showLabelInfoLink = 'ADMIN' === this.userProfile.role; }
+      if (this.userProfile) { this.showLabelInfoLink = 'SYSTEM_ADMIN' === this.userProfile.role; }
     });
     this.unsubscribeList.add(subUserProfile);
     this.initializeLabelsHelperLink().then();

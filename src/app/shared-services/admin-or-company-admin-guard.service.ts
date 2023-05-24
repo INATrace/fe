@@ -22,7 +22,7 @@ export class AdminOrCompanyAdminGuardService implements CanActivate {
         const companyId = Number(route.params.id);
 
         const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
-        if (userProfile && (userProfile.role === ApiUserGet.RoleEnum.ADMIN || userProfile.companyIdsAdmin.includes(companyId))) {
+        if (userProfile && (userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN || userProfile.companyIdsAdmin.includes(companyId))) {
             return true;
         }
 

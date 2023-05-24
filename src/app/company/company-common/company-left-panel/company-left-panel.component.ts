@@ -57,7 +57,7 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
       });
 
     this.authService.userProfile$.subscribe(value => {
-      if (value.role === ApiUserGet.RoleEnum.ADMIN) {
+      if (value.role === ApiUserGet.RoleEnum.SYSTEMADMIN) {
         this.isSystemAdmin = true;
       }
       if (value.companyIdsAdmin.includes(this.companyId)) {

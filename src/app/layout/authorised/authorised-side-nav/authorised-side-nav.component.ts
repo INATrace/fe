@@ -26,9 +26,9 @@ export class AuthorisedSideNavComponent implements OnInit {
   ngOnInit() {
     this.sub = this.authService.userProfile$.subscribe(user => {
       this.user = user;
-      this.isAdmin = user.role === 'ADMIN';
+      this.isAdmin = user.role === 'SYSTEM_ADMIN';
       this.isConfirmedOnly = user.status === 'CONFIRMED_EMAIL';
-    })
+    });
   }
 
   ngOnDestroy() {

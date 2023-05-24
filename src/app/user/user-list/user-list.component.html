@@ -64,7 +64,8 @@
                     <button ngbDropdownItem (click)="showStatus('CONFIRMED_EMAIL')" i18n="@@userList.filter.showConfirmed">Show confirmed email</button>
                     <button ngbDropdownItem (click)="showStatus('UNCONFIRMED')" i18n="@@userList.filter.showUnconfirmed">Show unconfirmed</button>
                     <div class="line"></div>
-                    <button ngbDropdownItem (click)="showStatus('ADMIN', true)" i18n="@@userList.filter.showAdmin">Show admin</button>
+                    <button ngbDropdownItem (click)="showStatus('SYSTEM_ADMIN', true)" i18n="@@userList.filter.showSystemAdmin">Show System admin</button>
+                    <!-- TODO: add option for Regional admin -->
                     <button ngbDropdownItem (click)="showStatus('USER', true)" i18n="@@userList.filter.showedUsers">Show user</button>
                     <div class="line"></div>
                     <button ngbDropdownItem (click)="myUsersOnly(true)" i18n="@@userList.filter.showMyUsers">Show my users</button>
@@ -124,9 +125,10 @@
                       <ng-container *ngIf="user.role === 'USER'" i18n="@@userList.tableCol.setAdmin">
                         Set admin
                       </ng-container>
-                      <ng-container *ngIf="user.role === 'ADMIN'" i18n="@@userList.tableCol.unsetAdmin">
-                        Unset admin
+                      <ng-container *ngIf="user.role === 'SYSTEM_ADMIN'" i18n="@@userList.tableCol.unsetSystemAdmin">
+                        Unset System admin
                       </ng-container>
+                      <!-- TODO: add option for unsetting Regional admin -->
                     </a>
                   </span>
                   </td>

@@ -16,9 +16,9 @@ export class AuthGuardService implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
-    let res = await this.authService.userProfile$.pipe(take(1)).toPromise();
-    if(res && "ADMIN" === res.role) return true;
-    else this.router.navigate(['/','home'])
+    const res = await this.authService.userProfile$.pipe(take(1)).toPromise();
+    if (res && 'SYSTEM_ADMIN' === res.role) { return true; }
+    else { this.router.navigate(['/', 'home']); }
 
   }
 

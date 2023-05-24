@@ -10,9 +10,8 @@ import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
-import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ApiUserRole } from 'src/api/model/apiUserRole';
-import {BeycoTokenService} from '../../shared-services/beyco-token.service';
+import { BeycoTokenService } from '../../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -33,8 +32,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   changedCompany = false;
 
   myCompanies = null;
-
-  roleCodebook = EnumSifrant.fromObject(this.role);
 
   constructor(
     private location: Location,
@@ -269,14 +266,4 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  get role() {
-    const obj = {};
-    obj['USER'] = $localize`:@@userDetail.role.user:User`;
-    obj['MANAGER'] = $localize`:@@userDetail.role.manager:Manager`;
-    obj['ACCOUNTANT'] = $localize`:@@userDetail.role.accountant:Accountant`;
-    obj['ADMIN'] = $localize`:@@userDetail.role.admin:Admin`;
-    return obj;
-  }
-
 }
-
