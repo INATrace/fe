@@ -11,183 +11,6 @@
     }
   ],
   "paths": {
-    "/api/chain/action-type": {
-      "put": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiBaseEntity_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "action-type-controller"
-        ],
-        "operationId": "createOrUpdateActionTypeUsingPUT",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiActionType"
-              }
-            }
-          },
-          "description": "apiActionType",
-          "required": true
-        },
-        "summary": "Create or update action type. If ID is provided the entity with the provided ID is updated."
-      }
-    },
-    "/api/chain/action-type/list": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Only count, only fetch, or return both values (if null)",
-            "in": "query",
-            "name": "requestType",
-            "required": false,
-            "schema": {
-              "enum": [
-                "COUNT",
-                "FETCH"
-              ],
-              "type": "string"
-            }
-          },
-          {
-            "description": "Number of records to return. Min: 1, default: 100",
-            "in": "query",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "default": 100,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Number of records to skip before returning. Default: 0, min: 0",
-            "in": "query",
-            "name": "offset",
-            "required": false,
-            "schema": {
-              "default": 0,
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Column name to be sorted by, varies for each endpoint, default is id",
-            "in": "query",
-            "name": "sortBy",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "description": "Direction of sorting (ASC or DESC). Default DESC.",
-            "in": "query",
-            "name": "sort",
-            "required": false,
-            "schema": {
-              "default": "DESC",
-              "enum": [
-                "ASC",
-                "DESC"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiPaginatedResponse_ApiActionType_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "action-type-controller"
-        ],
-        "operationId": "getActionTypeListUsingGET",
-        "summary": "Get a paginated list of action types."
-      }
-    },
-    "/api/chain/action-type/{id}": {
-      "delete": {
-        "parameters": [
-          {
-            "description": "Action type ID",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiDefaultResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "action-type-controller"
-        ],
-        "operationId": "deleteActionTypeUsingDELETE",
-        "summary": "Deletes an action type with the provided ID."
-      },
-      "get": {
-        "parameters": [
-          {
-            "description": "Record id",
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiActionType_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "action-type-controller"
-        ],
-        "operationId": "getActionTypeUsingGET",
-        "summary": "Get a single action type with the provided ID."
-      }
-    },
     "/api/chain/beyco-order/company/{companyId}/fields": {
       "get": {
         "parameters": [
@@ -11212,24 +11035,6 @@
       }
     },
     "schemas": {
-      "ApiActionType": {
-        "properties": {
-          "code": {
-            "description": "code",
-            "type": "string"
-          },
-          "id": {
-            "description": "Entity id",
-            "format": "int64",
-            "type": "integer"
-          },
-          "label": {
-            "description": "label",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
       "ApiActivityProof": {
         "properties": {
           "document": {
@@ -13379,33 +13184,6 @@
         },
         "type": "object"
       },
-      "ApiPaginatedList_ApiActionType_": {
-        "properties": {
-          "count": {
-            "description": "Count of all items satisfying 'paginatable' request.",
-            "format": "int32",
-            "type": "integer"
-          },
-          "items": {
-            "description": "Response items.",
-            "items": {
-              "$ref": "#/components/schemas/ApiActionType"
-            },
-            "type": "array"
-          },
-          "limit": {
-            "description": "Limit got from request",
-            "format": "int32",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "Offset got from request",
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "type": "object"
-      },
       "ApiPaginatedList_ApiBulkPayment_": {
         "properties": {
           "count": {
@@ -14079,50 +13857,6 @@
             "type": "integer"
           }
         },
-        "type": "object"
-      },
-      "ApiPaginatedResponse_ApiActionType_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiPaginatedList_ApiActionType_",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED",
-              "NOT_FOUND"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
-        ],
         "type": "object"
       },
       "ApiPaginatedResponse_ApiBulkPayment_": {
@@ -17097,50 +16831,6 @@
         "required": [
           "password",
           "token"
-        ],
-        "type": "object"
-      },
-      "ApiResponse_ApiActionType_": {
-        "description": "Generic API response. See documentation for data type for specific type details.",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/ApiActionType",
-            "description": "Response body for successful responses."
-          },
-          "errorDetails": {
-            "description": "Optional details for unexpected error responses.",
-            "type": "string"
-          },
-          "errorMessage": {
-            "description": "Simple message to explain client developers the reason for error.",
-            "type": "string"
-          },
-          "status": {
-            "description": "Response status. OK for successful reponses.",
-            "enum": [
-              "OK",
-              "ERROR",
-              "REQUEST_BODY_ERROR",
-              "VALIDATION_ERROR",
-              "TOO_MANY_REQUESTS",
-              "UNAUTHORIZED",
-              "AUTH_ERROR",
-              "UPSTREAM_HTTP_ERROR",
-              "INVALID_REQUEST",
-              "INVALID_OR_EXPIRED_STORAGE_KEY",
-              "NOT_IMPLEMENTED",
-              "NOT_FOUND"
-            ],
-            "example": "OK",
-            "type": "string"
-          },
-          "validationErrorDetails": {
-            "$ref": "#/components/schemas/ApiValidationErrorDetails",
-            "description": "Optional details for validation error responses."
-          }
-        },
-        "required": [
-          "status"
         ],
         "type": "object"
       },
@@ -20335,10 +20025,6 @@
     {
       "description": "Public Controller",
       "name": "public-controller"
-    },
-    {
-      "description": "Action Type Controller",
-      "name": "action-type-controller"
     },
     {
       "description": "Beyco Order Controller",

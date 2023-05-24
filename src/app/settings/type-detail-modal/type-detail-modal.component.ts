@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
 import { take } from 'rxjs/operators';
 import {
   ApiFacilityTypeValidationScheme,
   ApiMeasureUnitTypeValidationScheme,
-  ApiActionTypeValidationScheme,
   ApiProcessingEvidenceTypeValidationScheme,
   ApiSemiProductValidationScheme,
   ApiProcessingEvidenceFieldValidationScheme, ApiProductTypeValidationScheme
@@ -16,11 +15,9 @@ import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { ActiveMeasureUnitTypeService } from '../../shared-services/active-measure-unit-types.service';
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
-import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
 import { ApiFacilityType } from '../../../api/model/apiFacilityType';
 import { ApiMeasureUnitType } from '../../../api/model/apiMeasureUnitType';
-import { ApiActionType } from '../../../api/model/apiActionType';
 import { ApiProcessingEvidenceType } from '../../../api/model/apiProcessingEvidenceType';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
@@ -56,8 +53,6 @@ export class TypeDetailModalComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  productForm = new FormControl(null, Validators.required);
-
   codebookProcessingEvidenceTypeType = EnumSifrant.fromObject(this.processingEvidenceTypeType);
   codebookProcessingEvidenceFieldType = EnumSifrant.fromObject(this.processingEvidenceFieldType);
 
@@ -68,7 +63,6 @@ export class TypeDetailModalComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private facilityTypeService: FacilityTypeControllerService,
     private measureUnitTypeService: MeasureUnitTypeControllerService,
-    private actionTypeService: ActionTypeControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductService: SemiProductControllerService,
@@ -100,16 +94,6 @@ export class TypeDetailModalComponent implements OnInit {
           defaultEmptyObject(ApiMeasureUnitType.formMetadata()) as ApiMeasureUnitType, ApiMeasureUnitTypeValidationScheme);
       } else {
         this.form = generateFormFromMetadata(ApiMeasureUnitType.formMetadata(), this.typeElement, ApiMeasureUnitTypeValidationScheme);
-      }
-    }
-
-    if (this.type === 'action-types') {
-      if (!this.update) {
-        this.form = generateFormFromMetadata(ApiActionType.formMetadata(),
-          defaultEmptyObject(ApiActionType.formMetadata()) as ApiActionType, ApiActionTypeValidationScheme);
-      }
-      else {
-        this.form = generateFormFromMetadata(ApiActionType.formMetadata(), this.typeElement, ApiActionTypeValidationScheme);
       }
     }
 
@@ -181,10 +165,6 @@ export class TypeDetailModalComponent implements OnInit {
 
     if (this.type === 'measurement-unit-types') {
       res = await this.measureUnitTypeService.createOrUpdateMeasurementUnitTypeUsingPUT(data).pipe(take(1)).toPromise();
-    }
-
-    if (this.type === 'action-types') {
-      res = await this.actionTypeService.createOrUpdateActionTypeUsingPUT(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'processing-evidence-types') {
