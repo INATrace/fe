@@ -8,9 +8,9 @@ import { AuthService } from '../../core/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { ApiPaginatedResponseApiUserBase } from 'src/api/model/apiPaginatedResponseApiUserBase';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SortOption } from '../../shared/result-sorter/result-sorter-types';
+import { ApiPaginatedResponseApiUserBase } from '../../../api/model/apiPaginatedResponseApiUserBase';
 
 @Component({
   selector: 'app-user-list',
