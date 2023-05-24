@@ -2522,7 +2522,7 @@
     "companyUserRole.roles.accountant": "Contable",
     "companyUserRole.roles.manager": "Gerente",
     "companyUserRole.roles.user": "Usuario",
-    "companyUserRole.roles.admin": "Administrador",
+    "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.cooperatives": "Usuarios",
     "companyDetail.list-editor.cooperatives.label": "Usuarios con roles de la empresa",
     "companyDetail.list-editor.cooperatives.addText": "Añadir nuevo",

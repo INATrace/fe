@@ -2517,7 +2517,7 @@
     "companyUserRole.roles.accountant": "Umucungamari",
     "companyUserRole.roles.manager": "Umuyobozi mukuru",
     "companyUserRole.roles.user": "Ukoresha ikoranabuhanga",
-    "companyUserRole.roles.admin": "Umuyobozi",
+    "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.cooperatives": "Abakoresha ikoranabuhanga",
     "companyDetail.list-editor.cooperatives.label": "Abakoresha ikoranabuhanga n'inshingano muri kompanyi",
     "companyDetail.list-editor.cooperatives.addText": "Ongeraho ibishya",

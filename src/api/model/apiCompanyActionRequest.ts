@@ -71,7 +71,7 @@ export namespace ApiCompanyActionRequest {
      */
     export enum CompanyUserRoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN',
+        COMPANYADMIN = 'COMPANY_ADMIN',
         MANAGER = 'MANAGER',
         ACCOUNTANT = 'ACCOUNTANT'
     }

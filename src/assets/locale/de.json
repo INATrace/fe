@@ -2519,7 +2519,7 @@
     "companyUserRole.roles.accountant": "Buchhaltung",
     "companyUserRole.roles.manager": "Manager",
     "companyUserRole.roles.user": "Benutzer",
-    "companyUserRole.roles.admin": "Administrator",
+    "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.cooperatives": "Benutzer",
     "companyDetail.list-editor.cooperatives.label": "Nutzer mit Unternehmensrolle",
     "companyDetail.list-editor.cooperatives.addText": "Neu hinzufügen",

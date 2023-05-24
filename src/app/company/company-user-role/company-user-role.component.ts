@@ -66,7 +66,7 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
     obj['ACCOUNTANT'] = $localize`:@@companyUserRole.roles.accountant:Accountant`;
     obj['MANAGER'] = $localize`:@@companyUserRole.roles.manager:Manager`;
     obj['USER'] = $localize`:@@companyUserRole.roles.user:User`;
-    obj['ADMIN'] = $localize`:@@companyUserRole.roles.admin:Admin`;
+    obj['COMPANY_ADMIN'] = $localize`:@@companyUserRole.roles.companyAdmin:Company admin`;
     return obj;
   }
 
