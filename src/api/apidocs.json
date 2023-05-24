@@ -10308,9 +10308,7 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN",
-                "MANAGER",
-                "ACCOUNTANT"
+                "ADMIN"
               ],
               "type": "string"
             }
@@ -10543,9 +10541,7 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN",
-                "MANAGER",
-                "ACCOUNTANT"
+                "ADMIN"
               ],
               "type": "string"
             }
@@ -12345,9 +12341,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN",
-              "MANAGER",
-              "ACCOUNTANT"
+              "ADMIN"
             ],
             "type": "string"
           },
@@ -19388,9 +19382,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN",
-              "MANAGER",
-              "ACCOUNTANT"
+              "ADMIN"
             ],
             "type": "string"
           },
@@ -19440,9 +19432,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN",
-              "MANAGER",
-              "ACCOUNTANT"
+              "ADMIN"
             ],
             "type": "string"
           },
@@ -19712,9 +19702,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN",
-              "MANAGER",
-              "ACCOUNTANT"
+              "ADMIN"
             ],
             "type": "string"
           },
@@ -19746,9 +19734,7 @@
             "description": "Role",
             "enum": [
               "USER",
-              "ADMIN",
-              "MANAGER",
-              "ACCOUNTANT"
+              "ADMIN"
             ],
             "type": "string"
           }

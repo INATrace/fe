@@ -144,9 +144,7 @@ export namespace ApiUserGet {
      */
     export enum RoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN',
-        MANAGER = 'MANAGER',
-        ACCOUNTANT = 'ACCOUNTANT'
+        ADMIN = 'ADMIN'
     }
 
     /**
