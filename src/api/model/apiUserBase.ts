@@ -105,7 +105,7 @@ export namespace ApiUserBase {
      */
     export enum RoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN'
+        SYSTEMADMIN = 'SYSTEM_ADMIN'
     }
 
     /**

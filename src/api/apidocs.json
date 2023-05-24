@@ -10308,7 +10308,7 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN"
+                "SYSTEM_ADMIN"
               ],
               "type": "string"
             }
@@ -10541,7 +10541,7 @@
             "schema": {
               "enum": [
                 "USER",
-                "ADMIN"
+                "SYSTEM_ADMIN"
               ],
               "type": "string"
             }
@@ -12341,7 +12341,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "SYSTEM_ADMIN"
             ],
             "type": "string"
           },
@@ -19382,7 +19382,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "SYSTEM_ADMIN"
             ],
             "type": "string"
           },
@@ -19432,7 +19432,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "SYSTEM_ADMIN"
             ],
             "type": "string"
           },
@@ -19702,7 +19702,7 @@
             "description": "User role",
             "enum": [
               "USER",
-              "ADMIN"
+              "SYSTEM_ADMIN"
             ],
             "type": "string"
           },
@@ -19734,7 +19734,7 @@
             "description": "Role",
             "enum": [
               "USER",
-              "ADMIN"
+              "SYSTEM_ADMIN"
             ],
             "type": "string"
           }
