@@ -226,7 +226,7 @@
     "companyUserRole.textinput.role.error": "Role is required",
     "companyUserRole.roles.accountant": "Accountant",
     "companyUserRole.roles.manager": "Manager",
-    "companyUserRole.roles.user": "User",
+    "companyUserRole.roles.companyUser": "Company user",
     "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.basicInfo": "Basic information",
     "companyDetail.subtitle": "Add information about your company including your company name, logo, address, contact information, website and social media URLs.",

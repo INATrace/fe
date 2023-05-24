@@ -2521,7 +2521,7 @@
     "companyUserRole.textinput.role.error": "Se requiere rol",
     "companyUserRole.roles.accountant": "Contable",
     "companyUserRole.roles.manager": "Gerente",
-    "companyUserRole.roles.user": "Usuario",
+    "companyUserRole.roles.companyUser": "Company user",
     "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.cooperatives": "Usuarios",
     "companyDetail.list-editor.cooperatives.label": "Usuarios con roles de la empresa",

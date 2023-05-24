@@ -11892,7 +11892,7 @@
           "companyUserRole": {
             "description": "Company user role",
             "enum": [
-              "USER",
+              "COMPANY_USER",
               "COMPANY_ADMIN",
               "MANAGER",
               "ACCOUNTANT"
@@ -12328,7 +12328,7 @@
           "companyRole": {
             "description": "company role",
             "enum": [
-              "USER",
+              "COMPANY_USER",
               "COMPANY_ADMIN",
               "MANAGER",
               "ACCOUNTANT"

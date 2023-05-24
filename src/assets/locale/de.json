@@ -2518,7 +2518,7 @@
     "companyUserRole.textinput.role.error": "Rolle wird benötigt",
     "companyUserRole.roles.accountant": "Buchhaltung",
     "companyUserRole.roles.manager": "Manager",
-    "companyUserRole.roles.user": "Benutzer",
+    "companyUserRole.roles.companyUser": "Company user",
     "companyUserRole.roles.companyAdmin": "Company admin",
     "companyDetail.section.cooperatives": "Benutzer",
     "companyDetail.list-editor.cooperatives.label": "Nutzer mit Unternehmensrolle",
