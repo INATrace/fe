@@ -123,7 +123,7 @@ export namespace AdminListUsersUsingGET {
       /**
        * User role
        */
-      role?: 'USER' | 'SYSTEM_ADMIN';
+      role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN';
       /**
        * Email
        */
@@ -402,7 +402,7 @@ export namespace ListUsersUsingGET {
       /**
        * User role
        */
-      role?: 'USER' | 'SYSTEM_ADMIN';
+      role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN';
       /**
        * Email
        */
@@ -853,10 +853,10 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -1406,10 +1406,10 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
