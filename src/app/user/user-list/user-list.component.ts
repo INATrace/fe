@@ -224,16 +224,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   editUser(userId) {
-    if (this.isSystemAdmin) {
-      this.router.navigate(['/users', userId], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
-     } else {
-      this.globalEventsManager.push({
-        action: 'error',
-        notificationType: 'error',
-        title: $localize`:@@userList.editUser.error.title:Error`,
-        message: $localize`:@@userList.editUser.error.message:Unauthorised. Cannot edit the user.`
-      });
-    }
+    this.router.navigate(['/users', userId], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
   }
 
   async setUserRole(id, action: 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN') {

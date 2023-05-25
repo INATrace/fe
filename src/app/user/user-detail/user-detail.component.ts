@@ -86,7 +86,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     const sub = this.userController.getProfileForAdminUsingGET(this.userId)
       .subscribe(user => {
         this.createUserProfileForm(user.data);
-        if (user.data) { this.prepareMyCompanies(user.data).then(); }
         this.userData = user.data;
         this.unconfirmedUser = user.data.status === 'UNCONFIRMED';
         this.globalEventsManager.showLoading(false);
@@ -105,7 +104,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  async prepareMyCompanies(data) {
+  private async prepareMyCompanies(data) {
     const tmp = [];
     if (!data) { return; }
     for (const id of data.companyIds) {
@@ -158,7 +157,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  async saveUserProfile(goBack = true) {
+  private async saveUserProfile(goBack = true) {
     this.submitted = true;
     if (!this.userProfileForm.invalid) {
       try {
@@ -173,25 +172,19 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
           if (goBack) { this.goBack(); }
         }
       } catch (e) {
-
       } finally {
         this.globalEventsManager.showLoading(false);
       }
     }
   }
 
-  async saveAsAdmin(goBack = true) {
+  private async saveAsAdmin(goBack = true) {
+
     this.submitted = true;
     if (!this.userProfileForm.invalid) {
 
       try {
         this.globalEventsManager.showLoading(true);
-
-        await this.userController.activateUserUsingPOST('SET_USER_ROLE', {
-          id: this.userId,
-          role: this.userProfileForm.get('role').value as ApiUserRole.RoleEnum
-        } as ApiUserRole).pipe(take(1)).toPromise();
-
         const res = await this.userController.adminUpdateProfileUsingPUT({
           id: this.userId,
           name: this.userProfileForm.get('name').value,
@@ -203,7 +196,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
           if (goBack) { this.goBack(); }
         }
       } catch (e) {
-
       } finally {
         this.globalEventsManager.showLoading(false);
       }

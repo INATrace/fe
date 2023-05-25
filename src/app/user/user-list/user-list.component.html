@@ -40,7 +40,7 @@
                       </fa-icon>
                     </div>
                   </div>
-                  <div *ngIf="myUsers && myUsers.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.myUsers">My users
+                  <div *ngIf="myUsers && myUsers.value && isSystemAdmin" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@userList.filter.myUsers">My users
                     <div (click)="clearValue(myUsers, true)" style="margin-left: 0.5rem;">
                       <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
@@ -63,8 +63,10 @@
                     <button ngbDropdownItem (click)="showStatus('SYSTEM_ADMIN', true)" i18n="@@userList.filter.showSystemAdmin">Show System admin</button>
                     <button ngbDropdownItem (click)="showStatus('REGIONAL_ADMIN', true)" i18n="@@userList.filter.showRegionalAdmin">Show Regional admin</button>
                     <button ngbDropdownItem (click)="showStatus('USER', true)" i18n="@@userList.filter.showedUsers">Show user</button>
-                    <div class="line"></div>
-                    <button ngbDropdownItem (click)="myUsersOnly(true)" i18n="@@userList.filter.showMyUsers">Show my users</button>
+                    <ng-container *ngIf="isSystemAdmin">
+                      <div class="line"></div>
+                      <button ngbDropdownItem (click)="myUsersOnly(true)" i18n="@@userList.filter.showMyUsers">Show my users</button>
+                    </ng-container>
                   </div>
                 </div>
 

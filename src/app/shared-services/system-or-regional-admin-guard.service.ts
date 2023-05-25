@@ -7,7 +7,7 @@ import { take } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class SystemOrRegionalAdminGuardService implements CanActivate {
 
   constructor(
     private router: Router,
@@ -17,9 +17,8 @@ export class AuthGuardService implements CanActivate {
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
     const res = await this.authService.userProfile$.pipe(take(1)).toPromise();
-    if (res && 'SYSTEM_ADMIN' === res.role) { return true; }
-    else { this.router.navigate(['/', 'home']); }
-
+    if (res && ('SYSTEM_ADMIN' === res.role || 'REGIONAL_ADMIN' === res.role)) { return true; }
+    else { this.router.navigate(['/', 'home']).then(); }
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean |
