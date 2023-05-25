@@ -935,6 +935,8 @@
     "selectUserCompany.modal.button.confirm": "{$START_TAG_SPAN}Confirm{$CLOSE_TAG_SPAN}",
     "selectUserCompany.title": "Select company",
     "selectUserCompany.instructionsHtml": "Select a company you would like to continue with:",
+    "selectUserCompany.modal.userHasNoCompanies.message": "Currently you have no companies assigned. Contact your administrator.",
+    "selectUserCompany.modal.button.logout": "Logout",
     "homePage.button.showMeProducts": "Show me products",
     "userList.title.users": "Users",
     "userList.subTitle.listOfUsers": "List of users",

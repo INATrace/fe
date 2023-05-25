@@ -998,6 +998,8 @@
     "selectUserCompany.modal.button.confirm": "{$START_TAG_SPAN}Emeza{$CLOSE_TAG_SPAN}",
     "selectUserCompany.title": "Hitamo kompanyi",
     "selectUserCompany.instructionsHtml": "Hitamo kompanyi wifuza gukomeza nayo:",
+    "selectUserCompany.modal.userHasNoCompanies.message": "Currently you have no companies assigned. Contact your administrator.",
+    "selectUserCompany.modal.button.logout": "Logout",
     "userDetail.warning.message": "Uzi neza ko ushaka guhindura kompanyi yawe wahisemo kuri {$PH}?",
     "activeUserCustomersByOrganizationAndRole.input.placehoder": "Hitamo ...",
     "productLabelStockPurchaseOrdersModal.section.basicInfo": "Amakuru yibanze",

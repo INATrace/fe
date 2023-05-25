@@ -999,6 +999,8 @@
     "selectUserCompany.modal.button.confirm": "{$START_TAG_SPAN}Bestätigen{$CLOSE_TAG_SPAN}",
     "selectUserCompany.title": "Unternehmen auswählen",
     "selectUserCompany.instructionsHtml": "Wählen Sie ein Unternehmen aus, mit dem Sie fortsetzen möchten:",
+    "selectUserCompany.modal.userHasNoCompanies.message": "Currently you have no companies assigned. Contact your administrator.",
+    "selectUserCompany.modal.button.logout": "Logout",
     "userDetail.warning.message": "Sind Sie sicher, dass sie Ihr ausgewähltes Unternehmen ändern möchten zu  {$PH}?",
     "activeUserCustomersByOrganizationAndRole.input.placehoder": "Auswählen ...",
     "productLabelStockPurchaseOrdersModal.section.basicInfo": "Allgemeine Information",

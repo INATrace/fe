@@ -1753,19 +1753,13 @@ footer.main-footer .logos {
   margin-top: ($navbar-width - $navbar-logo-width)/2;
   margin-left: ($navbar-width - $navbar-logo-width)/2;
 }
-.auth-side-wrapper{
+.auth-side-wrapper {
   display: flex;
   flex-direction: row;
   position: fixed;
-  z-index:1050;     // here, we're moving logo below higlight when select company lands
-
-  @include media-breakpoint-up(lg) {
-  z-index: 9999;
-  }
-
+  z-index:1050;
 }
-.auth-side-icon-container{
-  // margin-top: 103px;
+.auth-side-icon-container {
   align-items:center;
   justify-content:center;
 }

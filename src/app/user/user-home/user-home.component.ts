@@ -91,10 +91,10 @@ export class UserHomeComponent implements OnInit {
         localStorage.setItem('selectedUserCompany', String(res.data.id));
         this.globalEventManager.selectedUserCompany(res.data.name);
       }
+      return;
     }
-    if (user.companyIds && user.companyIds.length > 1) {
-      this.listMyCompanies(user.companyIds).then();
-    }
+
+    this.listMyCompanies(user.companyIds ?? []).then();
   }
 
   async listMyCompanies(ids) {

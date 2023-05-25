@@ -1668,6 +1668,8 @@
     "selectUserCompany.modal.button.confirm": "{$START_TAG_SPAN}Confirmar{$CLOSE_TAG_SPAN}",
     "selectUserCompany.title": "Seleccione empresa",
     "selectUserCompany.instructionsHtml": "Seleccione una empresa a la que le gustaría seguir:",
+    "selectUserCompany.modal.userHasNoCompanies.message": "Currently you have no companies assigned. Contact your administrator.",
+    "selectUserCompany.modal.button.logout": "Logout",
     "userList.title.users": "Usuarios",
     "userList.subTitle.listOfUsers": "Lista de usuarios",
     "userList.subTitle.showing": "Mostrando {$INTERPOLATION}/{$INTERPOLATION_1}",
