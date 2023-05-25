@@ -77,6 +77,16 @@ p {
   cursor: pointer;
 }
 
+.disabled-action {
+  color: $gray !important;
+  cursor: default !important;
+  pointer-events: none;
+
+  &:hover {
+    color: $gray !important;
+  }
+}
+
 .container {
     width:100%;
     padding-right:15px;

@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   users = [];
   @ViewChild(UserDetailComponent) userDetails;
-  _listErrorStatus$: BehaviorSubject<string>;
+  listErrorStatus$: BehaviorSubject<string>;
 
   searchQuery = new FormControl(null);
   searchStatus = new FormControl('');
@@ -136,7 +136,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._listErrorStatus$ = new BehaviorSubject<string>('');
+    this.listErrorStatus$ = new BehaviorSubject<string>('');
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/users') {
         this.reloadPage();
@@ -150,7 +150,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async setAllUsers() {
-    if (this.isAdmin) {
+    if (this.isSystemAdmin) {
       const res = await this.userController.adminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
@@ -219,12 +219,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.paging$.next(event);
   }
 
-  get isAdmin() {
+  get isSystemAdmin() {
     return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
   editUser(userId) {
-    if (this.isAdmin) {
+    if (this.isSystemAdmin) {
       this.router.navigate(['/users', userId], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
      } else {
       this.globalEventsManager.push({
@@ -236,11 +236,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
   }
 
-  async setAdmin(id, role) {
+  async setUserRole(id, action: 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN') {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.userController
-        .activateUserUsingPOST(role === 'SYSTEM_ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
+      await this.userController.activateUserUsingPOST(action, { id })
+        .pipe(take(1))
+        .toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({

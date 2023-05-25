@@ -56,7 +56,7 @@ export namespace ActivateUserUsingPOST {
       /**
        * action
        */
-      action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE';
+      action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN' | 'SET_USER_ROLE';
       /**
        * request
        */
@@ -744,10 +744,10 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_ADMIN' | 'UNSET_USER_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN' | 'SET_USER_ROLE', ApiUserRole: ApiUserRole, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (action === null || action === undefined) {
             throw new Error('Required parameter action was null or undefined when calling activateUserUsingPOST.');
         }
