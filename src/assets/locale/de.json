@@ -734,6 +734,7 @@
     "settingsPage.newMeasurementUnitType.addTitle": "Art der Messeinheit hinzufügen",
     "settingsPage.newActionType.addTitle": "Art der Aktion hinzufügen",
     "settingsTypes.tableCol.edit": "Bearbeiten",
+    "settingsTypes.tableCol.view": "View",
     "settingsTypes.noTypes": "Keine Typen gefunden",
     "settingsTypes.sortOptions.id.name": "ID",
     "settingsTypes.sortOptions.label.name": "Label",

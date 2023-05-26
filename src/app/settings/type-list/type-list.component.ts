@@ -14,6 +14,7 @@ import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
 import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
 import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-type-list',
@@ -31,7 +32,8 @@ export class TypeListComponent implements OnInit, OnChanges {
     private productTypesService: ProductTypeControllerService,
     private route: ActivatedRoute,
     private modalService: NgbModalImproved,
-    protected globalEventsManager: GlobalEventManagerService
+    protected globalEventsManager: GlobalEventManagerService,
+    private authService: AuthService
   ) { }
 
   @Input()
@@ -228,6 +230,10 @@ export class TypeListComponent implements OnInit, OnChanges {
       inactive: true
     }
   ];
+
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
 
   ngOnInit(): void {
     this.setAll().then();

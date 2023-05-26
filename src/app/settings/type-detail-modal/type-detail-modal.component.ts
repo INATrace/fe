@@ -27,6 +27,7 @@ import { ApiSemiProductTranslation } from '../../../api/model/apiSemiProductTran
 import LanguageEnum = ApiSemiProductTranslation.LanguageEnum;
 import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
 import { ApiProductType } from '../../../api/model/apiProductType';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-type-detail-modal',
@@ -67,8 +68,13 @@ export class TypeDetailModalComponent implements OnInit {
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductService: SemiProductControllerService,
     private productTypeService: ProductTypeControllerService,
-    public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService
+    public activeMeasureUnitTypeService: ActiveMeasureUnitTypeService,
+    private authService: AuthService
   ) { }
+
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
 
   ngOnInit(): void {
     this.init().then();
@@ -141,6 +147,11 @@ export class TypeDetailModalComponent implements OnInit {
         this.form = generateFormFromMetadata(ApiProductType.formMetadata(), this.typeElement, ApiProductTypeValidationScheme);
       }
       this.finalizeForm();
+    }
+
+    // If in edit mode and logged in as a Regional admin, disable the form (Regional admin cannot edit, only create)
+    if (this.update && this.isRegionalAdmin) {
+      this.form.disable();
     }
 
   }

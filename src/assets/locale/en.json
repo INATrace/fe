@@ -853,6 +853,7 @@
     "settingsPage.unpublishedProductLabelText.label": "Unpublished product labels text",
     "settingsPage.unpublishedProductLabelText.placeholder": "Enter text",
     "settingsTypes.tableCol.edit": "Edit",
+    "settingsTypes.tableCol.view": "View",
     "settingsTypes.tableCol.delete": "Delete",
     "settingsTypes.noTypes": "No types found",
     "settingsTypes.sortOptions.id.name": "Id",

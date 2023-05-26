@@ -1587,6 +1587,7 @@
     "settingsPage.unpublishedProductLabelText.label": "Texto de etiquetas de productos no publicados",
     "settingsPage.unpublishedProductLabelText.placeholder": "Ingrese texto",
     "settingsTypes.tableCol.edit": "Editar",
+    "settingsTypes.tableCol.view": "View",
     "settingsTypes.tableCol.delete": "Borrar",
     "settingsTypes.noTypes": "No se encontraron tipos",
     "settingsTypes.sortOptions.id.name": "Identificación",

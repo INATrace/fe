@@ -10,6 +10,7 @@ import { TabCommunicationService } from '../shared/tab-communication.service';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from '../shared-services/component-can-deactivate';
 import { AuthorisedLayoutComponent } from '../layout/authorised/authorised-layout/authorised-layout.component';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   template: ''
@@ -70,33 +71,38 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     protected globalEventsManager: GlobalEventManagerService,
     protected commonController: CommonControllerService,
     protected modalService: NgbModalImproved,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) {
     super();
-  }
-
-  public canDeactivate(): boolean {
-    return (!this.labelsHelperLink || !this.labelsHelperLink.dirty) &&
-        (!this.unpublishedProductLabelText || !this.unpublishedProductLabelText.dirty);
-  }
-
-  ngOnInit(): void {
-    this.initializeLabelsHelperLink().then();
   }
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
   }
 
-  targetNavigate(segment: string) {
-    this.router.navigate(['settings', segment]).then();
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
+
+  ngOnInit(): void {
+    this.initializeLabelsHelperLink().then();
   }
 
   ngAfterViewInit() {
     this.selectedTab = this.tabCommunicationService.subscribe(this.tabs, this.tabNames, this.rootTab, this.targetNavigate.bind(this));
   }
-  /////////////////////////
 
+  targetNavigate(segment: string) {
+    this.router.navigate(['settings', segment]).then();
+  }
+
+  public canDeactivate(): boolean {
+    return (!this.labelsHelperLink || !this.labelsHelperLink.dirty) &&
+      (!this.unpublishedProductLabelText || !this.unpublishedProductLabelText.dirty);
+  }
+
+  /////////////////////////
   onShow(event, type) {
     if (type === 'facility-types') { this.showedFacilities = event; }
     if (type === 'measurement-unit-types') { this.showedMeasurements = event; }

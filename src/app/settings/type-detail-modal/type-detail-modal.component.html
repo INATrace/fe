@@ -484,6 +484,8 @@
   </div>
   <div class="modal-footer" i18n="@@collectorDetail.modal.footer.buttons">
     <button class="btn btn-outlined" data-dismiss="modal" type="button" (click)="dismiss()"><span>Cancel</span></button>
-    <button class="btn" type="button" (click)="save(); saveCallback && saveCallback();"><span>Save</span></button>
+    <button class="btn" type="button"
+            [disabled]="isRegionalAdmin"
+            (click)="save(); saveCallback && saveCallback();"><span>Save</span></button>
   </div>
 </div>

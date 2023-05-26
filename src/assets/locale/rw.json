@@ -734,6 +734,7 @@
     "settingsPage.newMeasurementUnitType.addTitle": "Ongeraho ubwoko bwi'igipimo",
     "settingsPage.newActionType.addTitle": "Ongeraho ubwoko bw'igikorwa",
     "settingsTypes.tableCol.edit": "Guhindura",
+    "settingsTypes.tableCol.view": "View",
     "settingsTypes.noTypes": "Nta bwoko bwabonetse",
     "settingsTypes.sortOptions.id.name": "ID",
     "settingsTypes.sortOptions.label.name": "Akarango",
