@@ -1903,7 +1903,7 @@ export class CompanyControllerService {
 
 
   /**
-   * Execute company action. Must be an administrator by map.
+   * Execute company action. Must be an Company admin, System admin or Regional admin enrolled in this company by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1935,7 +1935,7 @@ export class CompanyControllerService {
 
 
     /**
-     * Execute company action. Must be an administrator
+     * Execute company action. Must be an Company admin, System admin or Regional admin enrolled in this company
      * 
      * @param action action
      * @param ApiCompanyActionRequest request

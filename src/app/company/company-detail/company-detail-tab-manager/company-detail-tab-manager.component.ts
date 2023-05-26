@@ -40,7 +40,7 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   selectedTab: Subscription;
 
   isAdmin = false;
-  isCompanyEnrolled = false;
+  isCompanyAdmin = false;
   userProfileSubscription: Subscription;
 
   companyName: ApiCompanyName = null;
@@ -68,10 +68,10 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
 
             // Set flag if this user is enrolled in the selected company (if not enrolled in the company,
             // cannot see tabs: facilities and processing actions)
-            this.isCompanyEnrolled = userProfile.companyIdsAdmin.findIndex(id => String(id) === this.cId) !== -1;
+            this.isCompanyAdmin = userProfile.companyIdsAdmin.findIndex(id => String(id) === this.cId) !== -1;
 
             // If not company enrolled, lock the facilities and processing actions tabs
-            if (!this.isCompanyEnrolled) {
+            if (!this.isCompanyAdmin) {
               this.lockedTabs = [
                 'facilities',
                 'processingActions'

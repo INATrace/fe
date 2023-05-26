@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { GlobalEventManagerService } from '../core/global-event-manager.service';
 import { FormControl } from '@angular/forms';
 import { ApiPaginatedResponseApiCurrencyType } from '../../api/model/apiPaginatedResponseApiCurrencyType';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-currency-list',
@@ -57,8 +58,13 @@ export class CurrencyListComponent implements OnInit {
   constructor(
       private router: Router,
       private currencyService: CurrencyTypeControllerService,
-      private globalEventsManager: GlobalEventManagerService
+      private globalEventsManager: GlobalEventManagerService,
+      private authService: AuthService
   ) { }
+
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
 
   ngOnInit(): void {
     this.loadCurrencies();

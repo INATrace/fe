@@ -242,8 +242,9 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
         this.initializeListManagers();
 
         // If user is not enrolled in company enrolled, disable the form
-        if (!this.isCompanyEnrolled) {
+        if (!this.isCompanyAdmin) {
           this.companyDetailForm.disable();
+          this.valueChainsForm.disable();
         }
 
         this.globalEventsManager.showLoading(false);
@@ -369,11 +370,6 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   onFileUpload(event) {
     // console.log(event)
   }
-
-  toggleField(_field: BehaviorSubject<boolean>): void {
-    _field.next(!_field.value);
-  }
-
   validate() {
     this.submitted = true;
   }
