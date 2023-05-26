@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { AuthService } from '../../../core/auth.service';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-company-processing-actions',
@@ -23,9 +24,10 @@ export class CompanyProcessingActionsComponent extends CompanyDetailTabManagerCo
       protected router: Router,
       protected route: ActivatedRoute,
       protected globalEventsManager: GlobalEventManagerService,
-      protected authService: AuthService
+      protected authService: AuthService,
+      protected companyController: CompanyControllerService,
   ) {
-    super(router, route, authService);
+    super(router, route, authService, companyController);
   }
 
   ngOnInit(): void {

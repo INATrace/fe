@@ -101,11 +101,11 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       private processingActionControllerService: ProcessingActionControllerService,
       private semiProductControllerService: SemiProductControllerService,
       private finalProductController: FinalProductControllerService,
-      private companyController: CompanyControllerService,
+      protected companyController: CompanyControllerService,
       private cdr: ChangeDetectorRef,
       protected authService: AuthService
   ) {
-    super(router, route, authService);
+    super(router, route, authService, companyController);
   }
 
   get processingActionType() {

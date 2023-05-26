@@ -9,7 +9,10 @@
         <div class="af-form-wrapper">
             <div class="main-inside-top content-element">
                 <div class="d-flex justify-content-between content-element--row1">
-                    <div class="title-page content-element--title" i18n="@@companyDetailProcessingActions.title">Processing actions</div>
+                    <div class="title-page content-element--title d-flex">
+                        <div class="mr-1" i18n="@@companyDetailProcessingActions.title">Processing actions</div>
+                        <div>(<em>{{ companyName?.name }}</em>)</div>
+                    </div>
                     <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessingAction()" i18n="@@productLabelStock.button.newProcessingActions">
                         <span>+ Add processing action</span>
                     </button>

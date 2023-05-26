@@ -99,7 +99,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
   constructor(
     protected route: ActivatedRoute,
     private location: Location,
-    private companyController: CompanyControllerService,
+    protected companyController: CompanyControllerService,
     private valueChainController: ValueChainControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     public countryCodes: CountryService,
@@ -107,7 +107,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     protected router: Router,
     protected authService: AuthService
   ) {
-    super(router, route, authService);
+    super(router, route, authService, companyController);
   }
 
   static generateSocialMediaForm() {

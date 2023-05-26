@@ -7089,6 +7089,39 @@
         "summary": "Get all info about a company"
       }
     },
+    "/api/company/profile/{id}/name": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Record id",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiCompanyName_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getCompanyNameUsingGET",
+        "summary": "Get the company name and abbreviation"
+      }
+    },
     "/api/company/profile/{id}/users": {
       "get": {
         "parameters": [
@@ -10959,12 +10992,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10974,19 +11004,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -10996,19 +11023,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11018,19 +11042,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11040,19 +11061,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11062,19 +11080,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11084,19 +11099,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11106,8 +11118,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -12344,6 +12356,65 @@
               "ACTIVE",
               "DEACTIVATED"
             ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiCompanyName": {
+        "properties": {
+          "abbreviation": {
+            "description": "company abbreviation",
+            "type": "string"
+          },
+          "about": {
+            "description": "about the company",
+            "type": "string"
+          },
+          "displayPrefferedWayOfPayment": {
+            "description": "Display preferred way of payment on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
+          "email": {
+            "description": "email",
+            "type": "string"
+          },
+          "headquarters": {
+            "$ref": "#/components/schemas/ApiAddress",
+            "description": "headquarters"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "manager": {
+            "description": "name of manager / CEO",
+            "type": "string"
+          },
+          "mediaLinks": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "social media URL links (Facebook, Instagram, Twitter, YouTube, ...)",
+            "type": "object"
+          },
+          "name": {
+            "description": "company name",
+            "type": "string"
+          },
+          "phone": {
+            "description": "webpage",
+            "type": "string"
+          },
+          "purchaseProofDocumentMultipleFarmers": {
+            "description": "Enable adding multiple farmers for one proof document on purchase order form",
+            "example": false,
+            "type": "boolean"
+          },
+          "webPage": {
+            "description": "webpage",
             "type": "string"
           }
         },
@@ -17215,6 +17286,50 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiCompanyGet",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiCompanyName_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiCompanyName",
             "description": "Response body for successful responses."
           },
           "errorDetails": {

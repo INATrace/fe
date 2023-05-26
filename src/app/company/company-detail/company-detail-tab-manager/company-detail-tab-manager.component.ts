@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
+import { ApiCompanyName } from '../../../../api/model/apiCompanyName';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-company-detail-tab-manager',
@@ -41,10 +43,13 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   isCompanyEnrolled = false;
   userProfileSubscription: Subscription;
 
+  companyName: ApiCompanyName = null;
+
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService
   ) { super(); }
 
   get tabCommunicationService(): TabCommunicationService {
@@ -83,6 +88,14 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
           }
         }
       });
+
+    if (this.rootTab !== 0) {
+      this.companyController.getCompanyNameUsingGET(Number(this.cId)).subscribe(resp => {
+        if (resp && resp.status === 'OK') {
+          this.companyName = resp.data;
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

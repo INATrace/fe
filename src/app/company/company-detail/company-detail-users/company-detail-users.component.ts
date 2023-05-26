@@ -8,10 +8,10 @@ import { GlobalEventManagerService } from '../../../core/global-event-manager.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { defaultEmptyObject } from '../../../../shared/utils';
-import { ApiResponseListApiCompanyUser } from '../../../../api/model/apiResponseListApiCompanyUser';
-import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { AuthService } from '../../../core/auth.service';
+import { ApiResponseApiCompanyName } from '../../../../api/model/apiResponseApiCompanyName';
+import StatusEnum = ApiResponseApiCompanyName.StatusEnum;
 
 @Component({
   selector: 'app-company-detail-users',
@@ -32,11 +32,11 @@ export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponen
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
-    private companyController: CompanyControllerService,
+    protected companyController: CompanyControllerService,
     private globalEventsManager: GlobalEventManagerService,
     protected authService: AuthService
   ) {
-    super(router, route, authService);
+    super(router, route, authService, companyController);
   }
 
   static ApiCompanyUserCreateEmptyObject(): ApiCompanyUser {
