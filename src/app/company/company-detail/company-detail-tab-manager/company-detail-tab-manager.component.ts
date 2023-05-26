@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { Subscription } from 'rxjs';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
@@ -57,7 +57,7 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
         if (userProfile) {
 
           // Set flag if this user is System admin
-          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
+          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN || userProfile.role === ApiUserGet.RoleEnum.REGIONALADMIN;
 
           if (this.cId != null) {
 

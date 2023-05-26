@@ -25,7 +25,6 @@ import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityF
 import { ApiSustainability } from 'src/api/model/apiSustainability';
 import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
-import { UsersService } from 'src/app/shared-services/users.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
 import { TextinputComponent } from 'src/app/shared/textinput/textinput.component';
 import { AuthService } from 'src/app/core/auth.service';
@@ -109,7 +108,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     private location: Location,
     private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    public userSifrant: UsersService,
     public companyController: CompanyControllerService,
     public valueChainController: ValueChainControllerService,
     private modalService: NgbModalImproved,
@@ -897,10 +895,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-  }
-
-  userInputFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value);
   }
 
   goBack(): void {
