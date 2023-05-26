@@ -22,7 +22,7 @@
           <h2 i18n="@@userDetail.section.basicInfo">Basic information</h2>
           <div class="af-form-element">
 
-            <textinput [form]="userProfileForm.get('name')" label="First name"
+            <textinput [form]="$any(userProfileForm.get('name'))" label="First name"
               i18n-label="@@userDetail.textinput.firstname.label"
               i18n-placeholder="@@userDetail.textinput.firstname.placeholder"
               style="width: 100%" placeholder="Enter your first name"
@@ -37,7 +37,7 @@
               </ng-container>
             </textinput>
 
-            <textinput [form]="userProfileForm.get('surname')" label="Last name"
+            <textinput [form]="$any(userProfileForm.get('surname'))" label="Last name"
               i18n-label="@@userDetail.textinput.lastname.label"
               i18n-placeholder="@@userDetail.textinput.lastname.placeholder"
               style="width: 100%" placeholder="Enter your last name"
@@ -52,7 +52,7 @@
               </ng-container>
             </textinput>
 
-            <textinput [form]="userProfileForm.get('email')" label="Username"
+            <textinput [form]="$any(userProfileForm.get('email'))" label="Username"
               i18n-label="@@userDetail.textinput.username.label"
               style="width: 100%"
               [readOnly]=true>

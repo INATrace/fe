@@ -233,6 +233,8 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       this.globalEventsManager.showLoading(true);
       const res = await this.userController.activateUserUsingPOST('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
       if (res.status !== 'OK') { throw Error(); }
+
+      this.unconfirmedUser = false;
     } catch (e) {
       this.globalEventsManager.push({
         action: 'error',

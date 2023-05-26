@@ -97,34 +97,36 @@
                          (click)="editUser(user.id)"
                          class="user-action"
                          [class.enabled-action]="true">Edit</a>
-                      <a i18n="@@userList.tableCol.activate"
-                         (click)="user.status != 'ACTIVE' && activate(user.id)"
-                         class="user-action"
-                         [class.enabled-action]="user.status != 'ACTIVE'"
-                         [class.disabled-action]="user.status === 'ACTIVE'">Activate</a>
-                      <a i18n="@@userList.tableCol.deactivate"
-                         (click)="user.status != 'DEACTIVATED' && deactivate(user.id)"
-                         class="user-action"
-                         [class.enabled-action]="user.status != 'DEACTIVATED'"
-                         [class.disabled-action]="user.status === 'DEACTIVATED'">Deactivate</a>
-                      <ng-container *ngIf="isSystemAdmin && user.status === 'ACTIVE'">
-                        <ng-container *ngIf="user.role === 'USER'">
-                          <a class="user-action enabled-action"
-                             (click)="setUserRole(user.id, 'SET_USER_SYSTEM_ADMIN')"
-                             i18n="@@userList.tableCol.setSystemAdmin">Set System admin</a>
-                          <a class="user-action enabled-action"
-                             (click)="setUserRole(user.id, 'SET_USER_REGIONAL_ADMIN')"
-                             i18n="@@userList.tableCol.setRegionalAdmin">Set Regional admin</a>
-                        </ng-container>
-                        <ng-container *ngIf="user.role === 'SYSTEM_ADMIN'">
-                          <a class="user-action enabled-action"
-                             (click)="setUserRole(user.id, 'UNSET_USER_SYSTEM_ADMIN')"
-                             i18n="@@userList.tableCol.unsetSystemAdmin">Unset System admin</a>
-                        </ng-container>
-                        <ng-container *ngIf="user.role === 'REGIONAL_ADMIN'">
-                          <a class="user-action enabled-action"
-                             (click)="setUserRole(user.id, 'UNSET_USER_REGIONAL_ADMIN')"
-                             i18n="@@userList.tableCol.unsetRegionalAdmin">Unset Regional admin</a>
+                      <ng-container *ngIf="user.status !== 'UNCONFIRMED'">
+                        <a i18n="@@userList.tableCol.activate"
+                           (click)="user.status != 'ACTIVE' && activate(user.id)"
+                           class="user-action"
+                           [class.enabled-action]="user.status != 'ACTIVE'"
+                           [class.disabled-action]="user.status === 'ACTIVE'">Activate</a>
+                        <a i18n="@@userList.tableCol.deactivate"
+                           (click)="user.status != 'DEACTIVATED' && deactivate(user.id)"
+                           class="user-action"
+                           [class.enabled-action]="user.status != 'DEACTIVATED'"
+                           [class.disabled-action]="user.status === 'DEACTIVATED'">Deactivate</a>
+                        <ng-container *ngIf="isSystemAdmin && user.status === 'ACTIVE'">
+                          <ng-container *ngIf="user.role === 'USER'">
+                            <a class="user-action enabled-action"
+                               (click)="setUserRole(user.id, 'SET_USER_SYSTEM_ADMIN')"
+                               i18n="@@userList.tableCol.setSystemAdmin">Set System admin</a>
+                            <a class="user-action enabled-action"
+                               (click)="setUserRole(user.id, 'SET_USER_REGIONAL_ADMIN')"
+                               i18n="@@userList.tableCol.setRegionalAdmin">Set Regional admin</a>
+                          </ng-container>
+                          <ng-container *ngIf="user.role === 'SYSTEM_ADMIN'">
+                            <a class="user-action enabled-action"
+                               (click)="setUserRole(user.id, 'UNSET_USER_SYSTEM_ADMIN')"
+                               i18n="@@userList.tableCol.unsetSystemAdmin">Unset System admin</a>
+                          </ng-container>
+                          <ng-container *ngIf="user.role === 'REGIONAL_ADMIN'">
+                            <a class="user-action enabled-action"
+                               (click)="setUserRole(user.id, 'UNSET_USER_REGIONAL_ADMIN')"
+                               i18n="@@userList.tableCol.unsetRegionalAdmin">Unset Regional admin</a>
+                          </ng-container>
                         </ng-container>
                       </ng-container>
                     </span>
