@@ -3122,7 +3122,7 @@
     "collectorDetail.textinput.numberOfPlants.label": "Number of plants",
     "collectorDetail.textinput.numberOfPlants.placeholder": "Enter number of plants",
     "settingsPage.title.productTypes": "Product types",
-    "settingsPage.button.newProductType": "Add",
+    "settingsPage.button.newProductType": "+ Add",
     "settingsPage.subTitle.listOfProductTypes": "List of product types",
     "settingsPage.subTitle.showingProductTypes": "Showing {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productTypeDetail.textinput.name.label": "Name",
