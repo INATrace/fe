@@ -72,29 +72,33 @@
                   <td [attr.data-label]="sortOptions[2].name"><span>{{ valueChain.valueChainStatus }}</span></td>
                   <td [attr.data-label]="sortOptions[3].name">
                     <span>
-                      <a i18n="@@valueChainList.tableCol.action.edit"
-                         (click)="editValueChain(valueChain.id)"
+                      <a (click)="editValueChain(valueChain.id)"
                          class="value-chain-action"
                          [class.enabled-action]="true">
-                        Edit
+                        <span *ngIf="isRegionalAdmin; else editMode"
+                              i18n="@@valueChainList.tableCol.action.view">View</span>
+                        <ng-template #editMode>
+                          <span i18n="@@valueChainList.tableCol.action.edit">Edit</span>
+                        </ng-template>
                       </a>
                       <a i18n="@@valueChainList.tableCol.action.enable"
                          (click)="enableValueChain(valueChain.id)"
                          class="value-chain-action"
-                         [class.enabled-action]="valueChain.valueChainStatus === 'DISABLED'"
-                         [class.disabled-action]="valueChain.valueChainStatus === 'ENABLED'">
+                         [class.enabled-action]="valueChain.valueChainStatus === 'DISABLED' && !isRegionalAdmin"
+                         [class.disabled-action]="valueChain.valueChainStatus === 'ENABLED' || isRegionalAdmin">
                         Enable
                       </a>
                       <a i18n="@@valueChainList.tableCol.action.disable"
                          (click)="disableValueChain(valueChain.id)"
                          class="value-chain-action"
-                         [class.enabled-action]="valueChain.valueChainStatus === 'ENABLED'"
-                         [class.disabled-action]="valueChain.valueChainStatus === 'DISABLED'">
+                         [class.enabled-action]="valueChain.valueChainStatus === 'ENABLED' && !isRegionalAdmin"
+                         [class.disabled-action]="valueChain.valueChainStatus === 'DISABLED' || isRegionalAdmin">
                         Disable
                       </a>
                       <a i18n="@@valueChainList.tableCol.action.delete"
                          (click)="deleteValueChain(valueChain.id)"
-                         class="value-chain-action enabled-action">
+                         class="value-chain-action enabled-action"
+                         [class.disabled-action]="isRegionalAdmin">
                         Delete
                       </a>
                     </span>

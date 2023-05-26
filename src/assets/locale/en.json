@@ -2802,6 +2802,7 @@
     "valueChainList.sortOptions.status.name": "Status",
     "valueChainList.sortOptions.actions.name": "Actions",
     "valueChainList.tableCol.action.edit": "Edit",
+    "valueChainList.tableCol.action.view": "View",
     "valueChainList.tableCol.action.enable": "Enable",
     "valueChainList.tableCol.action.disable": "Disable",
     "valueChainList.tableCol.action.delete": "Delete",

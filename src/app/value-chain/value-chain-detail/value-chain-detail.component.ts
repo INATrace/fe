@@ -24,6 +24,7 @@ import ValueChainStatusEnum = ApiValueChain.ValueChainStatusEnum;
 import { ApiProcessingEvidenceField } from '../../../api/model/apiProcessingEvidenceField';
 import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
 import { ProductTypesService } from '../../shared-services/product-types.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-value-chain-detail',
@@ -51,7 +52,8 @@ export class ValueChainDetailComponent implements OnInit {
     private router: Router,
     private valueChainService: ValueChainControllerService,
     private globalEventsManager: GlobalEventManagerService,
-    private productControllerService: ProductTypeControllerService
+    private productControllerService: ProductTypeControllerService,
+    private authService: AuthService
   ) { }
 
   // Facility type form factory methods (used when creating ListEditorManager)
@@ -148,6 +150,10 @@ export class ValueChainDetailComponent implements OnInit {
     return (this.valueChainDetailForm.get('semiProducts') as FormArray).controls as FormControl[];
   }
 
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
+
   ngOnInit(): void {
     if (this.mode === 'update') {
       this.title = $localize`:@@valueChainDetail.title.edit:Edit value chain`;
@@ -179,9 +185,16 @@ export class ValueChainDetailComponent implements OnInit {
         valueChain => {
           this.valueChainDetailForm =
             generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain.data, ApiValueChainValidationScheme);
+
           if (this.mode === 'update' && valueChain.data.valueChainStatus === ValueChainStatusEnum.DISABLED) {
             this.valueChainDetailForm.disable();
           }
+
+          // If viewing as a Regional admin disable the form
+          if (this.isRegionalAdmin) {
+            this.valueChainDetailForm.disable();
+          }
+
           this.initializeListManagers();
         }
       );
