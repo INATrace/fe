@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
 import { shareReplay, take } from 'rxjs/operators';
 import { ApiResponseApiCompanyGet } from '../../../../api/model/apiResponseApiCompanyGet';
-import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
+import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
+import RoleEnum = ApiUserGet.RoleEnum;
 
 @Component({
   selector: 'app-company-left-panel',
@@ -26,7 +27,7 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
 
   private companySubs: Subscription;
 
-  isSystemAdmin = false;
+  isSystemOrRegionalAdmin = false;
   isCompanyAdmin = false;
 
   constructor(
@@ -57,8 +58,8 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
       });
 
     this.authService.userProfile$.subscribe(value => {
-      if (value.role === ApiUserGet.RoleEnum.SYSTEMADMIN) {
-        this.isSystemAdmin = true;
+      if (value.role === ApiUserGet.RoleEnum.SYSTEMADMIN || value.role === RoleEnum.REGIONALADMIN) {
+        this.isSystemOrRegionalAdmin = true;
       }
       if (value.companyIdsAdmin.includes(this.companyId)) {
         this.isCompanyAdmin = true;

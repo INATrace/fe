@@ -6,6 +6,7 @@ import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } f
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -119,13 +120,18 @@ export class CompanyFarmersListComponent implements OnInit {
   constructor(
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
-      private router: Router
+      private router: Router,
+      private authService: AuthService
   ) { }
+
+  get isSystemOrRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile &&
+      (this.authService.currentUserProfile.role === 'SYSTEM_ADMIN' || this.authService.currentUserProfile.role === 'REGIONAL_ADMIN');
+  }
 
   ngOnInit(): void {
     this.organizationId = localStorage.getItem('selectedUserCompany');
-
-    this.loadFarmers();
+    this.loadFarmers().then();
   }
 
   async loadFarmers() {
@@ -164,11 +170,11 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   addFarmer() {
-    this.router.navigate(['my-farmers', 'add']);
+    this.router.navigate(['my-farmers', 'add']).then();
   }
 
   editFarmer(id) {
-    this.router.navigate(['my-farmers', 'edit', id]);
+    this.router.navigate(['my-farmers', 'edit', id]).then();
   }
 
   async deleteFarmer(id) {
