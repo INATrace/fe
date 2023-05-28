@@ -29,7 +29,7 @@ export class AuthService {
 
     private updateUserProfile$ = new BehaviorSubject<boolean>(false);
 
-    private _currentUserProfile: ApiUserGet = null;
+    private userProfile: ApiUserGet = null;
 
   userProfile$ = this.updateUserProfile$.pipe(
     switchMap(ping => this.userController.getProfileForUserUsingGET().pipe(
@@ -45,7 +45,7 @@ export class AuthService {
       }
       return null;
     }),
-    tap(val => { this._currentUserProfile = val; }),
+    tap(val => { this.userProfile = val; }),
     shareReplay(1)
   );
 
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
     get currentUserProfile() {
-      return this._currentUserProfile;
+      return this.userProfile;
     }
 
     refreshUserProfile() {
@@ -91,7 +91,7 @@ export class AuthService {
         this.globalEventManager.selectedUserCompany(null);
         await this.userController.logoutUsingPOST().pipe(take(1)).toPromise();
         this.beycoTokenService.removeToken();
-        this._currentUserProfile = null;
+        this.userProfile = null;
         this.loggedIn$.next(false);
         if (redirect !== null) {
           this.router.navigate([redirect]).then();

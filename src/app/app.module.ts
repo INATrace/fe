@@ -55,7 +55,6 @@ import { TypeListComponent } from './settings/type-list/type-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { WelcomeScreenUnconfirmedComponent } from './welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
 import * as Hammer from 'hammerjs';
 import { ChartsModule } from 'ng2-charts';
 import { CompanyDetailTabManagerComponent } from './company/company-detail/company-detail-tab-manager/company-detail-tab-manager.component';
@@ -106,7 +105,6 @@ export function getConfiguration(): Configuration {
     ResetPasswordComponent,
     ResetPasswordRequestComponent,
     LandingPageComponent,
-    WelcomeScreenUnconfirmedComponent,
     CompanySelectModalComponent,
     CookieBannerComponent,
     ClearCookieConsentComponent,

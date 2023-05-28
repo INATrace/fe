@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
-import { WelcomeScreenUnconfirmedComponent } from '../../welcome-screen-unconfirmed/welcome-screen-unconfirmed.component';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
@@ -31,7 +30,6 @@ export class UserHomeComponent implements OnInit {
 
   user = null;
   sub: Subscription;
-  confirmedOnlyUser = false;
 
   codebookMyCompanies;
 
@@ -67,27 +65,9 @@ export class UserHomeComponent implements OnInit {
     this.sub = this.authService.userProfile$.subscribe(user => {
       if (this.authService.currentUserProfile) {
         this.user = user;
-        this.confirmedOnlyUser = user.status === 'CONFIRMED_EMAIL';
-
-        if (this.confirmedOnlyUser && !this.modalService.hasOpenModals()) {
-          this.openModal();
-        }
-
-        if (!this.confirmedOnlyUser) {
-          this.setSelectedUserCompany(user).then();
-        }
+        this.setSelectedUserCompany(user).then();
       }
     });
-  }
-
-  openModal() {
-    const modalRef = this.modalService.open(WelcomeScreenUnconfirmedComponent, {
-      centered: true,
-      size: 'lg',
-      backdrop: 'static',
-      keyboard: false
-    });
-    Object.assign(modalRef.componentInstance, {});
   }
 
   async setSelectedUserCompany(user) {
