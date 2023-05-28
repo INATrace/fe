@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { faUser, faBars} from '@fortawesome/free-solid-svg-icons';
+import { faBars} from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { take } from 'rxjs/operators';
@@ -22,7 +22,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
   displayCompany = '';
   productId = this.route.snapshot.params.id;
 
-  faUser = faUser;
   faBars = faBars;
 
   isConfirmedOnly = false;
@@ -103,10 +102,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     this.authService.logout().then();
   }
 
-  onUser() {
-    this.router.navigate(['home']).then();
-  }
-
   aboutUser() {
     this.router.navigate(['user-profile'], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
    }
@@ -128,10 +123,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     if (res && res.status === 'OK' && res.data) {
       this.globalEventManager.selectedUserCompany(res.data.name);
     }
-  }
-
-  goToProduct() {
-    this.router.navigate(['/', 'product-labels']).then();
   }
 
   goTo(type) {

@@ -62,13 +62,20 @@ export class UserHomeComponent implements OnInit {
   );
 
   ngOnInit(): void {
+
     this.authService.refreshUserProfile();
     this.sub = this.authService.userProfile$.subscribe(user => {
       if (this.authService.currentUserProfile) {
         this.user = user;
         this.confirmedOnlyUser = user.status === 'CONFIRMED_EMAIL';
-        if (this.confirmedOnlyUser && !this.modalService.hasOpenModals()) { this.openModal(); }
-        if (!localStorage.getItem('selectedUserCompany') && !this.confirmedOnlyUser) { this.setSelectedUserCompany(user).then(); }
+
+        if (this.confirmedOnlyUser && !this.modalService.hasOpenModals()) {
+          this.openModal();
+        }
+
+        if (!this.confirmedOnlyUser) {
+          this.setSelectedUserCompany(user).then();
+        }
       }
     });
   }
@@ -84,20 +91,35 @@ export class UserHomeComponent implements OnInit {
   }
 
   async setSelectedUserCompany(user) {
-    if (!user) { return; }
-    if (user.companyIds && user.companyIds.length === 1) {
-      const res = await this.companyControllerService.getCompanyUsingGET(user.companyIds[0]).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        localStorage.setItem('selectedUserCompany', String(res.data.id));
-        this.globalEventManager.selectedUserCompany(res.data.name);
-      }
+
+    if (!user) {
       return;
     }
 
-    this.listMyCompanies(user.companyIds ?? []).then();
+    // If there is already selected company, check that the user has access to it (if not, remove it from local storage)
+    let currentlySelectedCompany = localStorage.getItem('selectedUserCompany');
+    if (user.companyIds == null || user.companyIds.length === 0 || !user.companyIds.includes(Number(currentlySelectedCompany))) {
+      localStorage.removeItem('selectedUserCompany');
+      currentlySelectedCompany = null;
+    }
+
+    // If there is no current company selected, selected one or present modal dialog with list of available companies
+    if (currentlySelectedCompany == null) {
+      if (user.companyIds && user.companyIds.length === 1) {
+        const res = await this.companyControllerService.getCompanyUsingGET(user.companyIds[0]).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK' && res.data) {
+          localStorage.setItem('selectedUserCompany', String(res.data.id));
+          this.globalEventManager.selectedUserCompany(res.data.name);
+        }
+        return;
+      }
+
+      this.listMyCompanies(user.companyIds ?? []).then();
+    }
   }
 
   async listMyCompanies(ids) {
+
     const objCompanies = {};
     for (const id of ids) {
       const res = await this.companyControllerService.getCompanyUsingGET(id).pipe(take(1)).toPromise();
@@ -105,8 +127,13 @@ export class UserHomeComponent implements OnInit {
         objCompanies[res.data.id] = res.data.name;
       }
     }
+
     this.codebookMyCompanies = EnumSifrant.fromObject(objCompanies);
-    if (this.modalService.hasOpenModals()) { return; }
+
+    if (this.modalService.hasOpenModals()) {
+      return;
+    }
+
     const modalRef = this.modalService.open(SelectedUserCompanyModalComponent, {
       centered: true,
       backdrop: 'static',
@@ -114,6 +141,7 @@ export class UserHomeComponent implements OnInit {
     Object.assign(modalRef.componentInstance, {
       codebookMyCompanies: this.codebookMyCompanies
     });
+
     const company = await modalRef.result;
     if (company) {
       localStorage.setItem('selectedUserCompany', company);

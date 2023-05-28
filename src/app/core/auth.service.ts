@@ -113,7 +113,7 @@ export class AuthService {
         ).subscribe((resp: ApiDefaultResponse) => {
             subscription.unsubscribe();
             if (redirect !== null) {
-              this.router.navigate([redirect]);
+              this.router.navigate([redirect]).then();
             }
         });
     }
