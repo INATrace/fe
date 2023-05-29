@@ -2769,6 +2769,7 @@
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Precio final",
     "userHome.products.title": "Mis Productos",
     "userHome.customers.title": "Mis clientes",
+    "userHome.dashboard.title": "Dashboard",
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.placeholder": "Introduza peso neto ",
     "productLabelStockPurchaseOrdersModal.textinput.netWeight.label": "Peso neto",
     "procEvidenceField.fieldName.label": "Nombre de campo",

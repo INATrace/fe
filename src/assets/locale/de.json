@@ -2844,6 +2844,7 @@
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Endgültiger Preis",
     "userHome.products.title": "Meine Produkte",
     "userHome.customers.title": "Meine Kunden",
+    "userHome.dashboard.title": "Dashboard",
     "procEvidenceField.fieldName.label": "Feldname",
     "procEvidenceField.fieldName.placeholder": "Feldname eingeben",
     "procEvidenceField.fieldName.error.required": "Feldname ist erforderlich",

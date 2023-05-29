@@ -2918,6 +2918,7 @@
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Final price",
     "userHome.products.title": "My Products",
     "userHome.customers.title": "My customers",
+    "userHome.dashboard.title": "Dashboard",
     "procEvidenceField.fieldName.label": "Field name",
     "procEvidenceField.fieldName.placeholder": "Enter field name",
     "procEvidenceField.fieldName.error.required": "Field name is required",

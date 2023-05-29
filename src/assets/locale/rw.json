@@ -2855,6 +2855,7 @@
     "productLabelStockPurchaseOrdersModal.textinput.finalPrice.label": "Igiciro cya nyuma",
     "userHome.products.title": "Ibicuruzwa byacu",
     "userHome.customers.title": "Abakiriya banyuma",
+    "userHome.dashboard.title": "Dashboard",
     "procEvidenceField.fieldName.label": "Izina ry'ahandikwa",
     "procEvidenceField.fieldName.placeholder": "Injiza izina ry'ahandikwa",
     "procEvidenceField.fieldName.error.required": "Izina ry'ahandikwa ni ngombwa",
