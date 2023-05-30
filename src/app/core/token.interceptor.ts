@@ -30,10 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
           try {
-              // console.log(err)
             if (err.status === 401) {
-              // console.log(err)
-              // console.log(this.route, window.location.pathname)
               if (err.url.endsWith('/login')) {
                 const message = $localize`:@@tokenInterceptor.login.message:Wrong username or password`;
                 const title = $localize`:@@tokenInterceptor.login.title:Error`;
@@ -43,7 +40,7 @@ export class TokenInterceptor implements HttpInterceptor {
               } else if (err.url.endsWith('/user/profile') && this.pathsToIgnore()) {
                 // landing or get started page, ignore
               } else {
-                this.auth.logout();
+                this.auth.logout().then();
                 const message = $localize`:@@tokenInterceptor.logout.message:Your session has expired`;
                 const title = $localize`:@@tokenInterceptor.logout.title:Error`;
                 this.toasterService.error(message, title);
@@ -60,7 +57,6 @@ export class TokenInterceptor implements HttpInterceptor {
               } else if (err.url.includes('/chain-api/data/user/external/')) {
 
               }  else {
-                // let message = $localize`:@@tokenInterceptor.400.message:Please reload the page.`
                 const message = err.error.errorMessage;
                 const title = $localize`:@@tokenInterceptor.400.title:Communication error!`;
                 this.toasterService.error(message, title);
@@ -77,7 +73,6 @@ export class TokenInterceptor implements HttpInterceptor {
           } finally {
             this.globalEventsManager.showLoading(false);
           }
-          // log error
         }
         return of(err);
       })
@@ -85,8 +80,8 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   pathsToIgnore(){
-    const landingUrlTempl = '/([a-z]{2})/';
-    return (Array.isArray(window.location.pathname.match(landingUrlTempl)) && this.router.url === '/');
+    const landingUrlTemplate = '/([a-z]{2})/';
+    return (Array.isArray(window.location.pathname.match(landingUrlTemplate)) && this.router.url === '/');
   }
 
 }

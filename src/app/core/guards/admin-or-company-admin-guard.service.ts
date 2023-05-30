@@ -1,8 +1,8 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../auth.service';
 import { take } from 'rxjs/operators';
-import { ApiUserGet } from '../../api/model/apiUserGet';
+import { ApiUserGet } from '../../../api/model/apiUserGet';
 import RoleEnum = ApiUserGet.RoleEnum;
 
 /**

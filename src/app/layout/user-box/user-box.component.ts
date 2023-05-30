@@ -24,7 +24,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
 
   faBars = faBars;
 
-  isConfirmedOnly = false;
   isAdmin = false;
   isCompanyAdmin = false;
   companyId: number;
@@ -70,16 +69,14 @@ export class UserBoxComponent implements OnInit, OnDestroy {
 
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
 
-    this.userProfile = this.authService.currentUserProfile;
     this.unsubscribeList.add(
       this.authService.userProfile$.subscribe(val => {
         this.userProfile = val;
         if (this.userProfile) {
-          this.isConfirmedOnly = 'CONFIRMED_EMAIL' === this.userProfile.status;
           this.isAdmin = 'SYSTEM_ADMIN' === this.userProfile.role;
           this.isCompanyAdmin = this.userProfile.companyIdsAdmin.includes(this.companyId);
           this.displayName = this.userProfile.name;
-          this.setDisplayCompany().then();
+          // this.setDisplayCompany().then();
           this.unsubscribeList.add(
             this.globalEventManager.selectedUserCompanyEmitter.subscribe(
               company => {
@@ -116,7 +113,7 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     this.aboutAppInfoService.openAboutApp();
   }
 
-  async setDisplayCompany() {
+  private async setDisplayCompany() {
     const id = localStorage.getItem('selectedUserCompany');
     if (!id) { return; }
     const res = await this.companyControllerService.getCompanyUsingGET(Number(id)).pipe(take(1)).toPromise();

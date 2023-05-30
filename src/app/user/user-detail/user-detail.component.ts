@@ -10,7 +10,6 @@ import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
-import { ApiUserRole } from 'src/api/model/apiUserRole';
 import { BeycoTokenService } from '../../shared-services/beyco-token.service';
 
 @Component({

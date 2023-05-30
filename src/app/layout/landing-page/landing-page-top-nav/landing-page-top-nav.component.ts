@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/auth.service';
 
@@ -12,18 +11,18 @@ export class LandingPageTopNavComponent implements OnInit, OnDestroy {
 
   showNavButtons$: BehaviorSubject<boolean>;
 
-  public loggedId;
   public userProfile;
+
   constructor(
     public authService: AuthService
   ) { }
 
-  faUser = faUser;
   subUserProfile: Subscription;
 
   ngOnInit(): void {
+
     this.showNavButtons$ = new BehaviorSubject<boolean>(false);
-    this.authService.refreshUserProfile();
+
     this.subUserProfile = this.authService.userProfile$.subscribe(val => {
       this.userProfile = val;
     });

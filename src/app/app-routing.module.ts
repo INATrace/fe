@@ -20,7 +20,7 @@ import { ResetPasswordRequestComponent } from './user/reset-password-request/res
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 import { SettingsAdditionalComponent } from './settings/settings-additional/settings-additional.component';
 import { SettingsTypesComponent } from './settings/settings-types/settings-types.component';
-import { SystemOrRegionalAdminGuardService } from './shared-services/system-or-regional-admin-guard.service';
+import { SystemOrRegionalAdminGuardService } from './core/guards/system-or-regional-admin-guard.service';
 import { DeactivateGuardService } from './shared-services/deactivate-guard.service';
 import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
@@ -36,9 +36,9 @@ import { CurrencyListComponent } from './currency-list/currency-list.component';
 import {
   CompanyDetailProcessingActionsDetailComponent
 } from './company/company-detail/company-processing-actions/company-detail-processing-actions-detail/company-detail-processing-actions-detail.component';
-import { AdminOrCompanyAdminGuardService } from './shared-services/admin-or-company-admin-guard.service';
-import { ActivatedUserGuardService } from './shared-services/activated-user-guard.service';
-import { CompanyAdminGuardService } from './shared-services/company-admin-guard.service';
+import { AdminOrCompanyAdminGuardService } from './core/guards/admin-or-company-admin-guard.service';
+import { ActivatedUserGuardService } from './core/guards/activated-user-guard.service';
+import { CompanyAdminGuardService } from './core/guards/company-admin-guard.service';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -91,6 +91,7 @@ const routes: Routes = [
     path: 'home',
     component: UserHomeComponent,
     pathMatch: 'full',
+    canActivate: [ActivatedUserGuardService],
     data: {
       drobtinice: null
     }
@@ -99,6 +100,7 @@ const routes: Routes = [
     path: 'user-profile',
     component: UserDetailComponent,
     pathMatch: 'full',
+    canActivate: [ActivatedUserGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null

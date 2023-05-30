@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
@@ -17,7 +17,7 @@ import StatusEnum = ApiPaginatedResponseApiProductListResponse.StatusEnum;
   templateUrl: './user-home.component.html',
   styleUrls: ['./user-home.component.scss']
 })
-export class UserHomeComponent implements OnInit {
+export class UserHomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
@@ -28,7 +28,6 @@ export class UserHomeComponent implements OnInit {
     private productControllerService: ProductControllerService
   ) { }
 
-  user = null;
   sub: Subscription;
 
   codebookMyCompanies;
@@ -61,16 +60,18 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authService.refreshUserProfile();
     this.sub = this.authService.userProfile$.subscribe(user => {
-      if (this.authService.currentUserProfile) {
-        this.user = user;
-        this.setSelectedUserCompany(user).then();
-      }
+      this.setSelectedUserCompany(user).then();
     });
   }
 
-  async setSelectedUserCompany(user) {
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
+  private async setSelectedUserCompany(user) {
 
     if (!user) {
       return;
@@ -98,7 +99,7 @@ export class UserHomeComponent implements OnInit {
     }
   }
 
-  async listMyCompanies(ids) {
+  private async listMyCompanies(ids) {
 
     const objCompanies = {};
     for (const id of ids) {

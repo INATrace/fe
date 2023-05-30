@@ -12,10 +12,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
         ErrorModalComponent,
         MessageModalComponent
     ],
-    entryComponents: [
-        ErrorModalComponent,
-        MessageModalComponent,
-    ],
     imports: [
         CommonModule,
         FontAwesomeModule,

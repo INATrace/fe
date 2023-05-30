@@ -4,9 +4,6 @@ import { GlobalEventManagerService } from '../../core/global-event-manager.servi
 import { FormGroup } from '@angular/forms';
 import _ from 'lodash-es';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { generateFormFromMetadata } from '../../../shared/utils';
-import { ApiFacility } from '../../../api/model/apiFacility';
-import { ApiFacilityValidationScheme } from '../../company/company-detail/company-detail-facility-add/validation';
 import { GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -23,8 +20,8 @@ export class LocationFormNewComponent implements OnInit {
   submitted = false;
 
   @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) { this.gMap = map; this.fitBounds() };
-  };
+    if (map) { this.gMap = map; this.fitBounds(); }
+  }
 
   gMap = null;
   isGoogleMapsLoaded = false;
@@ -64,8 +61,8 @@ export class LocationFormNewComponent implements OnInit {
     }
     const tmp = {
       position: {
-        lat: lat,
-        lng: lng
+        lat,
+        lng
       }
     };
     this.marker = tmp;
@@ -75,12 +72,10 @@ export class LocationFormNewComponent implements OnInit {
   doShowVillage(): boolean {
     return this.form.get('facilityLocation.address.country').invalid
         || _.isEqual(this.form.get('facilityLocation.address.country').value, {id: 184, code: 'RW', name: 'Rwanda'});
-
-    return false;
   }
 
   get publiclyVisible() {
-    let obj = {}
+    const obj = {};
     obj['true'] = $localize`:@@locationForm.publiclyVisible.yes:YES`;
     obj['false'] = $localize`:@@locationForm.publiclyVisible.no:NO`;
     return obj;
@@ -121,12 +116,12 @@ export class LocationFormNewComponent implements OnInit {
   }
 
   fitBounds() {
-    this.bounds = new google.maps.LatLngBounds()
-    for (let bound of this.initialBounds) {
+    this.bounds = new google.maps.LatLngBounds();
+    for (const bound of this.initialBounds) {
       this.bounds.extend(bound);
     }
     if (this.bounds.isEmpty()) {
-      this.gMap.googleMap.setCenter(this.defaultCenter)
+      this.gMap.googleMap.setCenter(this.defaultCenter);
       this.gMap.googleMap.setZoom(this.defaultZoom);
       return;
     }
