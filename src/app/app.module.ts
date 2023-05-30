@@ -72,6 +72,7 @@ import { CompanyProcessingActionsComponent } from './company/company-detail/comp
 import { CompanyDetailProcessingActionsListComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-list/company-detail-processing-actions-list.component';
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -172,7 +173,10 @@ export function getConfiguration(): Configuration {
     GoogleMapsModule,
     DragDropModule,
     HammerModule,
-    ChartsModule
+    ChartsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     {
