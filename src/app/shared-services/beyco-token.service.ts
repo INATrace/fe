@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import {BeycoOrderControllerService} from '../../api/api/beycoOrderController.service';
-import {ApiBeycoTokenResponse} from '../../api/model/apiBeycoTokenResponse';
-import {tap} from 'rxjs/operators';
-import {BehaviorSubject} from 'rxjs';
-import {environment} from '../../environments/environment';
-import {uuidv4} from '../../shared/utils';
-import {GlobalEventManagerService} from '../core/global-event-manager.service';
+import { BeycoOrderControllerService } from '../../api/api/beycoOrderController.service';
+import { ApiBeycoTokenResponse } from '../../api/model/apiBeycoTokenResponse';
+import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { uuidv4 } from '../../shared/utils';
+import { GlobalEventManagerService } from '../core/global-event-manager.service';
+import { SelectedUserCompanyService } from '../core/selected-user-company.service';
+import { AuthService } from '../core/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeycoTokenService {
+
+  private companyId: number | null = null;
 
   private timeoutId: number | null = null;
   public beycoToken: ApiBeycoTokenResponse;
@@ -18,8 +22,23 @@ export class BeycoTokenService {
 
   constructor(
       private beycoService: BeycoOrderControllerService,
-      private globalEventManager: GlobalEventManagerService
-  ) { }
+      private globalEventManager: GlobalEventManagerService,
+      private authService: AuthService,
+      private selUserCompanyService: SelectedUserCompanyService
+  ) {
+
+    this.authService.userProfile$.subscribe(up => {
+      if (!up) {
+        this.removeToken();
+      }
+    });
+
+    this.selUserCompanyService.selectedCompanyProfile$.subscribe(cp => {
+      if (cp) {
+        this.companyId = cp.id;
+      }
+    });
+  }
 
   public redirectToBeycoAuthorization(redirectPath: string) {
       const redirectUri = window.location.origin + redirectPath;
@@ -80,9 +99,9 @@ export class BeycoTokenService {
       );
   }
 
-  public requestToken(authCode: string) {
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
-    return this.beycoService.getTokenUsingGET(authCode, companyId).pipe(
+  private requestToken(authCode: string) {
+
+    return this.beycoService.getTokenUsingGET(authCode, this.companyId).pipe(
         tap((tokenResp) => {
           this.tokenAvailable$.next(true);
           this.beycoToken = tokenResp.data;
@@ -92,9 +111,9 @@ export class BeycoTokenService {
     );
   }
 
-  public refreshToken() {
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
-    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken, companyId).pipe(
+  private refreshToken() {
+
+    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken, this.companyId).pipe(
         tap((resp) => {
           this.beycoToken = resp.data;
           this.timeoutId = window.setTimeout(this.refreshToken, (this.beycoToken.expiresIn / 3) * 2);

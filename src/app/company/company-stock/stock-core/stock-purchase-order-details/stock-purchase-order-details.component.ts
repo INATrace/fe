@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StockOrderType } from '../../../../../shared/types';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +6,7 @@ import { EnumSifrant } from '../../../../shared-services/enum-sifrant';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
-import { take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
@@ -25,14 +25,17 @@ import { ApiActivityProof } from '../../../../../api/model/apiActivityProof';
 import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
 import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
 import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
-import { ApiCompany } from '../../../../../api/model/apiCompany';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { ApiUserGet } from '../../../../../api/model/apiUserGet';
+import { Subscription } from 'rxjs';
+import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 
 @Component({
   selector: 'app-stock-purchase-order-details',
   templateUrl: './stock-purchase-order-details.component.html',
   styleUrls: ['./stock-purchase-order-details.component.scss']
 })
-export class StockPurchaseOrderDetailsComponent implements OnInit {
+export class StockPurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
   title: string = null;
 
@@ -74,14 +77,16 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   updatePOInProgress = false;
 
-  company: ApiCompany;
-  private companyId: number = null;
+  companyProfile: ApiCompanyGet | null = null;
+  private currentLoggedInUser: ApiUserGet | null = null;
 
   private facility: ApiFacility;
 
   private purchaseOrderId = this.route.snapshot.params.purchaseOrderId;
 
   additionalProofsListManager = null;
+
+  private userProfileSubs: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -93,6 +98,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     private semiProductControllerService: SemiProductControllerService,
     private codebookTranslations: CodebookTranslations,
     private authService: AuthService,
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   // Additional proof item factory methods (used when creating ListEditorManger)
@@ -226,18 +232,26 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.userProfileSubs = this.authService.userProfile$
+      .pipe(
+        switchMap(up => {
+          this.currentLoggedInUser = up;
+          return this.selUserCompanyService.selectedCompanyProfile$;
+        })
+      )
+      .subscribe(cp => {
+        if (cp) {
+          this.companyProfile = cp;
+          this.selectedCurrency = cp.currency?.code ? cp.currency.code : '-';
+          this.reloadOrder();
+        }
+      });
+  }
 
-    // Get the company base currency
-    if (this.companyId && this.route.snapshot.data.action === 'new') {
-      const res = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-      if (res && res.status === StatusEnum.OK && res.data) {
-        this.company = res.data;
-        this.selectedCurrency = res.data.currency?.code ? res.data.currency.code : '-';
-      }
+  ngOnDestroy(): void {
+    if (this.userProfileSubs) {
+      this.userProfileSubs.unsubscribe();
     }
-
-    this.reloadOrder();
   }
 
   private newTitle(pageMode: StockOrderType) {
@@ -272,8 +286,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.submitted = false;
 
     this.initializeData().then(() => {
-      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'FARMER');
-      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'COLLECTOR');
+      this.farmersCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyProfile?.id, 'FARMER');
+      this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyProfile?.id, 'COLLECTOR');
 
       if (this.update) {
         this.editStockOrder().then();
@@ -334,10 +348,9 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
       throw Error('Wrong action.');
     }
 
-    const companyRes = await this.companyControllerService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-    if (companyRes && companyRes.status === StatusEnum.OK && companyRes.data) {
+    if (this.companyProfile) {
       const obj = {};
-      for (const user of companyRes.data.users) {
+      for (const user of this.companyProfile.users) {
         obj[user.id.toString()] = user.name + ' ' + user.surname;
       }
       this.codebookUsers = EnumSifrant.fromObject(obj);
@@ -371,8 +384,8 @@ export class StockPurchaseOrderDetailsComponent implements OnInit {
     this.stockOrderForm.get('orderType').setValue(this.orderType);
     this.setDate();
 
-    // Set current logged in user as employee
-    this.employeeForm.setValue(this.authService.currentUserProfile.id.toString());
+    // Set current logged-in user as employee
+    this.employeeForm.setValue(this.currentLoggedInUser?.id.toString());
 
     // If only one semi-product select it as a default
     if (this.options && this.options.length === 1) {

@@ -13,6 +13,8 @@ import {ApiBeycoPortOfExport} from '../../../../../api/model/apiBeycoPortOfExpor
 import {GlobalEventManagerService} from '../../../../core/global-event-manager.service';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
 import {Subscription} from 'rxjs';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-beyco-order-list',
@@ -21,19 +23,12 @@ import {Subscription} from 'rxjs';
 })
 export class BeycoOrderListComponent implements OnInit, OnDestroy {
 
-  constructor(
-      private fb: FormBuilder,
-      private beycoOrderService: BeycoOrderControllerService,
-      private route: ActivatedRoute,
-      private router: Router,
-      private globalEventManager: GlobalEventManagerService,
-      private beycoTokenService: BeycoTokenService
-  ) { }
-
   subscriptions: Subscription[] = [];
 
   generalForm: FormGroup;
   coffeeInfoForms: FormGroup[] = [];
+
+  private companyId = null;
 
   readonly Variety = ApiBeycoCoffeeVariety.TypeEnum;
   readonly QualitySegment = ApiBeycoCoffeeQuality.TypeEnum;
@@ -45,39 +40,56 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
   readonly Species = ApiBeycoCoffee.SpeciesEnum;
   readonly Incoterms = ApiBeycoOrderCoffees.IncotermsEnum;
 
-  fc(form: FormGroup, fieldName: string): FormControl {
-    return form.get(fieldName) as FormControl;
-  }
+  constructor(
+    private fb: FormBuilder,
+    private beycoOrderService: BeycoOrderControllerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private globalEventManager: GlobalEventManagerService,
+    private beycoTokenService: BeycoTokenService,
+    private selUserCompanyService: SelectedUserCompanyService
+  ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.route.queryParams.subscribe(query => {
-        if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
-          this.router.navigate(['my-stock', 'orders', 'tab']);
-          return;
-        }
 
-        this.globalEventManager.showLoading(true);
-        const companyId = Number(localStorage.getItem('selectedUserCompany'));
-        this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']], companyId)
+    this.subscriptions.push(
+
+      this.selUserCompanyService.selectedCompanyProfile$
+        .pipe(
+          switchMap(cp => {
+            if (cp) {
+              this.companyId = cp.id;
+              return this.route.queryParams;
+            }
+          })
+        )
+        .subscribe(query => {
+
+          if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
+            this.router.navigate(['my-stock', 'orders', 'tab']).then();
+            return;
+          }
+
+          this.globalEventManager.showLoading(true);
+          this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']], this.companyId)
             .subscribe(
-                res => {
-                  this.generalForm = this.buildGeneralForm(res.data);
-                  for (const coffeeOrder of res.data.offerCoffees) {
-                    const coffeeForm = this.buildCoffeeInfoForm(coffeeOrder);
-                    this.subscriptions.push(
-                        coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm)),
-                        coffeeForm.get('varieties').valueChanges.subscribe(() => this.resetValidatorOnCustomVariety(coffeeForm)),
-                        coffeeForm.get('grades').valueChanges.subscribe(() => this.resetValidatorOnQualityDescription(coffeeForm)),
-                        coffeeForm.get('incoterms').valueChanges.subscribe(() => this.resetValidatorOnCustomIncoterms(coffeeForm))
-                    );
-                    this.coffeeInfoForms.push(coffeeForm);
-                  }
-                },
-                () => this.router.navigate(['my-stock', 'orders', 'tab']),
-                () => this.globalEventManager.showLoading(false)
+              res => {
+                this.generalForm = this.buildGeneralForm(res.data);
+                for (const coffeeOrder of res.data.offerCoffees) {
+                  const coffeeForm = this.buildCoffeeInfoForm(coffeeOrder);
+                  this.subscriptions.push(
+                    coffeeForm.get('cuppingScore').valueChanges.subscribe((cuppingScore) => this.isSpecialityCoffee(cuppingScore, coffeeForm)),
+                    coffeeForm.get('varieties').valueChanges.subscribe(() => this.resetValidatorOnCustomVariety(coffeeForm)),
+                    coffeeForm.get('grades').valueChanges.subscribe(() => this.resetValidatorOnQualityDescription(coffeeForm)),
+                    coffeeForm.get('incoterms').valueChanges.subscribe(() => this.resetValidatorOnCustomIncoterms(coffeeForm))
+                  );
+                  this.coffeeInfoForms.push(coffeeForm);
+                }
+              },
+              () => this.router.navigate(['my-stock', 'orders', 'tab']),
+              () => this.globalEventManager.showLoading(false)
             );
-      })
+        })
     );
   }
 
@@ -87,7 +99,12 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
     }
   }
 
+  fc(form: FormGroup, fieldName: string): FormControl {
+    return form.get(fieldName) as FormControl;
+  }
+
   submit() {
+
     let isInvalid = false;
     this.generalForm.markAllAsTouched();
     if (this.generalForm.invalid) { isInvalid = true; }
@@ -107,8 +124,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
     }
 
     this.globalEventManager.showLoading(true);
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.beycoOrderService.sendBeycoOrderUsingPOST(this.beycoTokenService.beycoToken.accessToken, companyId, this.buildApiBeycoOrderFields())
+    this.beycoOrderService.sendBeycoOrderUsingPOST(this.beycoTokenService.beycoToken.accessToken, this.companyId, this.buildApiBeycoOrderFields())
         .subscribe(
             () => {
               this.globalEventManager.push({
@@ -202,7 +218,10 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
         grades: form.get('grades').value?.map(g => ({ type: g }) as ApiBeycoCoffeeGrade),
         additionalQualityDescriptors: form.get('grades').value?.includes('Other') ? form.get('additionalQualityDescriptors').value : null,
         qualitySegments: form.get('qualitySegments').value?.map(q => ({ type: q }) as ApiBeycoCoffeeQuality),
-        varieties: form.get('varieties').value?.map(v => ({ type: v, customVariety: v === ApiBeycoCoffeeGrade.TypeEnum.Other ? form.get('customVariety').value : null }) as ApiBeycoCoffeeVariety),
+        varieties: form.get('varieties').value?.map(v => ({
+          type: v,
+          customVariety: v === ApiBeycoCoffeeGrade.TypeEnum.Other ? form.get('customVariety').value : null
+        }) as ApiBeycoCoffeeVariety),
         name: form.get('name').value,
         cuppingScore: Number(form.get('cuppingScore').value),
         maxScreenSize: Number(form.get('maxScreenSize').value),

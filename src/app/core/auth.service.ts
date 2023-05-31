@@ -4,9 +4,7 @@ import { of, ReplaySubject } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { ApiUserGet } from 'src/api/model/apiUserGet';
-import { GlobalEventManagerService } from './global-event-manager.service';
 import { LanguageCodeHelper } from '../language-code-helper';
-import { BeycoTokenService } from '../shared-services/beyco-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +17,7 @@ export class AuthService {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userController: UserControllerService,
-    private globalEventManager: GlobalEventManagerService,
-    private beycoTokenService: BeycoTokenService
+    private userController: UserControllerService
   ) {
     setTimeout(() => this.refreshUserProfile());
   }
@@ -80,8 +76,6 @@ export class AuthService {
   async logout() {
 
     await this.userController.logoutUsingPOST().pipe(take(1)).toPromise();
-    this.beycoTokenService.removeToken();
-
     this.router.navigate(['login']).then(() => this.userProfileSubject.next(null));
   }
 

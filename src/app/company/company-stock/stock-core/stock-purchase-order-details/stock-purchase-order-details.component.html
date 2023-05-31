@@ -1,5 +1,5 @@
 <app-authorised-layout>
-  <div *ngIf="stockOrderForm"  class="af-layout--authorised">
+  <div *ngIf="companyProfile != null && stockOrderForm" class="af-layout--authorised">
 
     <ng-container *ngIf="!orderType">
       <div class="af-form-wrapper">
