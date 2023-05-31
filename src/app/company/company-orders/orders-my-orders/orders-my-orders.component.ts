@@ -8,6 +8,7 @@ import { setNavigationParameter } from '../../../../shared/utils';
 import { ApiCompanyCustomer } from '../../../../api/model/apiCompanyCustomer';
 import { CompanyCustomersService } from '../../../shared-services/company-customers.service';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-orders-customer-orders',
@@ -28,13 +29,14 @@ export class OrdersMyOrdersComponent extends OrdersTabComponent implements OnIni
     protected router: Router,
     protected route: ActivatedRoute,
     protected facilityController: FacilityControllerService,
-    private companyControllerService: CompanyControllerService
+    private companyControllerService: CompanyControllerService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, facilityController);
+    super(router, route, facilityController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
     this.companyCustomerCodebook = new CompanyCustomersService(this.companyControllerService, this.companyId);
   }
 

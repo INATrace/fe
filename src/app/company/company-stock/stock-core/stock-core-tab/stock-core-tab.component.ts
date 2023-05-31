@@ -22,6 +22,8 @@ import { ApiCompanyUser } from '../../../../../api/model/apiCompanyUser';
 import StatusEnum = ApiResponseListApiCompanyUser.StatusEnum;
 import CompanyRoleEnum = ApiCompanyUser.CompanyRoleEnum;
 import {ApiGroupStockOrder} from '../../../../../api/model/apiGroupStockOrder';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 
 export type StockOrderListingPageMode = 'PURCHASE_ORDERS' | 'COMPANY_ADMIN' | 'SYSTEM_ADMIN';
 
@@ -37,7 +39,8 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   faTimes = faTimes;
 
-  companyId: number = Number(localStorage.getItem('selectedUserCompany'));
+  companyId: number;
+  companyProfile: ApiCompanyGet | null = null;
 
   selectedFacilityId: number;
   facilityIdPing$ = new BehaviorSubject<number>(null);
@@ -92,7 +95,8 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     protected globalEventManager: GlobalEventManagerService,
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
-    protected companyController: CompanyControllerService
+    protected companyController: CompanyControllerService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   get pageMode(): StockOrderListingPageMode {
@@ -108,15 +112,19 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
     this.router.navigate(['my-stock', segment, 'tab']).then();
   }
 
-  ngOnInit(): void {
-
-    this.isAuthorisedCompanyRole().then();
+  async ngOnInit(): Promise<void> {
 
     this.selectedOrders = [];
     this.selectedGroupOrders = [];
     this.selectedPayments = [];
 
-    this.initFacilityCodebook();
+    const cp = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
+    if (cp) {
+      this.companyProfile = cp;
+      this.companyId = cp.id;
+      this.isAuthorisedCompanyRole().then();
+      this.initFacilityCodebook();
+    }
   }
 
   ngAfterViewInit() {
@@ -207,10 +215,9 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
   private async isAuthorisedCompanyRole() {
 
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
     const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
 
-    const companyUsersRes = await this.companyController.getCompanyUsersUsingGET(companyId).pipe(take(1)).toPromise();
+    const companyUsersRes = await this.companyController.getCompanyUsersUsingGET(this.companyId).pipe(take(1)).toPromise();
     if (companyUsersRes && companyUsersRes.status === StatusEnum.OK) {
       const companyUsers = companyUsersRes.data;
       const user = companyUsers.find(cu => cu.id === userProfile.id);

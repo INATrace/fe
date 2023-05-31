@@ -17,6 +17,7 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
 import {dateISOString} from '../../../../../shared/utils';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 export interface SeasonalData {
   totalSeason?: any;
@@ -116,9 +117,10 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     protected companyController: CompanyControllerService,
     private commonCsvControllerService: CommonCsvControllerService,
     private codebookTranslations: CodebookTranslations,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
 
   get womenOnlyStatusValue() {
@@ -133,10 +135,6 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
     return Object.keys(this.seasonalData).length > 0;
   }
 
-  get orderListFormReadOnly() {
-    return this.orderListCheckbox.value;
-  }
-
   get orderListError() {
     return (this.orderListCheckbox.value != null && !this.orderListCheckbox.value && !this.orderListForm.value);
   }
@@ -146,8 +144,9 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       this.producerListForm.invalid || this.orderListError);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+
+    await super.ngOnInit();
   
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
   }

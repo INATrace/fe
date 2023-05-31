@@ -2,7 +2,7 @@
 
   <app-company-left-panel></app-company-left-panel>
 
-  <div class="main">
+  <div class="main" *ngIf="companyId != null">
 
     <!-- PURCHASE ORDERS -->
     <div class="main-inside-top content-element">
@@ -160,21 +160,21 @@
       </div>
 
       <app-stock-order-list
-              [reloadPingList$]="reloadPurchaseOrdersPing$"
-              (countAll)="onCountAllPO($event)"
-              [facilityId$]="facilityIdPing$"
-              (showing)="onShowPO($event)"
-              [openBalanceOnly$]="openBalancePing$"
-              [selectedOrders]="selectedOrders"
-              (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
-              [clickAddPaymentsPing$]="clickAddPaymentsPing$"
-              [companyId]="companyId"
-              [wayOfPaymentPing$]="wayOfPaymentPing$"
-              [womenOnlyPing$]="womenOnlyPing$"
-              [deliveryDatesPing$]="deliveryDatesPing$"
-              [semiProductId$]="semiProductId$"
-              [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
-              [clickClearCheckboxesPing$]="clickClearCheckboxesPing$">
+          [reloadPingList$]="reloadPurchaseOrdersPing$"
+          (countAll)="onCountAllPO($event)"
+          [facilityId$]="facilityIdPing$"
+          (showing)="onShowPO($event)"
+          [openBalanceOnly$]="openBalancePing$"
+          [selectedOrders]="selectedOrders"
+          (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
+          [clickAddPaymentsPing$]="clickAddPaymentsPing$"
+          [companyId]="companyId"
+          [wayOfPaymentPing$]="wayOfPaymentPing$"
+          [womenOnlyPing$]="womenOnlyPing$"
+          [deliveryDatesPing$]="deliveryDatesPing$"
+          [semiProductId$]="semiProductId$"
+          [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
+          [clickClearCheckboxesPing$]="clickClearCheckboxesPing$">
       </app-stock-order-list>
 
     </div>
@@ -196,10 +196,10 @@
                 label="From"
                 i18n-label="@@common.filter.from.label"
                 [form]="fromSeasonalFilterDate"
-                [invalid]="this.submitSeasonalData && fromSeasonalFilterDate.invalid"
+                [invalid]="submitSeasonalData && fromSeasonalFilterDate.invalid"
                 (onChange)="setQuoteOrdersForSeasonal()"
                 style="width: 130px; margin-right: 1rem;">
-          <ng-container *ngIf="this.submitSeasonalData">
+          <ng-container *ngIf="submitSeasonalData">
             <div *ngIf="fromSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.fromSeasonalFilterDate.error">
                 From date is required
@@ -212,10 +212,10 @@
                 label="To"
                 i18n-label="@@common.filter.to.label"
                 [form]="toSeasonalFilterDate"
-                [invalid]="this.submitSeasonalData && toSeasonalFilterDate.invalid"
+                [invalid]="submitSeasonalData && toSeasonalFilterDate.invalid"
                 (onChange)="setQuoteOrdersForSeasonal()"
                 style="width: 130px; margin-right: 1rem;">
-          <ng-container *ngIf="this.submitSeasonalData">
+          <ng-container *ngIf="submitSeasonalData">
             <div *ngIf="toSeasonalFilterDate.errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.toSeasonalFilterDate.error">
                 To date is required
@@ -229,10 +229,10 @@
                 i18n-label="@@productLabelStock.label.producer"
                 [formControlInput]="producerListForm"
                 [codebookService]="codebookCoop"
-                [isInvalidChoice]="this.submitSeasonalData && producerListForm.invalid"
+                [isInvalidChoice]="submitSeasonalData && producerListForm.invalid"
                 (onChange)="setQuoteOrdersForSeasonal()"
                 [readonly]="producerListFormReadOnly">
-          <ng-container *ngIf="this.submitSeasonalData">
+          <ng-container *ngIf="submitSeasonalData">
             <div *ngIf="producerListForm.errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@productLabelStock.textinput.producer.error">
                 Producer is required
@@ -245,21 +245,6 @@
 
       <div class="d-flex main-inside-top--row2 justify-content-between">
         <div class="d-flex">
-
-<!--          <single-choice-->
-<!--                  label="Orders"-->
-<!--                  i18n-label="@@productLabelStock.label.order"-->
-<!--                  [formControlInput]="orderListForm"-->
-<!--                  [codebookService]="quoteOrdersOnOrganizationCodebook"-->
-<!--                  [readonly]="orderListFormReadOnly"-->
-<!--                  [isInvalidChoice]="orderListError">-->
-<!--            <ng-container *ngIf="orderListError">-->
-<!--              <div i18n="@@productLabelStock.textinput.order.error" class="sc-invalid-feedback">-->
-<!--                Order is required-->
-<!--              </div>-->
-<!--            </ng-container>-->
-<!--          </single-choice>-->
-
           <checkbox-input
                   style="margin-left: 1rem; margin-top: 0.4rem"
                   [form]="orderListCheckbox"
@@ -272,7 +257,6 @@
               Include all orders
             </checkbox-input-rich-label>
           </checkbox-input>
-
         </div>
         <div>
           <button [disabled]="!showSeasonalButtonShowEnable"

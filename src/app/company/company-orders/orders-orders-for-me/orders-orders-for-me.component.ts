@@ -8,6 +8,7 @@ import { setNavigationParameter } from '../../../../shared/utils';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CodebookTranslations } from '../../../shared-services/codebook-translations';
 import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-orders-all-orders',
@@ -30,14 +31,15 @@ export class OrdersOrdersForMeComponent extends OrdersTabComponent implements On
     protected router: Router,
     protected route: ActivatedRoute,
     protected facilityController: FacilityControllerService,
-    private codebookTranslations: CodebookTranslations
+    private codebookTranslations: CodebookTranslations,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, facilityController);
+    super(router, route, facilityController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
-    super.ngOnInit();
+    await super.ngOnInit();
 
     this.facilityChangedSubs = this.selectedFacilityId$.subscribe(facilityId => {
       if (facilityId !== null && facilityId !== undefined) {

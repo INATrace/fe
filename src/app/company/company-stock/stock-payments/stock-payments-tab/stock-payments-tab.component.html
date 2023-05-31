@@ -2,16 +2,15 @@
 
     <app-company-left-panel></app-company-left-panel>
 
-    <div class="main" *ngIf="this.isAuthRoleToSeePayments">
+    <div class="main" *ngIf="companyId != null && isAuthRoleToSeePayments">
 
         <div class="main-inside-top content-element">
 
             <!-- PAYMENTS -->
-
             <div class="d-flex justify-content-between content-element--row1">
                 <div class="title-page content-element--title"
                      i18n="@@productLabelStock.title.payments">Payments</div>
-                <button *ngIf="this.isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
+                <button *ngIf="isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
                         (click)="newPayment()"
                         i18n="@@productLabelStock.button.newPayment">
                     <span>+ Add payment</span>
@@ -101,19 +100,18 @@
             </div>
 
             <app-stock-payments-list
-                    [reloadPingList$]="reloadPaymentPingList$"
-                    [companyId]="companyId"
-                    [wayOfPaymentPing$]="wayOfPaymentPing$"
-                    [deliveryDatesPing$]="deliveryDatesPing$"
-                    [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
-                    [currency]="currency"
-                    [selectedPayments]="selectedPayments"
-                    (selectedPaymentsChanged)="selectedIdsChanged($event)"
-                    (showing)="onShowPayments($event)"
-                    (countAll)="onCountAllPayments($event)"
-                    [readOnly]="!isAuthRoleToEditPayments">
+                [reloadPingList$]="reloadPaymentPingList$"
+                [companyId]="companyId"
+                [wayOfPaymentPing$]="wayOfPaymentPing$"
+                [deliveryDatesPing$]="deliveryDatesPing$"
+                [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
+                [currency]="currency"
+                [selectedPayments]="selectedPayments"
+                (selectedPaymentsChanged)="selectedIdsChanged($event)"
+                (showing)="onShowPayments($event)"
+                (countAll)="onCountAllPayments($event)"
+                [readOnly]="!isAuthRoleToEditPayments">
             </app-stock-payments-list>
-
 
             <!-- BULK PAYMENTS -->
 
@@ -140,16 +138,16 @@
             </div>
 
             <app-stock-payments-bulk-list
-                    [companyId]="companyId"
-                    (showing)="onShowBulkPayments($event)"
-                    (countAll)="onCountAllBulkPayments($event)"
-                    [readOnly]="!isAuthRoleToEditPayments">
+                [companyId]="companyId"
+                (showing)="onShowBulkPayments($event)"
+                (countAll)="onCountAllBulkPayments($event)"
+                [readOnly]="!isAuthRoleToEditPayments">
             </app-stock-payments-bulk-list>
 
         </div>
     </div>
 
-    <div class="main" *ngIf="!this.isAuthRoleToSeeProcessing">
+    <div class="main" *ngIf="!isAuthRoleToSeeProcessing">
         <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
     </div>
 

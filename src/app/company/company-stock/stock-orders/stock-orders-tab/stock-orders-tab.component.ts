@@ -12,6 +12,7 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import {map, startWith, take} from 'rxjs/operators';
 import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
 import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-stock-orders-tab',
@@ -59,13 +60,15 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
     private codebookTranslations: CodebookTranslations,
-    private beycoTokenService: BeycoTokenService
+    private beycoTokenService: BeycoTokenService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+
+    await super.ngOnInit();
 
     this.isAuthorizedForBeyco();
     this.subscriptions.push(
@@ -140,14 +143,10 @@ export class StockOrdersTabComponent extends StockCoreTabComponent implements On
   }
 
   private isAuthorizedForBeyco() {
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.companyController.getCompanyUsingGET(companyId).subscribe(
-        (company) => {
-          if (company.status === ApiResponseApiCompanyGet.StatusEnum.OK) {
-            this.isAuthRoleToExportToBeyco = !!company.data.allowBeycoIntegration;
-          }
-        }
-    );
+
+    if (this.companyProfile) {
+      this.isAuthRoleToExportToBeyco = !!this.companyProfile.allowBeycoIntegration;
+    }
   }
 
 }

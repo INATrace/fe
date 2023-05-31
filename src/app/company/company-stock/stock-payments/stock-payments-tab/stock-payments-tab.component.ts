@@ -14,7 +14,7 @@ import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
-import { ApiResponseApiCompanyGet } from '../../../../../api/model/apiResponseApiCompanyGet';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-stock-payments-tab',
@@ -49,24 +49,19 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       private paymentControllerService: PaymentControllerService,
       private companyService: CompanyControllerService,
       private commonCsvControllerService: CommonCsvControllerService,
-      private fileSaverService: FileSaverService
+      private fileSaverService: FileSaverService,
+      protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
 
-    // additional call for reading company's currency
-    this.companyService.getCompanyUsingGET(this.companyId).pipe(
-      take(1)
-    )
-      .subscribe(response => {
-        if (response && response.status === ApiResponseApiCompanyGet.StatusEnum.OK && response.data) {
-          this.currency = response.data.currency.code;
-        }
-      });
+    await super.ngOnInit();
 
+    if (this.companyProfile) {
+      this.currency = this.companyProfile.currency.code;
+    }
   }
 
   async newPayment() {

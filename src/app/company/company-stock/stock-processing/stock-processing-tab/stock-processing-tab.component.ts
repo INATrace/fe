@@ -6,6 +6,7 @@ import { FacilityControllerService } from '../../../../../api/api/facilityContro
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-stock-processing-tab',
@@ -27,13 +28,14 @@ export class StockProcessingTabComponent extends StockCoreTabComponent implement
     protected globalEventManager: GlobalEventManagerService,
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
-    protected companyController: CompanyControllerService
+    protected companyController: CompanyControllerService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, globalEventManager, facilityControllerService, authService, companyController);
+    super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
   }
 
   newProcessingOrder() {

@@ -68,12 +68,13 @@
       </div>
 
       <app-quote-order-list
-              (countAll)="onCount($event)"
-              [facilityId$]="selectedFacilityId$"
-              (showing)="onShow($event)"
-              [semiProductId$]="semiProductId$"
-              [companyId]="companyId"
-              [openOnly$]="openOnly$">
+          *ngIf="companyId != null"
+          (countAll)="onCount($event)"
+          [facilityId$]="selectedFacilityId$"
+          (showing)="onShow($event)"
+          [semiProductId$]="semiProductId$"
+          [companyId]="companyId"
+          [openOnly$]="openOnly$">
       </app-quote-order-list>
 
     </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrdersTabComponent } from '../orders-tab/orders-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-orders-dashboard',
@@ -15,13 +16,14 @@ export class OrdersDashboardComponent extends OrdersTabComponent implements OnIn
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
-    protected facilityController: FacilityControllerService
+    protected facilityController: FacilityControllerService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(router, route, facilityController);
+    super(router, route, facilityController, selUserCompanyService);
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+    super.ngOnInit().then();
   }
 
 }

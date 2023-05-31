@@ -2,7 +2,7 @@
 
   <app-company-left-panel></app-company-left-panel>
 
-  <div class="main" *ngIf="this.isAuthRoleToSeeMyStock">
+  <div class="main" *ngIf="companyId != null && isAuthRoleToSeeMyStock">
     <div class="main-inside-top content-element">
 
       <div class="d-flex justify-content-between content-element--row1">
@@ -39,12 +39,12 @@
         </div>
 
         <div class="af-form-block--c6">
-          <div *ngIf="!this.selectedFacilityId" style="max-width: 260px; font-size: 14px; color: #8788AA; line-height: 20px;" i18n="@@productLabelStock.facility.select.desc">Please select one facility to see the list of all stock orders.</div>
+          <div *ngIf="!selectedFacilityId" style="max-width: 260px; font-size: 14px; color: #8788AA; line-height: 20px;" i18n="@@productLabelStock.facility.select.desc">Please select one facility to see the list of all stock orders.</div>
         </div>
       </div>
 
       <!-- FILTERS -->
-      <div class="d-flex justify-content-between main-inside-top--row2" *ngIf="this.selectedFacilityId">
+      <div class="d-flex justify-content-between main-inside-top--row2" *ngIf="selectedFacilityId">
         <div class="d-flex align-items-center">
           <div>
             <div *ngIf="!showGroupView" class="sub-title-page content-element--subtitle" i18n="@@productLabelStock.subTitle.listOfOrders">List of orders</div>
@@ -125,7 +125,7 @@
 
       <!-- LIST OF STOCK ORDERS -->
       <app-stock-order-list
-              *ngIf="this.selectedFacilityId && !showGroupView"
+              *ngIf="selectedFacilityId && !showGroupView"
               mode="GENERAL"
               [reloadPingList$]="reloadStockOrdersPing$"
               (countAll)="onCountAllSO($event)"
@@ -143,7 +143,7 @@
       </app-stock-order-list>
 
       <app-group-stock-order-list
-              *ngIf="this.selectedFacilityId && showGroupView"
+              *ngIf="selectedFacilityId && showGroupView"
               [reloadPingList$]="reloadStockOrdersPing$"
               (countAll)="onCountAllSO($event)"
               [facilityId$]="facilityIdPing$"
@@ -152,8 +152,8 @@
               [availableOnly$]="availableOnly$"
               (selectedIdsChanged)="selectedIdsChanged($event, 'GROUP')"
               [selectedOrders]="selectedGroupOrders"
-              [semiProductId$]="semiProductId$"
-      ></app-group-stock-order-list>
+              [semiProductId$]="semiProductId$">
+      </app-group-stock-order-list>
 
     </div>
   </div>

@@ -2,7 +2,7 @@
 
   <app-company-left-panel></app-company-left-panel>
 
-  <div class="main" *ngIf="this.isAuthRoleToSeeProcessing">
+  <div class="main" *ngIf="companyId != null && isAuthRoleToSeeProcessing">
 
     <div class="main-inside-top content-element">
       <div class="d-flex justify-content-between content-element--row1">
@@ -32,16 +32,16 @@
       </div>
 
       <app-stock-processing-facility-list
-              [reloadPingList$]="reloadProcessingFacilitiesListPing$"
-              (countAll)="onCountAll($event)"
-              [companyId]="companyId"
-              (showing)="onShow($event)">
+          [reloadPingList$]="reloadProcessingFacilitiesListPing$"
+          (countAll)="onCountAll($event)"
+          [companyId]="companyId"
+          (showing)="onShow($event)">
       </app-stock-processing-facility-list>
     </div>
 
   </div>
 
-  <div class="main" *ngIf="!this.isAuthRoleToSeeProcessing">
+  <div class="main" *ngIf="!isAuthRoleToSeeProcessing">
     <div i18n="@@productLabelStock.tab.notAuth" style="padding-top: 4rem;">Not authorised to see the content.</div>
   </div>
 

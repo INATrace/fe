@@ -74,13 +74,14 @@
       </div>
 
       <app-quote-order-list
-              mode="CUSTOMER"
-              (countAll)="onCount($event)"
-              [facilityId$]="selectedFacilityId$"
-              (showing)="onShow($event)"
-              [companyId]="companyId"
-              [companyCustomerId$]="companyCustomerId$"
-              [openOnly$]="openOnly$">
+          *ngIf="companyId != null"
+          mode="CUSTOMER"
+          (countAll)="onCount($event)"
+          [facilityId$]="selectedFacilityId$"
+          (showing)="onShow($event)"
+          [companyId]="companyId"
+          [companyCustomerId$]="companyCustomerId$"
+          [openOnly$]="openOnly$">
       </app-quote-order-list>
 
     </div>

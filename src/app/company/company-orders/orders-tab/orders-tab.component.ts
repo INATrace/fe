@@ -9,6 +9,8 @@ import { ApiFacility } from '../../../../api/model/apiFacility';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
 import { CompanyFacilitiesService } from '../../../shared-services/company-facilities.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   template: ''
@@ -54,16 +56,21 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
-    protected facilityController: FacilityControllerService
+    protected facilityController: FacilityControllerService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   get tabCommunicationService(): TabCommunicationService {
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
   }
 
-  ngOnInit(): void {
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
+  async ngOnInit(): Promise<void> {
+
+    const cp = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
+    if (cp) {
+      this.companyId = cp.id;
+      this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
+    }
   }
 
   ngAfterViewInit() {
