@@ -9,6 +9,7 @@ import { GlobalEventManagerService } from 'src/app/core/global-event-manager.ser
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ApiUserGet } from '../../../api/model/apiUserGet';
+import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-user-box',
@@ -46,7 +47,8 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     private aboutAppInfoService: AboutAppInfoService,
     private globalEventManager: GlobalEventManagerService,
     private companyControllerService: CompanyControllerService,
-    private productController: ProductControllerService
+    private productController: ProductControllerService,
+    private selUserCompany: SelectedUserCompanyService
   ) { }
 
   unsubscribeList = new UnsubscribeList();
@@ -67,6 +69,7 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     this.showSettingsTabs = this.router.url.startsWith('/settings/');
     this.showCompaniesTabs = this.router.url.startsWith('/companies/');
 
+    // TODO: refactor this part - get the company from the selected company store
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
 
     this.unsubscribeList.add(

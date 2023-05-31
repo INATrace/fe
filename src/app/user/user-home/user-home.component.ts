@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
-import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
-import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { SelectedUserCompanyModalComponent } from '../selected-user-company-modal/selected-user-company-modal.component';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ProductControllerService } from '../../../api/api/productController.service';
@@ -19,18 +16,7 @@ import StatusEnum = ApiPaginatedResponseApiProductListResponse.StatusEnum;
 })
 export class UserHomeComponent implements OnInit, OnDestroy {
 
-  constructor(
-    private authService: AuthService,
-    public router: Router,
-    private modalService: NgbModalImproved,
-    private globalEventManager: GlobalEventManagerService,
-    private companyControllerService: CompanyControllerService,
-    private productControllerService: ProductControllerService
-  ) { }
-
   sub: Subscription;
-
-  codebookMyCompanies;
 
   private paging$ = new BehaviorSubject(1);
   page = 0;
@@ -58,75 +44,22 @@ export class UserHomeComponent implements OnInit, OnDestroy {
     tap(() => this.globalEventManager.showLoading(false))
   );
 
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private globalEventManager: GlobalEventManagerService,
+    private companyControllerService: CompanyControllerService,
+    private productControllerService: ProductControllerService
+  ) { }
+
   ngOnInit(): void {
 
-    this.sub = this.authService.userProfile$.subscribe(user => {
-      this.setSelectedUserCompany(user).then();
-    });
+    // TODO: subscribe to selected user company
   }
 
   ngOnDestroy(): void {
     if (this.sub) {
       this.sub.unsubscribe();
-    }
-  }
-
-  private async setSelectedUserCompany(user) {
-
-    if (!user) {
-      return;
-    }
-
-    // If there is already selected company, check that the user has access to it (if not, remove it from local storage)
-    let currentlySelectedCompany = localStorage.getItem('selectedUserCompany');
-    if (user.companyIds == null || user.companyIds.length === 0 || !user.companyIds.includes(Number(currentlySelectedCompany))) {
-      localStorage.removeItem('selectedUserCompany');
-      currentlySelectedCompany = null;
-    }
-
-    // If there is no current company selected, selected one or present modal dialog with list of available companies
-    if (currentlySelectedCompany == null) {
-      if (user.companyIds && user.companyIds.length === 1) {
-        const res = await this.companyControllerService.getCompanyUsingGET(user.companyIds[0]).pipe(take(1)).toPromise();
-        if (res && res.status === 'OK' && res.data) {
-          localStorage.setItem('selectedUserCompany', String(res.data.id));
-          this.globalEventManager.selectedUserCompany(res.data.name);
-        }
-        return;
-      }
-
-      this.listMyCompanies(user.companyIds ?? []).then();
-    }
-  }
-
-  private async listMyCompanies(ids) {
-
-    const objCompanies = {};
-    for (const id of ids) {
-      const res = await this.companyControllerService.getCompanyUsingGET(id).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        objCompanies[res.data.id] = res.data.name;
-      }
-    }
-
-    this.codebookMyCompanies = EnumSifrant.fromObject(objCompanies);
-
-    if (this.modalService.hasOpenModals()) {
-      return;
-    }
-
-    const modalRef = this.modalService.open(SelectedUserCompanyModalComponent, {
-      centered: true,
-      backdrop: 'static',
-      keyboard: false });
-    Object.assign(modalRef.componentInstance, {
-      codebookMyCompanies: this.codebookMyCompanies
-    });
-
-    const company = await modalRef.result;
-    if (company) {
-      localStorage.setItem('selectedUserCompany', company);
-      this.globalEventManager.selectedUserCompany(objCompanies[company]);
     }
   }
 
