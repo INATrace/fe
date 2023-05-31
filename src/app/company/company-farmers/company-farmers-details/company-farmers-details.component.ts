@@ -33,6 +33,7 @@ import { ApiProductType } from '../../../../api/model/apiProductType';
 import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
 import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInformation';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -56,7 +57,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   appName = environment.appName;
 
   openBalanceOnly = false;
-  sortPay = null;
   purchaseOrders = [];
   payments = [];
 
@@ -174,6 +174,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
+      private selUserCompanyService: SelectedUserCompanyService,
       public theme: ThemeService
   ) { }
 
@@ -230,14 +231,14 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   async initData() {
+
     const action = this.route.snapshot.data.action;
     if (!action) { return; }
-    this.companyId = localStorage.getItem('selectedUserCompany');
 
-    const c = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-    if (c && c.status === 'OK') {
-      this.company = c.data;
-    }
+    this.company = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
+    if (!this.company) { return; }
+
+    this.companyId = this.company.id;
 
     switch (action) {
       case 'new':
@@ -529,17 +530,15 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   async listOfOrgProducer() {
-    const company = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
 
-    if (company && company.status === 'OK' && company.data) {
-      const companiesObj = {};
-      companiesObj[company.data.id] = company.data.name;
-      this.codebookCoop = EnumSifrant.fromObject(companiesObj);
-      this.assocCoop = companiesObj;
-    }
+    const companiesObj = {};
+    companiesObj[this.company.id] = this.company.name;
+    this.codebookCoop = EnumSifrant.fromObject(companiesObj);
+    this.assocCoop = companiesObj;
   }
 
   async listOfOrgAssociation() {
+
     const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {

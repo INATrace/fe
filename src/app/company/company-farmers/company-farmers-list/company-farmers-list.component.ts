@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../core/auth.service';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -121,7 +122,8 @@ export class CompanyFarmersListComponent implements OnInit {
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
       private router: Router,
-      private authService: AuthService
+      private authService: AuthService,
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   get isSystemOrRegionalAdmin(): boolean {
@@ -130,11 +132,20 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.organizationId = localStorage.getItem('selectedUserCompany');
-    this.loadFarmers().then();
+
+    this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
+      if (cp) {
+        this.organizationId = cp.id;
+        this.showHonduras = cp.headquarters &&
+          cp.headquarters.country &&
+          cp.headquarters.country.code &&
+          cp.headquarters.country.code === 'HN';
+        this.loadFarmers().then();
+      }
+    });
   }
 
-  async loadFarmers() {
+  private async loadFarmers() {
     this.farmer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
@@ -162,11 +173,6 @@ export class CompanyFarmersListComponent implements OnInit {
             tap(() => this.globalEventsManager.showLoading(false)),
             shareReplay(1)
         );
-
-    this.companyController.getCompanyUsingGET(this.organizationId).pipe(take(1)).subscribe(value => {
-      this.showHonduras = value && value.data && value.data.headquarters && value.data.headquarters.country &&
-          value.data.headquarters.country.code && value.data.headquarters.country.code === 'HN';
-    });
   }
 
   addFarmer() {

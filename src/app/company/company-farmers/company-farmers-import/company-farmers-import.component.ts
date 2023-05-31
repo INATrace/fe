@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Location} from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
-import { finalize, take, tap } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { faFileExcel} from '@fortawesome/free-solid-svg-icons';
 import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { LanguageCodeHelper } from '../../../language-code-helper';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-farmers-import',
@@ -16,7 +17,7 @@ import { LanguageCodeHelper } from '../../../language-code-helper';
 })
 export class CompanyFarmersImportComponent implements OnInit {
 
-  companyId: number;
+  private companyId: number;
   fileForm = new FormControl();
 
   mimeError = $localize`:@@companyDetail.farmers.uploadSpreadsheet.error:Upload only file types XLS or XLSX.`;
@@ -33,7 +34,8 @@ export class CompanyFarmersImportComponent implements OnInit {
       private companyControllerService: CompanyControllerService,
       private toastService: ToastrService,
       private location: Location,
-      private globalEventsManager: GlobalEventManagerService
+      private globalEventsManager: GlobalEventManagerService,
+      private selUserCompanyService: SelectedUserCompanyService
   ) {
 
     if (LanguageCodeHelper.getCurrentLocale() === 'es') {
@@ -44,7 +46,11 @@ export class CompanyFarmersImportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
+      if (cp) {
+        this.companyId = cp.id;
+      }
+    });
   }
 
   import() {

@@ -15,7 +15,7 @@
                     <h6 i18n="@@companyDetail.farmers.import.data">Upload data</h6>
                     <attachment-uploader
                             allowedMimeType="[application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]"
-                            allowedMimeTypeErrorMessage={{mimeError}}
+                            [allowedMimeTypeErrorMessage]="mimeError"
                             mode="simpleAsTextField"
                             label="Spreadsheet of farmers"
                             i18n-label="@@companyDetail.farmers.spreadsheet.label"

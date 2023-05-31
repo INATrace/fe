@@ -4,7 +4,6 @@ import { CompanyCustomersService } from '../../../../shared-services/company-cus
 import { CompanyFacilitiesService } from '../../../../shared-services/company-facilities.service';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
-import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { finalize, take, tap } from 'rxjs/operators';
 import { dateISOString, defaultEmptyObject, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { ActivatedRoute } from '@angular/router';
@@ -20,6 +19,7 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import _ from 'lodash-es';
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import { ProductOrderControllerService } from '../../../../../api/api/productOrderController.service';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-global-order-details',
@@ -50,10 +50,9 @@ export class GlobalOrderDetailsComponent implements OnInit {
     private globalEventsManager: GlobalEventManagerService,
     private companyCustomerController: CompanyControllerService,
     private facilityController: FacilityControllerService,
-    private companyController: CompanyControllerService,
-    private codebookTranslations: CodebookTranslations,
     private productOrderController: ProductOrderControllerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   static StockOrderItemCreateEmptyObject(): ApiStockOrder {
@@ -79,8 +78,13 @@ export class GlobalOrderDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.reloadProductOrder();
+
+    this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
+      if (cp) {
+        this.companyId = cp.id;
+        this.reloadProductOrder();
+      }
+    });
   }
 
   private async getCreatorId() {

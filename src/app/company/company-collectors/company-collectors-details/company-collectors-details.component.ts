@@ -29,6 +29,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ApiCertification } from '../../../../api/model/apiCertification';
 import { ApiCertificationValidationScheme } from '../../../m-product/product-label/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-collectors-details',
@@ -72,15 +73,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   codebookCoop;
   assocCoop;
   assocForm = new FormControl(null);
-
-  public areaTranslations = {
-    totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
-    totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
-    coffeeCultivatedLabel: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.label:Area cultivated with coffee`,
-    coffeeCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.coffeeCultivatedArea.placeholder:Enter area cultivated with coffee`,
-    organicCertifiedLabel: $localize`:@@collectorDetail.textinput.areaOrganicCertified.label:Organic certified area`,
-    organicCertifiedPlaceholder: $localize`:@@collectorDetail.textinput.areaOrganicCertified.placeholder:Enter organic certified area`,
-  };
 
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
@@ -156,6 +148,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
+      private selUserCompanyService: SelectedUserCompanyService,
       public theme: ThemeService
   ) { }
 
@@ -206,14 +199,14 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   }
 
   async initData() {
+
     const action = this.route.snapshot.data.action;
     if (!action) { return; }
-    this.companyId = localStorage.getItem('selectedUserCompany');
 
-    const c = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
-    if (c && c.status === 'OK') {
-      this.company = c.data;
-    }
+    this.company = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
+    if (!this.company) { return; }
+
+    this.companyId = this.company.id;
 
     switch (action) {
       case 'new':
@@ -326,18 +319,16 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   }
 
   async listOfOrgProducer() {
-    const company = await this.companyService.getCompanyUsingGET(this.companyId).pipe(take(1)).toPromise();
 
-    if (company && company.status === 'OK' && company.data) {
-      const companiesObj = {};
-      companiesObj[company.data.id] = company.data.name;
-      this.codebookCoop = EnumSifrant.fromObject(companiesObj);
-      this.assocCoop = companiesObj;
-    }
+    const companiesObj = {};
+    companiesObj[this.company.id] = this.company.name;
+    this.codebookCoop = EnumSifrant.fromObject(companiesObj);
+    this.assocCoop = companiesObj;
   }
 
   async listOfOrgAssociation() {
-    const res = await this.companyService.listCompaniesUsingGET().pipe(take(1)).toPromise();
+
+    const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
       const companiesObj = {};
@@ -384,20 +375,9 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     }
     this.sortPO = event.sortOrder;
   }
-
-  setOpenBalanceOnly(action) {
-    this.openBalanceOnly = action;
-  }
   
   public get areaUnit(): FormControl {
     return this.collectorForm.get('farm.areaUnit') as FormControl;
-  }
-  
-  appendAreaUnit(message: string, unit: string): string {
-    if (unit && unit.length > 0) {
-      return message + ` (${unit})`;
-    }
-    return message;
   }
 
   selectedIdsChanged(event, type?) {

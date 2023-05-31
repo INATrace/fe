@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
+import { SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { CompanyControllerService, GetCompanyCustomersListUsingGET } from '../../../../api/api/companyController.service';
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-customers-list',
@@ -62,16 +63,21 @@ export class CompanyCustomersListComponent implements OnInit {
   constructor(
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
-      private router: Router
+      private router: Router,
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   ngOnInit(): void {
-    this.organizationId = localStorage.getItem('selectedUserCompany');
 
-    this.loadCustomers();
+    this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
+      if (cp) {
+        this.organizationId = cp.id;
+        this.loadCustomers().then();
+      }
+    });
   }
 
-  async loadCustomers() {
+  private async loadCustomers() {
     this.customer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
@@ -100,11 +106,11 @@ export class CompanyCustomersListComponent implements OnInit {
   }
 
   addCustomer() {
-    this.router.navigate(['my-customers', 'add']);
+    this.router.navigate(['my-customers', 'add']).then();
   }
 
   editCustomer(id) {
-    this.router.navigate(['my-customers', 'edit', id]);
+    this.router.navigate(['my-customers', 'edit', id]).then();
   }
 
   async deleteCustomer(id) {
@@ -139,17 +145,6 @@ export class CompanyCustomersListComponent implements OnInit {
     }
     event.key = newKey;
     this.sorting$.next(event);
-  }
-
-  showLocation(key, location) {
-    if (location && location.address) {
-      switch (key) {
-        case 'cell':
-          return location.address.cell ? location.address.cell : '-';
-        case 'village':
-          return location.address.village ? location.address.village : '-';
-      }
-    }
   }
 
   showPagination() {

@@ -6,6 +6,7 @@ import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } f
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-collectors-list',
@@ -14,7 +15,7 @@ import { FormControl } from '@angular/forms';
 })
 export class CompanyCollectorsListComponent implements OnInit{
 
-  organizationId;
+  private organizationId;
   page = 1;
   pageSize = 10;
 
@@ -119,17 +120,26 @@ export class CompanyCollectorsListComponent implements OnInit{
   constructor(
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
-      private router: Router
+      private router: Router,
+      private selUserCompanyService: SelectedUserCompanyService
   ) {
   }
 
   ngOnInit() {
-    this.organizationId = localStorage.getItem('selectedUserCompany');
 
-    this.loadCollectors();
+    this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
+      if (cp) {
+        this.organizationId = cp.id;
+        this.showHonduras = cp.headquarters &&
+          cp.headquarters.country &&
+          cp.headquarters.country.code &&
+          cp.headquarters.country.code === 'HN';
+        this.loadCollectors().then();
+      }
+    });
   }
 
-  async loadCollectors() {
+  private async loadCollectors() {
     this.collector$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
@@ -157,19 +167,14 @@ export class CompanyCollectorsListComponent implements OnInit{
             tap(() => this.globalEventsManager.showLoading(false)),
             shareReplay(1)
         );
-
-    this.companyController.getCompanyUsingGET(this.organizationId).pipe(take(1)).subscribe(value => {
-      this.showHonduras = value && value.data && value.data.headquarters && value.data.headquarters.country &&
-                          value.data.headquarters.country.code && value.data.headquarters.country.code === 'HN';
-    });
   }
 
   addCollector() {
-    this.router.navigate(['my-collectors', 'add']);
+    this.router.navigate(['my-collectors', 'add']).then();
   }
 
   editCollector(id) {
-    this.router.navigate(['my-collectors', 'edit', id]);
+    this.router.navigate(['my-collectors', 'edit', id]).then();
   }
 
   async deleteCollector(id) {

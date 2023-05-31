@@ -13,6 +13,7 @@ import { CompanyControllerService } from '../../../../api/api/companyController.
 import { ApiCompanyCustomer } from '../../../../api/model/apiCompanyCustomer';
 import { ApiCompanyCustomerValidationScheme } from './validation';
 import { ApiGeoAddress } from '../../../../api/model/apiGeoAddress';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-customers-details',
@@ -27,7 +28,7 @@ export class CompanyCustomersDetailsComponent implements OnInit {
   update = true;
 
   organization: ApiCompany;
-  organizationId: string;
+  companyId: number;
   productId;
 
   customer: ApiCompanyCustomer;
@@ -43,24 +44,27 @@ export class CompanyCustomersDetailsComponent implements OnInit {
       private route: ActivatedRoute,
       private authService: AuthService,
       private location: Location,
-      private companyService: CompanyControllerService
+      private companyService: CompanyControllerService,
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   ngOnInit(): void {
-    this.initialize().then(response => {
+    this.initialize().then(() => {
       if (this.update) {
         this.editCustomer();
       } else {
         this.newCustomer();
       }
-
     });
   }
 
   async initialize() {
+
     const action = this.route.snapshot.data.action;
     if (!action) { return; }
-    this.organizationId = localStorage.getItem('selectedUserCompany');
+
+    this.companyId = (await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise())?.id;
+
     this.customerId = this.route.snapshot.params.id;
     if (action === 'new') {
       this.title = $localize`:@@customerDetail.newCustomer.title:New customer`;
@@ -94,7 +98,7 @@ export class CompanyCustomersDetailsComponent implements OnInit {
 
   prepareData() {
     const data: ApiCompanyCustomer = _.cloneDeep(this.customerForm.value);
-    data.companyId = Number.parseInt(this.organizationId, 10);
+    data.companyId = this.companyId;
     return data;
   }
 

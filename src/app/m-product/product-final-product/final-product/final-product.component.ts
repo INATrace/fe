@@ -5,6 +5,7 @@ import { FinalProductDetailModalComponent } from '../final-product-detail-modal/
 import { ProductControllerService } from '../../../../api/api/productController.service';
 import { take } from 'rxjs/operators';
 import { ApiProductCompany } from '../../../../api/model/apiProductCompany';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-final-product',
@@ -26,12 +27,14 @@ export class FinalProductComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private modalService: NgbModalImproved,
-      private productController: ProductControllerService
+      private productController: ProductControllerService,
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
     this.productId = this.route.snapshot.params.id;
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
+    this.companyId = (await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise())?.id;
 
     this.productController.getProductUsingGET(this.productId).pipe(take(1)).subscribe(product => {
       if (product && product.data) {
