@@ -11,7 +11,6 @@ import {ActiveValueChainService} from '../../../shared-services/active-value-cha
 })
 export class CompanyAndValueChainSelectModalComponent implements OnInit {
 
-
   @Input()
   dismissable = true;
 

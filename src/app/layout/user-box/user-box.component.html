@@ -1,12 +1,12 @@
-<div class="user-box" *ngIf="userProfile" ngbDropdown placement="bottom" display="dynamic" container="body">
+<div class="user-box" *ngIf="userDisplayName" ngbDropdown placement="bottom" display="dynamic" container="body">
 
   <div class="d-flex af-user" ngbDropdownToggle>
 
     <div class="d-flex whole-name" [class.landing-page]="landingPageView">
-      <div class="user-box-name af-user--displayname" [class.landing-page]="landingPageView">{{displayName}}</div>
+      <div class="user-box-name af-user--displayname" [class.landing-page]="landingPageView">{{ userDisplayName }}</div>
       <div class="d-flex af-user--displaycompany">
         <div class="user-box-name" [class.landing-page]="landingPageView">&nbsp;(</div>
-        <div class="user-box-company" [class.landing-page]="landingPageView">{{displayCompany}}</div>
+        <div class="user-box-company" [class.landing-page]="landingPageView">{{ companyDisplayName ? companyDisplayName : '/' }}</div>
         <div class="user-box-name" [class.landing-page]="landingPageView">)</div>
       </div>
     </div>

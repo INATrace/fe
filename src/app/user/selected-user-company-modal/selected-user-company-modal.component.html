@@ -2,9 +2,9 @@
   <div class="modal-header">
     <h4 class="modal-title sp-faq-modal-title">{{title}}</h4>
   </div>
-  <ng-container *ngIf="availableUserCompanies$ | async as availableUserCompanies">
+  <ng-container *ngIf="codebookMyCompanies">
     <div class="modal-body">
-      <ng-container *ngIf="availableUserCompanies.length > 0; else userHasNoCompaniesLabel">
+      <ng-container *ngIf="userHasCompanies; else userHasNoCompaniesLabel">
         <div *ngIf="instructionsHtml" [innerHTML]="instructionsHtml"></div>
         <single-choice [label]="null"
                        [formControlInput]="companyForm"
@@ -16,7 +16,7 @@
       </ng-template>
     </div>
     <div class="modal-footer">
-      <button *ngIf="availableUserCompanies.length > 0; else userHasNoCompaniesLogoutButton"
+      <button *ngIf="userHasCompanies; else userHasNoCompaniesLogoutButton"
               type="button"
               class="btn"
               [class.disabled]="!companyForm.value"

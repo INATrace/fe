@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiEnumWithLabelString, EnumSifrant } from '../../shared-services/enum-sifrant';
-import { take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { AuthService } from '../../core/auth.service';
+import { ActiveCompaniesService } from '../../shared-services/active-companies.service';
+import { ApiUserGet } from '../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-selected-user-company-modal',
@@ -14,7 +13,10 @@ import { AuthService } from '../../core/auth.service';
 export class SelectedUserCompanyModalComponent implements OnInit {
 
   @Input()
-  codebookMyCompanies: EnumSifrant;
+  codebookMyCompanies: ActiveCompaniesService;
+
+  @Input()
+  userProfile: ApiUserGet;
 
   title = $localize`:@@selectUserCompany.title:Select company`;
   instructionsHtml = $localize`:@@selectUserCompany.instructionsHtml:Select a company you would like to continue with:`;
@@ -22,11 +24,8 @@ export class SelectedUserCompanyModalComponent implements OnInit {
   @Input()
   onSelectedCompany: (company: any) => {};
 
-  companyForm = new FormControl('');
-
-  availableUserCompanies$: Observable<ApiEnumWithLabelString[]> | undefined = undefined;
-
-  protected readonly length = length;
+  companyForm = new FormControl(null);
+  userHasCompanies = false;
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -34,7 +33,7 @@ export class SelectedUserCompanyModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.availableUserCompanies$ = this.codebookMyCompanies.getAllCandidates().pipe(take(1));
+    this.userHasCompanies = this.userProfile?.companyIds?.length > 0;
   }
 
   cancel() {

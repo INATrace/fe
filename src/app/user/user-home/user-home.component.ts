@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
-import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ProductControllerService } from '../../../api/api/productController.service';
 import { ApiPaginatedResponseApiProductListResponse } from '../../../api/model/apiPaginatedResponseApiProductListResponse';
 import StatusEnum = ApiPaginatedResponseApiProductListResponse.StatusEnum;
+import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-user-home',
@@ -48,13 +48,15 @@ export class UserHomeComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private globalEventManager: GlobalEventManagerService,
-    private companyControllerService: CompanyControllerService,
-    private productControllerService: ProductControllerService
+    private productControllerService: ProductControllerService,
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   ngOnInit(): void {
 
-    // TODO: subscribe to selected user company
+    this.sub = this.selUserCompanyService.selectedCompanyProfile$.subscribe(company => {
+      // TODO: subscribe to selected user company
+    });
   }
 
   ngOnDestroy(): void {

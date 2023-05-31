@@ -131,7 +131,7 @@
 
             <div *ngFor="let c of myCompanies index as i">
               <div class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;">
-                <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.company_name}}</div>
+                <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.name}}</div>
               </div>
             </div>
             <div *ngIf="myCompanies && myCompanies.length == 0" class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;" i18n="@@userDetail.myCompanies.noCompanies">

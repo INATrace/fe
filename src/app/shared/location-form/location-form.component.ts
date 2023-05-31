@@ -53,7 +53,7 @@ export class LocationFormComponent implements OnInit {
       this.form.get('address.sector').setValidators([Validators.required])
     })
 
-    let sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
+    let sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
       loaded => {
         // console.log("EMM:", loaded)
         if (loaded) this.isGoogleMapsLoaded = true;

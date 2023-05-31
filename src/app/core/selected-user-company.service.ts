@@ -4,10 +4,10 @@ import { ReplaySubject } from 'rxjs';
 import { ApiCompanyGet } from '../../api/model/apiCompanyGet';
 import { CompanyControllerService } from '../../api/api/companyController.service';
 import { ApiUserGet } from '../../api/model/apiUserGet';
-import { take } from 'rxjs/operators';
-import { EnumSifrant } from '../shared-services/enum-sifrant';
 import { SelectedUserCompanyModalComponent } from '../user/selected-user-company-modal/selected-user-company-modal.component';
 import { NgbModalImproved } from './ngb-modal-improved/ngb-modal-improved.service';
+import { ActiveCompaniesService } from '../shared-services/active-companies.service';
+import { ApiCompanyListResponse } from '../../api/model/apiCompanyListResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -40,56 +40,68 @@ export class SelectedUserCompanyService {
       // If there is no current company selected, selected one or present modal dialog with list of available companies
       if (currentlySelectedCompany == null) {
         if (user.companyIds && user.companyIds.length === 1) {
-          const res = await this.companyControllerService.getCompanyUsingGET(user.companyIds[0]).toPromise();
-          if (res && res.status === 'OK' && res.data) {
-            localStorage.setItem('selectedUserCompany', String(res.data.id));
-            this.selectedCompanyProfileSubject.next(res.data);
-            // TODO: rethink this
-            // this.globalEventManager.selectedUserCompany(res.data.name);
+          const companyProfile = await this.fetchCompanyProfile(user.companyIds[0]);
+          if (companyProfile) {
+            this.setSelectedCompany(companyProfile);
           }
           return;
         }
 
-        this.listMyCompanies(user.companyIds ?? []).then();
+        this.listMyCompanies(user).then();
+      } else {
+
+        const companyProfile = await this.fetchCompanyProfile(Number(currentlySelectedCompany));
+        if (companyProfile) {
+          this.setSelectedCompany(companyProfile);
+        }
       }
 
     } else {
-      // TODO: handle this case
+      this.clearSelectedCompany();
     }
   }
 
-  private async listMyCompanies(ids): Promise<void> {
+  private async listMyCompanies(userProfile: ApiUserGet): Promise<void> {
 
     if (this.modalService.hasOpenModals()) {
       return;
     }
 
-    const objCompanies = {};
-    for (const id of ids) {
-      const res = await this.companyControllerService.getCompanyUsingGET(id).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        objCompanies[res.data.id] = res.data.name;
-      }
-    }
-
-    // TODO: refactor this to support Company object
-    const codebookMyCompanies = EnumSifrant.fromObject(objCompanies);
+    const codebookMyCompanies = new ActiveCompaniesService(this.companyControllerService);
 
     const modalRef = this.modalService.open(SelectedUserCompanyModalComponent, {
       centered: true,
       backdrop: 'static',
       keyboard: false });
     Object.assign(modalRef.componentInstance, {
-      codebookMyCompanies
+      codebookMyCompanies,
+      userProfile
     });
 
-    const company = await modalRef.result;
+    const company = await modalRef.result as ApiCompanyListResponse;
     if (company) {
-      localStorage.setItem('selectedUserCompany', company);
-      this.selectedCompanyProfileSubject.next(company);
-      // TODO: rethink this
-      // this.globalEventManager.selectedUserCompany(objCompanies[company]);
+      this.setSelectedCompany(await this.fetchCompanyProfile(company.id));
     }
+  }
+
+  private async fetchCompanyProfile(id: number): Promise<ApiCompanyGet | null> {
+
+    const resp = await this.companyControllerService.getCompanyUsingGET(id).toPromise();
+    if (resp && resp.status === 'OK' && resp.data) {
+      return resp.data;
+    }
+
+    return null;
+  }
+
+  private clearSelectedCompany(): void {
+    localStorage.removeItem('selectedUserCompany');
+    this.selectedCompanyProfileSubject.next(null);
+  }
+
+  public setSelectedCompany(companyProfile: ApiCompanyGet): void {
+    localStorage.setItem('selectedUserCompany', String(companyProfile.id));
+    this.selectedCompanyProfileSubject.next(companyProfile);
   }
 
 }

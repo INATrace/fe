@@ -46,7 +46,7 @@ export class AuthService {
     }
   }
 
-  // TODO: remove this method an refactor dependencies
+  // TODO: remove this method and refactor dependencies
   get currentUserProfile() {
     return null;
   }
@@ -78,9 +78,6 @@ export class AuthService {
   }
 
   async logout() {
-
-    localStorage.removeItem('selectedUserCompany');
-    this.globalEventManager.selectedUserCompany(null);
 
     await this.userController.logoutUsingPOST().pipe(take(1)).toPromise();
     this.beycoTokenService.removeToken();

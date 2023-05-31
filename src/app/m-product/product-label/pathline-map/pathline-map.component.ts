@@ -73,7 +73,7 @@ export class PathlineMapComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.globalEventManager.areGoogleMapsLoadedEmmiter.pipe(takeUntil(this.destroy$)).subscribe({
+        this.globalEventManager.loadedGoogleMapsEmitter.pipe(takeUntil(this.destroy$)).subscribe({
             next: loaded => {
                 if (loaded) {
                     this.isGoogleMapsLoaded = true;

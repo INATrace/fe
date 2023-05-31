@@ -49,18 +49,10 @@ export class TokenInterceptor implements HttpInterceptor {
               const message = $localize`:@@tokenInterceptor.403.message:Unauthorized access`;
               const title = $localize`:@@tokenInterceptor.403.title:Error`;
               this.toasterService.error(message, title);
-
             } else if (err.status === 400) {
-              if ((window.location.pathname.includes('/p/') || window.location.pathname.includes('/p-cd/')) && err.url.includes('/api/public/product/label/')) {
-                const uuid = window.location.pathname.split('/').pop();
-                this.globalEventsManager.productLabelIsUnpublished(uuid);
-              } else if (err.url.includes('/chain-api/data/user/external/')) {
-
-              }  else {
-                const message = err.error.errorMessage;
-                const title = $localize`:@@tokenInterceptor.400.title:Communication error!`;
-                this.toasterService.error(message, title);
-              }
+              const message = err.error.errorMessage;
+              const title = $localize`:@@tokenInterceptor.400.title:Communication error!`;
+              this.toasterService.error(message, title);
             } else {
               const message = $localize`:@@tokenInterceptor.other.message:Please reload the page.`;
               const title = $localize`:@@tokenInterceptor.other.title:Communication error!`;

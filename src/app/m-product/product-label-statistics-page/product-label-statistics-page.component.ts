@@ -67,7 +67,7 @@ export class ProductLabelStatisticsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getStatistics();
 
-    let sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
+    let sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
       loaded => {
         if (loaded) this.isGoogleMapsLoaded = true;
       },

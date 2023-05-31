@@ -52,7 +52,7 @@ export class GeoaddressFormComponent implements OnInit, OnDestroy {
       this.form.get('sector').setValidators([Validators.required]);
     });
 
-    const sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
+    const sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
         loaded => {
           if (loaded) { this.isGoogleMapsLoaded = true; }
           this.initializeMarker();

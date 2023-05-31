@@ -2,12 +2,11 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { faBars} from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UnsubscribeList } from 'src/shared/rxutils';
-import { take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { AboutAppInfoService } from 'src/app/about-app-info.service';
 import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { ProductControllerService } from 'src/api/api/productController.service';
-import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ApiUserGet } from '../../../api/model/apiUserGet';
 import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
@@ -18,16 +17,16 @@ import { SelectedUserCompanyService } from '../../core/selected-user-company.ser
 })
 export class UserBoxComponent implements OnInit, OnDestroy {
 
-  userProfile: ApiUserGet = null;
-  displayName = '';
-  displayCompany = '';
+  userDisplayName: string | null = null;
+  companyDisplayName: string | null = null;
+
+  private companyId: string | null = null;
   productId = this.route.snapshot.params.id;
 
   faBars = faBars;
 
   isAdmin = false;
   isCompanyAdmin = false;
-  companyId: number;
 
   showProductNav = false;
   showSystemNav = false;
@@ -46,9 +45,8 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     private router: Router,
     private aboutAppInfoService: AboutAppInfoService,
     private globalEventManager: GlobalEventManagerService,
-    private companyControllerService: CompanyControllerService,
     private productController: ProductControllerService,
-    private selUserCompany: SelectedUserCompanyService
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   unsubscribeList = new UnsubscribeList();
@@ -69,28 +67,28 @@ export class UserBoxComponent implements OnInit, OnDestroy {
     this.showSettingsTabs = this.router.url.startsWith('/settings/');
     this.showCompaniesTabs = this.router.url.startsWith('/companies/');
 
-    // TODO: refactor this part - get the company from the selected company store
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-
+    let user: ApiUserGet | null = null;
     this.unsubscribeList.add(
-      this.authService.userProfile$.subscribe(val => {
-        this.userProfile = val;
-        if (this.userProfile) {
-          this.isAdmin = 'SYSTEM_ADMIN' === this.userProfile.role;
-          this.isCompanyAdmin = this.userProfile.companyIdsAdmin.includes(this.companyId);
-          this.displayName = this.userProfile.name;
-          // this.setDisplayCompany().then();
-          this.unsubscribeList.add(
-            this.globalEventManager.selectedUserCompanyEmitter.subscribe(
-              company => {
-                if (company) { this.displayCompany = company; }
-                else { this.displayCompany = ''; }
-              },
-              () => { }
-            )
-          );
-        }
-      })
+      this.authService.userProfile$
+        .pipe(
+          switchMap(userProfile => {
+            user = userProfile;
+            return this.selUserCompanyService.selectedCompanyProfile$;
+          })
+        )
+        .subscribe(companyProfile => {
+
+          if (user) {
+            this.isAdmin = 'SYSTEM_ADMIN' === user.role;
+            this.userDisplayName = user.name;
+
+            if (companyProfile) {
+              this.isCompanyAdmin = user.companyIdsAdmin.includes(companyProfile.id);
+              this.companyId = String(companyProfile.id);
+              this.companyDisplayName = companyProfile.name;
+            }
+          }
+        })
     );
   }
 
@@ -107,22 +105,12 @@ export class UserBoxComponent implements OnInit, OnDestroy {
    }
 
   companyProfile() {
-    const id = localStorage.getItem('selectedUserCompany');
-    if (!id) { return; }
-    this.router.navigate(['companies', id, 'company']).then();
+    if (!this.companyId) { return; }
+    this.router.navigate(['companies', this.companyId, 'company']).then();
   }
 
   aboutApp() {
     this.aboutAppInfoService.openAboutApp();
-  }
-
-  private async setDisplayCompany() {
-    const id = localStorage.getItem('selectedUserCompany');
-    if (!id) { return; }
-    const res = await this.companyControllerService.getCompanyUsingGET(Number(id)).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) {
-      this.globalEventManager.selectedUserCompany(res.data.name);
-    }
   }
 
   goTo(type) {

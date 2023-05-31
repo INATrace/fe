@@ -42,7 +42,7 @@ export class LocationFormNewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(loaded => {
+    this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(loaded => {
       if (loaded) {
         this.isGoogleMapsLoaded = true;
         this.initializeMarker();

@@ -88,7 +88,7 @@ export class B2cJourneyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const sub2 = this.globalEventManager.areGoogleMapsLoadedEmmiter.subscribe(
+    const sub2 = this.globalEventManager.loadedGoogleMapsEmitter.subscribe(
         loaded => {
           if (loaded) { this.isGoogleMapsLoaded = true; }
         },

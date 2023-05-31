@@ -84,7 +84,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
       this.getBatch();
       this.title = $localize`:@@batchDetail.title.edit:Edit batch`;
     }
-    let sub2 = this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(
+    let sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
       loaded => {
         if (loaded) this.isGoogleMapsLoaded = true;
       },

@@ -106,7 +106,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     this.companyId = this.route.snapshot.params.id;
     this.initializeFacilitiesObservable();
 
-    this.globalEventsManager.areGoogleMapsLoadedEmmiter.subscribe(loaded => {
+    this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(loaded => {
       if (loaded) {
         this.isGoogleMapsLoaded = true;
       }

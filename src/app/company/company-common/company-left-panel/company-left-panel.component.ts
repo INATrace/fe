@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { Subscription } from 'rxjs';
-import { CompanyControllerService } from '../../../../api/api/companyController.service';
-import { shareReplay, take } from 'rxjs/operators';
-import { ApiResponseApiCompanyGet } from '../../../../api/model/apiResponseApiCompanyGet';
+import { switchMap } from 'rxjs/operators';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
-import StatusEnum = ApiResponseApiCompanyGet.StatusEnum;
 import RoleEnum = ApiUserGet.RoleEnum;
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-company-left-panel',
@@ -20,57 +18,54 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
 
   faCog = faCog;
 
-  companyTitle: string;
   private companyId: number;
-
+  companyTitle: string;
   imgStorageKey: string = null;
-
-  private companySubs: Subscription;
 
   isSystemOrRegionalAdmin = false;
   isCompanyAdmin = false;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private globalEventManager: GlobalEventManagerService,
     private authService: AuthService,
-    private companyControllerService: CompanyControllerService
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   ngOnInit() {
-    this.companySubs = this.globalEventManager.selectedUserCompanyEmitter.subscribe(company => this.companyTitle = company);
 
-    const selectedCompanyId = localStorage.getItem('selectedUserCompany');
-    if (!selectedCompanyId) {
-      return;
-    }
+    let user: ApiUserGet | null = null;
+    this.subscriptions.push(
+      this.authService.userProfile$
+        .pipe(
+          switchMap(userProfile => {
+            user = userProfile;
+            return this.selUserCompanyService.selectedCompanyProfile$;
+          })
+        )
+        .subscribe(companyProfile => {
+          if (user && companyProfile) {
 
-    this.companyId = Number(selectedCompanyId);
+            this.companyId = companyProfile.id;
+            this.companyTitle = companyProfile.name;
+            this.imgStorageKey = companyProfile.logo.storageKey;
 
-    this.companyControllerService.getCompanyUsingGET(this.companyId)
-      .pipe(
-        take(1)
-      )
-      .subscribe(response => {
-        if (response && response.status === StatusEnum.OK && response.data) {
-          this.imgStorageKey = response.data.logo.storageKey;
-        }
-      });
+            if (user.role === ApiUserGet.RoleEnum.SYSTEMADMIN || user.role === RoleEnum.REGIONALADMIN) {
+              this.isSystemOrRegionalAdmin = true;
+            }
 
-    this.authService.userProfile$.subscribe(value => {
-      if (value.role === ApiUserGet.RoleEnum.SYSTEMADMIN || value.role === RoleEnum.REGIONALADMIN) {
-        this.isSystemOrRegionalAdmin = true;
-      }
-      if (value.companyIdsAdmin.includes(this.companyId)) {
-        this.isCompanyAdmin = true;
-      }
-    }, shareReplay(1));
+            if (user.companyIdsAdmin.includes(this.companyId)) {
+              this.isCompanyAdmin = true;
+            }
+          }
+        })
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.companySubs) {
-      this.companySubs.unsubscribe();
-    }
+    this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 
   openCompanyProfile() {

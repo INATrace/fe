@@ -1,25 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserControllerService } from 'src/api/api/userController.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ComponentCanDeactivate } from '../../shared-services/component-can-deactivate';
-import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { CompanyControllerService } from 'src/api/api/companyController.service';
+import { CompanyControllerService, ListCompaniesUsingGET } from 'src/api/api/companyController.service';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
 import { BeycoTokenService } from '../../shared-services/beyco-token.service';
+import { ApiCompanyListResponse } from '../../../api/model/apiCompanyListResponse';
+import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
-export class UserDetailComponent extends ComponentCanDeactivate implements OnInit, OnDestroy {
+export class UserDetailComponent extends ComponentCanDeactivate implements OnInit {
 
-  subscriptions: Subscription[] = [];
   userProfileForm: FormGroup;
   submitted = false;
   userId: number;
@@ -30,7 +30,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   returnUrl: string;
   changedCompany = false;
 
-  myCompanies = null;
+  myCompanies: ApiCompanyListResponse[] | null = null;
 
   constructor(
     private location: Location,
@@ -39,7 +39,8 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     private route: ActivatedRoute,
     private companyController: CompanyControllerService,
     private router: Router,
-    private beycoTokenService: BeycoTokenService
+    private beycoTokenService: BeycoTokenService,
+    private selUserCompanyService: SelectedUserCompanyService
   ) {
     super();
   }
@@ -55,10 +56,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
   public canDeactivate(): boolean {
     return !this.userProfileForm || !this.userProfileForm.dirty;
   }
@@ -70,19 +67,18 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   getUserProfile(): void {
     this.globalEventsManager.showLoading(true);
-    const sub = this.userController.getProfileForUserUsingGET().subscribe(user => {
+    this.userController.getProfileForUserUsingGET().subscribe(user => {
       this.createUserProfileForm(user.data);
-      if (user.data) { this.prepareMyCompanies(user.data).then(); }
+      this.prepareMyCompanies().then();
       this.userData = user.data;
       this.globalEventsManager.showLoading(false);
     }, () => this.globalEventsManager.showLoading(false));
-    this.subscriptions.push(sub);
   }
 
   getUserProfileAsAdmin(): void {
     this.globalEventsManager.showLoading(true);
 
-    const sub = this.userController.getProfileForAdminUsingGET(this.userId)
+    this.userController.getProfileForAdminUsingGET(this.userId)
       .subscribe(user => {
         this.createUserProfileForm(user.data);
         this.userData = user.data;
@@ -91,7 +87,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       }, () => {
         this.globalEventsManager.showLoading(false);
       });
-    this.subscriptions.push(sub);
   }
 
   goBack(): void {
@@ -103,35 +98,38 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  private async prepareMyCompanies(data) {
-    const tmp = [];
-    if (!data) { return; }
-    for (const id of data.companyIds) {
-      const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        tmp.push({
-          company_id: id,
-          company_name: res.data.name
-        });
-      }
+  private async prepareMyCompanies(): Promise<void> {
+
+    const requestParams = {
+      statuses: null,
+      requestType: 'FETCH',
+      limit: 1000,
+      offset: 0,
+      status: 'ACTIVE'
+    } as ListCompaniesUsingGET.PartialParamMap;
+
+    const resp = await this.companyController.listCompaniesUsingGETByMap(requestParams).toPromise();
+    if (resp && resp.status === 'OK' && resp.data?.items) {
+      this.myCompanies = resp.data.items;
     }
-    this.myCompanies = tmp;
   }
 
-  async setSelectedUserCompany(company) {
+  async setSelectedUserCompany(company: ApiCompanyListResponse) {
+
     if (this.mode === 'userProfileView') {
+
       const result = await this.globalEventsManager.openMessageModal({
         type: 'warning',
-        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.company_name}?`,
+        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.name}?`,
         options: { centered: true },
         dismissable: false
       });
+
       if (result !== 'ok') { return; }
-      const res = await this.companyController.getCompanyUsingGET(company.company_id).pipe(take(1)).toPromise();
+
+      const res = await this.companyController.getCompanyUsingGET(company.id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
-        localStorage.setItem('selectedUserCompany', String(res.data.id));
-        this.globalEventsManager.selectedUserCompany(res.data.name);
-        localStorage.setItem('token', 'user-company-changed');
+        this.selUserCompanyService.setSelectedCompany(res.data);
         this.changedCompany = true;
         this.beycoTokenService.removeToken();
       }
