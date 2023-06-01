@@ -74,10 +74,15 @@ export class UserListComponent implements OnInit, OnDestroy {
         const myUsers = params.myUsers;
         const newParams = { ...params };
         delete newParams.myUsers;
-        if (myUsers) {
-          return this.userController.listUsersUsingGETByMap(newParams);
+
+        if (this.isRegionalAdmin) {
+          return this.userController.regionalAdminListUsersUsingGETByMap(newParams);
         } else {
-          return this.userController.adminListUsersUsingGETByMap(newParams);
+          if (myUsers) {
+            return this.userController.listUsersUsingGETByMap(newParams);
+          } else {
+            return this.userController.adminListUsersUsingGETByMap(newParams);
+          }
         }
       }),
       map((resp: ApiPaginatedResponseApiUserBase) => {
@@ -114,10 +119,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     {
       key: 'role',
       name: $localize`:@@userList.sortOptions.role.name:Role`,
+      inactive: true
     },
     {
       key: 'status',
       name: $localize`:@@userList.sortOptions.status.name:Status`,
+      inactive: true
     },
     {
       key: 'actions',
@@ -150,7 +157,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async setAllUsers() {
-    if (this.isSystemAdmin) {
+
+    if (this.isRegionalAdmin) {
+      const res = await this.userController.regionalAdminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
+        this.allUsers = res.data.count;
+      }
+    }
+    else if (this.isSystemAdmin) {
       const res = await this.userController.adminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
@@ -221,6 +235,10 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   get isSystemAdmin() {
     return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
+  }
+
+  get isRegionalAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
   }
 
   editUser(userId) {
