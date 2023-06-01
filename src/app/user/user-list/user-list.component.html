@@ -107,7 +107,7 @@
                            (click)="user.status != 'DEACTIVATED' && deactivate(user.id)"
                            class="user-action"
                            [class.enabled-action]="user.status != 'DEACTIVATED'"
-                           [class.disabled-action]="user.status === 'DEACTIVATED'">Deactivate</a>
+                           [class.disabled-action]="user.status === 'DEACTIVATED' || isRegionalAdmin">Deactivate</a>
                         <ng-container *ngIf="isSystemAdmin && user.status === 'ACTIVE'">
                           <ng-container *ngIf="user.role === 'USER'">
                             <a class="user-action enabled-action"
