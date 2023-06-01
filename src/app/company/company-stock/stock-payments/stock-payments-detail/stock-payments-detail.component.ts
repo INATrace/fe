@@ -7,7 +7,7 @@ import { PaymentControllerService } from '../../../../../api/api/paymentControll
 import { ApiPayment } from '../../../../../api/model/apiPayment';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { CompanyUserCustomersByRoleService } from '../../../../shared-services/company-user-customers-by-role.service';
-import {dateISOString, generateFormFromMetadata} from '../../../../../shared/utils';
+import { dateISOString, generateFormFromMetadata } from '../../../../../shared/utils';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiPaymentValidationScheme } from '../validation';
 import { Location } from '@angular/common';
@@ -18,6 +18,7 @@ import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
 import UserCustomerTypeEnum = ApiUserCustomerCooperative.UserCustomerTypeEnum;
 import { ToastrService } from 'ngx-toastr';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-stock-payments-detail',
@@ -32,7 +33,7 @@ export class StockPaymentsDetailComponent implements OnInit {
   title: string;
 
   lastUpdatedByUser: string;
-  companyId: number;
+  companyId: number | null = null;
 
   purchaseOrderId: number;
   customerOrderId: number;
@@ -65,15 +66,18 @@ export class StockPaymentsDetailComponent implements OnInit {
       private stockOrderControllerService: StockOrderControllerService,
       private paymentControllerService: PaymentControllerService,
       private toasterService: ToastrService,
-      private router: Router
+      private router: Router,
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     this.purchaseOrderId = this.route.snapshot.params.purchaseOrderId;
     this.customerOrderId = this.route.snapshot.params.customerOrderId;
 
     this.paymentUpdateInProgress = false;
+
+    this.companyId = (await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise())?.id;
 
     this.initInitialData().then(
         () => {
@@ -142,8 +146,6 @@ export class StockPaymentsDetailComponent implements OnInit {
     } else {
       throw Error('Unrecognized action "' + action + '".');
     }
-
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
   }
 
   private async newPayment() {

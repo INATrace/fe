@@ -18,6 +18,7 @@ import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared
 import { ApiProductDataSharingAgreementValidationScheme, ApiProductValidationScheme } from './stakeholders-value-chain/validation';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiProductDataSharingAgreement } from '../../../../api/model/apiProductDataSharingAgreement';
+import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
   template: ''
@@ -76,24 +77,12 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     title: $localize`:@@productLabelStakeholders.title.associations:Associations`
   };
 
-  toc = [
-    this.buyersSection,
-    this.ownersSection,
-    this.producersSection,
-    this.roastersSection,
-    this.associationsSection,
-  ];
-
-  isActivePage = false;
-  unsubsribeList = new UnsubscribeList();
-
   productId = this.route.snapshot.params.id;
   unsubscribeList = new UnsubscribeList();
   currentProduct;
   productForm: FormGroup;
   submitted = false;
-  organizationId;
-  productOrganizationId;
+  companyId: number | null = null;
 
   public reloadValueChainPing$ = new BehaviorSubject<boolean>(false);
 
@@ -120,7 +109,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
         this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.currentProduct, ApiProductValidationScheme);
         this.initListManagers();
 
-        this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === Number(this.organizationId));
+        this.isOwner = data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === this.companyId);
 
         this.buyers = [];
         this.importers = [];
@@ -152,7 +141,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   static ApiProductDataSharingAgreementCreateEmptyObject(): ApiProductDataSharingAgreement {
@@ -180,14 +170,19 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     this.router.navigate([segment], { relativeTo: this.route.parent }).then();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
-    this.setOrganizationId();
+    this.companyId = (await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise())?.id;
+
+    this.unsubscribeList.add(
+      this.authService.userProfile$.subscribe(userProfile => {
+        if (userProfile) {
+          this.isSystemAdmin = userProfile && userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
+        }
+      })
+    );
+
     this.reload();
-
-    this.authService.userProfile$.subscribe(value => {
-      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
-    });
   }
 
   ngAfterViewInit() {
@@ -200,10 +195,6 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
       ProductLabelStakeholdersComponent.ApiProductDataSharingAgreementEmptyObjectFormFactory(),
       ApiProductDataSharingAgreementValidationScheme
     );
-  }
-
-  setOrganizationId() {
-    this.organizationId = localStorage.getItem('selectedUserCompany');
   }
 
   reload() {

@@ -59,7 +59,7 @@ import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToC
 import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
 import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 import { maxActiveArrayControls } from '../../../shared/validation';
-import { ApiUserGet } from '../../../api/model/apiUserGet';
+import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-product-label',
@@ -87,7 +87,6 @@ import { ApiUserGet } from '../../../api/model/apiUserGet';
       )
     ]),
   ]
-
 })
 export class ProductLabelComponent extends ComponentCanDeactivate implements OnInit, OnDestroy, AfterViewInit {
 
@@ -102,26 +101,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (infoWindow) { this.gInfoWindow = infoWindow; }
   }
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location,
-    private productController: ProductControllerService,
-    protected globalEventsManager: GlobalEventManagerService,
-    public companyController: CompanyControllerService,
-    public valueChainController: ValueChainControllerService,
-    private modalService: NgbModalImproved,
-    private authService: AuthService,
-    private commonController: CommonControllerService
-  ) {
-    super();
-    this.generateLabelMaps();
-    if (this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.labelId) {
-      this.redirectToCertainLabel = this.router.getCurrentNavigation().extras.state.labelId;
-      this.initialReload = true;
-    }
-  }
-
   get currentLabelName() {
     // if(this.currentLabel && this.currentLabel.title) return this.currentLabel.title
     const noName = $localize`:@@productLabel.qrLabels.untitled:NO NAME`;
@@ -133,7 +112,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const id = this.route.snapshot.params.id;
     return id == null ? 'create' : 'update';
   }
-
 
   // origin location helper methods
   get originLocations(): FormArray {
@@ -241,16 +219,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   valueChainName: string;
 
-  companyId: number;
+  companyId: number | null = null;
   isOwner = false;
 
   unsubscribeList = new UnsubscribeList();
 
   currentLabel: ApiProductLabel = null;
 
-  userProfile: ApiUserGet = null;
   showLabelInfoLink = false;
-  reloadProductNoLabel = true;
 
   action = this.route.snapshot.data.action;
 
@@ -688,31 +664,59 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     };
   }
 
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location,
+    private productController: ProductControllerService,
+    protected globalEventsManager: GlobalEventManagerService,
+    public companyController: CompanyControllerService,
+    public valueChainController: ValueChainControllerService,
+    private modalService: NgbModalImproved,
+    private authService: AuthService,
+    private commonController: CommonControllerService,
+    private selUserCompanyService: SelectedUserCompanyService
+  ) {
+    super();
+    this.generateLabelMaps();
+    if (this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.labelId) {
+      this.redirectToCertainLabel = this.router.getCurrentNavigation().extras.state.labelId;
+      this.initialReload = true;
+    }
+  }
+
   ngOnInit(): void {
 
-    this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.userProfile = this.authService.currentUserProfile;
-    const subUserProfile = this.authService.userProfile$.subscribe(val => {
-      this.userProfile = val;
-      if (this.userProfile) { this.showLabelInfoLink = 'SYSTEM_ADMIN' === this.userProfile.role; }
-    });
-    this.unsubscribeList.add(subUserProfile);
-    this.initializeLabelsHelperLink().then();
+    this.unsubscribeList.add(
+      this.authService.userProfile$
+        .pipe(
+          switchMap(up => {
+            if (up) {
+              this.showLabelInfoLink = 'SYSTEM_ADMIN' === up.role;
+              return this.selUserCompanyService.selectedCompanyProfile$;
+            }
+          })
+        )
+        .subscribe(cp => {
 
-    if (this.mode === 'update') {
+          this.companyId = cp?.id;
+          this.initializeLabelsHelperLink().then();
 
-      this.unsubscribeList.add(
-        this.product$.subscribe(val => { }),
-      );
-      this.unsubscribeList.add(
-        this.currentLabel$.subscribe(label => {
-          this.currentLabel = label;
+          if (this.mode === 'update') {
+            this.unsubscribeList.add(
+              this.product$.subscribe(val => { }),
+            );
+            this.unsubscribeList.add(
+              this.currentLabel$.subscribe(label => {
+                this.currentLabel = label;
+              })
+            );
+            this.reload();
+          } else {
+            this.newProduct().then();
+          }
         })
-      );
-      this.reload();
-    } else {
-      this.newProduct().then();
-    }
+    );
   }
 
   ngAfterViewInit() {   // ViewChildren for templates works only after ngAfterViewInit

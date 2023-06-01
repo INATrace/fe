@@ -32,7 +32,6 @@ import { ClipInputTransactionModalComponent } from './clip-input-transaction-mod
 import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
-import { CompanyControllerService } from '../../../../../api/api/companyController.service';
 import { AuthService } from '../../../../core/auth.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
@@ -48,6 +47,7 @@ import StatusEnum = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 import { ApiProcessingActionOutputSemiProduct } from '../../../../../api/model/apiProcessingActionOutputSemiProduct';
 import { uuidv4 } from 'src/shared/utils';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 type PageMode = 'create' | 'edit';
 
@@ -151,9 +151,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private semiProductsController: SemiProductControllerService,
     private productController: ProductControllerService,
     private codebookTranslations: CodebookTranslations,
-    private companyController: CompanyControllerService,
     private authService: AuthService,
-    private modalService: NgbModalImproved
+    private modalService: NgbModalImproved,
+    private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
   get selectedProcAction(): ApiProcessingAction {
@@ -968,10 +968,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   private async loadCompanyProfile() {
 
-    const companyId = Number(localStorage.getItem('selectedUserCompany'));
-    const res = await this.companyController.getCompanyUsingGET(companyId).pipe(take(1)).toPromise();
-    if (res && 'OK' === res.status && res.data) {
-      this.companyProfile = res.data;
+    const cp = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
+    if (cp) {
+      this.companyProfile = cp;
     } else {
       throw Error('Cannot get company profile.');
     }

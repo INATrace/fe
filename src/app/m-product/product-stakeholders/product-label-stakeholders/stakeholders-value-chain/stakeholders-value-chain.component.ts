@@ -8,6 +8,7 @@ import { AuthService } from '../../../../core/auth.service';
 import { AbstractControl, FormArray } from '@angular/forms';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiProductDataSharingAgreement } from '../../../../../api/model/apiProductDataSharingAgreement';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
   selector: 'app-stakeholders-value-chain',
@@ -26,17 +27,18 @@ export class StakeholdersValueChainComponent extends ProductLabelStakeholdersCom
     protected modalService: NgbModalImproved,
     protected route: ActivatedRoute,
     protected router: Router,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected selUserCompanyService: SelectedUserCompanyService
   ) {
-    super(productController, globalEventsManager, modalService, route, router, authService);
+    super(productController, globalEventsManager, modalService, route, router, authService, selUserCompanyService);
   }
 
   get dataSharingAgreementsControls(): AbstractControl[] {
     return (this.productForm.get('dataSharingAgreements') as FormArray).controls;
   }
 
-  ngOnInit() {
-    super.ngOnInit();
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
   }
 
 }

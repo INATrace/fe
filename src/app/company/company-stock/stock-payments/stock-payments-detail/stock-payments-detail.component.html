@@ -1,5 +1,5 @@
 <app-authorised-layout>
-    <div *ngIf="(mode === modeEnum.PURCHASE && paymentForm && searchFarmersForm.value || mode === modeEnum.CUSTOMER && paymentForm)"
+    <div *ngIf="companyId != null && (mode === modeEnum.PURCHASE && paymentForm && searchFarmersForm.value || mode === modeEnum.CUSTOMER && paymentForm)"
          class="af-layout--authorised">
 
         <div class="af-form-wrapper">

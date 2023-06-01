@@ -31,6 +31,8 @@ import PaymentTypeEnum = ApiPayment.PaymentTypeEnum;
 import RecipientTypeEnum = ApiPayment.RecipientTypeEnum;
 import PaymentStatusEnum = ApiPayment.PaymentStatusEnum;
 import PreferredWayOfPaymentEnum = ApiPayment.PreferredWayOfPaymentEnum;
+import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
+import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 enum BulkType {
   BONUS = 'BONUS',
@@ -79,6 +81,8 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     payingLabel: $localize`:@@productLabelStockBulkPayments.textinput.origin.paying:Paying`
   };
 
+  payingCompany: ApiCompanyGet | null = null;
+
   static ApiActivityProofItemCreateEmptyObject(): ApiActivityProof {
     return defaultEmptyObject(ApiActivityProof.formMetadata()) as ApiActivityProof;
   }
@@ -111,10 +115,12 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       private globalEventsManager: GlobalEventManagerService,
       private paymentControllerService: PaymentControllerService,
       private stockOrderControllerService: StockOrderControllerService,
-      private companyControllerService: CompanyControllerService
+      private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+    this.payingCompany = await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise();
 
     this.initInitialData().then(
         () => {
@@ -207,18 +213,11 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     this.bulkPaymentForm.get('formalCreationTime').setValue(today);
 
     // Paying company is the company in which the user is currently logged in
-    const payingCompanyId = Number(localStorage.getItem('selectedUserCompany'));
-    const payingCompanyResp = await this.companyControllerService.getCompanyUsingGET(payingCompanyId)
-        .pipe(take(1))
-        .toPromise();
-
-    if (payingCompanyResp && payingCompanyResp.status === 'OK' && payingCompanyResp.data) {
-      const payingCompany = payingCompanyResp.data;
-      this.bulkPaymentForm.get('payingCompany').setValue(payingCompany);
-      this.payableFromForm.setValue(payingCompany.name);
-      this.currency = payingCompany.currency.code;
+    if (this.payingCompany) {
+      this.bulkPaymentForm.get('payingCompany').setValue(this.payingCompany);
+      this.payableFromForm.setValue(this.payingCompany.name);
+      this.currency = this.payingCompany.currency.code;
     }
-
   }
 
   preparePaymentsForEdit() {
