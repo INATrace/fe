@@ -125,6 +125,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
+  get isRegionalAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
+
   ngOnInit(): void {
     this.listErrorStatus$ = new BehaviorSubject<string>('');
     // do not allow access via breadcrumbs - temp fix
