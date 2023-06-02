@@ -98,13 +98,14 @@
                       (click)="company.status != 'DEACTIVATED' && deactivate(company.id)"
                       class="company-action"
                       [class.enabled-action]="company.status != 'DEACTIVATED'"
-                      [class.disabled-action]="company.status === 'DEACTIVATED'">
+                      [class.disabled-action]="company.status === 'DEACTIVATED' || isRegionalAdmin">
                       Deactivate
                     </a>
                     <a i18n="@@companyList.tableCol.mergTo"
                       (click)="mergeTo(company)"
                       class="company-action"
-                      [class.enabled-action]="true">
+                      [class.enabled-action]="true"
+                      [class.disabled-action]="isRegionalAdmin">
                       Merge to
                     </a>
                     </span>

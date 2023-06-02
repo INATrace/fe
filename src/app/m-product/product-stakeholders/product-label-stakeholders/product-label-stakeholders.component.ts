@@ -19,6 +19,7 @@ import { ApiProductDataSharingAgreementValidationScheme, ApiProductValidationSch
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiProductDataSharingAgreement } from '../../../../api/model/apiProductDataSharingAgreement';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import RoleEnum = ApiUserGet.RoleEnum;
 
 @Component({
   template: ''
@@ -36,6 +37,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
 
   isOwner = false;
   isSystemAdmin = false;
+  isRegionalAdmin = false;
 
   // TABS ////////////////
   @ViewChild(AuthorisedLayoutComponent)
@@ -177,7 +179,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     this.unsubscribeList.add(
       this.authService.userProfile$.subscribe(userProfile => {
         if (userProfile) {
-          this.isSystemAdmin = userProfile && userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
+          this.isSystemAdmin = userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
+          this.isRegionalAdmin = userProfile.role === RoleEnum.REGIONALADMIN;
         }
       })
     );
@@ -402,7 +405,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
   }
 
   editable() {
-    return this.isSystemAdmin;
+    return this.isSystemAdmin || this.isRegionalAdmin;
   }
 
   async saveDataSharingAgreements() {
