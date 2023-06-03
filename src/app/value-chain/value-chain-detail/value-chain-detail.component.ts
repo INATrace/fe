@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../shared/utils';
 import { ApiValueChain } from '../../../api/model/apiValueChain';
@@ -46,6 +46,8 @@ export class ValueChainDetailComponent implements OnInit {
   semiProductsListManager: ListEditorManager<ApiSemiProduct>;
 
   productTypeCodebook: ProductTypesService;
+
+  isRegionalAdmin = false;
 
   constructor(
     protected route: ActivatedRoute,
@@ -150,11 +152,12 @@ export class ValueChainDetailComponent implements OnInit {
     return (this.valueChainDetailForm.get('semiProducts') as FormArray).controls as FormControl[];
   }
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+    });
+
     if (this.mode === 'update') {
       this.title = $localize`:@@valueChainDetail.title.edit:Edit value chain`;
       this.getValueChain();

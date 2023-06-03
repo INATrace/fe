@@ -30,6 +30,8 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
 
   showKnowledgeBlog = false;
 
+  isSystemAdmin = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -39,6 +41,11 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe().subscribe(up => {
+      this.isSystemAdmin = up?.role === 'SYSTEM_ADMIN';
+    });
+
     if (this.create) { return; }
     this.preparePhoto().then();
     this.knowledgeBlogSection().then();
@@ -92,10 +99,6 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
 
   goTo(type) {
     return ['/product-labels', this.productId, type];
-  }
-
-  get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
 }

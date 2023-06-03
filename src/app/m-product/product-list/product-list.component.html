@@ -26,7 +26,7 @@
                       </fa-icon>
                     </div>
                   </div>
-                  <div *ngIf="this.isAdmin && myProducts && myProducts.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productList.filter.myProducts">My products
+                  <div *ngIf="this.isSystemAdmin && myProducts && myProducts.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productList.filter.myProducts">My products
                     <div (click)="clearValue(myProducts, true)" style="margin-left: 0.5rem;">
                       <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
@@ -48,7 +48,7 @@
                   <div class="dropdown-menu" ngbDropdownMenu>
                     <button ngbDropdownItem (click)="showStatus('ACTIVE')" i18n="@@productList.filter.showActive">Show active</button>
                     <button ngbDropdownItem (click)="showStatus('DISABLED')" i18n="@@productList.filter.showDisabled">Show disabled</button>
-                    <ng-container *ngIf="this.isAdmin">
+                    <ng-container *ngIf="this.isSystemAdmin">
                       <div class="line"></div>
                       <button ngbDropdownItem (click)="myProductsOnly(true)" i18n="@@productList.filter.showMyProducts">Show my products</button>
                     </ng-container>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GetValueChainListUsingGET, ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, finalize, map, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { SortKeyAndOrder, SortOption, SortOrder } from '../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiValueChain } from '../../../api/model/apiPaginatedResponseApiValueChain';
@@ -99,6 +99,8 @@ export class ValueChainListComponent implements OnInit {
     tap(() => this.globalEventsManager.showLoading(false))
   );
 
+  isRegionalAdmin = false;
+
   constructor(
     private router: Router,
     private valueChainService: ValueChainControllerService,
@@ -106,11 +108,10 @@ export class ValueChainListComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+    });
   }
 
   reloadData() {

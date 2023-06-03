@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyTypeControllerService } from '../../api/api/currencyTypeController.service';
-import { first, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { first, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { SortKeyAndOrder, SortOption, SortOrder } from '../shared/result-sorter/result-sorter-types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
@@ -55,6 +55,8 @@ export class CurrencyListComponent implements OnInit {
   public enabledSearchText = new FormControl(null);
   public disabledSearchText = new FormControl(null);
 
+  isRegionalAdmin = false;
+
   constructor(
       private router: Router,
       private currencyService: CurrencyTypeControllerService,
@@ -62,11 +64,12 @@ export class CurrencyListComponent implements OnInit {
       private authService: AuthService
   ) { }
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+    });
+
     this.loadCurrencies();
   }
 

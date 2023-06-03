@@ -60,6 +60,8 @@ export class TypeDetailModalComponent implements OnInit {
   languages = [LanguageEnum.EN, LanguageEnum.DE, LanguageEnum.RW, LanguageEnum.ES];
   selectedLanguage = LanguageEnum.EN;
 
+  isRegionalAdmin = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private facilityTypeService: FacilityTypeControllerService,
@@ -72,12 +74,11 @@ export class TypeDetailModalComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
-    this.init().then();
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+      this.init().then();
+    });
   }
 
   dismiss() {
@@ -153,7 +154,6 @@ export class TypeDetailModalComponent implements OnInit {
     if (this.update && this.isRegionalAdmin) {
       this.form.disable();
     }
-
   }
 
   async save() {

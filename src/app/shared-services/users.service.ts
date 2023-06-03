@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { AdminListUsersUsingGET, UserControllerService } from 'src/api/api/userController.service';
@@ -52,20 +52,21 @@ export class UsersService extends GeneralSifrantService<ApiUserBase> {
             query: key
         };
 
-        let usersApiCall: Observable<ApiPaginatedResponseApiUserBase>;
-        if (this.authService.currentUserProfile?.role === 'REGIONAL_ADMIN') {
-            usersApiCall = this.userController.regionalAdminListUsersUsingGETByMap(reqPars);
-        } else {
-            usersApiCall = this.userController.adminListUsersUsingGETByMap(reqPars);
-        }
-
-        return usersApiCall.pipe(
-          map((res: ApiPaginatedResponseApiUserBase) => {
+        this.authService.userProfile$.pipe(
+          take(1),
+          switchMap(up => {
+              if (up?.role === 'REGIONAL_ADMIN') {
+                  return this.userController.regionalAdminListUsersUsingGETByMap(reqPars);
+              } else {
+                  this.userController.adminListUsersUsingGETByMap(reqPars);
+              }
+          }),
+          map((resp: ApiPaginatedResponseApiUserBase) => {
               return {
-                  results: res.data.items,
+                  results: resp.data.items,
                   offset: 0,
                   limit,
-                  totalCount: res.data.count
+                  totalCount: resp.data.count
               };
           })
         );

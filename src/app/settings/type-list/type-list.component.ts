@@ -231,11 +231,14 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
   ];
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
+  isRegionalAdmin = false;
 
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+    });
+
     this.setAll().then();
     if (this.type === 'facility-types') { this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`; }
     if (this.type === 'measurement-unit-types') { this.title = $localize`:@@settingsTypes.typeList.title.measurement:Measurement unit types`; }

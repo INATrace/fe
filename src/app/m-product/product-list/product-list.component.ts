@@ -93,6 +93,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     shareReplay(1)
   );
 
+  isSystemAdmin = false;
+
   constructor(
     private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
@@ -108,7 +110,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.reloadPage();
       }
     });
-    this.setAllProducts().then();
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isSystemAdmin = up?.role === 'SYSTEM_ADMIN';
+      this.setAllProducts().then();
+    });
   }
 
   ngOnDestroy() {
@@ -116,7 +122,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   async setAllProducts() {
-    if (this.isAdmin) {
+    if (this.isSystemAdmin) {
       const res = await this.productController.listProductsAdminUsingGET('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allProducts = res.data.count;
@@ -127,10 +133,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.allProducts = res.data.count;
       }
     }
-  }
-
-  get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
   get statusList() {

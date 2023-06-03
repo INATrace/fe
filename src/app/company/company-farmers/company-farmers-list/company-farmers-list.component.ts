@@ -8,6 +8,8 @@ import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../core/auth.service';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { ApiUserGet } from '../../../../api/model/apiUserGet';
+import RoleEnum = ApiUserGet.RoleEnum;
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -118,6 +120,8 @@ export class CompanyFarmersListComponent implements OnInit {
     }
   ];
 
+  isSystemOrRegionalAdmin = false;
+
   constructor(
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
@@ -126,12 +130,11 @@ export class CompanyFarmersListComponent implements OnInit {
       private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
-  get isSystemOrRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile &&
-      (this.authService.currentUserProfile.role === 'SYSTEM_ADMIN' || this.authService.currentUserProfile.role === 'REGIONAL_ADMIN');
-  }
-
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isSystemOrRegionalAdmin = up && (up.role === RoleEnum.SYSTEMADMIN || up.role === RoleEnum.REGIONALADMIN);
+    });
 
     this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
       if (cp) {

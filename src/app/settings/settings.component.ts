@@ -17,8 +17,6 @@ import { AuthService } from '../core/auth.service';
 })
 export class SettingsComponent extends ComponentCanDeactivate implements OnInit, OnDestroy, AfterViewInit {
 
-  activeTab = 0;
-
   submitted = false;
   labelsHelperLink = new FormControl(null);
   unpublishedProductLabelText = new FormControl(null);
@@ -67,6 +65,8 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
 
   selectedTab: Subscription;
 
+  isRegionalAdmin = false;
+
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
     protected commonController: CommonControllerService,
@@ -81,12 +81,11 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     return this.authorizedLayout ? this.authorizedLayout.tabCommunicationService : null;
   }
 
-  get isRegionalAdmin(): boolean {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
-    this.initializeLabelsHelperLink().then();
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+      this.initializeLabelsHelperLink().then();
+    });
   }
 
   ngAfterViewInit() {

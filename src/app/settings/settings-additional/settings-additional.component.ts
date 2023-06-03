@@ -26,6 +26,7 @@ export class SettingsAdditionalComponent extends SettingsComponent implements On
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     if (this.isRegionalAdmin) {
       this.labelsHelperLink.disable();
       this.unpublishedProductLabelText.disable();

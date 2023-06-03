@@ -39,8 +39,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   allCompanies = 0;
   showedCompanies = 0;
 
-  showSearch = false;
-
   searchParams$ = combineLatest(
       this.searchName.valueChanges.pipe(
           startWith(null),
@@ -112,6 +110,9 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     }
   ];
 
+  isSystemAdmin = false;
+  isRegionalAdmin = false;
+
   constructor(
     private companyController: CompanyControllerService,
     private router: Router,
@@ -121,24 +122,22 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     private modalService: NgbModalImproved
   ) { }
 
-  get isSystemAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
-  }
-
-  get isRegionalAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
-  }
-
   ngOnInit(): void {
+
     this.listErrorStatus$ = new BehaviorSubject<string>('');
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isSystemAdmin = up?.role === 'SYSTEM_ADMIN';
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+      this.setAllCompanies().then();
+    });
+
     // do not allow access via breadcrumbs - temp fix
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/companies') {
         this.reloadPage();
       }
     });
-
-    this.setAllCompanies().then();
   }
 
   ngOnDestroy() {

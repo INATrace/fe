@@ -42,11 +42,6 @@ export class AuthService {
     }
   }
 
-  // TODO: remove this method and refactor dependencies
-  get currentUserProfile() {
-    return null;
-  }
-
   login(username: string, password: string, redirect = null) {
 
     this.userController.loginUsingPOST(

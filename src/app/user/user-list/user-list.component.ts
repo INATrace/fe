@@ -135,6 +135,9 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   routerSub: Subscription;
 
+  isSystemAdmin = false;
+  isRegionalAdmin = false;
+
   constructor(
     private userController: UserControllerService,
     protected globalEventsManager: GlobalEventManagerService,
@@ -143,13 +146,19 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.authService.userProfile$.pipe(take(1)).subscribe(up => {
+      this.isSystemAdmin = up?.role === 'SYSTEM_ADMIN';
+      this.isRegionalAdmin = up?.role === 'REGIONAL_ADMIN';
+      this.setAllUsers().then();
+    });
+
     this.listErrorStatus$ = new BehaviorSubject<string>('');
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/users') {
         this.reloadPage();
       }
     });
-    this.setAllUsers().then();
   }
 
   ngOnDestroy() {
@@ -231,14 +240,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   onPageChange(event) {
     this.paging$.next(event);
-  }
-
-  get isSystemAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
-  }
-
-  get isRegionalAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
   }
 
   editUser(userId) {

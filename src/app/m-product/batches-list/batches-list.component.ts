@@ -32,23 +32,6 @@ export class BatchesListComponent implements OnInit {
   showedBatches: number = 0;
   goToLink: string = this.router.url.substr(0, this.router.url.lastIndexOf("/"));
 
-  reloadPage() {
-    this.reloadPing$.next(true)
-  }
-
-  onPageChange(event) {
-    this.paging$.next(event);
-  }
-
-  constructor(
-    private productController: ProductControllerService,
-    private router: Router,
-    private route: ActivatedRoute,
-    protected globalEventsManager: GlobalEventManagerService,
-    private authService: AuthService,
-    private modalService: NgbModalImproved
-  ) { }
-
   searchParams$ = combineLatest(
     this.searchName.valueChanges.pipe(
       startWith(null),
@@ -59,12 +42,23 @@ export class BatchesListComponent implements OnInit {
     }
   )
 
-  get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
-  }
+  constructor(
+    private productController: ProductControllerService,
+    private router: Router,
+    private route: ActivatedRoute,
+    protected globalEventsManager: GlobalEventManagerService
+  ) { }
 
   ngOnInit(): void {
-    this.setAllBatches();
+    this.setAllBatches().then();
+  }
+
+  reloadPage() {
+    this.reloadPing$.next(true)
+  }
+
+  onPageChange(event) {
+    this.paging$.next(event);
   }
 
   async setAllBatches() {
@@ -73,7 +67,6 @@ export class BatchesListComponent implements OnInit {
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allBatches = res.data.count;
       }
-
   }
 
   batches$ = combineLatest(this.reloadPing$, this.paging$, this.searchParams$, this.sortingParams$,

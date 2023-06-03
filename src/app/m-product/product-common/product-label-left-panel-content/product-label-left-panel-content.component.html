@@ -74,7 +74,7 @@
         Final products
       </a>
     </li>
-    <li *ngIf="isAdmin">
+    <li *ngIf="isSystemAdmin">
       <div class="spacer"></div>
       <a class="link-error">
         <div (click)="deleteCurrentProduct()" [class.side-menu-item-disabled]="changed" i18n="@@productLabel.sideTitle.archiveProduct">
