@@ -9,9 +9,8 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { FacilitySemiProductsCodebookService } from '../../../../shared-services/facility-semi-products-codebook.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
-import {map, startWith, take} from 'rxjs/operators';
-import {BeycoTokenService} from '../../../../shared-services/beyco-token.service';
-import {ApiResponseApiCompanyGet} from '../../../../../api/model/apiResponseApiCompanyGet';
+import { map, startWith, take } from 'rxjs/operators';
+import { BeycoTokenService } from '../../../../shared-services/beyco-token.service';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({

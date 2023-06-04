@@ -60,7 +60,7 @@
                                 <div class="af-ustwo-line3" i18n="@@productLabelStockBulkPayments.textinput.payableTo.farmer">Farmer</div>
                             </div>
                             <div class="af-c9">
-                                <span style="display: block; margin-bottom: 0.25rem; height: 0px;"></span>
+                                <span style="display: block; margin-bottom: 0.25rem; height: 0;"></span>
                                 <textinput style="width: 100%;"
                                            [form]="payableToCompany"
                                            [readOnly]=true>
@@ -82,7 +82,7 @@
                         <single-choice
                                 label="Payment purpose"
                                 i18n-label="@@productLabelStockBulkPayments.label.paymentPurpose"
-                                [formControlInput]="bulkPaymentForm.get('paymentPurposeType')"
+                                [formControlInput]="$any(bulkPaymentForm.get('paymentPurposeType'))"
                                 [codebookService]="paymentPurposeTypesCodebook"
                                 [isInvalidChoice]="submitted && bulkPaymentForm.get('paymentPurposeType').invalid">
                             <ng-container *ngIf="submitted">
@@ -99,7 +99,7 @@
                                 label="Payment description"
                                 i18n-label="@@productLabelStockBulkPayments.textinput.paymentDescription.label"
                                 style="width: 100%"
-                                [form]="bulkPaymentForm.get('paymentDescription')"
+                                [form]="$any(bulkPaymentForm.get('paymentDescription'))"
                                 [textarea]="true"
                                 [isInvalid]="submitted && bulkPaymentForm.get('paymentDescription').invalid"
                                 [readOnly]=this.update>
@@ -114,55 +114,6 @@
                             </ng-container>
                         </textinput>
 
-<!--                        <ng-container *ngIf="this.bulkType === BulkType.BONUS">-->
-<!--                            <textinput-->
-<!--                                    type="number"-->
-<!--                                    min="0"-->
-<!--                                    step="0.01"-->
-<!--                                    label="Total purchased in selected order(s) (kg)"-->
-<!--                                    placeholder="Enter total purchased in selected order(s) (kg)"-->
-<!--                                    i18n-placeholder="@@productLabelStockBulkPayments.textinput.totalPurchased.placeholder"-->
-<!--                                    i18n-label="@@productLabelStockBulkPayments.textinput.totalPurchased.label"-->
-<!--                                    style="width: 100%"-->
-<!--                                    [form]="totalPurchasedKgForm"-->
-<!--                                    [readOnly]="true">-->
-<!--                            </textinput>-->
-
-<!--                            <textinput-->
-<!--                                    type="number"-->
-<!--                                    min="0"-->
-<!--                                    step="0.01"-->
-<!--                                    label="Payment per kg (RWF)"-->
-<!--                                    placeholder="Enter payment per kg (RWF)"-->
-<!--                                    i18n-label="@@productLabelStockBulkPayments.textinput.paymentPerKg.label"-->
-<!--                                    i18n-placeholder="@@productLabelStockBulkPayments.textinput.paymentPerKg.placeholder"-->
-<!--                                    style="width: 100%"-->
-<!--                                    [form]="bulkPaymentForm.get('paymentPerKg')"-->
-<!--                                    [isInvalid]="submitted && bulkPaymentForm.get('paymentPerKg').invalid">-->
-<!--                                <ng-container *ngIf="submitted">-->
-<!--                                    <div *ngIf="bulkPaymentForm.get('paymentPerKg').errors as errors" class="sc-invalid-feedback">-->
-<!--                                        <div *ngIf="errors.required" i18n="@@productLabelStockBulkPayments.textinput.paymentPerKg.error">-->
-<!--                                            Payment per kilogram is required-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </ng-container>-->
-<!--                            </textinput>-->
-
-<!--                            <textinput-->
-<!--                                    type="number"-->
-<!--                                    min="0"-->
-<!--                                    step="0.01"-->
-<!--                                    label="Total balance to be paid(RWF)"-->
-<!--                                    placeholder="Enter total balance to be paid (RWF)"-->
-<!--                                    i18n-label="@@productLabelStockBulkPayments.textinput.totalBalance.label"-->
-<!--                                    i18n-placeholder="@@productLabelStockBulkPayments.textinput.totalBalance.placeholder"-->
-<!--                                    style="width: 100%"-->
-<!--                                    [form]="balanceSeasonalForm"-->
-<!--                                    [value]="setBalanceToBePaid()"-->
-<!--                                    [readOnly]="true">-->
-<!--                            </textinput>-->
-<!--                        </ng-container>-->
-
                         <!-- Total amount -->
                         <textinput
                                 type="number"
@@ -173,7 +124,7 @@
                                 i18n-placeholder="@@productLabelStockBulkPayments.textinput.amount.placeholder"
                                 style="width: 100%"
                                 [label]="getCurrencyString(stringWithoutUnits.totalAmountLabel)"
-                                [form]="bulkPaymentForm.get('totalAmount')"
+                                [form]="$any(bulkPaymentForm.get('totalAmount'))"
                                 [isInvalid]="submitted && bulkPaymentForm.get('totalAmount').invalid"
                                 [value]="setTotalAmountToBePaid()"
                                 [readOnly]="true">
@@ -197,7 +148,7 @@
                                     i18n-placeholder="@@productLabelStockBulkPayments.textinput.additionalCosts.placeholder"
                                     style="width: 100%"
                                     [label]="getCurrencyString(stringWithoutUnits.additionalCostsLabel)"
-                                    [form]="bulkPaymentForm.get('additionalCost')"
+                                    [form]="$any(bulkPaymentForm.get('additionalCost'))"
                                     [readOnly]=this.update>
                             </textinput>
 
@@ -205,7 +156,7 @@
                                     label="Description of additional costs"
                                     i18n-label="@@productLabelStockBulkPayments.textinput.additionalCostDescription.label"
                                     style="width: 100%"
-                                    [form]="bulkPaymentForm.get('additionalCostDescription')"
+                                    [form]="$any(bulkPaymentForm.get('additionalCostDescription'))"
                                     [textarea]="true"
                                     [isInvalid]="submitted && bulkPaymentForm.get('additionalCostDescription').invalid"
                                     [readOnly]=this.update>
@@ -221,7 +172,7 @@
 
                         <!-- Receipt number -->
                         <textinput
-                                [form]="bulkPaymentForm.get('receiptNumber')"
+                                [form]="$any(bulkPaymentForm.get('receiptNumber'))"
                                 label="Receipt number"
                                 style="width: 100%"
                                 placeholder="Enter receipt number"
@@ -252,7 +203,7 @@
 
                                     <textinput label="Name"
                                                i18n-label="@@productLabelStockBulkPayments.textinput.origin.name"
-                                               [form]="purchaseOrder.get('identifier')"
+                                               [form]="$any(purchaseOrder.get('identifier'))"
                                                [readOnly]="true">
                                     </textinput>
 
@@ -262,46 +213,26 @@
                                                 <textinput type="number"
                                                            label="Cost"
                                                            [label]="getCurrencyString(stringWithoutUnits.costLabel)"
-                                                           [form]="purchaseOrder.get('cost')"
+                                                           [form]="$any(purchaseOrder.get('cost'))"
                                                            [readOnly]="true">
                                                 </textinput>
                                             </ng-container>
-
-<!--                                            <ng-container *ngIf="this.bulkType === BulkType.BONUS">-->
-<!--                                                <textinput type="number"-->
-<!--                                                           label="Purchased (kg)" -->
-<!--                                                           i18n-label="@@productLabelStockBulkPayments.textinput.origin.purchased"-->
-<!--                                                           [form]="purchaseOrder.get('purchased')"-->
-<!--                                                           [readOnly]="true">-->
-<!--                                                </textinput>-->
-<!--                                            </ng-container>-->
-
                                         </div>
                                         <div class="col">
                                             <ng-container *ngIf="this.bulkType === BulkType.PO">
                                                 <textinput type="number"
                                                            label="Balance"
                                                            [label]="getCurrencyString(stringWithoutUnits.balanceLabel)"
-                                                           [form]="purchaseOrder.get('balance')"
+                                                           [form]="$any(purchaseOrder.get('balance'))"
                                                            [readOnly]="true">
                                                 </textinput>
                                             </ng-container>
-
-<!--                                            <ng-container *ngIf="this.bulkType === BulkType.BONUS">-->
-<!--                                                <textinput type="number"-->
-<!--                                                           label="Balance"-->
-<!--                                                           [label]="getCurrencyString(stringWithoutUnits.balanceLabel)"-->
-<!--                                                           [form]="purchaseOrder.get('balance')"-->
-<!--                                                           [value]="setBalanceBonus(item.get('purchased').value, purchaseOrder.get('balance'))"-->
-<!--                                                           [readOnly]="true">-->
-<!--                                                </textinput>-->
-<!--                                            </ng-container>-->
                                         </div>
                                         <div class="col">
                                             <textinput type="number"
                                                        label="Paying"
                                                        [label]="getCurrencyString(stringWithoutUnits.payingLabel)"
-                                                       [form]="purchaseOrder.get('paid')"
+                                                       [form]="$any(purchaseOrder.get('paid'))"
                                                        [isInvalid]="purchaseOrder.invalid">
                                             </textinput>
                                             <div *ngIf="purchaseOrder.errors as errors" class="sc-invalid-feedback" i18n="@@productLabelStockBulkPayments.textinput.paying.error">
@@ -318,29 +249,6 @@
                                         </fa-icon>
                                     </div>
                                 </div>
-
-                                <!-- <ng-container *ngSwitchCase="'ok'" class="simple-view-container">
-                                <div class="row">
-                                  <div [class.col-9]="!flexCol" [class.col]="flexCol">
-                                    <div class="custom-file">
-                                      <input class="custom-file-input" name="fileSimple" #fileSimple
-                                      [disabled]="readOnly"
-                                        type="file" ng2FileSelect [uploader]="uploader" />
-                                      <label class="custom-file-label labelPlaceholder" ng2FileSelect>{{truncateFilename(uploadName)}}</label>
-                                    </div>
-                                  </div>
-                                  <div [class.col-3]="!flexCol" [class.col-2]="flexCol">
-                                    <div class="d-flex flex-row">
-
-                                      <div style="width: 16px"></div>
-                                      <div *ngIf="isImage() && showShowIcon"
-                                        (click)="showContentModal()"><fa-icon
-                                          class="simple-view-view" [icon]="showIcon"></fa-icon>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div> -->
                             </div>
                         </div>
                     </div>
@@ -354,7 +262,7 @@
                                     <div class="col">
                                         <textinput label="Name"
                                                    i18n-label="@@productLabelStockBulkPayments.textinput.origin.name"
-                                                   [form]="purchaseOrder.get('identifier')"
+                                                   [form]="$any(purchaseOrder.get('identifier'))"
                                                    [readOnly]="true">
                                         </textinput>
                                     </div>
@@ -403,8 +311,8 @@
                                 <div *ngFor="let item of paymentsForm.controls; let i=index;">
                                     <app-stock-payments-item
                                             title=null
-                                            [paymentForm]="item"
-                                            [formControlInput]="item"
+                                            [paymentForm]="$any(item)"
+                                            [formControlInput]="$any(item)"
                                             [isOpen]="paymentsListManager.isOpen(i)"
                                             [listEditorManager]="this.paymentsListManager"
                                             [listEditorManagerPosition]="i"
@@ -437,7 +345,7 @@
                                     <div *ngFor="let item of additionalProofsForm.controls; let i=index;">
                                         <app-additional-proof-item
                                                 title=null
-                                                [formControlInput]="item"
+                                                [formControlInput]="$any(item)"
                                                 [isOpen]="additionalProofsListManager.isOpen(i)"
                                                 [listEditorManager]="this.additionalProofsListManager"
                                                 [listEditorManagerPosition]="i">

@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+                        <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;">
                             <div class="button-icon">
                                 <span class="button-icon-shape button-icon-shape--filter"></span>
                             </div>
@@ -67,13 +67,6 @@
                                 [form]="searchFarmerNameAndSurname"
                                 (valueChange)="searchPaymentByFarmerNameInput($event)">
                         </app-search-textinput>
-
-                        <button class="af-actions-btn"
-                                [class.af-actions-btn--disabled]="allPayments < 1"
-                                [disabled]="allPayments < 1"
-                                (click)="generatePaymentsCsv()">
-                            <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export</span>
-                        </button>
 
                     </div>
                 </div>
@@ -97,6 +90,13 @@
                         (onChange)="onFilterDateRangeChange()"
                         style="width: 130px">
                 </app-datepicker>
+
+                <button class="af-actions-btn" style="margin-top: 1.7rem"
+                        [class.af-actions-btn--disabled]="allPayments < 1"
+                        [disabled]="allPayments < 1"
+                        (click)="generatePaymentsCsv()">
+                    <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export data</span>
+                </button>
             </div>
 
             <app-stock-payments-list

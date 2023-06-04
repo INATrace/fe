@@ -2367,6 +2367,7 @@ animation-timing-function: ease-in;
 
 .main-inside-top {
   margin-top: 20px;
+  margin-bottom: 56px;
   padding-top: 0;
 
   @include media-breakpoint-up(lg) {
@@ -2795,25 +2796,6 @@ tr:nth-child(odd) {
 .dropdown-toggle::after {
     display:none;
 }
-
-
-// products, cards listing
-// moved from tmp.css
-
-// generic card styles will land here
-
-
-// .main-inside-top >
-// .d-flex > .title-page:first-child {
-//   color: blue;
-//   margin-top: 63px;
-// }
-// .d-flex + .d-flex > .title-page:first-child {
-//   color: red;
-//   margin-top: 0;
-// }
-
-
 
 .main-inside-top,
 .content-element {

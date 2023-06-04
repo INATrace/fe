@@ -76,10 +76,10 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   selectedTab: Subscription;
 
   tabs = [
-    $localize`:@@productLabelStock.tab0.title:Purchases`,
+    $localize`:@@productLabelStock.tab0.title:Deliveries`,
     $localize`:@@productLabelStock.tab1.title:Processing`,
     $localize`:@@productLabelStock.tab2.title:Payments`,
-    $localize`:@@productLabelStock.tab4.title:My stock`,
+    $localize`:@@productLabelStock.tab4.title:All stock`,
   ];
 
   tabNames = [

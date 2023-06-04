@@ -74,9 +74,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   searchFarmerNameSurnamePing$ = new BehaviorSubject<string>(null);
 
   @Input()
-  clickClearCheckboxesPing$ = new BehaviorSubject<boolean>(false);
-
-  @Input()
   mode: 'PURCHASE' | 'GENERAL' = 'PURCHASE';
 
   @Input()
@@ -106,7 +103,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   cbCheckedAll = new FormControl(false);
   private allSelected = false;
   currentData: ApiStockOrder[];
-  clearCheckboxesSubscription: Subscription;
 
   orders$: Observable<ApiPaginatedListApiStockOrder>;
   aggregatedOrders: AggregatedStockItem[];
@@ -126,12 +122,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
-    this.clearCheckboxesSubscription = this.clickClearCheckboxesPing$.subscribe(val => {
-      if (val) {
-        this.clearCBs();
-      }
-    });
 
     this.addPaymentsSubscription = this.clickAddPaymentsPing$.subscribe(val => {
       if (val) {
@@ -216,7 +206,6 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.addPaymentsSubscription) { this.addPaymentsSubscription.unsubscribe(); }
-    if (this.clearCheckboxesSubscription) { this.clearCheckboxesSubscription.unsubscribe(); }
   }
 
   private initSortOptions() {

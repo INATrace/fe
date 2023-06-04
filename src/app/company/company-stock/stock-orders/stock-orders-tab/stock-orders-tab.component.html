@@ -6,7 +6,7 @@
     <div class="main-inside-top content-element">
 
       <div class="d-flex justify-content-between content-element--row1">
-        <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock orders</div>
+        <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock</div>
         <div *ngIf="isAuthRoleToExportToBeyco && !isBeycoAuthorized">
           <button class="btn" type="button" (click)="getAuthBeyco()">
             <span i18n="@@productLabelStock.beyco.button.login">Login to Beyco</span>
@@ -91,7 +91,7 @@
               </div>
             </div>
 
-            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@productLabelStock.filter.placeholder">
+            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;">
               <div class="button-icon">
                 <span class="button-icon-shape button-icon-shape--filter"></span>
               </div>
