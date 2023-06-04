@@ -21,7 +21,7 @@
         <single-choice
           label="Customer of"
           i18n-label="@@producersItem.label.customer"
-          [formControlInput]="form.get('company.id')"
+          [formControlInput]="$any(form.get('company.id'))"
           [codebookService]="codebookCoop"
           [isInvalidChoice]="submitted && form.get('company.id').invalid"
           [readonly]="readonly">
@@ -38,9 +38,10 @@
         <single-choice
           label="Role"
           i18n-label="@@producersItem.label.role"
-          [formControlInput]="form.get('userCustomerType')"
+          [formControlInput]="$any(form.get('userCustomerType'))"
           [codebookService]="codebookRoles"
-          [isInvalidChoice]="submitted && form.get('userCustomerType').invalid">
+          [isInvalidChoice]="submitted && form.get('userCustomerType').invalid"
+          [readonly]="true">
           <ng-container *ngIf="submitted">
             <div *ngIf="form.get('userCustomerType').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@producersItem.textinput.role.error">

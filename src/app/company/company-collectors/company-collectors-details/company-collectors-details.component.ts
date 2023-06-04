@@ -76,10 +76,11 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
 
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
-    FEMALE: $localize`:@@collectorDetail.gender.female:Female`
+    FEMALE: $localize`:@@collectorDetail.gender.female:Female`,
+    N_A: 'N/A'
   });
 
-  codebookStatus = EnumSifrant.fromObject(this.roles);
+  readonly collectorType = UserCustomerTypeEnum.COLLECTOR;
 
   certificationListManager = null;
 
@@ -174,13 +175,6 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     return () => {
       return new FormControl(CompanyCollectorsDetailsComponent.ApiCertificationCreateEmptyObject(), ApiCertificationValidationScheme.validators);
     };
-  }
-
-  get roles() {
-    const obj = {};
-    obj['FARMER'] = $localize`:@@collectorDetail.roles.collector:Collector`;
-    obj['COLLECTOR'] = $localize`:@@collectorDetail.roles.collector:Collector`;
-    return obj;
   }
 
   get certifications(): AbstractControl[] {
@@ -339,12 +333,12 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
     }
   }
 
-  roleResultFormatter = (value: any) => {
-    return this.codebookStatus.textRepresentation(value);
+  assocResultFormatter = (value: any) => {
+    return this.codebookAssoc.textRepresentation(value);
   }
 
-  roleInputFormatter = (value: any) => {
-    return this.codebookStatus.textRepresentation(value);
+  assocInputFormatter = (value: any) => {
+    return this.codebookAssoc.textRepresentation(value);
   }
 
   addAssociation(item, form) {

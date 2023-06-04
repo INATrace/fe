@@ -61,29 +61,23 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   payments = [];
 
   producersListManager;
-  codebookAssoc;
+  codebookAssoc: EnumSifrant;
   codebookCoop;
   assocCoop;
   assocForm = new FormControl(null);
 
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
-    FEMALE: $localize`:@@collectorDetail.gender.female:Female`
+    FEMALE: $localize`:@@collectorDetail.gender.female:Female`,
+    N_A: 'N/A'
   });
 
-  get roles() {
-    const obj = {};
-    obj['FARMER'] = $localize`:@@collectorDetail.roles.farmer:Farmer`;
-    obj['COLLECTOR'] = $localize`:@@collectorDetail.roles.collector:Collector`;
-    return obj;
-  }
+  readonly farmerType = UserCustomerTypeEnum.FARMER;
 
   // payments table parameters
   showedPaymentOrders = 0;
   allPaymentOrders = 0;
   selectedPayments: ApiPayment[];
-
-  codebookStatus = EnumSifrant.fromObject(this.roles);
 
   farmerIdPing$ = new BehaviorSubject<number>(this.route.snapshot.params.id);
   productTypesForm = new FormControl(null);
@@ -550,12 +544,12 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  roleResultFormatter = (value: any) => {
-    return this.codebookStatus.textRepresentation(value);
+  assocResultFormatter = (value: any) => {
+    return this.codebookAssoc.textRepresentation(value);
   }
 
-  roleInputFormatter = (value: any) => {
-    return this.codebookStatus.textRepresentation(value);
+  assocInputFormatter = (value: any) => {
+    return this.codebookAssoc.textRepresentation(value);
   }
 
   addAssociation(item, form) {

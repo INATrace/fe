@@ -195,7 +195,7 @@
                                                         [assocCoop]="assocCoop"
                                                         title=null
                                                         [formControlInput]="item"
-                                                        [type]="'COLLECTOR'"
+                                                        [type]="collectorType"
                                                         [isOpen]="producersListManager.isOpen(i)"
                                                         [listEditorManager]="this.producersListManager"
                                                         [listEditorManagerPosition]="i">
@@ -228,8 +228,8 @@
                                     placeholder="Type association ..."
                                     i18n-placeholder="@@collectorDetail.textinput.assoc.placeholder"
                                     [codebookService]="codebookAssoc"
-                                    [resultFormatter]="roleResultFormatter"
-                                    [inputFormatter]="roleInputFormatter"
+                                    [resultFormatter]="assocResultFormatter"
+                                    [inputFormatter]="assocInputFormatter"
                                     (itemMatching)="addAssociation($event, assocForm)">
                             </textinput>
                         </div>

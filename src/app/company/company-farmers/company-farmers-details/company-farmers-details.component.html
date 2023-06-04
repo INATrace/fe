@@ -211,7 +211,7 @@
                                             [assocCoop]="assocCoop"
                                             title=null
                                             [formControlInput]="item"
-                                            [type]="'FARMER'"
+                                            [type]="farmerType"
                                             [isOpen]="producersListManager.isOpen(i)"
                                             [listEditorManager]="this.producersListManager"
                                             [listEditorManagerPosition]="i">
@@ -244,8 +244,8 @@
                                     placeholder="Type association ..."
                                     i18n-placeholder="@@collectorDetail.textinput.assoc.placeholder"
                                     [codebookService]="codebookAssoc"
-                                    [resultFormatter]="roleResultFormatter"
-                                    [inputFormatter]="roleInputFormatter"
+                                    [resultFormatter]="assocResultFormatter"
+                                    [inputFormatter]="assocInputFormatter"
                                     (itemMatching)="addAssociation($event, assocForm)">
                             </textinput>
                         </div>
@@ -269,7 +269,7 @@
                     <div class="af-form-element">
 
                         <textinput
-                            [form]="farmerForm.get('farm.areaUnit')"
+                            [form]="$any(farmerForm.get('farm.areaUnit'))"
                             label="Area unit"
                             i18n-label="@@collectorDetail.textinput.areaUnit.label"
                             style="width: 100%"
@@ -286,7 +286,7 @@
                         </textinput>
 
                         <textinput
-                            [form]="farmerForm.get('farm.totalCultivatedArea')"
+                            [form]="$any(farmerForm.get('farm.totalCultivatedArea'))"
                             style="width: 100%"
                             [label]="appendAreaUnit(areaTranslations.totalCultivatedLabel, areaUnit.value)"
                             [placeholder]="appendAreaUnit(areaTranslations.totalCultivatedPlaceholder, areaUnit.value)">
@@ -298,14 +298,14 @@
                             <label>{{ getProductTypeName(i) }}</label>
                             <div class="af-form-element">
                                 <textinput
-                                        [form]="farmPlantInfo.get('plantCultivatedArea')"
+                                        [form]="$any(farmPlantInfo.get('plantCultivatedArea'))"
                                         style="width: 100%"
                                         [label]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedLabel, areaUnit.value, i)"
                                         [placeholder]="appendAreaUnitAndProductType(areaTranslations.plantCultivatedPlaceholder, areaUnit.value, i)">
                                 </textinput>
 
                                 <textinput
-                                        [form]="farmPlantInfo.get('numberOfPlants')"
+                                        [form]="$any(farmPlantInfo.get('numberOfPlants'))"
                                         style="width: 100%"
                                         [label]="appendProductType(areaTranslations.numberOfPlantsLabel, i)"
                                         [placeholder]="appendProductType(areaTranslations.numberOfPlantsPlaceholder, i)">
@@ -317,14 +317,14 @@
                         </ng-container>
 
 
-                        <checkbox-input [form]="farmerForm.get('farm.organic')">
+                        <checkbox-input [form]="$any(farmerForm.get('farm.organic'))">
                             <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">
                                 Organic farm
                             </checkbox-input-rich-label>
                         </checkbox-input>
 
                         <textinput
-                            [form]="farmerForm.get('farm.areaOrganicCertified')"
+                            [form]="$any(farmerForm.get('farm.areaOrganicCertified'))"
                             style="width: 100%"
                             [label]="appendAreaUnit(areaTranslations.organicCertifiedLabel, areaUnit.value)"
                             [placeholder]="appendAreaUnit(areaTranslations.organicCertifiedPlaceholder, areaUnit.value)">
@@ -355,7 +355,7 @@
                                     <app-certification-and-standard-item
                                             title="Certification"
                                             i18n-title="@@companyDetail.list-editor.certificationsAndStandards.title"
-                                            [formControlInput]="item"
+                                            [formControlInput]="$any(item)"
                                             [isOpen]="certificationListManager.isOpen(i)"
                                             [listEditorManager]="this.certificationListManager"
                                             [listEditorManagerPosition]="i">

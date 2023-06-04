@@ -164,7 +164,8 @@ export namespace ApiUserCustomer {
      */
     export enum GenderEnum {
         FEMALE = 'FEMALE',
-        MALE = 'MALE'
+        MALE = 'MALE',
+        NA = 'N_A'
     }
 
     /**
