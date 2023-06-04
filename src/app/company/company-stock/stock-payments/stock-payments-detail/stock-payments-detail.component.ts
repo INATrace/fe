@@ -152,7 +152,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     if (this.stockOrder.priceDeterminedLater) {
       this.toasterService.error(this.addPricePerUnitMessage);
-      this.router.navigate(['my-stock', 'purchases', 'tab']).then();
+      this.router.navigate(['my-stock', 'deliveries', 'tab']).then();
     }
 
     this.submitted = false;

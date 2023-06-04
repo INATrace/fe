@@ -17,11 +17,11 @@ import { FileSaverService } from 'ngx-filesaver';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
-  selector: 'app-stock-purchases-tab',
-  templateUrl: './stock-purchases-tab.component.html',
-  styleUrls: ['./stock-purchases-tab.component.scss']
+  selector: 'app-stock-deliveries-tab',
+  templateUrl: './stock-deliveries-tab.component.html',
+  styleUrls: ['./stock-deliveries-tab.component.scss']
 })
-export class StockPurchasesTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
+export class StockDeliveriesTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
   rootTab = 0;
 
@@ -94,7 +94,7 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       return;
     }
 
-    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new']).then();
+    this.router.navigate(['my-stock', 'deliveries', 'facility', this.selectedFacilityId, 'deliveries', 'new']).then();
   }
 
   newPurchaseOrderBulk() {
@@ -106,7 +106,7 @@ export class StockPurchasesTabComponent extends StockCoreTabComponent implements
       return;
     }
 
-    this.router.navigate(['my-stock', 'purchases', 'facility', this.selectedFacilityId, 'purchases', 'new-bulk']).then();
+    this.router.navigate(['my-stock', 'deliveries', 'facility', this.selectedFacilityId, 'deliveries', 'new-bulk']).then();
   }
 
   async generatePurchasesCsv(){

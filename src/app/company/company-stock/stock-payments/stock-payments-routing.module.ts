@@ -18,7 +18,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'purchase-order/:purchaseOrderId/new',
+    path: 'delivery/:purchaseOrderId/new',
     component: StockPaymentsDetailComponent,
     pathMatch: 'full',
     data: {
@@ -56,7 +56,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'purchases/bulk-payment/update/:bulkPaymentId',
+    path: 'deliveries/bulk-payment/update/:bulkPaymentId',
     component: StockPaymentsBulkDetailComponent,
     pathMatch: 'full',
     data: {
@@ -69,7 +69,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'purchases/bulk-payment/:purchaseOrderIds/new/:bulkType',
+    path: 'deliveries/bulk-payment/:purchaseOrderIds/new/:bulkType',
     component: StockPaymentsBulkDetailComponent,
     pathMatch: 'full',
     data: {
@@ -77,7 +77,7 @@ const routes: Routes = [
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.bulkPayment.myStock:My stock`
             + ' / ' + $localize`:@@breadCrumb.bulkPayment.bulkPayment:Bulk payment`,
-        route: 'my-stock/purchases/tab'
+        route: 'my-stock/deliveries/tab'
       }
     }
   }

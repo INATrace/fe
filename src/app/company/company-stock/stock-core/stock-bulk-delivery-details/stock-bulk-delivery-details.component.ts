@@ -37,11 +37,11 @@ import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-stock-purchase-order-details-bulk',
-  templateUrl: './stock-purchase-order-details-bulk.component.html',
-  styleUrls: ['./stock-purchase-order-details-bulk.component.scss']
+  selector: 'app-stock-bulk-delivery-details',
+  templateUrl: './stock-bulk-delivery-details.component.html',
+  styleUrls: ['./stock-bulk-delivery-details.component.scss']
 })
-export class StockPurchaseOrderDetailsBulkComponent implements OnInit, OnDestroy {
+export class StockBulkDeliveryDetailsComponent implements OnInit, OnDestroy {
 
   // FontAwesome icons
   faTrashAlt = faTrashAlt;
@@ -112,7 +112,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit, OnDestroy
 
   static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(StockPurchaseOrderDetailsBulkComponent.AdditionalProofItemCreateEmptyObject(),
+      return new FormControl(StockBulkDeliveryDetailsComponent.AdditionalProofItemCreateEmptyObject(),
           ApiActivityProofValidationScheme.validators);
     };
   }
@@ -286,7 +286,7 @@ export class StockPurchaseOrderDetailsBulkComponent implements OnInit, OnDestroy
 
     this.additionalProofsListManager = new ListEditorManager<ApiActivityProof>(
         this.additionalProofsForm as FormArray,
-        StockPurchaseOrderDetailsBulkComponent.AdditionalProofItemEmptyObjectFormFactory(),
+        StockBulkDeliveryDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
         ApiActivityProofValidationScheme
     );
 

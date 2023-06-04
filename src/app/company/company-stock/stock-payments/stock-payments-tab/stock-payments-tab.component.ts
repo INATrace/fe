@@ -71,7 +71,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     });
     const stockOrder = await modalRef.result;
     if (stockOrder) {
-      await this.router.navigate(['my-stock', 'payments', 'purchase-order', stockOrder.id, 'new']);
+      await this.router.navigate(['my-stock', 'payments', 'delivery', stockOrder.id, 'new']);
     }
   }
 

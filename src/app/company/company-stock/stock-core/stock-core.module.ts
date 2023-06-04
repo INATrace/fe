@@ -7,21 +7,21 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockCoreTabComponent } from './stock-core-tab/stock-core-tab.component';
-import { StockPurchaseOrderDetailsComponent } from './stock-purchase-order-details/stock-purchase-order-details.component';
+import { StockDeliveryDetailsComponent } from './stock-delivery-details/stock-delivery-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdditionalProofItemComponent } from './additional-proof-item/additional-proof-item.component';
-import { StockPurchaseOrderDetailsBulkComponent } from './stock-purchase-order-details-bulk/stock-purchase-order-details-bulk.component';
+import { StockBulkDeliveryDetailsComponent } from './stock-bulk-delivery-details/stock-bulk-delivery-details.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
-import {QRCodeModule} from 'angular2-qrcode';
+import { QRCodeModule } from 'angular2-qrcode';
 import { GroupStockOrderListComponent } from './group-stock-order-list/group-stock-order-list.component';
-import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     StockCoreTabComponent,
-    StockPurchaseOrderDetailsComponent,
-    StockPurchaseOrderDetailsBulkComponent,
+    StockDeliveryDetailsComponent,
+    StockBulkDeliveryDetailsComponent,
     AdditionalProofItemComponent,
     OrderHistoryComponent,
     GroupStockOrderListComponent
@@ -41,8 +41,8 @@ import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
         NgbPaginationModule
     ],
     exports: [
-        StockPurchaseOrderDetailsComponent,
-        StockPurchaseOrderDetailsBulkComponent,
+        StockDeliveryDetailsComponent,
+        StockBulkDeliveryDetailsComponent,
         AdditionalProofItemComponent,
         GroupStockOrderListComponent
     ]

@@ -354,13 +354,13 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
 
     if (this.pageListingMode === 'PURCHASE_ORDERS') {
 
-      this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
+      this.router.navigate(['my-stock', 'deliveries', 'update', order.id]).then();
 
     } else {
 
       switch (order.orderType as StockOrderType) {
         case 'PURCHASE_ORDER':
-          this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
+          this.router.navigate(['my-stock', 'deliveries', 'update', order.id]).then();
           return;
         case 'GENERAL_ORDER':
         case 'PROCESSING_ORDER':
@@ -384,7 +384,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       this.toasterService.warning(this.addPricePerUnitMessage);
       return;
     }
-    this.router.navigate(['my-stock', 'payments', 'purchase-order', order.id, 'new']).then();
+    this.router.navigate(['my-stock', 'payments', 'delivery', order.id, 'new']).then();
   }
 
   farmerProfile(id) {
@@ -600,7 +600,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
       }
       poIds.push(item.id);
     }
-    this.router.navigate(['my-stock', 'payments', 'purchases', 'bulk-payment', poIds.toString(), 'new', 'PO']).then();
+    this.router.navigate(['my-stock', 'payments', 'deliveries', 'bulk-payment', poIds.toString(), 'new', 'PO']).then();
   }
 
   formatDate(productionDate) {

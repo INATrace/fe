@@ -31,11 +31,11 @@ import { Subscription } from 'rxjs';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 
 @Component({
-  selector: 'app-stock-purchase-order-details',
-  templateUrl: './stock-purchase-order-details.component.html',
-  styleUrls: ['./stock-purchase-order-details.component.scss']
+  selector: 'app-stock-delivery-details',
+  templateUrl: './stock-delivery-details.component.html',
+  styleUrls: ['./stock-delivery-details.component.scss']
 })
-export class StockPurchaseOrderDetailsComponent implements OnInit, OnDestroy {
+export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
 
   title: string = null;
 
@@ -109,7 +109,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
   static AdditionalProofItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(StockPurchaseOrderDetailsComponent.AdditionalProofItemCreateEmptyObject(),
+      return new FormControl(StockDeliveryDetailsComponent.AdditionalProofItemCreateEmptyObject(),
         ApiActivityProofValidationScheme.validators);
     };
   }
@@ -362,7 +362,7 @@ export class StockPurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.additionalProofsListManager = new ListEditorManager<ApiActivityProof>(
       this.additionalProofsForm as FormArray,
-      StockPurchaseOrderDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
+      StockDeliveryDetailsComponent.AdditionalProofItemEmptyObjectFormFactory(),
       ApiActivityProofValidationScheme
     );
 

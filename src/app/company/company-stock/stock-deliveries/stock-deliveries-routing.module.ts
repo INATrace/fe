@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StockPurchasesTabComponent } from './stock-purchases-tab/stock-purchases-tab.component';
-import { StockPurchaseOrderDetailsComponent } from '../stock-core/stock-purchase-order-details/stock-purchase-order-details.component';
-import {StockPurchaseOrderDetailsBulkComponent} from '../stock-core/stock-purchase-order-details-bulk/stock-purchase-order-details-bulk.component';
+import { StockDeliveriesTabComponent } from './stock-deliveries-tab/stock-deliveries-tab.component';
+import { StockDeliveryDetailsComponent } from '../stock-core/stock-delivery-details/stock-delivery-details.component';
+import {StockBulkDeliveryDetailsComponent} from '../stock-core/stock-bulk-delivery-details/stock-bulk-delivery-details.component';
 
 const routes: Routes = [
   {
@@ -11,16 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'tab',
-    component: StockPurchasesTabComponent,
+    component: StockDeliveriesTabComponent,
     pathMatch: 'full',
     data: {
-      tab: 'purchases',
+      tab: 'deliveries',
       drobtinice: null
     }
   },
   {
     path: 'facility/:facilityId/:fromTabType/new-bulk',
-    component: StockPurchaseOrderDetailsBulkComponent,
+    component: StockBulkDeliveryDetailsComponent,
     pathMatch: 'full',
     data: {
       action: 'new',
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'facility/:facilityId/:fromTabType/new',
-    component: StockPurchaseOrderDetailsComponent,
+    component: StockDeliveryDetailsComponent,
     pathMatch: 'full',
     data: {
       action: 'new',
@@ -46,14 +46,14 @@ const routes: Routes = [
   },
   {
     path: 'update/:purchaseOrderId',
-    component: StockPurchaseOrderDetailsComponent,
+    component: StockDeliveryDetailsComponent,
     pathMatch: 'full',
     data: {
       action: 'update',
       mode: 'PURCHASE_ORDER',
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.purchaseOrders.purchase:Purchase`,
-        route: 'my-stock/purchases'
+        route: 'my-stock/deliveries'
       }
     }
   }
@@ -63,4 +63,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StockPurchasesRoutingModule { }
+export class StockDeliveriesRoutingModule { }

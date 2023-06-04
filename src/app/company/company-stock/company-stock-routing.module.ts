@@ -4,11 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'purchases'
+    redirectTo: 'deliveries'
   },
   {
-    path: 'purchases',
-    loadChildren: () => import('./stock-purchases/stock-purchases.module').then(m => m.StockPurchasesModule)
+    path: 'deliveries',
+    loadChildren: () => import('./stock-deliveries/stock-deliveries.module').then(m => m.StockDeliveriesModule)
   },
   {
     path: 'processing',

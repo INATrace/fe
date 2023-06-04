@@ -270,7 +270,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   edit(order: ApiGroupStockOrder) {
     switch (order.orderType as StockOrderType) {
       case 'PURCHASE_ORDER':
-        this.router.navigate(['my-stock', 'purchases', 'update', order.groupedIds[0]]).then();
+        this.router.navigate(['my-stock', 'deliveries', 'update', order.groupedIds[0]]).then();
         return;
       case 'GENERAL_ORDER':
       case 'PROCESSING_ORDER':

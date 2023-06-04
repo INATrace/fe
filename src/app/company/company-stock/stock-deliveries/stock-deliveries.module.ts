@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StockPurchasesRoutingModule } from './stock-purchases-routing.module';
-import { StockPurchasesTabComponent } from './stock-purchases-tab/stock-purchases-tab.component';
+import { StockDeliveriesRoutingModule } from './stock-deliveries-routing.module';
+import { StockDeliveriesTabComponent } from './stock-deliveries-tab/stock-deliveries-tab.component';
 import { CoreModule } from '../../../core/core.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { LayoutModule } from '../../../layout/layout.module';
@@ -12,10 +12,10 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [StockPurchasesTabComponent],
+  declarations: [StockDeliveriesTabComponent],
   imports: [
     CommonModule,
-    StockPurchasesRoutingModule,
+    StockDeliveriesRoutingModule,
     CoreModule,
     ComponentsModule,
     LayoutModule,
@@ -26,4 +26,4 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ]
 })
-export class StockPurchasesModule { }
+export class StockDeliveriesModule { }

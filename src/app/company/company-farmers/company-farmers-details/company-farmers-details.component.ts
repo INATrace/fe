@@ -57,7 +57,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   appName = environment.appName;
 
   openBalanceOnly = false;
-  purchaseOrders = [];
+  deliveries = [];
   payments = [];
 
   producersListManager;
@@ -91,9 +91,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   productTypesCodebook: CompanyProductTypesService;
   selectedProductTypesForm = new FormControl(null, [ListNotEmptyValidator()]);
 
-  // purchase table parameters
-  showedPurchaseOrders = 0;
-  allPurchaseOrders = 0;
+  // Deliveries table parameters
+  showedDeliveries = 0;
+  allDeliveries = 0;
   selectedOrders: ApiStockOrder[];
 
   certificationListManager = null;
@@ -658,11 +658,11 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   onShowPO(event) {
-    this.showedPurchaseOrders = event;
+    this.showedDeliveries = event;
   }
 
   onCountAllPO(event) {
-    this.allPurchaseOrders = event;
+    this.allDeliveries = event;
   }
 
   onShowPayments(event) {

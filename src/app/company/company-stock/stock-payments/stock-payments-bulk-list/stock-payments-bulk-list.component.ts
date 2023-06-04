@@ -128,7 +128,7 @@ export class StockPaymentsBulkListComponent implements OnInit {
   }
 
   editBulkPayment(bulkPayment) {
-    this.router.navigate(['my-stock', 'payments', 'purchases', 'bulk-payment', 'update', bulkPayment.id]).then();
+    this.router.navigate(['my-stock', 'payments', 'deliveries', 'bulk-payment', 'update', bulkPayment.id]).then();
   }
 
   changeSort(event) {

@@ -83,7 +83,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
   ];
 
   tabNames = [
-    'purchases',
+    'deliveries',
     'processing',
     'payments',
     'orders'

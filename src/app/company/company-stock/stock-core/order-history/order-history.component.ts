@@ -114,7 +114,7 @@ export class OrderHistoryComponent implements OnInit {
 
       switch (order.orderType as StockOrderType) {
         case 'PURCHASE_ORDER':
-          this.router.navigate(['my-stock', 'purchases', 'update', order.id]).then();
+          this.router.navigate(['my-stock', 'deliveries', 'update', order.id]).then();
           return;
         case 'GENERAL_ORDER':
         case 'PROCESSING_ORDER':
