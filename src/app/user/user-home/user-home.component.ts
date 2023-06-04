@@ -6,8 +6,10 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ProductControllerService } from '../../../api/api/productController.service';
 import { ApiPaginatedResponseApiProductListResponse } from '../../../api/model/apiPaginatedResponseApiProductListResponse';
-import StatusEnum = ApiPaginatedResponseApiProductListResponse.StatusEnum;
 import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
+import { ApiCompanyGet } from '../../../api/model/apiCompanyGet';
+import StatusEnum = ApiPaginatedResponseApiProductListResponse.StatusEnum;
+import CompanyRolesEnum = ApiCompanyGet.CompanyRolesEnum;
 
 @Component({
   selector: 'app-user-home',
@@ -44,6 +46,9 @@ export class UserHomeComponent implements OnInit, OnDestroy {
     tap(() => this.globalEventManager.showLoading(false))
   );
 
+  showCollectorsNavButton = false;
+  showMyCustomersNavButton = false;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -55,7 +60,12 @@ export class UserHomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.sub = this.selUserCompanyService.selectedCompanyProfile$.subscribe(company => {
-      // TODO: subscribe to selected user company
+      this.showCollectorsNavButton = company?.supportsCollectors;
+      company?.companyRoles?.forEach(cr => {
+        if (cr === CompanyRolesEnum.BUYER) {
+          this.showMyCustomersNavButton = true;
+        }
+      });
     });
   }
 

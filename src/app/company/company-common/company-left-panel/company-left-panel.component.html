@@ -50,7 +50,7 @@
       </a>
     </li>
 
-    <li>
+    <li *ngIf="showCollectorsLink">
       <a class="link-normal"
          routerLinkActive="active"
          routerLink="/my-collectors"
@@ -59,7 +59,7 @@
       </a>
     </li>
 
-    <li>
+    <li *ngIf="showMyCustomersLink">
       <a class="link-normal"
          routerLinkActive="active"
          routerLink="/my-customers"

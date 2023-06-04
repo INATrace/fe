@@ -49,6 +49,10 @@ export interface ApiCompanyGet {
      * company certifications
      */
     certifications?: Array<ApiCertification>;
+    /**
+     * Roles by which this company is connected in the Products where it is part of
+     */
+    companyRoles?: Array<ApiCompanyGet.CompanyRolesEnum>;
     currency?: ApiCurrencyType;
     /**
      * Display preferred way of payment on purchase order form
@@ -93,6 +97,10 @@ export interface ApiCompanyGet {
      */
     purchaseProofDocumentMultipleFarmers?: boolean;
     /**
+     * Flag indicating that the company supports collectors for deliveries
+     */
+    supportsCollectors?: boolean;
+    /**
      * Company users
      */
     users?: Array<ApiCompanyUser>;
@@ -134,6 +142,10 @@ export namespace ApiCompanyGet {
          * company certifications
          */
         certifications = 'certifications',
+        /**
+         * Roles by which this company is connected in the Products where it is part of
+         */
+        companyRoles = 'companyRoles',
         currency = 'currency',
         /**
          * Display preferred way of payment on purchase order form
@@ -178,6 +190,10 @@ export namespace ApiCompanyGet {
          */
         purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
+         * Flag indicating that the company supports collectors for deliveries
+         */
+        supportsCollectors = 'supportsCollectors',
+        /**
          * Company users
          */
         users = 'users',
@@ -203,6 +219,21 @@ export namespace ApiCompanyGet {
         SETUSERCOMPANYROLE = 'SET_USER_COMPANY_ROLE',
         REMOVEUSERFROMCOMPANY = 'REMOVE_USER_FROM_COMPANY',
         MERGETOCOMPANY = 'MERGE_TO_COMPANY'
+    }
+
+    /**
+     * All possible values of companyRoles.
+     */
+    export enum CompanyRolesEnum {
+        BUYER = 'BUYER',
+        IMPORTER = 'IMPORTER',
+        EXPORTER = 'EXPORTER',
+        OWNER = 'OWNER',
+        PRODUCER = 'PRODUCER',
+        ASSOCIATION = 'ASSOCIATION',
+        PROCESSOR = 'PROCESSOR',
+        TRADER = 'TRADER',
+        ROASTER = 'ROASTER'
     }
 
 
@@ -267,6 +298,18 @@ export namespace ApiCompanyGet {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiCertification'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'Array&lt;ApiCompanyGet.CompanyRolesEnum&gt;',
+                    required: false,
+                    name: 'companyRoles',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'Array&lt;string&gt;',
+                    isPrimitiveType: true,
+                    isListContainer: true,
+                    complexType: ''
                 },
                 {
                     metadata: ApiCurrencyType.formMetadata,
@@ -416,6 +459,17 @@ export namespace ApiCompanyGet {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'supportsCollectors',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiCompanyUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -462,6 +516,8 @@ export namespace ApiCompanyGet {
                 ],
                 certifications: [
                 ],
+                companyRoles: [
+                ],
                 currency: [
                 ],
                 displayPrefferedWayOfPayment: [
@@ -487,6 +543,8 @@ export namespace ApiCompanyGet {
                 phone: [
                 ],
                 purchaseProofDocumentMultipleFarmers: [
+                ],
+                supportsCollectors: [
                 ],
                 users: [
                 ],
@@ -514,6 +572,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               certifications: {
+  //                   validators: []
+  //               },
+  //               companyRoles: {
   //                   validators: []
   //               },
   //               currency: {
@@ -553,6 +614,9 @@ export namespace ApiCompanyGet {
   //                   validators: []
   //               },
   //               purchaseProofDocumentMultipleFarmers: {
+  //                   validators: []
+  //               },
+  //               supportsCollectors: {
   //                   validators: []
   //               },
   //               users: {

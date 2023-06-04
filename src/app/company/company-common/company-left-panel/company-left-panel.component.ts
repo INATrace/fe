@@ -8,6 +8,8 @@ import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
 import RoleEnum = ApiUserGet.RoleEnum;
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { ApiCompanyGet } from '../../../../api/model/apiCompanyGet';
+import CompanyRolesEnum = ApiCompanyGet.CompanyRolesEnum;
 
 @Component({
   selector: 'app-company-left-panel',
@@ -26,6 +28,9 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
   isCompanyAdmin = false;
 
   private subscriptions: Subscription[] = [];
+
+  showCollectorsLink = false;
+  showMyCustomersLink = false;
 
   constructor(
     private router: Router,
@@ -59,6 +64,13 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
             if (user.companyIdsAdmin.includes(this.companyId)) {
               this.isCompanyAdmin = true;
             }
+
+            this.showCollectorsLink = companyProfile.supportsCollectors;
+            companyProfile.companyRoles?.forEach(cr => {
+              if (cr === CompanyRolesEnum.BUYER) {
+                this.showMyCustomersLink = true;
+              }
+            });
           }
         })
     );
