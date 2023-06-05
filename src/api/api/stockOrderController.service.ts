@@ -33,7 +33,9 @@ import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiStockOrder } from '../model/apiPaginatedResponseApiStockOrder';
 import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
+import { ApiResponseApiDeliveriesTotal } from '../model/apiResponseApiDeliveriesTotal';
 import { ApiResponseApiProcessingOrder } from '../model/apiResponseApiProcessingOrder';
+import { ApiResponseApiProcessingPerformanceTotal } from '../model/apiResponseApiProcessingPerformanceTotal';
 import { ApiResponseApiPurchaseOrder } from '../model/apiResponseApiPurchaseOrder';
 import { ApiResponseApiStockOrder } from '../model/apiResponseApiStockOrder';
 import { ApiResponseApiStockOrderHistory } from '../model/apiResponseApiStockOrderHistory';
@@ -302,6 +304,228 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
       productionDateEnd: [
       ],
       language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getDeliveriesAggregatedDataUsingGET.
+ */
+export namespace GetDeliveriesAggregatedDataUsingGET {
+    /**
+     * Parameter map for getDeliveriesAggregatedDataUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * Aggregation type
+       */
+      aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
+      /**
+       * Facility IDs
+       */
+      facilityIds?: Array<number>;
+      /**
+       * Semi-product ID
+       */
+      semiProductId?: number;
+      /**
+       * Farmer (UserCustomer) ID
+       */
+      farmerId?: number;
+      /**
+       * Collector (Representative of producer UserCustomer) ID
+       */
+      collectorId?: number;
+      /**
+       * Is women share
+       */
+      isWomenShare?: boolean;
+      /**
+       * Organic only
+       */
+      organicOnly?: boolean;
+      /**
+       * Price determined later
+       */
+      priceDeterminedLater?: boolean;
+      /**
+       * Production date range start
+       */
+      productionDateStart?: string;
+      /**
+       * Production date range end
+       */
+      productionDateEnd?: string;
+    }
+
+    /**
+     * Enumeration of all parameters for getDeliveriesAggregatedDataUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * Aggregation type
+       */
+      aggregationType = 'aggregationType',
+      /**
+       * Facility IDs
+       */
+      facilityIds = 'facilityIds',
+      /**
+       * Semi-product ID
+       */
+      semiProductId = 'semiProductId',
+      /**
+       * Farmer (UserCustomer) ID
+       */
+      farmerId = 'farmerId',
+      /**
+       * Collector (Representative of producer UserCustomer) ID
+       */
+      collectorId = 'collectorId',
+      /**
+       * Is women share
+       */
+      isWomenShare = 'isWomenShare',
+      /**
+       * Organic only
+       */
+      organicOnly = 'organicOnly',
+      /**
+       * Price determined later
+       */
+      priceDeterminedLater = 'priceDeterminedLater',
+      /**
+       * Production date range start
+       */
+      productionDateStart = 'productionDateStart',
+      /**
+       * Production date range end
+       */
+      productionDateEnd = 'productionDateEnd'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getDeliveriesAggregatedDataUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetDeliveriesAggregatedDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      aggregationType: [
+              ['required', Validators.required],
+      ],
+      facilityIds: [
+      ],
+      semiProductId: [
+      ],
+      farmerId: [
+      ],
+      collectorId: [
+      ],
+      isWomenShare: [
+      ],
+      organicOnly: [
+      ],
+      priceDeterminedLater: [
+      ],
+      productionDateStart: [
+      ],
+      productionDateEnd: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getProcessingPerformanceDataUsingGET.
+ */
+export namespace GetProcessingPerformanceDataUsingGET {
+    /**
+     * Parameter map for getProcessingPerformanceDataUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * Aggregation type
+       */
+      aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
+      /**
+       * Facility ID
+       */
+      facilityId?: number;
+      /**
+       * Process ID
+       */
+      processActionId?: number;
+      /**
+       * Date range start
+       */
+      dateStart?: string;
+      /**
+       * Date range end
+       */
+      dateEnd?: string;
+    }
+
+    /**
+     * Enumeration of all parameters for getProcessingPerformanceDataUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * Aggregation type
+       */
+      aggregationType = 'aggregationType',
+      /**
+       * Facility ID
+       */
+      facilityId = 'facilityId',
+      /**
+       * Process ID
+       */
+      processActionId = 'processActionId',
+      /**
+       * Date range start
+       */
+      dateStart = 'dateStart',
+      /**
+       * Date range end
+       */
+      dateEnd = 'dateEnd'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingPerformanceDataUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetProcessingPerformanceDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      aggregationType: [
+              ['required', Validators.required],
+      ],
+      facilityId: [
+      ],
+      processActionId: [
+      ],
+      dateStart: [
+      ],
+      dateEnd: [
       ],
     };
 }
@@ -1541,6 +1765,265 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableStockForStockUnitInFacilityUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * getDeliveriesAggregatedData by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getDeliveriesAggregatedDataUsingGETByMap(
+    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiDeliveriesTotal>;
+  public getDeliveriesAggregatedDataUsingGETByMap(
+    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiDeliveriesTotal>>;
+  public getDeliveriesAggregatedDataUsingGETByMap(
+    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiDeliveriesTotal>>;
+  public getDeliveriesAggregatedDataUsingGETByMap(
+    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getDeliveriesAggregatedDataUsingGET(
+      map.companyId,
+      map.aggregationType,
+      map.facilityIds,
+      map.semiProductId,
+      map.farmerId,
+      map.collectorId,
+      map.isWomenShare,
+      map.organicOnly,
+      map.priceDeterminedLater,
+      map.productionDateStart,
+      map.productionDateEnd,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * getDeliveriesAggregatedData
+     * 
+     * @param companyId Company ID
+     * @param aggregationType Aggregation type
+     * @param facilityIds Facility IDs
+     * @param semiProductId Semi-product ID
+     * @param farmerId Farmer (UserCustomer) ID
+     * @param collectorId Collector (Representative of producer UserCustomer) ID
+     * @param isWomenShare Is women share
+     * @param organicOnly Organic only
+     * @param priceDeterminedLater Price determined later
+     * @param productionDateStart Production date range start
+     * @param productionDateEnd Production date range end
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDeliveriesTotal>;
+    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDeliveriesTotal>>;
+    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDeliveriesTotal>>;
+    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getDeliveriesAggregatedDataUsingGET.');
+        }
+        if (aggregationType === null || aggregationType === undefined) {
+            throw new Error('Required parameter aggregationType was null or undefined when calling getDeliveriesAggregatedDataUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (companyId !== undefined && companyId !== null) {
+            queryParameters = queryParameters.set('companyId', <any>companyId);
+        }
+        if (facilityIds) {
+            facilityIds.forEach((element) => {
+                queryParameters = queryParameters.append('facilityIds', <any>element);
+            })
+        }
+        if (semiProductId !== undefined && semiProductId !== null) {
+            queryParameters = queryParameters.set('semiProductId', <any>semiProductId);
+        }
+        if (farmerId !== undefined && farmerId !== null) {
+            queryParameters = queryParameters.set('farmerId', <any>farmerId);
+        }
+        if (collectorId !== undefined && collectorId !== null) {
+            queryParameters = queryParameters.set('collectorId', <any>collectorId);
+        }
+        if (isWomenShare !== undefined && isWomenShare !== null) {
+            queryParameters = queryParameters.set('isWomenShare', <any>isWomenShare);
+        }
+        if (organicOnly !== undefined && organicOnly !== null) {
+            queryParameters = queryParameters.set('organicOnly', <any>organicOnly);
+        }
+        if (priceDeterminedLater !== undefined && priceDeterminedLater !== null) {
+            queryParameters = queryParameters.set('priceDeterminedLater', <any>priceDeterminedLater);
+        }
+        if (productionDateStart !== undefined && productionDateStart !== null) {
+            queryParameters = queryParameters.set('productionDateStart', <any>productionDateStart);
+        }
+        if (productionDateEnd !== undefined && productionDateEnd !== null) {
+            queryParameters = queryParameters.set('productionDateEnd', <any>productionDateEnd);
+        }
+        if (aggregationType !== undefined && aggregationType !== null) {
+            queryParameters = queryParameters.set('aggregationType', <any>aggregationType);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiDeliveriesTotal>(`${this.configuration.basePath}/api/chain/stock-order/deliveries-aggregated-data`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDeliveriesAggregatedDataUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * getProcessingPerformanceData by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getProcessingPerformanceDataUsingGETByMap(
+    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingPerformanceTotal>;
+  public getProcessingPerformanceDataUsingGETByMap(
+    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
+  public getProcessingPerformanceDataUsingGETByMap(
+    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
+  public getProcessingPerformanceDataUsingGETByMap(
+    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getProcessingPerformanceDataUsingGET(
+      map.companyId,
+      map.aggregationType,
+      map.facilityId,
+      map.processActionId,
+      map.dateStart,
+      map.dateEnd,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * getProcessingPerformanceData
+     * 
+     * @param companyId Company ID
+     * @param aggregationType Aggregation type
+     * @param facilityId Facility ID
+     * @param processActionId Process ID
+     * @param dateStart Date range start
+     * @param dateEnd Date range end
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingPerformanceTotal>;
+    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
+    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
+    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getProcessingPerformanceDataUsingGET.');
+        }
+        if (aggregationType === null || aggregationType === undefined) {
+            throw new Error('Required parameter aggregationType was null or undefined when calling getProcessingPerformanceDataUsingGET.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (companyId !== undefined && companyId !== null) {
+            queryParameters = queryParameters.set('companyId', <any>companyId);
+        }
+        if (facilityId !== undefined && facilityId !== null) {
+            queryParameters = queryParameters.set('facilityId', <any>facilityId);
+        }
+        if (processActionId !== undefined && processActionId !== null) {
+            queryParameters = queryParameters.set('processActionId', <any>processActionId);
+        }
+        if (dateStart !== undefined && dateStart !== null) {
+            queryParameters = queryParameters.set('dateStart', <any>dateStart);
+        }
+        if (dateEnd !== undefined && dateEnd !== null) {
+            queryParameters = queryParameters.set('dateEnd', <any>dateEnd);
+        }
+        if (aggregationType !== undefined && aggregationType !== null) {
+            queryParameters = queryParameters.set('aggregationType', <any>aggregationType);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiProcessingPerformanceTotal>(`${this.configuration.basePath}/api/chain/stock-order/processing-performance-data`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingPerformanceDataUsingGET')));
         }
         return handle;
     }

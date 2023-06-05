@@ -1,0 +1,255 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>Deliveries</h3>
+    </div>
+  </div>
+
+  <div class="af-form-element">
+    <div class="af-row">
+      <div class="af-c12">
+        <div class="row">
+          <div class="col-12 col-xs-6 col-md-8">
+            <div class="d-flex flex-wrap justify-content-start">
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      [disabled]="checkButtonDisabled('day', deliveriesForm)"
+                      (click)="setDeliveryInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      [disabled]="checkButtonDisabled('week', deliveriesForm)"
+                      (click)="setDeliveryInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      [disabled]="checkButtonDisabled('month', deliveriesForm)"
+                      (click)="setDeliveryInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      [disabled]="checkButtonDisabled('year', deliveriesForm)"
+                      (click)="setDeliveryInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@">YEARLY</span>
+              </button>
+              <app-datepicker
+                label="Select date from"
+                i18n-label="@@"
+                [form]="deliveriesForm.get('from')"
+                [invalid]="deliveriesForm.get('from').invalid"
+                (onChange)="onFilterDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+              <app-datepicker
+                label="Select date to"
+                i18n-label="@@"
+                [form]="deliveriesForm.get('to')"
+                [invalid]="deliveriesForm.get('to').invalid"
+                (onChange)="onFilterDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+            </div>
+
+            <div echarts [options]="deliveriesOptions" [merge]="mergeOptions"></div>
+          </div>
+
+          <div class="col-12 col-xs-6 col-md-4">
+
+<!--            <div class="mb-2">-->
+<!--              <button class="btn btn-solid round btn-table-new content-element&#45;&#45;btn"-->
+<!--                      (click)="exportData()"-->
+<!--                      i18n="@@">-->
+<!--                <span>Export data</span>-->
+<!--              </button>-->
+<!--            </div>-->
+
+            <div class="form-group">
+              <single-choice
+                label="Facility"
+                i18n-label="@@"
+                [formControlInput]="facilityFormControl"
+                [codebookService]="facilityCodebook"
+                (onChange)="addSelectedFacility($event)">
+              </single-choice>
+
+              <div *ngFor="let sp of this.facilities; index as idx">
+                <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                  <div>{{ sp.name }}</div>
+                  <div (click)="deleteFacility(sp, idx)" style="cursor: pointer;">
+                    <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="d-flex mb-0 text-input-label">
+                <span i18n="@@">Semi-product</span>
+              </label>
+              <ng-select bindLabel="name"
+                         bindValue="id"
+                         placeholder="Select semi-product"
+                         (ngModelChange)="semiProductSelected($event)"
+                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.placeholder"
+                         [items]="semiProductOptions"
+                         [(ngModel)]="semiProductModelChoice"
+                         notFoundText="Nothing found"
+                         i18-notFoundText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.nothing"
+                         i18-typeToSearchText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.enterSearchTerm"
+                         typeToSearchText="Enter search term"
+                         class="custom labelPlaceholder"
+                         style="border:none">
+              </ng-select>
+            </div>
+
+            <single-choice
+              label="Farmer"
+              i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer"
+              [formControlInput]="farmerFormControl"
+              [codebookService]="farmersCodebook"
+              (onChange)="refreshDeliveriesData()">
+            </single-choice>
+
+            <single-choice
+              label="Collector"
+              i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.collector"
+              [formControlInput]="collectorFormControl"
+              [codebookService]="collectorsCodebook"
+              (onChange)="refreshDeliveriesData()">
+            </single-choice>
+
+            <checkbox-input [form]="organicFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+                Organic
+              </checkbox-input-rich-label>
+            </checkbox-input>
+            <checkbox-input [form]="womensOnlyFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+                Women only
+              </checkbox-input-rich-label>
+            </checkbox-input>
+            <checkbox-input [form]="productInDepositFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+                Product in deposit
+              </checkbox-input-rich-label>
+            </checkbox-input>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <h3>Processing performance</h3>
+    </div>
+  </div>
+
+
+  <div class="af-form-element">
+    <div class="af-row">
+      <div class="af-c12">
+
+        <div class="row">
+          <div class="col-12 col-xs-6 col-md-8">
+            <div class="d-flex flex-wrap justify-content-start">
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      [disabled]="checkButtonDisabled('day', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      [disabled]="checkButtonDisabled('week', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      [disabled]="checkButtonDisabled('month', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      [disabled]="checkButtonDisabled('year', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@">YEARLY</span>
+              </button>
+              <app-datepicker
+                label="Select date from"
+                i18n-label="@@"
+                [form]="processingPerformanceForm.get('from')"
+                [invalid]="processingPerformanceForm.get('from').invalid"
+                (onChange)="onFilterProcessingDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+              <app-datepicker
+                label="Select date to"
+                i18n-label="@@"
+                [form]="processingPerformanceForm.get('to')"
+                [invalid]="processingPerformanceForm.get('to').invalid"
+                (onChange)="onFilterProcessingDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+            </div>
+
+            <div echarts [options]="processingPerformanceOption" [merge]="processingPerformanceMergeOptions"></div>
+          </div>
+
+          <div class="col-12 col-xs-6 col-md-4">
+
+<!--            <div class="mb-2">-->
+<!--              <button class="btn btn-solid round btn-table-new content-element&#45;&#45;btn"-->
+<!--                      (click)="exportData()"-->
+<!--                      i18n="@@">-->
+<!--                <span>Export data</span>-->
+<!--              </button>-->
+<!--            </div>-->
+
+            <single-choice
+                label="Facility"
+                i18n-label="@@"
+                [formControlInput]="processingFacilityFormControl"
+                [codebookService]="facilityCodebook"
+                (onChange)="refreshProcessingPerformanceData()">
+            </single-choice>
+
+            <single-choice
+              label="Processing"
+              i18n-label="@@"
+              [formControlInput]="processingActionFormControl"
+              [codebookService]="procActionsCodebook"
+              (onChange)="refreshProcessingPerformanceData()">
+            </single-choice>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
