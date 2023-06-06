@@ -3139,6 +3139,18 @@
     "settingsTypes.editProductType.editTitle": "Edit product type",
     "productLabelStockFacilityModal.removeValueChain.confirm.message": "Are you sure you want to remove the value chain? Proceeding will reset the selected semi-products.",
     "companyDetailValueChainModal.removeValueChain.confirm.message": "Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.",
-    "companyDetailProductTypeModal.removeProductType.confirm.message": "Are you sure you want to remove the product type?"
+    "companyDetailProductTypeModal.removeProductType.confirm.message": "Are you sure you want to remove the product type?",
+    "companyDashboardComponent.graph.timeUnit.month.Jan": "January",
+    "companyDashboardComponent.graph.timeUnit.month.Feb": "February",
+    "companyDashboardComponent.graph.timeUnit.month.Mar": "March",
+    "companyDashboardComponent.graph.timeUnit.month.Apr": "April",
+    "companyDashboardComponent.graph.timeUnit.month.May": "May",
+    "companyDashboardComponent.graph.timeUnit.month.Jun": "June",
+    "companyDashboardComponent.graph.timeUnit.month.Jul": "July",
+    "companyDashboardComponent.graph.timeUnit.month.Aug": "August",
+    "companyDashboardComponent.graph.timeUnit.month.Sep": "September",
+    "companyDashboardComponent.graph.timeUnit.month.Oct": "October",
+    "companyDashboardComponent.graph.timeUnit.month.Nov": "November",
+    "companyDashboardComponent.graph.timeUnit.month.Dec": "December"
   }
 }

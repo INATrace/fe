@@ -31,6 +31,7 @@ import { catchError }                                        from 'rxjs/operator
 
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiPaginatedResponseApiStockOrder } from '../model/apiPaginatedResponseApiStockOrder';
+import { ApiProcessingPerformanceRequest } from '../model/apiProcessingPerformanceRequest';
 import { ApiPurchaseOrder } from '../model/apiPurchaseOrder';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiDeliveriesTotal } from '../model/apiResponseApiDeliveriesTotal';
@@ -43,6 +44,38 @@ import { ApiStockOrder } from '../model/apiStockOrder';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+
+/**
+ * Namespace for calculateProcessingPerformanceDataUsingPOST.
+ */
+export namespace CalculateProcessingPerformanceDataUsingPOST {
+    /**
+     * Parameter map for calculateProcessingPerformanceDataUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * processingPerformanceRequest
+       */
+      ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest;
+    }
+
+    /**
+     * Enumeration of all parameters for calculateProcessingPerformanceDataUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * processingPerformanceRequest
+       */
+      ApiProcessingPerformanceRequest = 'ApiProcessingPerformanceRequest'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of calculateProcessingPerformanceDataUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CalculateProcessingPerformanceDataUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
 
 /**
  * Namespace for createOrUpdateStockOrderUsingPUT.
@@ -440,92 +473,6 @@ export namespace GetDeliveriesAggregatedDataUsingGET {
       productionDateStart: [
       ],
       productionDateEnd: [
-      ],
-    };
-}
-
-/**
- * Namespace for getProcessingPerformanceDataUsingGET.
- */
-export namespace GetProcessingPerformanceDataUsingGET {
-    /**
-     * Parameter map for getProcessingPerformanceDataUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * Company ID
-       */
-      companyId: number;
-      /**
-       * Aggregation type
-       */
-      aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
-      /**
-       * Facility ID
-       */
-      facilityId?: number;
-      /**
-       * Process ID
-       */
-      processActionId?: number;
-      /**
-       * Date range start
-       */
-      dateStart?: string;
-      /**
-       * Date range end
-       */
-      dateEnd?: string;
-    }
-
-    /**
-     * Enumeration of all parameters for getProcessingPerformanceDataUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * Company ID
-       */
-      companyId = 'companyId',
-      /**
-       * Aggregation type
-       */
-      aggregationType = 'aggregationType',
-      /**
-       * Facility ID
-       */
-      facilityId = 'facilityId',
-      /**
-       * Process ID
-       */
-      processActionId = 'processActionId',
-      /**
-       * Date range start
-       */
-      dateStart = 'dateStart',
-      /**
-       * Date range end
-       */
-      dateEnd = 'dateEnd'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingPerformanceDataUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetProcessingPerformanceDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      companyId: [
-              ['required', Validators.required],
-      ],
-      aggregationType: [
-              ['required', Validators.required],
-      ],
-      facilityId: [
-      ],
-      processActionId: [
-      ],
-      dateStart: [
-      ],
-      dateEnd: [
       ],
     };
 }
@@ -1363,6 +1310,94 @@ export class StockOrderControllerService {
 
 
   /**
+   * Calculates processing performance data by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public calculateProcessingPerformanceDataUsingPOSTByMap(
+    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingPerformanceTotal>;
+  public calculateProcessingPerformanceDataUsingPOSTByMap(
+    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
+  public calculateProcessingPerformanceDataUsingPOSTByMap(
+    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
+  public calculateProcessingPerformanceDataUsingPOSTByMap(
+    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.calculateProcessingPerformanceDataUsingPOST(
+      map.ApiProcessingPerformanceRequest,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Calculates processing performance data
+     * 
+     * @param ApiProcessingPerformanceRequest processingPerformanceRequest
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingPerformanceTotal>;
+    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
+    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
+    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (ApiProcessingPerformanceRequest === null || ApiProcessingPerformanceRequest === undefined) {
+            throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling calculateProcessingPerformanceDataUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiProcessingPerformanceTotal>(`${this.configuration.basePath}/api/chain/stock-order/processing-performance-data`,
+            ApiProcessingPerformanceRequest,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'calculateProcessingPerformanceDataUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Create or update stock order. If the ID is provided, then the entity with the provided ID is updated. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -1908,122 +1943,6 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDeliveriesAggregatedDataUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * getProcessingPerformanceData by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getProcessingPerformanceDataUsingGETByMap(
-    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProcessingPerformanceTotal>;
-  public getProcessingPerformanceDataUsingGETByMap(
-    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
-  public getProcessingPerformanceDataUsingGETByMap(
-    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
-  public getProcessingPerformanceDataUsingGETByMap(
-    map: GetProcessingPerformanceDataUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingPerformanceDataUsingGET(
-      map.companyId,
-      map.aggregationType,
-      map.facilityId,
-      map.processActionId,
-      map.dateStart,
-      map.dateEnd,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * getProcessingPerformanceData
-     * 
-     * @param companyId Company ID
-     * @param aggregationType Aggregation type
-     * @param facilityId Facility ID
-     * @param processActionId Process ID
-     * @param dateStart Date range start
-     * @param dateEnd Date range end
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingPerformanceTotal>;
-    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
-    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
-    public getProcessingPerformanceDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityId?: number, processActionId?: number, dateStart?: string, dateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getProcessingPerformanceDataUsingGET.');
-        }
-        if (aggregationType === null || aggregationType === undefined) {
-            throw new Error('Required parameter aggregationType was null or undefined when calling getProcessingPerformanceDataUsingGET.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (companyId !== undefined && companyId !== null) {
-            queryParameters = queryParameters.set('companyId', <any>companyId);
-        }
-        if (facilityId !== undefined && facilityId !== null) {
-            queryParameters = queryParameters.set('facilityId', <any>facilityId);
-        }
-        if (processActionId !== undefined && processActionId !== null) {
-            queryParameters = queryParameters.set('processActionId', <any>processActionId);
-        }
-        if (dateStart !== undefined && dateStart !== null) {
-            queryParameters = queryParameters.set('dateStart', <any>dateStart);
-        }
-        if (dateEnd !== undefined && dateEnd !== null) {
-            queryParameters = queryParameters.set('dateEnd', <any>dateEnd);
-        }
-        if (aggregationType !== undefined && aggregationType !== null) {
-            queryParameters = queryParameters.set('aggregationType', <any>aggregationType);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiProcessingPerformanceTotal>(`${this.configuration.basePath}/api/chain/stock-order/processing-performance-data`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingPerformanceDataUsingGET')));
         }
         return handle;
     }

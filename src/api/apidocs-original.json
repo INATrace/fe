@@ -5715,74 +5715,7 @@
       }
     },
     "/api/chain/stock-order/processing-performance-data": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Company ID",
-            "in": "query",
-            "name": "companyId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Facility ID",
-            "in": "query",
-            "name": "facilityId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Process ID",
-            "in": "query",
-            "name": "processActionId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Date range start",
-            "in": "query",
-            "name": "dateStart",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Date range end",
-            "in": "query",
-            "name": "dateEnd",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Aggregation type",
-            "in": "query",
-            "name": "aggregationType",
-            "required": true,
-            "schema": {
-              "enum": [
-                "DAY",
-                "WEEK",
-                "MONTH",
-                "YEAR"
-              ],
-              "type": "string"
-            }
-          }
-        ],
+      "post": {
         "responses": {
           "200": {
             "content": {
@@ -5798,8 +5731,19 @@
         "tags": [
           "stock-order-controller"
         ],
-        "operationId": "getProcessingPerformanceDataUsingGET",
-        "summary": "getProcessingPerformanceData"
+        "operationId": "calculateProcessingPerformanceDataUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiProcessingPerformanceRequest"
+              }
+            }
+          },
+          "description": "processingPerformanceRequest",
+          "required": true
+        },
+        "summary": "Calculates processing performance data"
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -11227,9 +11171,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11239,16 +11186,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11258,16 +11208,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11277,16 +11230,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11296,16 +11252,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11315,16 +11274,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11334,16 +11296,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11353,8 +11318,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -16045,6 +16010,64 @@
               "$ref": "#/components/schemas/ApiStockOrder"
             },
             "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingPerformanceRequest": {
+        "properties": {
+          "aggregationType": {
+            "enum": [
+              "DAY",
+              "WEEK",
+              "MONTH",
+              "YEAR"
+            ],
+            "type": "string"
+          },
+          "companyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "dateEnd": {
+            "format": "date",
+            "type": "string"
+          },
+          "dateStart": {
+            "format": "date",
+            "type": "string"
+          },
+          "evidenceFields": {
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingPerformanceRequestEvidenceField"
+            },
+            "type": "array"
+          },
+          "facilityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "processActionId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingPerformanceRequestEvidenceField": {
+        "properties": {
+          "evidenceField": {
+            "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+          },
+          "instantValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "numericValue": {
+            "type": "number"
+          },
+          "stringValue": {
+            "type": "string"
           }
         },
         "type": "object"

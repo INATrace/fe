@@ -17,7 +17,7 @@
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
                       [disabled]="checkButtonDisabled('day', deliveriesForm)"
                       (click)="setDeliveryInterval('day')">
-                <span class="af-actions-btn-label" i18n="@@">DAILY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -25,7 +25,7 @@
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
                       [disabled]="checkButtonDisabled('week', deliveriesForm)"
                       (click)="setDeliveryInterval('week')">
-                <span class="af-actions-btn-label" i18n="@@">WEEKLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -33,7 +33,7 @@
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
                       [disabled]="checkButtonDisabled('month', deliveriesForm)"
                       (click)="setDeliveryInterval('month')">
-                <span class="af-actions-btn-label" i18n="@@">MONTHLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -41,11 +41,11 @@
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
                       [disabled]="checkButtonDisabled('year', deliveriesForm)"
                       (click)="setDeliveryInterval('year')">
-                <span class="af-actions-btn-label" i18n="@@">YEARLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
               </button>
               <app-datepicker
                 label="Select date from"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.datepicker.deliveryDateFrom.label"
                 [form]="deliveriesForm.get('from')"
                 [invalid]="deliveriesForm.get('from').invalid"
                 (onChange)="onFilterDateRangeChange()"
@@ -53,7 +53,7 @@
               </app-datepicker>
               <app-datepicker
                 label="Select date to"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.datepicker.deliveryDateTo.label"
                 [form]="deliveriesForm.get('to')"
                 [invalid]="deliveriesForm.get('to').invalid"
                 (onChange)="onFilterDateRangeChange()"
@@ -77,7 +77,7 @@
             <div class="form-group">
               <single-choice
                 label="Facility"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.singleChoice.deliveryFacility.label"
                 [formControlInput]="facilityFormControl"
                 [codebookService]="facilityCodebook"
                 (onChange)="addSelectedFacility($event)">
@@ -101,12 +101,12 @@
                          bindValue="id"
                          placeholder="Select semi-product"
                          (ngModelChange)="semiProductSelected($event)"
-                         i18n-placeholder="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.placeholder"
+                         i18n-placeholder="@@companyDashboardComponent.singleChoice.semiProduct.placeholder"
                          [items]="semiProductOptions"
                          [(ngModel)]="semiProductModelChoice"
                          notFoundText="Nothing found"
-                         i18-notFoundText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.nothing"
-                         i18-typeToSearchText="@@productLabelStockPurchaseOrdersModal.singleChoice.semiProduct.enterSearchTerm"
+                         i18-notFoundText="@@companyDashboardComponent.singleChoice.semiProduct.nothing"
+                         i18-typeToSearchText="@@companyDashboardComponent.singleChoice.semiProduct.enterSearchTerm"
                          typeToSearchText="Enter search term"
                          class="custom labelPlaceholder"
                          style="border:none">
@@ -115,7 +115,7 @@
 
             <single-choice
               label="Farmer"
-              i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.farmer"
+              i18n-label="@@companyDashboardComponent.singleChoice.farmer.label"
               [formControlInput]="farmerFormControl"
               [codebookService]="farmersCodebook"
               (onChange)="refreshDeliveriesData()">
@@ -123,24 +123,27 @@
 
             <single-choice
               label="Collector"
-              i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.collector"
+              i18n-label="@@companyDashboardComponent.singleChoice.collector.label"
               [formControlInput]="collectorFormControl"
               [codebookService]="collectorsCodebook"
               (onChange)="refreshDeliveriesData()">
             </single-choice>
 
             <checkbox-input [form]="organicFormControl" (onClick)="refreshDeliveriesData()">
-              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.organic.label">
                 Organic
               </checkbox-input-rich-label>
             </checkbox-input>
             <checkbox-input [form]="womensOnlyFormControl" (onClick)="refreshDeliveriesData()">
-              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.womensOnly.label">
                 Women only
               </checkbox-input-rich-label>
             </checkbox-input>
             <checkbox-input [form]="productInDepositFormControl" (onClick)="refreshDeliveriesData()">
-              <checkbox-input-rich-label style="font-weight: 300;" i18n="@@">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.productInDeposit.label">
                 Product in deposit
               </checkbox-input-rich-label>
             </checkbox-input>
@@ -172,7 +175,7 @@
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
                       [disabled]="checkButtonDisabled('day', processingPerformanceForm)"
                       (click)="setProcessingPerformanceInterval('day')">
-                <span class="af-actions-btn-label" i18n="@@">DAILY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -180,7 +183,7 @@
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
                       [disabled]="checkButtonDisabled('week', processingPerformanceForm)"
                       (click)="setProcessingPerformanceInterval('week')">
-                <span class="af-actions-btn-label" i18n="@@">WEEKLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -188,7 +191,7 @@
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
                       [disabled]="checkButtonDisabled('month', processingPerformanceForm)"
                       (click)="setProcessingPerformanceInterval('month')">
-                <span class="af-actions-btn-label" i18n="@@">MONTHLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
@@ -196,11 +199,11 @@
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
                       [disabled]="checkButtonDisabled('year', processingPerformanceForm)"
                       (click)="setProcessingPerformanceInterval('year')">
-                <span class="af-actions-btn-label" i18n="@@">YEARLY</span>
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
               </button>
               <app-datepicker
                 label="Select date from"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.datepicker.processingDateFrom.label"
                 [form]="processingPerformanceForm.get('from')"
                 [invalid]="processingPerformanceForm.get('from').invalid"
                 (onChange)="onFilterProcessingDateRangeChange()"
@@ -208,7 +211,7 @@
               </app-datepicker>
               <app-datepicker
                 label="Select date to"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.datepicker.processingDateTo.label"
                 [form]="processingPerformanceForm.get('to')"
                 [invalid]="processingPerformanceForm.get('to').invalid"
                 (onChange)="onFilterProcessingDateRangeChange()"
@@ -231,7 +234,7 @@
 
             <single-choice
                 label="Facility"
-                i18n-label="@@"
+                i18n-label="@@companyDashboardComponent.singleChoice.processingFacility.label"
                 [formControlInput]="processingFacilityFormControl"
                 [codebookService]="facilityCodebook"
                 (onChange)="refreshProcessingPerformanceData()">
@@ -239,11 +242,24 @@
 
             <single-choice
               label="Processing"
-              i18n-label="@@"
+              i18n-label="@@companyDashboardComponent.singleChoice.processingAction.label"
               [formControlInput]="processingActionFormControl"
               [codebookService]="procActionsCodebook"
               (onChange)="refreshProcessingPerformanceData()">
             </single-choice>
+
+            <ng-container *ngIf="evidenceFields?.length > 0">
+              <ng-container *ngFor="let field of evidenceFields; let i=index;">
+
+               <textinput
+                 [form]="processingEvidenceInputField(field.fieldName)"
+                 [label]="field.label"
+                 (onBlur)="refreshProcessingPerformanceData()"
+                 style="width: 100%">
+               </textinput>
+
+              </ng-container>
+            </ng-container>
 
           </div>
         </div>
