@@ -1,7 +1,9 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h3>Deliveries</h3>
+      <h3>
+        <span i18n="@@companyDashboardComponent.section.deliveries.title">Deliveries</span>
+      </h3>
     </div>
   </div>
 
@@ -66,14 +68,6 @@
 
           <div class="col-12 col-xs-6 col-md-4">
 
-<!--            <div class="mb-2">-->
-<!--              <button class="btn btn-solid round btn-table-new content-element&#45;&#45;btn"-->
-<!--                      (click)="exportData()"-->
-<!--                      i18n="@@">-->
-<!--                <span>Export data</span>-->
-<!--              </button>-->
-<!--            </div>-->
-
             <div class="form-group">
               <single-choice
                 label="Facility"
@@ -95,7 +89,7 @@
 
             <div class="form-group">
               <label class="d-flex mb-0 text-input-label">
-                <span i18n="@@">Semi-product</span>
+                <span i18n="@@companyDashboardComponent.singleChoice.semiProduct.label">Semi-product</span>
               </label>
               <ng-select bindLabel="name"
                          bindValue="id"
@@ -157,7 +151,9 @@
 
   <div class="row">
     <div class="col">
-      <h3>Processing performance</h3>
+      <h3>
+        <span i18n="@@companyDashboardComponent.section.processingPerformance.title">Processing performance</span>
+      </h3>
     </div>
   </div>
 
@@ -224,14 +220,6 @@
 
           <div class="col-12 col-xs-6 col-md-4">
 
-<!--            <div class="mb-2">-->
-<!--              <button class="btn btn-solid round btn-table-new content-element&#45;&#45;btn"-->
-<!--                      (click)="exportData()"-->
-<!--                      i18n="@@">-->
-<!--                <span>Export data</span>-->
-<!--              </button>-->
-<!--            </div>-->
-
             <single-choice
                 label="Facility"
                 i18n-label="@@companyDashboardComponent.singleChoice.processingFacility.label"
@@ -247,6 +235,28 @@
               [codebookService]="procActionsCodebook"
               (onChange)="refreshProcessingPerformanceData()">
             </single-choice>
+
+            <div class="form-group">
+              <label class="d-flex mb-0 text-input-label">
+                <span i18n="@@">Measuring unit</span>
+              </label>
+              <ng-container *ngIf="measureUnitTypes?.length > 0">
+                <ng-select bindLabel="label"
+                           bindValue="id"
+                           placeholder="Select measuring unit"
+                           i18n-placeholder="@@companyDashboardComponent.singleChoice.measuringUnit.placeholder"
+                           [items]="measureUnitTypes"
+                           [formControl]="measuringUnitFormControl"
+                           (ngModelChange)="refreshProcessingPerformanceData()"
+                           notFoundText="Nothing found"
+                           i18-notFoundText="@@companyDashboardComponent.singleChoice.measuringUnit.nothing"
+                           i18-typeToSearchText="@@companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm"
+                           typeToSearchText="Enter search term"
+                           class="custom labelPlaceholder"
+                           style="border:none">
+                </ng-select>
+              </ng-container>
+            </div>
 
             <ng-container *ngIf="evidenceFields?.length > 0">
               <ng-container *ngFor="let field of evidenceFields; let i=index;">

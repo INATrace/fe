@@ -19,6 +19,7 @@
 
 
 import { ApiProcessingPerformanceRequestEvidenceField } from './apiProcessingPerformanceRequestEvidenceField';
+import { MeasureUnitType } from './measureUnitType';
 
 
 
@@ -29,6 +30,7 @@ export interface ApiProcessingPerformanceRequest {
     dateStart?: string;
     evidenceFields?: Array<ApiProcessingPerformanceRequestEvidenceField>;
     facilityId?: number;
+    measureUnitType?: MeasureUnitType;
     processActionId?: number;
 }
 
@@ -46,6 +48,7 @@ export namespace ApiProcessingPerformanceRequest {
         dateStart = 'dateStart',
         evidenceFields = 'evidenceFields',
         facilityId = 'facilityId',
+        measureUnitType = 'measureUnitType',
         processActionId = 'processActionId'
     }
 
@@ -134,6 +137,18 @@ export namespace ApiProcessingPerformanceRequest {
                     complexType: ''
                 },
                 {
+                    metadata: MeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measureUnitType',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'MeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'MeasureUnitType'
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
@@ -157,6 +172,8 @@ export namespace ApiProcessingPerformanceRequest {
                 evidenceFields: [
                 ],
                 facilityId: [
+                ],
+                measureUnitType: [
                 ],
                 processActionId: [
                 ],
@@ -183,6 +200,9 @@ export namespace ApiProcessingPerformanceRequest {
   //                   validators: []
   //               },
   //               facilityId: {
+  //                   validators: []
+  //               },
+  //               measureUnitType: {
   //                   validators: []
   //               },
   //               processActionId: {

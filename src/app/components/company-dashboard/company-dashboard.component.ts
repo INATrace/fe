@@ -17,6 +17,7 @@ import {ValueChainControllerService} from '../../../api/api/valueChainController
 import {
   ApiProcessingPerformanceRequestEvidenceField
 } from '../../../api/model/apiProcessingPerformanceRequestEvidenceField';
+import {ActiveMeasureUnitTypeService} from '../../shared-services/active-measure-unit-types.service';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -37,6 +38,7 @@ export class CompanyDashboardComponent implements OnInit {
     public valueChainController: ValueChainControllerService,
     private procActionController: ProcessingActionControllerService,
     private stockOrderControllerService: StockOrderControllerService,
+    public activeMeasureUnitTypeCodebook: ActiveMeasureUnitTypeService,
     private codebookTranslations: CodebookTranslations
   ) { }
 
@@ -50,6 +52,8 @@ export class CompanyDashboardComponent implements OnInit {
   companyValueChains = [];
 
   evidenceFields = [];
+
+  measureUnitTypes = [];
 
   facilities: ApiFacility[] = [];
 
@@ -140,7 +144,7 @@ export class CompanyDashboardComponent implements OnInit {
     timeUnitGraphType: this.fb.control(undefined),
     facility: this.fb.control(null),
     process: this.fb.control(null),
-
+    measuringUnit: this.fb.control(null)
   });
 
   get facilityFormControl(): FormControl{
@@ -181,6 +185,10 @@ export class CompanyDashboardComponent implements OnInit {
     return (this.processingPerformanceForm.get(name) as FormControl);
   }
 
+  get measuringUnitFormControl(): FormControl{
+    return (this.processingPerformanceForm.get('measuringUnit') as FormControl);
+  }
+
   ngOnInit(): void {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
     this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
@@ -197,6 +205,13 @@ export class CompanyDashboardComponent implements OnInit {
                   if (!this.evidenceFields.some(ef => ef.fieldName === evidenceField.fieldName)) {
                     this.evidenceFields.push(evidenceField);
                     this.processingPerformanceForm.addControl(evidenceField.fieldName, this.fb.control(undefined));
+                  }
+                });
+              }
+              if (vchain?.data?.measureUnitTypes) {
+                vchain.data.measureUnitTypes.forEach(unitType => {
+                  if (!this.measureUnitTypes.some(ut => ut.id === unitType.id)) {
+                    this.measureUnitTypes.push(unitType);
                   }
                 });
               }
@@ -322,6 +337,14 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
+    let measureUnitType = null;
+    let measureUnitVal = '';
+    if (this.processingPerformanceForm?.get('measuringUnit')?.value) {
+      measureUnitType = {id: this.processingPerformanceForm?.get('measuringUnit')?.value};
+      // first 3 chars are used in label
+      measureUnitVal = this.measureUnitTypes.find(unitType => unitType.id === this.processingPerformanceForm?.get('measuringUnit')?.value)?.label.substring(0, 3);
+    }
+
     this.stockOrderControllerService
       .calculateProcessingPerformanceDataUsingPOST({
       companyId: this.companyId,
@@ -330,6 +353,7 @@ export class CompanyDashboardComponent implements OnInit {
       dateStart: dateISOString(this.processingPerformanceForm.get('from')?.value),
       dateEnd: dateISOString(this.processingPerformanceForm.get('to')?.value),
       aggregationType: this.processingPerformanceForm.get('timeUnitGraphType').value,
+      measureUnitType,
       evidenceFields: efs
       }).subscribe(next => {
       if (next.data) {
@@ -349,6 +373,11 @@ export class CompanyDashboardComponent implements OnInit {
         this.processingPerformanceMergeOptions = {
           xAxis: {
             data: labelData
+          },
+          yAxis: {
+            axisLabel: {
+              formatter: `{value} ${measureUnitVal}`
+            }
           },
           series: [{
               data: inputQuantityData
@@ -423,10 +452,6 @@ export class CompanyDashboardComponent implements OnInit {
     this.deliveriesForm.get('semiProduct').updateValueAndValidity();
 
     setTimeout(() => this.refreshDeliveriesData());
-  }
-
-  exportData() {
-
   }
 
   checkButtonDisabled(interval: string, formGroup: FormGroup) {
