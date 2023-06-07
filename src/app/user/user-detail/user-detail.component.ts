@@ -6,11 +6,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { ComponentCanDeactivate } from '../../shared-services/component-can-deactivate';
 import { take } from 'rxjs/operators';
-import { CompanyControllerService, ListCompaniesUsingGET } from 'src/api/api/companyController.service';
+import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
 import { BeycoTokenService } from '../../shared-services/beyco-token.service';
-import { ApiCompanyListResponse } from '../../../api/model/apiCompanyListResponse';
 import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
 
 @Component({
@@ -30,7 +29,9 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   returnUrl: string;
   changedCompany = false;
 
-  myCompanies: ApiCompanyListResponse[] | null = null;
+  myCompanies = null;
+
+  loadingUserCompanies = false;
 
   constructor(
     private location: Location,
@@ -47,11 +48,12 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    this.title = $localize`:@@userDetail.title.edit:Edit user profile`;
     this.userId = +this.route.snapshot.paramMap.get('id');
     if (this.mode === 'userProfileView') {
+      this.title = $localize`:@@userDetail.title.edit:Edit My profile`;
       this.getUserProfile();
     } else {
+      this.title = $localize`:@@userDetail.adminView.title.edit:Edit user profile`;
       this.getUserProfileAsAdmin();
     }
   }
@@ -69,7 +71,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     this.globalEventsManager.showLoading(true);
     this.userController.getProfileForUserUsingGET().subscribe(user => {
       this.createUserProfileForm(user.data);
-      this.prepareMyCompanies().then();
+      this.prepareMyCompanies(user.data).then();
       this.userData = user.data;
       this.globalEventsManager.showLoading(false);
     }, () => this.globalEventsManager.showLoading(false));
@@ -81,6 +83,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     this.userController.getProfileForAdminUsingGET(this.userId)
       .subscribe(user => {
         this.createUserProfileForm(user.data);
+        this.prepareMyCompanies(user.data).then();
         this.userData = user.data;
         this.unconfirmedUser = user.data.status === 'UNCONFIRMED';
         this.globalEventsManager.showLoading(false);
@@ -98,36 +101,42 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  private async prepareMyCompanies(): Promise<void> {
+  private async prepareMyCompanies(data) {
 
-    const requestParams = {
-      statuses: null,
-      requestType: 'FETCH',
-      limit: 1000,
-      offset: 0,
-      status: 'ACTIVE'
-    } as ListCompaniesUsingGET.PartialParamMap;
+    const tmp = [];
+    if (!data) { return; }
 
-    const resp = await this.companyController.listCompaniesUsingGETByMap(requestParams).toPromise();
-    if (resp && resp.status === 'OK' && resp.data?.items) {
-      this.myCompanies = resp.data.items;
+    this.loadingUserCompanies = true;
+    try {
+      for (const id of data.companyIds) {
+        const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK' && res.data) {
+          tmp.push({
+            companyId: id,
+            companyName: res.data.name
+          });
+        }
+      }
+    } finally {
+      this.loadingUserCompanies = false;
     }
+
+    this.myCompanies = tmp;
   }
 
-  async setSelectedUserCompany(company: ApiCompanyListResponse) {
-
+  async setSelectedUserCompany(company) {
     if (this.mode === 'userProfileView') {
 
       const result = await this.globalEventsManager.openMessageModal({
         type: 'warning',
-        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.name}?`,
+        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.companyName}?`,
         options: { centered: true },
         dismissable: false
       });
 
       if (result !== 'ok') { return; }
 
-      const res = await this.companyController.getCompanyUsingGET(company.id).pipe(take(1)).toPromise();
+      const res = await this.companyController.getCompanyUsingGET(company.companyId).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         this.selUserCompanyService.setSelectedCompany(res.data);
         this.changedCompany = true;
