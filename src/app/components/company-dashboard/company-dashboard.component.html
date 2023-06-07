@@ -261,12 +261,24 @@
             <ng-container *ngIf="evidenceFields?.length > 0">
               <ng-container *ngFor="let field of evidenceFields; let i=index;">
 
-               <textinput
-                 [form]="processingEvidenceInputField(field.fieldName)"
-                 [label]="field.label"
-                 (onBlur)="refreshProcessingPerformanceData()"
-                 style="width: 100%">
-               </textinput>
+                <ng-container *ngIf="field.type === 'DATE'">
+                  <app-datepicker
+                    [label]="field.label"
+                    [form]="processingEvidenceInputField(field.fieldName)"
+                    [invalid]="processingEvidenceInputField(field.fieldName).invalid"
+                    (onChange)="refreshProcessingPerformanceData()"
+                    style="width: 150px;">
+                  </app-datepicker>
+                </ng-container>
+                <ng-container *ngIf="field.type !== 'DATE'">
+                  <textinput
+                    [form]="processingEvidenceInputField(field.fieldName)"
+                    [label]="field.label"
+                    (onBlur)="refreshProcessingPerformanceData()"
+                    style="width: 100%">
+                  </textinput>
+                </ng-container>
+
 
               </ng-container>
             </ng-container>
