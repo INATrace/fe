@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rx
 import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import {map, skip, switchMap, take, tap} from 'rxjs/operators';
+import { map, skip, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
@@ -14,18 +14,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiDefaultResponse } from '../../../../../api/model/apiDefaultResponse';
 import StatusEnum = ApiDefaultResponse.StatusEnum;
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
-import {GroupStockOrderControllerService} from '../../../../../api/api/groupStockOrderController.service';
-import {ApiPaginatedResponseApiGroupStockOrder} from '../../../../../api/model/apiPaginatedResponseApiGroupStockOrder';
-import {ApiPaginatedListApiGroupStockOrder} from '../../../../../api/model/apiPaginatedListApiGroupStockOrder';
-import {ApiGroupStockOrder} from '../../../../../api/model/apiGroupStockOrder';
-import {AggregatedStockItem} from '../stock-order-list/models';
+import { GroupStockOrderControllerService } from '../../../../../api/api/groupStockOrderController.service';
+import { ApiPaginatedResponseApiGroupStockOrder } from '../../../../../api/model/apiPaginatedResponseApiGroupStockOrder';
+import { ApiPaginatedListApiGroupStockOrder } from '../../../../../api/model/apiPaginatedListApiGroupStockOrder';
+import { ApiGroupStockOrder } from '../../../../../api/model/apiGroupStockOrder';
+import { AggregatedStockItem } from '../stock-unit-list/models';
 
 @Component({
-  selector: 'app-group-stock-order-list',
-  templateUrl: './group-stock-order-list.component.html',
-  styleUrls: ['./group-stock-order-list.component.scss']
+  selector: 'app-group-stock-unit-list',
+  templateUrl: './group-stock-unit-list.component.html',
+  styleUrls: ['./group-stock-unit-list.component.scss']
 })
-export class GroupStockOrderListComponent implements OnInit, OnDestroy {
+export class GroupStockUnitListComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -284,7 +284,7 @@ export class GroupStockOrderListComponent implements OnInit, OnDestroy {
   }
 
   history(item: ApiGroupStockOrder) {
-    this.router.navigate(['orders', 'stock-order', item.groupedIds[0], 'view'],
+    this.router.navigate(['all-stock', 'stock-order', item.groupedIds[0], 'view'],
         { relativeTo: this.route.parent.parent, queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 

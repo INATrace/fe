@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {BeycoOrderListComponent} from './beyco-order-list/beyco-order-list.component';
+import { BeycoOfferListComponent } from './beyco-offer-list/beyco-offer-list.component';
 
 const routes: Routes = [
     {
         path: 'list',
-        component: BeycoOrderListComponent,
+        component: BeycoOfferListComponent,
         data: {
             drobtinice: {
                 title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.stockOrders.stockOrderView:Stock order details` + ' / ' +
                 $localize`:@@breadCrumb.stockOrders.beycoOrder: Export to Beyco`,
-                route: 'my-stock/orders/tab'
+                route: 'my-stock/all-stock/tab'
             }
         }
     },
     {
         path: '',
-        redirectTo: '/my-stock/orders/tab'
+        redirectTo: '/my-stock/all-stock/tab'
     }
 ];
 
@@ -24,4 +24,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class BeycoOrderRoutingModule { }
+export class BeycoOfferRoutingModule { }

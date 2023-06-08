@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { StockOrdersRoutingModule } from './stock-orders-routing.module';
-import { StockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.component';
+import { StockAllStockRoutingModule } from './stock-all-stock-routing.module';
+import { StockAllStockTabComponent } from './stock-all-stock-tab/stock-all-stock-tab.component';
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { LayoutModule } from '../../../layout/layout.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
@@ -12,11 +12,11 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [StockOrdersTabComponent],
+  declarations: [StockAllStockTabComponent],
     imports: [
         CommonModule,
         StockCoreModule,
-        StockOrdersRoutingModule,
+        StockAllStockRoutingModule,
         LayoutModule,
         CompanyCommonModule,
         SharedModule,
@@ -26,4 +26,4 @@ import {ReactiveFormsModule} from '@angular/forms';
         ReactiveFormsModule
     ]
 })
-export class StockOrdersModule { }
+export class StockAllStockModule { }

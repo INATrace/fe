@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StockOrdersTabComponent } from './stock-orders-tab/stock-orders-tab.component';
+import { StockAllStockTabComponent } from './stock-all-stock-tab/stock-all-stock-tab.component';
 import { OrderHistoryComponent } from '../stock-core/order-history/order-history.component';
 
 const routes: Routes = [
@@ -10,9 +10,9 @@ const routes: Routes = [
   },
   {
     path: 'tab',
-    component: StockOrdersTabComponent,
+    component: StockAllStockTabComponent,
     data: {
-      tab: 'orders',
+      tab: 'all-stock',
       mode: 'COMPANY_ADMIN',
       drobtinice: null
     }
@@ -24,7 +24,7 @@ const routes: Routes = [
     data: {
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:My stock` + ' / ' + $localize`:@@breadCrumb.stockOrders.stockOrderView:Stock order details`,
-        route: 'my-stock/orders'
+        route: 'my-stock/all-stock'
       }
     }
   }
@@ -34,4 +34,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StockOrdersRoutingModule { }
+export class StockAllStockRoutingModule { }

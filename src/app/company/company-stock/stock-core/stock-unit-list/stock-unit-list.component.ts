@@ -22,11 +22,11 @@ import { ProcessingOrderControllerService } from '../../../../../api/api/process
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-stock-order-list',
-  templateUrl: './stock-order-list.component.html',
-  styleUrls: ['./stock-order-list.component.scss']
+  selector: 'app-stock-unit-list',
+  templateUrl: './stock-unit-list.component.html',
+  styleUrls: ['./stock-unit-list.component.scss']
 })
-export class StockOrderListComponent implements OnInit, OnDestroy {
+export class StockUnitListComponent implements OnInit, OnDestroy {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -375,7 +375,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
   }
 
   history(item: ApiStockOrder) {
-    this.router.navigate(['orders', 'stock-order', item.id, 'view'],
+    this.router.navigate(['all-stock', 'stock-order', item.id, 'view'],
       { relativeTo: this.route.parent.parent, queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
   }
 

@@ -155,7 +155,7 @@
 
       </div>
 
-      <app-stock-order-list
+      <app-stock-unit-list
           [reloadPingList$]="reloadPurchaseOrdersPing$"
           (countAll)="onCountAllPO($event)"
           [facilityId$]="facilityIdPing$"
@@ -170,7 +170,7 @@
           [deliveryDatesPing$]="deliveryDatesPing$"
           [semiProductId$]="$any(semiProductId$)"
           [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$">
-      </app-stock-order-list>
+      </app-stock-unit-list>
 
     </div>
   </div>

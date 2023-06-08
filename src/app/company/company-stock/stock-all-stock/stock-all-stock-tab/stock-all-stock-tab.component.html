@@ -124,7 +124,7 @@
       </div>
 
       <!-- LIST OF STOCK ORDERS -->
-      <app-stock-order-list
+      <app-stock-unit-list
               *ngIf="selectedFacilityId && !showGroupView"
               mode="GENERAL"
               [reloadPingList$]="reloadStockOrdersPing$"
@@ -140,9 +140,9 @@
               (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
               [clickAddPaymentsPing$]="clickAddPaymentsPing$"
               [hideCheckbox]="true">
-      </app-stock-order-list>
+      </app-stock-unit-list>
 
-      <app-group-stock-order-list
+      <app-group-stock-unit-list
               *ngIf="selectedFacilityId && showGroupView"
               [reloadPingList$]="reloadStockOrdersPing$"
               (countAll)="onCountAllSO($event)"
@@ -153,7 +153,7 @@
               (selectedIdsChanged)="selectedIdsChanged($event, 'GROUP')"
               [selectedOrders]="selectedGroupOrders"
               [semiProductId$]="semiProductId$">
-      </app-group-stock-order-list>
+      </app-group-stock-unit-list>
 
     </div>
   </div>

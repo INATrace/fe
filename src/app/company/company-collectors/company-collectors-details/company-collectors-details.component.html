@@ -263,14 +263,14 @@
                             <div class="counting-page content-element--counting"
                                  i18n="@@productLabelStock.subTitle.showingPurchaseOrders">
                                 Showing {{ showedPurchaseOrders }}/{{ allPurchaseOrders }}</div>
-                            <app-stock-order-list
+                            <app-stock-unit-list
                               (countAll)="onCountAllPO($event)"
                               (showing)="onShowPO($event)"
                               [selectedOrders]="selectedOrders"
                               (selectedIdsChanged)="selectedIdsChanged($event, 'PURCHASE')"
                               [companyId]="companyId"
                               [representativeOfProducerUserCustomerIdPing$]="representativeOfUserCustomerIdPing$">
-                            </app-stock-order-list>
+                            </app-stock-unit-list>
                         </ng-container>
                 </div>
             </div>

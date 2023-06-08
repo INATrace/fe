@@ -17,11 +17,11 @@ import { SelectedUserCompanyService } from '../../../../core/selected-user-compa
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-beyco-order-list',
-  templateUrl: './beyco-order-list.component.html',
-  styleUrls: ['./beyco-order-list.component.scss']
+  selector: 'app-beyco-offer-list',
+  templateUrl: './beyco-offer-list.component.html',
+  styleUrls: ['./beyco-offer-list.component.scss']
 })
-export class BeycoOrderListComponent implements OnInit, OnDestroy {
+export class BeycoOfferListComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
@@ -66,7 +66,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
         .subscribe(query => {
 
           if (!this.beycoTokenService.beycoToken || !query || !query['id']) {
-            this.router.navigate(['my-stock', 'orders', 'tab']).then();
+            this.router.navigate(['my-stock', 'all-stock', 'tab']).then();
             return;
           }
 
@@ -86,7 +86,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
                   this.coffeeInfoForms.push(coffeeForm);
                 }
               },
-              () => this.router.navigate(['my-stock', 'orders', 'tab']),
+              () => this.router.navigate(['my-stock', 'all-stock', 'tab']),
               () => this.globalEventManager.showLoading(false)
             );
         })
@@ -133,7 +133,7 @@ export class BeycoOrderListComponent implements OnInit, OnDestroy {
                 title: $localize`:@@beycoOrderList.notification.successfulOrder.title:Beyco order created`,
                 message: $localize`:@@beycoOrderList.notification.successfulOrder.message:You successfuly created Beyco order!`
               });
-              this.router.navigate(['my-stock', 'orders', 'tab']);
+              this.router.navigate(['my-stock', 'all-stock', 'tab']).then();
             },
             (error) => {
               this.globalEventManager.push({

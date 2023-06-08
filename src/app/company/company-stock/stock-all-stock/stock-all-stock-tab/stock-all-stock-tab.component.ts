@@ -14,11 +14,11 @@ import { BeycoTokenService } from '../../../../shared-services/beyco-token.servi
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
-  selector: 'app-stock-orders-tab',
-  templateUrl: './stock-orders-tab.component.html',
-  styleUrls: ['./stock-orders-tab.component.scss']
+  selector: 'app-stock-all-stock-tab',
+  templateUrl: './stock-all-stock-tab.component.html',
+  styleUrls: ['./stock-all-stock-tab.component.scss']
 })
-export class StockOrdersTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
+export class StockAllStockTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 

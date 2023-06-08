@@ -14,7 +14,7 @@ import { AdditionalProofItemComponent } from './additional-proof-item/additional
 import { StockBulkDeliveryDetailsComponent } from './stock-bulk-delivery-details/stock-bulk-delivery-details.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { QRCodeModule } from 'angular2-qrcode';
-import { GroupStockOrderListComponent } from './group-stock-order-list/group-stock-order-list.component';
+import { GroupStockUnitListComponent } from './group-stock-unit-list/group-stock-unit-list.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     StockBulkDeliveryDetailsComponent,
     AdditionalProofItemComponent,
     OrderHistoryComponent,
-    GroupStockOrderListComponent
+    GroupStockUnitListComponent
   ],
     imports: [
         CommonModule,
@@ -44,7 +44,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
         StockDeliveryDetailsComponent,
         StockBulkDeliveryDetailsComponent,
         AdditionalProofItemComponent,
-        GroupStockOrderListComponent
+        GroupStockUnitListComponent
     ]
 })
 export class StockCoreModule { }

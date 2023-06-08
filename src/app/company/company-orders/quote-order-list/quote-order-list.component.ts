@@ -106,7 +106,7 @@ export class QuoteOrderListComponent implements OnInit {
   }
 
   history(item: ApiStockOrder) {
-    this.router.navigate(['my-stock', 'orders', 'stock-order', item.id, 'view'],
+    this.router.navigate(['my-stock', 'all-stock', 'stock-order', item.id, 'view'],
       { queryParams: { returnUrl: this.router.routerState.snapshot.url }}).then();
    }
 

@@ -19,11 +19,15 @@ const routes: Routes = [
     loadChildren: () => import('./stock-payments/stock-payments.module').then(m => m.StockPaymentsModule)
   },
   {
-    path: 'orders', loadChildren: () => import('./stock-orders/stock-orders.module').then(m => m.StockOrdersModule)
+    path: 'orders', // Used for Beyco redirect - after login they redirect to orders
+    redirectTo: 'all-stock'
+  },
+  {
+    path: 'all-stock', loadChildren: () => import('./stock-all-stock/stock-all-stock.module').then(m => m.StockAllStockModule)
   },
   {
     path: 'beyco',
-    loadChildren: () => import('./beyco-order/beyco-order.module').then(m => m.BeycoOrderModule)
+    loadChildren: () => import('./beyco-offer/beyco-offer.module').then(m => m.BeycoOfferModule)
   }
 ];
 
