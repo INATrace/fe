@@ -25,7 +25,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   searchName = new FormControl(null);
   searchStatus = new FormControl('');
-  searchRole = new FormControl('');
   myProducts = new FormControl(true);
   reloadPing$ = new BehaviorSubject<boolean>(false);
   pagingParams$ = new BehaviorSubject({});

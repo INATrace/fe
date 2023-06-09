@@ -7,12 +7,18 @@
 
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@myOrders.title.placedOrders">Placed orders</div>
-        <button *ngIf="companyHasBuyerRole"
-                class="btn btn-solid round btn-table-new content-element--btn"
-                i18n="@@myOrders.button.newGlobalOrder"
-                (click)="addCustomerOrder()">
-          <span>+ Add customer order</span>
-        </button>
+        <div class="d-flex">
+          <button class="btn btn-solid round btn-table-new content-element--btn"
+                  (click)="placeQuoteOrder()">
+            <span>Place quote order</span>
+          </button>
+          <button *ngIf="companyHasBuyerRole"
+                  class="ml-4 btn btn-solid round btn-table-new content-element--btn"
+                  i18n="@@myOrders.button.newGlobalOrder"
+                  (click)="addCustomerOrder()">
+            <span>+ Add customer order</span>
+          </button>
+        </div>
       </div>
 
       <div class="af-form-row af-form-row--nomargin">
