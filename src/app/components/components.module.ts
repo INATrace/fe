@@ -35,6 +35,9 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
 import { ProductCardComponent } from './product-card/product-card.component';
 import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
 import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.component';
+import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,8 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
     FormatPaymentStatusPipe,
-    QrCodeRedirectComponent
+    QrCodeRedirectComponent,
+    CompanyDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -79,7 +83,9 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     NgbDropdownModule,
     NgbPaginationModule,
     GoogleMapsModule,
-    DragDropModule
+    DragDropModule,
+    NgxEchartsModule,
+    NgSelectModule
   ],
   exports: [
     BottomButtonsComponent,
@@ -103,7 +109,8 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
-    FormatPaymentStatusPipe
+    FormatPaymentStatusPipe,
+    CompanyDashboardComponent
   ],
   providers: [
     FormatPaymentPurposeTypePipe

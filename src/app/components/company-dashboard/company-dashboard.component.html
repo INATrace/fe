@@ -1,0 +1,293 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>
+        <span i18n="@@companyDashboardComponent.section.deliveries.title">Deliveries</span>
+      </h3>
+    </div>
+  </div>
+
+  <div class="af-form-element">
+    <div class="af-row">
+      <div class="af-c12">
+        <div class="row">
+          <div class="col-12 col-xs-6 col-md-8">
+            <div class="d-flex flex-wrap justify-content-start">
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      [disabled]="checkButtonDisabled('day', deliveriesForm)"
+                      (click)="setDeliveryInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      [disabled]="checkButtonDisabled('week', deliveriesForm)"
+                      (click)="setDeliveryInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      [disabled]="checkButtonDisabled('month', deliveriesForm)"
+                      (click)="setDeliveryInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      [disabled]="checkButtonDisabled('year', deliveriesForm)"
+                      (click)="setDeliveryInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
+              </button>
+              <app-datepicker
+                label="Select date from"
+                i18n-label="@@companyDashboardComponent.datepicker.deliveryDateFrom.label"
+                [form]="deliveriesForm.get('from')"
+                [invalid]="deliveriesForm.get('from').invalid"
+                (onChange)="onFilterDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+              <app-datepicker
+                label="Select date to"
+                i18n-label="@@companyDashboardComponent.datepicker.deliveryDateTo.label"
+                [form]="deliveriesForm.get('to')"
+                [invalid]="deliveriesForm.get('to').invalid"
+                (onChange)="onFilterDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+            </div>
+
+            <div echarts [options]="deliveriesOptions" [merge]="mergeOptions"></div>
+          </div>
+
+          <div class="col-12 col-xs-6 col-md-4">
+
+            <div class="form-group">
+              <single-choice
+                label="Facility"
+                i18n-label="@@companyDashboardComponent.singleChoice.deliveryFacility.label"
+                [formControlInput]="facilityFormControl"
+                [codebookService]="facilityCodebook"
+                (onChange)="addSelectedFacility($event)">
+              </single-choice>
+
+              <div *ngFor="let sp of this.facilities; index as idx">
+                <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                  <div>{{ sp.name }}</div>
+                  <div (click)="deleteFacility(sp, idx)" style="cursor: pointer;">
+                    <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="d-flex mb-0 text-input-label">
+                <span i18n="@@companyDashboardComponent.singleChoice.semiProduct.label">Semi-product</span>
+              </label>
+              <ng-select bindLabel="name"
+                         bindValue="id"
+                         placeholder="Select semi-product"
+                         (ngModelChange)="semiProductSelected($event)"
+                         i18n-placeholder="@@companyDashboardComponent.singleChoice.semiProduct.placeholder"
+                         [items]="semiProductOptions"
+                         [(ngModel)]="semiProductModelChoice"
+                         notFoundText="Nothing found"
+                         i18-notFoundText="@@companyDashboardComponent.singleChoice.semiProduct.nothing"
+                         i18-typeToSearchText="@@companyDashboardComponent.singleChoice.semiProduct.enterSearchTerm"
+                         typeToSearchText="Enter search term"
+                         class="custom labelPlaceholder"
+                         style="border:none">
+              </ng-select>
+            </div>
+
+            <single-choice
+              label="Farmer"
+              i18n-label="@@companyDashboardComponent.singleChoice.farmer.label"
+              [formControlInput]="farmerFormControl"
+              [codebookService]="farmersCodebook"
+              (onChange)="refreshDeliveriesData()">
+            </single-choice>
+
+            <single-choice
+              label="Collector"
+              i18n-label="@@companyDashboardComponent.singleChoice.collector.label"
+              [formControlInput]="collectorFormControl"
+              [codebookService]="collectorsCodebook"
+              (onChange)="refreshDeliveriesData()">
+            </single-choice>
+
+            <checkbox-input [form]="organicFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.organic.label">
+                Organic
+              </checkbox-input-rich-label>
+            </checkbox-input>
+            <checkbox-input [form]="womensOnlyFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.womensOnly.label">
+                Women only
+              </checkbox-input-rich-label>
+            </checkbox-input>
+            <checkbox-input [form]="productInDepositFormControl" (onClick)="refreshDeliveriesData()">
+              <checkbox-input-rich-label style="font-weight: 300;"
+                                         i18n="@@companyDashboardComponent.checkbox.productInDeposit.label">
+                Product in deposit
+              </checkbox-input-rich-label>
+            </checkbox-input>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <h3>
+        <span i18n="@@companyDashboardComponent.section.processingPerformance.title">Processing performance</span>
+      </h3>
+    </div>
+  </div>
+
+
+  <div class="af-form-element">
+    <div class="af-row">
+      <div class="af-c12">
+
+        <div class="row">
+          <div class="col-12 col-xs-6 col-md-8">
+            <div class="d-flex flex-wrap justify-content-start">
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      [disabled]="checkButtonDisabled('day', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      [disabled]="checkButtonDisabled('week', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      [disabled]="checkButtonDisabled('month', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      [disabled]="checkButtonDisabled('year', processingPerformanceForm)"
+                      (click)="setProcessingPerformanceInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
+              </button>
+              <app-datepicker
+                label="Select date from"
+                i18n-label="@@companyDashboardComponent.datepicker.processingDateFrom.label"
+                [form]="processingPerformanceForm.get('from')"
+                [invalid]="processingPerformanceForm.get('from').invalid"
+                (onChange)="onFilterProcessingDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+              <app-datepicker
+                label="Select date to"
+                i18n-label="@@companyDashboardComponent.datepicker.processingDateTo.label"
+                [form]="processingPerformanceForm.get('to')"
+                [invalid]="processingPerformanceForm.get('to').invalid"
+                (onChange)="onFilterProcessingDateRangeChange()"
+                style="width: 150px; margin-left: 1rem;">
+              </app-datepicker>
+            </div>
+
+            <div echarts [options]="processingPerformanceOption" [merge]="processingPerformanceMergeOptions"></div>
+          </div>
+
+          <div class="col-12 col-xs-6 col-md-4">
+
+            <single-choice
+                label="Facility"
+                i18n-label="@@companyDashboardComponent.singleChoice.processingFacility.label"
+                [formControlInput]="processingFacilityFormControl"
+                [codebookService]="facilityCodebook"
+                (onChange)="refreshProcessingPerformanceData()">
+            </single-choice>
+
+            <single-choice
+              label="Processing"
+              i18n-label="@@companyDashboardComponent.singleChoice.processingAction.label"
+              [formControlInput]="processingActionFormControl"
+              [codebookService]="procActionsCodebook"
+              (onChange)="refreshProcessingPerformanceData()">
+            </single-choice>
+
+            <div class="form-group">
+              <label class="d-flex mb-0 text-input-label">
+                <span i18n="@@">Measuring unit</span>
+              </label>
+              <ng-container *ngIf="measureUnitTypes?.length > 0">
+                <ng-select bindLabel="label"
+                           bindValue="id"
+                           placeholder="Select measuring unit"
+                           i18n-placeholder="@@companyDashboardComponent.singleChoice.measuringUnit.placeholder"
+                           [items]="measureUnitTypes"
+                           [formControl]="measuringUnitFormControl"
+                           (ngModelChange)="refreshProcessingPerformanceData()"
+                           notFoundText="Nothing found"
+                           i18-notFoundText="@@companyDashboardComponent.singleChoice.measuringUnit.nothing"
+                           i18-typeToSearchText="@@companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm"
+                           typeToSearchText="Enter search term"
+                           class="custom labelPlaceholder"
+                           style="border:none">
+                </ng-select>
+              </ng-container>
+            </div>
+
+            <ng-container *ngIf="evidenceFields?.length > 0">
+              <ng-container *ngFor="let field of evidenceFields; let i=index;">
+
+                <ng-container *ngIf="field.type === 'DATE'">
+                  <app-datepicker
+                    [label]="field.label"
+                    [form]="processingEvidenceInputField(field.fieldName)"
+                    [invalid]="processingEvidenceInputField(field.fieldName).invalid"
+                    (onChange)="refreshProcessingPerformanceData()"
+                    style="width: 150px;">
+                  </app-datepicker>
+                </ng-container>
+                <ng-container *ngIf="field.type !== 'DATE'">
+                  <textinput
+                    [form]="processingEvidenceInputField(field.fieldName)"
+                    [label]="field.label"
+                    (onBlur)="refreshProcessingPerformanceData()"
+                    style="width: 100%">
+                  </textinput>
+                </ng-container>
+
+
+              </ng-container>
+            </ng-container>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
