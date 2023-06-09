@@ -9,10 +9,10 @@ import { CompanyCommonModule } from '../company-common/company-common.module';
 import { SharedModule } from '../../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { QuoteOrderListComponent } from './quote-order-list/quote-order-list.component';
-import { GlobalOrderDetailsComponent } from './placed-orders/global-order-details/global-order-details.component';
+import { CompanyOrdersListComponent } from './company-orders-list/company-orders-list.component';
+import { AddCustomerOrderComponent } from './placed-orders/add-customer-order/add-customer-order.component';
 import { ComponentsModule } from '../../components/components.module';
-import { ProductOrderItemComponent } from './placed-orders/global-order-details/product-order-item/product-order-item.component';
+import { CustomerOrderItemComponent } from './placed-orders/add-customer-order/customer-order-item/customer-order-item.component';
 import { ApproveRejectTransactionModalComponent } from './approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 
 
@@ -21,9 +21,9 @@ import { ApproveRejectTransactionModalComponent } from './approve-reject-transac
     OrdersTabComponent,
     ReceivedOrdersComponent,
     PlacedOrdersComponent,
-    QuoteOrderListComponent,
-    GlobalOrderDetailsComponent,
-    ProductOrderItemComponent,
+    CompanyOrdersListComponent,
+    AddCustomerOrderComponent,
+    CustomerOrderItemComponent,
     ApproveRejectTransactionModalComponent
   ],
   imports: [

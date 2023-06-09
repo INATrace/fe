@@ -40,8 +40,8 @@ export class PlacedOrdersComponent extends OrdersTabComponent implements OnInit 
     this.companyCustomerCodebook = new CompanyCustomersService(this.companyControllerService, this.companyId);
   }
 
-  newGlobalOrder() {
-    this.router.navigate(['global-order', 'create'], { relativeTo: this.route.parent }).then();
+  addCustomerOrder() {
+    this.router.navigate(['customer-order', 'add'], { relativeTo: this.route.parent }).then();
   }
 
   customerChanged(event: ApiCompanyCustomer) {

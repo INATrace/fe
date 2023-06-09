@@ -18,11 +18,11 @@ import { map, startWith } from 'rxjs/operators';
 import { CurrencyCodesService } from '../../../../../shared-services/currency-codes.service';
 
 @Component({
-  selector: 'app-product-order-item',
-  templateUrl: './product-order-item.component.html',
-  styleUrls: ['./product-order-item.component.scss']
+  selector: 'app-customer-order-item',
+  templateUrl: './customer-order-item.component.html',
+  styleUrls: ['./customer-order-item.component.scss']
 })
-export class ProductOrderItemComponent extends GenericEditableItemComponent<ApiStockOrder> implements OnInit, OnDestroy {
+export class CustomerOrderItemComponent extends GenericEditableItemComponent<ApiStockOrder> implements OnInit, OnDestroy {
 
   @Input()
   disableDelete = false;

@@ -19,14 +19,14 @@ import { GenerateQRCodeModalComponent } from '../../../components/generate-qr-co
 import { ProcessingOrderControllerService } from '../../../../api/api/processingOrderController.service';
 
 @Component({
-  selector: 'app-quote-order-list',
-  templateUrl: './quote-order-list.component.html',
-  styleUrls: ['./quote-order-list.component.scss']
+  selector: 'app-company-orders-list',
+  templateUrl: './company-orders-list.component.html',
+  styleUrls: ['./company-orders-list.component.scss']
 })
-export class QuoteOrderListComponent implements OnInit {
+export class CompanyOrdersListComponent implements OnInit {
 
   @Input()
-  mode: 'INPUT' | 'CUSTOMER' = 'INPUT';
+  orderType: 'RECEIVED' | 'PLACED' = 'RECEIVED';
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -162,13 +162,13 @@ export class QuoteOrderListComponent implements OnInit {
         key: 'client',
         name: $localize`:@@orderList.sortOptions.client.name:Client`,
         inactive: true,
-        hide: this.mode === 'CUSTOMER'
+        hide: this.orderType === 'PLACED'
       },
       {
         key: 'customer',
         name: $localize`:@@orderList.sortOptions.customer.name:Customer`,
         inactive: true,
-        hide: this.mode === 'INPUT'
+        hide: this.orderType === 'RECEIVED'
       },
       {
         key: 'orderId',
@@ -179,13 +179,13 @@ export class QuoteOrderListComponent implements OnInit {
         key: 'toFacility',
         name: $localize`:@@orderList.sortOptions.toFacility.name:To facility`,
         inactive: true,
-        hide: this.mode === 'CUSTOMER'
+        hide: this.orderType === 'PLACED'
       },
       {
         key: 'orderedTo',
         name: $localize`:@@orderList.sortOptions.orderedTo.name:Ordered to`,
         inactive: true,
-        hide: this.mode === 'INPUT'
+        hide: this.orderType === 'RECEIVED'
       },
       {
         key: 'fullfilled',
@@ -267,17 +267,17 @@ export class QuoteOrderListComponent implements OnInit {
     Observable<ApiPaginatedResponseApiStockOrder> {
 
     // If we are in input mode, that means we need stock orders that are quoted to the current company
-    if (this.mode === 'INPUT') {
+    if (this.orderType === 'RECEIVED') {
 
       return this.stockOrderController.getQuoteOrdersInFacilityUsingGETByMap(params);
 
-    } else if (this.mode === 'CUSTOMER') {
+    } else if (this.orderType === 'PLACED') {
 
       // If we are in customer mode, that means we need stock orders the were created form the current company for a customer company
       return this.stockOrderController.getStockOrdersInFacilityForCustomerUsingGETByMap(params);
     }
 
-    throw Error('Wrong mode: ' + this.mode);
+    throw Error('Wrong mode: ' + this.orderType);
   }
 
   private setCounts(allCount: number) {
@@ -296,7 +296,7 @@ export class QuoteOrderListComponent implements OnInit {
   }
 
   canDelete(order: ApiStockOrder) {
-    return this.mode !== 'INPUT' && Math.abs(order.fulfilledQuantity - order.availableQuantity) < 0.0000000001;
+    return this.orderType !== 'RECEIVED' && Math.abs(order.fulfilledQuantity - order.availableQuantity) < 0.0000000001;
   }
 
   async delete(order: ApiStockOrder) {

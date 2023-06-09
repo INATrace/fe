@@ -7,7 +7,10 @@
 
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title" i18n="@@myOrders.title.placedOrders">Placed orders</div>
-        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newGlobalOrder()" i18n="@@myOrders.button.newGlobalOrder">
+        <button *ngIf="companyHasBuyerRole"
+                class="btn btn-solid round btn-table-new content-element--btn"
+                i18n="@@myOrders.button.newGlobalOrder"
+                (click)="addCustomerOrder()">
           <span>+ Add customer order</span>
         </button>
       </div>
@@ -73,16 +76,16 @@
         </div>
       </div>
 
-      <app-quote-order-list
+      <app-company-orders-list
           *ngIf="companyId != null"
-          mode="CUSTOMER"
+          orderType="PLACED"
           (countAll)="onCount($event)"
           [facilityId$]="selectedFacilityId$"
           (showing)="onShow($event)"
           [companyId]="companyId"
           [companyCustomerId$]="companyCustomerId$"
           [openOnly$]="openOnly$">
-      </app-quote-order-list>
+      </app-company-orders-list>
 
     </div>
   </div>

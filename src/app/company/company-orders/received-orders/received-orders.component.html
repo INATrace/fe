@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <app-quote-order-list
+      <app-company-orders-list
           *ngIf="companyId != null"
           (countAll)="onCount($event)"
           [facilityId$]="selectedFacilityId$"
@@ -75,7 +75,7 @@
           [semiProductId$]="semiProductId$"
           [companyId]="companyId"
           [openOnly$]="openOnly$">
-      </app-quote-order-list>
+      </app-company-orders-list>
 
     </div>
   </div>

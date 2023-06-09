@@ -47,7 +47,7 @@
                  [class.enabled-action]="true">
                 View
               </a>
-              <a *ngIf="this.mode === 'CUSTOMER'"
+              <a *ngIf="this.orderType === 'PLACED'"
                  i18n="@@productLabelPurchaseOrder.tableCol.approveRejectOrder"
                  (click)="approveReject(order)"
                  class="company-action"
@@ -55,7 +55,7 @@
                 Approve/Reject
               </a>
               <a i18n="@@productLabelPurchaseOrder.tableCol.payment"
-                 *ngIf="this.mode === 'CUSTOMER'"
+                 *ngIf="this.orderType === 'PLACED'"
                  (click)="payment(order)"
                  class="company-action"
                  [class.enabled-action]="true">
@@ -69,7 +69,7 @@
                 Delete
               </a>
               <a i18n="@@productLabelPurchaseOrder.tableCol.qr"
-                 *ngIf="mode == 'CUSTOMER' && order.qrCodeTag"
+                 *ngIf="orderType == 'PLACED' && order.qrCodeTag"
                  (click)="openQRCodes(order)"
                  class="company-action"
                  [class.enabled-action]="true">

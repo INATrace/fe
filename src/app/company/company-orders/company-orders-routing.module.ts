@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ReceivedOrdersComponent } from './received-orders/received-orders.component';
 import { PlacedOrdersComponent } from './placed-orders/placed-orders.component';
-import { GlobalOrderDetailsComponent } from './placed-orders/global-order-details/global-order-details.component';
+import { AddCustomerOrderComponent } from './placed-orders/add-customer-order/add-customer-order.component';
 
 const routes: Routes = [
   {
@@ -26,13 +26,13 @@ const routes: Routes = [
     }
   },
   {
-    path: 'global-order/create',
-    component: GlobalOrderDetailsComponent,
+    path: 'customer-order/add',
+    component: AddCustomerOrderComponent,
     pathMatch: 'full',
     data: {
       drobtinice: {
         title: ' / ' + $localize`:@@breadCrumb.purchasesOrders.myStock:Orders` + ' / ' + $localize`:@@breadCrumb.orders.globalOrder:Order`,
-        route: 'my-orders/customer-orders'
+        route: 'my-orders/placed-orders'
       }
     }
   }

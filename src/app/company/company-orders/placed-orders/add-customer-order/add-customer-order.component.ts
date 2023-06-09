@@ -13,7 +13,7 @@ import { ApiProductOrderValidationScheme } from './validation';
 import { ApiProductOrder } from '../../../../../api/model/apiProductOrder';
 import { ListEditorManager } from '../../../../shared/list-editor/list-editor-manager';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
-import { ApiStockOrderValidationScheme } from './product-order-item/validation';
+import { ApiStockOrderValidationScheme } from './customer-order-item/validation';
 import { Location } from '@angular/common';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
 import _ from 'lodash-es';
@@ -22,11 +22,11 @@ import { ProductOrderControllerService } from '../../../../../api/api/productOrd
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
 @Component({
-  selector: 'app-global-order-details',
-  templateUrl: './global-order-details.component.html',
-  styleUrls: ['./global-order-details.component.scss']
+  selector: 'app-add-customer-order',
+  templateUrl: './add-customer-order.component.html',
+  styleUrls: ['./add-customer-order.component.scss']
 })
-export class GlobalOrderDetailsComponent implements OnInit {
+export class AddCustomerOrderComponent implements OnInit {
 
   form: FormGroup;
   submitted = false;
@@ -62,7 +62,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
 
   static StockOrderItemEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(GlobalOrderDetailsComponent.StockOrderItemCreateEmptyObject(), ApiStockOrderValidationScheme.validators);
+      return new FormControl(AddCustomerOrderComponent.StockOrderItemCreateEmptyObject(), ApiStockOrderValidationScheme.validators);
     };
   }
 
@@ -131,7 +131,7 @@ export class GlobalOrderDetailsComponent implements OnInit {
   private initializeListManager() {
     this.stockOrdersListManager = new ListEditorManager<ApiStockOrder>(
       this.orderItemsFormArray,
-      GlobalOrderDetailsComponent.StockOrderItemEmptyObjectFormFactory(),
+      AddCustomerOrderComponent.StockOrderItemEmptyObjectFormFactory(),
       ApiStockOrderValidationScheme
     );
   }

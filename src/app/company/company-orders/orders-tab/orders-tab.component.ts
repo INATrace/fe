@@ -11,6 +11,8 @@ import { CompanyFacilitiesService } from '../../../shared-services/company-facil
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { take } from 'rxjs/operators';
+import { ApiCompanyGet } from '../../../../api/model/apiCompanyGet';
+import CompanyRolesEnum = ApiCompanyGet.CompanyRolesEnum;
 
 @Component({
   template: ''
@@ -34,6 +36,7 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   companyId: number;
+  companyHasBuyerRole = false;
 
   // Controls for the facility dropdown select component
   facilityCodebook: CompanyFacilitiesService;
@@ -68,6 +71,7 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
     if (cp) {
       this.companyId = cp.id;
       this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
+      this.companyHasBuyerRole = cp.companyRoles?.some(cr => cr === CompanyRolesEnum.BUYER);
     }
   }
 
