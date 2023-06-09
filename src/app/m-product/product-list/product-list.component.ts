@@ -11,8 +11,8 @@ import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import {
-  CompanyAndValueChainSelectModalComponent
-} from '../../company/company-list/company-and-value-chain-select-modal/company-and-value-chain-select-modal.component';
+  NewProductModalComponent
+} from './new-product-modal/new-product-modal.component';
 
 @Component({
   selector: 'app-product-list',
@@ -152,17 +152,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   async createProductForCompany() {
-    const modalRef = this.modalService.open(CompanyAndValueChainSelectModalComponent, { centered: true });
+
+    const modalRef = this.modalService.open(NewProductModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {
       title: $localize`:@@productList.createProductForCompanyAndValueChain.title:Product Company and Value Chain`,
       companyInstructionsHtml: $localize`:@@productList.createProductForCompanyAndValueChain.companyInstructionsHtml:Select a company for your product:`,
       valueChainInstructionsHtml: $localize`:@@productList.createProductForCompanyAndValueChain.valueChainInstructionsHtml:Select a value chain for your product:`
     });
     const modalResult = await modalRef.result;
-    const company = modalResult.company;
-    const valueChain =  modalResult.valueChain;
+    const company = modalResult?.company;
+    const valueChain =  modalResult?.valueChain;
 
-    if (company) {
+    if (company && valueChain) {
       this.router.navigate(['product-labels', 'new', company.id, valueChain.id]).then();
     }
   }

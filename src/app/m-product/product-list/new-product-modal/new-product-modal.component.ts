@@ -5,11 +5,11 @@ import {ActiveCompaniesService} from '../../../shared-services/active-companies.
 import {ActiveValueChainService} from '../../../shared-services/active-value-chain.service';
 
 @Component({
-  selector: 'app-company-and-value-chain-select-modal',
-  templateUrl: './company-and-value-chain-select-modal.component.html',
-  styleUrls: ['./company-and-value-chain-select-modal.component.scss']
+  selector: 'app-new-product-modal',
+  templateUrl: './new-product-modal.component.html',
+  styleUrls: ['./new-product-modal.component.scss']
 })
-export class CompanyAndValueChainSelectModalComponent implements OnInit {
+export class NewProductModalComponent implements OnInit {
 
   @Input()
   dismissable = true;

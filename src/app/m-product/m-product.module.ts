@@ -34,10 +34,12 @@ import { LanguageForLabelModalComponent } from './product-label/language-for-lab
 import { ProductCommonModule } from './product-common/product-common.module';
 import { PathlineMapComponent } from './product-label/pathline-map/pathline-map.component';
 import { FeedbackModalComponent } from './product-label-feedback-page/feedback-modal/feedback-modal.component';
+import { NewProductModalComponent } from './product-list/new-product-modal/new-product-modal.component';
 
 @NgModule({
   declarations: [
     ProductListComponent,
+    NewProductModalComponent,
     ProductLabelComponent,
     LabelRedirectToProductPageComponent,
     BatchesListComponent,

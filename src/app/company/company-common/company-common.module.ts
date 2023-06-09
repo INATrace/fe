@@ -9,10 +9,12 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockPaymentsListComponent } from '../company-stock/stock-payments/stock-payments-list/stock-payments-list.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ProducersItemComponent } from './producers-item/producers-item.component';
+import { CompanySelectModalComponent } from './company-select-modal/company-select-modal.component';
 
 @NgModule({
   declarations: [
     CompanyLeftPanelComponent,
+    CompanySelectModalComponent,
     StockUnitListComponent,
     StockPaymentsListComponent,
     ProducersItemComponent
@@ -27,6 +29,7 @@ import { ProducersItemComponent } from './producers-item/producers-item.componen
   ],
   exports: [
     CompanyLeftPanelComponent,
+    CompanySelectModalComponent,
     StockUnitListComponent,
     StockPaymentsListComponent,
     ProducersItemComponent

@@ -9,7 +9,7 @@ import { EnumSifrant } from '../../shared-services/enum-sifrant';
 import { AuthService } from '../../core/auth.service';
 import { GlobalEventManagerService } from '../../core/global-event-manager.service';
 import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improved.service';
-import { CompanySelectModalComponent } from './company-select-modal/company-select-modal.component';
+import { CompanySelectModalComponent } from '../company-common/company-select-modal/company-select-modal.component';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 

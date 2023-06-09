@@ -6,7 +6,7 @@ import { ApiProductCompany } from 'src/api/model/apiProductCompany';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { UnsubscribeList } from 'src/shared/rxutils';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { CompanySelectModalComponent } from 'src/app/company/company-list/company-select-modal/company-select-modal.component';
+import { CompanySelectModalComponent } from 'src/app/company/company-common/company-select-modal/company-select-modal.component';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
