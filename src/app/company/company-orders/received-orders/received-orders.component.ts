@@ -11,13 +11,13 @@ import { ApiSemiProduct } from '../../../../api/model/apiSemiProduct';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
-  selector: 'app-orders-all-orders',
-  templateUrl: './orders-orders-for-me.component.html',
-  styleUrls: ['./orders-orders-for-me.component.scss']
+  selector: 'app-received-orders',
+  templateUrl: './received-orders.component.html',
+  styleUrls: ['./received-orders.component.scss']
 })
-export class OrdersOrdersForMeComponent extends OrdersTabComponent implements OnInit, OnDestroy {
+export class ReceivedOrdersComponent extends OrdersTabComponent implements OnInit, OnDestroy {
 
-  rootTab = 1;
+  rootTab = 0;
 
   // Semi-product dropdown selection component
   semiProductFrom = new FormControl(null);

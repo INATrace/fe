@@ -4,20 +4,23 @@
 
   <div class="main">
     <div class="main-inside-top content-element">
+
       <div class="d-flex justify-content-between content-element--row1">
-        <div class="title-page content-element--title" i18n="@@ordersAllOrders.title.allOrders">Orders for me</div>
+        <div class="title-page content-element--title" i18n="@@myOrders.title.placedOrders">Placed orders</div>
+        <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newGlobalOrder()" i18n="@@myOrders.button.newGlobalOrder">
+          <span>+ Add customer order</span>
+        </button>
       </div>
 
       <div class="af-form-row af-form-row--nomargin">
-
         <div class="af-form-block--c6">
-
           <div class="af-form-element">
             <div class="af-row">
               <div class="af-c12">
+
                 <single-choice *ngIf="facilityCodebook"
                                label="Selected facility"
-                               i18n-label="@@ordersAllOrders.selectedFacility.singleChoice.label"
+                               i18n-label="@@myOrders..selectedFacility.singleChoice.label"
                                [formControlInput]="facilityForStockOrderForm"
                                [codebookService]="facilityCodebook"
                                (onChange)="facilityChanged($event)"
@@ -25,12 +28,14 @@
                 </single-choice>
 
                 <single-choice *ngIf="facilityForStockOrderForm.value"
-                               label="Selected SKU"
-                               i18n-label="@@ordersAllOrders.selectedSKU.singleChoice.label"
-                               [formControlInput]="semiProductFrom"
-                               [codebookService]="semiProductsInFacilityCodebook"
-                               (onChange)="selectSemiProduct($event)">
+                               label="Customer"
+                               i18n-label="@@myOrders..selectedCustomer.singleChoice.label"
+                               [formControlInput]="companyCustomerForm"
+                               [codebookService]="companyCustomerCodebook"
+                               (onChange)="customerChanged($event)"
+                               style="min-width: 150px;">
                 </single-choice>
+
               </div>
             </div>
           </div>
@@ -39,20 +44,21 @@
 
       <div class="d-flex justify-content-between main-inside-top--row2">
         <div>
-          <div class="sub-title-page content-element--subtitle" i18n="@@ordersAllOrders.subTitle.listOfOrders">List of orders</div>
-          <div class="counting-page content-element--counting" i18n="@@ordersAllOrders.subTitle.showingOrders">Showing {{ showedOrders }}/{{ allOrders }}</div>
+          <div class="sub-title-page content-element--subtitle" i18n="@@myOrders..subTitle.listOfOrders">List of orders</div>
+          <div class="counting-page content-element--counting" i18n="@@myOrders..subTitle.showingOrders">Showing {{showedOrders}}/{{allOrders}}</div>
         </div>
 
         <div class="d-flex align-items-top">
           <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
-            <div *ngIf="openOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@ordersAllOrders.filter.openOnly.filter">Open only
+
+            <div *ngIf="openOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@myOrders..filter.openOnly.filter">Open only
               <div style="margin-left: 0.5rem;" (click)="setOpenOnly(false)">
                 <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                 </fa-icon>
               </div>
             </div>
 
-            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@ordersAllOrders.filter.placeholder">
+            <button ngbDropdownToggle class="btn btn-filter" style="margin-left: 1rem;" i18n-placeholder="@@myOrders..filter.placeholder">
               <div class="button-icon">
                 <span class="button-icon-shape button-icon-shape--filter"></span>
               </div>
@@ -60,7 +66,7 @@
             </button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
-              <button ngbDropdownItem (click)="setOpenOnly(true)" i18n="@@ordersAllOrders.filter.openOnly.button">Open only</button>
+              <button ngbDropdownItem (click)="setOpenOnly(true)" i18n="@@myOrders..filter.openOnly.button">Open only</button>
             </div>
 
           </div>
@@ -69,11 +75,12 @@
 
       <app-quote-order-list
           *ngIf="companyId != null"
+          mode="CUSTOMER"
           (countAll)="onCount($event)"
           [facilityId$]="selectedFacilityId$"
           (showing)="onShow($event)"
-          [semiProductId$]="semiProductId$"
           [companyId]="companyId"
+          [companyCustomerId$]="companyCustomerId$"
           [openOnly$]="openOnly$">
       </app-quote-order-list>
 

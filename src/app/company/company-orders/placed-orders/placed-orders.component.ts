@@ -11,13 +11,13 @@ import { CompanyControllerService } from '../../../../api/api/companyController.
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 
 @Component({
-  selector: 'app-orders-customer-orders',
-  templateUrl: './orders-my-orders.component.html',
-  styleUrls: ['./orders-my-orders.component.scss']
+  selector: 'app-placed-orders',
+  templateUrl: './placed-orders.component.html',
+  styleUrls: ['./placed-orders.component.scss']
 })
-export class OrdersMyOrdersComponent extends OrdersTabComponent implements OnInit {
+export class PlacedOrdersComponent extends OrdersTabComponent implements OnInit {
 
-  rootTab = 2;
+  rootTab = 1;
 
   // Controls for company customer dropdown selection component
   companyCustomerForm = new FormControl(null);

@@ -24,15 +24,13 @@ export class OrdersTabComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedTab: Subscription;
 
   tabs = [
-    $localize`:@@productLabelOrder.tab0.title:Dashboard`,
-    $localize`:@@productLabelOrder.tab1.title:Orders for me`,
-    $localize`:@@productLabelOrder.tab2.title:My orders`
+    $localize`:@@productLabelOrder.tab0.title:Received orders`,
+    $localize`:@@productLabelOrder.tab1.title:Placed orders`
   ];
 
   tabNames = [
-    'dashboard',
-    'all-orders',
-    'customer-orders'
+    'received-orders',
+    'placed-orders'
   ];
 
   companyId: number;

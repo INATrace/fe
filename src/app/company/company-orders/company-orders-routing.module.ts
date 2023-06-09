@@ -1,34 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrdersDashboardComponent } from './orders-dashboard/orders-dashboard.component';
-import { OrdersOrdersForMeComponent } from './orders-orders-for-me/orders-orders-for-me.component';
-import { OrdersMyOrdersComponent } from './orders-my-orders/orders-my-orders.component';
-import { GlobalOrderDetailsComponent } from './orders-my-orders/global-order-details/global-order-details.component';
+import { ReceivedOrdersComponent } from './received-orders/received-orders.component';
+import { PlacedOrdersComponent } from './placed-orders/placed-orders.component';
+import { GlobalOrderDetailsComponent } from './placed-orders/global-order-details/global-order-details.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard'
+    redirectTo: 'received-orders'
   },
   {
-    path: 'dashboard',
-    component: OrdersDashboardComponent,
+    path: 'received-orders',
+    component: ReceivedOrdersComponent,
     pathMatch: 'full',
     data: {
       drobtinice: null
     }
   },
   {
-    path: 'all-orders',
-    component: OrdersOrdersForMeComponent,
-    pathMatch: 'full',
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 'customer-orders',
-    component: OrdersMyOrdersComponent,
+    path: 'placed-orders',
+    component: PlacedOrdersComponent,
     pathMatch: 'full',
     data: {
       drobtinice: null
