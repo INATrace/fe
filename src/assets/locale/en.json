@@ -3137,6 +3137,12 @@
     "settingsTypes.editProductType.editTitle": "Edit product type",
     "productLabelStockFacilityModal.removeValueChain.confirm.message": "Are you sure you want to remove the value chain? Proceeding will reset the selected semi-products.",
     "companyDetailValueChainModal.removeValueChain.confirm.message": "Are you sure you want to remove the value chain? Processing on these value chains will not work anymore.",
-    "companyDetailProductTypeModal.removeProductType.confirm.message": "Are you sure you want to remove the product type?"
+    "companyDetailProductTypeModal.removeProductType.confirm.message": "Are you sure you want to remove the product type?",
+    "company.orders.placedOrders.placeQuoteOrderModal.title": "First select facility and order template",
+    "company.orders.placedOrders.placeQuoteOrderModal.field.facility.label": "Select facility",
+    "company.orders.placedOrders.placeQuoteOrderModal.field.orderTemplate.label": "Select quote order template",
+    "company.orders.placedOrders.placeQuoteOrderModal.field.orderTemplate.placeholder": "Select quote order template",
+    "company.orders.placedOrders.placeQuoteOrderModal.button.cancel": "Cancel",
+    "company.orders.placedOrders.placeQuoteOrderModal.button..confirm": "Confirm"
   }
 }

@@ -7,18 +7,21 @@ import {
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
+import { ApiFacility } from '../../api/model/apiFacility';
 
-export class CompanyProcessingActionsService extends GeneralSifrantService<ApiProcessingAction> {
+export class CompanyQuoteProcActionsForFacilityService extends GeneralSifrantService<ApiProcessingAction> {
 
   private requestParams = {
     limit: 1000,
     offset: 0,
-    id: this.companyId
+    id: this.companyId,
+    actionType: 'SHIPMENT'
   } as ListProcessingActionsByCompanyUsingGET.PartialParamMap;
 
   constructor(
     private processingActionController: ProcessingActionControllerService,
-    private companyId: number
+    private companyId: number,
+    private facility: ApiFacility
   ) {
     super();
     this.initializeCodebook();
@@ -33,15 +36,15 @@ export class CompanyProcessingActionsService extends GeneralSifrantService<ApiPr
   }
 
   public placeholder(): string {
-    return $localize`:@@activeProcessingAction.input.placehoder:Select processing action`;
+    return $localize`:@@company.orders.placedOrders.placeQuoteOrderModal.field.orderTemplate.placeholder:Select quote order template`;
   }
 
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProcessingAction>> {
-    const lkey = key ? key.toLocaleLowerCase() : null;
+    const queryString = key ? key.toLocaleLowerCase() : null;
     return this.sifrant$.pipe(
       map((allChoices: PagedSearchResults<ApiProcessingAction>) => {
         return {
-          results: allChoices.results.filter((x: ApiProcessingAction) => lkey == null || x.name.toLocaleLowerCase().indexOf(lkey) >= 0),
+          results: allChoices.results.filter((x: ApiProcessingAction) => queryString == null || x.name.toLocaleLowerCase().indexOf(queryString) >= 0),
           offset: allChoices.offset,
           limit: allChoices.limit,
           totalCount: allChoices.totalCount
@@ -54,7 +57,27 @@ export class CompanyProcessingActionsService extends GeneralSifrantService<ApiPr
     this.sifrant$ = this.sifrant$ ||
       this.processingActionController.listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams })
         .pipe(
-          map(x => this.pack(x.data.items))
+          map(x => {
+
+            let actions = x.data?.items ?? [];
+
+            // Filter the quote order proc. actions that are supported for the selected facility and semi or final product
+            actions = actions.filter(procAction => {
+
+              if (procAction.supportedFacilities?.length > 0 && procAction.supportedFacilities.findIndex(sf => sf.id === this.facility.id) === -1) {
+                return false;
+              }
+
+              const facilitySemiProd = this.facility.facilitySemiProductList.find(fsp => fsp.id === procAction.inputSemiProduct?.id);
+              if (facilitySemiProd) {
+                return true;
+              }
+
+              return !!this.facility.facilityFinalProducts.find(ffp => ffp.id === procAction.inputFinalProduct?.id);
+            });
+
+            return this.pack(actions);
+          })
         );
   }
 
