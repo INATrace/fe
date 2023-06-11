@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiFacility } from '../../../../../../api/model/apiFacility';
 import { ApiProcessingAction } from '../../../../../../api/model/apiProcessingAction';
+import TypeEnum = ApiProcessingAction.TypeEnum;
 
 @Component({
   selector: 'app-facility-card',
@@ -120,6 +121,11 @@ export class FacilityCardComponent implements OnInit {
   private setMenuOptions() {
 
     for (const action of this.actions) {
+
+      // Filter-out processing actions of type 'SHIPMENT' (Quote orders)
+      if (action.type === TypeEnum.SHIPMENT) {
+        continue;
+      }
 
       // If processing action has specified supported facilities check if this facility is specified (if not, skip the processing action)
       if (action.supportedFacilities && action.supportedFacilities.length > 0 && action.supportedFacilities.findIndex(sf => sf.id === this.facility.id) === -1) {

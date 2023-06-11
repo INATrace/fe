@@ -68,12 +68,7 @@ export class CompanyQuoteProcActionsForFacilityService extends GeneralSifrantSer
                 return false;
               }
 
-              const facilitySemiProd = this.facility.facilitySemiProductList.find(fsp => fsp.id === procAction.inputSemiProduct?.id);
-              if (facilitySemiProd) {
-                return true;
-              }
-
-              return !!this.facility.facilityFinalProducts.find(ffp => ffp.id === procAction.inputFinalProduct?.id);
+              return !!this.facility.facilitySemiProductList.find(fsp => fsp.id === procAction.inputSemiProduct?.id);
             });
 
             return this.pack(actions);

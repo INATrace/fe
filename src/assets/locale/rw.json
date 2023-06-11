@@ -2308,7 +2308,7 @@
     "orderList.deleteProcessingOrder.error.message": "Are you sure you want to delete the order? This will delete processing transaction and possibly all orders generated from it.",
     "orderList.delete.error.message": "Are you sure you want to delete the order?",
     "myOrders.title.placedOrders": "Placed orders",
-    "myOrders.button.newGlobalOrder": "{$START_TAG_SPAN}+ Add customer order{$CLOSE_TAG_SPAN}",
+    "myOrders.button.addCustomerOrder": "{$START_TAG_SPAN}+ Add customer order{$CLOSE_TAG_SPAN}",
     "myOrders..selectedFacility.singleChoice.label": "Selected facility",
     "myOrders..selectedCustomer.singleChoice.label": "Customer",
     "myOrders..subTitle.listOfOrders": "List of orders",

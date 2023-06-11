@@ -16,7 +16,7 @@
               <textinput
                       label="Order ID"
                       i18n-label="@@globalOrderEdit.textinput.orderID.label"
-                      [form]="form.get('orderId')"
+                      [form]="$any(form.get('orderId'))"
                       style="width: 100%"
                       placeholder="Enter id"
                       i18n-placeholder="@@globalOrderEdit.textinput.orderID.placeholder"
@@ -37,7 +37,7 @@
               <single-choice
                       label="Customer"
                       i18n-label="@@globalOrderEdit.textinput.customer.label"
-                      [formControlInput]="form.get('customer')"
+                      [formControlInput]="$any(form.get('customer'))"
                       [codebookService]="companyCustomerCodebook"
                       style="min-width: 150px;"
                       [isInvalidChoice]="submitted && form.get('customer').invalid">
@@ -74,7 +74,7 @@
           <div class="af-row">
             <div class="af-c12">
               <checkbox-input
-                      [form]="form.get('requiredWomensOnly')"
+                      [form]="$any(form.get('requiredWomensOnly'))"
                       style="margin-bottom: 1rem; margin-top: -1rem;">
                 <checkbox-input-rich-label>
                   <span i18n="@@globalOrderEdit.checkbox.womensCoffee.label">Women's only</span>
@@ -86,7 +86,7 @@
           <div class="af-row">
             <div class="af-c12">
               <checkbox-input
-                      [form]="form.get('requiredOrganic')"
+                      [form]="$any(form.get('requiredOrganic'))"
                       style="margin-bottom: 1rem; margin-top: -1rem;">
                 <checkbox-input-rich-label>
                   <span i18n="@@globalOrderEdit.checkbox.requiredOrganic.label">Organic only</span>
@@ -125,16 +125,16 @@
                            [invalid]="submitted && form.get('items')?.invalid">
                 <list-editor-items>
                   <div *ngFor="let item of orderItemsFormArray.controls; let i=index;">
-                    <app-product-order-item
+                    <app-customer-order-item
                             [title]="null"
                             [outputFacility]="outputFacility"
-                            [formControlInput]="item"
+                            [formControlInput]="$any(item)"
                             [globalOrderId]="form.get('orderId').value"
                             [isOpen]="stockOrdersListManager.isOpen(i)"
                             [listEditorManager]="this.stockOrdersListManager"
                             [companyId]="companyId"
                             [listEditorManagerPosition]="i">
-                    </app-product-order-item>
+                    </app-customer-order-item>
                   </div>
                 </list-editor-items>
                 <list-editor-errors>
