@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
@@ -13,40 +13,28 @@ import { ApiActivityProofValidationScheme } from '../../stock-core/additional-pr
 import { dateISOString, deleteNullFields, generateFormFromMetadata } from '../../../../../shared/utils';
 import { CompanyFacilitiesForStockUnitProductService } from '../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { AvailableSellingFacilitiesForCompany } from '../../../../shared-services/available-selling-facilities-for.company';
-import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { GetAvailableStockForStockUnitInFacilityUsingGET, StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
+import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { FacilityControllerService } from '../../../../../api/api/facilityController.service';
 import { Subscription } from 'rxjs';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
-import { debounceTime, map, take } from 'rxjs/operators';
-import { faCut, faFemale, faLeaf, faQrcode, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { take } from 'rxjs/operators';
+import { faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ApiSemiProduct } from '../../../../../api/model/apiSemiProduct';
 import { ApiFinalProduct } from '../../../../../api/model/apiFinalProduct';
-import { SemiProductControllerService } from '../../../../../api/api/semiProductController.service';
-import { ProductControllerService } from '../../../../../api/api/productController.service';
-import { ApiStockOrderSelectable } from './stock-processing-order-details.model';
-import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
-import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
-import { ClipInputTransactionModalComponent } from './clip-input-transaction-modal/clip-input-transaction-modal.component';
-import { ClipInputTransactionModalResult } from './clip-input-transaction-modal/model';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiCompanyGet } from '../../../../../api/model/apiCompanyGet';
 import { AuthService } from '../../../../core/auth.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiProcessingOrder } from '../../../../../api/model/apiProcessingOrder';
 import { ApiProcessingOrderValidationScheme, ApiStockOrderValidationScheme } from './validation';
-import { ApiStockOrderEvidenceFieldValue } from '../../../../../api/model/apiStockOrderEvidenceFieldValue';
-import { ApiProcessingEvidenceField } from '../../../../../api/model/apiProcessingEvidenceField';
 import { StaticSemiProductsService } from './static-semi-products.service';
 import { StockProcessingOrderDetailsHelper } from './stock-processing-order-details.helper';
-import ApiTransactionStatus = ApiTransaction.StatusEnum;
 import TypeEnum = ApiProcessingAction.TypeEnum;
-import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
-import StatusEnum = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
-import { ApiProcessingActionOutputSemiProduct } from '../../../../../api/model/apiProcessingActionOutputSemiProduct';
 import { uuidv4 } from 'src/shared/utils';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { ProcessingOrderInputComponent } from './processing-order-input/processing-order-input.component';
+import { ProcessingOrderOutputComponent } from './processing-order-output/processing-order-output.component';
 
 type PageMode = 'create' | 'edit';
 
@@ -59,15 +47,11 @@ interface RepackedTargetStockOrder extends ApiStockOrder {
   templateUrl: './stock-processing-order-details.component.html',
   styleUrls: ['./stock-processing-order-details.component.scss']
 })
-export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
+export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // FontAwesome icons
   faTimes = faTimes;
   faTrashAlt = faTrashAlt;
-  faQrcode = faQrcode;
-  faCut = faCut;
-  faLeaf = faLeaf;
-  faFemale = faFemale;
 
   title: string;
 
@@ -86,23 +70,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   qrCodeForFinalProductControl = new FormControl({ value: null, disabled: true });
 
   // Properties and controls used for display and selection of input facility
-  selectedInputFacility: ApiFacility = null;
   inputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService | AvailableSellingFacilitiesForCompany;
   inputFacilityControl = new FormControl(null, Validators.required);
 
-  // Input stock orders filter controls
-  dateFromFilterControl = new FormControl(null);
-  dateToFilterControl = new FormControl(null);
-  internalLotNameSearchControl = new FormControl(null);
-  womenOnlyFilterControl = new FormControl(null);
-  organicOnlyFilterControl = new FormControl(null);
-
   // Input stock orders properties and controls
-  availableInputStockOrders: ApiStockOrderSelectable[] = [];
-  selectedInputStockOrders: ApiStockOrderSelectable[] = [];
-  organicOnlyInputStockOrders = false;
-  womenOnlyInputStockOrders = false;
-  cbSelectAllControl = new FormControl(false);
   totalInputQuantityControl = new FormControl({ value: null, disabled: true });
   remainingQuantityControl = new FormControl({ value: null, disabled: true });
 
@@ -122,7 +93,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   finalProductOutputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
   currentOutputFinalProduct: ApiFinalProduct;
   outputFinalProductNameControl = new FormControl({ value: null, disabled: true });
-
   outputSemiProductsCodebook: StaticSemiProductsService;
   semiProductOutputFacilitiesCodebooks: Map<number, CompanyFacilitiesForStockUnitProductService>;
 
@@ -139,6 +109,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   // List for holding references to observable subscriptions
   subscriptions: Subscription[] = [];
 
+  @ViewChild('input')
+  private input: ProcessingOrderInputComponent;
+
+  @ViewChild('output')
+  private output: ProcessingOrderOutputComponent;
+
   constructor(
     private location: Location,
     private route: ActivatedRoute,
@@ -147,10 +123,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private processingOrderController: ProcessingOrderControllerService,
     private procActionController: ProcessingActionControllerService,
     private facilityController: FacilityControllerService,
-    private semiProductsController: SemiProductControllerService,
-    private productController: ProductControllerService,
     private authService: AuthService,
-    private modalService: NgbModalImproved,
     private selUserCompanyService: SelectedUserCompanyService
   ) { }
 
@@ -160,13 +133,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get actionType(): ProcessingActionType {
     return this.selectedProcAction ? this.selectedProcAction.type : null;
-  }
-
-  get leftSideEnabled() {
-    const facility = this.inputFacilityControl.value as ApiFacility;
-    if (!facility) { return true; }
-    if (!this.editing) { return true; }
-    return this.companyId === facility.company?.id;
   }
 
   get rightSideEnabled(): boolean {
@@ -180,39 +146,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     return true;
-  }
-
-  get disabledLeftFields() {
-    const facility = this.inputFacilityControl.value as ApiFacility;
-    return !facility || facility.company?.id !== this.companyId;
-  }
-
-  get womenOnlyStatusValue() {
-    if (this.womenOnlyFilterControl.value != null) {
-      if (this.womenOnlyFilterControl.value) { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.womenCoffee:Women coffee`; }
-      else { return $localize`:@@productLabelStockProcessingOrderDetail.womensOnlyStatus.nonWomenCoffee:Non-women coffee`; }
-    }
-    return null;
-  }
-
-  get organicOnlyStatusValue() {
-    if (this.organicOnlyFilterControl.value != null) {
-      if (this.organicOnlyFilterControl.value) {
-        return $localize`:@@productLabelStockProcessingOrderDetail.organicOnlyStatus.organicCoffee:Organic coffee`;
-      } else {
-        return $localize`:@@productLabelStockProcessingOrderDetail.organicOnlyStatus.nonOrganicCoffee:Non-organic coffee`;
-      }
-    }
-  }
-
-  get oneInputStockOrderRequired() {
-
-    if (this.actionType === 'SHIPMENT') { return false; }
-
-    const existingInputTRCount = this.inputTransactions ? this.inputTransactions.length : 0;
-    const selectedInputSOCount = this.selectedInputStockOrders ? this.selectedInputStockOrders.length : 0;
-
-    return existingInputTRCount + selectedInputSOCount === 0;
   }
 
   get inputTransactions(): ApiTransaction[] {
@@ -323,27 +256,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }`;
   }
 
-  get targetStockOrderOutputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in`;
-  }
-
-  get showAddNewOutputButton() {
-    return this.actionType === 'PROCESSING';
-  }
-
-  private get companyId(): number {
+  get companyId(): number {
     return this.companyProfile.id;
   }
 
-  private get inputTransactionsArray(): FormArray {
+  get inputTransactionsArray(): FormArray {
     return this.procOrderGroup.get('inputTransactions') as FormArray;
   }
 
   ngOnInit(): void {
 
-    // Register value change listeners for input controls
-    this.registerInternalLotSearchValueChangeListener();
-    this.registerInputFacilityValueChangeListener();
+  }
+
+  ngAfterViewInit(): void {
 
     // Start loading of data and prepare form groups
     this.globalEventsManager.showLoading(true);
@@ -365,8 +290,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.submitted = false;
 
     StockProcessingOrderDetailsHelper.setRequiredProcessingEvidence(procAction, this.requiredProcessingEvidenceArray).then();
-    this.clearInputPropsAndControls();
-    this.clearInputFacility();
+    this.input?.clearInputPropsAndControls();
+    this.input?.clearInputFacility();
     this.clearOutputPropsAndControls();
 
     if (procAction) {
@@ -390,7 +315,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
       // Add new initial output (if not in edit mode)
       if (!this.editing) {
-        await this.addNewOutput();
+        await this.output.addNewOutput();
       }
 
       // Load and the facilities that are applicable for the processing action
@@ -405,55 +330,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async setInputFacility(facility: ApiFacility) {
-
-    this.clearInputPropsAndControls();
-
-    if (facility) {
-      this.selectedInputFacility = facility;
-
-      const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
-        limit: 500,
-        offset: 0,
-        facilityId: facility.id,
-        semiProductId: this.selectedProcAction.inputSemiProduct?.id,
-        finalProductId: this.selectedProcAction.inputFinalProduct?.id
-      };
-
-      this.availableInputStockOrders = await this.fetchAvailableStockOrders(requestParams);
-    } else {
-      this.clearInputFacility();
-    }
-
-    if (this.disabledLeftFields) {
-      this.cbSelectAllControl.disable();
-    } else {
-      this.cbSelectAllControl.enable();
-    }
-  }
-
-  async setWomenOnlyStatus(status: boolean) {
-    if (!this.leftSideEnabled) {
-      return;
-    }
-
-    this.womenOnlyFilterControl.setValue(status);
-    if (this.selectedInputFacility) {
-      this.dateSearch().then();
-    }
-  }
-
-  async setOrganicOnlyStatus(organicOnly: boolean) {
-    if (!this.leftSideEnabled) {
-      return;
-    }
-
-    this.organicOnlyFilterControl.setValue(organicOnly);
-    if (this.selectedInputFacility) {
-      this.dateSearch().then();
-    }
-  }
-
   async saveProcessingOrder() {
 
     if (this.saveInProgress) {
@@ -462,14 +338,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.submitted = true;
 
-    if (this.procOrderGroup.invalid || this.oneInputStockOrderRequired) {
+    if (this.procOrderGroup.invalid || this.input?.oneInputStockOrderRequired) {
       return;
     }
 
     // Validate the all the entered output quantity is being used
     let notAllOutputQuantityIsUsed = false;
     for (const tsoGroup of this.targetStockOrdersArray.controls) {
-      notAllOutputQuantityIsUsed = this.notAllOutputQuantityIsUsed(tsoGroup);
+      notAllOutputQuantityIsUsed = this.output.notAllOutputQuantityIsUsed(tsoGroup);
       if (notAllOutputQuantityIsUsed) {
         break;
       }
@@ -487,12 +363,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       const processingOrder = this.procOrderGroup.getRawValue() as ApiProcessingOrder;
 
       // Create input transactions from the selected Stock orders
-      processingOrder.inputTransactions.push(...this.prepInputTransactionsFromStockOrders());
+      processingOrder.inputTransactions.push(...this.input?.prepInputTransactionsFromStockOrders());
 
       // If we have 'TRANSFER' order, the target Stock order present is just temporary (holds entered info)
       // We need to create the actual target Stock orders from the selected input Stock orders
       if (this.actionType === 'TRANSFER') {
-        processingOrder.targetStockOrders = this.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
+        processingOrder.targetStockOrders = this.input?.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
       }
       else if (this.selectedProcAction.repackedOutputFinalProducts) {
 
@@ -535,376 +411,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   dismiss() {
     this.location.back();
-  }
-
-  async dateSearch() {
-
-    if (!this.leftSideEnabled) { return; }
-    if (!this.selectedInputFacility) { return; }
-
-    const from = this.dateFromFilterControl.value;
-    const to = this.dateToFilterControl.value;
-
-    // Prepare initial request params
-    const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
-      limit: 500,
-      offset: 0,
-      facilityId: this.selectedInputFacility.id,
-      semiProductId: this.selectedProcAction.inputSemiProduct?.id,
-      finalProductId: this.selectedProcAction.inputFinalProduct?.id,
-      isWomenShare: this.womenOnlyFilterControl.value,
-      organicOnly: this.organicOnlyFilterControl.value,
-      internalLotName: this.internalLotNameSearchControl.value
-    };
-
-    // Prepare date filters
-    if (from && to) {
-      requestParams.productionDateStart = dateISOString(from);
-      requestParams.productionDateEnd = dateISOString(to);
-    } else if (from) {
-      requestParams.productionDateStart = dateISOString(from);
-    } else if (to) {
-      requestParams.productionDateEnd = dateISOString(to);
-    }
-
-    // Get the available stock in the provided facility for the provided semi-product
-    this.availableInputStockOrders = await this.fetchAvailableStockOrders(requestParams);
-
-    // Reinitialize selections
-    const tmpSelected = [];
-    for (const item of this.availableInputStockOrders) {
-      for (const selected of this.selectedInputStockOrders) {
-        if (selected.id === item.id) {
-          tmpSelected.push(item);
-          item.selected = true;
-          item.selectedQuantity = selected.availableQuantity;
-        }
-      }
-    }
-    this.selectedInputStockOrders = tmpSelected;
-    this.calcInputQuantity(true);
-  }
-
-  cbSelectAllClick() {
-
-    if (!this.leftSideEnabled) { return; }
-    if (this.disabledLeftFields) { return; }
-
-    if (this.cbSelectAllControl.value) {
-
-      this.selectedInputStockOrders = [];
-      for (const item of this.availableInputStockOrders) {
-        this.selectedInputStockOrders.push(item);
-      }
-
-      this.availableInputStockOrders.map(item => { item.selected = true; item.selectedQuantity = item.availableQuantity; return item; });
-
-      if (this.actionType === 'SHIPMENT') {
-        this.clipInputQuantity();
-      }
-
-    } else {
-
-      this.selectedInputStockOrders = [];
-      this.availableInputStockOrders.map(item => { item.selected = false; item.selectedQuantity = 0; return item; });
-    }
-
-    this.calcInputQuantity(true);
-    this.setOrganicAndWomenOnly();
-  }
-
-  cbSelectClick(stockOrder: ApiStockOrderSelectable, index: number) {
-
-    if (!this.leftSideEnabled) { return; }
-
-    if (this.cbSelectAllControl.value) {
-      this.cbSelectAllControl.setValue(false);
-    }
-
-    if (!this.availableInputStockOrders[index].selected) {
-
-      const outputQuantity = this.totalOutputQuantity as number || 0;
-      const inputQuantity = this.calcInputQuantity(false);
-
-      const toFill = Number((outputQuantity - inputQuantity).toFixed(2));
-
-      const currentAvailable = this.availableInputStockOrders[index].availableQuantity;
-
-      if (this.actionType === 'SHIPMENT') {
-
-        // In case of 'SHIPMENT' we always clip the input quantity
-        if (toFill > 0 && currentAvailable > 0) {
-          this.availableInputStockOrders[index].selected = true;
-          this.availableInputStockOrders[index].selectedQuantity = toFill < currentAvailable ? toFill : currentAvailable;
-        } else {
-
-          // We have to set first to true due tu change detection in checkbox component
-          this.availableInputStockOrders[index].selected = true;
-          this.availableInputStockOrders[index].selectedQuantity = 0;
-          setTimeout(() => this.availableInputStockOrders[index].selected = false);
-        }
-      } else {
-        this.availableInputStockOrders[index].selected = true;
-        this.availableInputStockOrders[index].selectedQuantity = currentAvailable;
-      }
-    } else {
-      this.availableInputStockOrders[index].selected = false;
-      this.availableInputStockOrders[index].selectedQuantity = 0;
-    }
-
-    this.selectInputStockOrder(stockOrder);
-  }
-
-  openInputStockOrderQRCode(order: ApiStockOrder) {
-
-    if (!order.qrCodeTag) {
-      return;
-    }
-
-    const modalRef = this.modalService.open(GenerateQRCodeModalComponent, {
-      centered: true,
-      backdrop: 'static',
-      keyboard: false
-    });
-
-    Object.assign(modalRef.componentInstance, {
-      qrCodeTag: order.qrCodeTag,
-      qrCodeFinalProduct: order.qrCodeTagFinalProduct
-    });
-  }
-
-  async clipInputTransaction(item: ApiStockOrderSelectable, index: number) {
-
-    if (!this.leftSideEnabled) { return; }
-
-    const modalRef = this.modalService.open(ClipInputTransactionModalComponent, { centered: true, keyboard: false, backdrop: 'static' });
-    Object.assign(modalRef.componentInstance, {
-      stockOrder: item,
-      currentSelectedQuantity: this.availableInputStockOrders[index].selectedQuantity
-    });
-
-    const result: ClipInputTransactionModalResult = await modalRef.result;
-    if (!result) {
-      return;
-    }
-
-    if (result.selectedQuantity > 0) {
-
-      // If this transaction was not selected, trigger selection
-      if (!this.availableInputStockOrders[index].selected) {
-        this.selectInputStockOrder(item);
-      }
-
-      this.availableInputStockOrders[index].selected = true;
-      this.availableInputStockOrders[index].selectedQuantity = result.selectedQuantity;
-    } else {
-
-      // If this transaction was selected, trigger unselect
-      if (this.availableInputStockOrders[index].selected) {
-        this.selectInputStockOrder(item);
-      }
-
-      this.availableInputStockOrders[index].selected = false;
-      this.availableInputStockOrders[index].selectedQuantity = 0;
-    }
-
-    this.calcInputQuantity(true);
-  }
-
-  deleteTransaction(i: number) {
-
-    if (!this.leftSideEnabled) { return; }
-
-    switch (this.actionType) {
-      case 'PROCESSING':
-      case 'FINAL_PROCESSING':
-      case 'GENERATE_QR_CODE':
-      case 'SHIPMENT':
-        this.inputTransactionsArray.removeAt(i);
-        this.calcInputQuantity(true);
-        break;
-      case 'TRANSFER':
-        this.inputTransactionsArray.removeAt(i);
-        this.targetStockOrdersArray.removeAt(i);
-        this.calcInputQuantity(true);
-    }
-  }
-
-  async addNewOutput() {
-
-    // If no processing action is selected, exit
-    if (!this.selectedProcAction) {
-      return;
-    }
-
-    // Validate if we can add new output
-    switch (this.actionType) {
-      case 'TRANSFER':
-      case 'SHIPMENT':
-      case 'GENERATE_QR_CODE':
-      case 'FINAL_PROCESSING':
-        // If we already have one target Stock order, exit
-        if (this.targetStockOrdersArray.length > 0) {
-          return;
-        }
-    }
-
-    // Create a default Stock order with common shared values
-    const defaultStockOrder: ApiStockOrder = {
-      creatorId: this.processingUserId,
-      orderType: this.actionType === 'SHIPMENT' ? OrderTypeEnum.GENERALORDER : OrderTypeEnum.PROCESSINGORDER,
-      productionDate: dateISOString(new Date())
-    };
-
-    const targetStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), defaultStockOrder, ApiStockOrderValidationScheme);
-    this.targetStockOrdersArray.push(targetStockOrderGroup);
-
-    this.setRequiredFieldsAndListenersForTSO(targetStockOrderGroup);
-
-    // If we have defined output final product, set it the target Stock order form group
-    if (this.currentOutputFinalProduct) {
-      targetStockOrderGroup.get('finalProduct').setValue(this.currentOutputFinalProduct);
-
-      // If there is only one facility available for the output final product, set it in the target Stock order form group
-      const facilities = await this.finalProductOutputFacilitiesCodebook.getAllCandidates().toPromise();
-      if (facilities?.length === 1) {
-        targetStockOrderGroup.get('facility').setValue(facilities[0]);
-      }
-
-    } else if (this.selectedProcAction.outputSemiProducts?.length === 1) {
-
-      // If we have output semi-products, and there is only one defined in the Processing action, set it automatically
-      targetStockOrderGroup.get('semiProduct').setValue(this.selectedProcAction.outputSemiProducts[0]);
-    }
-  }
-
-  removeOutput(index: number) {
-    this.targetStockOrdersArray.removeAt(index);
-    this.calcTotalOutputQuantity();
-    this.calcRemainingQuantity();
-  }
-
-  getOutputFacilityCodebook(tsoGroup: FormGroup): CompanyFacilitiesForStockUnitProductService | null {
-
-    if (this.finalProductOutputFacilitiesCodebook) {
-      return this.finalProductOutputFacilitiesCodebook;
-    }
-
-    const semiProduct = (tsoGroup.get('semiProduct').value as ApiSemiProduct);
-    if (semiProduct) {
-      return this.semiProductOutputFacilitiesCodebooks.get(semiProduct.id);
-    }
-
-    return null;
-  }
-
-  getTSOGroupRepackedOutputsArray(tsoGroup: AbstractControl): FormArray {
-    return tsoGroup.get('repackedOutputsArray') as FormArray;
-  }
-
-  getTSOGroupRepackedMaxWeight(tsoGroup: AbstractControl): number | null {
-
-    const outputSemiProduct = tsoGroup.get('semiProduct').value as ApiProcessingActionOutputSemiProduct;
-    let maxOutputWeight: number | null = null;
-
-    if (this.selectedProcAction.repackedOutputFinalProducts) {
-      maxOutputWeight = this.selectedProcAction.maxOutputWeight;
-    } else if (outputSemiProduct?.repackedOutput) {
-      maxOutputWeight = outputSemiProduct.maxOutputWeight;
-    }
-
-    return maxOutputWeight;
-  }
-
-  getRepackedSacQuantityLabel(tsoGroup: AbstractControl) {
-
-    const outputFinalProduct = tsoGroup.get('finalProduct').value as ApiFinalProduct;
-    const outputSemiProduct = tsoGroup.get('semiProduct').value as ApiProcessingActionOutputSemiProduct;
-
-    let unit = '';
-    if (outputFinalProduct) {
-      unit = outputFinalProduct.measurementUnitType.label;
-    } else if (outputSemiProduct) {
-      unit = outputSemiProduct.measurementUnitType.label;
-    }
-
-    return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.getTSOGroupRepackedMaxWeight(tsoGroup) } ${ unit })`;
-  }
-
-  notAllOutputQuantityIsUsed(tsoGroup: AbstractControl) {
-
-    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
-
-    if (!repackedOutputsArray && !this.selectedProcAction?.repackedOutputFinalProducts) {
-      return false;
-    }
-
-    const enteredOutputQuantity = tsoGroup.get('totalQuantity').value;
-    if (!enteredOutputQuantity) {
-      return false;
-    }
-
-    let repackedSOQuantity = 0;
-    repackedOutputsArray.controls.forEach((soGroup: FormGroup) => {
-      repackedSOQuantity += soGroup.get('totalQuantity').value ? Number(soGroup.get('totalQuantity').value) : 0;
-    });
-
-    return Number(enteredOutputQuantity) > repackedSOQuantity;
-  }
-
-  prefillRepackedOutputSOQuantities(tsoGroup: AbstractControl) {
-
-    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
-
-    let availableQua = tsoGroup.get('totalQuantity').value;
-    const maxAllowedWeight = this.getTSOGroupRepackedMaxWeight(tsoGroup);
-
-    repackedOutputsArray.controls.some((outputStockOrderGroup: FormGroup) => {
-      outputStockOrderGroup.get('totalQuantity').setValue(Number(availableQua > maxAllowedWeight ? maxAllowedWeight : availableQua).toFixed(2));
-      availableQua -= maxAllowedWeight;
-      if (availableQua <= 0) {
-        return true;
-      }
-    });
-  }
-
-  addRepackedOutputStockOrder(tsoGroup: AbstractControl) {
-
-    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
-
-    let sacNumber = null;
-    if (repackedOutputsArray.length > 0) {
-      const lastSacNumber = Number(repackedOutputsArray.controls[repackedOutputsArray.length - 1].get('sacNumber').value);
-      if (lastSacNumber && lastSacNumber > 0) {
-        sacNumber = lastSacNumber + 1;
-      }
-    }
-
-    repackedOutputsArray.push(this.prepareRepackedSOFormGroup(sacNumber, tsoGroup));
-  }
-
-  removeRepackedOutputStockOrder(tsoGroup: AbstractControl, index: number) {
-    this.getTSOGroupRepackedOutputsArray(tsoGroup).removeAt(index);
-  }
-
-  private registerInternalLotSearchValueChangeListener() {
-    this.subscriptions.push(
-      this.internalLotNameSearchControl.valueChanges
-        .pipe(debounceTime(350))
-        .subscribe(() => this.dateSearch())
-    );
-  }
-
-  private registerInputFacilityValueChangeListener() {
-    this.subscriptions.push(
-      this.inputFacilityControl.valueChanges.subscribe((facility: ApiFacility) => {
-
-        // If we are creating new Quote order, set the quoteFacility when input facility is selected
-        if (!this.editing && this.actionType === 'SHIPMENT' && this.targetStockOrdersArray?.length > 0) {
-          this.targetStockOrdersArray.at(0).get('quoteFacility').setValue(facility);
-        }
-    })
-    );
   }
 
   private async initializeData() {
@@ -1011,10 +517,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Calculate and set the total output and total input quantity
     this.calcTotalOutputQuantity();
-    this.calcInputQuantity(true);
+    this.input?.calcInputQuantity(true);
 
     // Set required fields for every target Stock order
-    this.targetStockOrdersArray.controls.forEach(tso => this.setRequiredFieldsAndListenersForTSO(tso as FormGroup));
+    this.targetStockOrdersArray.controls.forEach(tso => this.output.setRequiredFieldsAndListenersForTSO(tso as FormGroup));
   }
 
   private async loadFacilities() {
@@ -1026,13 +532,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
         const quoteFacility = this.targetStockOrdersArray.value[0].quoteFacility;
         this.inputFacilityControl.setValue(quoteFacility);
-        await this.setInputFacility(this.inputFacilityControl.value);
+        await this.input?.setInputFacility(this.inputFacilityControl.value);
       } else {
 
         // In the other case, we set the input facility from the sourceFacility in the first input transaction
         const sourceFacility = this.inputTransactions[0].sourceFacility;
         this.inputFacilityControl.setValue(sourceFacility);
-        await this.setInputFacility(this.inputFacilityControl.value);
+        await this.input?.setInputFacility(this.inputFacilityControl.value);
       }
 
     } else {
@@ -1047,14 +553,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         const facility = facilities.find(f => f.id === this.facilityIdPathParam);
         if (facility) {
           this.inputFacilityControl.setValue(facility);
-          await this.setInputFacility(this.inputFacilityControl.value);
+          await this.input?.setInputFacility(this.inputFacilityControl.value);
           return;
         }
       }
 
       if (facilities && facilities.length === 1) {
         this.inputFacilityControl.setValue(facilities[0]);
-        await this.setInputFacility(this.inputFacilityControl.value);
+        await this.input?.setInputFacility(this.inputFacilityControl.value);
       }
     }
   }
@@ -1261,26 +767,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private clearInputPropsAndControls() {
-
-    this.dateFromFilterControl.setValue(null);
-    this.dateToFilterControl.setValue(null);
-    this.internalLotNameSearchControl.setValue(null, { emitEvent: false });
-
-    this.womenOnlyFilterControl.setValue(null);
-    this.organicOnlyFilterControl.setValue(null);
-
-    this.availableInputStockOrders = [];
-    this.selectedInputStockOrders = [];
-    this.cbSelectAllControl.setValue(false);
-
-    this.organicOnlyInputStockOrders = false;
-    this.womenOnlyInputStockOrders = false;
-
-    this.totalInputQuantityControl.reset();
-    this.remainingQuantityControl.reset();
-  }
-
   private clearOutputPropsAndControls() {
 
     // If editing existing order exit
@@ -1295,141 +781,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.commentsControl.reset();
   }
 
-  private clearInputFacility() {
-    this.selectedInputFacility = null;
-    this.inputFacilityControl.setValue(null);
-  }
-
-  private async fetchAvailableStockOrders(params: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap): Promise<ApiStockOrder[]> {
-
-    // Final product is defined for 'FINAL_PROCESSING' and Quote or Transfer for a final product
-    const finalProduct = this.selectedProcAction.outputFinalProduct;
-
-    return this.stockOrderController
-      .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
-      .pipe(
-        take(1),
-        map(res => {
-          if (res && res.status === 'OK' && res.data) {
-
-            // If we are editing existing order, filter the stock orders that are already present in the proc. order
-            if (this.editing) {
-              const availableStockOrders = res.data.items;
-              this.targetStockOrdersArray.value.forEach(tso => {
-                const soIndex = availableStockOrders.findIndex(aso => aso.id === tso.id);
-                if (soIndex !== -1) {
-                  availableStockOrders.splice(soIndex, 1);
-                }
-              });
-
-              return availableStockOrders;
-            }
-
-            return res.data.items;
-          } else {
-            return [];
-          }
-        }),
-        map(availableStockOrders => {
-
-          // If generating QR code, filter all the stock orders that have already generated QR code tag
-          if (this.selectedProcAction.type === 'GENERATE_QR_CODE') {
-            return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag);
-          } else if (finalProduct) {
-
-            // If final product action (final processing of Quote or Transfer order for a final product)
-            // filter the stock orders that have QR code tag for different final products than the selected one (from the Proc. action)
-            return availableStockOrders.filter(apiStockOrder => !apiStockOrder.qrCodeTag || apiStockOrder.qrCodeTagFinalProduct.id === finalProduct.id);
-
-          } else {
-            return availableStockOrders;
-          }
-        })
-      )
-      .toPromise();
-  }
-
-  private setOrganicAndWomenOnly() {
-
-    let countOrganic = 0;
-    let countWomenShare = 0;
-
-    const allSelected = this.selectedInputStockOrders.length;
-    for (const item of this.selectedInputStockOrders) {
-      if (item.organic) {
-        countOrganic++;
-      }
-
-      if (item.womenShare) {
-        countWomenShare++;
-      }
-    }
-
-    this.organicOnlyInputStockOrders = countOrganic === allSelected && allSelected > 0;
-    this.womenOnlyInputStockOrders = countWomenShare === allSelected && allSelected > 0;
-  }
-
-  private selectInputStockOrder(stockOrder: ApiStockOrderSelectable) {
-
-    const index = this.selectedInputStockOrders.indexOf(stockOrder);
-    if (index !== -1) {
-      this.selectedInputStockOrders.splice(index, 1);
-    } else {
-      this.selectedInputStockOrders.push(stockOrder);
-    }
-
-    this.calcInputQuantity(true);
-    this.setOrganicAndWomenOnly();
-  }
-
-  private calcInputQuantity(setValue: boolean) {
-
-    let inputQuantity = 0;
-    if (this.editing) {
-      for (const item of this.availableInputStockOrders) {
-        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
-      }
-
-      const txs = this.inputTransactions;
-
-      if (txs) {
-        for (const tx of txs) {
-          if (tx.status !== ApiTransactionStatus.CANCELED) {
-            inputQuantity += tx.outputQuantity;
-          }
-        }
-      }
-    } else {
-      for (const item of this.availableInputStockOrders) {
-        inputQuantity += item.selectedQuantity ? item.selectedQuantity : 0;
-      }
-    }
-
-    // Set total input quantity value
-    if (setValue) {
-
-      if (inputQuantity) {
-        switch (this.actionType) {
-          case 'GENERATE_QR_CODE':
-            // If generating QR code, the output is always the same with the input
-            this.totalInputQuantityControl.setValue(Number(inputQuantity).toFixed(2));
-            this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(Number(inputQuantity).toFixed(2));
-            break;
-          default:
-            this.totalInputQuantityControl.setValue(Number(inputQuantity).toFixed(2));
-        }
-      } else {
-        this.totalInputQuantityControl.reset();
-      }
-
-      // Also update the remaining quantity
-      this.calcRemainingQuantity();
-    }
-
-    return inputQuantity;
-  }
-
-  private calcRemainingQuantity() {
+  calcRemainingQuantity() {
 
     const inputQuantity = this.totalInputQuantityControl.value ? parseFloat(this.totalInputQuantityControl.value) : null;
     const outputQuantity = this.totalOutputQuantity;
@@ -1452,7 +804,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   /**
    * Calculates the total output quantity normalized in the input measuring unit (from current input stock unit).
    */
-  private calcTotalOutputQuantity() {
+  calcTotalOutputQuantity() {
 
     let sumInKGs = 0;
     (this.targetStockOrdersArray.getRawValue() as ApiStockOrder[]).forEach(tso => {
@@ -1477,39 +829,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.totalOutputQuantityControl.reset();
-  }
-
-  private clipInputQuantity() {
-
-    const outputQuantity = this.totalOutputQuantity;
-    let tmpQuantity = 0;
-
-    for (const tx of this.inputTransactions) {
-      tmpQuantity += tx.outputQuantity;
-    }
-
-    for (const item of this.availableInputStockOrders) {
-
-      if (!item.selected) { continue; }
-
-      if (tmpQuantity + item.availableQuantity <= outputQuantity) {
-        tmpQuantity += item.availableQuantity;
-        item.selectedQuantity = item.availableQuantity;
-        continue;
-      }
-
-      if (tmpQuantity >= outputQuantity) {
-        item.selected = false;
-        item.selectedQuantity = 0;
-        continue;
-      }
-
-      item.selectedQuantity = Number((outputQuantity - tmpQuantity).toFixed(2));
-      tmpQuantity = outputQuantity;
-    }
-
-    // Filter all selected Stock orders that are no longer selected (after clipping)
-    this.selectedInputStockOrders = this.selectedInputStockOrders.filter(so => so.selected);
   }
 
   private updatePageTitle() {
@@ -1561,210 +880,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private setRequiredFieldsAndListenersForTSO(tsoGroup: FormGroup) {
-
-    // Set validators for specific fields depending on the Processing action type
-    switch (this.actionType) {
-      case 'PROCESSING':
-        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
-      // tslint:disable-next-line:no-switch-case-fall-through
-      case 'GENERATE_QR_CODE':
-        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'semiProduct', [Validators.required]);
-        break;
-      case 'SHIPMENT':
-        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'totalQuantity', [Validators.required]);
-        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'deliveryTime', [Validators.required]);
-        StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'quoteFacility', [Validators.required]);
-      // tslint:disable-next-line:no-switch-case-fall-through
-      case 'TRANSFER':
-        if (this.selectedProcAction.finalProductAction) {
-          StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'finalProduct', [Validators.required]);
-        } else {
-          StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'semiProduct', [Validators.required]);
-        }
-        break;
-    }
-
-    StockProcessingOrderDetailsHelper.setFormControlValidators(tsoGroup, 'facility', [Validators.required]);
-
-    // Clear the required fields form
-    const requiredProcEvidenceFieldGroup = new FormGroup({});
-
-    // Set required fields form group
-    const evidenceFieldsValues: ApiStockOrderEvidenceFieldValue[] =
-      tsoGroup.get('requiredEvidenceFieldValues')?.value ?
-        tsoGroup.get('requiredEvidenceFieldValues').value : [];
-
-    this.selectedProcAction.requiredEvidenceFields.forEach(field => {
-
-      let value = null;
-      const evidenceFieldValue = evidenceFieldsValues
-        .find(efv => efv.evidenceFieldId === field.id && efv.evidenceFieldName === field.fieldName);
-
-      if (evidenceFieldValue) {
-        switch (field.type) {
-          case ProcessingEvidenceField.NUMBER:
-          case ProcessingEvidenceField.INTEGER:
-          case ProcessingEvidenceField.EXCHANGERATE:
-          case ProcessingEvidenceField.PRICE:
-            value = evidenceFieldValue.numericValue;
-            break;
-          case ProcessingEvidenceField.DATE:
-          case ProcessingEvidenceField.TIMESTAMP:
-            value = evidenceFieldValue.dateValue;
-            break;
-          case ProcessingEvidenceField.STRING:
-          case ProcessingEvidenceField.TEXT:
-            value = evidenceFieldValue.stringValue;
-            break;
-          default:
-            value = evidenceFieldValue.stringValue;
-        }
-      }
-
-      if (field.mandatory) {
-        requiredProcEvidenceFieldGroup.addControl(field.fieldName, new FormControl(value, Validators.required));
-      } else {
-        requiredProcEvidenceFieldGroup.addControl(field.fieldName, new FormControl(value));
-      }
-    });
-
-    tsoGroup.setControl('requiredProcEvidenceFieldGroup', requiredProcEvidenceFieldGroup);
-
-    // Register value change listeners for specific fields
-    this.subscriptions.push(tsoGroup.get('totalQuantity').valueChanges
-        .pipe(debounceTime(350))
-        .subscribe((totalQuantity: number) => {
-          setTimeout(() => this.targetStockOrderOutputQuantityChange());
-
-          // When the total output quantity changes we need to re/generate the output stock orders that are
-          // being repacked as part of this processing; This is only applicable when we have selected output semi-product
-          // with the option 'repackedOutputs' and set 'maxOutputWeight'
-          this.generateRepackedOutputStockOrders(totalQuantity, tsoGroup);
-        }));
-
-    this.subscriptions.push(tsoGroup.get('finalProduct').valueChanges
-        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderFinalProductChange(value, tsoGroup)));
-
-    this.subscriptions.push(tsoGroup.get('semiProduct').valueChanges
-        .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderSemiProductChange(value, tsoGroup)));
-
-    // Set specific fields to default disabled state
-    if (!this.editing) {
-      tsoGroup.get('totalQuantity').disable({ emitEvent: false });
-    }
-  }
-
-  private targetStockOrderOutputQuantityChange() {
-    this.calcTotalOutputQuantity();
-    this.calcRemainingQuantity();
-  }
-
-  private targetStockOrderFinalProductChange(finalProduct: ApiFinalProduct | null, targetStockOrderGroup: FormGroup) {
-
-    // Remove repacked outputs form array
-    targetStockOrderGroup.removeControl('repackedOutputsArray');
-
-    if (finalProduct) {
-      targetStockOrderGroup.get('measureUnitType').setValue(finalProduct.measurementUnitType);
-      targetStockOrderGroup.get('totalQuantity').enable({ emitEvent: false });
-
-      // If selected processing action has set the option to repack output final product, set the form array control
-      if (this.selectedProcAction.repackedOutputFinalProducts) {
-        targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
-      }
-
-    } else {
-      targetStockOrderGroup.get('measureUnitType').setValue(null);
-      targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
-    }
-    targetStockOrderGroup.get('totalQuantity').setValue(null);
-  }
-
-  private targetStockOrderSemiProductChange(semiProduct: ApiProcessingActionOutputSemiProduct | null, targetStockOrderGroup: FormGroup) {
-
-    // Remove repacked outputs form array
-    targetStockOrderGroup.removeControl('repackedOutputsArray');
-
-    if (semiProduct) {
-      targetStockOrderGroup.get('measureUnitType').setValue(semiProduct.measurementUnitType);
-      targetStockOrderGroup.get('totalQuantity').enable({ emitEvent: false });
-
-      // If there is only one facility available for this semi-product set it by default
-      const facilitiesCodebook = this.semiProductOutputFacilitiesCodebooks.get(semiProduct.id);
-      facilitiesCodebook.getAllCandidates().pipe(take(1)).subscribe(facilities => {
-        if (facilities.length === 1) {
-          setTimeout(() => {
-            targetStockOrderGroup.get('facility').setValue(facilities[0]);
-          });
-        }
-      });
-
-      // If output semi-product has set option to repack outputs, add the form array control into the target Stock order
-      if (semiProduct.repackedOutput) {
-        targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
-      }
-
-    } else {
-      targetStockOrderGroup.get('facility').setValue(null);
-      targetStockOrderGroup.get('measureUnitType').setValue(null);
-      targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
-    }
-    targetStockOrderGroup.get('totalQuantity').setValue(null);
-  }
-
-  private prepInputTransactionsFromStockOrders(): ApiTransaction[] {
-
-    const inputTransactions: ApiTransaction[] = [];
-
-    // Common computed properties used in every transaction
-    const isProcessing = this.actionType === 'PROCESSING' || this.actionType === 'FINAL_PROCESSING' || this.actionType === 'GENERATE_QR_CODE';
-    const status: ApiTransaction.StatusEnum = this.actionType === 'SHIPMENT' ? StatusEnum.PENDING : StatusEnum.EXECUTED;
-
-    for (const stockOrder of this.selectedInputStockOrders) {
-
-      // Create transaction for current stock order from the list of selected stock orders
-      const transaction: ApiTransaction = {
-        isProcessing,
-        company: { id: this.companyId },
-        initiationUserId: this.processingUserId,
-        sourceStockOrder: stockOrder,
-        status,
-        inputQuantity: stockOrder.selectedQuantity,
-        outputQuantity: stockOrder.selectedQuantity
-      };
-
-      inputTransactions.push(transaction);
-    }
-
-    return inputTransactions;
-  }
-
-  private prepareTransferTargetStockOrders(sourceStockOrder: ApiStockOrder): ApiStockOrder[] {
-
-    const targetStockOrders: ApiStockOrder[] = [];
-
-    for (const [index, selectedStockOrder] of this.selectedInputStockOrders.entries()) {
-      const newStockOrder: ApiStockOrder = {
-        facility: sourceStockOrder.facility,
-        semiProduct: selectedStockOrder.semiProduct,
-        finalProduct: selectedStockOrder.finalProduct,
-        internalLotNumber: `${sourceStockOrder.internalLotNumber}/${index + 1 + 0}`,
-        creatorId: this.processingUserId,
-        productionDate: selectedStockOrder.productionDate ? selectedStockOrder.productionDate : (dateISOString(new Date()) as any),
-        orderType: OrderTypeEnum.TRANSFERORDER,
-        totalQuantity: selectedStockOrder.availableQuantity
-      };
-
-      // Set the temporary object that holds the processing evidence fields
-      newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
-
-      targetStockOrders.push(newStockOrder);
-    }
-
-    return targetStockOrders;
-  }
-
   private prepareRepackedTargetStockOrders(sourceStockOrder: RepackedTargetStockOrder): ApiStockOrder[] {
 
     const repackedTSOId = sourceStockOrder.repackedOriginStockOrderId ?? uuidv4();
@@ -1811,32 +926,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Delete null and not need properties
       delete tso['requiredProcEvidenceFieldGroup'];
       deleteNullFields(tso);
-    });
-  }
-
-  private generateRepackedOutputStockOrders(totalOutputQuantity: number, tsoGroup: AbstractControl): void {
-
-    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
-
-    // If we are updating a processing order, do not regenerate the output stock orders
-    if (this.editing || !repackedOutputsArray) {
-      return;
-    }
-
-    repackedOutputsArray.clear();
-
-    const outputStockOrdersSize = Math.ceil(totalOutputQuantity / this.getTSOGroupRepackedMaxWeight(tsoGroup));
-    for (let i = 0; i < outputStockOrdersSize; i++) {
-      repackedOutputsArray.push(this.prepareRepackedSOFormGroup(i + 1, tsoGroup));
-    }
-  }
-
-  private prepareRepackedSOFormGroup(sacNumber: number, tsoGroup: AbstractControl): FormGroup {
-
-    return new FormGroup({
-      id: new FormControl(null),
-      totalQuantity: new FormControl(null, [Validators.required, Validators.max(this.getTSOGroupRepackedMaxWeight(tsoGroup))]),
-      sacNumber: new FormControl(sacNumber, [Validators.required])
     });
   }
 

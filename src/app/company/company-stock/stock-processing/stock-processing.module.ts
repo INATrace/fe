@@ -13,8 +13,10 @@ import { FacilityCardComponent } from './stock-processing-facility-list/facility
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StockProcessingOrderFieldsComponent } from './stock-processing-order-details/stock-processing-order-fields/stock-processing-order-fields.component';
-import { ClipInputTransactionModalComponent } from './stock-processing-order-details/clip-input-transaction-modal/clip-input-transaction-modal.component';
+import { ClipInputTransactionModalComponent } from './stock-processing-order-details/processing-order-input/clip-input-transaction-modal/clip-input-transaction-modal.component';
 import { StockProcessingOrderDetailsComponent } from './stock-processing-order-details/stock-processing-order-details.component';
+import { ProcessingOrderInputComponent } from './stock-processing-order-details/processing-order-input/processing-order-input.component';
+import { ProcessingOrderOutputComponent } from './stock-processing-order-details/processing-order-output/processing-order-output.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { StockProcessingOrderDetailsComponent } from './stock-processing-order-d
     StockProcessingFacilityListComponent,
     FacilityCardComponent,
     ClipInputTransactionModalComponent,
-    StockProcessingOrderDetailsComponent
+    StockProcessingOrderDetailsComponent,
+    ProcessingOrderInputComponent,
+    ProcessingOrderOutputComponent
   ],
   imports: [
     CommonModule,
