@@ -1,0 +1,18 @@
+@import "src/_variables";
+
+.del-icon {
+  color: $danger;
+}
+
+.delete-output-icon {
+  margin-top: 1.9rem;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: default;
+    pointer-events: none;
+    .del-icon {
+      color: $gray;
+    }
+  }
+}

@@ -22,7 +22,7 @@ import { StaticSemiProductsService } from '../static-semi-products.service';
 @Component({
   selector: 'app-processing-order-output',
   templateUrl: './processing-order-output.component.html',
-  styleUrls: ['./processing-order-output.component.scss']
+  styleUrls: ['./processing-order-output.component.scss', '../stock-processing-order-details-common.scss']
 })
 export class ProcessingOrderOutputComponent implements OnInit, OnDestroy {
 
@@ -115,7 +115,7 @@ export class ProcessingOrderOutputComponent implements OnInit, OnDestroy {
 
     const semiProduct = (tsoGroup.get('semiProduct').value as ApiSemiProduct);
     if (semiProduct) {
-      return this.semiProductOutputFacilitiesCodebooks.get(semiProduct.id);
+      return this.semiProductOutputFacilitiesCodebooks?.get(semiProduct.id);
     }
 
     return null;
@@ -233,9 +233,6 @@ export class ProcessingOrderOutputComponent implements OnInit, OnDestroy {
   }
 
   async addNewOutput() {
-
-    // TODO: remove this, for debug purposes
-    console.log('Sel. proc action: ', this.selectedProcAction);
 
     // If no processing action is selected, exit
     if (!this.selectedProcAction) {

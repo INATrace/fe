@@ -24,7 +24,7 @@
                     [formControlInput]="$any(procOrderGroup.get('processingAction'))"
                     [codebookService]="procActionsCodebook"
                     style="min-width: 150px;"
-                    (onChange)="processingActionUpdated($event)"
+                    (onChange)="processingActionSelected($event)"
                     [isInvalidChoice]="submitted && procOrderGroup.get('processingAction').invalid">
                   <ng-container *ngIf="submitted">
                     <div *ngIf="procOrderGroup.get('processingAction').errors as errors" class="sc-invalid-feedback"
@@ -119,8 +119,7 @@
         </div>
 
         <!-- RIGHT SIDE - OUTPUT DATA OF THE PROCESSING -->
-        <div class="af-form-block--c6">
-
+        <div *ngIf="selectedProcAction" class="af-form-block--c6">
           <app-processing-order-output #output
                                        [editing]="editing"
                                        [submitted]="submitted"
@@ -138,7 +137,6 @@
                                        (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
                                        (calcRemainingQuantity)="calcRemainingQuantity()">
           </app-processing-order-output>
-
         </div>
       </div>
 

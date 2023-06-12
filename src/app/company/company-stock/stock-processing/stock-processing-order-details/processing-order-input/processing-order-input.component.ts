@@ -26,7 +26,7 @@ import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
 @Component({
   selector: 'app-processing-order-input',
   templateUrl: './processing-order-input.component.html',
-  styleUrls: ['./processing-order-input.component.scss']
+  styleUrls: ['./processing-order-input.component.scss', '../stock-processing-order-details-common.scss']
 })
 export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
 
@@ -160,6 +160,10 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+
+    this.clearInputPropsAndControls();
+    this.clearInputFacility();
+
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 

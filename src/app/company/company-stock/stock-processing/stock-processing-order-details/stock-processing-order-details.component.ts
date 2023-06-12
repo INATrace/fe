@@ -45,7 +45,7 @@ interface RepackedTargetStockOrder extends ApiStockOrder {
 @Component({
   selector: 'app-stock-processing-order-details',
   templateUrl: './stock-processing-order-details.component.html',
-  styleUrls: ['./stock-processing-order-details.component.scss']
+  styleUrls: ['./stock-processing-order-details.component.scss', './stock-processing-order-details-common.scss']
 })
 export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -285,7 +285,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  async processingActionUpdated(procAction: ApiProcessingAction) {
+  processingActionSelected(event: ApiProcessingAction): void {
+    // Execute the update in separate cycle
+    setTimeout(() => this.processingActionUpdated(event));
+  }
+
+  private async processingActionUpdated(procAction: ApiProcessingAction) {
 
     this.submitted = false;
 
@@ -314,9 +319,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       this.updatePageTitle();
 
       // Add new initial output (if not in edit mode)
-      if (!this.editing) {
-        await this.output.addNewOutput();
-      }
+      setTimeout(() => {
+        if (!this.editing) {
+          this.output.addNewOutput();
+        }
+      });
 
       // Load and the facilities that are applicable for the processing action
       await this.loadFacilities();
@@ -338,7 +345,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
     this.submitted = true;
 
-    if (this.procOrderGroup.invalid || this.input?.oneInputStockOrderRequired) {
+    if (this.procOrderGroup.invalid || this.input.oneInputStockOrderRequired) {
       return;
     }
 
@@ -363,12 +370,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       const processingOrder = this.procOrderGroup.getRawValue() as ApiProcessingOrder;
 
       // Create input transactions from the selected Stock orders
-      processingOrder.inputTransactions.push(...this.input?.prepInputTransactionsFromStockOrders());
+      processingOrder.inputTransactions.push(...this.input.prepInputTransactionsFromStockOrders());
 
       // If we have 'TRANSFER' order, the target Stock order present is just temporary (holds entered info)
       // We need to create the actual target Stock orders from the selected input Stock orders
       if (this.actionType === 'TRANSFER') {
-        processingOrder.targetStockOrders = this.input?.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
+        processingOrder.targetStockOrders = this.input.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
       }
       else if (this.selectedProcAction.repackedOutputFinalProducts) {
 
@@ -486,7 +493,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       .pipe(take(1)).toPromise();
     if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
       this.procOrderGroup.get('processingAction').setValue(respProcAction.data);
-      await this.processingActionUpdated(respProcAction.data);
+
+      // Execute Proc. action updated in separate cycle
+      setTimeout(() => this.processingActionUpdated(respProcAction.data));
     }
   }
 
@@ -508,19 +517,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
     // Initialize the Processing order group using the fetched data
     this.prepareEditingProcOrderGroup(respProcessingOrder.data);
-    await this.processingActionUpdated(respProcessingOrder.data.processingAction);
 
-    // After Processing order and Processing action are loaded and initialized, set the existing evidence documents
-    const firstTSO = this.targetStockOrdersArray.at(0) as FormGroup;
-    StockProcessingOrderDetailsHelper.loadExistingOtherEvidenceDocuments(firstTSO, this.otherProcessingEvidenceArray);
-    StockProcessingOrderDetailsHelper.loadExistingRequiredEvidenceDocuments(firstTSO, this.requiredProcessingEvidenceArray);
+    // Execute the rest part in separate cycle
+    setTimeout(async () => {
+      await this.processingActionUpdated(respProcessingOrder.data.processingAction);
 
-    // Calculate and set the total output and total input quantity
-    this.calcTotalOutputQuantity();
-    this.input?.calcInputQuantity(true);
+      // After Processing order and Processing action are loaded and initialized, set the existing evidence documents
+      const firstTSO = this.targetStockOrdersArray.at(0) as FormGroup;
+      StockProcessingOrderDetailsHelper.loadExistingOtherEvidenceDocuments(firstTSO, this.otherProcessingEvidenceArray);
+      StockProcessingOrderDetailsHelper.loadExistingRequiredEvidenceDocuments(firstTSO, this.requiredProcessingEvidenceArray);
 
-    // Set required fields for every target Stock order
-    this.targetStockOrdersArray.controls.forEach(tso => this.output.setRequiredFieldsAndListenersForTSO(tso as FormGroup));
+      // Calculate and set the total output and total input quantity
+      this.calcTotalOutputQuantity();
+      this.input.calcInputQuantity(true);
+
+      // Set required fields for every target Stock order
+      this.targetStockOrdersArray.controls.forEach(tso => this.output.setRequiredFieldsAndListenersForTSO(tso as FormGroup));
+    });
   }
 
   private async loadFacilities() {
@@ -532,13 +545,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
         const quoteFacility = this.targetStockOrdersArray.value[0].quoteFacility;
         this.inputFacilityControl.setValue(quoteFacility);
-        await this.input?.setInputFacility(this.inputFacilityControl.value);
+        await this.input.setInputFacility(this.inputFacilityControl.value);
       } else {
 
         // In the other case, we set the input facility from the sourceFacility in the first input transaction
         const sourceFacility = this.inputTransactions[0].sourceFacility;
         this.inputFacilityControl.setValue(sourceFacility);
-        await this.input?.setInputFacility(this.inputFacilityControl.value);
+        await this.input.setInputFacility(this.inputFacilityControl.value);
       }
 
     } else {
@@ -553,14 +566,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
         const facility = facilities.find(f => f.id === this.facilityIdPathParam);
         if (facility) {
           this.inputFacilityControl.setValue(facility);
-          await this.input?.setInputFacility(this.inputFacilityControl.value);
+          await this.input.setInputFacility(this.inputFacilityControl.value);
           return;
         }
       }
 
       if (facilities && facilities.length === 1) {
         this.inputFacilityControl.setValue(facilities[0]);
-        await this.input?.setInputFacility(this.inputFacilityControl.value);
+        await this.input.setInputFacility(this.inputFacilityControl.value);
       }
     }
   }
