@@ -4,7 +4,6 @@ import { GlobalEventManagerService } from '../../../../core/global-event-manager
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
-import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ApiProcessingAction } from '../../../../../api/model/apiProcessingAction';
 import { ProcessingActionType } from '../../../../../shared/types';
 import { Location } from '@angular/common';
@@ -150,7 +149,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     private facilityController: FacilityControllerService,
     private semiProductsController: SemiProductControllerService,
     private productController: ProductControllerService,
-    private codebookTranslations: CodebookTranslations,
     private authService: AuthService,
     private modalService: NgbModalImproved,
     private selUserCompanyService: SelectedUserCompanyService
@@ -309,19 +307,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   get inputQuantityLabel() {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
-      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+      this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
     }`;
   }
 
   get remainingQuantityLabel() {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.remainingQuantityLabelWithUnits.label: Remaining quantity in ${
-      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+      this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
     }`;
   }
 
   get totalOutputQuantityLabel() {
     return $localize`:@@productLabelStockProcessingOrderDetail.textinput.totalOutputQuantityLabelWithUnits.label: Total output quantity in ${
-      this.currentInputStockUnit ? this.codebookTranslations.translate(this.currentInputStockUnit.measurementUnitType, 'label') : ''
+      this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
     }`;
   }
 
@@ -928,7 +926,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     // Initialize the processing actions codebook
     this.procActionsCodebook =
-      new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
+      new CompanyProcessingActionsService(this.procActionController, this.companyId);
 
     if (pageMode === 'create') {
 
