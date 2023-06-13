@@ -9,134 +9,146 @@
         </div>
       </div>
 
-      <!-- DISPLAY THE SELECTED PROCESSING ACTION AND FINAL PRODUCT NAME IF ACTION IS QR CODE GENERATION -->
+      <!-- SECTION FOR INPUT AND OUTPUT ICONS FOR EASCH COLUMN -->
       <div class="af-form-row">
         <div class="af-form-block--c6">
-          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
-          <div class="af-form-element">
-
-            <!-- DROPDOWN FOR SELECTING PROCESSING ACTION (IF ID PRESENT IN PATH, SELECTED AUTOMATICALLY) -->
-            <div class="af-row">
-              <div class="af-c12">
-                <single-choice
-                    label="Processing"
-                    i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
-                    [formControlInput]="$any(procOrderGroup.get('processingAction'))"
-                    [codebookService]="procActionsCodebook"
-                    style="min-width: 150px;"
-                    (onChange)="processingActionSelected($event)"
-                    [isInvalidChoice]="submitted && procOrderGroup.get('processingAction').invalid">
-                  <ng-container *ngIf="submitted">
-                    <div *ngIf="procOrderGroup.get('processingAction').errors as errors" class="sc-invalid-feedback"
-                         i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
-                      Action is required
-                    </div>
-                  </ng-container>
-                </single-choice>
-              </div>
-            </div>
-
-            <!-- IF ACTION IS FOR QR CODE GENERATION, DISPLAY THE FINAL PRODUCT NAME -->
-            <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
-              <div class="af-c12">
-                <textinput
-                    [form]="qrCodeForFinalProductControl"
-                    label="QR code for final product"
-                    i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
-                    style="width: 100%">
-                </textinput>
-              </div>
-            </div>
-
-          </div>
+          <!-- TODO: INPUT ICON -->
         </div>
-
-        <div *ngIf="selectedProcAction" class="af-form-block--c6">
-          <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle">Results of recording</h2>
-          <div class="af-form-element position-relative outputs-bottom-spacing">
-
-            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE COMPANY NAME THAT IS CREATING THE ORDER -->
-            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && quoteOrderOwnerCompany">
-              <div class="af-c12">
-                {{ quoteOrderOwnerCompany }}
-              </div>
-            </div>
-
-            <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE PRODUCT ORDER IF SET; THIS IS APPLICABLE IN QUOTE ORDERS FOR FINAL PRODUCTS -->
-            <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
-              <div class="af-c12">
-                <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
-              </div>
-            </div>
-
-            <div class="af-row">
-              <div class="af-c12">
-                <app-datepicker
-                    label="Processing date"
-                    i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
-                    [form]="$any(procOrderGroup.get('processingDate'))"
-                    [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
-                    style="width: 130px; margin-right: 1rem;">
-                  <ng-container>
-                    <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
-                      <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
-                        Processing date is required
-                      </div>
-                    </div>
-                  </ng-container>
-                </app-datepicker>
-              </div>
-            </div>
-
-            <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
-          </div>
+        <div class="af-form-block--c6">
+          <!-- TODO: OUTPUT ICON -->
         </div>
       </div>
 
-      <!-- SECTION WHERE WE DISPLAY THE INPUT AND OUTPUT DATA FOR THE PROCESSING -->
-      <!-- THE LEFT REPRESENTS THE INPUT PARAMETERS, AND THE RIGHT SIDE REPRESENTS THE OUTPUTS (THERE CAN BE MORE THAN ONE OUTPUT FROM THE PROCESSING) -->
+      <!-- SECTION FOR INPUT AND OUTPUT DATA -->
       <div class="af-form-row">
 
-        <!-- LEFT SIDE - input data in the processing -->
-        <div *ngIf="selectedProcAction" class="af-form-block--c6">
-          <app-processing-order-input #input
-                                      [processingUserId]="processingUserId"
-                                      [editing]="editing"
-                                      [submitted]="submitted"
-                                      [companyId]="companyId"
-                                      [selectedProcAction]="selectedProcAction"
-                                      [inputFacilitiesCodebook]="inputFacilitiesCodebook"
-                                      [inputFacilityControl]="inputFacilityControl"
-                                      [totalInputQuantityControl]="totalInputQuantityControl"
-                                      [currentInputStockUnit]="currentInputStockUnit"
-                                      [remainingQuantityControl]="remainingQuantityControl"
-                                      [targetStockOrdersArray]="targetStockOrdersArray"
-                                      [inputTransactionsArray]="inputTransactionsArray"
-                                      [inputTransactions]="inputTransactions"
-                                      [totalOutputQuantity]="totalOutputQuantity"
-                                      (calcRemainingQuantity)="calcRemainingQuantity()">
-          </app-processing-order-input>
+        <!-- INPUT SECTION -->
+        <div class="af-form-block--c6">
+
+          <!-- DISPLAY THE SELECTED PROCESSING ACTION AND FINAL PRODUCT NAME IF ACTION IS QR CODE GENERATION -->
+          <div>
+            <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
+            <div class="af-form-element">
+
+              <!-- DROPDOWN FOR SELECTING PROCESSING ACTION (IF ID PRESENT IN PATH, SELECTED AUTOMATICALLY) -->
+              <div class="af-row">
+                <div class="af-c12">
+                  <single-choice
+                      label="Processing"
+                      i18n-label="@@productLabelStockProcessingOrderDetail.processingActionForm.label"
+                      [formControlInput]="$any(procOrderGroup.get('processingAction'))"
+                      [codebookService]="procActionsCodebook"
+                      style="min-width: 150px;"
+                      (onChange)="processingActionSelected($event)"
+                      [isInvalidChoice]="submitted && procOrderGroup.get('processingAction').invalid">
+                    <ng-container *ngIf="submitted">
+                      <div *ngIf="procOrderGroup.get('processingAction').errors as errors" class="sc-invalid-feedback"
+                           i18n="@@productLabelStockProcessingOrderDetail.processingActionForm.error">
+                        Action is required
+                      </div>
+                    </ng-container>
+                  </single-choice>
+                </div>
+              </div>
+
+              <!-- IF ACTION IS FOR QR CODE GENERATION, DISPLAY THE FINAL PRODUCT NAME -->
+              <div class="af-row" *ngIf="actionType === 'GENERATE_QR_CODE'">
+                <div class="af-c12">
+                  <textinput
+                      [form]="qrCodeForFinalProductControl"
+                      label="QR code for final product"
+                      i18n-label="@@productLabelStockProcessingOrderDetail.qrCodeForFinalProduct.label"
+                      style="width: 100%">
+                  </textinput>
+                </div>
+              </div>
+
+              <div class="position-relative">
+
+                <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE COMPANY NAME THAT IS CREATING THE ORDER -->
+                <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && quoteOrderOwnerCompany">
+                  <div class="af-c12">
+                    {{ quoteOrderOwnerCompany }}
+                  </div>
+                </div>
+
+                <!-- ON QUOTE ORDERS - SHIPMENT, DISPLAY THE PRODUCT ORDER IF SET; THIS IS APPLICABLE IN QUOTE ORDERS FOR FINAL PRODUCTS -->
+                <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT' && productOrderId">
+                  <div class="af-c12">
+                    <span i18n="@@productLabelStockProcessingOrderDetail.orderID.label">Order ID:</span> {{ productOrderId }}
+                  </div>
+                </div>
+
+                <div class="af-row">
+                  <div class="af-c12">
+                    <app-datepicker
+                        label="Processing date"
+                        i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
+                        [form]="$any(procOrderGroup.get('processingDate'))"
+                        [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
+                        style="width: 130px; margin-right: 1rem;">
+                      <ng-container>
+                        <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
+                            Processing date is required
+                          </div>
+                        </div>
+                      </ng-container>
+                    </app-datepicker>
+                  </div>
+                </div>
+
+                <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- INPUT PARAMETERS - MATERIAL TO BE RECORDED -->
+          <div *ngIf="selectedProcAction">
+            <app-processing-order-input #input
+                                        [processingUserId]="processingUserId"
+                                        [editing]="editing"
+                                        [submitted]="submitted"
+                                        [companyId]="companyId"
+                                        [selectedProcAction]="selectedProcAction"
+                                        [inputFacilitiesCodebook]="inputFacilitiesCodebook"
+                                        [inputFacilityControl]="inputFacilityControl"
+                                        [totalInputQuantityControl]="totalInputQuantityControl"
+                                        [currentInputStockUnit]="currentInputStockUnit"
+                                        [remainingQuantityControl]="remainingQuantityControl"
+                                        [targetStockOrdersArray]="targetStockOrdersArray"
+                                        [inputTransactionsArray]="inputTransactionsArray"
+                                        [inputTransactions]="inputTransactions"
+                                        [totalOutputQuantity]="totalOutputQuantity"
+                                        (calcRemainingQuantity)="calcRemainingQuantity()">
+            </app-processing-order-input>
+          </div>
         </div>
 
-        <!-- RIGHT SIDE - OUTPUT DATA OF THE PROCESSING -->
-        <div *ngIf="selectedProcAction" class="af-form-block--c6">
-          <app-processing-order-output #output
-                                       [editing]="editing"
-                                       [submitted]="submitted"
-                                       [processingUserId]="processingUserId"
-                                       [productOrderId]="productOrderId"
-                                       [selectedProcAction]="selectedProcAction"
-                                       [procActionLotPrefixControl]="procActionLotPrefixControl"
-                                       [rightSideEnabled]="rightSideEnabled"
-                                       [targetStockOrdersArray]="targetStockOrdersArray"
-                                       [finalProductOutputFacilitiesCodebook]="finalProductOutputFacilitiesCodebook"
-                                       [semiProductOutputFacilitiesCodebooks]="semiProductOutputFacilitiesCodebooks"
-                                       [currentOutputFinalProduct]="currentOutputFinalProduct"
-                                       [outputFinalProductNameControl]="outputFinalProductNameControl"
-                                       [outputSemiProductsCodebook]="outputSemiProductsCodebook"
-                                       (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
-                                       (calcRemainingQuantity)="calcRemainingQuantity()">
-          </app-processing-order-output>
+        <!-- OUTPUT SECTION -->
+        <div class="af-form-block--c6">
+
+          <!-- OUTPUT DATA OF THE PROCESSING (THERE CAN BE MORE THAN ONE OUTPUT FROM THE PROCESSING) -->
+          <div *ngIf="selectedProcAction">
+            <app-processing-order-output #output
+                                         [editing]="editing"
+                                         [submitted]="submitted"
+                                         [processingUserId]="processingUserId"
+                                         [productOrderId]="productOrderId"
+                                         [selectedProcAction]="selectedProcAction"
+                                         [procActionLotPrefixControl]="procActionLotPrefixControl"
+                                         [rightSideEnabled]="rightSideEnabled"
+                                         [targetStockOrdersArray]="targetStockOrdersArray"
+                                         [finalProductOutputFacilitiesCodebook]="finalProductOutputFacilitiesCodebook"
+                                         [semiProductOutputFacilitiesCodebooks]="semiProductOutputFacilitiesCodebooks"
+                                         [currentOutputFinalProduct]="currentOutputFinalProduct"
+                                         [outputFinalProductNameControl]="outputFinalProductNameControl"
+                                         [outputSemiProductsCodebook]="outputSemiProductsCodebook"
+                                         (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
+                                         (calcRemainingQuantity)="calcRemainingQuantity()">
+            </app-processing-order-output>
+          </div>
         </div>
       </div>
 
