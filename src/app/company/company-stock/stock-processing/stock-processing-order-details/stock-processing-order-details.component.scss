@@ -1,0 +1,16 @@
+@import "src/_variables";
+
+.processing-icon {
+  width: 48px;
+  height: 48px;
+  background: $secondary;
+  &.input {
+    mask: url("/assets/icons/icon-input.svg") no-repeat;
+    mask-size: 48px;
+  }
+
+  &.output {
+    mask: url("/assets/icons/icon-output.svg") no-repeat;
+    mask-size: 48px;
+  }
+}

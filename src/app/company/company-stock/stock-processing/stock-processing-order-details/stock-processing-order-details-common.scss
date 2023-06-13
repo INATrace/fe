@@ -6,8 +6,22 @@
   right: 0;
   background-color: white;
   opacity: 0.5;
+  border-radius: 7px;
 }
 
 .outputs-bottom-spacing {
   margin-bottom: 25px;
+}
+
+.processing-section {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-color: transparent;
+
+  &.input {
+    background-color: #0862000d;
+  }
+
+  &.output {
+    background-color: rgb(255 251 240);
+  }
 }
