@@ -1,7 +1,6 @@
 @import "../../../../../../variables";
 @import '../../../../../../../node_modules/bootstrap/scss/bootstrap';
 
-
 .af-card-icon {
   background-color: $af-card-bg;
   // width: 90px;
@@ -11,7 +10,6 @@
   letter-spacing: 0.34px;
   line-height: 18px;
   border: none;
-  border-radius: 7px;
   height: $card-icon-bg-size;
 }
 .af-card-icon:hover{
@@ -27,22 +25,15 @@
   border: 1px solid $af-card-border;
   box-shadow: 0 3px 9px 0 rgba(37,38,94,0.04);
   border-radius: 5px;
-
   min-height: 162px;
-  // width: 280px;
-  // min-width: 284px;
 
-  // based paddings and margings
+  // based paddings and margins
   //for both content blocks
   &-section {
 
     &-content {
       // default padding for whole top card
-      padding-top: 5px;
-      padding-right: 20px;
-      padding-bottom: 10px;
-      padding-left: 15px;
-      background: $af-card-content-bg;
+      padding: 5px 20px 10px 15px;
 
       .af-card {
         &-indicator {
@@ -50,11 +41,12 @@
           border: 0.5px solid $af-card-indicator-border;
           height: 8px;
           width: 8px;
-          border-radius: 4px;
+          border-radius: 50%;
           float: right;
           margin-top: 6px;
           margin-right: -10px;
         }
+
         &-title {
           font-size: 18px;
           color: $af-card-title;
@@ -66,10 +58,10 @@
           height: (2 * $af-card-title-lineheight) + rem;
 
           // https://stackoverflow.com/questions/15909489/text-overflow-ellipsis-on-two-lines
-
           line-height: $af-card-title-lineheight;
           @include ellipsis-2-rows;
         }
+
         &-subtitle {
           font-size: 14px;
           color: $af-card-subtitle;
@@ -78,6 +70,7 @@
           // padding-bottom: 15px;
           display: inline-block;
         }
+
         &-description {
           font-size: 10px;
           color: $af-card-description;
@@ -102,7 +95,7 @@
           float: right;
 
           &-shape {
-            // This defines placement of icon as mask, backtround color defines color of icon
+            // This defines placement of icon as mask, background color defines color of icon
             display: inline-block;
             width: $card-icon-size;
             height: $card-icon-size;
@@ -126,11 +119,7 @@
           }
         }
       }
-
     }
-
-
-
 
     // HERE WE START
     // THEMING & Changing
@@ -138,24 +127,14 @@
 
     &-content--cyan {
 
-      // let's adjust values for cyan
-      // upper part of card
-      $af-card-content-border: $moderate-cyan;
-      $af-card-content-bg: $very-pale-cyan;
-      // $af-card-content-bg:  $white;
-
       // indicator up top right
-      $af-card-indicator-bg: $soft-cyan;           // move these to --cyan, replace with --default
       $af-card-indicator-bg: $white;
       $af-card-indicator-border: $moderate-cyan;
 
       // icon bottom right in upper section
       $af-icon-shape-bg: $moderate-cyan;
 
-
-      background: $af-card-content-bg;
-      border: 0.5px solid $af-card-content-border;
-      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid $af-card-border;
 
       .af-card {
         &-indicator {
@@ -182,18 +161,11 @@
     }
 
     &-content--red {
-      $af-card-content-border: $moderate-red;         // moderate
-      $af-card-content-bg: $pale-red;                 // pale
-      // $af-card-content-bg:  $white;
-
       $af-card-indicator-bg: $pale-red;               // soft
       $af-card-indicator-border: $moderate-red;       // moderate
       $af-icon-shape-bg: $moderate-red;               // moderate
 
-
-      background: $af-card-content-bg;
-      border: 0.5px solid $af-card-content-border;
-      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid $af-card-border;
 
       .af-card {
         &-indicator {
@@ -220,17 +192,11 @@
     }
 
     &-content--green {
-      $af-card-content-border: $moderate-green;         // moderate
-      $af-card-content-bg: $pale-green;                 // pale
-      // $af-card-content-bg:  $white;
       $af-card-indicator-bg: $pale-green;               // soft
       $af-card-indicator-border: $moderate-green;       // moderate
       $af-icon-shape-bg: $moderate-green;               // moderate
 
-
-      background: $af-card-content-bg;
-      border: 0.5px solid $af-card-content-border;
-      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid $af-card-border;
 
       .af-card {
         &-indicator {
@@ -257,17 +223,11 @@
     }
 
     &-content--orange {
-      $af-card-content-border: $moderate-orange;         // moderate
-      $af-card-content-bg: $pale-orange;                 // pale
-      // $af-card-content-bg:  $white;
       $af-card-indicator-bg: $pale-orange;               // soft
       $af-card-indicator-border: $moderate-orange;       // moderate
       $af-icon-shape-bg: $moderate-orange;               // moderate
 
-
-      background: $af-card-content-bg;
-      border: 0.5px solid $af-card-content-border;
-      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid $af-card-border;
 
       .af-card {
         &-indicator {
@@ -294,16 +254,11 @@
     }
 
     &-content--yellow {
-      $af-card-content-border: $moderate-yellow;         // moderate
-      $af-card-content-bg: $pale-yellow;                 // pale
-      // $af-card-content-bg:  $white;
       $af-card-indicator-bg: $pale-yellow;               // soft
       $af-card-indicator-border: $moderate-yellow;       // moderate
       $af-icon-shape-bg: $moderate-yellow;               // moderate
 
-      background: $af-card-content-bg;
-      border: 0.5px solid $af-card-content-border;
-      border-radius: 4px 4px 0 0;
+      border-bottom: 1px solid $af-card-border;
 
       .af-card {
         &-indicator {
@@ -328,11 +283,8 @@
         }
       }
     }
-
   }
 }
-
-
 
 .af-card {
   position: relative;
@@ -372,7 +324,6 @@
     background: #FFFFFF;
     border: 1px solid #E0E3E7;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.13);
-    border-radius: 7px;
 
     // left: 60px;
     right: 0;

@@ -18,7 +18,6 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { FormDetailsLeftPanelComponent } from './form-details-left-panel/form-details-left-panel.component';
 import { FormPositionBoxComponent } from './form-position-box/form-position-box.component';
 import { LastSeenTagComponent } from './last-seen-tag/last-seen-tag.component';
-import { OrderCardComponent } from './order-card/order-card.component';
 import { FormatAvailabilityPipe } from './pipes/format-availability.pipe';
 import { FormatProcessingActionTypePipe } from './pipes/format-processing-action-type.pipe';
 import { FormatProcessingEvidenceTypeTypePipe } from './pipes/format-processing-evidence-type-type.pipe';
@@ -43,7 +42,6 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     FormDetailsLeftPanelComponent,
     FormPositionBoxComponent,
     LastSeenTagComponent,
-    OrderCardComponent,
     FormatAvailabilityPipe,
     FormatStockOrderTypePipe,
     RedirectClearCacheComponent,
@@ -87,7 +85,6 @@ import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.com
     FormDetailsLeftPanelComponent,
     FormPositionBoxComponent,
     LastSeenTagComponent,
-    OrderCardComponent,
     FormatAvailabilityPipe,
     FormatStockOrderTypePipe,
     RedirectClearCacheComponent,

@@ -11,18 +11,29 @@ import TypeEnum = ApiProcessingAction.TypeEnum;
 })
 export class FacilityCardComponent implements OnInit {
 
+  private readonly FACILITY_COLOR_CLASSES: string[] = [
+    'af-card-section-content af-card-section-content--red',
+    'af-card-section-content af-card-section-content--orange',
+    'af-card-section-content af-card-section-content--yellow',
+    'af-card-section-content af-card-section-content--green',
+    'af-card-section-content af-card-section-content--cyan'
+  ];
+
+  description = '';
+
+  menuOptions: { id: any; name: string }[] = [];
+
   @Input()
   facility: ApiFacility;
+
+  @Input()
+  indexInList: number;
 
   @Input()
   companyId: number;
 
   @Input()
   actions: ApiProcessingAction[] = [];
-
-  description = '';
-
-  menuOptions: { id: any; name: string }[] = [];
 
   constructor(
     private router: Router
@@ -72,35 +83,7 @@ export class FacilityCardComponent implements OnInit {
   }
 
   facilityTypeColor() {
-
-    switch (this.facility.facilityType.code) {
-      case 'WASHING_STATION':
-      case 'BENEFICIO_HUMEDO':
-        if (this.facility.isCollectionFacility) {
-          return 'af-card-section-content af-card-section-content--red';
-        } else {
-          return 'af-card-section-content af-card-section-content--orange';
-        }
-      case 'DRYING_BED':
-        return 'af-card-section-content af-card-section-content--yellow';
-      case 'STORAGE':
-      case 'ALMACEN':
-        return 'af-card-section-content af-card-section-content--cyan';
-      case 'HULLING_STATION':
-      case 'MAQUILADO_CAFE':
-      case 'BENEFICIO_SECO':
-        return 'af-card-section-content af-card-section-content--cyan';
-      case 'GREEN_COFFEE_STORAGE':
-      case 'ALMACEN_CAFE_ORO':
-      case 'ROASTED_COFFEE_STORAGE':
-        if (this.facility.isPublic) {
-          return 'af-card-section-content af-card-section-content--green';
-        } else {
-          return 'af-card-section-content af-card-section-content--cyan';
-        }
-      default:
-        return 'af-card-section-content af-card-section-content--cyan';
-    }
+    return this.FACILITY_COLOR_CLASSES[(this.indexInList ?? 0) % this.FACILITY_COLOR_CLASSES.length];
   }
 
   private async semiAndFinalProductsIncluded() {
