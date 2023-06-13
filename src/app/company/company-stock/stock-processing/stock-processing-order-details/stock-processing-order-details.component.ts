@@ -456,6 +456,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       if (procActionIdPathParam !== 'NEW') {
         this.facilityIdPathParam = Number(this.route.snapshot.params.inputFacilityId);
         await this.loadProcessingAction(procActionIdPathParam);
+
+        // If processing action ID is provided in route, disable the Proc. action control
+        this.procOrderGroup?.get('processingAction')?.disable({ emitEvent: false });
       }
 
     } else if (pageMode === 'edit') {

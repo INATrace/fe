@@ -710,11 +710,12 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 .ng-select.ng-select-opened > .ng-select-container {
     background: #ffffff;
     border-color: $gray-semi;
-    border-top-color: $gray-semi;
-    border-right-color: $gray-semi;
-    border-bottom-color: $gray-semi;
-    border-left-color: $gray-semi;
 }
+
+.ng-select.ng-select-disabled > .ng-select-container {
+  background: #e9ecef;
+}
+
 .ng-select.ng-select-single
 .ng-select-container {
     // height: 36px;
@@ -740,7 +741,8 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     max-width: 550px;
     min-width: 100%;
 }
-.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
     border: 1px solid $gray-semi;
     outline: 0;
     // Avoid using mixin so we can pass custom focus shadow properly
