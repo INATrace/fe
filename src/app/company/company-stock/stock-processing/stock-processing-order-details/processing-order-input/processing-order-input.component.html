@@ -1,6 +1,11 @@
 <ng-container>
-    <h2 i18n="@@productLabelStockProcessingOrderDetail.section.input">Material to be recorded</h2>
-    <div class="af-form-element position-relative processing-section input">
+    <h2 *ngIf="actionType !== 'SHIPMENT'; else quoteOrderTitle"
+        i18n="@@productLabelStockProcessingOrderDetail.section.input">Material to be recorded</h2>
+    <ng-template #quoteOrderTitle>
+        <h2 i18n="@@productLabelStockProcessingOrderDetail.section.supplierDetails">Supplier details</h2>
+    </ng-template>
+    <div class="af-form-element position-relative processing-section"
+         [class.input]="actionType !== 'SHIPMENT'">
         <div class="af-row mb-3" *ngIf="actionType === 'SHIPMENT'">
             <div class="af-c12">
                 {{ inputFacilityControl?.value?.company?.name }}
@@ -30,7 +35,7 @@
         </div>
 
         <!-- DATE AND INTERNAL LOT NAME SEARCH FOR AVAILABLE STOCK AT SELECTED FACILITY FOR THE SELECTED SEMI-PRODUCT -->
-        <div *ngIf="inputFacilityControl.value" class="d-flex justify-content-between"
+        <div *ngIf="inputFacilityControl.value && !hideAvailableStock" class="d-flex justify-content-between"
              ngbDropdown placement="bottom-right" display="dynamic" container="body">
 
             <div class="af-row">
@@ -80,7 +85,7 @@
         </div>
 
         <!-- ORGANIC AND WOMEN'S COFFE FILTERS DROPDOWN -->
-        <div *ngIf="inputFacilityControl.value"
+        <div *ngIf="inputFacilityControl.value && !hideAvailableStock"
              class="d-flex justify-content-end" ngbDropdown placement="bottom-right" display="dynamic" container="body">
             <div *ngIf="womenOnlyFilterControl.value != null" (click)="setWomenOnlyStatus(null)"
                  class="d-flex filter-text cursor-pointer" style="margin-top: 0.55rem;"> {{ womenOnlyStatusValue }}
@@ -154,7 +159,7 @@
             </div>
 
             <!-- WRAPPER FOR AVAILABLE STOCK ORDER SECTION (we use this so we can overlay when controls should be disabled) -->
-            <div class="position-relative">
+            <div *ngIf="!hideAvailableStock">
 
                 <!-- CHECKBOX FOR SELECTING ALL INPUT AVAILABLE STOCK ORDERS -->
                 <div class="af-row" *ngIf="inputFacilityControl.value && availableInputStockOrders.length > 0">
@@ -208,8 +213,6 @@
                         </div>
                     </div>
                 </ng-container>
-
-                <div *ngIf="disabledLeftFields && leftSideEnabled" class="disabled-section-overlay"></div>
             </div>
 
             <ng-container *ngIf="submitted && oneInputStockOrderRequired">

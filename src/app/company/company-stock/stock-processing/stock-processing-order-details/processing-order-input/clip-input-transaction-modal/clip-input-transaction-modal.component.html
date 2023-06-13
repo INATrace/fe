@@ -1,10 +1,11 @@
 <div class="modal-container" *ngIf="stockOrder">
+
   <div class="modal-header">
     <h4 class="modal-title sp-faq-modal-title"
         i18n="@@productLabelStockProcessingOrderDetail.clipInputModal.title">Clip input quantity</h4>
   </div>
-  <div class="modal-body">
 
+  <div class="modal-body">
     <div class="d-flex-column align-items-center mb-4">
       <textinput
               label="Enter the quantity to be used from this transaction"
@@ -29,14 +30,14 @@
         </ng-container>
       </textinput>
     </div>
+  </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outlined" (click)="cancel()" i18n="@@rejectTransaction.modal.button.cancel">
-        <span>Cancel</span>
-      </button>
-      <button type="button" class="btn" (click)="confirm()" i18n="@@rejectTransaction.modal.button.confirm">
-        <span>Confirm</span>
-      </button>
-    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outlined" (click)="cancel()" i18n="@@rejectTransaction.modal.button.cancel">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="btn" (click)="confirm()" i18n="@@rejectTransaction.modal.button.confirm">
+      <span>Confirm</span>
+    </button>
   </div>
 </div>

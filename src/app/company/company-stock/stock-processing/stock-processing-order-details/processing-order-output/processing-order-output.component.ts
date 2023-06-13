@@ -83,7 +83,11 @@ export class ProcessingOrderOutputComponent implements OnInit, OnDestroy {
   }
 
   get targetStockOrderOutputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in`;
+    if (this.actionType === 'SHIPMENT') {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.orderedQuantityLabelWithUnits.label: Ordered quantity in`;
+    } else {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.outputQuantityLabelWithUnits.label: Output quantity in`;
+    }
   }
 
   get showAddNewOutputButton() {

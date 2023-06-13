@@ -238,10 +238,26 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
     return null;
   }
 
+  get processingDateLabel() {
+    if (this.actionType === 'SHIPMENT') {
+      return $localize`:@@productLabelStockProcessingOrderDetail.datepicker.date.orderDate:Order date`;
+    } else {
+      return $localize`:@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate:Processing date`;
+    }
+  }
+
   get inputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
-      this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
-    }`;
+    if (this.actionType === 'SHIPMENT') {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.fulfilledQuantityLabelWithUnits.label: Quantity fulfilled by supplier in ${
+        this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
+      }`;
+    } else {
+
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.inputQuantityLabelWithUnits.label: Input quantity in ${
+        this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
+      }`;
+    }
+
   }
 
   get remainingQuantityLabel() {
@@ -251,9 +267,17 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
   }
 
   get totalOutputQuantityLabel() {
-    return $localize`:@@productLabelStockProcessingOrderDetail.textinput.totalOutputQuantityLabelWithUnits.label: Total output quantity in ${
-      this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
-    }`;
+    if (this.actionType === 'SHIPMENT') {
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.totalOrderedQuantityLabelWithUnits.label: Total ordered quantity in ${
+        this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
+      }`;
+    } else {
+
+      return $localize`:@@productLabelStockProcessingOrderDetail.textinput.totalOutputQuantityLabelWithUnits.label: Total output quantity in ${
+        this.currentInputStockUnit ? this.currentInputStockUnit.measurementUnitType.label : ''
+      }`;
+    }
+
   }
 
   get companyId(): number {
@@ -315,9 +339,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       // With the data provided from the Processing action, initialize the facilities codebook services (for input and output facilities)
       this.initializeFacilitiesCodebooks();
 
-      // Set the page title depending on the page mode and the Processing action type
-      this.updatePageTitle();
-
       // Add new initial output (if not in edit mode)
       setTimeout(() => {
         if (!this.editing) {
@@ -330,11 +351,12 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
     } else {
 
-      this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
-
       this.procActionLotPrefixControl.reset();
       this.qrCodeForFinalProductControl.reset();
     }
+
+    // Set the page title depending on the page mode and the Processing action type
+    this.updatePageTitle();
   }
 
   async saveProcessingOrder() {
@@ -444,7 +466,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
     if (pageMode === 'create') {
 
       this.editing = false;
-      this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
 
       // Initialize the Processing order form group
       this.prepareNewProcOrderGroup();
@@ -460,6 +481,8 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
         // If processing action ID is provided in route, disable the Proc. action control
         this.procOrderGroup?.get('processingAction')?.disable({ emitEvent: false });
       }
+
+      this.updatePageTitle();
 
     } else if (pageMode === 'edit') {
 
@@ -851,28 +874,33 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
     if (!this.editing) {
 
-      this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTitle:Add action`;
-
       switch (this.actionType) {
         case TypeEnum.SHIPMENT:
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newShipmentTitle:Add shipment action`;
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newQuoteOrderTitle:Place new order`;
           break;
         case TypeEnum.TRANSFER:
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.newTransferTitle:Add transfer action`;
           break;
-        case TypeEnum.PROCESSING:
-        case TypeEnum.GENERATEQRCODE:
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add processing action`;
-          break;
         case TypeEnum.FINALPROCESSING:
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.newFinalProcessingTitle:Add final processing action`;
           break;
+        case TypeEnum.PROCESSING:
+        case TypeEnum.GENERATEQRCODE:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add new processing action`;
+          break;
+        default:
+          this.title = $localize`:@@productLabelStockProcessingOrderDetail.newProcessingTitle:Add new processing action`;
       }
     } else {
 
       switch (this.actionType) {
         case TypeEnum.SHIPMENT:
-          this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateShipmentTitle:Update shipment action`;
+
+          if (this.rightSideEnabled) {
+            this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateQuoteOrderTitle:Update existing order`;
+          } else {
+            this.title = $localize`:@@productLabelStockProcessingOrderDetail.fulfillQuoteOrderTitle:Fulfill order`;
+          }
           break;
         case TypeEnum.TRANSFER:
           this.title = $localize`:@@productLabelStockProcessingOrderDetail.updateTransferTitle:Update transfer action`;

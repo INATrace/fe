@@ -16,14 +16,19 @@
         <div class="af-form-block--c6">
 
           <!-- INPUT SECTION ICON -->
-          <div class="mb-4">
+          <div *ngIf="actionType !== 'SHIPMENT'" class="mb-4">
             <div class="processing-icon input"></div>
           </div>
 
           <!-- DISPLAY THE SELECTED PROCESSING ACTION AND FINAL PRODUCT NAME IF ACTION IS QR CODE GENERATION -->
           <div>
-            <h2 i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
-            <div class="af-form-element position-relative processing-section input">
+            <h2 *ngIf="actionType !== 'SHIPMENT'; else quoteOrderTitle"
+                i18n="@@productLabelStockProcessingOrderDetail.section.processing">Choose activity that you want to record</h2>
+            <ng-template #quoteOrderTitle>
+              <h2 i18n="@@productLabelStockProcessingOrderDetail.section.orderDetails">Order details</h2>
+            </ng-template>
+            <div class="af-form-element position-relative processing-section"
+                 [class.input]="actionType !== 'SHIPMENT'">
 
               <!-- DROPDOWN FOR SELECTING PROCESSING ACTION (IF ID PRESENT IN PATH, SELECTED AUTOMATICALLY) -->
               <div class="af-row">
@@ -74,12 +79,10 @@
 
               <div class="af-row">
                 <div class="af-c12">
-                  <app-datepicker
-                      label="Processing date"
-                      i18n-label="@@productLabelStockProcessingOrderDetail.datepicker.date.processingDate"
-                      [form]="$any(procOrderGroup.get('processingDate'))"
-                      [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
-                      style="width: 130px; margin-right: 1rem;">
+                  <app-datepicker [label]="processingDateLabel"
+                                  [form]="$any(procOrderGroup.get('processingDate'))"
+                                  [invalid]="submitted && procOrderGroup.get('processingDate').invalid"
+                                  style="width: 130px; margin-right: 1rem;">
                     <ng-container>
                       <div *ngIf="procOrderGroup.get('processingDate').errors as errors" class="sc-invalid-feedback">
                         <div *ngIf="errors.required" i18n="@@productLabelStockProcessingOrderDetail.datepicker.processingDate.error">
@@ -94,6 +97,27 @@
               <div *ngIf="!rightSideEnabled" class="disabled-section-overlay"></div>
             </div>
           </div>
+
+          <!-- THE PROCESSING OUTPUT COMPONENT IS DISPLAYED HERE ONLY WHEN WE HAVE TYPE 'SHIPMENT' - Quote order -->
+          <ng-container *ngIf="selectedProcAction && actionType === 'SHIPMENT'">
+            <app-processing-order-output #output
+                                         [editing]="editing"
+                                         [submitted]="submitted"
+                                         [processingUserId]="processingUserId"
+                                         [productOrderId]="productOrderId"
+                                         [selectedProcAction]="selectedProcAction"
+                                         [procActionLotPrefixControl]="procActionLotPrefixControl"
+                                         [rightSideEnabled]="rightSideEnabled"
+                                         [targetStockOrdersArray]="targetStockOrdersArray"
+                                         [finalProductOutputFacilitiesCodebook]="finalProductOutputFacilitiesCodebook"
+                                         [semiProductOutputFacilitiesCodebooks]="semiProductOutputFacilitiesCodebooks"
+                                         [currentOutputFinalProduct]="currentOutputFinalProduct"
+                                         [outputFinalProductNameControl]="outputFinalProductNameControl"
+                                         [outputSemiProductsCodebook]="outputSemiProductsCodebook"
+                                         (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
+                                         (calcRemainingQuantity)="calcRemainingQuantity()">
+            </app-processing-order-output>
+          </ng-container>
 
           <!-- INPUT PARAMETERS - MATERIAL TO BE RECORDED -->
           <div *ngIf="selectedProcAction">
@@ -118,7 +142,7 @@
         </div>
 
         <!-- OUTPUT SECTION -->
-        <div class="af-form-block--c6">
+        <div *ngIf="selectedProcAction && actionType !== 'SHIPMENT'" class="af-form-block--c6">
 
           <!-- OUTPUT SECTION ICON -->
           <div class="mb-4">
@@ -126,25 +150,23 @@
           </div>
 
           <!-- OUTPUT DATA OF THE PROCESSING (THERE CAN BE MORE THAN ONE OUTPUT FROM THE PROCESSING) -->
-          <div *ngIf="selectedProcAction">
-            <app-processing-order-output #output
-                                         [editing]="editing"
-                                         [submitted]="submitted"
-                                         [processingUserId]="processingUserId"
-                                         [productOrderId]="productOrderId"
-                                         [selectedProcAction]="selectedProcAction"
-                                         [procActionLotPrefixControl]="procActionLotPrefixControl"
-                                         [rightSideEnabled]="rightSideEnabled"
-                                         [targetStockOrdersArray]="targetStockOrdersArray"
-                                         [finalProductOutputFacilitiesCodebook]="finalProductOutputFacilitiesCodebook"
-                                         [semiProductOutputFacilitiesCodebooks]="semiProductOutputFacilitiesCodebooks"
-                                         [currentOutputFinalProduct]="currentOutputFinalProduct"
-                                         [outputFinalProductNameControl]="outputFinalProductNameControl"
-                                         [outputSemiProductsCodebook]="outputSemiProductsCodebook"
-                                         (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
-                                         (calcRemainingQuantity)="calcRemainingQuantity()">
-            </app-processing-order-output>
-          </div>
+          <app-processing-order-output #output
+                                       [editing]="editing"
+                                       [submitted]="submitted"
+                                       [processingUserId]="processingUserId"
+                                       [productOrderId]="productOrderId"
+                                       [selectedProcAction]="selectedProcAction"
+                                       [procActionLotPrefixControl]="procActionLotPrefixControl"
+                                       [rightSideEnabled]="rightSideEnabled"
+                                       [targetStockOrdersArray]="targetStockOrdersArray"
+                                       [finalProductOutputFacilitiesCodebook]="finalProductOutputFacilitiesCodebook"
+                                       [semiProductOutputFacilitiesCodebooks]="semiProductOutputFacilitiesCodebooks"
+                                       [currentOutputFinalProduct]="currentOutputFinalProduct"
+                                       [outputFinalProductNameControl]="outputFinalProductNameControl"
+                                       [outputSemiProductsCodebook]="outputSemiProductsCodebook"
+                                       (calcTotalOutputQuantity)="calcTotalOutputQuantity()"
+                                       (calcRemainingQuantity)="calcRemainingQuantity()">
+          </app-processing-order-output>
         </div>
       </div>
 

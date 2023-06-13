@@ -137,7 +137,7 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
     return this.companyId === facility.company?.id;
   }
 
-  get disabledLeftFields() {
+  get hideAvailableStock() {
     const facility = this.inputFacilityControl.value as ApiFacility;
     return !facility || facility.company?.id !== this.companyId;
   }
@@ -325,18 +325,12 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
     } else {
       this.clearInputFacility();
     }
-
-    if (this.disabledLeftFields) {
-      this.cbSelectAllControl.disable();
-    } else {
-      this.cbSelectAllControl.enable();
-    }
   }
 
   cbSelectAllClick() {
 
     if (!this.leftSideEnabled) { return; }
-    if (this.disabledLeftFields) { return; }
+    if (this.hideAvailableStock) { return; }
 
     if (this.cbSelectAllControl.value) {
 

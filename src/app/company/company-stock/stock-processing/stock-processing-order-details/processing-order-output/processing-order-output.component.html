@@ -1,6 +1,8 @@
 <ng-container>
-    <h2 i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h2>
-    <div class="af-form-element position-relative outputs-bottom-spacing processing-section output"
+    <h2 *ngIf="actionType !== 'SHIPMENT'"
+        i18n="@@productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle">Outputs of this processing</h2>
+    <div class="af-form-element position-relative outputs-bottom-spacing processing-section"
+         [class.output]="actionType !== 'SHIPMENT'"
          *ngFor="let tsoGroup of targetStockOrdersArray.controls; index as tsoGroupIndex">
 
         <!-- CONTROLS FOR DISPLAYING AND SELECTING OUTPUT STOCK UNIT -->
