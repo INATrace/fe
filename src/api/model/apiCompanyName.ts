@@ -18,185 +18,150 @@
  */
 
 
+import { ApiAddress } from './apiAddress';
 
 
 
-export interface ApiUserGet { 
+export interface ApiCompanyName { 
     /**
-     * Possible actions
+     * company abbreviation
      */
-    actions?: Array<ApiUserGet.ActionsEnum>;
+    abbreviation?: string;
     /**
-     * User's company ids
+     * about the company
      */
-    companyIds?: Array<number>;
+    about?: string;
     /**
-     * User's company ids where user is company admin
+     * Display preferred way of payment on purchase order form
      */
-    companyIdsAdmin?: Array<number>;
+    displayPrefferedWayOfPayment?: boolean;
     /**
-     * Email/username
+     * email
      */
     email?: string;
+    headquarters?: ApiAddress;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * language
+     * name of manager / CEO
      */
-    language?: ApiUserGet.LanguageEnum;
+    manager?: string;
     /**
-     * Name
+     * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+     */
+    mediaLinks?: { [key: string]: string; };
+    /**
+     * company name
      */
     name?: string;
     /**
-     * User role
+     * webpage
      */
-    role?: ApiUserGet.RoleEnum;
+    phone?: string;
     /**
-     * Status
+     * Enable adding multiple farmers for one proof document on purchase order form
      */
-    status?: ApiUserGet.StatusEnum;
+    purchaseProofDocumentMultipleFarmers?: boolean;
     /**
-     * Surname
+     * webpage
      */
-    surname?: string;
+    webPage?: string;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiUserGet.
+ * Namespace for property- and property-value-enumerations of ApiCompanyName.
  */
-export namespace ApiUserGet {
+export namespace ApiCompanyName {
     /**
-     * All properties of ApiUserGet.
+     * All properties of ApiCompanyName.
      */
     export enum Properties {
         /**
-         * Possible actions
+         * company abbreviation
          */
-        actions = 'actions',
+        abbreviation = 'abbreviation',
         /**
-         * User's company ids
+         * about the company
          */
-        companyIds = 'companyIds',
+        about = 'about',
         /**
-         * User's company ids where user is company admin
+         * Display preferred way of payment on purchase order form
          */
-        companyIdsAdmin = 'companyIdsAdmin',
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
         /**
-         * Email/username
+         * email
          */
         email = 'email',
+        headquarters = 'headquarters',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * language
+         * name of manager / CEO
          */
-        language = 'language',
+        manager = 'manager',
         /**
-         * Name
+         * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+         */
+        mediaLinks = 'mediaLinks',
+        /**
+         * company name
          */
         name = 'name',
         /**
-         * User role
+         * webpage
          */
-        role = 'role',
+        phone = 'phone',
         /**
-         * Status
+         * Enable adding multiple farmers for one proof document on purchase order form
          */
-        status = 'status',
+        purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
-         * Surname
+         * webpage
          */
-        surname = 'surname'
-    }
-
-    /**
-     * All possible values of actions.
-     */
-    export enum ActionsEnum {
-        VIEWUSERPROFILE = 'VIEW_USER_PROFILE',
-        CREATECOMPANY = 'CREATE_COMPANY',
-        UPDATEUSERPROFILE = 'UPDATE_USER_PROFILE',
-        ACTIVATEUSER = 'ACTIVATE_USER',
-        CONFIRMUSEREMAIL = 'CONFIRM_USER_EMAIL',
-        DEACTIVATEUSER = 'DEACTIVATE_USER',
-        SETUSERSYSTEMADMIN = 'SET_USER_SYSTEM_ADMIN',
-        UNSETUSERSYSTEMADMIN = 'UNSET_USER_SYSTEM_ADMIN',
-        SETUSERREGIONALADMIN = 'SET_USER_REGIONAL_ADMIN',
-        UNSETUSERREGIONALADMIN = 'UNSET_USER_REGIONAL_ADMIN'
-    }
-
-    /**
-     * All possible values of language.
-     */
-    export enum LanguageEnum {
-        EN = 'EN',
-        DE = 'DE',
-        RW = 'RW',
-        ES = 'ES'
-    }
-
-    /**
-     * All possible values of role.
-     */
-    export enum RoleEnum {
-        USER = 'USER',
-        SYSTEMADMIN = 'SYSTEM_ADMIN',
-        REGIONALADMIN = 'REGIONAL_ADMIN'
-    }
-
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNCONFIRMED = 'UNCONFIRMED',
-        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
-        ACTIVE = 'ACTIVE',
-        DEACTIVATED = 'DEACTIVATED'
+        webPage = 'webPage'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiUserGet',
+            classname: 'ApiCompanyName',
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'Array&lt;ApiUserGet.ActionsEnum&gt;',
+                    isEnum: false,
                     required: false,
-                    name: 'actions',
-                    classname: 'ApiUserGet',
-                    dataType: 'Array&lt;string&gt;',
+                    name: 'abbreviation',
+                    classname: 'ApiCompanyName',
+                    dataType: 'string',
                     isPrimitiveType: true,
-                    isListContainer: true,
+                    isListContainer: false,
                     complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'companyIds',
-                    classname: 'ApiUserGet',
-                    dataType: 'Array&lt;number&gt;',
+                    name: 'about',
+                    classname: 'ApiCompanyName',
+                    dataType: 'string',
                     isPrimitiveType: true,
-                    isListContainer: true,
+                    isListContainer: false,
                     complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'companyIdsAdmin',
-                    classname: 'ApiUserGet',
-                    dataType: 'Array&lt;number&gt;',
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyName',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
-                    isListContainer: true,
+                    isListContainer: false,
                     complexType: ''
                 },
                 {
@@ -204,7 +169,41 @@ export namespace ApiUserGet {
                     isEnum: false,
                     required: false,
                     name: 'email',
-                    classname: 'ApiUserGet',
+                    classname: 'ApiCompanyName',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiAddress.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'headquarters',
+                    classname: 'ApiCompanyName',
+                    dataType: 'ApiAddress',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiAddress'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiCompanyName',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'manager',
+                    classname: 'ApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -214,21 +213,9 @@ export namespace ApiUserGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiUserGet',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
+                    name: 'mediaLinks',
+                    classname: 'ApiCompanyName',
+                    dataType: '{ [key: string]: string; }',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -238,31 +225,7 @@ export namespace ApiUserGet {
                     isEnum: false,
                     required: false,
                     name: 'name',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.RoleEnum',
-                    required: false,
-                    name: 'role',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.StatusEnum',
-                    required: false,
-                    name: 'status',
-                    classname: 'ApiUserGet',
+                    classname: 'ApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -272,8 +235,30 @@ export namespace ApiUserGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'surname',
-                    classname: 'ApiUserGet',
+                    name: 'phone',
+                    classname: 'ApiCompanyName',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyName',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'webPage',
+                    classname: 'ApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -281,65 +266,75 @@ export namespace ApiUserGet {
                 },
             ],
             validators: {
-                actions: [
+                abbreviation: [
                 ],
-                companyIds: [
+                about: [
                 ],
-                companyIdsAdmin: [
+                displayPrefferedWayOfPayment: [
                 ],
                 email: [
                 ],
+                headquarters: [
+                ],
                 id: [
                 ],
-                language: [
+                manager: [
+                ],
+                mediaLinks: [
                 ],
                 name: [
                 ],
-                role: [
+                phone: [
                 ],
-                status: [
+                purchaseProofDocumentMultipleFarmers: [
                 ],
-                surname: [
+                webPage: [
                 ],
             }
         }
     }
 
-  // export const ApiUserGetValidationScheme = {
+  // export const ApiCompanyNameValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               actions: {
+  //               abbreviation: {
   //                   validators: []
   //               },
-  //               companyIds: {
+  //               about: {
   //                   validators: []
   //               },
-  //               companyIdsAdmin: {
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               email: {
   //                   validators: []
   //               },
+  //               headquarters: {
+  //                   validators: []
+  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               language: {
+  //               manager: {
+  //                   validators: []
+  //               },
+  //               mediaLinks: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               role: {
+  //               phone: {
   //                   validators: []
   //               },
-  //               status: {
+  //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
-  //               surname: {
+  //               webPage: {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiUserGet>;
+  // } as SimpleValidationScheme<ApiCompanyName>;
 
 
 }

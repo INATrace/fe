@@ -137,9 +137,6 @@ export function getConfiguration(): Configuration {
     CompanyDetailProcessingActionsListComponent,
     CurrencyListComponent
   ],
-  entryComponents: [
-    CompanySelectModalComponent
-  ],
   imports: [
     ApiModule.forRoot(getConfiguration),
     BrowserModule,

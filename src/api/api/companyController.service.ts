@@ -42,6 +42,7 @@ import { ApiPaginatedResponseApiValueChain } from '../model/apiPaginatedResponse
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiCompanyCustomer } from '../model/apiResponseApiCompanyCustomer';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
+import { ApiResponseApiCompanyName } from '../model/apiResponseApiCompanyName';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
@@ -501,6 +502,41 @@ export namespace GetCompanyCustomersListUsingGET {
       query: [
       ],
       phone: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getCompanyNameUsingGET.
+ */
+export namespace GetCompanyNameUsingGET {
+    /**
+     * Parameter map for getCompanyNameUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Record id
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getCompanyNameUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Record id
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCompanyNameUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetCompanyNameUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
       ],
     };
 }
@@ -1867,7 +1903,7 @@ export class CompanyControllerService {
 
 
   /**
-   * Execute company action. Must be an administrator by map.
+   * Execute company action. Must be an Company admin, System admin or Regional admin enrolled in this company by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -1899,7 +1935,7 @@ export class CompanyControllerService {
 
 
     /**
-     * Execute company action. Must be an administrator
+     * Execute company action. Must be an Company admin, System admin or Regional admin enrolled in this company
      * 
      * @param action action
      * @param ApiCompanyActionRequest request
@@ -2266,6 +2302,88 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyCustomersListUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get the company name and abbreviation by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCompanyNameUsingGETByMap(
+    map: GetCompanyNameUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiCompanyName>;
+  public getCompanyNameUsingGETByMap(
+    map: GetCompanyNameUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyName>>;
+  public getCompanyNameUsingGETByMap(
+    map: GetCompanyNameUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyName>>;
+  public getCompanyNameUsingGETByMap(
+    map: GetCompanyNameUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getCompanyNameUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get the company name and abbreviation
+     * 
+     * @param id Record id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyNameUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyName>;
+    public getCompanyNameUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyName>>;
+    public getCompanyNameUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyName>>;
+    public getCompanyNameUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getCompanyNameUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiCompanyName>(`${this.configuration.basePath}/api/company/profile/${encodeURIComponent(String(id))}/name`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyNameUsingGET')));
         }
         return handle;
     }

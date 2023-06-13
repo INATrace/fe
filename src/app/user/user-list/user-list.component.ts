@@ -8,9 +8,9 @@ import { AuthService } from '../../core/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { startWith, debounceTime, tap, switchMap, map, shareReplay, take } from 'rxjs/operators';
 import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { ApiPaginatedResponseApiUserBase } from 'src/api/model/apiPaginatedResponseApiUserBase';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SortOption } from '../../shared/result-sorter/result-sorter-types';
+import { ApiPaginatedResponseApiUserBase } from '../../../api/model/apiPaginatedResponseApiUserBase';
 
 @Component({
   selector: 'app-user-list',
@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   users = [];
   @ViewChild(UserDetailComponent) userDetails;
-  _listErrorStatus$: BehaviorSubject<string>;
+  listErrorStatus$: BehaviorSubject<string>;
 
   searchQuery = new FormControl(null);
   searchStatus = new FormControl('');
@@ -74,10 +74,15 @@ export class UserListComponent implements OnInit, OnDestroy {
         const myUsers = params.myUsers;
         const newParams = { ...params };
         delete newParams.myUsers;
-        if (myUsers) {
-          return this.userController.listUsersUsingGETByMap(newParams);
+
+        if (this.isRegionalAdmin) {
+          return this.userController.regionalAdminListUsersUsingGETByMap(newParams);
         } else {
-          return this.userController.adminListUsersUsingGETByMap(newParams);
+          if (myUsers) {
+            return this.userController.listUsersUsingGETByMap(newParams);
+          } else {
+            return this.userController.adminListUsersUsingGETByMap(newParams);
+          }
         }
       }),
       map((resp: ApiPaginatedResponseApiUserBase) => {
@@ -95,7 +100,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   );
 
   codebookStatus = EnumSifrant.fromObject(this.statusList);
-  codebookRole = EnumSifrant.fromObject(this.roleList);
 
   sortOptions: SortOption[] = [
     {
@@ -115,10 +119,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     {
       key: 'role',
       name: $localize`:@@userList.sortOptions.role.name:Role`,
+      inactive: true
     },
     {
       key: 'status',
       name: $localize`:@@userList.sortOptions.status.name:Status`,
+      inactive: true
     },
     {
       key: 'actions',
@@ -137,7 +143,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._listErrorStatus$ = new BehaviorSubject<string>('');
+    this.listErrorStatus$ = new BehaviorSubject<string>('');
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/users') {
         this.reloadPage();
@@ -151,7 +157,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   async setAllUsers() {
-    if (this.isAdmin) {
+
+    if (this.isRegionalAdmin) {
+      const res = await this.userController.regionalAdminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
+      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
+        this.allUsers = res.data.count;
+      }
+    }
+    else if (this.isSystemAdmin) {
       const res = await this.userController.adminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
@@ -171,14 +184,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     obj['CONFIRMED_EMAIL'] = $localize`:@@userList.statusList.comfirmedEmail:Comfirmed email`;
     obj['ACTIVE'] = $localize`:@@userList.statusList.active:Active`;
     obj['DEACTIVATED'] = $localize`:@@userList.statusList.deactiveted:Deactiveted`;
-    return obj;
-  }
-
-  get roleList() {
-    const obj = {};
-    obj[''] = $localize`:@@userList.roleList.all:All`;
-    obj['USER'] = $localize`:@@userList.roleList.user:User`;
-    obj['ADMIN'] = $localize`:@@userList.roleList.admin:Admin`;
     return obj;
   }
 
@@ -228,28 +233,24 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.paging$.next(event);
   }
 
-  get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN';
+  get isSystemAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
+  }
+
+  get isRegionalAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
   }
 
   editUser(userId) {
-    if (this.isAdmin) {
-      this.router.navigate(['/users', userId], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
-     } else {
-      this.globalEventsManager.push({
-        action: 'error',
-        notificationType: 'error',
-        title: $localize`:@@userList.editUser.error.title:Error`,
-        message: $localize`:@@userList.editUser.error.message:Unauthorised. Cannot edit the user.`
-      });
-    }
+    this.router.navigate(['/users', userId], {queryParams: {returnUrl: this.router.routerState.snapshot.url}}).then();
   }
 
-  async setAdmin(id, role) {
+  async setUserRole(id, action: 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN') {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.userController
-        .activateUserUsingPOST(role === 'ADMIN' ? 'UNSET_USER_ADMIN' : 'SET_USER_ADMIN', { id }).pipe(take(1)).toPromise();
+      await this.userController.activateUserUsingPOST(action, { id })
+        .pipe(take(1))
+        .toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({

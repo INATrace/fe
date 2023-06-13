@@ -2,10 +2,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { Subscription } from 'rxjs';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { AuthorisedLayoutComponent } from 'src/app/layout/authorised/authorised-layout/authorised-layout.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
 import { AuthService } from '../../../core/auth.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
+import { ApiCompanyName } from '../../../../api/model/apiCompanyName';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-company-detail-tab-manager',
@@ -38,13 +40,16 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
   selectedTab: Subscription;
 
   isAdmin = false;
-  isCompanyEnrolled = false;
+  isCompanyAdmin = false;
   userProfileSubscription: Subscription;
+
+  companyName: ApiCompanyName = null;
 
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService
   ) { super(); }
 
   get tabCommunicationService(): TabCommunicationService {
@@ -57,16 +62,16 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
         if (userProfile) {
 
           // Set flag if this user is System admin
-          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.ADMIN;
+          this.isAdmin = userProfile.role === ApiUserGet.RoleEnum.SYSTEMADMIN || userProfile.role === ApiUserGet.RoleEnum.REGIONALADMIN;
 
           if (this.cId != null) {
 
             // Set flag if this user is enrolled in the selected company (if not enrolled in the company,
             // cannot see tabs: facilities and processing actions)
-            this.isCompanyEnrolled = userProfile.companyIdsAdmin.findIndex(id => String(id) === this.cId) !== -1;
+            this.isCompanyAdmin = userProfile.companyIdsAdmin.findIndex(id => String(id) === this.cId) !== -1;
 
             // If not company enrolled, lock the facilities and processing actions tabs
-            if (!this.isCompanyEnrolled) {
+            if (!this.isCompanyAdmin) {
               this.lockedTabs = [
                 'facilities',
                 'processingActions'
@@ -83,6 +88,14 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
           }
         }
       });
+
+    if (this.rootTab !== 0) {
+      this.companyController.getCompanyNameUsingGET(Number(this.cId)).subscribe(resp => {
+        if (resp && resp.status === 'OK') {
+          this.companyName = resp.data;
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

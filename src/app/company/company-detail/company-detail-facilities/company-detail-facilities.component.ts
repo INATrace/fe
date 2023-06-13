@@ -11,6 +11,7 @@ import { ApiPaginatedResponseApiFacility } from '../../../../api/model/apiPagina
 import { ApiPaginatedListApiFacility } from '../../../../api/model/apiPaginatedListApiFacility';
 import { AuthService } from '../../../core/auth.service';
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
+import { CompanyControllerService } from '../../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-company-detail-facilities',
@@ -39,7 +40,6 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     lng: 21.514503
   };
   defaultZoom = 3;
-  zoomForOnePin = 10;
   bounds: any;
   initialBounds: any = [];
   gInfoWindowText = '';
@@ -95,9 +95,10 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     protected route: ActivatedRoute,
     protected facilityControllerService: FacilityControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected companyController: CompanyControllerService,
   ) {
-    super(router, route, authService);
+    super(router, route, authService, companyController);
   }
 
   ngOnInit(): void {

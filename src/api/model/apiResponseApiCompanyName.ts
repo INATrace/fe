@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * INATrace Services API swagger documentation
+ * Abelium INATrace Services API swagger documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -18,7 +18,7 @@
  */
 
 
-import { ApiPaginatedListApiUserBasicResponse } from './apiPaginatedListApiUserBasicResponse';
+import { ApiCompanyName } from './apiCompanyName';
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 
@@ -26,8 +26,8 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
  * Generic API response. See documentation for data type for specific type details.
  */
 
-export interface ApiPaginatedResponseApiUserBasicResponse { 
-    data?: ApiPaginatedListApiUserBasicResponse;
+export interface ApiResponseApiCompanyName { 
+    data?: ApiCompanyName;
     /**
      * Optional details for unexpected error responses.
      */
@@ -39,16 +39,16 @@ export interface ApiPaginatedResponseApiUserBasicResponse {
     /**
      * Response status. OK for successful reponses.
      */
-    status: ApiPaginatedResponseApiUserBasicResponse.StatusEnum;
+    status: ApiResponseApiCompanyName.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
 /**
- * Namespace for property- and property-value-enumerations of ApiPaginatedResponseApiUserBasicResponse.
+ * Namespace for property- and property-value-enumerations of ApiResponseApiCompanyName.
  */
-export namespace ApiPaginatedResponseApiUserBasicResponse {
+export namespace ApiResponseApiCompanyName {
     /**
-     * All properties of ApiPaginatedResponseApiUserBasicResponse.
+     * All properties of ApiResponseApiCompanyName.
      */
     export enum Properties {
         data = 'data',
@@ -80,33 +80,35 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
         AUTHERROR = 'AUTH_ERROR',
         UPSTREAMHTTPERROR = 'UPSTREAM_HTTP_ERROR',
         INVALIDREQUEST = 'INVALID_REQUEST',
-        NOTIMPLEMENTED = 'NOT_IMPLEMENTED'
+        INVALIDOREXPIREDSTORAGEKEY = 'INVALID_OR_EXPIRED_STORAGE_KEY',
+        NOTIMPLEMENTED = 'NOT_IMPLEMENTED',
+        NOTFOUND = 'NOT_FOUND'
     }
 
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
-            classname: 'ApiPaginatedResponseApiUserBasicResponse',
+            classname: 'ApiResponseApiCompanyName',
             vars: [
                 {
-                    metadata: ApiPaginatedListApiUserBasicResponse.formMetadata,
+                    metadata: ApiCompanyName.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'data',
-                    classname: 'ApiPaginatedResponseApiUserBasicResponse',
-                    dataType: 'ApiPaginatedListApiUserBasicResponse',
+                    classname: 'ApiResponseApiCompanyName',
+                    dataType: 'ApiCompanyName',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiPaginatedListApiUserBasicResponse'
+                    complexType: 'ApiCompanyName'
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'errorDetails',
-                    classname: 'ApiPaginatedResponseApiUserBasicResponse',
+                    classname: 'ApiResponseApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -117,7 +119,7 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
                     isEnum: false,
                     required: false,
                     name: 'errorMessage',
-                    classname: 'ApiPaginatedResponseApiUserBasicResponse',
+                    classname: 'ApiResponseApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -126,10 +128,10 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiPaginatedResponseApiUserBasicResponse.StatusEnum',
+                    datatypeWithEnum: 'ApiResponseApiCompanyName.StatusEnum',
                     required: true,
                     name: 'status',
-                    classname: 'ApiPaginatedResponseApiUserBasicResponse',
+                    classname: 'ApiResponseApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
@@ -141,7 +143,7 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
                     isEnum: false,
                     required: false,
                     name: 'validationErrorDetails',
-                    classname: 'ApiPaginatedResponseApiUserBasicResponse',
+                    classname: 'ApiResponseApiCompanyName',
                     dataType: 'ApiValidationErrorDetails',
                     isPrimitiveType: false,
                     isListContainer: false,
@@ -164,7 +166,7 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
         }
     }
 
-  // export const ApiPaginatedResponseApiUserBasicResponseValidationScheme = {
+  // export const ApiResponseApiCompanyNameValidationScheme = {
   //     validators: [],
   //     fields: {
   //               data: {
@@ -183,7 +185,7 @@ export namespace ApiPaginatedResponseApiUserBasicResponse {
   //                   validators: []
   //               },
   //     }
-  // } as SimpleValidationScheme<ApiPaginatedResponseApiUserBasicResponse>;
+  // } as SimpleValidationScheme<ApiResponseApiCompanyName>;
 
 
 }

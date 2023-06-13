@@ -36,8 +36,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
 import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.component';
 import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
-import {NgxEchartsModule} from 'ngx-echarts';
-import {NgSelectModule} from '@ng-select/ng-select';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [

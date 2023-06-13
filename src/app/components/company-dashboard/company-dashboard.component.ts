@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {CompanyFacilitiesService} from '../../shared-services/company-facilities.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {FacilityControllerService} from '../../../api/api/facilityController.service';
-import {StockOrderControllerService} from '../../../api/api/stockOrderController.service';
-import {ApiFacility} from '../../../api/model/apiFacility';
-import {EChartsOption} from 'echarts';
-import {dateISOString} from '../../../shared/utils';
-import {CompanyUserCustomersByRoleService} from '../../shared-services/company-user-customers-by-role.service';
-import {CompanyControllerService} from '../../../api/api/companyController.service';
-import {ApiSemiProduct} from '../../../api/model/apiSemiProduct';
-import {CompanyProcessingActionsService} from '../../shared-services/company-processing-actions.service';
-import {ProcessingActionControllerService} from '../../../api/api/processingActionController.service';
-import {CodebookTranslations} from '../../shared-services/codebook-translations';
-import {ValueChainControllerService} from '../../../api/api/valueChainController.service';
+import { CompanyFacilitiesService } from '../../shared-services/company-facilities.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FacilityControllerService } from '../../../api/api/facilityController.service';
+import { StockOrderControllerService } from '../../../api/api/stockOrderController.service';
+import { ApiFacility } from '../../../api/model/apiFacility';
+import { EChartsOption } from 'echarts';
+import { dateISOString } from '../../../shared/utils';
+import { CompanyUserCustomersByRoleService } from '../../shared-services/company-user-customers-by-role.service';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
+import { CompanyProcessingActionsService } from '../../shared-services/company-processing-actions.service';
+import { ProcessingActionControllerService } from '../../../api/api/processingActionController.service';
+import { CodebookTranslations } from '../../shared-services/codebook-translations';
+import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import {
   ApiProcessingPerformanceRequestEvidenceField
 } from '../../../api/model/apiProcessingPerformanceRequestEvidenceField';
-import {ActiveMeasureUnitTypeService} from '../../shared-services/active-measure-unit-types.service';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -38,10 +37,8 @@ export class CompanyDashboardComponent implements OnInit {
     public valueChainController: ValueChainControllerService,
     private procActionController: ProcessingActionControllerService,
     private stockOrderControllerService: StockOrderControllerService,
-    public activeMeasureUnitTypeCodebook: ActiveMeasureUnitTypeService,
     private codebookTranslations: CodebookTranslations
   ) { }
-
 
   faTimes = faTimes;
 

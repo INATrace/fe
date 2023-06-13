@@ -4,6 +4,7 @@ import { CommonControllerService } from 'src/api/api/commonController.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { SettingsComponent } from '../settings.component';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-settings-types',
@@ -18,10 +19,11 @@ export class SettingsTypesComponent extends SettingsComponent {
     protected globalEventsManager: GlobalEventManagerService,
     protected commonController: CommonControllerService,
     protected modalService: NgbModalImproved,
-    protected router: Router
+    protected router: Router,
+    protected authService: AuthService
   ) {
     super(
-        globalEventsManager, commonController, modalService, router);
+        globalEventsManager, commonController, modalService, router, authService);
   }
 
 }

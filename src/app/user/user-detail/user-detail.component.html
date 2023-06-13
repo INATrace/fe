@@ -22,7 +22,7 @@
           <h2 i18n="@@userDetail.section.basicInfo">Basic information</h2>
           <div class="af-form-element">
 
-            <textinput [form]="userProfileForm.get('name')" label="First name"
+            <textinput [form]="$any(userProfileForm.get('name'))" label="First name"
               i18n-label="@@userDetail.textinput.firstname.label"
               i18n-placeholder="@@userDetail.textinput.firstname.placeholder"
               style="width: 100%" placeholder="Enter your first name"
@@ -37,7 +37,7 @@
               </ng-container>
             </textinput>
 
-            <textinput [form]="userProfileForm.get('surname')" label="Last name"
+            <textinput [form]="$any(userProfileForm.get('surname'))" label="Last name"
               i18n-label="@@userDetail.textinput.lastname.label"
               i18n-placeholder="@@userDetail.textinput.lastname.placeholder"
               style="width: 100%" placeholder="Enter your last name"
@@ -52,7 +52,7 @@
               </ng-container>
             </textinput>
 
-            <textinput [form]="userProfileForm.get('email')" label="Username"
+            <textinput [form]="$any(userProfileForm.get('email'))" label="Username"
               i18n-label="@@userDetail.textinput.username.label"
               style="width: 100%"
               [readOnly]=true>
@@ -126,17 +126,27 @@
       <div class="af-form-row">
         <div class="af-form-block--c6">
 
-          <h2 i18n="@@userDetail.myCompanies.label">My companies</h2>
+          <h2 *ngIf="mode === 'userProfileView'; else adminViewCompanyListTitle" i18n="@@userDetail.myCompanies.label">My companies</h2>
+          <ng-template #adminViewCompanyListTitle>
+            <h2 i18n="@@userDetail.adminView.companies.label">User companies</h2>
+          </ng-template>
           <div class="af-form-element">
 
-            <div *ngFor="let c of myCompanies index as i">
-              <div class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;">
-                <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.company_name}}</div>
+            <ng-container *ngIf="!loadingUserCompanies; else loadingUserCompaniesTemplate">
+              <div *ngFor="let c of myCompanies index as i">
+                <div class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;">
+                  <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.companyName}}</div>
+                </div>
               </div>
-            </div>
-            <div *ngIf="myCompanies && myCompanies.length == 0" class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;" i18n="@@userDetail.myCompanies.noCompanies">
-              <div>No companies</div>
-            </div>
+              <div *ngIf="myCompanies && myCompanies.length == 0" class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;" i18n="@@userDetail.myCompanies.noCompanies">
+                <div>No companies</div>
+              </div>
+            </ng-container>
+            <ng-template #loadingUserCompaniesTemplate>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary my-2"></div>
+              </div>
+            </ng-template>
 
           </div>
         </div>

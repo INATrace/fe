@@ -23,7 +23,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   faTimes = faTimes;
 
   companies = [];
-  _listErrorStatus$: BehaviorSubject<string>;
+  listErrorStatus$: BehaviorSubject<string>;
 
   searchName = new FormControl(null);
   searchStatus = new FormControl('');
@@ -121,12 +121,16 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     private modalService: NgbModalImproved
   ) { }
 
-  get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN';
+  get isSystemAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
+  }
+
+  get isRegionalAdmin() {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
   }
 
   ngOnInit(): void {
-    this._listErrorStatus$ = new BehaviorSubject<string>('');
+    this.listErrorStatus$ = new BehaviorSubject<string>('');
     // do not allow access via breadcrumbs - temp fix
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/companies') {
@@ -150,7 +154,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   }
 
   async setAllCompanies() {
-    if (this.isAdmin) {
+    if (this.isSystemAdmin) {
       const res = await this.companyController.listCompaniesAdminUsingGET('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allCompanies = res.data.count;

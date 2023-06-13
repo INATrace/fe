@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductControllerService } from 'src/api/api/productController.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take, filter, tap, switchMap, catchError, map } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import { ApiProductCompany } from 'src/api/model/apiProductCompany';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { UnsubscribeList } from 'src/shared/rxutils';
@@ -18,6 +18,7 @@ import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared
 import { ApiProductDataSharingAgreementValidationScheme, ApiProductValidationScheme } from './stakeholders-value-chain/validation';
 import { ListEditorManager } from '../../../shared/list-editor/list-editor-manager';
 import { ApiProductDataSharingAgreement } from '../../../../api/model/apiProductDataSharingAgreement';
+import RoleEnum = ApiUserGet.RoleEnum;
 
 @Component({
   template: ''
@@ -35,6 +36,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
 
   isOwner = false;
   isSystemAdmin = false;
+  isRegionalAdmin = false;
 
   // TABS ////////////////
   @ViewChild(AuthorisedLayoutComponent)
@@ -186,7 +188,8 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     this.reload();
 
     this.authService.userProfile$.subscribe(value => {
-      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.ADMIN;
+      this.isSystemAdmin = value && value.role === ApiUserGet.RoleEnum.SYSTEMADMIN;
+      this.isRegionalAdmin = value && value.role === RoleEnum.REGIONALADMIN;
     });
   }
 
@@ -411,7 +414,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
   }
 
   editable() {
-    return this.isSystemAdmin;
+    return this.isSystemAdmin || this.isRegionalAdmin;
   }
 
   async saveDataSharingAgreements() {

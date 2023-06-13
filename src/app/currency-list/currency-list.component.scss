@@ -9,12 +9,6 @@
   color: $primary;
 }
 
-.disabled-action {
-  color: $gray;
-  cursor: default;
-  pointer-events: none;
-}
-
 .enabled-action:hover {
   text-decoration: underline;
 }

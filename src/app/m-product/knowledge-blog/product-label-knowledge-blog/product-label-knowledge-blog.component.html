@@ -29,7 +29,7 @@
                 <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
                   <div *ngIf="searchStatus && searchStatus?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem"> Show {{searchStatus.value | lowercase}}
                     <div (click)="clearValue()" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
                     </div>
                   </div>

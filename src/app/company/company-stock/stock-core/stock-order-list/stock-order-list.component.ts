@@ -251,7 +251,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         key: 'farmer',
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.farmer.name:Farmer`,
         inactive: true,
-        hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
+        hide: ['COMPANY_ADMIN', 'SYSTEM_ADMIN'].indexOf(this.pageListingMode) >= 0,
       },
       {
         key: 'semiProduct',
@@ -262,7 +262,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         key: 'quantity',
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.quantity.name:Quantity`,
         inactive: true,
-        hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
+        hide: ['COMPANY_ADMIN', 'SYSTEM_ADMIN'].indexOf(this.pageListingMode) >= 0,
       },
       {
         key: 'quantity',
@@ -280,7 +280,7 @@ export class StockOrderListComponent implements OnInit, OnDestroy {
         key: 'payable',
         name: $localize`:@@productLabelPurchaseOrder.sortOptions.payable.name:Payable / Balance`,
         inactive: true,
-        hide: ['COMPANY_ADMIN', 'ADMIN'].indexOf(this.pageListingMode) >= 0,
+        hide: ['COMPANY_ADMIN', 'SYSTEM_ADMIN'].indexOf(this.pageListingMode) >= 0,
       },
       {
         key: 'deliveryTime',

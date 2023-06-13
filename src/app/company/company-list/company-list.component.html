@@ -30,13 +30,16 @@
                 <div class="d-flex align-items-center" style="margin-bottom: 1rem;" ngbDropdown placement="bottom-right" display="dynamic" container="body">
                   <div *ngIf="searchStatus && searchStatus?.value.length>0" class="d-flex filter-text" style="margin-left: 0.75rem"> Show {{searchStatus.value | lowercase}}
                     <div (click)="clearValue(searchStatus)" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
                     </div>
                   </div>
-                  <div *ngIf="myCompanies && myCompanies.value" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@companyList.filter.myCompanies">My companies
+                  <div *ngIf="myCompanies && myCompanies.value && isSystemAdmin"
+                       class="d-flex filter-text"
+                       style="margin-left: 0.75rem"
+                       i18n="@@companyList.filter.myCompanies">My companies
                     <div (click)="clearValue(myCompanies, true)" style="margin-left: 0.5rem;">
-                      <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                      <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                       </fa-icon>
                     </div>
                   </div>
@@ -52,8 +55,10 @@
                     <button ngbDropdownItem (click)="showStatus('ACTIVE')" i18n="@@companyList.filter.showActive">Show active</button>
                     <button ngbDropdownItem (click)="showStatus('DEACTIVATED')" i18n="@@companyList.filter.showDeactivated">Show deactivated</button>
                     <button ngbDropdownItem (click)="showStatus('REGISTERED')" i18n="@@companyList.filter.showRegistered">Show registered</button>
-                    <div class="line"></div>
-                    <button ngbDropdownItem (click)="myCompaniesOnly(true)" i18n="@@companyList.filter.showMyCompanies">Show my companies</button>
+                    <ng-container *ngIf="isSystemAdmin">
+                      <div class="line"></div>
+                      <button ngbDropdownItem (click)="myCompaniesOnly(true)" i18n="@@companyList.filter.showMyCompanies">Show my companies</button>
+                    </ng-container>
                   </div>
                 </div>
 
@@ -93,13 +98,14 @@
                       (click)="company.status != 'DEACTIVATED' && deactivate(company.id)"
                       class="company-action"
                       [class.enabled-action]="company.status != 'DEACTIVATED'"
-                      [class.disabled-action]="company.status === 'DEACTIVATED'">
+                      [class.disabled-action]="company.status === 'DEACTIVATED' || isRegionalAdmin">
                       Deactivate
                     </a>
                     <a i18n="@@companyList.tableCol.mergTo"
                       (click)="mergeTo(company)"
                       class="company-action"
-                      [class.enabled-action]="true">
+                      [class.enabled-action]="true"
+                      [class.disabled-action]="isRegionalAdmin">
                       Merge to
                     </a>
                     </span>
@@ -127,11 +133,11 @@
 
 
 
-    <div *ngIf="_listErrorStatus$.value === 'UNAUTHORIZED'" i18n="@@companyList.unauthorized">
+    <div *ngIf="listErrorStatus$.value === 'UNAUTHORIZED'" i18n="@@companyList.unauthorized">
       Not authorised to see the list of companies.
     </div>
 
-    <div *ngIf="!!_listErrorStatus$.value && _listErrorStatus$.value != 'UNAUTHORIZED'" i18n="@@companyList.somethingWentWrong">
+    <div *ngIf="!!listErrorStatus$.value && listErrorStatus$.value != 'UNAUTHORIZED'" i18n="@@companyList.somethingWentWrong">
       Something went wrong during login.
     </div>
 

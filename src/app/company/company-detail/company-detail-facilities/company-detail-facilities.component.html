@@ -6,7 +6,9 @@
     <div class="af-form-wrapper">
       <div class="main-inside-top content-element">
         <div class="d-flex justify-content-between content-element--row1">
-          <div class="title-page content-element--title">{{ title }}</div>
+          <div class="title-page content-element--title">
+            {{ title }} (<em>{{ companyName?.name }}</em>)
+          </div>
           <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" i18n="@@productLabelStock.button.newFacility">
             <span>+ Add facility</span>
           </button>

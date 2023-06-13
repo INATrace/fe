@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyProcessingActionsService } from '../../../../shared-services/company-processing-actions.service';
 import { ProcessingActionControllerService } from '../../../../../api/api/processingActionController.service';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
@@ -46,8 +46,14 @@ import TypeEnum = ApiProcessingAction.TypeEnum;
 import ProcessingEvidenceField = ApiProcessingEvidenceField.TypeEnum;
 import StatusEnum = ApiTransaction.StatusEnum;
 import OrderTypeEnum = ApiStockOrder.OrderTypeEnum;
+import { ApiProcessingActionOutputSemiProduct } from '../../../../../api/model/apiProcessingActionOutputSemiProduct';
+import { uuidv4 } from 'src/shared/utils';
 
 type PageMode = 'create' | 'edit';
+
+interface RepackedTargetStockOrder extends ApiStockOrder {
+  repackedOutputsArray: ApiStockOrder[];
+}
 
 @Component({
   selector: 'app-stock-processing-order-details',
@@ -113,9 +119,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   private totalOutQuantityRangeLow: number = null;
   private totalOutQuantityRangeHigh: number = null;
 
-  // Repacked output stock orders
-  repackedOutputStockOrdersArray = new FormArray([]);
-
   // Properties and controls for displaying output final-product and output semi-product
   finalProductOutputFacilitiesCodebook: CompanyFacilitiesForStockUnitProductService;
   currentOutputFinalProduct: ApiFinalProduct;
@@ -136,7 +139,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   // List for holding references to observable subscriptions
   subscriptions: Subscription[] = [];
-  repackedOutQuantitySubscription: Subscription;
 
   constructor(
     private location: Location,
@@ -252,25 +254,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get notAllOutputQuantityIsUsed() {
-
-    if (!this.selectedProcAction?.repackedOutputs) {
-      return false;
-    }
-
-    const enteredOutputQuantity = this.targetStockOrdersArray.at(0).get('totalQuantity').value;
-    if (!enteredOutputQuantity) {
-      return false;
-    }
-
-    let repackedSOQuantity = 0;
-    this.repackedOutputStockOrdersArray.controls.forEach((soGroup: FormGroup) => {
-      repackedSOQuantity += soGroup.get('totalQuantity').value ? Number(soGroup.get('totalQuantity').value) : 0;
-    });
-
-    return Number(enteredOutputQuantity) > repackedSOQuantity;
-  }
-
   get expectedOutputQuantityHelpText() {
 
     if (this.actionType !== 'PROCESSING' || !this.selectedProcAction?.estimatedOutputQuantityPerUnit) {
@@ -347,19 +330,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   get showAddNewOutputButton() {
-    return this.actionType === 'PROCESSING' && !this.selectedProcAction.repackedOutputs;
-  }
-
-  get sacQuantityLabel() {
-
-    let unit = '';
-    if (this.selectedProcAction.outputFinalProduct) {
-      unit = this.selectedProcAction.outputFinalProduct.measurementUnitType.label;
-    } else if (this.selectedProcAction.outputSemiProducts?.length > 0) {
-      unit = this.selectedProcAction.outputSemiProducts[0].measurementUnitType.label;
-    }
-
-    return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.selectedProcAction.maxOutputWeight } ${ unit })`;
+    return this.actionType === 'PROCESSING';
   }
 
   private get companyId(): number {
@@ -389,10 +360,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-
-    if (this.repackedOutQuantitySubscription) {
-      this.repackedOutQuantitySubscription.unsubscribe();
-    }
   }
 
   async processingActionUpdated(procAction: ApiProcessingAction) {
@@ -426,7 +393,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // Add new initial output (if not in edit mode)
       if (!this.editing) {
         await this.addNewOutput();
-        this.registerRepackedOutQuantityVCListener();
       }
 
       // Load and the facilities that are applicable for the processing action
@@ -498,7 +464,20 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
 
     this.submitted = true;
 
-    if (this.procOrderGroup.invalid || this.oneInputStockOrderRequired || this.notAllOutputQuantityIsUsed) {
+    if (this.procOrderGroup.invalid || this.oneInputStockOrderRequired) {
+      return;
+    }
+
+    // Validate the all the entered output quantity is being used
+    let notAllOutputQuantityIsUsed = false;
+    for (const tsoGroup of this.targetStockOrdersArray.controls) {
+      notAllOutputQuantityIsUsed = this.notAllOutputQuantityIsUsed(tsoGroup);
+      if (notAllOutputQuantityIsUsed) {
+        break;
+      }
+    }
+
+    if (notAllOutputQuantityIsUsed) {
       return;
     }
 
@@ -516,11 +495,26 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       // We need to create the actual target Stock orders from the selected input Stock orders
       if (this.actionType === 'TRANSFER') {
         processingOrder.targetStockOrders = this.prepareTransferTargetStockOrders(processingOrder.targetStockOrders[0]);
-      } else if (this.selectedProcAction.repackedOutputs) {
+      }
+      else if (this.selectedProcAction.repackedOutputFinalProducts) {
 
         // If we have processing with repacking, the target Stock order present is just temporary (holds entered info)
-        // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputStockOrdersArray)
-        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0]);
+        // We have to create the actual target Stock orders from the generated repacked output stock orders (repackedOutputsArray)
+        processingOrder.targetStockOrders = this.prepareRepackedTargetStockOrders(processingOrder.targetStockOrders[0] as RepackedTargetStockOrder);
+      } else {
+
+        const processedTargetStockOrders: ApiStockOrder[] = [];
+
+        processingOrder.targetStockOrders.forEach(targetStockOrder => {
+
+          if ((targetStockOrder as RepackedTargetStockOrder).repackedOutputsArray?.length > 0) {
+            processedTargetStockOrders.push(...this.prepareRepackedTargetStockOrders(targetStockOrder as RepackedTargetStockOrder));
+          } else {
+            processedTargetStockOrders.push(targetStockOrder);
+          }
+        });
+
+        processingOrder.targetStockOrders = processedTargetStockOrders;
       }
 
       // Add common shared data (processing evidences, comments, etc.) to all target output Stock order
@@ -806,12 +800,68 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  prefillRepackedOutputSOQuantities() {
+  getTSOGroupRepackedOutputsArray(tsoGroup: AbstractControl): FormArray {
+    return tsoGroup.get('repackedOutputsArray') as FormArray;
+  }
 
-    let availableQua = this.targetStockOrdersArray.at(0).get('totalQuantity').value;
-    const maxAllowedWeight = this.selectedProcAction.maxOutputWeight;
+  getTSOGroupRepackedMaxWeight(tsoGroup: AbstractControl): number | null {
 
-    this.repackedOutputStockOrdersArray.controls.some((outputStockOrderGroup: FormGroup) => {
+    const outputSemiProduct = tsoGroup.get('semiProduct').value as ApiProcessingActionOutputSemiProduct;
+    let maxOutputWeight: number | null = null;
+
+    if (this.selectedProcAction.repackedOutputFinalProducts) {
+      maxOutputWeight = this.selectedProcAction.maxOutputWeight;
+    } else if (outputSemiProduct?.repackedOutput) {
+      maxOutputWeight = outputSemiProduct.maxOutputWeight;
+    }
+
+    return maxOutputWeight;
+  }
+
+  getRepackedSacQuantityLabel(tsoGroup: AbstractControl) {
+
+    const outputFinalProduct = tsoGroup.get('finalProduct').value as ApiFinalProduct;
+    const outputSemiProduct = tsoGroup.get('semiProduct').value as ApiProcessingActionOutputSemiProduct;
+
+    let unit = '';
+    if (outputFinalProduct) {
+      unit = outputFinalProduct.measurementUnitType.label;
+    } else if (outputSemiProduct) {
+      unit = outputSemiProduct.measurementUnitType.label;
+    }
+
+    return $localize`:@@productLabelStockProcessingOrderDetail.itemNetWeightLabel: Quantity (max. ${ this.getTSOGroupRepackedMaxWeight(tsoGroup) } ${ unit })`;
+  }
+
+  notAllOutputQuantityIsUsed(tsoGroup: AbstractControl) {
+
+    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
+
+    if (!repackedOutputsArray && !this.selectedProcAction?.repackedOutputFinalProducts) {
+      return false;
+    }
+
+    const enteredOutputQuantity = tsoGroup.get('totalQuantity').value;
+    if (!enteredOutputQuantity) {
+      return false;
+    }
+
+    let repackedSOQuantity = 0;
+    repackedOutputsArray.controls.forEach((soGroup: FormGroup) => {
+      repackedSOQuantity += soGroup.get('totalQuantity').value ? Number(soGroup.get('totalQuantity').value) : 0;
+    });
+
+    return Number(enteredOutputQuantity) > repackedSOQuantity;
+  }
+
+  prefillRepackedOutputSOQuantities(tsoGroup: AbstractControl) {
+
+    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
+
+    let availableQua = tsoGroup.get('totalQuantity').value;
+    const maxAllowedWeight = this.getTSOGroupRepackedMaxWeight(tsoGroup);
+
+    repackedOutputsArray.controls.some((outputStockOrderGroup: FormGroup) => {
       outputStockOrderGroup.get('totalQuantity').setValue(Number(availableQua > maxAllowedWeight ? maxAllowedWeight : availableQua).toFixed(2));
       availableQua -= maxAllowedWeight;
       if (availableQua <= 0) {
@@ -820,21 +870,23 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  addRepackedOutputStockOrder() {
+  addRepackedOutputStockOrder(tsoGroup: AbstractControl) {
+
+    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
 
     let sacNumber = null;
-    if (this.repackedOutputStockOrdersArray.length > 0) {
-      const lastSacNumber = Number(this.repackedOutputStockOrdersArray.controls[this.repackedOutputStockOrdersArray.length - 1].get('sacNumber').value);
+    if (repackedOutputsArray.length > 0) {
+      const lastSacNumber = Number(repackedOutputsArray.controls[repackedOutputsArray.length - 1].get('sacNumber').value);
       if (lastSacNumber && lastSacNumber > 0) {
         sacNumber = lastSacNumber + 1;
       }
     }
 
-    this.repackedOutputStockOrdersArray.push(this.prepareRepackedSOFormGroup(sacNumber));
+    repackedOutputsArray.push(this.prepareRepackedSOFormGroup(sacNumber, tsoGroup));
   }
 
-  removeRepackedOutputStockOrder(index) {
-    this.repackedOutputStockOrdersArray.removeAt(index);
+  removeRepackedOutputStockOrder(tsoGroup: AbstractControl, index: number) {
+    this.getTSOGroupRepackedOutputsArray(tsoGroup).removeAt(index);
   }
 
   private registerInternalLotSearchValueChangeListener() {
@@ -855,23 +907,6 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
         }
     })
     );
-  }
-
-  private registerRepackedOutQuantityVCListener() {
-
-    if (this.repackedOutQuantitySubscription) {
-      this.repackedOutQuantitySubscription.unsubscribe();
-      this.repackedOutQuantitySubscription = null;
-    }
-
-    // When the total output quantity changes we need to re/generate the output stock order that are
-    // being repacked as part of this processing; This is only applicable when we have Processing action
-    // that has selected the option 'repackedOutputs' and set 'maxOutputWeight'
-    if (this.selectedProcAction.repackedOutputs && this.selectedProcAction.maxOutputWeight > 0) {
-      this.repackedOutQuantitySubscription = this.targetStockOrdersArray.at(0).get('totalQuantity').valueChanges
-        .pipe(debounceTime(300))
-        .subscribe((totalQuantity: number) => this.generateRepackedOutputStockOrders(totalQuantity));
-    }
   }
 
   private async initializeData() {
@@ -1155,49 +1190,77 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     this.procOrderGroup =
       generateFormFromMetadata(ApiProcessingOrder.formMetadata(), processingOrder, ApiProcessingOrderValidationScheme);
 
-    if (processingOrder.processingAction?.repackedOutputs) {
+    // First clear the target stock orders array, we have to prepare and push FormGroups for each Stock order
+    this.targetStockOrdersArray.clear();
 
-      this.targetStockOrdersArray.clear();
-      this.repackedOutputStockOrdersArray.clear();
+    // Iterate over the target stock orders in the Processing order and group stock orders that are repacked (have the same 'repackedOriginStockOrderId')
+    const repackedStockOrdersMap: Map<string, ApiStockOrder[]> = new Map<string, ApiStockOrder[]>();
 
-      const firstTSO = processingOrder.targetStockOrders[0];
-      this.commentsControl.setValue(firstTSO.comments);
+    processingOrder.targetStockOrders.forEach((tso, index) => {
+
+      // Get the comment content from the first target Stock order (all Stock orders have same comments content)
+      if (index === 0) {
+        this.commentsControl.setValue(tso.comments);
+      }
+
+      if (tso.repackedOriginStockOrderId != null) {
+        const repackedTSOs = repackedStockOrdersMap.get(tso.repackedOriginStockOrderId);
+        if (repackedTSOs) {
+          repackedTSOs.push(tso);
+        } else {
+          repackedStockOrdersMap.set(tso.repackedOriginStockOrderId, [tso]);
+        }
+      } else {
+
+        // Push new FormGroup created from the target Stock order data
+        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
+      }
+    });
+
+    // For each repacked grouped of target Stock orders, prepare form group and push them repackedOutputsArray
+    for (const repackedOriginStockOrderId of repackedStockOrdersMap.keys()) {
+
+      const repackedTargetStockOrders = repackedStockOrdersMap.get(repackedOriginStockOrderId);
+
+      // Find the maximum allowed weight for the repacked Stock orders
+      let maxOutputWeight: number | undefined = this.selectedProcAction.maxOutputWeight;
+      if (maxOutputWeight == null) {
+        processingOrder.processingAction.outputSemiProducts.forEach(apiProcActionOSM => {
+          if (apiProcActionOSM.id === repackedTargetStockOrders[0].semiProduct?.id) {
+            maxOutputWeight = apiProcActionOSM.maxOutputWeight;
+            repackedTargetStockOrders[0].semiProduct = apiProcActionOSM;
+          }
+        });
+      }
+
+      // Create target Stock order FormGroup from the first repacked Stock order
+      const targetStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), repackedTargetStockOrders[0], ApiStockOrderValidationScheme);
+
+      // Add repacked outputs FormArray
+      targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
 
       // Set the first Stock order as a target Stock order in the target Stock orders array
-      this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), firstTSO, ApiStockOrderValidationScheme));
+      this.targetStockOrdersArray.push(targetStockOrderGroup);
 
       // Add all the repacked Stock orders as repacked output stock order in the repackedOutputStockOrdersArray
       let totalOutputQuantity = 0;
-      processingOrder.targetStockOrders.forEach(tso => {
+      repackedTargetStockOrders.forEach(tso => {
 
-        const repackedStockOrder = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
-        repackedStockOrder.get('totalQuantity').setValidators([Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]);
-        repackedStockOrder.get('sacNumber').setValidators([Validators.required]);
+        const repackedStockOrderGroup = generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme);
+        repackedStockOrderGroup.get('totalQuantity').setValidators([Validators.required, Validators.max(maxOutputWeight)]);
+        repackedStockOrderGroup.get('sacNumber').setValidators([Validators.required]);
 
-        this.repackedOutputStockOrdersArray.push(repackedStockOrder);
+        (targetStockOrderGroup.get('repackedOutputsArray') as FormArray).push(repackedStockOrderGroup);
         totalOutputQuantity += tso.totalQuantity;
       });
 
       // Set the total output quantity (calculated above) to the target Stock order
-      this.targetStockOrdersArray.at(0).get('totalQuantity').setValue(totalOutputQuantity);
+      targetStockOrderGroup.get('totalQuantity').setValue(totalOutputQuantity);
 
-      const lastSlashIndex = firstTSO.internalLotNumber.lastIndexOf('/');
+      const lastSlashIndex = repackedTargetStockOrders[0].internalLotNumber.lastIndexOf('/');
       if (lastSlashIndex !== -1) {
-        this.targetStockOrdersArray.at(0).get('internalLotNumber').setValue(firstTSO.internalLotNumber.substring(0, lastSlashIndex));
+        targetStockOrderGroup.get('internalLotNumber').setValue(repackedTargetStockOrders[0].internalLotNumber.substring(0, lastSlashIndex));
       }
-
-    } else {
-
-      // Clear the target Stock orders form array and push Stock orders as Form groups with a specific validation scheme
-      this.targetStockOrdersArray.clear();
-      processingOrder.targetStockOrders.forEach((tso, index) => {
-        this.targetStockOrdersArray.push(generateFormFromMetadata(ApiStockOrder.formMetadata(), tso, ApiStockOrderValidationScheme));
-
-        // Get the comment content from the first target Stock order (all Stock orders have same comments content)
-        if (index === 0) {
-          this.commentsControl.setValue(tso.comments);
-        }
-      });
     }
   }
 
@@ -1574,7 +1637,14 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     // Register value change listeners for specific fields
     this.subscriptions.push(tsoGroup.get('totalQuantity').valueChanges
         .pipe(debounceTime(350))
-        .subscribe(() => setTimeout(() => this.targetStockOrderOutputQuantityChange())));
+        .subscribe((totalQuantity: number) => {
+          setTimeout(() => this.targetStockOrderOutputQuantityChange());
+
+          // When the total output quantity changes we need to re/generate the output stock orders that are
+          // being repacked as part of this processing; This is only applicable when we have selected output semi-product
+          // with the option 'repackedOutputs' and set 'maxOutputWeight'
+          this.generateRepackedOutputStockOrders(totalQuantity, tsoGroup);
+        }));
 
     this.subscriptions.push(tsoGroup.get('finalProduct').valueChanges
         .subscribe((value: ApiFinalProduct | null) => this.targetStockOrderFinalProductChange(value, tsoGroup)));
@@ -1594,9 +1664,19 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   private targetStockOrderFinalProductChange(finalProduct: ApiFinalProduct | null, targetStockOrderGroup: FormGroup) {
+
+    // Remove repacked outputs form array
+    targetStockOrderGroup.removeControl('repackedOutputsArray');
+
     if (finalProduct) {
       targetStockOrderGroup.get('measureUnitType').setValue(finalProduct.measurementUnitType);
       targetStockOrderGroup.get('totalQuantity').enable({ emitEvent: false });
+
+      // If selected processing action has set the option to repack output final product, set the form array control
+      if (this.selectedProcAction.repackedOutputFinalProducts) {
+        targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
+      }
+
     } else {
       targetStockOrderGroup.get('measureUnitType').setValue(null);
       targetStockOrderGroup.get('totalQuantity').disable({ emitEvent: false });
@@ -1604,7 +1684,10 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     targetStockOrderGroup.get('totalQuantity').setValue(null);
   }
 
-  private targetStockOrderSemiProductChange(semiProduct: ApiSemiProduct | null, targetStockOrderGroup: FormGroup) {
+  private targetStockOrderSemiProductChange(semiProduct: ApiProcessingActionOutputSemiProduct | null, targetStockOrderGroup: FormGroup) {
+
+    // Remove repacked outputs form array
+    targetStockOrderGroup.removeControl('repackedOutputsArray');
 
     if (semiProduct) {
       targetStockOrderGroup.get('measureUnitType').setValue(semiProduct.measurementUnitType);
@@ -1619,6 +1702,11 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
           });
         }
       });
+
+      // If output semi-product has set option to repack outputs, add the form array control into the target Stock order
+      if (semiProduct.repackedOutput) {
+        targetStockOrderGroup.addControl('repackedOutputsArray', new FormArray([]));
+      }
 
     } else {
       targetStockOrderGroup.get('facility').setValue(null);
@@ -1680,11 +1768,13 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     return targetStockOrders;
   }
 
-  private prepareRepackedTargetStockOrders(sourceStockOrder: ApiStockOrder): ApiStockOrder[] {
+  private prepareRepackedTargetStockOrders(sourceStockOrder: RepackedTargetStockOrder): ApiStockOrder[] {
 
-    return this.repackedOutputStockOrdersArray.controls.map((repackedOutputSOGroup: FormGroup) => {
+    const repackedTSOId = sourceStockOrder.repackedOriginStockOrderId ?? uuidv4();
 
-      const newStockOrder = repackedOutputSOGroup.getRawValue() as ApiStockOrder;
+    return sourceStockOrder.repackedOutputsArray.map(repackedSacUnit => {
+
+      const newStockOrder = {...repackedSacUnit};
       newStockOrder.creatorId = sourceStockOrder.creatorId;
       newStockOrder.internalLotNumber = sourceStockOrder.internalLotNumber;
       newStockOrder.facility = sourceStockOrder.facility;
@@ -1692,6 +1782,9 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
       newStockOrder.finalProduct = sourceStockOrder.finalProduct;
       newStockOrder.productionDate = sourceStockOrder.productionDate;
       newStockOrder.orderType = OrderTypeEnum.PROCESSINGORDER;
+
+      // Set generated ID, so we can group the repacked stock orders when viewing or editing the Processing order
+      newStockOrder.repackedOriginStockOrderId = repackedTSOId;
 
       // Add the injected FormGroup for processing evidence fields
       newStockOrder['requiredProcEvidenceFieldGroup'] = sourceStockOrder['requiredProcEvidenceFieldGroup'];
@@ -1724,28 +1817,28 @@ export class StockProcessingOrderDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private generateRepackedOutputStockOrders(totalOutputQuantity: number): void {
+  private generateRepackedOutputStockOrders(totalOutputQuantity: number, tsoGroup: AbstractControl): void {
+
+    const repackedOutputsArray = this.getTSOGroupRepackedOutputsArray(tsoGroup);
 
     // If we are updating a processing order, do not regenerate the output stock orders
-    if (this.editing) {
+    if (this.editing || !repackedOutputsArray) {
       return;
     }
 
-    const maxOutputWeight = this.selectedProcAction.maxOutputWeight;
+    repackedOutputsArray.clear();
 
-    this.repackedOutputStockOrdersArray.clear();
-
-    const outputStockOrdersSize = Math.ceil(totalOutputQuantity / maxOutputWeight);
+    const outputStockOrdersSize = Math.ceil(totalOutputQuantity / this.getTSOGroupRepackedMaxWeight(tsoGroup));
     for (let i = 0; i < outputStockOrdersSize; i++) {
-      this.repackedOutputStockOrdersArray.push(this.prepareRepackedSOFormGroup(i + 1));
+      repackedOutputsArray.push(this.prepareRepackedSOFormGroup(i + 1, tsoGroup));
     }
   }
 
-  private prepareRepackedSOFormGroup(sacNumber: number): FormGroup {
+  private prepareRepackedSOFormGroup(sacNumber: number, tsoGroup: AbstractControl): FormGroup {
 
     return new FormGroup({
       id: new FormControl(null),
-      totalQuantity: new FormControl(null, [Validators.required, Validators.max(this.selectedProcAction.maxOutputWeight)]),
+      totalQuantity: new FormControl(null, [Validators.required, Validators.max(this.getTSOGroupRepackedMaxWeight(tsoGroup))]),
       sacNumber: new FormControl(sacNumber, [Validators.required])
     });
   }

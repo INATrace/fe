@@ -10,9 +10,7 @@ import { take } from 'rxjs/operators';
 import { CompanyControllerService } from 'src/api/api/companyController.service';
 import { LanguageCodeHelper } from '../../language-code-helper';
 import { ApiUser } from 'src/api/model/apiUser';
-import { EnumSifrant } from '../../shared-services/enum-sifrant';
-import { ApiUserRole } from 'src/api/model/apiUserRole';
-import {BeycoTokenService} from '../../shared-services/beyco-token.service';
+import { BeycoTokenService } from '../../shared-services/beyco-token.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -34,7 +32,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   myCompanies = null;
 
-  roleCodebook = EnumSifrant.fromObject(this.role);
+  loadingUserCompanies = false;
 
   constructor(
     private location: Location,
@@ -50,11 +48,12 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    this.title = $localize`:@@userDetail.title.edit:Edit user profile`;
     this.userId = +this.route.snapshot.paramMap.get('id');
     if (this.mode === 'userProfileView') {
+      this.title = $localize`:@@userDetail.title.edit:Edit My profile`;
       this.getUserProfile();
     } else {
+      this.title = $localize`:@@userDetail.adminView.title.edit:Edit user profile`;
       this.getUserProfileAsAdmin();
     }
   }
@@ -108,18 +107,26 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  async prepareMyCompanies(data) {
+  private async prepareMyCompanies(data) {
+
     const tmp = [];
     if (!data) { return; }
-    for (const id of data.companyIds) {
-      const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data) {
-        tmp.push({
-          company_id: id,
-          company_name: res.data.name
-        });
+
+    this.loadingUserCompanies = true;
+    try {
+      for (const id of data.companyIds) {
+        const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
+        if (res && res.status === 'OK' && res.data) {
+          tmp.push({
+            companyId: id,
+            companyName: res.data.name
+          });
+        }
       }
+    } finally {
+      this.loadingUserCompanies = false;
     }
+
     this.myCompanies = tmp;
   }
 
@@ -127,12 +134,12 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     if (this.mode === 'userProfileView') {
       const result = await this.globalEventsManager.openMessageModal({
         type: 'warning',
-        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.company_name}?`,
+        message: $localize`:@@userDetail.warning.message:Are you sure you want to change your selected company to  ${company.companyName}?`,
         options: { centered: true },
         dismissable: false
       });
       if (result !== 'ok') { return; }
-      const res = await this.companyController.getCompanyUsingGET(company.company_id).pipe(take(1)).toPromise();
+      const res = await this.companyController.getCompanyUsingGET(company.companyId).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         localStorage.setItem('selectedUserCompany', String(res.data.id));
         this.globalEventsManager.selectedUserCompany(res.data.name);
@@ -161,7 +168,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  async saveUserProfile(goBack = true) {
+  private async saveUserProfile(goBack = true) {
     this.submitted = true;
     if (!this.userProfileForm.invalid) {
       try {
@@ -176,25 +183,19 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
           if (goBack) { this.goBack(); }
         }
       } catch (e) {
-
       } finally {
         this.globalEventsManager.showLoading(false);
       }
     }
   }
 
-  async saveAsAdmin(goBack = true) {
+  private async saveAsAdmin(goBack = true) {
+
     this.submitted = true;
     if (!this.userProfileForm.invalid) {
 
       try {
         this.globalEventsManager.showLoading(true);
-
-        await this.userController.activateUserUsingPOST('SET_USER_ROLE', {
-          id: this.userId,
-          role: this.userProfileForm.get('role').value as ApiUserRole.RoleEnum
-        } as ApiUserRole).pipe(take(1)).toPromise();
-
         const res = await this.userController.adminUpdateProfileUsingPUT({
           id: this.userId,
           name: this.userProfileForm.get('name').value,
@@ -206,7 +207,6 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
           if (goBack) { this.goBack(); }
         }
       } catch (e) {
-
       } finally {
         this.globalEventsManager.showLoading(false);
       }
@@ -244,6 +244,8 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
       this.globalEventsManager.showLoading(true);
       const res = await this.userController.activateUserUsingPOST('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
       if (res.status !== 'OK') { throw Error(); }
+
+      this.unconfirmedUser = false;
     } catch (e) {
       this.globalEventsManager.push({
         action: 'error',
@@ -269,14 +271,4 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     }
   }
 
-  get role() {
-    const obj = {};
-    obj['USER'] = $localize`:@@userDetail.role.user:User`;
-    obj['MANAGER'] = $localize`:@@userDetail.role.manager:Manager`;
-    obj['ACCOUNTANT'] = $localize`:@@userDetail.role.accountant:Accountant`;
-    obj['ADMIN'] = $localize`:@@userDetail.role.admin:Admin`;
-    return obj;
-  }
-
 }
-

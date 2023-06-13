@@ -9,19 +9,12 @@ import { NgbModalImproved } from '../../core/ngb-modal-improved/ngb-modal-improv
 import { environment } from 'src/environments/environment';
 import { FacilityTypeControllerService } from '../../../api/api/facilityTypeController.service';
 import { MeasureUnitTypeControllerService } from '../../../api/api/measureUnitTypeController.service';
-import { ActionTypeControllerService } from '../../../api/api/actionTypeController.service';
 import { ProcessingEvidenceTypeControllerService } from '../../../api/api/processingEvidenceTypeController.service';
-import { ApiPaginatedResponseApiFacilityType } from '../../../api/model/apiPaginatedResponseApiFacilityType';
-import { ApiPaginatedResponseApiMeasureUnitType } from '../../../api/model/apiPaginatedResponseApiMeasureUnitType';
-import { ApiPaginatedResponseApiActionType } from '../../../api/model/apiPaginatedResponseApiActionType';
-import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
 import { SortOption } from '../../shared/result-sorter/result-sorter-types';
 import { SemiProductControllerService } from '../../../api/api/semiProductController.service';
-import { ApiPaginatedResponseApiSemiProduct } from '../../../api/model/apiPaginatedResponseApiSemiProduct';
 import { ProcessingEvidenceFieldControllerService } from '../../../api/api/processingEvidenceFieldController.service';
-import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
-import { ApiPaginatedResponseApiProductType } from '../../../api/model/apiPaginatedResponseApiProductType';
 import { ProductTypeControllerService } from '../../../api/api/productTypeController.service';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-type-list',
@@ -33,14 +26,14 @@ export class TypeListComponent implements OnInit, OnChanges {
   constructor(
     private facilityTypeService: FacilityTypeControllerService,
     private measureUnitTypeService: MeasureUnitTypeControllerService,
-    private actionTypeService: ActionTypeControllerService,
     private processingEvidenceTypeService: ProcessingEvidenceTypeControllerService,
     private processingEvidenceFieldService: ProcessingEvidenceFieldControllerService,
     private semiProductsService: SemiProductControllerService,
     private productTypesService: ProductTypeControllerService,
     private route: ActivatedRoute,
     private modalService: NgbModalImproved,
-    protected globalEventsManager: GlobalEventManagerService
+    protected globalEventsManager: GlobalEventManagerService,
+    private authService: AuthService
   ) { }
 
   @Input()
@@ -238,6 +231,10 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
   ];
 
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
+
   ngOnInit(): void {
     this.setAll().then();
     if (this.type === 'facility-types') { this.title = $localize`:@@settingsTypes.typeList.title.facility:Facility types`; }
@@ -280,9 +277,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'measurement-unit-types') {
       return this.measureUnitTypeService.getMeasureUnitTypeListUsingGETByMap({ ...params });
     }
-    if (this.type === 'action-types') {
-      return this.actionTypeService.getActionTypeListUsingGETByMap({ ...params });
-    }
     if (this.type === 'processing-evidence-types') {
       return this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGETByMap({ ...params });
     }
@@ -295,16 +289,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     if (this.type === 'product-types') {
       return this.productTypesService.getProductTypesUsingGETByMap({ ...params });
     }
-  }
-
-  paginatedType() {
-    if (this.type === 'facility-types') { return ApiPaginatedResponseApiFacilityType; }
-    if (this.type === 'measurement-unit-types') { return ApiPaginatedResponseApiMeasureUnitType; }
-    if (this.type === 'action-types') { return ApiPaginatedResponseApiActionType; }
-    if (this.type === 'processing-evidence-types') { return ApiPaginatedResponseApiProcessingEvidenceType; }
-    if (this.type === 'processing-evidence-fields') { return ApiPaginatedResponseApiProcessingEvidenceField; }
-    if (this.type === 'semi-products') { return ApiPaginatedResponseApiSemiProduct; }
-    if (this.type === 'product-types') { return ApiPaginatedResponseApiProductType; }
   }
 
   edit(type) {
@@ -371,12 +355,6 @@ export class TypeListComponent implements OnInit, OnChanges {
           this.reloadPage();
         }
       }
-      if (this.type === 'action-types') {
-        const res = await this.actionTypeService.deleteActionTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
-        if (res && res.status === 'OK') {
-          this.reloadPage();
-        }
-      }
       if (this.type === 'processing-evidence-types') {
         const res = await this.processingEvidenceTypeService.deleteProcessingEvidenceTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
@@ -416,13 +394,6 @@ export class TypeListComponent implements OnInit, OnChanges {
     }
     if (this.type === 'measurement-unit-types') {
       const res = await this.measureUnitTypeService.getMeasureUnitTypeListUsingGET().pipe(take(1)).toPromise();
-      if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
-        this.all = res.data.count;
-        this.countAll.emit(res.data.count);
-      }
-    }
-    if (this.type === 'action-types') {
-      const res = await this.actionTypeService.getActionTypeListUsingGET().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);

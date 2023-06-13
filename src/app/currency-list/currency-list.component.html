@@ -40,9 +40,8 @@
                                         <span>
                                             <a i18n="@@currencyList.tableCol.action.disable"
                                                (click)="disableCurrency(enabledCurrency.id)"
-                                               class="value-chain-action enabled-action">
-                                                Disable
-                                            </a>
+                                               class="value-chain-action enabled-action"
+                                               [class.disabled-action]="isRegionalAdmin">Disable</a>
                                         </span>
                                     </td>
                                 </tr>

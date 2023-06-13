@@ -75,19 +75,19 @@
 
             <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.openBalanceOnly.filter">Open balance
               <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs"></fa-icon>
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs"></fa-icon>
               </div>
             </div>
 
             <div *ngIf="purchaseOrderOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.purchaseOrderOnly.filter">Purchase order only
               <div style="margin-left: 0.5rem;" (click)="setPurchaseOrdersOnly(false)">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs"></fa-icon>
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs"></fa-icon>
               </div>
             </div>
 
             <div *ngIf="availableOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.availableOnly.filter">Available only
               <div style="margin-left: 0.5rem;" (click)="setAvailableOnly(false)">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs"></fa-icon>
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs"></fa-icon>
               </div>
             </div>
 

@@ -55,7 +55,7 @@
 
             <div *ngIf="openBalanceOnly" class="d-flex filter-text" style="margin-left: 0.75rem" i18n="@@productLabelStock.filter.openBalanceOnly.filter">Open balance
               <div style="margin-left: 0.5rem;" (click)="setOpenBalanceOnly(false)">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                 </fa-icon>
               </div>
             </div>
@@ -65,14 +65,14 @@
                  style="margin-left: 0.75rem"
                  i18n="@@productLabelStock.filter.wayOfPayment.wayOfPayment">{{ filterWayOfPayment.value | formatWayOfPayment }}
               <div (click)="setWayOfPayment('')" style="margin-left: 0.5rem;">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                 </fa-icon>
               </div>
             </div>
 
             <div *ngIf="filterWomenOnly.value != null" class="d-flex filter-text" style="margin-left: 1rem"> {{ womenOnlyStatusValue }}
               <div (click)="setWomenOnly(null)" style="margin-left: 0.5rem;">
-                <fa-icon style="cursor: pointer;" [icon]="faTimes" size="xs">
+                <fa-icon class="cursor-pointer" [icon]="faTimes" size="xs">
                 </fa-icon>
               </div>
             </div>

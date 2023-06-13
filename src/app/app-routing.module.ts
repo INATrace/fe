@@ -20,7 +20,7 @@ import { ResetPasswordRequestComponent } from './user/reset-password-request/res
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 import { SettingsAdditionalComponent } from './settings/settings-additional/settings-additional.component';
 import { SettingsTypesComponent } from './settings/settings-types/settings-types.component';
-import { AuthGuardService } from './shared-services/auth-guard.service';
+import { SystemOrRegionalAdminGuardService } from './shared-services/system-or-regional-admin-guard.service';
 import { DeactivateGuardService } from './shared-services/deactivate-guard.service';
 import { VersionComponent } from './shared/version/version.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
@@ -112,7 +112,7 @@ const routes: Routes = [
     path: 'settings/additional',
     component: SettingsAdditionalComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -122,7 +122,7 @@ const routes: Routes = [
     path: 'settings/types',
     component: SettingsTypesComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -132,7 +132,7 @@ const routes: Routes = [
     path: 'value-chains',
     component: ValueChainListComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     data: {
       drobtinice: null
     }
@@ -141,7 +141,7 @@ const routes: Routes = [
     path: 'value-chains/new',
     component: ValueChainDetailComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -155,7 +155,7 @@ const routes: Routes = [
     path: 'value-chains/:id/value-chain',
     component: ValueChainDetailComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -165,7 +165,7 @@ const routes: Routes = [
     path: 'currencies',
     component: CurrencyListComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     data: {
       drobtinice: null
     }
@@ -174,7 +174,7 @@ const routes: Routes = [
     path: 'users',
     component: UserListComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     data: {
       drobtinice: null
     }
@@ -183,7 +183,7 @@ const routes: Routes = [
     path: 'users/:id',
     component: UserDetailComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     canDeactivate: [DeactivateGuardService],
     data: {
       drobtinice: null
@@ -193,7 +193,7 @@ const routes: Routes = [
     path: 'companies',
     component: CompanyListComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuardService],
+    canActivate: [SystemOrRegionalAdminGuardService],
     data: {
       drobtinice: null
     }

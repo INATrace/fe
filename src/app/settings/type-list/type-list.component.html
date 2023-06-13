@@ -28,16 +28,16 @@
             <td [attr.data-label]="sortOptionsSemiProducts[4].name"><span>{{ getBooleanSign(type.skuendCustomer) }}</span></td>
             <td [attr.data-label]="sortOptionsSemiProducts[5].name">
               <span>
-                <a i18n="@@settingsTypes.tableCol.edit"
-                   (click)="edit(type)"
+                <a (click)="edit(type)"
                    class="company-action"
                    [class.enabled-action]="true">
-                  Edit
+                  <span *ngIf="isRegionalAdmin; else editMode" i18n="@@settingsTypes.tableCol.view">View</span>
                 </a>
                 <a i18n="@@settingsTypes.tableCol.delete"
                    (click)="delete(type)"
                    class="company-action"
-                   [class.enabled-action]="true">
+                   [class.enabled-action]="!isRegionalAdmin"
+                   [class.disabled-action]="isRegionalAdmin">
                   Delete
                 </a>
               </span>
@@ -55,16 +55,16 @@
             <td [attr.data-label]="sortOptionsFPQ[5].name" class="align-center"><span>{{ getBooleanSign(type.quality) }}</span></td>
             <td [attr.data-label]="sortOptionsFPQ[6].name">
               <span>
-              <a i18n="@@settingsTypes.tableCol.edit"
-                (click)="edit(type)"
-                class="company-action"
-                [class.enabled-action]="true">
-                Edit
+              <a (click)="edit(type)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                <span *ngIf="isRegionalAdmin; else editMode" i18n="@@settingsTypes.tableCol.view">View</span>
               </a>
               <a i18n="@@settingsTypes.tableCol.delete"
                 (click)="delete(type)"
                 class="company-action"
-                [class.enabled-action]="true">
+                [class.enabled-action]="!isRegionalAdmin"
+                 [class.disabled-action]="isRegionalAdmin">
                 Delete
               </a>
             </span>
@@ -79,16 +79,16 @@
             <td [attr.data-label]="sortOptionsEvidenceFields[2].name"><span>{{ type.type | formatProcessingEvidenceFieldType }}</span></td>
             <td [attr.data-label]="sortOptionsEvidenceFields[3].name">
               <span>
-              <a i18n="@@settingsTypes.tableCol.edit"
-                 (click)="edit(type)"
+              <a (click)="edit(type)"
                  class="company-action"
                  [class.enabled-action]="true">
-                Edit
+                <span *ngIf="isRegionalAdmin; else editMode" i18n="@@settingsTypes.tableCol.view">View</span>
               </a>
               <a i18n="@@settingsTypes.tableCol.delete"
                  (click)="delete(type)"
                  class="company-action"
-                 [class.enabled-action]="true">
+                 [class.enabled-action]="!isRegionalAdmin"
+                 [class.disabled-action]="isRegionalAdmin">
                 Delete
               </a>
             </span>
@@ -103,11 +103,10 @@
             <td [attr.data-label]="sortOptionsProductTypes[2].name"><span>{{ type.description }}</span></td>
             <td [attr.data-label]="sortOptionsProductTypes[3].name">
               <span>
-                <a i18n="@@settingsTypes.tableCol.edit"
-                   (click)="edit(type)"
+                <a (click)="edit(type)"
                    class="company-action"
                    [class.enabled-action]="true">
-                  Edit
+                  <span *ngIf="isRegionalAdmin; else editMode" i18n="@@settingsTypes.tableCol.view">View</span>
                 </a>
               </span>
             </td>
@@ -120,16 +119,16 @@
             <td [attr.data-label]="sortOptions[1].name"><span>{{ type | translateCodebook: 'label' }}</span></td>
             <td [attr.data-label]="sortOptions[2].name">
               <span>
-              <a i18n="@@settingsTypes.tableCol.edit"
-                (click)="edit(type)"
-                class="company-action"
-                [class.enabled-action]="true">
-                Edit
+              <a (click)="edit(type)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                <span *ngIf="isRegionalAdmin; else editMode" i18n="@@settingsTypes.tableCol.view">View</span>
               </a>
               <a i18n="@@settingsTypes.tableCol.delete"
-                (click)="delete(type)"
-                class="company-action"
-                [class.enabled-action]="true">
+                 (click)="delete(type)"
+                 class="company-action"
+                 [class.enabled-action]="!isRegionalAdmin"
+                 [class.disabled-action]="isRegionalAdmin">
                 Delete
               </a>
             </span>
@@ -153,4 +152,7 @@
       [rotate]="true">
     </ngb-pagination>
   </div>
+  <ng-template #editMode>
+    <span i18n="@@settingsTypes.tableCol.edit">Edit</span>
+  </ng-template>
 </ng-container>

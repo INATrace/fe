@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { take } from 'rxjs/operators';
 import { ApiUserGet } from '../../api/model/apiUserGet';
+import RoleEnum = ApiUserGet.RoleEnum;
 
 /**
  * Guard that checks if the current user is either Company admin or a System admin.
@@ -22,8 +23,15 @@ export class AdminOrCompanyAdminGuardService implements CanActivate {
         const companyId = Number(route.params.id);
 
         const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
-        if (userProfile && (userProfile.role === ApiUserGet.RoleEnum.ADMIN || userProfile.companyIdsAdmin.includes(companyId))) {
-            return true;
+
+        if (userProfile) {
+            if (userProfile.role === RoleEnum.SYSTEMADMIN) {
+                return true;
+            } else if (userProfile.role === RoleEnum.REGIONALADMIN && userProfile.companyIds.includes(companyId)) {
+                return true;
+            } else if (userProfile.companyIdsAdmin.includes(companyId)) {
+                return true;
+            }
         }
 
         return this.router.createUrlTree(['/', 'home']);

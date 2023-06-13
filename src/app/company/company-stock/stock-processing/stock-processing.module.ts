@@ -8,7 +8,6 @@ import { LayoutModule } from '../../../layout/layout.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
-import { StockProcessingOrderDetailsOldComponent } from './stock-processing-order-details-old/stock-processing-order-details-old.component';
 import { StockProcessingFacilityListComponent } from './stock-processing-facility-list/stock-processing-facility-list.component';
 import { FacilityCardComponent } from './stock-processing-facility-list/facility-card/facility-card.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +19,6 @@ import { StockProcessingOrderDetailsComponent } from './stock-processing-order-d
 @NgModule({
   declarations: [
     StockProcessingTabComponent,
-    StockProcessingOrderDetailsOldComponent,
     StockProcessingOrderFieldsComponent,
     StockProcessingFacilityListComponent,
     FacilityCardComponent,

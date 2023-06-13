@@ -60,7 +60,7 @@ export class BatchesListComponent implements OnInit {
   )
 
   get isAdmin() {
-    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'ADMIN'
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'SYSTEM_ADMIN';
   }
 
   ngOnInit(): void {

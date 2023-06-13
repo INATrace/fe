@@ -21,6 +21,7 @@
 import { ApiCompanyBase } from './apiCompanyBase';
 import { ApiFacility } from './apiFacility';
 import { ApiFinalProduct } from './apiFinalProduct';
+import { ApiProcessingActionOutputSemiProduct } from './apiProcessingActionOutputSemiProduct';
 import { ApiProcessingActionTranslation } from './apiProcessingActionTranslation';
 import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 import { ApiProcessingEvidenceType } from './apiProcessingEvidenceType';
@@ -54,7 +55,7 @@ export interface ApiProcessingAction {
      */
     language?: ApiProcessingAction.LanguageEnum;
     /**
-     * Processing action maximum output weight
+     * Processing action maximum output weight when repacked outputs for final product is set to 'true'
      */
     maxOutputWeight?: number;
     /**
@@ -65,7 +66,7 @@ export interface ApiProcessingAction {
     /**
      * List of supported output semi-products
      */
-    outputSemiProducts?: Array<ApiSemiProduct>;
+    outputSemiProducts?: Array<ApiProcessingActionOutputSemiProduct>;
     /**
      * Processing action prefix
      */
@@ -84,9 +85,9 @@ export interface ApiProcessingAction {
     publicTimelineLocation?: string;
     qrCodeForFinalProduct?: ApiFinalProduct;
     /**
-     * Processing action repacked outputs
+     * Processing action repacked outputs when using output final product
      */
-    repackedOutputs?: boolean;
+    repackedOutputFinalProducts?: boolean;
     /**
      * Processing action required document types
      */
@@ -149,7 +150,7 @@ export namespace ApiProcessingAction {
          */
         language = 'language',
         /**
-         * Processing action maximum output weight
+         * Processing action maximum output weight when repacked outputs for final product is set to 'true'
          */
         maxOutputWeight = 'maxOutputWeight',
         /**
@@ -179,9 +180,9 @@ export namespace ApiProcessingAction {
         publicTimelineLocation = 'publicTimelineLocation',
         qrCodeForFinalProduct = 'qrCodeForFinalProduct',
         /**
-         * Processing action repacked outputs
+         * Processing action repacked outputs when using output final product
          */
-        repackedOutputs = 'repackedOutputs',
+        repackedOutputFinalProducts = 'repackedOutputFinalProducts',
         /**
          * Processing action required document types
          */
@@ -377,16 +378,16 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiFinalProduct'
                 },
                 {
-                    metadata: ApiSemiProduct.formMetadata,
+                    metadata: ApiProcessingActionOutputSemiProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'outputSemiProducts',
                     classname: 'ApiProcessingAction',
-                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    dataType: 'Array&lt;ApiProcessingActionOutputSemiProduct&gt;',
                     isPrimitiveType: false,
                     isListContainer: true,
-                    complexType: 'ApiSemiProduct'
+                    complexType: 'ApiProcessingActionOutputSemiProduct'
                 },
                 {
                     isReadOnly: false,
@@ -449,7 +450,7 @@ export namespace ApiProcessingAction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'repackedOutputs',
+                    name: 'repackedOutputFinalProducts',
                     classname: 'ApiProcessingAction',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -575,7 +576,7 @@ export namespace ApiProcessingAction {
                 ],
                 qrCodeForFinalProduct: [
                 ],
-                repackedOutputs: [
+                repackedOutputFinalProducts: [
                 ],
                 requiredDocumentTypes: [
                 ],
@@ -649,7 +650,7 @@ export namespace ApiProcessingAction {
   //               qrCodeForFinalProduct: {
   //                   validators: []
   //               },
-  //               repackedOutputs: {
+  //               repackedOutputFinalProducts: {
   //                   validators: []
   //               },
   //               requiredDocumentTypes: {

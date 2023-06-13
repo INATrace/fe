@@ -8,6 +8,7 @@ import { GlobalEventManagerService } from '../../core/global-event-manager.servi
 import { ApiPaginatedResponseApiValueChain } from '../../../api/model/apiPaginatedResponseApiValueChain';
 import { Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-value-chain-list',
@@ -101,8 +102,13 @@ export class ValueChainListComponent implements OnInit {
   constructor(
     private router: Router,
     private valueChainService: ValueChainControllerService,
-    protected globalEventsManager: GlobalEventManagerService
+    protected globalEventsManager: GlobalEventManagerService,
+    private authService: AuthService
   ) { }
+
+  get isRegionalAdmin(): boolean {
+    return this.authService.currentUserProfile && this.authService.currentUserProfile.role === 'REGIONAL_ADMIN';
+  }
 
   ngOnInit(): void {
   }

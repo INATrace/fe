@@ -15,7 +15,9 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <div class="title-page content-element--title">{{ title }}</div>
+          <div class="title-page content-element--title">
+            {{ title }}<ng-container *ngIf="mode === 'update'"> (<em>{{ companyDetailForm.get('name').value }}</em>)</ng-container>
+          </div>
         </div>
       </div>
 
@@ -355,7 +357,7 @@
             <div *ngFor="let valueChain of this.valueChains; index as idx">
               <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                 <div>{{ valueChain.name }}</div>
-                <div (click)="deleteValueChain(idx)" style="cursor: pointer;">
+                <div *ngIf="isCompanyAdmin" (click)="deleteValueChain(idx)" class="cursor-pointer">
                   <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
                 </div>
               </div>

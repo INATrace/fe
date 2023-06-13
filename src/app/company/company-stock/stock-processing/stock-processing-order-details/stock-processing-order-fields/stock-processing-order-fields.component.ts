@@ -45,19 +45,8 @@ export class StockProcessingOrderFieldsComponent implements OnInit {
     return this.formGroupLocal;
   }
 
-  get isOnCorrectSide() {
-    // TODO: correct this
-    // if (this.side === 'right') {
-    //   return !(this.isQuote && this.settings.leftOnQuote);
-    // }
-    // if (this.side === 'left') {
-    //   return this.isQuote && this.settings.leftOnQuote;
-    // }
-    return true;
-  }
-
   get showRow() {
-    return this.fieldInfo && this.fieldInfo.fieldName && this.formGroup && this.isOnCorrectSide;
+    return this.fieldInfo && this.fieldInfo.fieldName && this.formGroup;
   }
 
   constructor() {}

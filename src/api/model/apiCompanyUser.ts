@@ -102,8 +102,8 @@ export namespace ApiCompanyUser {
      * All possible values of companyRole.
      */
     export enum CompanyRoleEnum {
-        USER = 'USER',
-        ADMIN = 'ADMIN',
+        COMPANYUSER = 'COMPANY_USER',
+        COMPANYADMIN = 'COMPANY_ADMIN',
         MANAGER = 'MANAGER',
         ACCOUNTANT = 'ACCOUNTANT'
     }
@@ -123,9 +123,8 @@ export namespace ApiCompanyUser {
      */
     export enum RoleEnum {
         USER = 'USER',
-        ADMIN = 'ADMIN',
-        MANAGER = 'MANAGER',
-        ACCOUNTANT = 'ACCOUNTANT'
+        SYSTEMADMIN = 'SYSTEM_ADMIN',
+        REGIONALADMIN = 'REGIONAL_ADMIN'
     }
 
     /**

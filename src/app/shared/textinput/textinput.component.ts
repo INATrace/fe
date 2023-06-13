@@ -4,7 +4,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-improved.service';
 import { TextinputModalComponent } from '../textinput-modal/textinput-modal.component';
 import { BehaviorSubject, combineLatest, Subscription, Subject, merge, of, Observable } from 'rxjs';
-// import { JezikTekst } from 'src/api/model/jezikTekst';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { map, shareReplay, startWith, distinctUntilChanged, filter, debounceTime, delay } from 'rxjs/operators';
 import { CodebookHelperService } from 'src/interfaces/CodebookHelperService';
@@ -31,29 +30,29 @@ export class TextinputComponent implements OnInit {
   @Input()
   landingPageStyle = false;
 
-  _form = null
+  _form = null;
   @Input() set form(value: FormControl) {
-    this._form = value
+    this._form = value;
     if (value) {
-      this.resubscribe()
+      this.resubscribe();
     }
   }
 
   get form(): FormControl {
-    return this._form
+    return this._form;
   }
 
   @Input()
   value: any;
 
   @Input()
-  valueTextInput: boolean = false
+  valueTextInput = false;
 
   @Input()
-  editableLanguages = ['sl']
+  editableLanguages = ['sl'];
 
   @Input()
-  showTranslatedOnly = true
+  showTranslatedOnly = true;
 
   @Input()
   codebookService?: CodebookHelperService<any>;
@@ -62,40 +61,37 @@ export class TextinputComponent implements OnInit {
   organizationId?: string = null;
 
   @Input()
-  autocompleteSearchAdditionalParams?: any
+  autocompleteSearchAdditionalParams?: any;
 
   @Input()
   autocompleteHeaderText = null
 
   @Input()
-  autocomplete = 'off'
+  autocomplete = 'off';
   @Input()
-  type = "text"
+  type = 'text';
   @Input()
-  step
+  step;
   @Input()
-  min
+  min;
 
   @Input()
   hideLabel = false;
 
   @Input()
-  placeholder = ''
+  placeholder = '';
 
   @Input()
-  resultFormatter = (value: any) => value;
+  resultFormatter = (value: any) => value
 
   @Input()
-  inputFormatter = (value: any) => value;
+  inputFormatter = (value: any) => value
 
   @Input()
-  showInputField: boolean = true;
+  showInputField = true;
 
   @Input()
   helpText: string = null;
-
-  @Input()
-  noBottomMargin = false
 
   @Input()
   prefix: string | null = null;
@@ -103,10 +99,12 @@ export class TextinputComponent implements OnInit {
   @Input()
   suffix: string | null = null;
 
+  @Input()
+  smallInput = false;
+
   @Output() onKeyUpEnter = new EventEmitter<any>();
   @Output() onFocus = new EventEmitter<any>();
   @Output() onBlur = new EventEmitter<any>();
-
 
   autocompleteSearchAdditionalParams$ = new BehaviorSubject<any>(null)
 

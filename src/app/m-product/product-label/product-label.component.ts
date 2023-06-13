@@ -25,7 +25,6 @@ import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityF
 import { ApiSustainability } from 'src/api/model/apiSustainability';
 import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
-import { UsersService } from 'src/app/shared-services/users.service';
 import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
 import { TextinputComponent } from 'src/app/shared/textinput/textinput.component';
 import { AuthService } from 'src/app/core/auth.service';
@@ -60,6 +59,7 @@ import { ApiBusinessToCustomerSettings } from '../../../api/model/apiBusinessToC
 import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLabelCompanyDocument';
 import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 import { maxActiveArrayControls } from '../../../shared/validation';
+import { ApiUserGet } from '../../../api/model/apiUserGet';
 
 @Component({
   selector: 'app-product-label',
@@ -108,7 +108,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     private location: Location,
     private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
-    public userSifrant: UsersService,
     public companyController: CompanyControllerService,
     public valueChainController: ValueChainControllerService,
     private modalService: NgbModalImproved,
@@ -249,7 +248,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   currentLabel: ApiProductLabel = null;
 
-  userProfile = null;
+  userProfile: ApiUserGet = null;
   showLabelInfoLink = false;
   reloadProductNoLabel = true;
 
@@ -695,7 +694,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.userProfile = this.authService.currentUserProfile;
     const subUserProfile = this.authService.userProfile$.subscribe(val => {
       this.userProfile = val;
-      if (this.userProfile) { this.showLabelInfoLink = 'ADMIN' === this.userProfile.role; }
+      if (this.userProfile) { this.showLabelInfoLink = 'SYSTEM_ADMIN' === this.userProfile.role; }
     });
     this.unsubscribeList.add(subUserProfile);
     this.initializeLabelsHelperLink().then();
@@ -896,10 +895,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     } finally {
       this.globalEventsManager.showLoading(false);
     }
-  }
-
-  userInputFormatter = (value: any) => {
-    return this.userSifrant.textRepresentation(value);
   }
 
   goBack(): void {

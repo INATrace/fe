@@ -13,7 +13,8 @@
   </label>
   <div *ngIf="showInputField && !textarea" class="input-wrapper"
        (click)="focusOnInput()"
-       [class.prefix-or-suffix-input-wrapper]="prefix != null || suffix != null">
+       [class.prefix-or-suffix-input-wrapper]="prefix != null || suffix != null"
+       [class.small-input]="smallInput">
     <div class="prefix" *ngIf="prefix">{{ prefix }}</div>
       <input
         #inputfield

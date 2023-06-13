@@ -70,8 +70,8 @@ export namespace ApiCompanyActionRequest {
      * All possible values of companyUserRole.
      */
     export enum CompanyUserRoleEnum {
-        USER = 'USER',
-        ADMIN = 'ADMIN',
+        COMPANYUSER = 'COMPANY_USER',
+        COMPANYADMIN = 'COMPANY_ADMIN',
         MANAGER = 'MANAGER',
         ACCOUNTANT = 'ACCOUNTANT'
     }
