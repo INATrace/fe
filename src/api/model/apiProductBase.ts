@@ -43,10 +43,6 @@ export interface ApiProductBase {
      * product name
      */
     name?: string;
-    /**
-     * nutritional Value - list the nutritional value of the product
-     */
-    nutritionalValue?: string;
     origin?: ApiProductOrigin;
 }
 
@@ -78,10 +74,6 @@ export namespace ApiProductBase {
          * product name
          */
         name = 'name',
-        /**
-         * nutritional Value - list the nutritional value of the product
-         */
-        nutritionalValue = 'nutritionalValue',
         origin = 'origin'
     }
 
@@ -147,17 +139,6 @@ export namespace ApiProductBase {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'nutritionalValue',
-                    classname: 'ApiProductBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiProductOrigin.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -181,8 +162,6 @@ export namespace ApiProductBase {
                 ],
                 name: [
                 ],
-                nutritionalValue: [
-                ],
                 origin: [
                 ],
             }
@@ -205,9 +184,6 @@ export namespace ApiProductBase {
   //                   validators: []
   //               },
   //               name: {
-  //                   validators: []
-  //               },
-  //               nutritionalValue: {
   //                   validators: []
   //               },
   //               origin: {

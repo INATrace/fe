@@ -524,22 +524,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #nutritionalValue>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('nutritionalValue')"
-    [reorderMode]="reorderMode">
-    <textinput [form]="$any(productForm).get('nutritionalValue')"
-      label="Nutritional Value"
-      style="width: 100%"
-      [textarea]="true"
-      helpText="Per 100g serving. Calories, carbohydrates, fats, proteins, minerals, additives, vitamins,..."
-      i18n-label="@@productLabel.textinput.nutritionalValue.label"
-      i18n-helpText="@@productLabel.textinput.nutritionalValue.helpText"
-      [readOnly]="!canEdit()">
-    </textinput>
-  </app-closable>
-</ng-template>
-
 <ng-template #howToUse>
   <app-closable
     [visibilityForm]="visibilityMap.get('howToUse')"

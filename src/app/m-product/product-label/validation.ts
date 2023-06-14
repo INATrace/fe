@@ -370,9 +370,6 @@ export const ApiProductValidationScheme = {
     name: {
       validators: [Validators.required]
     },
-    nutritionalValue: {
-      validators: []
-    },
     origin: ApiProductOriginValidationScheme,
     photo: {
       validators: [Validators.required]
