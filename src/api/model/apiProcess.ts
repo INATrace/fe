@@ -18,32 +18,14 @@
  */
 
 
-import { ApiCertification } from './apiCertification';
-import { ApiProcessDocument } from './apiProcessDocument';
 
 
 
 export interface ApiProcess { 
     /**
-     * codes of conduct - Briefly describe your company codes of conduct that your employees
-     */
-    codesOfConduct?: string;
-    /**
      * production description - Briefly describe your production process
      */
     production?: string;
-    /**
-     * production records
-     */
-    records?: Array<ApiProcessDocument>;
-    /**
-     * certifications and standards
-     */
-    standards?: Array<ApiCertification>;
-    /**
-     * storage - Briefly describe your storage procedures
-     */
-    storage?: string;
 }
 
 /**
@@ -55,25 +37,9 @@ export namespace ApiProcess {
      */
     export enum Properties {
         /**
-         * codes of conduct - Briefly describe your company codes of conduct that your employees
-         */
-        codesOfConduct = 'codesOfConduct',
-        /**
          * production description - Briefly describe your production process
          */
-        production = 'production',
-        /**
-         * production records
-         */
-        records = 'records',
-        /**
-         * certifications and standards
-         */
-        standards = 'standards',
-        /**
-         * storage - Briefly describe your storage procedures
-         */
-        storage = 'storage'
+        production = 'production'
     }
 
 
@@ -86,53 +52,7 @@ export namespace ApiProcess {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'codesOfConduct',
-                    classname: 'ApiProcess',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'production',
-                    classname: 'ApiProcess',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProcessDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'records',
-                    classname: 'ApiProcess',
-                    dataType: 'Array&lt;ApiProcessDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessDocument'
-                },
-                {
-                    metadata: ApiCertification.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'standards',
-                    classname: 'ApiProcess',
-                    dataType: 'Array&lt;ApiCertification&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCertification'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'storage',
                     classname: 'ApiProcess',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -141,15 +61,7 @@ export namespace ApiProcess {
                 },
             ],
             validators: {
-                codesOfConduct: [
-                ],
                 production: [
-                ],
-                records: [
-                ],
-                standards: [
-                ],
-                storage: [
                 ],
             }
         }
@@ -158,19 +70,7 @@ export namespace ApiProcess {
   // export const ApiProcessValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               codesOfConduct: {
-  //                   validators: []
-  //               },
   //               production: {
-  //                   validators: []
-  //               },
-  //               records: {
-  //                   validators: []
-  //               },
-  //               standards: {
-  //                   validators: []
-  //               },
-  //               storage: {
   //                   validators: []
   //               },
   //     }

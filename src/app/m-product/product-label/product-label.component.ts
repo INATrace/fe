@@ -4,8 +4,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } f
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faArrowAltCircleDown, faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faArrowDown, faArrowsAlt, faCodeBranch, faCog, faEye, faListOl, faPen, faQrcode, faSlidersH, faTimes, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faCompass, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faArrowDown, faArrowsAlt, faArrowUp, faCodeBranch, faEye, faQrcode, faSlidersH, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { catchError, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { CommonControllerService } from 'src/api/api/commonController.service';
@@ -15,7 +15,6 @@ import { ApiAddress } from 'src/api/model/apiAddress';
 import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiProcess } from 'src/api/model/apiProcess';
 import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
-import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiProduct } from 'src/api/model/apiProduct';
 import { ApiProductLabel } from 'src/api/model/apiProductLabel';
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
@@ -36,12 +35,12 @@ import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { PrefillProductSelectionModalComponent } from './prefill-product-selection-modal/prefill-product-selection-modal.component';
 import {
   ApiBusinessToCustomerSettingsValidationScheme,
-  ApiCertificationValidationScheme,
   ApiCompanyValidationScheme,
   ApiProcessDocumentValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
-  ApiResponsibilityFarmerPictureValidationScheme, ApiValueChainValidationScheme,
+  ApiResponsibilityFarmerPictureValidationScheme,
+  ApiValueChainValidationScheme,
   pricingTransparencyFormMetadata,
   pricingTransparencyValidationScheme
 } from './validation';
@@ -188,19 +187,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     lng: 21.514503
   };
   defaultZoom = 3;
-  zoomForOnePin = 10;
   bounds: any;
   initialBounds: any = [];
 
   faTimes = faTimes;
   faArrowsAlt = faArrowsAlt;
   faTrashAlt = faTrashAlt;
-  faCog = faCog;
   faCodeBranch = faCodeBranch;
-  faPen = faPen;
   faEye = faEye;
-  faArrowAltCircleDown = faArrowAltCircleDown;
-  faListOl = faListOl;
   faCompass = faCompass;
   faSlidersH = faSlidersH;
   faQrcode = faQrcode;
@@ -338,8 +332,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       shareReplay(1)
     );
 
-  standardsListManager = null;
-  recordsListManager = null;
   farmerPhotosListManager = null;
 
   formProductionRecord = new FormControl(null);
@@ -413,18 +405,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   // PROCESS
   @ViewChild('production', { static: false })
   productionTmpl: TemplateRef<any>;
-
-  @ViewChild('storage', { static: false })
-  storageTmpl: TemplateRef<any>;
-
-  @ViewChild('codesOfConduct', { static: false })
-  codesOfConductTmpl: TemplateRef<any>;
-
-  @ViewChild('certificationsAndStandards', { static: false })
-  certificationsAndStandardsTmpl: TemplateRef<any>;
-
-  @ViewChild('productionRecords', { static: false })
-  productionRecordsTmpl: TemplateRef<any>;
 
   processElements: any[] = [];
 
@@ -780,16 +760,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   initializeListManagers() {
-    this.standardsListManager = new ListEditorManager<ApiCertification>(
-      this.productForm.get('process.standards') as FormArray,
-      CompanyDetailComponent.ApiCertificationEmptyObjectFormFactory(),
-      ApiCertificationValidationScheme
-    );
-    this.recordsListManager = new ListEditorManager<ApiProcessDocument>(
-      this.productForm.get('process.records') as FormArray,
-      ProductLabelComponent.ApiProcessDocumentEmptyObjectFormFactory(),
-      ApiProcessDocumentValidationScheme
-    );
     this.farmerPhotosListManager = new ListEditorManager<ApiResponsibilityFarmerPicture>(
       this.productForm.get('responsibility.pictures') as FormArray,
       ProductLabelComponent.ApiResponsibilityFarmerPictureEmptyObjectFormFactory(),
@@ -1208,11 +1178,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   generateProcessElements() {
     this.processElements = [
-      { name: 'process.production', section: 'process', visible: new FormControl(false), template: this.productionTmpl },
-      { name: 'process.storage', section: 'process', visible: new FormControl(false), template: this.storageTmpl },
-      { name: 'process.codesOfConduct', section: 'process', visible: new FormControl(false), template: this.codesOfConductTmpl },
-      { name: 'process.standards', section: 'process', visible: new FormControl(false), template: this.certificationsAndStandardsTmpl },
-      { name: 'process.records', section: 'process', visible: new FormControl(false), template: this.productionRecordsTmpl },
+      { name: 'process.production', section: 'process', visible: new FormControl(false), template: this.productionTmpl }
     ];
   }
 
@@ -1809,44 +1775,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       }
       if (data.sustainability.co2Footprint) {
         this.productForm.get('sustainability.co2Footprint').setValue(data.sustainability.co2Footprint);
-      }
-    }
-    this.productForm.markAsDirty();
-  }
-
-  async prefillCertsFromOther(certsAndStds: boolean) {
-    const modalRef = this.modalService.open(PrefillProductSelectionModalComponent, { centered: true });
-    Object.assign(modalRef.componentInstance, {
-      title: $localize`:@@productLabel.prefillCertsFromOther.title:Products`,
-      instructionsHtmlProduct: $localize`:@@productLabel.prefillCertsFromOther.instructionsHtmlProduct:Select a product`,
-      skipItemId: this.productForm.get('id').value
-    });
-    const product = await modalRef.result;
-    if (product) {
-      this.productController.getProductUsingGET(product.id).pipe(take(1))
-        .subscribe(resp => {
-          if (resp.status === 'OK') {
-            this.prefillCertFields(certsAndStds, resp.data);
-          }
-        }
-        );
-    }
-  }
-
-  prefillCertFields(certsAndStds: boolean, data: any) {
-    if (certsAndStds) {
-      if (data.process.standards) {
-        (this.productForm.get('process.standards') as FormArray).clear();
-        data.process.standards.forEach(doc => {
-          (this.productForm.get('process.standards') as FormArray).push(new FormControl(doc));
-        });
-      }
-    } else {
-      if (data.process.records) {
-        (this.productForm.get('process.records') as FormArray).clear();
-        data.process.records.forEach(doc => {
-          (this.productForm.get('process.records') as FormArray).push(new FormControl(doc));
-        });
       }
     }
     this.productForm.markAsDirty();

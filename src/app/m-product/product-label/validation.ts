@@ -106,21 +106,9 @@ const ApiProcessValidationScheme = {
   forceExpand: true,
   validators: [],
   fields: {
-    codesOfConduct: {
-      validators: []
-    },
     production: {
       validators: [Validators.required]
-    },
-    records: {
-      validators: []
-    },
-    standards: {
-      validators: []
-    },
-    storage: {
-      validators: []
-    },
+    }
   }
 } as SimpleValidationScheme<ApiProcess>;
 

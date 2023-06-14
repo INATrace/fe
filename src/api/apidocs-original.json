@@ -15381,44 +15381,9 @@
       },
       "ApiProcess": {
         "properties": {
-          "codesOfConduct": {
-            "description": "codes of conduct - Briefly describe your company codes of conduct that your employees",
-            "type": "string"
-          },
           "production": {
             "description": "production description - Briefly describe your production process",
             "type": "string"
-          },
-          "records": {
-            "description": "production records",
-            "items": {
-              "$ref": "#/components/schemas/ApiProcessDocument"
-            },
-            "type": "array"
-          },
-          "standards": {
-            "description": "certifications and standards",
-            "items": {
-              "$ref": "#/components/schemas/ApiCertification"
-            },
-            "type": "array"
-          },
-          "storage": {
-            "description": "storage - Briefly describe your storage procedures",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiProcessDocument": {
-        "properties": {
-          "description": {
-            "description": "description of this document",
-            "type": "string"
-          },
-          "document": {
-            "$ref": "#/components/schemas/ApiDocument",
-            "description": "certificate for this document"
           }
         },
         "type": "object"
