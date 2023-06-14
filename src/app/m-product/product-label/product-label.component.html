@@ -446,7 +446,6 @@
       [label]="this.productNameLabelAndPlaceholder('LABEL', 'photo')"
       i18n-label="@@productLabel.attachment-uploader.productPhoto.label"
       [flexCol]="true"
-      (onFileInfoLoad)="onFileUpload($event)"
       [form]="$any(productForm).get('photo')"
       [attachmentUploaderId]="'product_image'"
       [readOnly]="productForm.disabled || !canEdit()"
@@ -565,7 +564,7 @@
       Reset map
     </button>
 
-    <div *ngFor="let loc of productForm.get('origin.locations')?.controls; index as idx">
+    <div *ngFor="let loc of $any(productForm.get('origin.locations'))?.controls; index as idx">
       <div class="row">
         <div class="col-6">
           <textinput [form]="loc.get('pinName')"
@@ -700,11 +699,11 @@
       <list-editor-items>
         <div cdkDropList
           (cdkDropListDropped)="farmerPhotosListManager.onDrop($event)">
-          <div *ngFor="let item of productForm.get('responsibility.pictures').controls; let i=index;">
+          <div *ngFor="let item of $any(productForm.get('responsibility.pictures')).controls; let i=index;">
             <app-farmer-story-photos
               title="Farmer or Farmer Group Picture"
               i18n-title="@@productLabel.list-editor.farmerPics.title"
-              [formControlInput]="item"
+              [formControlInput]="$any(item)"
               [isOpen]="farmerPhotosListManager.isOpen(i)"
               [disableEdit]="!canEdit()"
               [disableDelete]="!canEdit()"
@@ -959,55 +958,6 @@
       style="width: 100%;"
       hideRequired="true"
       i18n-label="@@productLabel.textinput.termsOfUseText.label">
-    </tinymce-textarea>
-
-  </app-closable>
-</ng-template>
-
-<ng-template #increaseIncome>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('settings.increaseIncome')"
-    [reorderMode]="reorderMode"
-    label="Increase in income on this value chain"
-    i18n-label="@@productLabel.increaseIncome.label"
-    mode="simple"
-    [openOnValueChange]="openOnStart">
-    <div>
-
-      <attachment-uploader
-        rootImageUrl="{{rootImageUrl}}"
-        allowedMimeType="[image/png', 'image/jpeg']"
-        allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
-        mode="simpleAsTextField"
-        label="Photo"
-        i18n-label="@@productLabel.attachment-uploader.incomeIncreaseDocument.label"
-        i18n-placeholder="@@productLabel.attachment-uploader.incomeIncreaseDocument.allowedMimeTypeErrorMessage"
-        (onFileInfoLoad)="onFileUpload($event)"
-        [form]="$any(productForm).get('settings.incomeIncreaseDocument')"
-        [attachmentUploaderId]="'income_increase_document'"
-        [readOnly]="productForm.disabled || !canEdit()">
-        <attachment-uploader-content i18n="@@productLabel.attachment-uploader.incomeIncreaseDocument.content">
-          Upload photo
-        </attachment-uploader-content>
-      </attachment-uploader>
-    </div>
-  </app-closable>
-</ng-template>
-
-<ng-template #increaseIncomeDescription>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('settings.incomeIncreaseDescription')"
-    [reorderMode]="reorderMode"
-    mode="simple"
-    label="Description"
-    i18n-label="@@productLabel.tinymce.incomeIncreaseDescription.label"
-    [openOnValueChange]="openOnStart"
-    [nonClosable]="true">
-
-    <tinymce-textarea
-      [formControlInput]="$any(productForm).get('settings.incomeIncreaseDescription')"
-      [disabled]="!canEdit()"
-      style="width: 100%;">
     </tinymce-textarea>
 
   </app-closable>
@@ -1421,11 +1371,15 @@
       </div>
     </div>
 
-    <ng-container *ngIf="$any(productForm).get('businessToCustomerSettings.tabFairPrices').value">
-      <ng-container *ngFor="let element of pricingTransparencyElements">
-        <ng-template *ngTemplateOutlet="element.template"></ng-template>
-      </ng-container>
-    </ng-container>
+    <div>
+      <tinymce-textarea
+          label="Pricing transparency description"
+          i18n-label="@@productLabel.section.pricingTransparency"
+          [formControlInput]="$any(productForm).get('settings.incomeIncreaseDescription')"
+          [disabled]="!canEdit()"
+          style="width: 100%;">
+      </tinymce-textarea>
+    </div>
 
   </app-closable>
 </ng-template>

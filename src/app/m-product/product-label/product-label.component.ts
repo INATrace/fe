@@ -14,7 +14,6 @@ import { ProductControllerService } from 'src/api/api/productController.service'
 import { ApiAddress } from 'src/api/model/apiAddress';
 import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiProcess } from 'src/api/model/apiProcess';
-import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
 import { ApiProduct } from 'src/api/model/apiProduct';
 import { ApiProductLabel } from 'src/api/model/apiProductLabel';
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
@@ -36,7 +35,6 @@ import { PrefillProductSelectionModalComponent } from './prefill-product-selecti
 import {
   ApiBusinessToCustomerSettingsValidationScheme,
   ApiCompanyValidationScheme,
-  ApiProcessDocumentValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
   ApiResponsibilityFarmerPictureValidationScheme,
@@ -240,15 +238,15 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   ).pipe(
     filter(val => val != null),
-    tap(val => { this.globalEventsManager.showLoading(true); }),
+    tap(() => { this.globalEventsManager.showLoading(true); }),
     switchMap(id => this.productController.getProductUsingGET(id).pipe(
-      catchError(val => of(null))
+      catchError(() => of(null))
     )),
     filter(resp => !!resp),
     map(resp => {
       return resp.data;
     }),
-    tap(val => {
+    tap(() => {
       this.reloadLabels();
       if (this.action === 'labels') {
         this.reloadLabel();
@@ -257,7 +255,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         this.currentLabel = null;
       }
     }),
-    tap(val => { this.globalEventsManager.showLoading(false); }),
+    tap(() => { this.globalEventsManager.showLoading(false); }),
     tap((data: ApiProduct) => {
 
       const product = data;
@@ -299,7 +297,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   ).pipe(
     filter(val => val != null),
     switchMap(id => this.productController.getProductLabelsUsingGET(id).pipe(
-      catchError(val => of(null))
+      catchError(() => of(null))
     )),
     filter(val => val != null),
     map(resp => {
@@ -319,10 +317,10 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }).pipe(
       filter(val => val != null),
       switchMap(id => this.productController.getProductLabelUsingGET(id).pipe(
-        catchError(val => of(null))
+        catchError(() => of(null))
       )),
       filter(x => x != null),
-      tap(resp => {
+      tap(() => {
         this.fadeInProductOnRefresh();
       }),
       map(resp => {
@@ -334,56 +332,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   farmerPhotosListManager = null;
 
-  formProductionRecord = new FormControl(null);
-
-  userForm = new FormControl(null);
-
   labelsSection = {
     anchor: 'PRODUCT_LABELS',
     title: $localize`:@@productLabel.labelsSection.labels:QR labels`,
     icon: 'info'
   };
-
-  productSection = {
-    anchor: 'PRODUCT_GENERAL',
-    title: $localize`:@@productLabel.labelsSection.general:Product`
-  };
-
-  processSection = {
-    anchor: 'PRODUCT_PROCESS',
-    title: $localize`:@@productLabel.labelsSection.process:Process`
-  };
-
-  socialResponsibilitySection = {
-    anchor: 'PRODUCT_SOCIAL_RESPONSIBILITY',
-    title: $localize`:@@productLabel.labelsSection.responsibility:Social responsibility`,
-  };
-
-  environmentalSustainabilitySection = {
-    anchor: 'PRODUCT_ENVIRONMENTAL_SUSTAINABILITY',
-    title: $localize`:@@productLabel.labelsSection.sustainability:Environmental sustainability`,
-  };
-
-  settingsSection = {
-    anchor: 'SETTINGS',
-    title: $localize`:@@productLabel.labelsSection.settings:Settings`,
-  };
-
-
-  companySection = {
-    anchor: 'PRODUCT_COMPANY',
-    title: $localize`:@@productLabel.labelsSection.company:Company`,
-  };
-
-  toc = [
-    this.labelsSection,
-    this.productSection,
-    this.processSection,
-    this.socialResponsibilitySection,
-    this.environmentalSustainabilitySection,
-    this.settingsSection,
-    this.companySection
-  ];
 
   emptyField = '-';
 
@@ -553,15 +506,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('giveFeedback', { static: false })
   giveFeedbackTmpl: TemplateRef<any>;
 
-  @ViewChild('pricingTransparency', { static: false })
-  pricingTransparencyTmpl: TemplateRef<any>;
-
-  @ViewChild('increaseIncome', { static: false })
-  increaseIncomeTmpl: TemplateRef<any>;
-
-  @ViewChild('increaseIncomeDescription', { static: false })
-  increaseIncomeDescriptionTmpl: TemplateRef<any>;
-
   @ViewChild('gdprText', { static: false })
   gdprTextTmpl: TemplateRef<any>;
 
@@ -575,8 +519,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   knowledgeBlogTmpl: TemplateRef<any>;
 
   settingsElements: any[] = [];
-
-  pricingTransparencyElements: any[] = [];
 
   visibilityForm: FormGroup = null;
 
@@ -598,20 +540,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   unpublishString = $localize`:@@productLabel.qrLabels.unpublish:Unpublish`;
 
   fadeInProduct = false;
-  codebookLanguageCodes = EnumSifrant.fromObject(this.languageCodes);
 
   graphicFairPricesCodes = EnumSifrant.fromObject(this.graphicFairPriceUnits);
-
-  static ApiProcessDocumentCreateEmptyObject(): ApiProcessDocument {
-    const obj = ApiProcessDocument.formMetadata();
-    return defaultEmptyObject(obj) as ApiProcessDocument;
-  }
-
-  static ApiProcessDocumentEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(ProductLabelComponent.ApiProcessDocumentCreateEmptyObject(), ApiProcessDocumentValidationScheme.validators);
-    };
-  }
 
   static ApiResponsibilityFarmerPictureCreateEmptyObject(): ApiResponsibilityFarmerPicture {
     const obj = ApiResponsibilityFarmerPicture.formMetadata();
@@ -664,7 +594,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
           if (this.mode === 'update') {
             this.unsubscribeList.add(
-              this.product$.subscribe(val => { }),
+              this.product$.subscribe(() => { }),
             );
             this.unsubscribeList.add(
               this.currentLabel$.subscribe(label => {
@@ -980,10 +910,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
-  onFileUpload(event) {
-    // console.log(event)
-  }
-
   createOrFillOriginLocationsItem(loc: any, create: boolean): FormGroup {
     return new FormGroup({
       latitude: new FormControl(create ? loc.lat : loc.latitude),
@@ -1077,14 +1003,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.gInfoWindow.open(gMarker);
   }
   
-  addJourneyMarker(event: google.maps.MouseEvent) {
-    this.journeyMarkersCtrl.push(new FormGroup({
-      latitude: new FormControl(event.latLng.lat()),
-      longitude: new FormControl(event.latLng.lng()),
-    }));
-    this.journeyMarkersCtrl.markAsDirty();
-  }
-  
   removeJourneyMarker(i: number) {
     this.journeyMarkersCtrl.removeAt(i);
     this.journeyMarkersCtrl.markAsDirty();
@@ -1114,15 +1032,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     arr[index1] = arr[index2];
     arr[index2] = temp;
     return arr;
-  }
-  
-  getJourneyVertices(): google.maps.LatLngLiteral[] {
-    return this.journeyMarkersCtrl.controls.map(ctrl => {
-      return {
-        lat: ctrl.get('latitude').value,
-        lng: ctrl.get('longitude').value,
-      };
-    });
   }
 
   onKey(event, index) {
@@ -1162,7 +1071,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.googleMapsIsLoaded();
   }
 
-  openOnStart(value: any) {
+  openOnStart() {
     return true;
   }
 
@@ -1241,14 +1150,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     ];
   }
 
-  generatePricingTransparenctElements() {
-    this.pricingTransparencyElements = [
-      { name: 'settings.incomeIncreaseDescription', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeDescriptionTmpl },
-      { name: 'settings.pricingTransparency', section: 'settings', visible: new FormControl(false), template: this.pricingTransparencyTmpl },
-      { name: 'settings.increaseIncome', section: 'settings', visible: new FormControl(false), template: this.increaseIncomeTmpl }
-    ];
-  }
-
   generateBusinessToCustomerSettingsElements() {
     this.b2cElements = [
       { name: 'businessToCustomerSettings.primaryColor', section: 'businessToCustomerSettings', visible: new FormControl(false), template: this.b2cPrimaryColor },
@@ -1285,7 +1186,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateProcessElements();
     this.generateSocialResponsibilityElements();
     this.generateEnvironmentalSustainabilityElements();
-    this.generatePricingTransparenctElements();
     this.generateSettingsElements();
     this.generateCompanyElements();
     this.generateBusinessToCustomerSettingsElements();
@@ -1295,7 +1195,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   generateJointVisibilityForm() {
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.settingsElements, ...this.companyElements];
     const formObj = {};
     allList.forEach(element => {
       const fixedKey = element.name.replace(/\./g, '_');
@@ -1328,10 +1228,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     const settingsMap = new Map();
     this.settingsElements.forEach(el => {
-      settingsMap.set(el.name, el);
-    });
-
-    this.pricingTransparencyElements.forEach(el => {
       settingsMap.set(el.name, el);
     });
 
@@ -1397,27 +1293,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   }
 
-  preparePricingTransparencyElements(): any[] {
-    const elts = [];
-    this.pricingTransparencyElements.forEach(elt => {
-      if (elt.name === 'settings.increaseIncome') {
-        elts.push({
-          name: 'settings.incomeIncreaseDescription',
-          section: elt.section,
-          visible: elt.visible
-        });
-        elts.push({
-          name: 'settings.incomeIncreaseDocument',
-          section: elt.section,
-          visible: elt.visible
-        });
-      } else {
-        elts.push(elt);
-      }
-    });
-    return elts;
-  }
-
   prepareProductElements(): any[] {
     const elts = [];
     this.productElements.forEach(elt => elts.push(elt));
@@ -1454,9 +1329,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const labels = [];
     const allSocialResponsibilityElements = this.prepareSocialResponsibilityElements();
     const allProductElements = this.prepareProductElements();
-    const allPricingTransparencyElements = this.preparePricingTransparencyElements();
     const allList = [allProductElements, this.processElements, allSocialResponsibilityElements,
-      this.environmentalSustainabilityElements, allPricingTransparencyElements, this.settingsElements, this.companyElements];
+      this.environmentalSustainabilityElements, this.settingsElements, this.companyElements];
     allList.forEach(list => {
       list.forEach(val => {
         if (val.name === 'journeyMarkers') {
@@ -1538,7 +1412,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.generateDefaultElements();
 
     const allList = [...this.productElements, ...this.processElements, ...this.socialResponsibilityElements,
-    ...this.environmentalSustainabilityElements, ...this.pricingTransparencyElements, ...this.settingsElements, ...this.companyElements];
+    ...this.environmentalSustainabilityElements, ...this.settingsElements, ...this.companyElements];
     let i = 0;
     allList.forEach(el => {    // default order
       sortOrderMap.set(el.name, i);
@@ -1576,10 +1450,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.visibilityForm.markAsPristine();
     this.labelTitleForm.setValue(label.title);
     this.labelTitleForm.markAsPristine();
-  }
-
-  toggleReorder() {
-    this.reorderMode = !this.reorderMode;
   }
 
   toggleEditTitleMode(mode?: boolean) {
@@ -1785,26 +1655,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       return 'http://' + link;
     }
     return link;
-  }
-
-  labelsInfo(evt) {
-    let message = '';
-    let link = this.editInfoLabelLink;
-    if (!link || /^\s*$/.test(link)) {
-      message = $localize`:@@productLabel.labelsInfo.message:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner.`;
-    } else {
-      link = this.checkExternalLink(link);
-      message = $localize`:@@productLabel.labelsInfo.messageWithLink:You can communicate the information about your products through QR labels so that you attach them to your product packaging. Add multiple QR labels to share different information about the same product. You can add QR labels for different package sizes (e.g. label for 50g and 100g packaging) or share information for consumers on one label and information for distributors on another. You can add numerous labels and can use them in communicating different information about the same product to different readers. Always make sure to publish the labels to activate them! <br> If you have any other questions regarding QR labels, please contact us through the brown chat button in your bottom right corner. <br> <a href=${link} target="_blank" class="labelInfoLink">More Information</a>`;
-    }
-    this.globalEventsManager.openMessageModal({
-      type: 'general',
-      title: $localize`:@@productLabel.labelsInfo.title:QR  multiple labels`,
-      message,
-      options: { centered: true, size: 'lg' },
-      dismissable: false,
-      buttons: ['ok'],
-      buttonTitles: { ok: 'OK' }
-    });
   }
 
   async initializeLabelsHelperLink() {
