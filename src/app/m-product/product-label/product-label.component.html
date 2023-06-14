@@ -618,43 +618,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #speciality>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('speciality')"
-    [reorderMode]="reorderMode"
-    label="Speciality"
-    i18n-label="@@productLabel.speciality.label"
-    mode="simple">
-
-    <textinput [form]="$any(productForm).get('specialityDescription')"
-      label="Description"
-      style="width: 100%"
-      [textarea]="true"
-      helpText="Speciality of this product in comparison to other products on the market."
-      i18n-label="@@productLabel.textinput.specialityDescription.label"
-      [readOnly]="!canEdit()">
-    </textinput>
-
-    <attachment-uploader
-      rootImageUrl="{{rootImageUrl}}"
-      allowedMimeType="[image/png', 'image/jpeg']"
-      allowedMimeTypeErrorMessage="Upload only file types: PNG, JPG and JPEG."
-      mode="simpleAsTextField"
-      label="Photo"
-      i18n-label="@@productLabel.attachment-uploader.specialityDocument.label"
-      i18n-placeholder="@@productLabel.attachment-uploader.specialityDocument.allowedMimeTypeErrorMessage"
-      (onFileInfoLoad)="onFileUpload($event)"
-      [form]="$any(productForm).get('specialityDocument')"
-      [attachmentUploaderId]="'speciality_document'"
-      [readOnly]="productForm.disabled || !canEdit()">
-      <attachment-uploader-content i18n="@@productLabel.attachment-uploader.specialityDocument.content">
-        Upload photo
-      </attachment-uploader-content>
-    </attachment-uploader>
-
-  </app-closable>
-</ng-template>
-
 <!-- PROCESS TEMPLATES -->
 <ng-template #production>
   <app-closable

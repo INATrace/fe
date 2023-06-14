@@ -408,9 +408,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('origin', { static: false })
   originValueTmpl: TemplateRef<any>;
 
-  @ViewChild('speciality', { static: false })
-  specialityTmpl: TemplateRef<any>;
-
   productElements: any[] = [];
 
   // PROCESS
@@ -1205,7 +1202,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'photo', section: 'product', visible: new FormControl(true), template: this.productLogoTmpl, disableDrag: true },
       { name: 'description', section: 'product', visible: new FormControl(true), template: this.productDescriptionTmpl, disableDrag: true },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
-      { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl },
       { name: 'journeyMarkers', section: 'product', visible: new FormControl(true), disableDrag: true }
     ];
   }
@@ -1458,22 +1454,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   prepareProductElements(): any[] {
     const elts = [];
-    this.productElements.forEach(elt => {
-      if (elt.name === 'speciality') {
-        elts.push({
-          name: 'specialityDescription',
-          section: elt.section,
-          visible: elt.visible
-        });
-        elts.push({
-          name: 'specialityDocument',
-          section: elt.section,
-          visible: elt.visible
-        });
-      } else {
-        elts.push(elt);
-      }
-    });
+    this.productElements.forEach(elt => elts.push(elt));
     return elts;
   }
 
@@ -1587,7 +1568,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const newFieldMap = new Map();
     const sortOrderMap = new Map();
     let farmerStoryVisible = false;
-    let specialityVisible = false;
     let increaseVisible = false;
     this.generateDefaultElements();
 
@@ -1602,7 +1582,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     label.fields.forEach(field => {
       if (field.name === 'responsibility.farmer') { farmerStoryVisible = field.visible; }
-      if (field.name === 'specialityDescription') { specialityVisible = field.visible; }
       if (field.name === 'settings.incomeIncreaseDescription') { increaseVisible = field.visible; }
       newFieldMap.set(field.name, field);
       sortOrderMap.set(field.name, i);
@@ -1625,7 +1604,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       }
 
       if (el.name === 'responsibility.farmerStory') { el.visible.setValue(farmerStoryVisible); }
-      if (el.name === 'speciality') { el.visible.setValue(specialityVisible); }
       if (el.name === 'settings.increaseIncome') { el.visible.setValue(increaseVisible); }
       this.visibilityMap.set(el.name, el.visible);
     });

@@ -62,11 +62,6 @@ export interface ApiProductLabelContent {
     process?: ApiProcess;
     responsibility?: ApiResponsibility;
     settings?: ApiProductSettings;
-    /**
-     * speciality document
-     */
-    specialityDescription?: string;
-    specialityDocument?: ApiDocument;
     sustainability?: ApiSustainability;
 }
 
@@ -109,11 +104,6 @@ export namespace ApiProductLabelContent {
         process = 'process',
         responsibility = 'responsibility',
         settings = 'settings',
-        /**
-         * speciality document
-         */
-        specialityDescription = 'specialityDescription',
-        specialityDocument = 'specialityDocument',
         sustainability = 'sustainability'
     }
 
@@ -275,29 +265,6 @@ export namespace ApiProductLabelContent {
                     complexType: 'ApiProductSettings'
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'specialityDescription',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'specialityDocument',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
                     metadata: ApiSustainability.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -336,10 +303,6 @@ export namespace ApiProductLabelContent {
                 responsibility: [
                 ],
                 settings: [
-                ],
-                specialityDescription: [
-                ],
-                specialityDocument: [
                 ],
                 sustainability: [
                 ],
@@ -387,12 +350,6 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               settings: {
-  //                   validators: []
-  //               },
-  //               specialityDescription: {
-  //                   validators: []
-  //               },
-  //               specialityDocument: {
   //                   validators: []
   //               },
   //               sustainability: {
