@@ -364,9 +364,6 @@ export const ApiProductValidationScheme = {
     id: {
       validators: []
     },
-    ingredients: {
-      validators: []
-    },
     keyMarketsShare: {
       validators: []
     },
