@@ -339,7 +339,6 @@
     "productLabel.textinput.productName.error": "{$START_TAG_SPAN} Izina ry'igicuruzwa ni ngombwa {$CLOSE_TAG_SPAN}",
     "productLabel.attachment-uploader.productPhoto.comment": "Shyiraho ifoto nziza y'igicuruzwa cyawe - umenye neza ko ifoto ari iyamamaza ubwiza (hakenewe ifoto ya72dpi na 1200x2000px)",
     "productLabel.textinput.productDesc.helpText": "Vuga muri make ibicuruzwa n'impamvu zituma ibicuruzwa byawe bikwiriye kugurwa (urugero: imitungo idasanzwe, inyungu z'ubuzima, agaciro gakomeye, umusaruro oruganike....)",
-    "productLabel.textinput.ingredients.label": "Ibikoze igicuruzwa",
     "productLabel.textinput.ingredients.helpText": "Andika ibigize igicuruzwa hanyuma usobanure imiterere yabyo (urugero: Amavuta ya Organic Shea Butter, Ubucuruzi bwiza Mango ....)",
     "productLabel.textinput.nutritionalValue.label": "Intungamubiri",
     "productLabel.textinput.nutritionalValue.helpText": "Kuri 100g zifashwe. Kalori, karubone, amavuta, proteyine, imyunyu ngugu, inyongera, vitamine, ...",

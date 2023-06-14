@@ -2220,7 +2220,6 @@
     "productLabel.textinput.productName.error": "{$START_TAG_SPAN} Product name is required {$CLOSE_TAG_SPAN}",
     "productLabel.attachment-uploader.productPhoto.comment": "Please upload a high-quality photo of your product – make sure the photo is of marketing quality. (72dpi and 1200x2000px recommended)",
     "productLabel.textinput.productDesc.helpText": "Briefly describe the product AND reasons why your product is worth buying. (example: special properties, health benefits, great value, organic production....)",
-    "productLabel.textinput.ingredients.label": "Ingredients",
     "productLabel.textinput.ingredients.helpText": "List the ingredients in the product and describe their properties. (example: Organic Shea Butter, Fair Trade Mango....)",
     "productLabel.textinput.nutritionalValue.label": "Nutritional Value",
     "productLabel.textinput.nutritionalValue.helpText": "Per 100g serving. Calories, carbohydrates, fats, proteins, minerals, additives, vitamins,...",

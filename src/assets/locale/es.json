@@ -567,7 +567,6 @@
     "productLabel.attachment-uploader.productPhoto.comment": "Por favor, suba una foto de alta calidad de su producto (se recomienda 72DPI y 1200x2000px).",
     "productLabel.textinput.productDesc.label": "Descripción del producto",
     "productLabel.textinput.productDesc.helpText": "Describa en breve el producto Y las razones para comprarlo. (Ejemplo: propiedades especiales, beneficios para la salud, valores adicionales, producción orgánica...)",
-    "productLabel.textinput.ingredients.label": "Ingredientes",
     "productLabel.textinput.ingredients.helpText": "Especifique los ingredientes del producto y describa sus propiedades. (Ejemplo: manteca de karité orgánica, Fairtrade mango ...)",
     "productLabel.textinput.nutritionalValue.label": "Valor nutricional",
     "productLabel.textinput.nutritionalValue.helpText": "Por cada porción de 100g. Calorías, hidratos de carbono, grasas, proteínas, minerales, aditivos, vitaminas,...",

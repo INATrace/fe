@@ -341,7 +341,6 @@
     "productLabel.textinput.productName.error": "{$START_TAG_SPAN} Ein Produktname wird benötigt {$CLOSE_TAG_SPAN}",
     "productLabel.attachment-uploader.productPhoto.comment": "Bitte laden Sie ein qualitativ hochwertiges Foto Ihres Produkts hoch - Stellen Sie sicher, dass das Foto von Marketingqualität ist (72 dpi und 1200 x 2000 Pixel empfohlen).",
     "productLabel.textinput.productDesc.helpText": "Beschreiben Sie kurz das Produkt UND die Gründe, warum Ihr Produkt einen Kauf wert ist (Beispiel: besondere Eigenschaften, gesundheitliche Vorteile, hoher Wert, ökologische Produktion ....)",
-    "productLabel.textinput.ingredients.label": "Zutaten",
     "productLabel.textinput.ingredients.helpText": "Listen Sie die Inhaltsstoffe des Produkts auf und beschreiben Sie deren Eigenschaften (Beispiel: Bio-Sheabutter, Fairtrade-Mango ....)",
     "productLabel.textinput.nutritionalValue.label": "Nährwert",
     "productLabel.textinput.nutritionalValue.helpText": "Pro 100g Portion. Kalorien, Kohlenhydrate, Fette, Proteine, Mineralien, Zusatzstoffe, Vitamine, ...",

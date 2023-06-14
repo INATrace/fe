@@ -524,22 +524,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #ingredients>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('ingredients')"
-    [reorderMode]="reorderMode">
-    <textinput [form]="$any(productForm).get('ingredients')"
-      label="Ingredients"
-      style="width: 100%"
-      [textarea]="true"
-      helpText="List the ingredients in the product and describe their properties. (example: Organic Shea Butter, Fair Trade Mango....)"
-      i18n-label="@@productLabel.textinput.ingredients.label"
-      i18n-helpText="@@productLabel.textinput.ingredients.helpText"
-      [readOnly]="!canEdit()">
-    </textinput>
-  </app-closable>
-</ng-template>
-
 <ng-template #nutritionalValue>
   <app-closable
     [visibilityForm]="visibilityMap.get('nutritionalValue')"

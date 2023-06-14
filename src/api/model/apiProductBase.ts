@@ -36,10 +36,6 @@ export interface ApiProductBase {
      */
     id?: number;
     /**
-     * ingredients - list the ingredients in the product and describe their properties
-     */
-    ingredients?: string;
-    /**
      * Key Markets, market name - share number map
      */
     keyMarketsShare?: { [key: string]: number; };
@@ -74,10 +70,6 @@ export namespace ApiProductBase {
          * Entity id
          */
         id = 'id',
-        /**
-         * ingredients - list the ingredients in the product and describe their properties
-         */
-        ingredients = 'ingredients',
         /**
          * Key Markets, market name - share number map
          */
@@ -136,17 +128,6 @@ export namespace ApiProductBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'ingredients',
-                    classname: 'ApiProductBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'keyMarketsShare',
                     classname: 'ApiProductBase',
                     dataType: '{ [key: string]: number; }',
@@ -196,8 +177,6 @@ export namespace ApiProductBase {
                 ],
                 id: [
                 ],
-                ingredients: [
-                ],
                 keyMarketsShare: [
                 ],
                 name: [
@@ -220,9 +199,6 @@ export namespace ApiProductBase {
   //                   validators: []
   //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               ingredients: {
   //                   validators: []
   //               },
   //               keyMarketsShare: {

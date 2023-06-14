@@ -46,10 +46,6 @@ export interface ApiProductLabelContent {
      */
     id?: number;
     /**
-     * ingredients - list the ingredients in the product and describe their properties
-     */
-    ingredients?: string;
-    /**
      * Product journey path
      */
     journeyMarkers?: Array<ApiProductJourneyMarker>;
@@ -108,10 +104,6 @@ export namespace ApiProductLabelContent {
          * Entity id
          */
         id = 'id',
-        /**
-         * ingredients - list the ingredients in the product and describe their properties
-         */
-        ingredients = 'ingredients',
         /**
          * Product journey path
          */
@@ -208,17 +200,6 @@ export namespace ApiProductLabelContent {
                     name: 'id',
                     classname: 'ApiProductLabelContent',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'ingredients',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -397,8 +378,6 @@ export namespace ApiProductLabelContent {
                 ],
                 id: [
                 ],
-                ingredients: [
-                ],
                 journeyMarkers: [
                 ],
                 keyMarketsShare: [
@@ -447,9 +426,6 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               ingredients: {
   //                   validators: []
   //               },
   //               journeyMarkers: {

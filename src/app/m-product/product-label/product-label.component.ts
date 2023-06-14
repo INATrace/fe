@@ -410,9 +410,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('productDescription', { static: false })
   productDescriptionTmpl: TemplateRef<any>;
 
-  @ViewChild('ingredients', { static: false })
-  ingredientsTmpl: TemplateRef<any>;
-
   @ViewChild('nutritionalValue', { static: false })
   nutritionalValueTmpl: TemplateRef<any>;
 
@@ -1227,7 +1224,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'name', section: 'product', visible: new FormControl(true), template: this.productNameTmpl, disableDrag: true },
       { name: 'photo', section: 'product', visible: new FormControl(true), template: this.productLogoTmpl, disableDrag: true },
       { name: 'description', section: 'product', visible: new FormControl(true), template: this.productDescriptionTmpl, disableDrag: true },
-      { name: 'ingredients', section: 'product', visible: new FormControl(false), template: this.ingredientsTmpl },
       { name: 'nutritionalValue', section: 'product', visible: new FormControl(false), template: this.nutritionalValueTmpl },
       { name: 'howToUse', section: 'product', visible: new FormControl(false), template: this.howToUseTmpl },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
