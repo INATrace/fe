@@ -50,10 +50,6 @@ export interface ApiProduct {
      */
     description?: string;
     /**
-     * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
-     */
-    howToUse?: string;
-    /**
      * Entity id
      */
     id?: number;
@@ -113,10 +109,6 @@ export namespace ApiProduct {
          * product description
          */
         description = 'description',
-        /**
-         * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
-         */
-        howToUse = 'howToUse',
         /**
          * Entity id
          */
@@ -214,17 +206,6 @@ export namespace ApiProduct {
                     isEnum: false,
                     required: false,
                     name: 'description',
-                    classname: 'ApiProduct',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'howToUse',
                     classname: 'ApiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -418,8 +399,6 @@ export namespace ApiProduct {
                 ],
                 description: [
                 ],
-                howToUse: [
-                ],
                 id: [
                 ],
                 journeyMarkers: [
@@ -470,9 +449,6 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               description: {
-  //                   validators: []
-  //               },
-  //               howToUse: {
   //                   validators: []
   //               },
   //               id: {

@@ -358,9 +358,6 @@ export const ApiProductValidationScheme = {
     description: {
       validators: [Validators.required]
     },
-    howToUse: {
-      validators: []
-    },
     id: {
       validators: []
     },

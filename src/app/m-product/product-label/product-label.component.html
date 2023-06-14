@@ -524,22 +524,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #howToUse>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('howToUse')"
-    [reorderMode]="reorderMode">
-    <textinput [form]="$any(productForm).get('howToUse')"
-      label="How to Use / Recipes"
-      style="width: 100%"
-      [textarea]="true"
-      helpText="Describe the best way to use the product. (e.g. recipes, how to apply the product...)"
-      i18n-label="@@productLabel.textinput.recipes.label"
-      i18n-helpText="@@productLabel.textinput.recipes.helpText"
-      [readOnly]="!canEdit()">
-    </textinput>
-  </app-closable>
-</ng-template>
-
 <ng-template #origin>
   <app-closable
     [visibilityForm]="visibilityMap.get('origin')"

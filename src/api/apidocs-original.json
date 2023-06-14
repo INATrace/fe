@@ -15867,10 +15867,6 @@
             "description": "product description",
             "type": "string"
           },
-          "howToUse": {
-            "description": "how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)",
-            "type": "string"
-          },
           "id": {
             "description": "Entity id",
             "format": "int64",
@@ -15950,10 +15946,6 @@
         "properties": {
           "description": {
             "description": "product description",
-            "type": "string"
-          },
-          "howToUse": {
-            "description": "how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)",
             "type": "string"
           },
           "id": {
@@ -16318,10 +16310,6 @@
           },
           "description": {
             "description": "product description",
-            "type": "string"
-          },
-          "howToUse": {
-            "description": "how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)",
             "type": "string"
           },
           "id": {

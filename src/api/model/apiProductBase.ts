@@ -28,10 +28,6 @@ export interface ApiProductBase {
      */
     description?: string;
     /**
-     * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
-     */
-    howToUse?: string;
-    /**
      * Entity id
      */
     id?: number;
@@ -59,10 +55,6 @@ export namespace ApiProductBase {
          */
         description = 'description',
         /**
-         * how to Use / Recipes - Describe the best way to use the product (e.g. recipes, how to apply the product...)
-         */
-        howToUse = 'howToUse',
-        /**
          * Entity id
          */
         id = 'id',
@@ -88,17 +80,6 @@ export namespace ApiProductBase {
                     isEnum: false,
                     required: false,
                     name: 'description',
-                    classname: 'ApiProductBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'howToUse',
                     classname: 'ApiProductBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -154,8 +135,6 @@ export namespace ApiProductBase {
             validators: {
                 description: [
                 ],
-                howToUse: [
-                ],
                 id: [
                 ],
                 keyMarketsShare: [
@@ -172,9 +151,6 @@ export namespace ApiProductBase {
   //     validators: [],
   //     fields: {
   //               description: {
-  //                   validators: []
-  //               },
-  //               howToUse: {
   //                   validators: []
   //               },
   //               id: {
