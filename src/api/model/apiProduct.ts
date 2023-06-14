@@ -58,10 +58,6 @@ export interface ApiProduct {
      */
     journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
-     * Key Markets, market name - share number map
-     */
-    keyMarketsShare?: { [key: string]: number; };
-    /**
      * knowledge blog
      */
     knowledgeBlog?: boolean;
@@ -117,10 +113,6 @@ export namespace ApiProduct {
          * Product journey path
          */
         journeyMarkers = 'journeyMarkers',
-        /**
-         * Key Markets, market name - share number map
-         */
-        keyMarketsShare = 'keyMarketsShare',
         /**
          * knowledge blog
          */
@@ -234,17 +226,6 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiProductJourneyMarker'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'keyMarketsShare',
-                    classname: 'ApiProduct',
-                    dataType: '{ [key: string]: number; }',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -403,8 +384,6 @@ export namespace ApiProduct {
                 ],
                 journeyMarkers: [
                 ],
-                keyMarketsShare: [
-                ],
                 knowledgeBlog: [
                 ],
                 labels: [
@@ -455,9 +434,6 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               journeyMarkers: {
-  //                   validators: []
-  //               },
-  //               keyMarketsShare: {
   //                   validators: []
   //               },
   //               knowledgeBlog: {

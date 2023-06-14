@@ -194,98 +194,6 @@ export const ApiCompanyValidationScheme = {
   }
 } as SimpleValidationScheme<ApiCompany>;
 
-export function marketShareFormMetadata() {
-  return {
-    metadata: marketShareFormMetadata,
-    vars: [
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'yourCountry',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'eastAfrica',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'restOfAfrica',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'europe',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'usa',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-      {
-        isReadOnly: false,
-        isEnum: false,
-        required: false,
-        name: 'elsewhere',
-        dataType: 'number',
-        isPrimitiveType: true,
-        isListContainer: false,
-        complexType: ''
-      },
-    ]
-  };
-}
-
-export const MarketShareValidationScheme = {
-  validators: [],
-  fields: {
-    yourCountry: {
-      validators: []
-    },
-    eastAfrica: {
-      validators: []
-    },
-    restOfAfrica: {
-      validators: []
-    },
-    europe: {
-      validators: []
-    },
-    usa: {
-      validators: []
-    },
-    elsewhere: {
-      validators: []
-    }
-  }
-};
-
 export const ApiProductOriginValidationScheme = {
   forceExpand: true,
   validators: [],
@@ -359,9 +267,6 @@ export const ApiProductValidationScheme = {
       validators: [Validators.required]
     },
     id: {
-      validators: []
-    },
-    keyMarketsShare: {
       validators: []
     },
     name: {

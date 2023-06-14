@@ -42,8 +42,6 @@ import {
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
   ApiResponsibilityFarmerPictureValidationScheme, ApiValueChainValidationScheme,
-  marketShareFormMetadata,
-  MarketShareValidationScheme,
   pricingTransparencyFormMetadata,
   pricingTransparencyValidationScheme
 } from './validation';
@@ -272,9 +270,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
       this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
 
-      const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
-      this.productForm.setControl('keyMarketsShare', marketShareForm);
-
       const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
@@ -412,9 +407,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   @ViewChild('origin', { static: false })
   originValueTmpl: TemplateRef<any>;
-
-  @ViewChild('keyMarkets', { static: false })
-  keyMarketsTmpl: TemplateRef<any>;
 
   @ViewChild('speciality', { static: false })
   specialityTmpl: TemplateRef<any>;
@@ -771,9 +763,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), product, ApiProductValidationScheme);
 
-    const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), product.keyMarketsShare, MarketShareValidationScheme);
-    this.productForm.setControl('keyMarketsShare', marketShareForm);
-
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
@@ -827,9 +816,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.isOwner = true;
 
     this.productForm = generateFormFromMetadata(ApiProduct.formMetadata(), this.emptyObject(), ApiProductValidationScheme);
-
-    const marketShareForm = generateFormFromMetadata(marketShareFormMetadata(), {}, MarketShareValidationScheme);
-    this.productForm.setControl('keyMarketsShare', marketShareForm);
 
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), {}, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
@@ -1219,7 +1205,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       { name: 'photo', section: 'product', visible: new FormControl(true), template: this.productLogoTmpl, disableDrag: true },
       { name: 'description', section: 'product', visible: new FormControl(true), template: this.productDescriptionTmpl, disableDrag: true },
       { name: 'origin', section: 'product', visible: new FormControl(true), template: this.originValueTmpl },
-      { name: 'keyMarketsShare', section: 'product', visible: new FormControl(false), template: this.keyMarketsTmpl },
       { name: 'speciality', section: 'product', visible: new FormControl(false), template: this.specialityTmpl },
       { name: 'journeyMarkers', section: 'product', visible: new FormControl(true), disableDrag: true }
     ];

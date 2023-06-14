@@ -618,64 +618,6 @@
   </app-closable>
 </ng-template>
 
-<ng-template #keyMarkets>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('keyMarketsShare')"
-    [reorderMode]="reorderMode"
-    mode="simple"
-    label="Key Markets"
-    i18n-label="@@productLabel.textinput.keyMarkets.label">
-    <div>
-      <app-number-row label="% Share sold in your country:" i18n-label="@@productLabel.textinput.keyMarkets.ourCountry">
-        <textinput
-          [form]="$any(productForm).get('keyMarketsShare.yourCountry')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="% Share sold in East Africa:" i18n-label="@@productLabel.textinput.keyMarkets.eastAfrica">
-        <textinput
-          [form]="$any(productForm).get('keyMarketsShare.eastAfrica')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="% Share sold in the rest of Africa:" i18n-label="@@productLabel.textinput.keyMarkets.africa">
-        <textinput
-          [form]="$any(productForm).get('keyMarketsShare.restOfAfrica')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="% Share sold in Europe:" i18n-label="@@productLabel.textinput.keyMarkets.europe">
-        <textinput [form]="$any(productForm).get('keyMarketsShare.europe')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="% Share sold in USA:" i18n-label="@@productLabel.textinput.keyMarkets.usa">
-        <textinput [form]="$any(productForm).get('keyMarketsShare.usa')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-      <app-number-row label="% Share sold elsewhere:" i18n-label="@@productLabel.textinput.keyMarkets.elsewhere">
-        <textinput [form]="$any(productForm).get('keyMarketsShare.elsewhere')"
-          [label]="null"
-          [readOnly]="!canEdit()"
-          style="width: 100%">
-        </textinput>
-      </app-number-row>
-
-    </div>
-  </app-closable>
-</ng-template>
-
 <ng-template #speciality>
   <app-closable
     [visibilityForm]="visibilityMap.get('speciality')"
