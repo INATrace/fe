@@ -1557,7 +1557,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.processElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.socialResponsibilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.environmentalSustainabilityElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
-    this.pricingTransparencyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.settingsElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.companyElements.sort((a, b) => sortOrderMap.get(a.name) < sortOrderMap.get(b.name) ? -1 : 1);
     this.visibilityMap = new Map();

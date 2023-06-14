@@ -222,29 +222,6 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <h2 i18n="@@productLabel.section.pricingTransparency">Pricing Transparency</h2>
-          <div class="af-form-element">
-            <section
-              cdkDropList
-              class="droppable-list">
-
-              <ng-container *ngFor="let element of pricingTransparencyElements">
-                <div cdkDrag class="row" [class.draggable-box]="!element.disableDrag && reorderMode" [cdkDragDisabled]="element.disableDrag || !reorderMode">
-                  <div class="col-1 px-0 d-flex justify-content-center">
-                    <fa-icon *ngIf="!element.disableDrag && reorderMode" [icon]="faArrowsAlt" class="arrows-move"></fa-icon>
-                  </div>
-                  <div class="col-11">
-                    <ng-template *ngTemplateOutlet="element.template"></ng-template>
-                  </div>
-                </div>
-              </ng-container>
-            </section>
-          </div>
-        </div>
-      </div>
-
-      <div class="af-form-row">
-        <div class="af-form-block--c12">
           <h2>Product journey</h2>
           <div class="af-form-element">
             <section class="droppable-list">
@@ -1443,6 +1420,13 @@
                    label="'Fair prices' tab position" [readOnly]="!canEdit()"></textinput>
       </div>
     </div>
+
+    <ng-container *ngIf="$any(productForm).get('businessToCustomerSettings.tabFairPrices').value">
+      <ng-container *ngFor="let element of pricingTransparencyElements">
+        <ng-template *ngTemplateOutlet="element.template"></ng-template>
+      </ng-container>
+    </ng-container>
+
   </app-closable>
 </ng-template>
 
