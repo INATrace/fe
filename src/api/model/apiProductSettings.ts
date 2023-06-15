@@ -24,10 +24,6 @@ import { ApiDocument } from './apiDocument';
 
 export interface ApiProductSettings { 
     /**
-     * check authenticity
-     */
-    checkAuthenticity?: boolean;
-    /**
      * cost breakdown
      */
     costBreakdown?: boolean;
@@ -35,10 +31,6 @@ export interface ApiProductSettings {
      * GDPR text
      */
     gdprText?: string;
-    /**
-     * give feedback
-     */
-    giveFeedback?: boolean;
     /**
      * increase in income - description
      */
@@ -60,10 +52,6 @@ export interface ApiProductSettings {
      * Terms of use text
      */
     termsOfUseText?: string;
-    /**
-     * trace origin
-     */
-    traceOrigin?: boolean;
 }
 
 /**
@@ -75,10 +63,6 @@ export namespace ApiProductSettings {
      */
     export enum Properties {
         /**
-         * check authenticity
-         */
-        checkAuthenticity = 'checkAuthenticity',
-        /**
          * cost breakdown
          */
         costBreakdown = 'costBreakdown',
@@ -86,10 +70,6 @@ export namespace ApiProductSettings {
          * GDPR text
          */
         gdprText = 'gdprText',
-        /**
-         * give feedback
-         */
-        giveFeedback = 'giveFeedback',
         /**
          * increase in income - description
          */
@@ -110,11 +90,7 @@ export namespace ApiProductSettings {
         /**
          * Terms of use text
          */
-        termsOfUseText = 'termsOfUseText',
-        /**
-         * trace origin
-         */
-        traceOrigin = 'traceOrigin'
+        termsOfUseText = 'termsOfUseText'
     }
 
     /**
@@ -137,17 +113,6 @@ export namespace ApiProductSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'checkAuthenticity',
-                    classname: 'ApiProductSettings',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'costBreakdown',
                     classname: 'ApiProductSettings',
                     dataType: 'boolean',
@@ -162,17 +127,6 @@ export namespace ApiProductSettings {
                     name: 'gdprText',
                     classname: 'ApiProductSettings',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'giveFeedback',
-                    classname: 'ApiProductSettings',
-                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -245,26 +199,11 @@ export namespace ApiProductSettings {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'traceOrigin',
-                    classname: 'ApiProductSettings',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                checkAuthenticity: [
-                ],
                 costBreakdown: [
                 ],
                 gdprText: [
-                ],
-                giveFeedback: [
                 ],
                 incomeIncreaseDescription: [
                 ],
@@ -278,8 +217,6 @@ export namespace ApiProductSettings {
                 ],
                 termsOfUseText: [
                 ],
-                traceOrigin: [
-                ],
             }
         }
     }
@@ -287,16 +224,10 @@ export namespace ApiProductSettings {
   // export const ApiProductSettingsValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               checkAuthenticity: {
-  //                   validators: []
-  //               },
   //               costBreakdown: {
   //                   validators: []
   //               },
   //               gdprText: {
-  //                   validators: []
-  //               },
-  //               giveFeedback: {
   //                   validators: []
   //               },
   //               incomeIncreaseDescription: {
@@ -315,9 +246,6 @@ export namespace ApiProductSettings {
   //                   validators: []
   //               },
   //               termsOfUseText: {
-  //                   validators: []
-  //               },
-  //               traceOrigin: {
   //                   validators: []
   //               },
   //     }

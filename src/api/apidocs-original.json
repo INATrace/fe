@@ -15844,11 +15844,6 @@
             },
             "type": "array"
           },
-          "knowledgeBlog": {
-            "description": "knowledge blog",
-            "example": false,
-            "type": "boolean"
-          },
           "labels": {
             "description": "labels",
             "items": {
@@ -16265,11 +16260,6 @@
             },
             "type": "array"
           },
-          "knowledgeBlog": {
-            "description": "knowledge blog",
-            "example": false,
-            "type": "boolean"
-          },
           "labelId": {
             "description": "label id",
             "format": "int64",
@@ -16661,11 +16651,6 @@
       },
       "ApiProductSettings": {
         "properties": {
-          "checkAuthenticity": {
-            "description": "check authenticity",
-            "example": false,
-            "type": "boolean"
-          },
           "costBreakdown": {
             "description": "cost breakdown",
             "example": false,
@@ -16674,11 +16659,6 @@
           "gdprText": {
             "description": "GDPR text",
             "type": "string"
-          },
-          "giveFeedback": {
-            "description": "give feedback",
-            "example": false,
-            "type": "boolean"
           },
           "incomeIncreaseDescription": {
             "description": "increase in income - description",
@@ -16713,11 +16693,6 @@
           "termsOfUseText": {
             "description": "Terms of use text",
             "type": "string"
-          },
-          "traceOrigin": {
-            "description": "trace origin",
-            "example": false,
-            "type": "boolean"
           }
         },
         "type": "object"

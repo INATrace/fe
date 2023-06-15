@@ -45,14 +45,14 @@ export class ProductLabelStatisticsPageComponent implements OnInit, OnDestroy {
 
   goToLink: string = this.router.url.substr(0, this.router.url.lastIndexOf("/"));
 
-  showAuth: boolean = true;
-  showOrig: boolean = true;
+  showAuth = true;
+  showOrig = true;
 
   locationsForm = new FormGroup({
     visitLoc: new FormControl(true),
     authLoc: new FormControl(false),
     origLoc: new FormControl(false)
-    })
+    });
 
   constructor(
     private globalEventsManager: GlobalEventManagerService,
@@ -85,21 +85,12 @@ export class ProductLabelStatisticsPageComponent implements OnInit, OnDestroy {
 
     let sub = this.productController.getProductLabelUsingGET(this.id).
     subscribe(lab => {
-      this.getValues();
       if(lab.status == "OK") {
         this.getStatistcsData(lab.data.uuid);
       }
     }, err => this.globalEventsManager.showLoading(true)
     )
     this.subs.push(sub);
-  }
-
-  async getValues() {
-    let res = await this.productController.getProductLabelContentUsingGET(this.id).pipe(take(1)).toPromise();
-    if (res && res.status === 'OK' && res.data) {
-      if (res.data.settings && res.data.settings.checkAuthenticity != null) this.showAuth = res.data.settings.checkAuthenticity;
-      if (res.data.settings && res.data.settings.traceOrigin != null) this.showOrig = res.data.settings.traceOrigin;
-    }
   }
 
   getStatistcsData(uuid: string) {

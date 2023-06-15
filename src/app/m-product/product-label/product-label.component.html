@@ -57,7 +57,7 @@
 
                   <div style="margin-right: -8px;">
 
-                    <div *ngIf="showBatches && canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
+                    <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="batches()" i18n="@@productLabel.labelActions.batches">
                       <fa-icon [icon]="faCodeBranch" class="button-icon2"></fa-icon>Batches
                     </div>
                     <div *ngIf="canEdit()" class="tool-button" [class.side-menu-item-disabled]="changed" (click)="feedbacks()" i18n="@@productLabel.labelActions.feedback">
@@ -733,7 +733,6 @@
 </ng-template>
 
 <!-- SETTINGS TEMPLATES -->
-
 <ng-template #language>
   <app-closable
     [visibilityForm]="visibilityMap.get('settings.language')"
@@ -748,84 +747,6 @@
     </textinput>
   </app-closable>
 </ng-template>
-
-<ng-template #knowledgeBlog>
-  <app-closable
-  [visibilityForm]="visibilityMap.get('knowledgeBlog')"
-    [reorderMode]="reorderMode"
-    [nonClosable]="true"
-    [openOnValueChange]="openOnStart">
-    <checkbox-input
-    [form]="$any(productForm).get('knowledgeBlog')"
-    [disabled]="!canEdit()">
-      <checkbox-input-rich-label
-        style="font-weight: 300;"
-        i18n="@@productLabel.knowledgeBlog.label">
-        Show "Knowledge blog" section
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
-<ng-template #checkAuthenticity>
-  <span>Visible by end users</span>
-
-  <app-closable
-    [visibilityForm]="visibilityMap.get('settings.checkAuthenticity')"
-    [reorderMode]="reorderMode"
-    [nonClosable]="true"
-    class="af-form-element--nolabel"
-    [openOnValueChange]="openOnStart">
-    <checkbox-input
-      [form]="$any(productForm).get('settings.checkAuthenticity')"
-      [disabled]="!canEdit()">
-      <checkbox-input-rich-label
-        style="font-weight: 300;"
-        i18n="@@productLabel.checkbox.checkAuthenticity.label">
-        Button "Check Authenticity"
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
-<ng-template #traceOrigin>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('settings.traceOrigin')"
-    [reorderMode]="reorderMode"
-    [nonClosable]="true"
-    class="af-form-element--nolabel"
-    [openOnValueChange]="openOnStart">
-    <checkbox-input
-      [form]="$any(productForm).get('settings.traceOrigin')"
-      [disabled]="!canEdit()">
-      <checkbox-input-rich-label
-        style="font-weight: 300;"
-        i18n="@@productLabel.checkbox.traceOrigin.label">
-        Button "Trace origin"
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
-<ng-template #giveFeedback>
-  <app-closable
-    [visibilityForm]="visibilityMap.get('settings.giveFeedback')"
-    [reorderMode]="reorderMode"
-    [nonClosable]="true"
-    class="af-form-element--last"
-    [openOnValueChange]="openOnStart">
-    <checkbox-input
-      [form]="$any(productForm).get('settings.giveFeedback')"
-      [disabled]="!canEdit()">
-      <checkbox-input-rich-label
-        style="font-weight: 300;"
-        i18n="@@productLabel.checkbox.giveFeedback.label">
-        Button "Give feedback"
-      </checkbox-input-rich-label>
-    </checkbox-input>
-  </app-closable>
-</ng-template>
-
 
 <ng-template #gdprText>
   <app-closable

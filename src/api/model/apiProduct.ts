@@ -58,10 +58,6 @@ export interface ApiProduct {
      */
     journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
-     * knowledge blog
-     */
-    knowledgeBlog?: boolean;
-    /**
      * labels
      */
     labels?: Array<ApiProductLabelValues>;
@@ -108,10 +104,6 @@ export namespace ApiProduct {
          * Product journey path
          */
         journeyMarkers = 'journeyMarkers',
-        /**
-         * knowledge blog
-         */
-        knowledgeBlog = 'knowledgeBlog',
         /**
          * labels
          */
@@ -216,17 +208,6 @@ export namespace ApiProduct {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiProductJourneyMarker'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'knowledgeBlog',
-                    classname: 'ApiProduct',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     metadata: ApiProductLabelValues.formMetadata,
@@ -351,8 +332,6 @@ export namespace ApiProduct {
                 ],
                 journeyMarkers: [
                 ],
-                knowledgeBlog: [
-                ],
                 labels: [
                 ],
                 name: [
@@ -397,9 +376,6 @@ export namespace ApiProduct {
   //                   validators: []
   //               },
   //               journeyMarkers: {
-  //                   validators: []
-  //               },
-  //               knowledgeBlog: {
   //                   validators: []
   //               },
   //               labels: {

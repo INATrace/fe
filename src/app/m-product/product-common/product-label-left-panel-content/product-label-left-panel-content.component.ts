@@ -28,8 +28,6 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
   @Input()
   changed = false;
 
-  showKnowledgeBlog = false;
-
   isSystemAdmin = false;
 
   constructor(
@@ -48,20 +46,12 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
 
     if (this.create) { return; }
     this.preparePhoto().then();
-    this.knowledgeBlogSection().then();
   }
 
   async preparePhoto() {
     const resp = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
     if (resp.status === 'OK' && resp.data && resp.data.photo) {
       this.imgStorageKey = resp.data.photo.storageKey;
-    }
-  }
-
-  async knowledgeBlogSection() {
-    const res = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
-    if (res.status === 'OK' && res.data && res.data.knowledgeBlog) {
-      this.showKnowledgeBlog = res.data.knowledgeBlog;
     }
   }
 

@@ -140,12 +140,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     return this.publishString;
   }
 
-  get showBatches() {
-    if (this.productForm && this.productForm.get('settings')) {
-      return this.productForm.get('settings.traceOrigin').value;
-    }
-  }
-
   get downloadFileName() {
     const productName = this.productForm.get('name').value;
     const LabelName = this.currentLabelName;
@@ -487,15 +481,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild('language', { static: false })
   languageTmpl: TemplateRef<any>;
 
-  @ViewChild('checkAuthenticity', { static: false })
-  checkAuthenticityTmpl: TemplateRef<any>;
-
-  @ViewChild('traceOrigin', { static: false })
-  traceOriginTmpl: TemplateRef<any>;
-
-  @ViewChild('giveFeedback', { static: false })
-  giveFeedbackTmpl: TemplateRef<any>;
-
   @ViewChild('gdprText', { static: false })
   gdprTextTmpl: TemplateRef<any>;
 
@@ -504,9 +489,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   @ViewChild('termsOfUseText', { static: false })
   termsOfUseTextTmpl: TemplateRef<any>;
-
-  @ViewChild('knowledgeBlog', { static: false })
-  knowledgeBlogTmpl: TemplateRef<any>;
 
   settingsElements: any[] = [];
 
@@ -1095,9 +1077,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (this.action === 'labels') {
       this.settingsElements = [
         { name: 'settings.language', section: 'settings', visible: new FormControl(false), template: this.languageTmpl },
-        { name: 'settings.checkAuthenticity', section: 'settings', visible: new FormControl(false), template: this.checkAuthenticityTmpl },
-        { name: 'settings.traceOrigin', section: 'settings', visible: new FormControl(false), template: this.traceOriginTmpl },
-        { name: 'settings.giveFeedback', section: 'settings', visible: new FormControl(false), template: this.giveFeedbackTmpl },
         { name: 'settings.gdprText', section: 'settings', visible: new FormControl(false), template: this.gdprTextTmpl },
         { name: 'settings.privacyPolicyText', section: 'settings', visible: new FormControl(false), template: this.privacyPolicyTextTmpl },
         { name: 'settings.termsOfUseText', section: 'settings', visible: new FormControl(false), template: this.termsOfUseTextTmpl }
@@ -1106,10 +1085,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
     this.settingsElements = [
       { name: 'settings.language', section: 'settings', visible: new FormControl(false), template: this.languageTmpl },
-      { name: 'knowledgeBlog', section: 'settings', visible: new FormControl(false), template: this.knowledgeBlogTmpl },
-      { name: 'settings.checkAuthenticity', section: 'settings', visible: new FormControl(false), template: this.checkAuthenticityTmpl },
-      { name: 'settings.traceOrigin', section: 'settings', visible: new FormControl(false), template: this.traceOriginTmpl },
-      { name: 'settings.giveFeedback', section: 'settings', visible: new FormControl(false), template: this.giveFeedbackTmpl },
       { name: 'settings.gdprText', section: 'settings', visible: new FormControl(false), template: this.gdprTextTmpl },
       { name: 'settings.privacyPolicyText', section: 'settings', visible: new FormControl(false), template: this.privacyPolicyTextTmpl },
       { name: 'settings.termsOfUseText', section: 'settings', visible: new FormControl(false), template: this.termsOfUseTextTmpl }

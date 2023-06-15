@@ -46,10 +46,6 @@ export interface ApiProductLabelContent {
      */
     journeyMarkers?: Array<ApiProductJourneyMarker>;
     /**
-     * knowledge blog
-     */
-    knowledgeBlog?: boolean;
-    /**
      * label id
      */
     labelId?: number;
@@ -87,10 +83,6 @@ export namespace ApiProductLabelContent {
          * Product journey path
          */
         journeyMarkers = 'journeyMarkers',
-        /**
-         * knowledge blog
-         */
-        knowledgeBlog = 'knowledgeBlog',
         /**
          * label id
          */
@@ -170,17 +162,6 @@ export namespace ApiProductLabelContent {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiProductJourneyMarker'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'knowledgeBlog',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -288,8 +269,6 @@ export namespace ApiProductLabelContent {
                 ],
                 journeyMarkers: [
                 ],
-                knowledgeBlog: [
-                ],
                 labelId: [
                 ],
                 name: [
@@ -326,9 +305,6 @@ export namespace ApiProductLabelContent {
   //                   validators: []
   //               },
   //               journeyMarkers: {
-  //                   validators: []
-  //               },
-  //               knowledgeBlog: {
   //                   validators: []
   //               },
   //               labelId: {

@@ -243,9 +243,6 @@ export const ApiProductValidationScheme = {
     responsibility: ApiResponsibilityValidationScheme,
     sustainability: ApiSustainabilityValidationScheme,
     settings: ApiProductSettingsValidationScheme,
-    knowledgeBlog: {
-      validators: []
-    },
     businessToCustomerSettings: ApiBusinessToCustomerSettingsValidationScheme,
     journeyMarkers: {
       validators: [],
