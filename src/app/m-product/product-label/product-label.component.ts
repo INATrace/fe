@@ -19,7 +19,6 @@ import { ApiProductLabel } from 'src/api/model/apiProductLabel';
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
 import { ApiResponseApiBaseEntity } from 'src/api/model/apiResponseApiBaseEntity';
 import { ApiResponsibility } from 'src/api/model/apiResponsibility';
-import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
 import { ApiSustainability } from 'src/api/model/apiSustainability';
 import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
@@ -37,7 +36,6 @@ import {
   ApiCompanyValidationScheme,
   ApiProductOriginValidationScheme,
   ApiProductValidationScheme,
-  ApiResponsibilityFarmerPictureValidationScheme,
   ApiValueChainValidationScheme,
   pricingTransparencyFormMetadata,
   pricingTransparencyValidationScheme
@@ -265,7 +263,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
       (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-      this.initializeListManagers();
       const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
       const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
       companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
@@ -364,12 +361,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   // SOCIAL RESPONSIBILITY
   @ViewChild('laborPolicies', { static: false })
   laborPoliciesTmpl: TemplateRef<any>;
-
-  @ViewChild('relationshipWithFarmersSuppliers', { static: false })
-  relationshipWithFarmersSuppliersTmpl: TemplateRef<any>;
-
-  @ViewChild('farmerStory', { static: false })
-  farmerStoryTmpl: TemplateRef<any>;
 
   socialResponsibilityElements: any[] = [];
 
@@ -543,17 +534,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   graphicFairPricesCodes = EnumSifrant.fromObject(this.graphicFairPriceUnits);
 
-  static ApiResponsibilityFarmerPictureCreateEmptyObject(): ApiResponsibilityFarmerPicture {
-    const obj = ApiResponsibilityFarmerPicture.formMetadata();
-    return defaultEmptyObject(obj) as ApiResponsibilityFarmerPicture;
-  }
-
-  static ApiResponsibilityFarmerPictureEmptyObjectFormFactory(): () => FormControl {
-    return () => {
-      return new FormControl(ProductLabelComponent.ApiResponsibilityFarmerPictureCreateEmptyObject(), ApiResponsibilityFarmerPictureValidationScheme.validators);
-    };
-  }
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -673,8 +653,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const pricingTransparencyForm = generateFormFromMetadata(pricingTransparencyFormMetadata(), product.settings.pricingTransparency, pricingTransparencyValidationScheme);
     (this.productForm.get('settings') as FormGroup).setControl('pricingTransparency', pricingTransparencyForm);
 
-    this.initializeListManagers();
-
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     const oldMediaLinks = this.productForm.get('company.mediaLinks').value;
     companyFormMediaLinks.setValue({ ...companyFormMediaLinks.value, ...oldMediaLinks });
@@ -687,14 +665,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     this.productForm.updateValueAndValidity();
     this.initializeOriginLocations();
     this.initializeMarkers();
-  }
-
-  initializeListManagers() {
-    this.farmerPhotosListManager = new ListEditorManager<ApiResponsibilityFarmerPicture>(
-      this.productForm.get('responsibility.pictures') as FormArray,
-      ProductLabelComponent.ApiResponsibilityFarmerPictureEmptyObjectFormFactory(),
-      ApiResponsibilityFarmerPictureValidationScheme
-    );
   }
 
   emptyObject() {
@@ -743,7 +713,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         ApiBusinessToCustomerSettingsValidationScheme);
     this.productForm.setControl('businessToCustomerSettings', businessToCustomerSettings);
 
-    this.initializeListManagers();
     const companyFormMediaLinks = CompanyDetailComponent.generateSocialMediaForm();
     (this.productForm.get('company') as FormGroup).setControl('mediaLinks', companyFormMediaLinks);
     this.productForm.updateValueAndValidity();
@@ -1093,9 +1062,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   generateSocialResponsibilityElements() {
     this.socialResponsibilityElements = [
-      { name: 'responsibility.laborPolicies', section: 'responsibility', visible: new FormControl(false), template: this.laborPoliciesTmpl },
-      { name: 'responsibility.relationship', section: 'responsibility', visible: new FormControl(false), template: this.relationshipWithFarmersSuppliersTmpl },
-      { name: 'responsibility.farmerStory', section: 'responsibility', visible: new FormControl(false), template: this.farmerStoryTmpl },
+      { name: 'responsibility.laborPolicies', section: 'responsibility', visible: new FormControl(false), template: this.laborPoliciesTmpl }
     ];
   }
 
@@ -1301,27 +1268,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   prepareSocialResponsibilityElements(): any[] {
     const elts = [];
-    this.socialResponsibilityElements.forEach(elt => {
-      if (elt.name === 'responsibility.farmerStory') {
-        elts.push({
-          name: 'responsibility.farmer',
-          section: elt.section,
-          visible: elt.visible
-        });
-        elts.push({
-          name: 'responsibility.pictures',
-          section: elt.section,
-          visible: elt.visible
-        });
-        elts.push({
-          name: 'responsibility.story',
-          section: elt.section,
-          visible: elt.visible
-        });
-      } else {
-        elts.push(elt);
-      }
-    });
+    this.socialResponsibilityElements.forEach(elt => elts.push(elt));
     return elts;
   }
 
@@ -1407,7 +1354,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
     const newFieldMap = new Map();
     const sortOrderMap = new Map();
-    let farmerStoryVisible = false;
     let increaseVisible = false;
     this.generateDefaultElements();
 
@@ -1421,7 +1367,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     i = 0;
 
     label.fields.forEach(field => {
-      if (field.name === 'responsibility.farmer') { farmerStoryVisible = field.visible; }
       if (field.name === 'settings.incomeIncreaseDescription') { increaseVisible = field.visible; }
       newFieldMap.set(field.name, field);
       sortOrderMap.set(field.name, i);
@@ -1442,7 +1387,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
         el.visible.setValue(false);
       }
 
-      if (el.name === 'responsibility.farmerStory') { el.visible.setValue(farmerStoryVisible); }
       if (el.name === 'settings.increaseIncome') { el.visible.setValue(increaseVisible); }
       this.visibilityMap.set(el.name, el.visible);
     });
@@ -1619,21 +1563,6 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (fromSocialResp) {
       if (data.responsibility.laborPolicies) {
         this.productForm.get('responsibility.laborPolicies').setValue(data.responsibility.laborPolicies);
-      }
-      if (data.responsibility.relationship) {
-        this.productForm.get('responsibility.relationship').setValue(data.responsibility.relationship);
-      }
-      if (data.responsibility.farmer) {
-        this.productForm.get('responsibility.farmer').setValue(data.responsibility.farmer);
-      }
-      if (data.responsibility.pictures) {
-        (this.productForm.get('responsibility.pictures') as FormArray).clear();
-        data.responsibility.pictures.forEach(pic => {
-          (this.productForm.get('responsibility.pictures') as FormArray).push(new FormControl(pic));
-        });
-      }
-      if (data.responsibility.story) {
-        this.productForm.get('responsibility.story').setValue(data.responsibility.story);
       }
     } else {
       if (data.sustainability.production) {

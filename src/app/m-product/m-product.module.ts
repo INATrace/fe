@@ -21,7 +21,6 @@ import { MProductRoutingModule } from './m-product-routing.module';
 import { ProductLabelFeedbackPageComponent } from './product-label-feedback-page/product-label-feedback-page.component';
 import { ProductLabelStatisticsPageComponent } from './product-label-statistics-page/product-label-statistics-page.component';
 import { StatisticsCardComponent } from './product-label-statistics-page/statistics-card/statistics-card.component';
-import { FarmerStoryPhotosComponent } from './product-label/farmer-story-photos/farmer-story-photos.component';
 import { LabelRedirectToProductPageComponent } from './product-label/label-redirect-to-product-page/label-redirect-to-product-page.component';
 import { LabelSelectorCardComponent } from './product-label/label-selector/label-selector-card/label-selector-card.component';
 import { LabelSelectorComponent } from './product-label/label-selector/label-selector.component';
@@ -51,7 +50,6 @@ import { NewProductModalComponent } from './product-list/new-product-modal/new-p
     StatisticsCardComponent,
     PrefillLocationsFromProductModalComponent,
     ProductionRecordItemComponent,
-    FarmerStoryPhotosComponent,
     LabelSelectorComponent,
     NumberRowComponent,
     PrefillProductSelectionModalComponent,

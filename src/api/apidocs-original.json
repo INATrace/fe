@@ -18901,41 +18901,9 @@
       },
       "ApiResponsibility": {
         "properties": {
-          "farmer": {
-            "description": "farmers story - farmer or community",
-            "type": "string"
-          },
           "laborPolicies": {
             "description": "labor policies - Briefly describe labor policies you have in place in your company",
             "type": "string"
-          },
-          "pictures": {
-            "description": "farmers story - pictures",
-            "items": {
-              "$ref": "#/components/schemas/ApiResponsibilityFarmerPicture"
-            },
-            "type": "array"
-          },
-          "relationship": {
-            "description": "storage - Briefly describe your storage procedures",
-            "type": "string"
-          },
-          "story": {
-            "description": "farmers story - text",
-            "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "ApiResponsibilityFarmerPicture": {
-        "properties": {
-          "description": {
-            "description": "description of this picture",
-            "type": "string"
-          },
-          "document": {
-            "$ref": "#/components/schemas/ApiDocument",
-            "description": "picture document"
           }
         },
         "type": "object"

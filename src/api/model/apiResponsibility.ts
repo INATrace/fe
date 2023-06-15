@@ -18,31 +18,14 @@
  */
 
 
-import { ApiResponsibilityFarmerPicture } from './apiResponsibilityFarmerPicture';
 
 
 
 export interface ApiResponsibility { 
     /**
-     * farmers story - farmer or community
-     */
-    farmer?: string;
-    /**
      * labor policies - Briefly describe labor policies you have in place in your company
      */
     laborPolicies?: string;
-    /**
-     * farmers story - pictures
-     */
-    pictures?: Array<ApiResponsibilityFarmerPicture>;
-    /**
-     * storage - Briefly describe your storage procedures
-     */
-    relationship?: string;
-    /**
-     * farmers story - text
-     */
-    story?: string;
 }
 
 /**
@@ -54,25 +37,9 @@ export namespace ApiResponsibility {
      */
     export enum Properties {
         /**
-         * farmers story - farmer or community
-         */
-        farmer = 'farmer',
-        /**
          * labor policies - Briefly describe labor policies you have in place in your company
          */
-        laborPolicies = 'laborPolicies',
-        /**
-         * farmers story - pictures
-         */
-        pictures = 'pictures',
-        /**
-         * storage - Briefly describe your storage procedures
-         */
-        relationship = 'relationship',
-        /**
-         * farmers story - text
-         */
-        story = 'story'
+        laborPolicies = 'laborPolicies'
     }
 
 
@@ -85,52 +52,7 @@ export namespace ApiResponsibility {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'farmer',
-                    classname: 'ApiResponsibility',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'laborPolicies',
-                    classname: 'ApiResponsibility',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiResponsibilityFarmerPicture.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'pictures',
-                    classname: 'ApiResponsibility',
-                    dataType: 'Array&lt;ApiResponsibilityFarmerPicture&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiResponsibilityFarmerPicture'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'relationship',
-                    classname: 'ApiResponsibility',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'story',
                     classname: 'ApiResponsibility',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -139,15 +61,7 @@ export namespace ApiResponsibility {
                 },
             ],
             validators: {
-                farmer: [
-                ],
                 laborPolicies: [
-                ],
-                pictures: [
-                ],
-                relationship: [
-                ],
-                story: [
                 ],
             }
         }
@@ -156,19 +70,7 @@ export namespace ApiResponsibility {
   // export const ApiResponsibilityValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               farmer: {
-  //                   validators: []
-  //               },
   //               laborPolicies: {
-  //                   validators: []
-  //               },
-  //               pictures: {
-  //                   validators: []
-  //               },
-  //               relationship: {
-  //                   validators: []
-  //               },
-  //               story: {
   //                   validators: []
   //               },
   //     }

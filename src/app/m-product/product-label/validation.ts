@@ -68,21 +68,9 @@ const ApiResponsibilityValidationScheme = {
   forceExpand: true,
   validators: [],
   fields: {
-    farmer: {
-      validators: []
-    },
     laborPolicies: {
       validators: [Validators.required]
-    },
-    pictures: {
-      validators: []
-    },
-    relationship: {
-      validators: []
-    },
-    story: {
-      validators: []
-    },
+    }
   }
 } as SimpleValidationScheme<ApiResponsibility>;
 
