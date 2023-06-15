@@ -18,7 +18,6 @@ html {
 body {
   height: 100%;
     margin:0;
-    // font-family: 'Signika','Helvetica Neue','sans-serif';
     font-family: 'Poppins', sans-serif;
     font-size: 1rem; //16px
     font-weight:normal;
@@ -26,7 +25,6 @@ body {
     color:$secondary;
     text-align:left;
     background-color:$body-background;
-    // letter-spacing: 0.5px;
 }
 hr {
     box-sizing:content-box;
@@ -42,11 +40,13 @@ p {
     margin-bottom:1rem
 }
 
-.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
-    margin-bottom:.5rem;
-    font-weight:500;
-    line-height:1.2;
-    color:$primary;
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+  color: $primary;
 }
 .h1,h1 {
     font-size:2.5rem
@@ -120,10 +120,6 @@ p {
   line-height: 20px;
   letter-spacing: 0.5px;
   color: $secondary;
-
-  &.landing-page {
-    color: $landing-primary;
-  }
 }
 
 .text-input {
@@ -249,93 +245,6 @@ p {
   margin-right: 80px;
 }
 
-// @import 'variables';
-// @import '~bootstrap/scss/bootstrap';
-// @import "~@ng-select/ng-select/scss/default.theme.scss";
-// @import '~ngx-toastr/toastr';
-// @import 'scss/fontawesome.scss';
-// @import 'scss/solid.scss';
-// @import 'scss/signika-font.scss';
-
-// body{
-//     margin:0;
-//     font-family: 'Signika','Helvetica Neue','sans-serif';
-//     font-size: 1rem; //16px
-//     font-weight:normal;
-//     line-height: 1.563rem; //25px
-//     color:$tertiary;
-//     text-align:left;
-//     background-color:#fff
-// }
-// hr{
-//     box-sizing:content-box;
-//     height:0;
-//     overflow:visible
-// }
-// h1,h2,h3,h4,h5,h6{
-//     margin-top:0;
-//     margin-bottom:.5rem
-// }
-// p{
-//     margin-top:0;
-//     margin-bottom:1rem
-// }
-
-// .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
-//     margin-bottom:.5rem;
-//     font-weight:500;
-//     line-height:1.2;
-//     color:$primary;
-// }
-// .h1,h1{
-//     font-size:2.5rem
-// }
-// .h2,h2{
-//     font-size:2.25rem
-// }
-// .h3,h3{
-//     font-size:1.75rem
-// }
-// .h4,h4{
-//     font-size:1.5rem
-// }
-// .h5,h5{
-//     font-size:1.25rem
-// }
-// .h6,h6{
-//     font-size:1rem
-// }
-
-
-
-// .container{
-//     width:100%;
-//     padding-right:15px;
-//     padding-left:15px;
-//     margin-right:auto;
-//     margin-left:auto;
-// }
-// @media (min-width:576px){
-//     .container{
-//         max-width:540px
-//     }
-// }
-// @media (min-width:768px){
-//     .container{
-//         max-width:720px
-//     }
-// }
-// @media (min-width:992px){
-//     .container{
-//         max-width:960px
-//     }
-// }
-// @media (min-width:1200px){
-//     .container{
-//         max-width:1140px
-//     }
-// }
-
 // /////////////////////////////////////////
 // //// Button style override
 // /////////////////////////////////////////
@@ -419,40 +328,6 @@ button.no-shadow {
     box-shadow: none !important;
 }
 
-// Button styles used on landing page
-button.btn, a.btn {
-  &.landing-page {
-    color: white;
-    background-color: $landing-primary;
-    border-color: $landing-primary;
-    transition: background-color 0.4s ease-out 0s;
-
-    &:hover {
-      color: white;
-      background-color: $landing-primary;
-      border-color: $landing-primary;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-
-    &:focus {
-      border-color: $landing-primary;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-  }
-}
-
-button.btn.btn-outlined, a.btn.btn-outlined {
-  &.landing-page {
-    background-color: transparent;
-    color: $landing-primary;
-
-    &:hover {
-      background-color: transparent;
-      color: $landing-primary;
-    }
-  }
-}
-
 .tagitem {
   // display: inline-block;
   // margin-right: 0.5rem;
@@ -477,39 +352,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 .hover-pointer {
     cursor: pointer;
 }
-
-// .translation {
-//     display: none;
-// }
-
-// .card-border-like-textfield {
-//     background-color: #fff;
-//     background-clip: padding-box;
-//     border: 1px solid $gray-400;
-//     border-radius: 0.25rem;
-// }
-
-// span.newline {
-//     display: block;
-// }
-
-// .side-block {
-//     background: $gray-100;
-// }
-
-// .c-disabled {
-//     opacity: 0.65;
-//     @include themify {
-//         background-color: $color-secondary !important
-//     }
-
-
-// }
-
-// .c-capitalize-first:first-letter {
-//     text-transform: capitalize
-// }
-
 
 // ///////////////////////////////////////////////////////////////
 // // Typeahead dropdown
@@ -550,15 +392,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
   }
 }
 
-// body .dropdown {
-//   .dropdown-menu.show {
-//     top: 0px;
-//     left: 0px;
-//     will-change: transform;
-//     transform: translate(158px, 50px) !important;
-//   }
-// }
-
 // Textfield warning colors
 .dropdown-menu-warning .dropdown-menu {
     @include themify {
@@ -582,8 +415,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 ///////////////////////////////////////////////////////////////
 // ng-select fix
 ///////////////////////////////////////////////////////////////
-
-// senčka za selected
 .ng-dropdown-panel
 .ng-dropdown-panel-items
 .ng-option.ng-option-marked {
@@ -624,9 +455,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     height: calc(1.5em + 0.75rem + 2px);
 }
 
-// tako uvozimo lokalne stile. Poglej na vrhu, kaj od bootstrapa moramo uvoziti na vrhu lokalnega scss
-// @import "./app/shared/single-choice/single-choice.component.scss";
-
 .ng-dropdown-panel
 .ng-dropdown-panel-items
 .ng-option {
@@ -660,17 +488,8 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 }
 
 ng-select.ng-invalid.ng-touched .ng-select-container {
-    // border-color: #dc3545;
-    // @include themify {
-    //     border-color: $color-danger;
-    // }
     border-color: $danger;
-    // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
 }
-
-// .ng-dropdown-footer {
-//     // background-color: $gray-300;
-// }
 
 .sc-invalid-feedback {
     width: 100%;
@@ -688,221 +507,9 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   color: $warning;
 }
 
-// .ab-invalid-feedback {
-//     width: 100%;
-//     margin-top: 0.25rem;
-//     font-size: 80%;
-//     @include themify {
-//         color: $color-danger;
-//     }
-// }
-
-// .ab-invalid-feedback-label-color {
-//     @include themify {
-//         color: $color-danger;
-//     }
-// }
-
-
-
-// .no-focus-highlight:focus,.no-focus-highlight:active {
-//     outline: none !important;
-//     box-shadow: none;
-//  }
-
-
-// ///////////////////////////////////////////////////////////////
-// // breadcrumb
-// ///////////////////////////////////////////////////////////////
-// .breadcrumb {
-//     background-color: transparent;
-//     padding-inline-start: 0px;
-// }
-
-// .breadcrumb-item + .breadcrumb-item::before {
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     font-weight: 600;
-//     content: ">";
-// }
-
-
-
-// ///////////////////////////////////////////////////////////////
-// // dashboard pages, breadcrumb
-// ///////////////////////////////////////////////////////////////
-
-// .main-page-title {
-//     margin-top: 1.5rem;
-//     margin-bottom: 1rem;
-//     font-size: 1.5rem;
-//     @include themify {
-//         color: $color-dark;
-//     }
-// }
-
-// .full-page {
-//     min-height: 100vh;
-//     padding-left: 3rem;
-// }
-
-// .dashboard--font {
-//     font-weight: 100;
-// }
-
-// .dashboard-card-title {
-//     font-weight: 300;
-//     font-size: 1.1rem;
-//     margin-top: 1rem;
-//     margin-bottom: 1rem;
-// }
-
-// .c-comment-text {
-//     color: $gray-600;
-//     font-size: 0.9em;
-//     font-weight: 100;
-// }
-
-// .c-separator {
-//     height: 1px;
-//     border-bottom:1px solid $gray-400;
-//     margin-top: 1px;
-//     margin-bottom: 1px;
-// }
-
-// .c-separator-2 {
-//     height: 1px;
-//     border-bottom:2px solid $gray-400;
-//     margin-top: 1px;
-//     margin-bottom: 1px;
-// }
-
-// .c-operation-title {
-//     text-transform: uppercase;
-//     font-size: 28px;
-// }
-
-// .c-card-capital-title {
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 1rem;
-//     margin-bottom: 1rem;
-// }
-
-// .c-key-value-listing {
-//     font-weight: 400;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-// }
-
-// .c-listing-title {
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 0.5rem;
-//     margin-bottom: 0.5rem;
-// }
-
-// .c-listing-title-no-upper {
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 0.5rem;
-//     margin-bottom: 0.5rem;
-// }
-
-// .c-step-title {
-//     @include themify {
-//         color: $color-dark;
-//     }
-//     font-weight: bold;
-//     font-size: 1.3rem;
-//     text-transform: uppercase;
-//     margin-bottom: 1rem;
-// }
-
-// /////////////////////////////////////
-// // Accordion
-// /////////////////////////////////////
-
-// .accordion {
-//     background-color: $gray-100;
-//     margin-left: 0;
-//     padding-left: 0;
-//     padding-top: 4em;
-//     width: 100%;
-// }
-
-// .accordion .card {
-//     border-radius: 0;
-//     background-color: $gray-100;
-//     border-right-width: 0;
-//     border-left-width: 0;
-// }
-
-// .accordion .card .card-header {
-//     background-color: $gray-100;
-// }
-
-// /////////////////////////////////////
-// // Page transitions
-// /////////////////////////////////////
-
-// .generic-main-panel-fade-in {
-// 	opacity: 1;
-// 	animation-name: fadeInOpacity;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 0.4s;
-// }
-
-// @keyframes fadeInOpacity {
-// 	0% {
-// 		opacity: 0;
-// 	}
-// 	100% {
-// 		opacity: 1;
-// 	}
-// }
-
-// .blink-priloga-on-create > div {
-// 	opacity: 1;
-// 	animation-name: blinkOnCreate;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 1s;
-// }
-
-// @keyframes blinkOnCreate {
-// 	0% {
-//         opacity: 1;
-//     }
-// 	50% {
-//         opacity: 1;
-//     }
-// 	75% {
-//         opacity: 0.5;
-//         transform: scale(1.02);
-// 	}
-// 	100% {
-//         opacity: 1;
-// 	}
-// }
-
-// /////////////////////////////////////
-// // Invalid fields
-// /////////////////////////////////////
-
-
 .form-control.is-invalid {
     background-image: none;
 }
-
 
 .ab-edit-link {
     @include themify {
@@ -928,66 +535,19 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   }
 }
 
-
-
-// ////////////////////////////////
-// // right menu
-
-// .right-menu {
-//     background-color: $gray-100;
-// }
-
-// .right-menu-section-title,
-// .right-menu-item {
-//     display: block;
-//     width: 100%;
-//     padding: 0.25rem 1rem;
-//     border: none;
-//     box-shadow: none;
-//     outline: none;
-//     border-top: 1px solid $gray-200;
-//     border-bottom: 1px solid $gray-200;
-//     line-height: $line-height-base;
-//     text-align: left;
-// }
-
-// .right-menu-section-title {
-//     font-weight: bold;
-//     text-transform: uppercase;
-//     background-color: white;
-// }
-
-// .right-menu-item {
-//     color: $link-color;
-//     text-decoration: $link-decoration;
-//     background-color: transparent;
-//     &:hover {
-//         color: $link-hover-color;
-//         text-decoration: $link-hover-decoration;
-//     }
-// }
-
-
 // //////////// Bootstrap theme override
-
-a{
+a {
     text-decoration:none;
     background-color:transparent;
     font-size: 0.875rem;
     font-weight: 300;
     color: $secondary;
 }
-a:hover{
+a:hover {
     color:$secondary;
     text-decoration:text-decoration-line
 }
-// a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):focus,a:not([href]):not([tabindex]):hover{
-//     color:inherit;
-//     text-decoration:none
-// }
-// a:not([href]):not([tabindex]):focus{
-//     outline:0
-// }
+
 
 // btn colors
 .btn-primary {
@@ -1046,7 +606,6 @@ a:hover{
     }
 }
 
-
 #content {
   padding-top: 150px;
   padding-bottom: 150px;
@@ -1066,7 +625,7 @@ a:hover{
 }
 
 #content #landing-h4 {
-  font-size: 20px;
+  font-size: 20pt;
   color: $landing-text-color;
   font-weight: 700;
   line-height: 1.764em;
@@ -1845,7 +1404,7 @@ button.btn-filter {
     // border-radius: 17px;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $button-icon-size;
       height: $button-icon-size;
@@ -1853,14 +1412,6 @@ button.btn-filter {
       mask-size: cover;
       margin-left: -2px; // visually align space
       margin-top: 5px;
-      // margin: ($button-icon-bg-size - $button-icon-size) / 2; // (34 - 24)/2
-
-      // Todo: need to figure out how to hover this alongside hover of the button
-      // to remove split hover effect.
-      // &:hover,
-      // &:focus {
-      //   background: $moderate-cyan;  // this overrides color of icon for states
-      // }
 
       // list icon sources here
       &--filter {
@@ -1899,19 +1450,11 @@ button.btn-filter {
   }
 }
 
-
-
-
 //label
 .labelPlaceholder{
   font-weight: 300;
   // color: red;
 }
-
-
-// .fontTertiary {
-//   color: $tertiary
-// }
 
 ////////////// RIPPLE ////////////
 .global-overlay-backdrop {
@@ -1923,13 +1466,6 @@ button.btn-filter {
   z-index: 1000;
   background-color: rgba(0,0,0,0.2);
 }
-
-// .modal-content:has(> div.modal-no-bg-spinner) {
-//   background-color:transparent;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
 
 .spinner-fade-in {
 opacity: 1;
@@ -1992,14 +1528,7 @@ animation-timing-function: ease-in;
 
 
  ////// Scrollspy settings
-
-// .sp-aside-toc ul {
-  // background-color: orange;
-  // position: fixed;
-  // position: absolute;
-  // right: 1rem;
-// }
-.above-sidenav-home{
+.above-sidenav-home {
   margin-left: $navbar-width;
   height: 80px; /* Full-height: remove this if you want "auto" height */
   width: 368px; /* Set the width of the sidebar */
@@ -2011,7 +1540,8 @@ animation-timing-function: ease-in;
   overflow-x: hidden; /* Disable horizontal scroll */
   border-bottom: 1px solid $top-bar-border;
 }
-.above-sidenav{
+
+.above-sidenav {
   margin-left: 0;
   height: 80px;
   position: relative;
@@ -2023,7 +1553,6 @@ animation-timing-function: ease-in;
     margin-left: $navbar-width;
     height: 80px; /* Full-height: remove this if you want "auto" height */
     width: 368px; /* Set the width of the sidebar */
-    position: relative; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1050; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
@@ -2035,8 +1564,8 @@ animation-timing-function: ease-in;
 }
 
 .above-sidenav-title {
-  font-size: 22px;
-  font-weight: 500;
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-size: 22pt;
   letter-spacing: 0;
   line-height: 30px;
   margin-left: 8px;
@@ -2063,17 +1592,17 @@ animation-timing-function: ease-in;
     margin-top: -2px;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $sidenav-icon-size;
       height: $sidenav-icon-size;
-      background: $dark-blue;  // initiall color of icon
+      background: $dark-blue;  // initial color of icon
       mask-size: cover;
       margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
 
       &:hover,
       &:focus {
-        background: $moderate-cyan;  // this overrides color of icon for states
+        background: $primary-new;  // this overrides color of icon for states
       }
 
       // list icon sources here
@@ -2093,8 +1622,6 @@ animation-timing-function: ease-in;
     margin-top: -2px;       // vertically align to text
   }
 }
-
-
 
 .sidebar {
   &-icon {
@@ -2251,96 +1778,6 @@ animation-timing-function: ease-in;
   border-radius: 9px;
 }
 
-
-// .sp-contents-table {
-//   // Do not use margin here. It will be overwritten.
-//   // position: absolute; // <-- must have.
-//   padding: 0.125rem;
-//   font-size: rem-calc(14px);
-//   background-color: red;
-//   height: 100vh;
-// }
-
-// .sp-contents-table.sticky {
-//   position: fixed; // <-- must have.
-//   // top: 5rem; // <-- must have.
-//   // right: 0;
-//   // left:0;
-//   // max-width: 200px;
-//   width: 368px;
-// }
-
-// .sp-contents-table {
-//   list-style: none;
-//   margin: 0;
-
-
-//   @include media-breakpoint-down(md) {
-//       display: none;
-//   }
-//   @include media-breakpoint-down(lg) {
-//       max-width: 200px;
-//   }
-
-// }
-
-// .sp-contents-table-subsections {
-//   list-style: none;
-//   margin: 0;
-//   margin-left: 1.5rem;
-//   @include media-breakpoint-down(md) {
-//       display: none;
-//   }
-// }
-
-// .sp-contents-table a {
-//   // border-radius: 4px;
-//   display: block;
-//   padding: 0.25rem;
-//   color: $tertiary;
-//   text-decoration: none;
-//   transition: all 0.3s ease-out 0.3s;
-//   cursor: pointer;
-//   font-size: 1rem;
-//   font-weight: 400;
-// }
-
-// .sp-contents-table a.active {
-//   // background-color: #000;
-//   color: $secondary;
-//   background-color: white;
-//   // font-weight: 600;
-//   // margin-left: -1rem;
-// }
-
-// .sp-contents-table a.link-error {
-//   color: $danger;
-//   font-weight: 500;
-// }
-
-// .sp-contents-table a.active.parent {
-//   margin-left: 0rem !important;
-//   font-size: rem-calc(14px);
-// }
-
-// .sp-parent-content-section {
-//   display: block;
-//   border-bottom: 3px solid $secondary;
-//   color: $secondary;
-//   font-size: 2rem;
-//   margin-top: 4rem;
-//   margin-bottom: 0;
-//   // margin-right: 3rem;
-//   margin-left: rem-calc(20px);   // 1rem + 4px for border on left
-//   width: calc(100% - 2rem);
-
-//   @include media-breakpoint-up(lg) {
-//       // margin-right: 1rem;
-//       // padding-left: 1rem;
-//     width: calc(100% - 2rem - 1rem - 20px); // hopefully, we get aligned to bottom element
-//   }
-// }
-
 .left-contents-panel {
   background-color: #FFFFFF;
 }
@@ -2348,37 +1785,6 @@ animation-timing-function: ease-in;
 .search-field .form-group {
   margin-bottom: 0.5rem;
 }
-
-// .side-nav-buffer {
-//   margin-left: 80px;
-// }
-
-// ///////// MINI ANIMACIJE
-// .sp-page-fade-in {
-// 	opacity: 1;
-// 	animation-name: fadeInOpacity;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 0.5s;
-// }
-
-// @keyframes fadeInOpacity {
-// 	0% {
-// 		opacity: 0.1;
-// 	}
-// 	100% {
-// 		opacity: 1;
-// 	}
-// }
-
-// .edit-field {
-//   cursor: pointer;
-// }
-
-// .edit-field:hover {
-//   text-decoration: underline;
-// }
-
 
 .container-landing-page {
   background-color: transparent;
@@ -2392,8 +1798,6 @@ animation-timing-function: ease-in;
     position: fixed;
     left: 6rem;
     bottom: 1rem;
-    // right: 1rem;
-    // top: 0.5rem;
     padding: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
@@ -2409,42 +1813,7 @@ animation-timing-function: ease-in;
   @include media-breakpoint-down(md) {
     left: 1rem;
   }
-
 }
-
-// .no-list-results {
-//   font-size: 1.5rem;
-//   margin-left: 1rem;
-//   color: $gray;
-//   text-align: center;
-//   margin-top: 1rem;
-// }
-
-// ///// Datepicker fix
-// .ngb-dp-navigation-chevron {
-//   padding: 0 !important;
-// }
-
-// .ngb-dp-arrow-btn {
-//   border: 0 !important;
-// }
-
-
-// .page-list-container {
-//   max-width: 1140px;
-//   padding-top: 5px;
-
-//   @include media-breakpoint-up(xl) {
-//     width: 1140px;
-//   }
-//   @include media-breakpoint-up(lg) {
-//     width: 960px;
-//   }
-//   @include media-breakpoint-up(md) {
-//     width: 720px;
-//   }
-// }
-
 
 .news-content-footer-divider{
   height: 60px;
@@ -2494,8 +1863,6 @@ animation-timing-function: ease-in;
   font-weight: 400;
   text-decoration: underline;
 }
-
-
 
 @media screen and (max-width: 640px) {
   table {
@@ -2582,7 +1949,7 @@ tr:nth-child(odd) {
   background-color: $odd-table-color;
 }
 
-.title-page{
+.title-page {
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 0;
@@ -2649,17 +2016,12 @@ tr:nth-child(odd) {
 .main-inside-top,
 .content-element {
   &--row1 {
-    // button {
-      // margin-bottom: 1rem;
-    // }
-
     margin-bottom: 0.5rem;
     min-height: 39px;
     background-color: $row-1;
-    // height: 32px;
   }
+
   &--row2 {
-    // margin-top: -16px;
     background-color: $row-2;
   }
 
@@ -2668,17 +2030,21 @@ tr:nth-child(odd) {
     padding-top: 0.375rem;
     line-height: 1.25;
     color: $primary-new;
+    font-family: 'PathwayGothicOne-Regular', sans-serif;
+    font-size: 22pt;
     span {
       font-weight: normal;
     }
   }
+
   &--btn {
-    // background-color: greenyellow;
     min-width: 150px;
   }
+
   &--subtitle {
     background-color: $row-2-subtitle;
   }
+
   &--counting {
     background-color: $row-2-counting;
   }
@@ -2704,6 +2070,8 @@ tr:nth-child(odd) {
 
     .content-element--title {
       margin-bottom: $af-spacing-three; // 3rem
+      font-family: 'PathwayGothicOne-Regular', sans-serif;
+      font-size: 22pt;
     }
 
     &--nomargin {
@@ -2973,8 +2341,7 @@ tr:nth-child(odd) {
   &-block--c8,
   &-block--c12 {
     h2, h3 {
-      font-family: Poppins-Regular, sans-serif;
-      font-size: 20px;
+      font-size: 18pt;
       color: #181B31;
       text-align: left;
       position: relative;
@@ -2993,15 +2360,6 @@ tr:nth-child(odd) {
       font-size: 18px;
     }
   }
-  // &-element {
-    // h2 {
-    //   display: block;
-    // }
-    // &--one {
-    //   &:first-child {
-    //   }
-    // }
-  // }
 }
 
 
@@ -3404,15 +2762,6 @@ $chechboxSize-1: 1rem !important;
   content: "";
   position: absolute;
   top: -1rem;
-}
-
-.form-control {
-  &.landing-page {
-    &:focus {
-      border-color: $landing-primary-lightest;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-  }
 }
 
 // HERE BE PLACEHOLDER
@@ -4658,4 +4007,57 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label {
 input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
   left: calc(100% - 5px);
   transform: translateX(-100%);
+}
+
+///////////////////////////////////////////////////////////////
+// Translation selection component
+///////////////////////////////////////////////////////////////
+.af-translation-language {
+  div {
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 0.25rem;
+    border: 1px solid $primary-new;
+    padding: 0.125rem 0.375rem;
+    color: $primary-new;
+
+    &:hover {
+      background-color: $primary-lighter-new
+    }
+
+    img {
+      margin-right: 0.5rem;
+      border-radius: 2px;
+      height: 12px;
+      width: 12px;
+      margin-top: -2px;
+      opacity: 0.75;
+    }
+  }
+
+  div:last-child {
+    margin-right: 0;
+  }
+
+  .af-translation-language--selected {
+    color: white;
+    background-color: $primary-new;
+
+    &:hover {
+      color: white;
+      background-color: $primary-new;
+    }
+  }
+
+  .af-translation-language--error {
+    color: white;
+    border-color: $red;
+    background-color: $red-light;
+
+    &:hover {
+      color: white;
+      background-color: $red;
+    }
+
+  }
 }

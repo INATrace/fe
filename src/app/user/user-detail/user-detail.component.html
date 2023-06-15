@@ -79,10 +79,10 @@
 
                 <div>
                   <label i18n="@@userDetail.textinput.userSelectedLanguage.label">Selected</label>
-                  <div class="d-flex af-user-language">
+                  <div class="d-flex af-translation-language">
 
                     <!-- <img> -->
-                    <div class="af-user-language--selected">
+                    <div class="af-translation-language--selected">
                       <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
                       <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
                       <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
@@ -97,7 +97,7 @@
 
                 <div>
                   <label i18n="@@userDetail.textinput.userAvailableLanguage.label">Available</label>
-                  <div class="d-flex af-user-language">
+                  <div class="d-flex af-translation-language">
 
                     <div (click)="selectLanguage('EN')" *ngIf="this.userProfileForm.get('language').value != 'EN'">
                       <img src="../../../assets/icons/icon-flag--united-kingdom.svg">

@@ -26,10 +26,6 @@ export class TextinputComponent implements OnInit {
   @Input()
   htmlLabel: string;
 
-  // If this text input should be styled with the landing page theme
-  @Input()
-  landingPageStyle = false;
-
   _form = null;
   @Input() set form(value: FormControl) {
     this._form = value;

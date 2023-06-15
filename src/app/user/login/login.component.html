@@ -13,13 +13,13 @@
         <div class="login-subtitle" i18n="@@login.subtitle">Sign in to continue</div>
         <div class="login-big-spacer"></div>
         <form class="form-group">
-          <label for="username" class="mb-0 mt-3 text-input-label landing-page">
+          <label for="username" class="mb-0 mt-3 text-input-label">
             <div [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('username').invalid" i18n="@@login.input.username.label">
               Username
             </div>
           </label>
           <input
-            class="form-control landing-page text-input-bigger"
+            class="form-control text-input-bigger"
             id="username"
             [ngClass]="{ 'is-invalid': submitted && loginForm.get('username').invalid }"
             style="margin-bottom: 0;"
@@ -39,14 +39,14 @@
           </ng-container>
           <div class="login-small-spacer"></div>
           <div class="login-small-spacer"></div>
-          <label for="password" class="mb-0 mt-3 text-input-label landing-page">
+          <label for="password" class="mb-0 mt-3 text-input-label">
             <div [class.sc-invalid-feedback-label-color]="submitted && loginForm.get('password').invalid" i18n="@@login.input.password.label">
               Password
             </div>
           </label>
           <div class="input-group">
             <input
-              class="form-control landing-page text-input-bigger"
+              class="form-control text-input-bigger"
               id="password"
               [ngClass]="{ 'is-invalid': submitted && loginForm.get('password').invalid }"
               style="margin-bottom: 0;"
@@ -77,7 +77,7 @@
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
-        <button class="btn landing-page btn-register" (click)="login()" i18n="@@login.button.login">
+        <button class="btn btn-register" (click)="login()" i18n="@@login.button.login">
           <span>Login</span>
         </button>
 

@@ -41,9 +41,6 @@ export class CheckboxInputComponent implements OnInit {
     @Input()
     noBottomMargin = false
 
-    @Input()
-    landingPageStyle = false;
-
     @ViewChildren('inputfield') inputfield;
 
     isDisabled() {

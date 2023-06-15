@@ -2,8 +2,7 @@
   <label [for]="id"
          class="mb-0 text-input-label"
          *ngIf="label || htmlLabel"
-         [class.ab-closed-label]="labelClosedIndicator"
-         [class.landing-page]="landingPageStyle">
+         [class.ab-closed-label]="labelClosedIndicator">
     <div [class.sc-invalid-feedback-label-color]="isInvalid || isNaN()">
       <ng-container *ngIf="label && !htmlLabel">{{ label }}</ng-container>
       <span *ngIf="!label && htmlLabel" [innerHTML]="htmlLabel"></span>
@@ -24,7 +23,6 @@
         [value]="value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
-        [class.landing-page]="landingPageStyle"
         [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"
@@ -43,7 +41,6 @@
         [id]="id"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
-        [class.landing-page]="landingPageStyle"
         [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"
@@ -63,7 +60,6 @@
         [value]="form.value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
-        [class.landing-page]="landingPageStyle"
         [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         #instance="ngbTypeahead"
         [ngbTypeahead]="typeaheadSearch"
@@ -90,7 +86,6 @@
         [value]="languageFormControl.value"
         [readonly]="modal || readOnly"
         [ngClass]="{ 'is-invalid': isInvalid, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
-        [class.landing-page]="landingPageStyle"
         [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         [type]="type"
         [step]="step"
@@ -109,7 +104,6 @@
         [id]="id"
         [readonly]="readOnly"
         [ngClass]="{ 'is-invalid': isInvalid || isNaN() || numericError, 'text-input-bigger': biggerTextInput, 'text-input-without-border': withoutBorder, 'text-input-search': searchInput }"
-        [class.landing-page]="landingPageStyle"
         [class.prefix-or-suffix-text-input]="prefix != null || suffix != null"
         (focus)="onFocusHandler($event)"
         (blur)="onBlurHandler($event)"

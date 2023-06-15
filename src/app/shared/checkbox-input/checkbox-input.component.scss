@@ -35,13 +35,6 @@ $chechboxSize: 1.5rem;
   background-color: $primary;
 }
 
-.landing-page {
-  .checkbox:checked {
-    border: 2px solid $landing-primary;
-    background-color: $landing-primary;
-  }
-}
-
 .checkbox:focus {
   border-width: 3px !important;
 }

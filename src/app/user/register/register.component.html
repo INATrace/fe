@@ -10,7 +10,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.firstname.label"
           i18n-placeholder="@@register.textinput.firstname.placeholder"
-          [isInvalid]="submitted && registerForm.get('name').invalid" [landingPageStyle]="true">
+          [isInvalid]="submitted && registerForm.get('name').invalid">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('name').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.firstname.error">
@@ -25,7 +25,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.surname.label"
           i18n-placeholder="@@register.textinput.surname.placeholder"
-          [isInvalid]="submitted && registerForm.get('surname').invalid" [landingPageStyle]="true">
+          [isInvalid]="submitted && registerForm.get('surname').invalid">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('surname').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.surname.error">
@@ -40,7 +40,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.email.label"
           i18n-placeholder="@@register.textinput.email.placeholder"
-          [isInvalid]="submitted && registerForm.get('email').invalid" [landingPageStyle]="true">
+          [isInvalid]="submitted && registerForm.get('email').invalid">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('email').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@register.textinput.email.errorRequired">
@@ -58,7 +58,7 @@
           biggerTextInput="true"
           i18n-label="@@register.textinput.password.label"
           i18n-placeholder="@@register.textinput.password.placeholder"
-          type="password" [isInvalid]="submitted && registerForm.get('password').invalid" [landingPageStyle]="true">
+          type="password" [isInvalid]="submitted && registerForm.get('password').invalid">
           <ng-container *ngIf="submitted">
             <div *ngIf="registerForm.get('password').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required || errors.minlength" i18n="@@register.textinput.password.error">
@@ -69,7 +69,7 @@
         </textinput>
 
         <checkbox-input #conditionEl [form]="registerForm.get('condition')"
-          [invalid]="submitted && registerForm.get('condition').invalid" [landingPageStyle]="true">
+          [invalid]="submitted && registerForm.get('condition').invalid">
           <checkbox-input-rich-label style="font-weight: 300;"
             i18n="@@register.checkbox-input">
           </checkbox-input-rich-label>
@@ -104,7 +104,7 @@
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
         <div class="login-small-spacer"></div>
-        <button class="btn landing-page btn-register" (click)="onSubmit()" i18n="@@register.button.register">
+        <button class="btn btn-register" (click)="onSubmit()" i18n="@@register.button.register">
           <span>Register</span>
         </button>
       </div>
