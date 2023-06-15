@@ -24,6 +24,7 @@
 export interface ApiDeliveriesTotalItem { 
     totalQuantity?: number;
     unit?: string;
+    year?: number;
 }
 
 /**
@@ -35,7 +36,8 @@ export namespace ApiDeliveriesTotalItem {
      */
     export enum Properties {
         totalQuantity = 'totalQuantity',
-        unit = 'unit'
+        unit = 'unit',
+        year = 'year'
     }
 
 
@@ -66,11 +68,24 @@ export namespace ApiDeliveriesTotalItem {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'year',
+                    classname: 'ApiDeliveriesTotalItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 totalQuantity: [
                 ],
                 unit: [
+                ],
+                year: [
                 ],
             }
         }
@@ -83,6 +98,9 @@ export namespace ApiDeliveriesTotalItem {
   //                   validators: []
   //               },
   //               unit: {
+  //                   validators: []
+  //               },
+  //               year: {
   //                   validators: []
   //               },
   //     }

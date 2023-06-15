@@ -4519,145 +4519,6 @@
         "summary": "Creates a list of purchase orders."
       }
     },
-    "/api/chain/stock-order/deliveries-aggregated-data": {
-      "get": {
-        "parameters": [
-          {
-            "description": "Company ID",
-            "in": "query",
-            "name": "companyId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Facility IDs",
-            "explode": true,
-            "in": "query",
-            "name": "facilityIds",
-            "required": false,
-            "schema": {
-              "items": {
-                "format": "int64",
-                "type": "integer"
-              },
-              "type": "array"
-            }
-          },
-          {
-            "description": "Semi-product ID",
-            "in": "query",
-            "name": "semiProductId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Farmer (UserCustomer) ID",
-            "in": "query",
-            "name": "farmerId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Collector (Representative of producer UserCustomer) ID",
-            "in": "query",
-            "name": "collectorId",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "description": "Is women share",
-            "in": "query",
-            "name": "isWomenShare",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "Organic only",
-            "in": "query",
-            "name": "organicOnly",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "Price determined later",
-            "in": "query",
-            "name": "priceDeterminedLater",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "description": "Production date range start",
-            "in": "query",
-            "name": "productionDateStart",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Production date range end",
-            "in": "query",
-            "name": "productionDateEnd",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "description": "Aggregation type",
-            "in": "query",
-            "name": "aggregationType",
-            "required": true,
-            "schema": {
-              "enum": [
-                "DAY",
-                "WEEK",
-                "MONTH",
-                "YEAR"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiDeliveriesTotal_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "getDeliveriesAggregatedDataUsingGET",
-        "summary": "getDeliveriesAggregatedData"
-      }
-    },
     "/api/chain/stock-order/list/company/{companyId}": {
       "get": {
         "parameters": [
@@ -5535,38 +5396,6 @@
         ],
         "operationId": "getAvailableStockForStockUnitInFacilityUsingGET",
         "summary": "Get a paginated list of stock orders for provided facility ID and semi-product or final product ID."
-      }
-    },
-    "/api/chain/stock-order/processing-performance-data": {
-      "post": {
-        "responses": {
-          "200": {
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingPerformanceTotal_"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "tags": [
-          "stock-order-controller"
-        ],
-        "operationId": "calculateProcessingPerformanceDataUsingPOST",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiProcessingPerformanceRequest"
-              }
-            }
-          },
-          "description": "processingPerformanceRequest",
-          "required": true
-        },
-        "summary": "Calculates processing performance data"
       }
     },
     "/api/chain/stock-order/{id}": {
@@ -7992,6 +7821,348 @@
         ],
         "operationId": "getCompanyValueChainsUsingGET",
         "summary": "Get list of value chains for the company with the given ID"
+      }
+    },
+    "/api/dashboard/deliveries-aggregated-data": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Facility IDs",
+            "explode": true,
+            "in": "query",
+            "name": "facilityIds",
+            "required": false,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Collector (Representative of producer UserCustomer) ID",
+            "in": "query",
+            "name": "collectorId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Organic only",
+            "in": "query",
+            "name": "organicOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Price determined later",
+            "in": "query",
+            "name": "priceDeterminedLater",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Aggregation type",
+            "in": "query",
+            "name": "aggregationType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "DAY",
+                "WEEK",
+                "MONTH",
+                "YEAR"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiDeliveriesTotal_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "getDeliveriesAggregatedDataUsingGET",
+        "summary": "getDeliveriesAggregatedData"
+      }
+    },
+    "/api/dashboard/deliveries-aggregated-data/export": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Facility IDs",
+            "explode": true,
+            "in": "query",
+            "name": "facilityIds",
+            "required": false,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Collector (Representative of producer UserCustomer) ID",
+            "in": "query",
+            "name": "collectorId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Organic only",
+            "in": "query",
+            "name": "organicOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Price determined later",
+            "in": "query",
+            "name": "priceDeterminedLater",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Aggregation type",
+            "in": "query",
+            "name": "aggregationType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "DAY",
+                "WEEK",
+                "MONTH",
+                "YEAR"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Export type",
+            "in": "query",
+            "name": "exportType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EXCEL",
+                "PDF",
+                "CSV"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "exportDeliveriesDataUsingGET",
+        "summary": "exportDeliveriesData"
+      }
+    },
+    "/api/dashboard/processing-performance-data": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingPerformanceTotal_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "calculateProcessingPerformanceDataUsingPOST",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProcessingPerformanceRequest"
+        },
+        "summary": "Calculates processing performance data"
+      }
+    },
+    "/api/dashboard/processing-performance-data/export": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "exportProcessingPerformanceDataUsingPOST",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProcessingPerformanceRequest"
+        },
+        "summary": "Exports processing performance data to the requested format"
       }
     },
     "/api/final-product/company/{companyId}": {
@@ -11163,9 +11334,12 @@
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11175,16 +11349,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingDELETE",
-        "summary": "errorHtml"
+        "operationId": "errorUsingDELETE",
+        "summary": "error"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11194,16 +11371,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingGET",
-        "summary": "errorHtml"
+        "operationId": "errorUsingGET",
+        "summary": "error"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11213,16 +11393,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingHEAD",
-        "summary": "errorHtml"
+        "operationId": "errorUsingHEAD",
+        "summary": "error"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11232,16 +11415,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingOPTIONS",
-        "summary": "errorHtml"
+        "operationId": "errorUsingOPTIONS",
+        "summary": "error"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11251,16 +11437,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPATCH",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPATCH",
+        "summary": "error"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11270,16 +11459,19 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPOST",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPOST",
+        "summary": "error"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "text/html": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModelAndView"
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
                 }
               }
             },
@@ -11289,8 +11481,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorHtmlUsingPUT",
-        "summary": "errorHtml"
+        "operationId": "errorUsingPUT",
+        "summary": "error"
       }
     }
   },
@@ -11316,6 +11508,17 @@
           }
         },
         "description": "request",
+        "required": true
+      },
+      "ApiProcessingPerformanceRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiProcessingPerformanceRequest"
+            }
+          }
+        },
+        "description": "processingPerformanceRequest",
         "required": true
       },
       "ApiProductLabel": {
@@ -12913,6 +13116,10 @@
           },
           "unit": {
             "type": "string"
+          },
+          "year": {
+            "format": "int32",
+            "type": "integer"
           }
         },
         "type": "object"
@@ -16026,12 +16233,17 @@
             },
             "type": "array"
           },
+          "exportType": {
+            "enum": [
+              "EXCEL",
+              "PDF",
+              "CSV"
+            ],
+            "type": "string"
+          },
           "facilityId": {
             "format": "int64",
             "type": "integer"
-          },
-          "measureUnitType": {
-            "$ref": "#/components/schemas/MeasureUnitType"
           },
           "processActionId": {
             "format": "int64",
@@ -16060,6 +16272,9 @@
       },
       "ApiProcessingPerformanceTotal": {
         "properties": {
+          "measureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
+          },
           "totals": {
             "items": {
               "$ref": "#/components/schemas/ApiProcessingPerformanceTotalItem"
@@ -16091,6 +16306,10 @@
           },
           "unit": {
             "type": "string"
+          },
+          "year": {
+            "format": "int32",
+            "type": "integer"
           }
         },
         "type": "object"
@@ -20513,27 +20732,6 @@
         },
         "type": "object"
       },
-      "MeasureUnitType": {
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "id": {
-            "format": "int64",
-            "type": "integer"
-          },
-          "label": {
-            "type": "string"
-          },
-          "underlyingMeasurementUnitType": {
-            "$ref": "#/components/schemas/MeasureUnitType"
-          },
-          "weight": {
-            "type": "number"
-          }
-        },
-        "type": "object"
-      },
       "ModelAndView": {
         "properties": {
           "empty": {
@@ -20686,6 +20884,10 @@
     {
       "description": "Payment Controller",
       "name": "payment-controller"
+    },
+    {
+      "description": "Dashboard Controller",
+      "name": "dashboard-controller"
     },
     {
       "description": "Currency Controller",

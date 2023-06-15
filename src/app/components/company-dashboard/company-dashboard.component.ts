@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { CompanyFacilitiesService } from '../../shared-services/company-facilities.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FacilityControllerService } from '../../../api/api/facilityController.service';
-import { StockOrderControllerService } from '../../../api/api/stockOrderController.service';
 import { ApiFacility } from '../../../api/model/apiFacility';
 import { EChartsOption } from 'echarts';
 import { dateISOString } from '../../../shared/utils';
@@ -17,6 +15,11 @@ import { ValueChainControllerService } from '../../../api/api/valueChainControll
 import {
   ApiProcessingPerformanceRequestEvidenceField
 } from '../../../api/model/apiProcessingPerformanceRequestEvidenceField';
+import {DashboardControllerService} from '../../../api/api/dashboardController.service';
+import {FileSaverService} from 'ngx-filesaver';
+import {CompanyCollectingFacilitiesService} from '../../shared-services/company-collecting-facilities.service';
+import {GeneralSifrantService} from '../../shared-services/general-sifrant.service';
+import {ApiProcessingAction} from '../../../api/model/apiProcessingAction';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -25,7 +28,7 @@ import {
 })
 export class CompanyDashboardComponent implements OnInit {
 
-  facilityCodebook: CompanyFacilitiesService;
+  facilityCodebook: GeneralSifrantService<any>;
   farmersCodebook: CompanyUserCustomersByRoleService;
   collectorsCodebook: CompanyUserCustomersByRoleService;
   procActionsCodebook: CompanyProcessingActionsService;
@@ -36,11 +39,14 @@ export class CompanyDashboardComponent implements OnInit {
     private companyControllerService: CompanyControllerService,
     public valueChainController: ValueChainControllerService,
     private procActionController: ProcessingActionControllerService,
-    private stockOrderControllerService: StockOrderControllerService,
+    private dashboardControllerService: DashboardControllerService,
+    private fileSaverService: FileSaverService,
     private codebookTranslations: CodebookTranslations
   ) { }
 
   faTimes = faTimes;
+
+  maxShownOnGraphs = 30;
 
   companyId: number = Number(localStorage.getItem('selectedUserCompany'));
 
@@ -51,6 +57,8 @@ export class CompanyDashboardComponent implements OnInit {
   evidenceFields = [];
 
   measureUnitTypes = [];
+
+  processingActions: ApiProcessingAction[] = [];
 
   facilities: ApiFacility[] = [];
 
@@ -81,7 +89,7 @@ export class CompanyDashboardComponent implements OnInit {
 
   // search fields form control
   deliveriesForm: FormGroup = this.fb.group({
-    from: this.fb.control(new Date(new Date().getFullYear() - 2, 0, 1, 1)),
+    from: this.fb.control(new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDay(), 12)),
     to: this.fb.control(new Date()),
     timeUnitGraphType: this.fb.control(undefined),
     facility: this.fb.control(null),
@@ -90,7 +98,8 @@ export class CompanyDashboardComponent implements OnInit {
     collector: this.fb.control(undefined),
     organic: this.fb.control(undefined),
     womenOnly: this.fb.control(undefined),
-    productInDeposit: this.fb.control(undefined)
+    productInDeposit: this.fb.control(undefined),
+    exportType: this.fb.control('EXCEL')
   });
 
   processingPerformanceOption = {
@@ -102,7 +111,18 @@ export class CompanyDashboardComponent implements OnInit {
       type: 'category',
       data: []
     },
-    yAxis: {},
+    yAxis: [{
+      type: 'value',
+      name: '',
+      position: 'left'
+    }, {
+      type: 'value',
+      name: '',
+      position: 'right',
+      axisLabel: {
+        formatter: `{value} %`
+      }
+    }],
     series: [{
       name: 'Input',
       type: 'bar',
@@ -110,6 +130,7 @@ export class CompanyDashboardComponent implements OnInit {
         show: true,
         position: 'top'
       },
+      yAxisIndex: 0,
       data: []
     }, {
       name: 'Output',
@@ -119,15 +140,17 @@ export class CompanyDashboardComponent implements OnInit {
         position: 'top'
       },
       color: '#ff8c00',
+      yAxisIndex: 0,
       data: []
     }, {
       name: 'Input-Output ratio in %',
-      type: 'bar',
+      type: 'line',
       label: {
         show: true,
         position: 'top'
       },
       color: '#a9a9a9',
+      yAxisIndex: 1,
       data: []
     }]
   };
@@ -136,12 +159,12 @@ export class CompanyDashboardComponent implements OnInit {
 
 
   processingPerformanceForm: FormGroup = this.fb.group({
-    from: this.fb.control(new Date(new Date().getFullYear() - 2, 0, 1, 1)),
+    from: this.fb.control(new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDay(), 12)),
     to: this.fb.control(new Date()),
     timeUnitGraphType: this.fb.control(undefined),
     facility: this.fb.control(null),
     process: this.fb.control(null),
-    measuringUnit: this.fb.control(null)
+    exportType: this.fb.control('EXCEL')
   });
 
   get facilityFormControl(): FormControl{
@@ -182,13 +205,9 @@ export class CompanyDashboardComponent implements OnInit {
     return (this.processingPerformanceForm.get(name) as FormControl);
   }
 
-  get measuringUnitFormControl(): FormControl{
-    return (this.processingPerformanceForm.get('measuringUnit') as FormControl);
-  }
-
   ngOnInit(): void {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
-    this.facilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
+    this.facilityCodebook = new CompanyCollectingFacilitiesService(this.facilityController, this.companyId);
 
     this.companyControllerService.getCompanyUsingGET(this.companyId).subscribe(
       next => {
@@ -197,14 +216,6 @@ export class CompanyDashboardComponent implements OnInit {
         this.companyValueChains.forEach(valueChain => {
           this.valueChainController.getValueChainUsingGET(valueChain.id).subscribe(
             vchain => {
-              if (vchain?.data?.processingEvidenceFields) {
-                vchain.data.processingEvidenceFields.forEach(evidenceField => {
-                  if (!this.evidenceFields.some(ef => ef.fieldName === evidenceField.fieldName)) {
-                    this.evidenceFields.push(evidenceField);
-                    this.processingPerformanceForm.addControl(evidenceField.fieldName, this.fb.control(undefined));
-                  }
-                });
-              }
               if (vchain?.data?.measureUnitTypes) {
                 vchain.data.measureUnitTypes.forEach(unitType => {
                   if (!this.measureUnitTypes.some(ut => ut.id === unitType.id)) {
@@ -224,6 +235,20 @@ export class CompanyDashboardComponent implements OnInit {
     this.procActionsCodebook =
       new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
 
+    this.procActionController.listProcessingActionsByCompanyUsingGETByMap({
+      limit: 1000,
+      offset: 0,
+      id: this.companyId
+    }).subscribe(next => {
+      if (next?.data) {
+        this.processingActions = next.data.items;
+        setTimeout(() => {
+          this.processingPerformanceForm.get('process').setValue(this.processingActions[0]);
+          this.reloadProcessingFields(this.processingActions[0]);
+        });
+      }
+    });
+
     // init interval for delivery graph
     let diff = Math.abs(this.deliveriesForm.get('from').value.getTime() - this.deliveriesForm.get('to').value.getTime());
     let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
@@ -231,7 +256,7 @@ export class CompanyDashboardComponent implements OnInit {
       this.deliveriesForm.get('timeUnitGraphType').setValue('DAY');
     } else if (diffDays < 30) {
       this.deliveriesForm.get('timeUnitGraphType').setValue('WEEK');
-    } else if (diffDays < 365) {
+    } else if (diffDays < 905) {
       this.deliveriesForm.get('timeUnitGraphType').setValue('MONTH');
     } else {
       this.deliveriesForm.get('timeUnitGraphType').setValue('YEAR');
@@ -246,13 +271,11 @@ export class CompanyDashboardComponent implements OnInit {
       this.processingPerformanceForm.get('timeUnitGraphType').setValue('DAY');
     } else if (diffDays < 30) {
       this.processingPerformanceForm.get('timeUnitGraphType').setValue('WEEK');
-    } else if (diffDays < 365) {
+    } else if (diffDays < 900) {
       this.processingPerformanceForm.get('timeUnitGraphType').setValue('MONTH');
     } else {
       this.processingPerformanceForm.get('timeUnitGraphType').setValue('YEAR');
     }
-
-    this.refreshProcessingPerformanceData();
   }
 
   refreshDeliveriesData() {
@@ -263,7 +286,7 @@ export class CompanyDashboardComponent implements OnInit {
     const productInDepositFilter = this.deliveriesForm.get('productInDeposit')?.value ? true : null;
     const facilityIds = this.facilities.map(facility => facility.id);
 
-    this.stockOrderControllerService.getDeliveriesAggregatedDataUsingGETByMap({
+    this.dashboardControllerService.getDeliveriesAggregatedDataUsingGETByMap({
           companyId: this.companyId,
           farmerId: this.deliveriesForm.get('farmer')?.value?.id,
           facilityIds,
@@ -279,9 +302,11 @@ export class CompanyDashboardComponent implements OnInit {
           if (next.data) {
             const labelData = [];
             const graphData = [];
-            next.data.totals.forEach(
+
+            // only first n results are shown in the graph
+            next.data.totals?.slice(0, this.maxShownOnGraphs).forEach(
               total => {
-                const timeUnit = this.calculateTimeUnit(total.unit, this.deliveriesForm.get('timeUnitGraphType').value);
+                const timeUnit = this.calculateTimeUnit(total.unit, total.year, this.deliveriesForm.get('timeUnitGraphType').value);
                 labelData.push(timeUnit);
                 graphData.push(total.totalQuantity);
             });
@@ -334,15 +359,13 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
-    let measureUnitType = null;
     let measureUnitVal = '';
     if (this.processingPerformanceForm?.get('measuringUnit')?.value) {
-      measureUnitType = {id: this.processingPerformanceForm?.get('measuringUnit')?.value};
       // first 3 chars are used in label
       measureUnitVal = this.measureUnitTypes.find(unitType => unitType.id === this.processingPerformanceForm?.get('measuringUnit')?.value)?.label.substring(0, 3);
     }
 
-    this.stockOrderControllerService
+    this.dashboardControllerService
       .calculateProcessingPerformanceDataUsingPOST({
       companyId: this.companyId,
       facilityId: this.processingPerformanceForm.get('facility')?.value?.id,
@@ -350,7 +373,6 @@ export class CompanyDashboardComponent implements OnInit {
       dateStart: dateISOString(this.processingPerformanceForm.get('from')?.value),
       dateEnd: dateISOString(this.processingPerformanceForm.get('to')?.value),
       aggregationType: this.processingPerformanceForm.get('timeUnitGraphType').value,
-      measureUnitType,
       evidenceFields: efs
       }).subscribe(next => {
       if (next.data) {
@@ -358,9 +380,11 @@ export class CompanyDashboardComponent implements OnInit {
         const inputQuantityData = [];
         const outputQuantityData = [];
         const ratioData = [];
-        next.data.totals.forEach(
+
+        // only first n results are shown in the graph
+        next.data.totals?.slice(0, this.maxShownOnGraphs).forEach(
           total => {
-            const timeUnit = this.calculateTimeUnit(total.unit, this.processingPerformanceForm.get('timeUnitGraphType').value);
+            const timeUnit = this.calculateTimeUnit(total.unit, total.year, this.processingPerformanceForm.get('timeUnitGraphType').value);
             labelData.push(timeUnit);
             inputQuantityData.push(total.inputQuantity);
             outputQuantityData.push(total.outputQuantity);
@@ -371,11 +395,11 @@ export class CompanyDashboardComponent implements OnInit {
           xAxis: {
             data: labelData
           },
-          yAxis: {
+          yAxis: [{
             axisLabel: {
               formatter: `{value} ${measureUnitVal}`
             }
-          },
+          }],
           series: [{
               data: inputQuantityData
             }, {
@@ -388,46 +412,49 @@ export class CompanyDashboardComponent implements OnInit {
     });
   }
 
-  private calculateTimeUnit(stringUnit: string, aggregationType: string) {
+  private calculateTimeUnit(stringUnit: string, year: number, aggregationType: string) {
     let timeUnit = stringUnit;
     if (aggregationType === 'WEEK') {
-      timeUnit = this.translateGraphWeek(stringUnit);
+      timeUnit = this.translateGraphWeek(stringUnit, year);
     } else if (aggregationType === 'MONTH') {
-      timeUnit = this.translateGraphMonth(stringUnit);
+      timeUnit = this.translateGraphMonth(stringUnit, year);
     }
     return timeUnit;
   }
 
-  private translateGraphWeek(weekNum: string) {
-    return $localize `:@@companyDashboardComponent.graph.timeUnit.week:Week ` + weekNum;
+  private translateGraphWeek(weekNum: string, year: number) {
+    return $localize `:@@companyDashboardComponent.graph.timeUnit.week:Week` + '-' + weekNum + ' ' + year;
   }
 
-  private translateGraphMonth(monthNum: string) {
+  private translateGraphMonth(monthNum: string, year: number) {
+    let translated;
     if (monthNum === '0') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jan:January`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jan:Jan`;
     } else if (monthNum === '1') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Feb:February`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Feb:Feb`;
     } else if (monthNum === '2') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Mar:March`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Mar:Mar`;
     } else if (monthNum === '3') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Apr:April`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Apr:Apr`;
     } else if (monthNum === '4') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.May:May`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.May:May`;
     } else if (monthNum === '5') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jun:June`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jun:Jun`;
     } else if (monthNum === '6') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jul:July`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jul:Jul`;
     } else if (monthNum === '7') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Aug:August`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Aug:Aug`;
     } else if (monthNum === '8') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Sep:September`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Sep:Sep`;
     } else if (monthNum === '9') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Oct:October`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Oct:Oct`;
     } else if (monthNum === '10') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Nov:November`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Nov:Nov`;
     } else if (monthNum === '11') {
-      return $localize `:@@companyDashboardComponent.graph.timeUnit.month.Dec:December`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Dec:Dec`;
     }
+
+    return translated + ' ' + year;
   }
 
   onFilterDateRangeChange() {
@@ -459,7 +486,7 @@ export class CompanyDashboardComponent implements OnInit {
     } else if (interval === 'week') {
       return diffDays < 7 ||  diffDays > 360;
     } else if (interval === 'month') {
-      return diffDays < 30 || diffDays > 720;
+      return diffDays < 30 || diffDays > 900;
     } else if (interval === 'year') {
       return diffDays < 365;
     }
@@ -545,4 +572,118 @@ export class CompanyDashboardComponent implements OnInit {
     });
   }
 
+  exportDeliveries() {
+
+    const womenOnlyFilter = this.deliveriesForm.get('womenOnly')?.value ? true : null;
+    const organicFilter = this.deliveriesForm.get('organic')?.value ? true : null;
+    const productInDepositFilter = this.deliveriesForm.get('productInDeposit')?.value ? true : null;
+    const facilityIds = this.facilities.map(facility => facility.id);
+    const exportType = this.deliveriesForm.get('exportType')?.value;
+
+    this.dashboardControllerService.exportDeliveriesDataUsingGETByMap({
+      companyId: this.companyId,
+      farmerId: this.deliveriesForm.get('farmer')?.value?.id,
+      facilityIds,
+      collectorId: this.deliveriesForm.get('collector')?.value?.id,
+      semiProductId: this.deliveriesForm.get('semiProduct')?.value?.id,
+      isWomenShare: womenOnlyFilter,
+      organicOnly: organicFilter,
+      priceDeterminedLater: productInDepositFilter,
+      productionDateStart: dateISOString(this.deliveriesForm.get('from')?.value),
+      productionDateEnd: dateISOString(this.deliveriesForm.get('to')?.value),
+      aggregationType: this.deliveriesForm.get('timeUnitGraphType').value,
+      exportType
+    }).subscribe(next => {
+      if (exportType === 'CSV') {
+        this.fileSaverService.save(next, 'deliveries.csv');
+      } else if (exportType === 'EXCEL') {
+        this.fileSaverService.save(next, 'deliveries.xls');
+      } else if (exportType === 'PDF') {
+        this.fileSaverService.save(next, 'deliveries.pdf');
+      }
+    });
+  }
+
+  exportProcessingPerformance() {
+
+    const efs: ApiProcessingPerformanceRequestEvidenceField[] = [];
+
+    // check given evidenceFields
+    this.evidenceFields.forEach(evidenceField => {
+      const value = this.processingPerformanceForm.get(evidenceField.fieldName)?.value;
+      if (value) {
+        if (evidenceField.fieldName === 'WASHING_DATE') {
+          efs.push({
+            evidenceField: {
+              fieldName: evidenceField.fieldName
+            },
+            instantValue: value
+          });
+
+        } else if (evidenceField.fieldName === 'SIZE') {
+          efs.push({
+            evidenceField: {
+              fieldName: evidenceField.fieldName
+            },
+            numericValue: value
+          });
+        } else {
+          // string
+          efs.push({
+            evidenceField: {
+              fieldName: evidenceField.fieldName
+            },
+            stringValue: value
+          });
+        }
+      }
+    });
+
+    const exportType = this.processingPerformanceForm.get('exportType')?.value;
+
+    this.dashboardControllerService
+      .exportProcessingPerformanceDataUsingPOST({
+          companyId: this.companyId,
+          facilityId: this.processingPerformanceForm.get('facility')?.value?.id,
+          processActionId: this.processingPerformanceForm.get('process')?.value?.id,
+          dateStart: dateISOString(this.processingPerformanceForm.get('from')?.value),
+          dateEnd: dateISOString(this.processingPerformanceForm.get('to')?.value),
+          aggregationType: this.processingPerformanceForm.get('timeUnitGraphType').value,
+          evidenceFields: efs,
+          exportType
+        }).subscribe(next => {
+          if (exportType === 'CSV') {
+            this.fileSaverService.save(next, 'processing.csv');
+          } else if (exportType === 'EXCEL') {
+            this.fileSaverService.save(next, 'processing.xls');
+          } else if (exportType === 'PDF') {
+            this.fileSaverService.save(next, 'processing.pdf');
+          }
+        });
+  }
+
+  reloadProcessingFields(procAction: ApiProcessingAction) {
+    if (procAction) {
+
+      // reset previous evidence fields
+      this.evidenceFields.forEach(ef => {
+        if (this.processingPerformanceForm.contains(ef.fieldName)) {
+          this.processingPerformanceForm.removeControl(ef.fieldName);
+        }
+      });
+      this.evidenceFields = [];
+
+      const foundProcAction = this.processingActions.find(pa => pa.id === procAction.id);
+      if (foundProcAction) {
+        foundProcAction.requiredEvidenceFields.forEach(evidenceField => {
+          if (!this.evidenceFields.some(ef => ef.fieldName === evidenceField.fieldName)) {
+            this.evidenceFields.push(evidenceField);
+            this.processingPerformanceForm.addControl(evidenceField.fieldName, this.fb.control(undefined));
+          }
+        });
+      }
+
+      this.refreshProcessingPerformanceData();
+    }
+  }
 }

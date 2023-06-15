@@ -26,6 +26,7 @@ export interface ApiProcessingPerformanceTotalItem {
     outputQuantity?: number;
     ratio?: number;
     unit?: string;
+    year?: number;
 }
 
 /**
@@ -39,7 +40,8 @@ export namespace ApiProcessingPerformanceTotalItem {
         inputQuantity = 'inputQuantity',
         outputQuantity = 'outputQuantity',
         ratio = 'ratio',
-        unit = 'unit'
+        unit = 'unit',
+        year = 'year'
     }
 
 
@@ -92,6 +94,17 @@ export namespace ApiProcessingPerformanceTotalItem {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'year',
+                    classname: 'ApiProcessingPerformanceTotalItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 inputQuantity: [
@@ -101,6 +114,8 @@ export namespace ApiProcessingPerformanceTotalItem {
                 ratio: [
                 ],
                 unit: [
+                ],
+                year: [
                 ],
             }
         }
@@ -119,6 +134,9 @@ export namespace ApiProcessingPerformanceTotalItem {
   //                   validators: []
   //               },
   //               unit: {
+  //                   validators: []
+  //               },
+  //               year: {
   //                   validators: []
   //               },
   //     }

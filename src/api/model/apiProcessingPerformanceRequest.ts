@@ -19,7 +19,6 @@
 
 
 import { ApiProcessingPerformanceRequestEvidenceField } from './apiProcessingPerformanceRequestEvidenceField';
-import { MeasureUnitType } from './measureUnitType';
 
 
 
@@ -29,8 +28,8 @@ export interface ApiProcessingPerformanceRequest {
     dateEnd?: string;
     dateStart?: string;
     evidenceFields?: Array<ApiProcessingPerformanceRequestEvidenceField>;
+    exportType?: ApiProcessingPerformanceRequest.ExportTypeEnum;
     facilityId?: number;
-    measureUnitType?: MeasureUnitType;
     processActionId?: number;
 }
 
@@ -47,8 +46,8 @@ export namespace ApiProcessingPerformanceRequest {
         dateEnd = 'dateEnd',
         dateStart = 'dateStart',
         evidenceFields = 'evidenceFields',
+        exportType = 'exportType',
         facilityId = 'facilityId',
-        measureUnitType = 'measureUnitType',
         processActionId = 'processActionId'
     }
 
@@ -60,6 +59,15 @@ export namespace ApiProcessingPerformanceRequest {
         WEEK = 'WEEK',
         MONTH = 'MONTH',
         YEAR = 'YEAR'
+    }
+
+    /**
+     * All possible values of exportType.
+     */
+    export enum ExportTypeEnum {
+        EXCEL = 'EXCEL',
+        PDF = 'PDF',
+        CSV = 'CSV'
     }
 
 
@@ -127,6 +135,18 @@ export namespace ApiProcessingPerformanceRequest {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingPerformanceRequest.ExportTypeEnum',
+                    required: false,
+                    name: 'exportType',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'facilityId',
@@ -135,18 +155,6 @@ export namespace ApiProcessingPerformanceRequest {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: MeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'measureUnitType',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'MeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'MeasureUnitType'
                 },
                 {
                     isReadOnly: false,
@@ -171,9 +179,9 @@ export namespace ApiProcessingPerformanceRequest {
                 ],
                 evidenceFields: [
                 ],
-                facilityId: [
+                exportType: [
                 ],
-                measureUnitType: [
+                facilityId: [
                 ],
                 processActionId: [
                 ],
@@ -199,10 +207,10 @@ export namespace ApiProcessingPerformanceRequest {
   //               evidenceFields: {
   //                   validators: []
   //               },
-  //               facilityId: {
+  //               exportType: {
   //                   validators: []
   //               },
-  //               measureUnitType: {
+  //               facilityId: {
   //                   validators: []
   //               },
   //               processActionId: {

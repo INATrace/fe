@@ -18,11 +18,13 @@
  */
 
 
+import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingPerformanceTotalItem } from './apiProcessingPerformanceTotalItem';
 
 
 
 export interface ApiProcessingPerformanceTotal { 
+    measureUnitType?: ApiMeasureUnitType;
     totals?: Array<ApiProcessingPerformanceTotalItem>;
     unitType?: ApiProcessingPerformanceTotal.UnitTypeEnum;
 }
@@ -35,6 +37,7 @@ export namespace ApiProcessingPerformanceTotal {
      * All properties of ApiProcessingPerformanceTotal.
      */
     export enum Properties {
+        measureUnitType = 'measureUnitType',
         totals = 'totals',
         unitType = 'unitType'
     }
@@ -55,6 +58,18 @@ export namespace ApiProcessingPerformanceTotal {
             metadata: formMetadata,
             classname: 'ApiProcessingPerformanceTotal',
             vars: [
+                {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measureUnitType',
+                    classname: 'ApiProcessingPerformanceTotal',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
+                },
                 {
                     metadata: ApiProcessingPerformanceTotalItem.formMetadata,
                     isReadOnly: false,
@@ -81,6 +96,8 @@ export namespace ApiProcessingPerformanceTotal {
                 },
             ],
             validators: {
+                measureUnitType: [
+                ],
                 totals: [
                 ],
                 unitType: [
@@ -92,6 +109,9 @@ export namespace ApiProcessingPerformanceTotal {
   // export const ApiProcessingPerformanceTotalValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               measureUnitType: {
+  //                   validators: []
+  //               },
   //               totals: {
   //                   validators: []
   //               },

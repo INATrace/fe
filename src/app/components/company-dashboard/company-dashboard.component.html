@@ -13,38 +13,6 @@
         <div class="row">
           <div class="col-12 col-xs-6 col-md-8">
             <div class="d-flex flex-wrap justify-content-start">
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', deliveriesForm)"
-                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
-                      [disabled]="checkButtonDisabled('day', deliveriesForm)"
-                      (click)="setDeliveryInterval('day')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', deliveriesForm)"
-                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
-                      [disabled]="checkButtonDisabled('week', deliveriesForm)"
-                      (click)="setDeliveryInterval('week')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', deliveriesForm)"
-                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
-                      [disabled]="checkButtonDisabled('month', deliveriesForm)"
-                      (click)="setDeliveryInterval('month')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', deliveriesForm)"
-                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
-                      [disabled]="checkButtonDisabled('year', deliveriesForm)"
-                      (click)="setDeliveryInterval('year')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
-              </button>
               <app-datepicker
                 label="Select date from"
                 i18n-label="@@companyDashboardComponent.datepicker.deliveryDateFrom.label"
@@ -61,12 +29,61 @@
                 (onChange)="onFilterDateRangeChange()"
                 style="width: 150px; margin-left: 1rem;">
               </app-datepicker>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      (click)="setDeliveryInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      (click)="setDeliveryInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      (click)="setDeliveryInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', deliveriesForm)"
+                      [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      (click)="setDeliveryInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
+              </button>
             </div>
 
             <div echarts [options]="deliveriesOptions" [merge]="mergeOptions"></div>
           </div>
 
           <div class="col-12 col-xs-6 col-md-4">
+
+            <div [formGroup]="deliveriesForm" class="mb-1">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="deliveriesExcel" value="EXCEL">
+                <label class="form-check-label" for="deliveriesExcel">Excel</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="deliveriesPDF" value="PDF">
+                <label class="form-check-label" for="deliveriesPDF">PDF</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="deliveriesCSV" value="CSV">
+                <label class="form-check-label" for="deliveriesCSV">CSV</label>
+              </div>
+            </div>
+
+            <button class="btn btn-solid round btn-table-new content-element--btn mb-3"
+                    (click)="exportDeliveries()">
+              <span>Export Data</span>
+            </button>
+
 
             <div class="form-group">
               <single-choice
@@ -103,6 +120,7 @@
                          i18-typeToSearchText="@@companyDashboardComponent.singleChoice.semiProduct.enterSearchTerm"
                          typeToSearchText="Enter search term"
                          class="custom labelPlaceholder"
+                         [disabled]="this.facilities?.length < 1"
                          style="border:none">
               </ng-select>
             </div>
@@ -165,38 +183,6 @@
         <div class="row">
           <div class="col-12 col-xs-6 col-md-8">
             <div class="d-flex flex-wrap justify-content-start">
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', processingPerformanceForm)"
-                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
-                      [disabled]="checkButtonDisabled('day', processingPerformanceForm)"
-                      (click)="setProcessingPerformanceInterval('day')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', processingPerformanceForm)"
-                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
-                      [disabled]="checkButtonDisabled('week', processingPerformanceForm)"
-                      (click)="setProcessingPerformanceInterval('week')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', processingPerformanceForm)"
-                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
-                      [disabled]="checkButtonDisabled('month', processingPerformanceForm)"
-                      (click)="setProcessingPerformanceInterval('month')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
-              </button>
-              <button style="margin-top: 1.7rem"
-                      class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', processingPerformanceForm)"
-                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
-                      [disabled]="checkButtonDisabled('year', processingPerformanceForm)"
-                      (click)="setProcessingPerformanceInterval('year')">
-                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
-              </button>
               <app-datepicker
                 label="Select date from"
                 i18n-label="@@companyDashboardComponent.datepicker.processingDateFrom.label"
@@ -213,12 +199,60 @@
                 (onChange)="onFilterProcessingDateRangeChange()"
                 style="width: 150px; margin-left: 1rem;">
               </app-datepicker>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
+                      (click)="setProcessingPerformanceInterval('day')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
+                      (click)="setProcessingPerformanceInterval('week')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
+                      (click)="setProcessingPerformanceInterval('month')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
+              </button>
+              <button style="margin-top: 1.7rem"
+                      class="af-actions-btn"
+                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', processingPerformanceForm)"
+                      [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
+                      (click)="setProcessingPerformanceInterval('year')">
+                <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
+              </button>
             </div>
 
             <div echarts [options]="processingPerformanceOption" [merge]="processingPerformanceMergeOptions"></div>
           </div>
 
           <div class="col-12 col-xs-6 col-md-4">
+
+            <div [formGroup]="processingPerformanceForm" class="mb-1">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="processingPerformanceExcel" value="EXCEL">
+                <label class="form-check-label" for="processingPerformanceExcel">Excel</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="processingPerformancePDF" value="PDF">
+                <label class="form-check-label" for="processingPerformancePDF">PDF</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="exportType" id="processingPerformanceCSV" value="CSV">
+                <label class="form-check-label" for="processingPerformanceCSV">CSV</label>
+              </div>
+            </div>
+
+            <button class="btn btn-solid round btn-table-new content-element--btn mb-3"
+                    (click)="exportProcessingPerformance()">
+              <span>Export Data</span>
+            </button>
 
             <single-choice
                 label="Facility"
@@ -233,30 +267,8 @@
               i18n-label="@@companyDashboardComponent.singleChoice.processingAction.label"
               [formControlInput]="processingActionFormControl"
               [codebookService]="procActionsCodebook"
-              (onChange)="refreshProcessingPerformanceData()">
+              (onChange)="reloadProcessingFields($event)">
             </single-choice>
-
-            <div class="form-group">
-              <label class="d-flex mb-0 text-input-label">
-                <span i18n="@@">Measuring unit</span>
-              </label>
-              <ng-container *ngIf="measureUnitTypes?.length > 0">
-                <ng-select bindLabel="label"
-                           bindValue="id"
-                           placeholder="Select measuring unit"
-                           i18n-placeholder="@@companyDashboardComponent.singleChoice.measuringUnit.placeholder"
-                           [items]="measureUnitTypes"
-                           [formControl]="measuringUnitFormControl"
-                           (ngModelChange)="refreshProcessingPerformanceData()"
-                           notFoundText="Nothing found"
-                           i18-notFoundText="@@companyDashboardComponent.singleChoice.measuringUnit.nothing"
-                           i18-typeToSearchText="@@companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm"
-                           typeToSearchText="Enter search term"
-                           class="custom labelPlaceholder"
-                           style="border:none">
-                </ng-select>
-              </ng-container>
-            </div>
 
             <ng-container *ngIf="evidenceFields?.length > 0">
               <ng-container *ngFor="let field of evidenceFields; let i=index;">
