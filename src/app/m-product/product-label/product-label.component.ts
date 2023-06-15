@@ -22,7 +22,6 @@ import { ApiResponsibility } from 'src/api/model/apiResponsibility';
 import { ApiSustainability } from 'src/api/model/apiSustainability';
 import { CompanyDetailComponent } from 'src/app/company/company-detail/company-detail.component';
 import { ComponentCanDeactivate } from 'src/app/shared-services/component-can-deactivate';
-import { ListEditorManager } from 'src/app/shared/list-editor/list-editor-manager';
 import { TextinputComponent } from 'src/app/shared/textinput/textinput.component';
 import { AuthService } from 'src/app/core/auth.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';

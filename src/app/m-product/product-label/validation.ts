@@ -7,7 +7,6 @@ import { ApiProcess } from 'src/api/model/apiProcess';
 import { ApiCompany } from 'src/api/model/apiCompany';
 import { ApiAddress } from 'src/api/model/apiAddress';
 import { ApiProcessDocument } from 'src/api/model/apiProcessDocument';
-import { ApiResponsibilityFarmerPicture } from 'src/api/model/apiResponsibilityFarmerPicture';
 import { ApiProductOrigin } from 'src/api/model/apiProductOrigin';
 import { ApiCertification } from 'src/api/model/apiCertification';
 import { ApiProductSettings } from 'src/api/model/apiProductSettings';
@@ -42,18 +41,6 @@ export const ApiProcessDocumentValidationScheme = {
     },
   }
 } as SimpleValidationScheme<ApiProcessDocument>;
-
-export const ApiResponsibilityFarmerPictureValidationScheme = {
-  validators: [],
-  fields: {
-    description: {
-      validators: [Validators.required]
-    },
-    document: {
-      validators: [Validators.required]
-    },
-  }
-} as SimpleValidationScheme<ApiResponsibilityFarmerPicture>;
 
 export const ApiValueChainValidationScheme = {
   validators: [],
