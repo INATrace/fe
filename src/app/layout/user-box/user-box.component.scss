@@ -34,6 +34,7 @@
   //   color: $moderate-cyan;
   // }
 }
+
 .user-box-company {
   // color: $secondary;
   vertical-align: middle;
@@ -48,9 +49,7 @@
 }
 
 .whole-name:hover {
-  // color: $secondary;
-  color: $moderate-cyan;
-  // text-decoration: underline;
+  color: $secondary-new;
 }
 
 .user-icon-box {
@@ -68,7 +67,6 @@
     margin-left: 0.25rem;
     background-color: white
   }
-
 }
 
 .user-icon {
@@ -79,9 +77,6 @@
   }
 }
 
-
-
-
 .dropdown-toggle::after {
   display: none;
 }
@@ -89,6 +84,10 @@
 .dropdown-menu {
   left: unset;
   right: -3.5rem;
+  .dropdown-item:active {
+    background-color: $selector-marked-color;
+    color: $secondary-new;
+  }
 }
 
 .line{
@@ -108,12 +107,10 @@
 
   &--displaycompany {
     color: inherit;
-    // padding-right: 0.5rem;
   }
 
   &:hover {
-    color: $moderate-cyan;
-    // text-decoration: underline;
+    color: $secondary-new;
   }
 
   &-caret-box {
@@ -126,13 +123,6 @@
     @include media-breakpoint-down(md) {
       margin-right: 0.5rem;
     }
-
-    // &--careticon {
-      // color: $secondary;
-      // @include media-breakpoint-down(md) {
-        // color: white;
-    //   }
-    // }
   }
 }
 

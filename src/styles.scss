@@ -339,20 +339,14 @@ p {
 // /////////////////////////////////////////
 // //// Button style override
 // /////////////////////////////////////////
-
 button.btn, a.btn {
   color: white;
-  background-color: $primary;
+  background-color: $primary-new;
   font-size: 1rem;
   line-height: 25px;
   font-weight: normal;
   letter-spacing: 0.46px;
-  //https://codepen.io/sdthornton/pen/wBZdXq
-  // box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  // // box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  // transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   transition: none;   // overriding fom tmp.css transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
-
 
   &.btn-link {
       text-transform: none;
@@ -364,23 +358,13 @@ button.btn, a.btn {
           color: $color-primary;
       }
   }
-  &.btn-outlined {
-  color: $primary;
-  background-color: transparent;
-  border: 1px solid $primary;
-  }
-  // ellipsis on 6ch, until md'
-  // &--el6ch {
-  //   max-width: 6ch;
-  //   display: block;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
 
-  //   @include media-breakpoint-up(md) {
-  //     max-width: 100%;
-  //   }
-  // }
+  &.btn-outlined {
+    color: $primary-new;
+    background-color: transparent;
+    border: 1px solid $primary-new;
+  }
+
   &--el {
     max-width: 100%;
     display: block;
@@ -392,37 +376,43 @@ button.btn, a.btn {
       max-width: 100%;
     }
   }
+
+  &:focus {
+    border-color: $primary-new;
+    box-shadow: 0 0 0 0.2rem $primary-light-new;
+  }
 }
 
 button.btn:hover, a.btn:hover {
-    &.no-hover {
-      color: white;
-      background-color: $primary;
-      border: 1px solid $primary;
+  &.no-hover {
+    color: white;
+    background-color: $primary-new;
+    border: 1px solid $primary-new;
 
-      &.btn-link {
-        box-shadow: none;
-      }
-
-      &.btn-outlined {
-        color:$primary;
-        background-color: transparent;
-      }
+    &.btn-link {
+      box-shadow: none;
     }
 
-    &:not(.no-hover) {
-      color:$primary;
-      background-color: $very-pale-cyan;
-      border: 1px solid $primary;
-
-      &.btn-link {
-        box-shadow: none;
-      }
-      &.btn-outlined {
-        color:$primary;
-        background-color: $very-pale-cyan;
-      }
+    &.btn-outlined {
+      color: $primary-new;
+      background-color: transparent;
     }
+  }
+
+  &:not(.no-hover) {
+    color: $primary-new;
+    background-color: $primary-lighter-new;
+    border: 1px solid $primary-new;
+
+    &.btn-link {
+      box-shadow: none;
+    }
+
+    &.btn-outlined {
+      color: $primary-new;
+      background-color: $primary-lighter-new;
+    }
+  }
 }
 
 button.no-shadow {
@@ -463,101 +453,16 @@ button.btn.btn-outlined, a.btn.btn-outlined {
   }
 }
 
-// ///////////////////////////////////////
-// ///// Button circles
-// ///////////////////////////////////////
-
-// .btn-circle.btn-xl {
-//     width: 70px;
-//     height: 70px;
-//     padding: 10px 16px;
-//     border-radius: 35px;
-//     font-size: 24px;
-//     line-height: 1.33;
-// }
-
-// .btn-circle.btn-lg {
-//     width: 40px;
-//     height: 40px;
-//     padding-top: 8px;
-//     border-radius: 20px;
-//     font-size: 20px;
-//     line-height: 1.2;
-// }
-
-// .btn-circle {
-//     width: 30px;
-//     height: 30px;
-//     padding: 6px 0px;
-//     border-radius: 15px;
-//     text-align: center;
-//     font-size: 15px;
-//     // line-height: 1.42857;
-//     line-height: 1
-// }
-
-// .btn-in-title-circle {
-//     margin-left: 0.5rem;
-// }
-
-// ////////////////////////////////////////
-// /// Custom styles
-// ////////////////////////////////////////
-
-// .heavy-label, .c-heavy-label-title {
-//     font-weight: bold;
-//     text-transform: uppercase;
-// }
-
-// .c-heavy-label-title {
-//     margin-bottom: map-get($spacers, 0)
-// }
-
-// .c-heavy-label-title-as-single-choice {
-//     font-weight: bold;
-//     text-transform: uppercase;
-//     margin-bottom: map-get($spacers, 2)
-// }
-
-// .c-before-infoblock-title {
-//     font-size: 1.2rem;
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: map-get($spacers, 2);
-//     margin-bottom: map-get($spacers, 2);
-// }
-
-// // .tagitem {
-// //     display: inline-block;
-// //     margin-right: map-get($spacers, 2);
-// //     margin-bottom: map-get($spacers, 2);
-// //     padding: map-get($spacers, 1) map-get($spacers, 3);
-// //     @include themify {
-// //         color: $color-tag-text;
-// //     }
-// //     // color: $tag-text;
-// //     // background-color: $tag-background;
-// //     @include themify {
-// //         background-color: $color-tag-background;
-// //         border: 1px solid $color-tag-border;
-// //     }
-
-// //     border-radius: $border-radius;//0.25rem;
-// // }
-
 .tagitem {
   // display: inline-block;
   // margin-right: 0.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  color: $gray;
-  background-color: $tag-background;
+  color: $white;
+  background-color: $primary-new;
   border: $tag-border;
   border-radius: 0.25rem;
 }
-
 
 .ro-tagitem {
     display: inline;
@@ -625,10 +530,7 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     white-space: nowrap;
     background-color: transparent;
     border: 0;
-
 }
-
-
 
 .dropdown-menu {
     padding-left: 1px;
@@ -1437,9 +1339,7 @@ footer.main-footer .logos {
     height:100%
 }
 
-//
-// //sidebar
-
+// Sidebar
 .af-layout {
   &--aside {
     height: auto;
@@ -1460,25 +1360,14 @@ footer.main-footer .logos {
       background-color: inherit;
 
       @include media-breakpoint-up(lg) {
-      //   width: $navbar-width;
-        background-color: $secondary;
-        // margin-left: $navbar-width;
+        background-color: $primary-new;
       }
 
       ul {
         display: none;
         opacity: 0;
-        // TODO: this is here left navigation kicks in
-        // position: absolute;
-        // top: 1rem;
-        // right: -44px;
-        // height: 44px;
-        // width: 44px;
-        // background-color: red;
         overflow: hidden;
 
-
-        // @media (min-width:576px) {
         @include media-breakpoint-up(lg) {
           position: relative;
           display: flex;
@@ -1492,6 +1381,7 @@ footer.main-footer .logos {
       }
     }
   }
+
   &--main {
     margin-left: 0;
     display: block;
@@ -1579,27 +1469,7 @@ footer.main-footer .logos {
   }
 }
 
-// .topnav-tabs li {
-//   float: left;
-//   color: $secondary;
-//   padding-left: 25px;
-//   padding-right: 25px;
-//   padding-top: 12px;
-//   margin-top: 35px;
-
-//   &:hover {
-//     color: $moderate-cyan;
-//   }
-// }
 .topnav-tabs {
-  // todo: this needs to get icon, and actuall
-  // option to toggle nagivation options into view.
-  // position: absolute;
-  // height: 44px;
-  // width: 44px;
-  // left: 125px;
-  // margin-top: 0.5rem;
-  // background-color: gainsboro;
 
   display: none;
   opacity: 0;
@@ -1626,12 +1496,10 @@ footer.main-footer .logos {
   // }
 
   li {
-    // float: left;
     color: $secondary;
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 12px;
-    // margin-top: 11px; // was 35px
     margin-top: 0;
     display: none;
 
@@ -1644,7 +1512,7 @@ footer.main-footer .logos {
       padding-top: 11px;                // was 35px
 
       &:hover {
-        color: $moderate-cyan;
+        color: $secondary-new;
       }
     }
 
@@ -1660,12 +1528,18 @@ footer.main-footer .logos {
       letter-spacing: 0;
       line-height: 22px;
     }
+
+    &.active {
+      a {
+        color: $secondary-new;
+      }
+    }
   }
 
   &-bottom.active {
     margin-top: 22px;
     height: 4px;
-    background-color: $primary;
+    background-color: $secondary-new;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
@@ -1826,11 +1700,9 @@ footer.main-footer .logos {
   height: 45px;
 }
 
-
 button.btn-search,
 button.btn-filter {
   background-color: #FFFFFF;
-  // width: 90px;
   color: $secondary;
   font-size: 12px;
   font-weight: 500;
@@ -1840,6 +1712,7 @@ button.btn-filter {
   border-radius: 7px;
   height: $button-icon-bg-size;
 }
+
 button.btn-search:hover,
 button.btn-filter:hover {
   background-color: #FFFFFF;
@@ -1847,9 +1720,8 @@ button.btn-filter:hover {
 
   .button {
     &-icon {
-
       &-shape {
-        background: $moderate-cyan;  // initiall color of icon
+        background: currentColor;
       }
     }
   }
@@ -1868,29 +1740,10 @@ button.btn-filter:hover {
   }
 }
 
-
-// button.btn-filter {
-//   background-color: #FFFFFF;
-//   // width: 90px;
-//   color: $secondary;
-//   font-size: 12px;
-//   font-weight: 500;
-//   letter-spacing: 0.34px;
-//   line-height: 18px;
-//   border: none;
-//   border-radius: 7px;
-// }
-//  {
-//   background-color: #FFFFFF;
-//   color: $primary;
-// }
-
 button.btn-search,
 button.btn-filter {
   height: $button-icon-bg-size;
 }
-
-
 
 .button {
   &-icon {
@@ -1958,30 +1811,26 @@ button.btn-filter {
   font-weight: 500;
   letter-spacing: 0.34px;
   line-height: 18px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 7px;
-
   margin-left: 1rem;
-  // &:first-child {
-  //   margin-left: 0;
-  // }
 
   &:hover {
     background-color: #FFFFFF;
-    color: $primary;
+    color: $primary-new;
+    border: 1px solid $primary-new;
   }
-  // disabled variation
 
+  // disabled variation
   &--disabled {
-    color: $secondary;
     color: #939393;
     background-color: #efefef;
     &:hover {
       background-color: #efefef;
       color: #939393;
+      border: 1px solid transparent;
     }
   }
-
 
   // actions button with icon
   //
@@ -2184,22 +2033,25 @@ animation-timing-function: ease-in;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   }
 }
-.above-sidenav-title{
+
+.above-sidenav-title {
   font-size: 22px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
   margin-left: 8px;
   padding-top: 25px;
+  color: $primary-new;
 
   @include media-breakpoint-up(lg) {
     margin-left: 40px;
   }
-
 }
-.above-sidenav-title-cursor{
+
+.above-sidenav-title-cursor {
   cursor: pointer;
 }
+
 .above-sidenav {
   &-icon {
     // This adds basic shape of icon with a background
@@ -2254,17 +2106,17 @@ animation-timing-function: ease-in;
     align-items: center;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $sidebar-icon-size;
       height: $sidebar-icon-size;
-      background: white;  // initiall color of icon
+      background: white;  // initial color of icon
       mask-size: cover;
-      //margin: ($sidebar-icon-bg-size - $sidebar-icon-size) / 2; // (34 - 24)/2
+      transition: scale 150ms ease-out;
 
       &:hover,
       &:focus {
-        background: $moderate-cyan;  // this overrides color of icon for states
+        scale: 1.15;
       }
 
       // list icon sources here
@@ -2293,7 +2145,6 @@ animation-timing-function: ease-in;
   background-color: $sidenav-bg-colour;
   overflow-x: inherit; /* Disable horizontal scroll */
 
-
   @include media-breakpoint-up(lg) {
     margin-top: 80px;
     margin-left: $navbar-width;
@@ -2304,8 +2155,6 @@ animation-timing-function: ease-in;
     width: 368px; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     overflow-x: hidden; /* Disable horizontal scroll */
-
-
   }
 }
 
@@ -2314,7 +2163,6 @@ animation-timing-function: ease-in;
   padding: 0.25rem;
   color: $secondary;
   text-decoration: none;
-  transition: all 0.15s ease-out 0.15s;
   cursor: pointer;
   font-size: 18px;
   letter-spacing: 0;
@@ -2323,18 +2171,20 @@ animation-timing-function: ease-in;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-left: 4px solid $sidenav-bg-colour; // offsets border on .active
-  // padding-left: 4px;
 
   &:hover {
-    color: $moderate-cyan;
+    color: $secondary-new;
   }
 }
 
 .sidenav a.active {
-  color: $secondary;
+  color: $secondary-new;
   background-color: $body-background;
-  border-left: 4px solid $primary;
-  // padding-left: 0;
+  border-left: 4px solid $secondary-new;
+
+  &:hover {
+    color: $secondary-new;
+  }
 }
 
 .sidenav a.link-error {
@@ -2343,11 +2193,9 @@ animation-timing-function: ease-in;
 }
 
 .sidenav a.active.parent {
-  margin-left: 0rem !important;
+  margin-left: 0 !important;
   font-size: rem-calc(14px);
 }
-
-
 
 .af-sidenav {
   &--block {
@@ -2364,8 +2212,6 @@ animation-timing-function: ease-in;
     }
   }
 }
-
-
 
 .main-inside-top {
   margin-top: 20px;
@@ -2782,9 +2628,10 @@ tr:nth-child(odd) {
   letter-spacing: 0;
   line-height: 18px;
   text-align: right;
+  cursor: default;
 
   &:hover {
-    color: $moderate-cyan;
+    color: $primary-new;
   }
 }
 
@@ -2820,6 +2667,7 @@ tr:nth-child(odd) {
     background-color: $row-1-title;
     padding-top: 0.375rem;
     line-height: 1.25;
+    color: $primary-new;
     span {
       font-weight: normal;
     }

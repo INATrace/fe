@@ -40,7 +40,7 @@ $primary-lighter:#C5BFBB;
 $primary-lightest:#E8E6E4;
 
 // bootstrap theme colors
-$primary:       #5DBCCF;
+$primary:       #999933;
 $secondary:     #25265E;
 $tertiary:      #3C4859;
 $success:       $primary !default;
@@ -50,6 +50,11 @@ $danger:        $red !default;
 $light:         $gray-light !default;
 $dark:          $gray-dark !default;
 
+$primary-new:   #999933;
+$primary-light-new: #E7E8BA;
+$primary-lighter-new: lighten($primary-light-new, 15%);
+$secondary-new: #C87711;
+
 
 $body-background: #F7F7F7;
 $top-bar-border: #F1F2F5;
@@ -57,8 +62,6 @@ $login-title-color: #8F92A1;
 $checkbox-border: #CCC;
 $odd-table-color: #F8F8F8;
 $counting-page: #8F92A1;
-$side-nav-active-bar: #B7BFCB;
-
 
 // a brush of af-card related colours
 $af-card-border: #F1F2F5;

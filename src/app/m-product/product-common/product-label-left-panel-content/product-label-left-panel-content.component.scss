@@ -10,31 +10,15 @@ i.fas {
   background-color: $body-background;
 }
 
-
-// .img-style{
-//   height: 218px;
-//   width: 290px;
-//   border-radius: 4px;
-//   object-fit: cover; // hopefully fixes image placement
-// }
-
-// .img-container{
-
-// }
-
-
 .link-error {
   padding-left: 33px;
   color: $danger;
 }
 
-.link-normal{
+.link-normal {
   padding-left: 33px;
-
-  &:hover {
-    color: $moderate-cyan;
-  }
 }
+
 ul {
   list-style-type: none;
 }
