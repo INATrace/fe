@@ -17,27 +17,30 @@ html {
 
 body {
   height: 100%;
-    margin:0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem; //16px
-    font-weight:normal;
-    line-height: 1.563; //25px
-    color:$secondary;
-    text-align:left;
-    background-color:$body-background;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem; //16px
+  font-weight: 400;
+  line-height: 1.563; //25px
+  color: $theme-primary-text;
+  text-align: left;
+  background-color: $body-background;
 }
+
 hr {
-    box-sizing:content-box;
-    height:0;
-    overflow:visible
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible
 }
-h1,h2,h3,h4,h5,h6 {
-    margin-top:0;
-    margin-bottom:.5rem
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: .5rem
 }
+
 p {
-    margin-top:0;
-    margin-bottom:1rem
+  margin-top: 0;
+  margin-bottom: 1rem
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -135,12 +138,11 @@ p {
   border-top: none;
   border-right: none;
   border-left: none;
-  border-radius: 0px;
+  border-radius: 0;
   width: 300px;
-  margin-bottom:0px;;
-
-    padding-top: 0px;
-  padding-bottom: 0px;
+  margin-bottom:0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .text-input-without-border:focus {
@@ -149,12 +151,11 @@ p {
   border-top: none;
   border-right: none;
   border-left: none;
-  border-radius: 0px;
+  border-radius: 0;
   width: 300px;
-  margin-bottom:0px;
-
-    padding-top: 0px;
-  padding-bottom: 0px;
+  margin-bottom:0;
+  padding-top: 0;
+  padding-bottom: 0;
 
 }
 
@@ -171,31 +172,35 @@ p {
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
-  color: $landing-primary;
+  color: $theme-primary;
 }
-.login-subtitle{
-  color: $login-title-color;
+
+.login-subtitle {
+  color: $theme-secondary-text;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 20px;
 }
 
-.login-small-spacer{
+.login-small-spacer {
   height: 12px;
 }
-.login-medium-spacer{
+
+.login-medium-spacer {
   height: 19px;
 }
-.login-big-spacer{
+
+.login-big-spacer {
   height: 53px;
 }
-.login-right-side-text{
+
+.login-right-side-text {
   font-size: 30px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 36px;
-  color: $landing-primary;
+  color: $theme-primary;
 
   margin-top: 0;
   margin-right: 80px;
@@ -209,16 +214,13 @@ p {
   }
 }
 
-.login-right-side-subtext{
-  color: $login-title-color;
+.login-right-side-subtext {
+  color: $theme-secondary-text;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 22px;
 
   margin-top: 0;
-  margin-right: 0;
-  margin-left: 0;
-
   margin-left: 50px;
   margin-right: 80px;
 
@@ -227,10 +229,10 @@ p {
     margin-right: 109px;
     margin-left: 129px;
   }
-
 }
+
 .login-forgot-password{
-  color: $login-title-color;
+  color: $theme-secondary-text;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 22px;
@@ -250,7 +252,7 @@ p {
 // /////////////////////////////////////////
 button.btn, a.btn {
   color: white;
-  background-color: $primary-new;
+  background-color: $theme-primary;
   font-size: 1rem;
   line-height: 25px;
   font-weight: normal;
@@ -269,9 +271,9 @@ button.btn, a.btn {
   }
 
   &.btn-outlined {
-    color: $primary-new;
+    color: $theme-primary;
     background-color: transparent;
-    border: 1px solid $primary-new;
+    border: 1px solid $theme-primary;
   }
 
   &--el {
@@ -287,39 +289,39 @@ button.btn, a.btn {
   }
 
   &:focus {
-    border-color: $primary-new;
-    box-shadow: 0 0 0 0.2rem $primary-light-new;
+    border-color: $theme-primary;
+    box-shadow: 0 0 0 0.2rem $theme-primary-light;
   }
 }
 
 button.btn:hover, a.btn:hover {
   &.no-hover {
     color: white;
-    background-color: $primary-new;
-    border: 1px solid $primary-new;
+    background-color: $theme-primary;
+    border: 1px solid $theme-primary;
 
     &.btn-link {
       box-shadow: none;
     }
 
     &.btn-outlined {
-      color: $primary-new;
+      color: $theme-primary;
       background-color: transparent;
     }
   }
 
   &:not(.no-hover) {
-    color: $primary-new;
-    background-color: $primary-lighter-new;
-    border: 1px solid $primary-new;
+    color: $theme-primary;
+    background-color: $theme-primary-lighter;
+    border: 1px solid $theme-primary;
 
     &.btn-link {
       box-shadow: none;
     }
 
     &.btn-outlined {
-      color: $primary-new;
-      background-color: $primary-lighter-new;
+      color: $theme-primary;
+      background-color: $theme-primary-lighter;
     }
   }
 }
@@ -329,13 +331,11 @@ button.no-shadow {
 }
 
 .tagitem {
-  // display: inline-block;
-  // margin-right: 0.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
   color: $white;
-  background-color: $primary-new;
-  border: $tag-border;
+  background-color: $theme-primary;
+  border: lighten($theme-primary, 20%);
   border-radius: 0.25rem;
 }
 
@@ -523,9 +523,6 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 }
 
 .af-form-element {
-  // ul {                  // you're a bold one cotton!
-  //   margin-bottom: 0;
-  // }
   a.ab-edit-link:not([href]) {
     text-decoration: underline;
 
@@ -547,7 +544,6 @@ a:hover {
     color:$secondary;
     text-decoration:text-decoration-line
 }
-
 
 // btn colors
 .btn-primary {
@@ -619,14 +615,14 @@ a:hover {
 
 #content #landing-h2 {
   font-size: 68px;
-  color: $landing-text-color;
+  color: $theme-primary-text;
   font-weight: 700;
   margin-bottom: 26px
 }
 
 #content #landing-h4 {
   font-size: 20pt;
-  color: $landing-text-color;
+  color: $theme-primary-text;
   font-weight: 700;
   line-height: 1.764em;
   margin-bottom: 60px
@@ -847,7 +843,7 @@ a:hover {
 
 footer.main-footer {
   background-color: white;
-  color: $landing-text-color;
+  color: $theme-primary-text;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -915,11 +911,10 @@ footer.main-footer .logos {
 
     &-nav {
       width: $navbar-width;
-      // background-color: $secondary;
       background-color: inherit;
 
       @include media-breakpoint-up(lg) {
-        background-color: $primary-new;
+        background-color: $theme-primary;
       }
 
       ul {
@@ -944,20 +939,13 @@ footer.main-footer .logos {
   &--main {
     margin-left: 0;
     display: block;
-
-    @include media-breakpoint-up(lg) {
-      // background-color: $secondary;
-      // margin-left: $navbar-width;
-    }
   }
   &--system {
     display: block;
     margin-left: 0;
-    // background-color: red !important;
 
     @include media-breakpoint-up(lg) {
       display: block;
-      // background-color: $secondary;
       margin-left: 0;
     }
   }
@@ -972,8 +960,6 @@ footer.main-footer .logos {
 
   }
 }
-
-
 
 .af-nav {
   &--topnav {
@@ -1001,9 +987,6 @@ footer.main-footer .logos {
     }
   }
 }
-
-
-
 
 .af-topnav {
   &-more {
@@ -1043,16 +1026,6 @@ footer.main-footer .logos {
     margin-top: 12px; // inherit;
     background-color: inherit;
   }
-  // margin-left:-25px;
-
-
-  // @include media-breakpoint-up(lg) {
-  //   // background-color: $secondary;
-  //   right: 0;
-  //   position: fixed;
-  //   border: none;
-  //   margin-top: 0;
-  // }
 
   li {
     color: $secondary;
@@ -1071,7 +1044,7 @@ footer.main-footer .logos {
       padding-top: 11px;                // was 35px
 
       &:hover {
-        color: $secondary-new;
+        color: $theme-secondary;
       }
     }
 
@@ -1084,13 +1057,14 @@ footer.main-footer .logos {
       text-decoration: none;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 400;
       letter-spacing: 0;
       line-height: 22px;
     }
 
     &.active {
       a {
-        color: $secondary-new;
+        color: $theme-secondary;
       }
     }
   }
@@ -1098,7 +1072,7 @@ footer.main-footer .logos {
   &-bottom.active {
     margin-top: 22px;
     height: 4px;
-    background-color: $secondary-new;
+    background-color: $theme-secondary;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
@@ -1128,26 +1102,12 @@ footer.main-footer .logos {
   }
 }
 
-// .topnav-tabs li a.active {
-//   color: $tertiary;
-//   border-bottom: 4px solid $primary;
-// }
-
-
 .main {
   margin-left: 8px;
   margin-right: 8px;
 
   max-width: 100%;
-
-  // @include media-breakpoint-up(lg) {
-  //   margin-left: calc(458px); //458px;
-  // // width: 870px;
-  // }
 }
-
-// 367px
-// 70px
 
 @media (min-width:576px){
   .main{
@@ -1186,14 +1146,6 @@ footer.main-footer .logos {
   }
 }
 
-
-
-// .auth-side-navbar {
-//   // width: 90px;
-//   width: $navbar-width;
-//   background-color: $secondary;
-//   height: 100vh;
-// }
 .auth-side-logo {
   margin-top: ($navbar-width - $navbar-logo-width)/2;
   margin-left: ($navbar-width - $navbar-logo-width)/2;
@@ -1208,52 +1160,7 @@ footer.main-footer .logos {
   align-items:center;
   justify-content:center;
 }
-// #sidebar-guest-shadow {
-// height: 100vh;
-// width: 16px;
-// background-color: $primary-light;
-// }
-// #sidebar-register-shadow {
-// height: 100vh;
-// width: 16px;
-// background-color: $primary-light;
-// }
 
-
-
-// #topbar-product-label-front-shadow {
-//   height: 8px;
-//   background-color: $primary-lighter;
-// }
-
-// #topbar-guest-shadow {
-//   height: 16px;
-//   background-color: $primary-lighter;
-// }
-
-
-// .btn-icon{
-//     display:inline-flex;
-//     align-items:center;
-//     justify-content:center;
-//     font-size:1em;
-//     letter-spacing:0;
-//     transition:inherit;
-//     background-size:99.99%!important
-// }
-
-
-// //registration forms
-// .col-register {
-//   width: 350px;
-// }
-// .row-register {
-//   text-align: center;
-//   justify-content: center
-// }
-// .register-text-left{
-//   text-align:left;
-// }
 .btn-register {
   width: 280px;
   height: 45px;
@@ -1376,8 +1283,8 @@ button.btn-filter {
 
   &:hover {
     background-color: #FFFFFF;
-    color: $primary-new;
-    border: 1px solid $primary-new;
+    color: $theme-primary;
+    border: 1px solid $theme-primary;
   }
 
   // disabled variation
@@ -1448,12 +1355,6 @@ button.btn-filter {
       margin-top: 0 !important;     // we're important too, you know.
     }
   }
-}
-
-//label
-.labelPlaceholder{
-  font-weight: 300;
-  // color: red;
 }
 
 ////////////// RIPPLE ////////////
@@ -1570,7 +1471,7 @@ animation-timing-function: ease-in;
   line-height: 30px;
   margin-left: 8px;
   padding-top: 25px;
-  color: $primary-new;
+  color: $theme-primary;
 
   @include media-breakpoint-up(lg) {
     margin-left: 40px;
@@ -1602,7 +1503,7 @@ animation-timing-function: ease-in;
 
       &:hover,
       &:focus {
-        background: $primary-new;  // this overrides color of icon for states
+        background: $theme-primary;  // this overrides color of icon for states
       }
 
       // list icon sources here
@@ -1700,17 +1601,17 @@ animation-timing-function: ease-in;
   border-left: 4px solid $sidenav-bg-colour; // offsets border on .active
 
   &:hover {
-    color: $secondary-new;
+    color: $theme-secondary;
   }
 }
 
 .sidenav a.active {
-  color: $secondary-new;
+  color: $theme-secondary;
   background-color: $body-background;
-  border-left: 4px solid $secondary-new;
+  border-left: 4px solid $theme-secondary;
 
   &:hover {
-    color: $secondary-new;
+    color: $theme-secondary;
   }
 }
 
@@ -1818,42 +1719,50 @@ animation-timing-function: ease-in;
 .news-content-footer-divider{
   height: 60px;
 }
+
 .news-title-content-divider{
   height: 32px;
 }
+
 .news-content-divider{
   height: 24px;
 }
+
 .news-title {
   font-size: 48px;
   margin-top: 72px;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-section-title {
   margin-top: 40px;
   font-size: 2rem;
   font-weight: 600;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-section-subtitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-summary {
   font-size: 1rem;
   font-weight: 300;
   color: $secondary;
 }
+
 .news-content {
   font-size: 1.125rem;
   font-weight: 300;
   color: $secondary;
 }
-.news-content a{
+
+.news-content a {
   font-size: 1.125rem;
   font-weight: 300;
-  color: $landing-primary;
+  color: $theme-primary;
   text-decoration: underline;
 }
 
@@ -1946,7 +1855,7 @@ table, td, th {
 }
 
 tr:nth-child(odd) {
-  background-color: $odd-table-color;
+  background-color: #F8F8F8;
 }
 
 .title-page {
@@ -1963,21 +1872,11 @@ tr:nth-child(odd) {
 }
 
 .counting-page{
-  color: $counting-page;
+  color: #8F92A1;
   font-size: 12px;
   letter-spacing: 0;
   line-height: 18px;
-  // margin-top: -14px;
 }
-
-// ng-select.custom {
-//     border: none;
-// }
-// ng-select.dropdown {
-//     border: none;
-// }
-
-
 
 .ngb-pagination {
   border-color: red;
@@ -1998,7 +1897,7 @@ tr:nth-child(odd) {
   cursor: default;
 
   &:hover {
-    color: $primary-new;
+    color: $theme-primary;
   }
 }
 
@@ -2029,7 +1928,7 @@ tr:nth-child(odd) {
     background-color: $row-1-title;
     padding-top: 0.375rem;
     line-height: 1.25;
-    color: $primary-new;
+    color: $theme-primary;
     font-family: 'PathwayGothicOne-Regular', sans-serif;
     font-size: 22pt;
     span {
@@ -4017,12 +3916,12 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
     cursor: pointer;
     margin-right: 10px;
     border-radius: 0.25rem;
-    border: 1px solid $primary-new;
+    border: 1px solid $theme-primary;
     padding: 0.125rem 0.375rem;
-    color: $primary-new;
+    color: $theme-primary;
 
     &:hover {
-      background-color: $primary-lighter-new
+      background-color: $theme-primary-lighter
     }
 
     img {
@@ -4041,11 +3940,11 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
 
   .af-translation-language--selected {
     color: white;
-    background-color: $primary-new;
+    background-color: $theme-primary;
 
     &:hover {
       color: white;
-      background-color: $primary-new;
+      background-color: $theme-primary;
     }
   }
 

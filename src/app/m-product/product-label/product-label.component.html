@@ -1203,7 +1203,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabFairPrices')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabFairPrices">
           Enable 'Fair prices' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1238,7 +1238,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabProducers')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabProducers">
           Enable 'Producers' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1262,7 +1262,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabQuality')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabQuality">
           Enable 'Quality' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1286,7 +1286,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabFeedback')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabFeedback">
           Enable 'Feedback' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1394,7 +1394,7 @@
     <checkbox-input
             [form]="$any(productForm).get('businessToCustomerSettings.graphicQuality')"
             [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicQuality">
+      <checkbox-input-rich-label i18n="@@productLabel.b2c.graphicQuality">
         Enable 'Quality' graphic
       </checkbox-input-rich-label>
     </checkbox-input>
@@ -1411,7 +1411,7 @@
     <ng-container *ngFor="let video of videoList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(video).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(video)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
@@ -1431,7 +1431,7 @@
     <ng-container *ngFor="let farmer of farmerList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(farmer).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(farmer)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>

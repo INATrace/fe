@@ -49,7 +49,7 @@
 }
 
 .whole-name:hover {
-  color: $secondary-new;
+  color: $theme-secondary;
 }
 
 .user-icon-box {
@@ -86,7 +86,7 @@
   right: -3.5rem;
   .dropdown-item:active {
     background-color: $selector-marked-color;
-    color: $secondary-new;
+    color: $theme-secondary;
   }
 }
 
@@ -110,7 +110,7 @@
   }
 
   &:hover {
-    color: $secondary-new;
+    color: $theme-secondary;
   }
 
   &-caret-box {

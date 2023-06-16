@@ -106,12 +106,12 @@ button.btn-del {
   cursor: pointer;
 
   &:hover {
-    color: $primary-new;
+    color: $theme-primary;
     background-color: white;
-    border: 1px solid $primary-new;
+    border: 1px solid $theme-primary;
 
     .button-icon2 {
-      color: $primary-new;
+      color: $theme-primary;
     }
   }
 

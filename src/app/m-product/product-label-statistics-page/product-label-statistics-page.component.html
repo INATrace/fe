@@ -127,17 +127,17 @@
 
       <div class="d-flex justify-content-between">
         <checkbox-input [form]="locationsForm.get('visitLoc')" (onClick)="fitBounds()">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStatistics.checkbox-input.pageVisits">
+          <checkbox-input-rich-label i18n="@@productLabelStatistics.checkbox-input.pageVisits">
             Page visits
           </checkbox-input-rich-label>
         </checkbox-input>
         <checkbox-input [form]="locationsForm.get('authLoc')" (onClick)="fitBounds()" *ngIf="this.showAuth">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStatistics.checkbox-input.authenticityClicks">
+          <checkbox-input-rich-label i18n="@@productLabelStatistics.checkbox-input.authenticityClicks">
             Check Authenticity clicks
           </checkbox-input-rich-label>
         </checkbox-input>
         <checkbox-input [form]="locationsForm.get('origLoc')" (onClick)="fitBounds()" *ngIf="this.showOrig">
-          <checkbox-input-rich-label style="font-weight: 300;" i18n="@@productLabelStatistics.checkbox-input.originClicks">
+          <checkbox-input-rich-label i18n="@@productLabelStatistics.checkbox-input.originClicks">
             Trace origin clicks
           </checkbox-input-rich-label>
         </checkbox-input>

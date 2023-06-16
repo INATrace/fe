@@ -70,8 +70,7 @@
 
         <checkbox-input #conditionEl [form]="registerForm.get('condition')"
           [invalid]="submitted && registerForm.get('condition').invalid">
-          <checkbox-input-rich-label style="font-weight: 300;"
-            i18n="@@register.checkbox-input">
+          <checkbox-input-rich-label i18n="@@register.checkbox-input">
           </checkbox-input-rich-label>
           <checkbox-input-errors>
             <ng-container *ngIf="submitted">

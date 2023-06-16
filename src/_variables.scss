@@ -5,7 +5,6 @@ $fa-font-path: "../src/assets/webfonts";
 // Below one can override variables from:
 // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
 
-
 @font-face {
   font-family: 'graystroke';
   src: url('../src/assets/webfonts/graystroke_regular-webfont.woff2') format('woff2'),
@@ -14,13 +13,17 @@ $fa-font-path: "../src/assets/webfonts";
   font-style: normal;
 }
 
-// Landing page variables
-$landing-primary: rgb(157, 160, 66);
-$landing-primary-lightest: rgba(126, 128, 53, 0.25);
-$landing-text-color: rgb(0, 0, 0, 0.77);
+// Theme colors
+$theme-primary:   #999933;
+$theme-primary-light: #E7E8BA;
+$theme-primary-lighter: lighten($theme-primary-light, 15%);
+$theme-secondary: #C87711;
+$theme-primary-text: rgb(51, 51, 51);
+$theme-secondary-text: #8F92A1;
+$body-background: #F7F7F7;
+$top-bar-border: #F1F2F5;
 
 /// SYNC COLORS WITH theme.service.ts !!!!
-
 $gray-dark:   #666666 !default;
 $gray:        #939393 !default;
 $gray-semi:   #E6E6E6 !default;
@@ -39,7 +42,7 @@ $primary-lighter:#C5BFBB;
 $primary-lightest:#E8E6E4;
 
 // bootstrap theme colors
-$primary:       #999933;
+$primary:       $theme-primary;
 $secondary:     #25265E;
 $tertiary:      #3C4859;
 $success:       $primary !default;
@@ -48,19 +51,6 @@ $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-light !default;
 $dark:          $gray-dark !default;
-
-$primary-new:   #999933;
-$primary-light-new: #E7E8BA;
-$primary-lighter-new: lighten($primary-light-new, 15%);
-$secondary-new: #C87711;
-
-
-$body-background: #F7F7F7;
-$top-bar-border: #F1F2F5;
-$login-title-color: #8F92A1;
-$checkbox-border: #CCC;
-$odd-table-color: #F8F8F8;
-$counting-page: #8F92A1;
 
 // a brush of af-card related colours
 $af-card-border: #F1F2F5;
@@ -95,32 +85,14 @@ $darker-yellow: #AC893D;
 $icons-color: #25265E;
 
 $placeholder-color: #999999; // #939393;
-// $placeholder-color: red;
-
-// tags
-// $tag-background: lighten($primary, 47%);
-$tag-background: lighten($primary, 20%);
-
-// $tag-text: $gray-800;
-$tag-border: lighten($primary, 20%);
-// $tag-border-color: lighten($primary, 20%);
-// $tag-border: 1px solid $tag-border-color;
-
-// $info: #71B6D0
 
 // selectorji single-choice in taglist
 $selector-marked-color:$gray-semi;
 $selector-selected-color:$gray-semi;
 
-// $dropdown-link-color:               $gray-900 !default;
-// $dropdown-link-hover-color:         darken($gray-900, 5%) !default;
-
-// $line-navigator-color: $gray-500;
 $line-navigator-width: 4px;
 
 $btn-line-height: 2.5;
-
-// $default-body-background: $gray-100;
 
 // navbar and sidebar backgrounds for different themes
 $navbar-bg-rnpd: $primary;
@@ -134,11 +106,8 @@ $sidebar-bg-rnsd: $primary;
 //////////// NE UPORABLJAT DIREKTNO !!!
 $primary-rnsd: #46A6AF;
 $secondary-rnsd: #00666F;
-// $primary-rnsd: $primary;
-// $secondary-rnsd: $secondary;
 
 //////////////////////////////////////////////
-
 $themes: (
   'rnpd': (
     'primary':  #369BC1,
@@ -190,29 +159,6 @@ $color-sidebar-bg: null;
 $color-tag-background: null;
 $color-tag-text: null;
 $color-tag-border: null;
-
-
-
-// https://www.sitepoint.com/sass-theming-neverending-story/
-// POZOR: themify deluje samo na 2. levelu. Konkretno ne smeš delat
-// .bs-tooltip-right {
-//     .arrow::before {
-//         @include themify {
-//             border-top-color: $color-primary;
-//         }
-//     }
-// }
-//
-// ampak
-//
-// .bs-tooltip-right {
-//     @include themify {
-//         .arrow::before {
-//             border-top-color: $color-primary;
-//         }
-//     }
-// }
-
 
 @mixin themify($themes: $themes) {
   @each $theme, $colors in $themes {
