@@ -582,7 +582,7 @@ export class CompanyDashboardComponent implements OnInit {
       if (exportType === 'CSV') {
         this.fileSaverService.save(next, 'deliveries.csv');
       } else if (exportType === 'EXCEL') {
-        this.fileSaverService.save(next, 'deliveries.xls');
+        this.fileSaverService.save(next, 'deliveries.xlsx');
       } else if (exportType === 'PDF') {
         this.fileSaverService.save(next, 'deliveries.pdf');
       }
@@ -640,7 +640,7 @@ export class CompanyDashboardComponent implements OnInit {
           if (exportType === 'CSV') {
             this.fileSaverService.save(next, 'processing.csv');
           } else if (exportType === 'EXCEL') {
-            this.fileSaverService.save(next, 'processing.xls');
+            this.fileSaverService.save(next, 'processing.xlsx');
           } else if (exportType === 'PDF') {
             this.fileSaverService.save(next, 'processing.pdf');
           }
