@@ -1,4 +1,6 @@
+@import "../../variables";
+
 .button-selected {
-  color: #51a864;
-  background-color: #a9ce90;
+  color: white;
+  background-color: $theme-primary;
 }
