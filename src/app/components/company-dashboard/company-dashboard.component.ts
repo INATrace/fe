@@ -10,16 +10,15 @@ import { CompanyControllerService } from '../../../api/api/companyController.ser
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
 import { CompanyProcessingActionsService } from '../../shared-services/company-processing-actions.service';
 import { ProcessingActionControllerService } from '../../../api/api/processingActionController.service';
-import { CodebookTranslations } from '../../shared-services/codebook-translations';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import {
   ApiProcessingPerformanceRequestEvidenceField
 } from '../../../api/model/apiProcessingPerformanceRequestEvidenceField';
-import {DashboardControllerService} from '../../../api/api/dashboardController.service';
-import {FileSaverService} from 'ngx-filesaver';
-import {CompanyCollectingFacilitiesService} from '../../shared-services/company-collecting-facilities.service';
-import {GeneralSifrantService} from '../../shared-services/general-sifrant.service';
-import {ApiProcessingAction} from '../../../api/model/apiProcessingAction';
+import { DashboardControllerService } from '../../../api/api/dashboardController.service';
+import { FileSaverService } from 'ngx-filesaver';
+import { CompanyCollectingFacilitiesService } from '../../shared-services/company-collecting-facilities.service';
+import { GeneralSifrantService } from '../../shared-services/general-sifrant.service';
+import { ApiProcessingAction } from '../../../api/model/apiProcessingAction';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -40,8 +39,7 @@ export class CompanyDashboardComponent implements OnInit {
     public valueChainController: ValueChainControllerService,
     private procActionController: ProcessingActionControllerService,
     private dashboardControllerService: DashboardControllerService,
-    private fileSaverService: FileSaverService,
-    private codebookTranslations: CodebookTranslations
+    private fileSaverService: FileSaverService
   ) { }
 
   faTimes = faTimes;
@@ -157,7 +155,6 @@ export class CompanyDashboardComponent implements OnInit {
 
   processingPerformanceMergeOptions: EChartsOption;
 
-
   processingPerformanceForm: FormGroup = this.fb.group({
     from: this.fb.control(new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDay(), 12)),
     to: this.fb.control(new Date()),
@@ -171,10 +168,6 @@ export class CompanyDashboardComponent implements OnInit {
     return (this.deliveriesForm.get('facility') as FormControl);
   }
 
-  get deliverySemiProduct(): FormControl{
-    return (this.deliveriesForm.get('semiProduct') as FormControl);
-  }
-
   get farmerFormControl(): FormControl{
     return (this.deliveriesForm.get('farmer') as FormControl);
   }
@@ -186,9 +179,11 @@ export class CompanyDashboardComponent implements OnInit {
   get organicFormControl(): FormControl{
     return (this.deliveriesForm.get('organic') as FormControl);
   }
+
   get womensOnlyFormControl(): FormControl{
     return (this.deliveriesForm.get('womenOnly') as FormControl);
   }
+
   get productInDepositFormControl(): FormControl{
     return (this.deliveriesForm.get('productInDeposit') as FormControl);
   }
@@ -233,7 +228,7 @@ export class CompanyDashboardComponent implements OnInit {
     this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'COLLECTOR');
 
     this.procActionsCodebook =
-      new CompanyProcessingActionsService(this.procActionController, this.companyId, this.codebookTranslations);
+      new CompanyProcessingActionsService(this.procActionController, this.companyId);
 
     this.procActionController.listProcessingActionsByCompanyUsingGETByMap({
       limit: 1000,
@@ -262,7 +257,7 @@ export class CompanyDashboardComponent implements OnInit {
       });
     });
 
-    // init interval for delivery graph
+    // Init interval for delivery graph
     let diff = Math.abs(this.deliveriesForm.get('from').value.getTime() - this.deliveriesForm.get('to').value.getTime());
     let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     if (diffDays < 7) {
@@ -275,7 +270,7 @@ export class CompanyDashboardComponent implements OnInit {
       this.deliveriesForm.get('timeUnitGraphType').setValue('YEAR');
     }
     
-    // init interval for processing performance
+    // Init interval for processing performance
     diff = Math.abs(this.processingPerformanceForm.get('from').value.getTime() - this.processingPerformanceForm.get('to').value.getTime());
     diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     if (diffDays < 7) {
@@ -291,7 +286,7 @@ export class CompanyDashboardComponent implements OnInit {
 
   refreshDeliveriesData() {
 
-    // true when checked, otherwise no filter (null)
+    // True when checked, otherwise no filter (null)
     const womenOnlyFilter = this.deliveriesForm.get('womenOnly')?.value ? true : null;
     const organicFilter = this.deliveriesForm.get('organic')?.value ? true : null;
     const productInDepositFilter = this.deliveriesForm.get('productInDeposit')?.value ? true : null;
@@ -334,12 +329,11 @@ export class CompanyDashboardComponent implements OnInit {
     });
   }
 
-
   refreshProcessingPerformanceData() {
 
     const efs: ApiProcessingPerformanceRequestEvidenceField[] = [];
 
-    // check given evidenceFields
+    // Check given evidenceFields
     this.evidenceFields.forEach(evidenceField => {
       const value = this.processingPerformanceForm.get(evidenceField.fieldName)?.value;
       if (value) {
@@ -542,7 +536,6 @@ export class CompanyDashboardComponent implements OnInit {
     this.refreshDeliveriesData();
     setTimeout(() => this.deliveriesForm.get('facility').setValue(null));
   }
-
 
   deleteFacility(facility: ApiFacility, idx: number) {
     this.facilities.splice(idx, 1);
