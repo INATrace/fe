@@ -274,8 +274,6 @@ export class CompanyDashboardComponent implements OnInit {
     } else {
       this.deliveriesForm.get('timeUnitGraphType').setValue('YEAR');
     }
-
-    this.refreshDeliveriesData();
     
     // init interval for processing performance
     diff = Math.abs(this.processingPerformanceForm.get('from').value.getTime() - this.processingPerformanceForm.get('to').value.getTime());
