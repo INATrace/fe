@@ -913,7 +913,7 @@ footer.main-footer .logos {
       background-color: inherit;
 
       @include media-breakpoint-up(lg) {
-        background-color: $theme-primary;
+        background-color: $theme-secondary;
       }
 
       ul {
@@ -939,6 +939,7 @@ footer.main-footer .logos {
     margin-left: 0;
     display: block;
   }
+
   &--system {
     display: block;
     margin-left: 0;
@@ -948,6 +949,7 @@ footer.main-footer .logos {
       margin-left: 0;
     }
   }
+
   &--authorised {
     margin-left: 8px;
     margin-right: 8px;
@@ -956,7 +958,6 @@ footer.main-footer .logos {
       margin-left: 2rem;
       margin-right: 2rem;
     }
-
   }
 }
 
@@ -1468,7 +1469,7 @@ animation-timing-function: ease-in;
   line-height: 30px;
   margin-left: 8px;
   padding-top: 25px;
-  color: $theme-primary;
+  color: $theme-secondary;
 
   @include media-breakpoint-up(lg) {
     margin-left: 40px;
@@ -1500,7 +1501,7 @@ animation-timing-function: ease-in;
 
       &:hover,
       &:focus {
-        background: $theme-primary;  // this overrides color of icon for states
+        background: $theme-secondary;  // this overrides color of icon for states
       }
 
       // list icon sources here
