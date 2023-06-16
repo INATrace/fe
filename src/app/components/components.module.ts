@@ -1,4 +1,3 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,9 +33,6 @@ import { FormatProcessingEvidenceFieldTypePipe } from './pipes/format-processing
 import { ProductCardComponent } from './product-card/product-card.component';
 import { FormatPaymentStatusPipe } from './pipes/format-payment-status.pipe';
 import { QrCodeRedirectComponent } from './qr-code-redirect/qr-code-redirect.component';
-import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
-import { NgxEchartsModule } from 'ngx-echarts';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -61,8 +57,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
     FormatPaymentStatusPipe,
-    QrCodeRedirectComponent,
-    CompanyDashboardComponent
+    QrCodeRedirectComponent
   ],
   imports: [
     CommonModule,
@@ -80,10 +75,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgbTimepickerModule,
     NgbDropdownModule,
     NgbPaginationModule,
-    GoogleMapsModule,
-    DragDropModule,
-    NgxEchartsModule,
-    NgSelectModule
+    GoogleMapsModule
   ],
   exports: [
     BottomButtonsComponent,
@@ -106,8 +98,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormatPaymentPurposeTypePipe,
     FormatProcessingEvidenceFieldTypePipe,
     ProductCardComponent,
-    FormatPaymentStatusPipe,
-    CompanyDashboardComponent
+    FormatPaymentStatusPipe
   ],
   providers: [
     FormatPaymentPurposeTypePipe

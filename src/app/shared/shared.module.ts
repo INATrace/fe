@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// tslint:disable-next-line:max-line-length
 import { faAlignJustify, faBuilding, faBullseye, faCheck, faChevronDown, faChevronUp, faEllipsisH, faExclamation, faExternalLinkAlt, faEye, faEyeSlash, faFileUpload, faGavel, faLightbulb, faMapMarkerAlt, faPaperclip, faPen, faPlus, faPlusCircle, faTimes, faTrashAlt, faUndo, faQrcode, faQuestion, faInfoCircle, faInfo } from '@fortawesome/free-solid-svg-icons';
 import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -203,7 +204,8 @@ import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
         GeoaddressFormComponent,
         ColorInputComponent,
         DocumentPreviewComponent,
-        ToggleSwitchComponent
+        ToggleSwitchComponent,
+        NgSelectModule
     ]
 })
 export class SharedModule {

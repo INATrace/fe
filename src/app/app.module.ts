@@ -70,6 +70,7 @@ import { CompanyDetailProcessingActionsListComponent } from './company/company-d
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -95,6 +96,7 @@ export function getConfiguration(): Configuration {
     LoginComponent,
     RegisterComponent,
     UserHomeComponent,
+    DashboardComponent,
     ConfirmEmailComponent,
     UserListComponent,
     UserDetailComponent,
