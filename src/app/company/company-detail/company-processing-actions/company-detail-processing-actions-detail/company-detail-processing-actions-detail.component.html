@@ -51,7 +51,7 @@
                                 </ng-container>
                             </single-choice>
                             <div *ngFor="let sp of this.valueChains; index as idx">
-                                <div class="d-flex justify-content-between user-line mb-1">
+                                <div class="d-flex justify-content-between mb-1">
                                     <div>{{ sp.name }}</div>
                                     <div (click)="deleteValueChain(idx)" class="cursor-pointer">
                                         <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
@@ -556,7 +556,7 @@
                         <div class="spacer-title-section"></div>
 
                         <ng-container *ngIf="this.form.get('requiredEvidenceFields').value.length > 0">
-                            <div class="af-row user-line pl-3 pr-3 mb-1">
+                            <div class="af-row pl-3 pr-3 mb-1">
                                 <div class="af-c5"></div>
                                 <div>
                                     <small i18n="@@companyDetailProcessingActions.hint.processingEvidenceFields.checkBox">
@@ -568,7 +568,7 @@
 
                         <ng-container *ngIf="this.form.get('requiredEvidenceFields')">
                             <div *ngFor="let field of this.form.get('requiredEvidenceFields').value; index as i">
-                                <div class="af-row user-line pl-3 pr-3 mb-1">
+                                <div class="af-row pl-3 pr-3 mb-1">
                                     <div class="af-c6 d-flex align-items-center">{{field?.label}}</div>
                                     <div class="af-c5 d-flex align-items-center">
                                         <checkbox-input
@@ -625,7 +625,7 @@
                         <div class="spacer-title-section"></div>
 
                         <ng-container *ngIf="this.form.get('requiredDocumentTypes').value.length > 0">
-                            <div class="af-row user-line pl-3 pr-3 mb-1">
+                            <div class="af-row pl-3 pr-3 mb-1">
                                 <div class="af-c3"></div>
                                 <div>
                                     <small i18n="@@companyDetailProcessingActions.hint.processingEvidenceDocuments.checkBox">
@@ -637,7 +637,7 @@
 
                         <ng-container *ngIf="this.form.get('requiredDocumentTypes')">
                             <div *ngFor="let doc of this.form.get('requiredDocumentTypes').value; index as i">
-                                <div class="af-row user-line pl-3 pr-3 mb-1">
+                                <div class="af-row pl-3 pr-3 mb-1">
                                     <div class="af-c6 d-flex align-items-center">{{doc?.label}}</div>
                                     <div class="af-c5 d-flex align-items-center">
                                         <checkbox-input

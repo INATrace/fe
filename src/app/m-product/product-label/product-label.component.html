@@ -310,7 +310,7 @@
                 <div class="col-1 px-0">
                 </div>
                 <div class="col-11 px-0" i18n="@@productLabel.companySection.subtitle">
-                  <p style="font-weight: 300">If you want to edit company details, please first save all changes and proceed to the <a *ngIf="productForm?.get('company.id')?.value" [routerLink]="['/', 'companies', productForm.get('company.id')?.value]" style="font-weight: 300; font-size: 1rem; text-decoration: underline;">company section</a>. Please note that company information will change on all of your products.</p>
+                  <p>If you want to edit company details, please first save all changes and proceed to the <a *ngIf="productForm?.get('company.id')?.value" [routerLink]="['/', 'companies', productForm.get('company.id')?.value]" style="font-size: 1rem; text-decoration: underline;">company section</a>. Please note that company information will change on all of your products.</p>
                 </div>
               </div>
 
@@ -546,7 +546,7 @@
       </map-marker>
       <map-info-window>{{gInfoWindowText}}</map-info-window>
     </google-map>
-    <small style="font-weight: 300;" i18n="@@productLabel.origin.helpText">
+    <small i18n="@@productLabel.origin.helpText">
       Double click on the map to drop a pin and mark the locations of farmers / suppliers. Indicate the number of farmers / suppliers you work with directly or indirectly at each location. You can also name each location.
     </small>
     <ng-container *ngIf="submitted">
@@ -1443,7 +1443,7 @@
     <ng-container *ngFor="let record of productionRecordList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(record).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(record)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>

@@ -16,17 +16,19 @@ $casovnica-circle-radius: 22px;
     margin-left: $casovnica-circle-radius/2;
 
     &-subtitle {
-      font-size: 16px;
+      //font-size: 16px;
       letter-spacing: 0;
       line-height: 25px;
-      color: $secondary;
+      color: $theme-primary-text;
     }
+
     &-label {
       font-size: 14px;
       letter-spacing: 0;
       line-height: 25px;
       color: $secondary;
     }
+
     ul {
       font-size: 0.875rem;
       line-height: 1.5;
@@ -39,6 +41,7 @@ $casovnica-circle-radius: 22px;
 
     }
   }
+
   &-bullet {
     width: $casovnica-circle-radius;
     height: $casovnica-circle-radius;
@@ -46,7 +49,7 @@ $casovnica-circle-radius: 22px;
     position: absolute;
     top: 1px;
     left: -$casovnica-circle-radius/2;
-    border: 3px solid $secondary;
+    border: 3px solid $theme-primary-text;
     background-color: $gray-light;
   }
 }

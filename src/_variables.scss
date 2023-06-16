@@ -5,14 +5,6 @@ $fa-font-path: "../src/assets/webfonts";
 // Below one can override variables from:
 // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
 
-@font-face {
-  font-family: 'graystroke';
-  src: url('../src/assets/webfonts/graystroke_regular-webfont.woff2') format('woff2'),
-       url('../src/assets/webfonts/graystroke_regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 // Theme colors
 $theme-primary:   #999933;
 $theme-primary-light: #E7E8BA;

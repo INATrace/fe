@@ -5,10 +5,8 @@
 @import '~ngx-toastr/toastr';
 @import 'scss/fontawesome.scss';
 @import 'scss/solid.scss';
-@import 'scss/signika-font.scss';
 @import 'scss/pathway-gothic-one-regular';
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap");
 
 html {
@@ -119,10 +117,9 @@ p {
 }
 
 .text-input-label {
-  size: 13px;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: $secondary;
+  color: $theme-primary-text;
 }
 
 .text-input {
@@ -164,7 +161,6 @@ p {
   padding-bottom: 29px;
   border-radius: 5px;
   background-color: #FFFFFF;
-  font-weight: 300;
 }
 
 .login-title {
@@ -255,6 +251,7 @@ button.btn, a.btn {
   background-color: $theme-primary;
   font-size: 1rem;
   line-height: 25px;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal;
   letter-spacing: 0.46px;
   transition: none;   // overriding fom tmp.css transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
@@ -367,7 +364,7 @@ button.no-shadow {
     padding: 0.25rem 1.5rem;
     clear: both;
     font-weight: 400;
-    color:$secondary;
+    color: $theme-primary-text;
     text-align: inherit;
     white-space: nowrap;
     background-color: transparent;
@@ -380,7 +377,6 @@ button.no-shadow {
 }
 
 .dropdown-menu.show {
-    // display: block;
     will-change: unset !important;
     max-height: 90vh !important;
     overflow-y: auto !important;
@@ -459,8 +455,7 @@ button.no-shadow {
 .ng-dropdown-panel-items
 .ng-option {
     background-color: #fff;
-    color: $secondary;
-    // padding: 8px 10px;
+    color: $theme-primary-text;
     padding: 0.25rem 1.5rem;
 }
 
@@ -527,7 +522,7 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     text-decoration: underline;
 
     &:hover {
-      color: $moderate-cyan;
+      color: $theme-secondary;
     }
   }
 }
@@ -537,12 +532,19 @@ a {
     text-decoration:none;
     background-color:transparent;
     font-size: 0.875rem;
-    font-weight: 300;
     color: $secondary;
 }
 a:hover {
-    color:$secondary;
-    text-decoration:text-decoration-line
+    color: $theme-secondary;
+    text-decoration: underline;
+}
+a:not([href]):hover {
+  color: $theme-secondary;
+}
+
+// ngb overrides
+.ngb-dp-weekday {
+  color: $theme-secondary !important;
 }
 
 // btn colors
@@ -1028,7 +1030,7 @@ footer.main-footer .logos {
   }
 
   li {
-    color: $secondary;
+    color: $theme-primary-text;
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 12px;
@@ -1038,10 +1040,10 @@ footer.main-footer .logos {
     @include media-breakpoint-up(lg) {
       float: left;
       display: inline;
-      color: $secondary;
+      color: $theme-primary-text;
       padding-left: 25px;
       padding-right: 25px;
-      padding-top: 11px;                // was 35px
+      padding-top: 11px;
 
       &:hover {
         color: $theme-secondary;
@@ -1169,7 +1171,7 @@ footer.main-footer .logos {
 button.btn-search,
 button.btn-filter {
   background-color: #FFFFFF;
-  color: $secondary;
+  color: $theme-primary-text;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.34px;
@@ -1225,10 +1227,9 @@ button.btn-filter {
       display: inline-block;
       width: $button-icon-size;
       height: $button-icon-size;
-      background: $dark-blue;  // initiall color of icon
+      background: $theme-primary-text;
       mask-size: cover;
       margin-left: -2px; // visually align space
-      // margin: ($button-icon-bg-size - $button-icon-size) / 2; // (34 - 24)/2
 
       &:hover,
       &:focus {
@@ -1497,7 +1498,7 @@ animation-timing-function: ease-in;
       display: inline-block;
       width: $sidenav-icon-size;
       height: $sidenav-icon-size;
-      background: $dark-blue;  // initial color of icon
+      background: $theme-primary-text;
       mask-size: cover;
       margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
 
@@ -1589,7 +1590,7 @@ animation-timing-function: ease-in;
 .sidenav a {
   display: block;
   padding: 0.25rem;
-  color: $secondary;
+  color: $theme-primary-text;
   text-decoration: none;
   cursor: pointer;
   font-size: 18px;
@@ -2241,7 +2242,7 @@ tr:nth-child(odd) {
   &-block--c12 {
     h2, h3 {
       font-size: 18pt;
-      color: #181B31;
+      color: $theme-primary-text;
       text-align: left;
       position: relative;
 
@@ -2512,7 +2513,6 @@ $ustwo-colour-delux: #666;
 
 small,
 .small {
-  font-weight: 300;
   line-height: 1.2;
   display: inline-block;
 }
@@ -2931,7 +2931,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
     .small {
       font-size: 14px;
       line-height: 21px;
-      font-weight: 300;
       color: #ABABAB;
       text-align: center;
 
@@ -3330,32 +3329,17 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
 .af-journey {
 
   &-wrapper {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // height: calc(96px + 20px);
-    // background-color: $af-header;
-    // padding-top: rem-calc(32px);
     list-style-type: none;
     margin-left: 0;
-    padding-left: 0;                    // remove dedault UL padding
-
-
-    // li {
-    //   text-align: -webkit-match-parent;
-    // }
-
+    padding-left: 0;                    // remove default UL padding
   }
+
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: rem-calc(45px);
 
-  // &:first-child {
-    // padding-top: 0;
-    // background-color: red;
-  // }
   &:last-child {
     .af-journey-info {
 
@@ -3366,28 +3350,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
 
     }
   }
-  // &::before {
-  //   content: "";
-  //   border-left: 5px solid red;
-  //   margin-left: -10px;
-  //   display: block;
-  // }
-
-  // z-index: 3;
-  // height: calc(96px + 20px);
-  // background-color: $af-header;
-
-  // &::before {
-  //   content: " ";
-  //   position: absolute;
-  //   // z-index: 1;
-  //   top: 5px;
-  //   left: 5px;
-  //   right: 5px;
-  //   bottom: 5px;
-  //   // background: orange;
-  //   // border-left: 5px solid red;
-  // }
 
   &-dot {
     display: inline-block;
@@ -3465,7 +3427,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
       font-size: 14px;
       color: rgba(0,0,0,0.70);
       line-height: 1.5;
-      font-weight: 300;
     }
   }
 

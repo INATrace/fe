@@ -234,7 +234,7 @@
                             </textinput>
                         </div>
                         <div *ngFor="let item of collectorForm.value.associations; index as i">
-                            <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                            <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                                 <div>{{item.company.name}}</div>
                                 <div (click)="deleteAssociation(item, i)">
                                     <fa-icon
