@@ -249,6 +249,19 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
+    this.facilityController.listCollectingFacilitiesByCompanyUsingGETByMap({
+      limit: 1000,
+      offset: 0,
+      id: this.companyId
+    }).subscribe(next => {
+      this.facilities.push(next.data.items[0]);
+      this.refreshSemiProducts();
+      this.semiProductModelChoice = next.data.items[0].facilitySemiProductList[0]?.id;
+      setTimeout(() => {
+        this.semiProductSelected(next.data.items[0].facilitySemiProductList[0]?.id?.toString());
+      });
+    });
+
     // init interval for delivery graph
     let diff = Math.abs(this.deliveriesForm.get('from').value.getTime() - this.deliveriesForm.get('to').value.getTime());
     let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
