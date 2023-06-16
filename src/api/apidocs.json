@@ -7823,6 +7823,348 @@
         "summary": "Get list of value chains for the company with the given ID"
       }
     },
+    "/api/dashboard/deliveries-aggregated-data": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Facility IDs",
+            "explode": true,
+            "in": "query",
+            "name": "facilityIds",
+            "required": false,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Collector (Representative of producer UserCustomer) ID",
+            "in": "query",
+            "name": "collectorId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Organic only",
+            "in": "query",
+            "name": "organicOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Price determined later",
+            "in": "query",
+            "name": "priceDeterminedLater",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Aggregation type",
+            "in": "query",
+            "name": "aggregationType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "DAY",
+                "WEEK",
+                "MONTH",
+                "YEAR"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiDeliveriesTotal_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "getDeliveriesAggregatedDataUsingGET",
+        "summary": "getDeliveriesAggregatedData"
+      }
+    },
+    "/api/dashboard/deliveries-aggregated-data/export": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Facility IDs",
+            "explode": true,
+            "in": "query",
+            "name": "facilityIds",
+            "required": false,
+            "schema": {
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "description": "Semi-product ID",
+            "in": "query",
+            "name": "semiProductId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Farmer (UserCustomer) ID",
+            "in": "query",
+            "name": "farmerId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Collector (Representative of producer UserCustomer) ID",
+            "in": "query",
+            "name": "collectorId",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Is women share",
+            "in": "query",
+            "name": "isWomenShare",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Organic only",
+            "in": "query",
+            "name": "organicOnly",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Price determined later",
+            "in": "query",
+            "name": "priceDeterminedLater",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "description": "Production date range start",
+            "in": "query",
+            "name": "productionDateStart",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Production date range end",
+            "in": "query",
+            "name": "productionDateEnd",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Aggregation type",
+            "in": "query",
+            "name": "aggregationType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "DAY",
+                "WEEK",
+                "MONTH",
+                "YEAR"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "description": "Export type",
+            "in": "query",
+            "name": "exportType",
+            "required": true,
+            "schema": {
+              "enum": [
+                "EXCEL",
+                "PDF",
+                "CSV"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "exportDeliveriesDataUsingGET",
+        "summary": "exportDeliveriesData"
+      }
+    },
+    "/api/dashboard/processing-performance-data": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiProcessingPerformanceTotal_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "calculateProcessingPerformanceDataUsingPOST",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProcessingPerformanceRequest"
+        },
+        "summary": "Calculates processing performance data"
+      }
+    },
+    "/api/dashboard/processing-performance-data/export": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "dashboard-controller"
+        ],
+        "operationId": "exportProcessingPerformanceDataUsingPOST",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ApiProcessingPerformanceRequest"
+        },
+        "summary": "Exports processing performance data to the requested format"
+      }
+    },
     "/api/final-product/company/{companyId}": {
       "get": {
         "parameters": [
@@ -10992,12 +11334,9 @@
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11007,19 +11346,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingDELETE",
-        "summary": "error"
+        "operationId": "errorHtmlUsingDELETE",
+        "summary": "errorHtml"
       },
       "get": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11029,19 +11365,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingGET",
-        "summary": "error"
+        "operationId": "errorHtmlUsingGET",
+        "summary": "errorHtml"
       },
       "head": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11051,19 +11384,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingHEAD",
-        "summary": "error"
+        "operationId": "errorHtmlUsingHEAD",
+        "summary": "errorHtml"
       },
       "options": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11073,19 +11403,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingOPTIONS",
-        "summary": "error"
+        "operationId": "errorHtmlUsingOPTIONS",
+        "summary": "errorHtml"
       },
       "patch": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11095,19 +11422,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPATCH",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPATCH",
+        "summary": "errorHtml"
       },
       "post": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11117,19 +11441,16 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPOST",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPOST",
+        "summary": "errorHtml"
       },
       "put": {
         "responses": {
           "200": {
             "content": {
-              "*/*": {
+              "text/html": {
                 "schema": {
-                  "additionalProperties": {
-                    "type": "object"
-                  },
-                  "type": "object"
+                  "$ref": "#/components/schemas/ModelAndView"
                 }
               }
             },
@@ -11139,8 +11460,8 @@
         "tags": [
           "basic-error-controller"
         ],
-        "operationId": "errorUsingPUT",
-        "summary": "error"
+        "operationId": "errorHtmlUsingPUT",
+        "summary": "errorHtml"
       }
     }
   },
@@ -11166,6 +11487,17 @@
           }
         },
         "description": "request",
+        "required": true
+      },
+      "ApiProcessingPerformanceRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiProcessingPerformanceRequest"
+            }
+          }
+        },
+        "description": "processingPerformanceRequest",
         "required": true
       },
       "ApiProductLabel": {
@@ -12757,6 +13089,41 @@
         "required": [
           "status"
         ],
+        "type": "object"
+      },
+      "ApiDeliveriesTotal": {
+        "properties": {
+          "totals": {
+            "items": {
+              "$ref": "#/components/schemas/ApiDeliveriesTotalItem"
+            },
+            "type": "array"
+          },
+          "unitType": {
+            "enum": [
+              "DAY",
+              "WEEK",
+              "MONTH",
+              "YEAR"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiDeliveriesTotalItem": {
+        "properties": {
+          "totalQuantity": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "year": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
         "type": "object"
       },
       "ApiDocument": {
@@ -15804,6 +16171,116 @@
         },
         "type": "object"
       },
+      "ApiProcessingPerformanceRequest": {
+        "properties": {
+          "aggregationType": {
+            "enum": [
+              "DAY",
+              "WEEK",
+              "MONTH",
+              "YEAR"
+            ],
+            "type": "string"
+          },
+          "companyId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "dateEnd": {
+            "format": "date",
+            "type": "string"
+          },
+          "dateStart": {
+            "format": "date",
+            "type": "string"
+          },
+          "evidenceFields": {
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingPerformanceRequestEvidenceField"
+            },
+            "type": "array"
+          },
+          "exportType": {
+            "enum": [
+              "EXCEL",
+              "PDF",
+              "CSV"
+            ],
+            "type": "string"
+          },
+          "facilityId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "processActionId": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingPerformanceRequestEvidenceField": {
+        "properties": {
+          "evidenceField": {
+            "$ref": "#/components/schemas/ApiProcessingEvidenceField"
+          },
+          "instantValue": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "numericValue": {
+            "type": "number"
+          },
+          "stringValue": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingPerformanceTotal": {
+        "properties": {
+          "measureUnitType": {
+            "$ref": "#/components/schemas/ApiMeasureUnitType"
+          },
+          "totals": {
+            "items": {
+              "$ref": "#/components/schemas/ApiProcessingPerformanceTotalItem"
+            },
+            "type": "array"
+          },
+          "unitType": {
+            "enum": [
+              "DAY",
+              "WEEK",
+              "MONTH",
+              "YEAR"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiProcessingPerformanceTotalItem": {
+        "properties": {
+          "inputQuantity": {
+            "type": "number"
+          },
+          "outputQuantity": {
+            "type": "number"
+          },
+          "ratio": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "year": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
       "ApiProduct": {
         "properties": {
           "associatedCompanies": {
@@ -17277,6 +17754,50 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiDeliveriesTotal_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiDeliveriesTotal",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiDocument_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -17766,6 +18287,50 @@
         "properties": {
           "data": {
             "$ref": "#/components/schemas/ApiProcessingOrder",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ApiResponse_ApiProcessingPerformanceTotal_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiProcessingPerformanceTotal",
             "description": "Response body for successful responses."
           },
           "errorDetails": {
@@ -20154,6 +20719,10 @@
     {
       "description": "Payment Controller",
       "name": "payment-controller"
+    },
+    {
+      "description": "Dashboard Controller",
+      "name": "dashboard-controller"
     },
     {
       "description": "Currency Controller",
