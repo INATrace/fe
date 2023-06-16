@@ -31,28 +31,24 @@
               </app-datepicker>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', deliveriesForm)"
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'DAY'"
                       (click)="setDeliveryInterval('day')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', deliveriesForm)"
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'WEEK'"
                       (click)="setDeliveryInterval('week')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', deliveriesForm)"
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'MONTH'"
                       (click)="setDeliveryInterval('month')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', deliveriesForm)"
                       [class.button-selected]="deliveriesForm.get('timeUnitGraphType')?.value === 'YEAR'"
                       (click)="setDeliveryInterval('year')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>
@@ -201,28 +197,24 @@
               </app-datepicker>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('day', processingPerformanceForm)"
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'DAY'"
                       (click)="setProcessingPerformanceInterval('day')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.daily">DAILY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('week', processingPerformanceForm)"
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'WEEK'"
                       (click)="setProcessingPerformanceInterval('week')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.weekly">WEEKLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('month', processingPerformanceForm)"
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'MONTH'"
                       (click)="setProcessingPerformanceInterval('month')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.monthly">MONTHLY</span>
               </button>
               <button style="margin-top: 1.7rem"
                       class="af-actions-btn"
-                      [class.af-actions-btn--disabled]="checkButtonDisabled('year', processingPerformanceForm)"
                       [class.button-selected]="processingPerformanceForm.get('timeUnitGraphType')?.value === 'YEAR'"
                       (click)="setProcessingPerformanceInterval('year')">
                 <span class="af-actions-btn-label" i18n="@@companyDashboardComponent.button.timeUnit.yearly">YEARLY</span>

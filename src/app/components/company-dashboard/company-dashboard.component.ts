@@ -474,21 +474,6 @@ export class CompanyDashboardComponent implements OnInit {
     setTimeout(() => this.refreshDeliveriesData());
   }
 
-  checkButtonDisabled(interval: string, formGroup: FormGroup) {
-    const diff = Math.abs(formGroup.get('from').value.getTime() - formGroup.get('to').value.getTime());
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    if (interval === 'day') {
-      return diffDays > 90;
-    } else if (interval === 'week') {
-      return diffDays < 7 ||  diffDays > 360;
-    } else if (interval === 'month') {
-      return diffDays < 30 || diffDays > 900;
-    } else if (interval === 'year') {
-      return diffDays < 365;
-    }
-    return false;
-  }
-
   setDeliveryInterval(interval: string) {
 
     const previousVal = this.deliveriesForm.get('timeUnitGraphType').value;
