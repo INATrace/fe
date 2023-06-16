@@ -429,29 +429,29 @@ export class CompanyDashboardComponent implements OnInit {
 
   private translateGraphMonth(monthNum: string, year: number) {
     let translated;
-    if (monthNum === '0') {
+    if (monthNum === '1') {
       translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jan:Jan`;
-    } else if (monthNum === '1') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Feb:Feb`;
     } else if (monthNum === '2') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Mar:Mar`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Feb:Feb`;
     } else if (monthNum === '3') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Apr:Apr`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Mar:Mar`;
     } else if (monthNum === '4') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.May:May`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Apr:Apr`;
     } else if (monthNum === '5') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jun:Jun`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.May:May`;
     } else if (monthNum === '6') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jul:Jul`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jun:Jun`;
     } else if (monthNum === '7') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Aug:Aug`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Jul:Jul`;
     } else if (monthNum === '8') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Sep:Sep`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Aug:Aug`;
     } else if (monthNum === '9') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Oct:Oct`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Sep:Sep`;
     } else if (monthNum === '10') {
-      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Nov:Nov`;
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Oct:Oct`;
     } else if (monthNum === '11') {
+      translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Nov:Nov`;
+    } else if (monthNum === '12') {
       translated = $localize `:@@companyDashboardComponent.graph.timeUnit.month.Dec:Dec`;
     }
 
