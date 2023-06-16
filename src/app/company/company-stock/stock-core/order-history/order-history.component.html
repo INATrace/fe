@@ -256,9 +256,9 @@
               <ng-container *ngIf="history">
                 <ng-container *ngFor="let historyItem of history.timelineItems; let i= index; let last= last">
                   <div class="af-timeline-box" [class.last-box]="last">
-                    <h4 class="af-timeline-box-subtitle">
+                    <h5 class="af-timeline-box-subtitle">
                       <span *ngIf="processingCreationDate(historyItem) as dateOfCreation">{{ dateOfCreation | date: 'yyyy-MM-dd' }} - </span>{{ processingOrderName(historyItem) }}
-                    </h4>
+                    </h5>
 
                     <ul>
                       <ng-container *ngFor="let targetStockOrder of getTargetStockOrders(historyItem)">

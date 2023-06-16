@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-activation',
@@ -15,8 +15,8 @@ export class RegisterActivationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toLogin(): void {
-    this.router.navigate(['login']);
+  toLogin(): void {
+    this.router.navigate(['login']).then();
   }
 
 }

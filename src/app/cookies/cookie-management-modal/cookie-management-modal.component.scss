@@ -2,10 +2,6 @@
 
 .modal-header {
     border-bottom: 0 none;
-
-    .landing-page {
-        color: $landing-primary;
-    }
 }
 .modal-footer {
     border-top: 0 none;
@@ -32,15 +28,15 @@
 
 .modal-container {
     .custom-control-input:checked ~ .custom-control-label::before {
-        border-color: $landing-primary;
-        background-color: $landing-primary;
+        border-color: $theme-primary;
+        background-color: $theme-primary;
     }
 
     .custom-control-input:focus ~ .custom-control-label::before {
-        box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
+        box-shadow: 0 0 0 0.2rem $theme-primary-light;
     }
 
     .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-        border-color: $landing-primary;
+        border-color: $theme-primary;
     }
 }

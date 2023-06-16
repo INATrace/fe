@@ -3,7 +3,7 @@
 .processing-icon {
   width: 48px;
   height: 48px;
-  background: $secondary;
+  background: $theme-primary-text;
   &.input {
     mask: url("/assets/icons/icon-input.svg") no-repeat;
     mask-size: 48px;

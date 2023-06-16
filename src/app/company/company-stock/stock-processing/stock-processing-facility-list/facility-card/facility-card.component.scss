@@ -3,7 +3,6 @@
 
 .af-card-icon {
   background-color: $af-card-bg;
-  // width: 90px;
   color: $secondary;
   font-size: 12px;
   font-weight: 500;
@@ -293,7 +292,6 @@
 .af-popover {
   &-wrapper {
     position: absolute;
-    /* top: -23px; */
     left: 5px;
     background: transparent;
     height: calc(100% - 5px);
@@ -306,6 +304,14 @@
         visibility: visible;
         transform: translate(0, -5px);
         transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+
+        ul li::after {
+          border-left-color: currentColor;
+        }
+
+        li:hover {
+          color: $theme-primary;
+        }
       }
     }
   }
@@ -333,7 +339,6 @@
       right: calc(50% - 150px);
     }
 
-
     ul {
       list-style: none;
       padding-left: 0;
@@ -343,10 +348,9 @@
       li {
         position: relative;
         width: 100%;
-        color: $dark-blue;
+        color: $theme-primary-text;
 
         &:hover {
-          color: $moderate-cyan;
           cursor: pointer;
         }
 
@@ -360,7 +364,7 @@
           height: 10px;
           border-style: solid;
           border-width: 5px 0 5px 5px;
-          border-color: transparent transparent transparent $dark-blue;
+          border-color: transparent transparent transparent $theme-primary-text;
         }
       }
     }
@@ -376,11 +380,8 @@
       border-color: transparent transparent #fff transparent;
       transition-duration: 0.3s;
       transition-property: transform;
-
-
     }
   }
-
 
   .popover__message {
     text-align: center;

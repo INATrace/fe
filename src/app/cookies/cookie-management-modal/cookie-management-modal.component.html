@@ -2,7 +2,7 @@
 
 <div class="modal-container">
   <div class="modal-header">
-    <h4 class="modal-title landing-page" i18n="@@cookies.cookieManagement.modal.title">Cookies settings</h4>
+    <h4 class="modal-title" i18n="@@cookies.cookieManagement.modal.title">Cookies settings</h4>
     <button *ngIf="dismissable" type="button" class="close" aria-label="Close"
       (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -76,11 +76,11 @@
   </div>
   <div class="modal-footer" i18n="@@cookies.cookieManagement.modal.footer.buttons.backAndSave">
     <button
-      class="btn landing-page"
+      class="btn"
       (click)="activeModal.dismiss('Nazaj click')"
       style="margin-left: 0px;"><span>Back</span></button>
     <button
-      class="btn landing-page"
+      class="btn"
       (click)="save()"><span>Save</span></button>
 
   </div>

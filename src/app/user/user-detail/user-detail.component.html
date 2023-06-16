@@ -60,10 +60,10 @@
 
             <div class="d-flex flex-column">
               <button class="btn btn-outlined" (click)="showPassReqSentModal()" style="margin-bottom: 0.25rem; width: 220px;">
-                <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem; font-weight: 300;" i18n="@@userDetail.button.reset">Reset password</span>
+                <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem;" i18n="@@userDetail.button.reset">Reset password</span>
               </button>
               <button class="btn btn-outlined" (click)="confirmEmail()" *ngIf="unconfirmedUser" style="width: 220px;">
-                <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem; font-weight: 300;" i18n="@@userDetail.button.confirmUserEmail">Confirm user email</span>
+                <span style="padding-top: 0.25rem; padding-bottom: 0.25rem; padding-left: 0.75rem; padding-right: 0.75rem;" i18n="@@userDetail.button.confirmUserEmail">Confirm user email</span>
               </button>
             </div>
 
@@ -79,10 +79,10 @@
 
                 <div>
                   <label i18n="@@userDetail.textinput.userSelectedLanguage.label">Selected</label>
-                  <div class="d-flex af-user-language">
+                  <div class="d-flex af-translation-language">
 
                     <!-- <img> -->
-                    <div class="af-user-language--selected">
+                    <div class="af-translation-language--selected">
                       <img *ngIf="this.userProfileForm.get('language').value === 'EN'" src="../../../assets/icons/icon-flag--united-kingdom.svg" alt="Select EN lang">
                       <img *ngIf="this.userProfileForm.get('language').value === 'DE'" src="../../../assets/icons/icon-flag--germany.svg" alt="Select DE lang">
                       <img *ngIf="this.userProfileForm.get('language').value === 'RW'" src="../../../assets/icons/icon-flag--rwanda.svg" alt="Select RW lang">
@@ -97,7 +97,7 @@
 
                 <div>
                   <label i18n="@@userDetail.textinput.userAvailableLanguage.label">Available</label>
-                  <div class="d-flex af-user-language">
+                  <div class="d-flex af-translation-language">
 
                     <div (click)="selectLanguage('EN')" *ngIf="this.userProfileForm.get('language').value != 'EN'">
                       <img src="../../../assets/icons/icon-flag--united-kingdom.svg">
@@ -134,11 +134,11 @@
 
             <ng-container *ngIf="!loadingUserCompanies; else loadingUserCompaniesTemplate">
               <div *ngFor="let c of myCompanies index as i">
-                <div class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;">
+                <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                   <div (click)="setSelectedUserCompany(c)" [class.show-pointer]="this.mode === 'userProfileView'">{{c.companyName}}</div>
                 </div>
               </div>
-              <div *ngIf="myCompanies && myCompanies.length == 0" class="d-flex justify-content-between pl-3 pr-3 mb-1" style="font-weight: 300;" i18n="@@userDetail.myCompanies.noCompanies">
+              <div *ngIf="myCompanies && myCompanies.length == 0" class="d-flex justify-content-between pl-3 pr-3 mb-1" i18n="@@userDetail.myCompanies.noCompanies">
                 <div>No companies</div>
               </div>
             </ng-container>

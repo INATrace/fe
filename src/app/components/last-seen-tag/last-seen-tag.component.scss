@@ -24,12 +24,6 @@
       height: $sidenav-icon-bg-size;
       background: $dark-blue;  // initiall color of icon
       mask-size: cover;
-      // margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
-
-      // &:hover,
-      // &:focus {
-      //   background: $moderate-cyan;  // this overrides color of icon for states
-      // }
 
       // list icon sources here
       &--view {

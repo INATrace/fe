@@ -271,7 +271,7 @@ $af-icon-shape-bg: $moderate-cyan;
       // height: $card-icon-size;
       height: 36px; // $card-icon-size;
       width: 30px; // $card-icon-size;
-      background: $af-icon-shape-bg;  // this will be color of icon, default is --BLUE
+      background: $theme-primary;  // this will be color of icon, default is --BLUE
       mask-size: cover;
 
       // list icon

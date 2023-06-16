@@ -3,12 +3,8 @@
 @import "../../../../../node_modules/bootstrap/scss/variables";
 @import "../../../../../node_modules/bootstrap/scss/mixins";
 
-.link-normal{
+.link-normal {
   padding-left: 33px;
-
-  &:hover {
-    color: $moderate-cyan;
-  }
 }
 
 // Adjutsments for img-container
@@ -93,8 +89,11 @@
   display: flex;
   justify-content: space-between;
   margin-right: 40px;
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-size: 22pt;
 
   .settings-icon {
+    font-size: 24px;
     cursor: pointer;
   }
 }

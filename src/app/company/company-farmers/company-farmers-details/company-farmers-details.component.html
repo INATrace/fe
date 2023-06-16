@@ -143,7 +143,7 @@
                         </textinput>
 
                         <checkbox-input [form]="$any(farmerForm.get('hasSmartphone'))">
-                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
+                            <checkbox-input-rich-label i18n="@@collectorDetail.checkbox-input.hasSmartPhone">
                                 Smart phone
                             </checkbox-input-rich-label>
                         </checkbox-input>
@@ -250,7 +250,7 @@
                             </textinput>
                         </div>
                         <div *ngFor="let item of farmerForm.value.associations; index as i">
-                            <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                            <div class="d-flex justify-content-between pl-3 pr-3 mb-1">
                                 <div>{{item.company.name}}</div>
                                 <div (click)="deleteAssociation(item, i)">
                                     <fa-icon
@@ -318,7 +318,7 @@
 
 
                         <checkbox-input [form]="$any(farmerForm.get('farm.organic'))">
-                            <checkbox-input-rich-label style="font-weight: 300;" i18n="@@collectorDetail.checkbox-input.organicFarm">
+                            <checkbox-input-rich-label i18n="@@collectorDetail.checkbox-input.organicFarm">
                                 Organic farm
                             </checkbox-input-rich-label>
                         </checkbox-input>

@@ -36,9 +36,6 @@ export class UserBoxComponent implements OnInit, OnDestroy {
   showSettingsTabs = false;
   showCompaniesTabs = false;
 
-  @Input()
-  landingPageView = false;
-
   constructor(
     private route: ActivatedRoute,
     public authService: AuthService,

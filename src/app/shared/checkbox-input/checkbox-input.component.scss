@@ -8,7 +8,7 @@
 $chechboxSize: 1.5rem;
 .checkbox {
   -webkit-appearance: none;
-  border: 1px solid $checkbox-border;
+  border: 1px solid #CCC;
   border-radius: 5px;
   // padding: 1rem;
   display: inline-block;
@@ -33,13 +33,6 @@ $chechboxSize: 1.5rem;
   border: 2px solid $primary;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
   background-color: $primary;
-}
-
-.landing-page {
-  .checkbox:checked {
-    border: 2px solid $landing-primary;
-    background-color: $landing-primary;
-  }
 }
 
 .checkbox:focus {

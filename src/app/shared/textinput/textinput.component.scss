@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 .icon-inside {
       position: absolute;
       right: 10px;
@@ -16,8 +18,8 @@
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
       &:focus-within {
-            border-color: #bfe5ec;
-            box-shadow: 0 0 0 0.2rem rgb(93 188 207 / 25%);
+            border-color: $theme-primary-light;
+            box-shadow: 0 0 0 0.2rem $theme-primary-light;
       }
 }
 

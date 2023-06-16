@@ -25,17 +25,11 @@
   // }
 }
 
-
 .user-box-name {
-  // color: $secondary;
   vertical-align: middle;
-
-  // &:hover {
-  //   color: $moderate-cyan;
-  // }
 }
+
 .user-box-company {
-  // color: $secondary;
   vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
@@ -48,9 +42,7 @@
 }
 
 .whole-name:hover {
-  // color: $secondary;
-  color: $moderate-cyan;
-  // text-decoration: underline;
+  color: $theme-secondary;
 }
 
 .user-icon-box {
@@ -68,7 +60,6 @@
     margin-left: 0.25rem;
     background-color: white
   }
-
 }
 
 .user-icon {
@@ -79,9 +70,6 @@
   }
 }
 
-
-
-
 .dropdown-toggle::after {
   display: none;
 }
@@ -89,6 +77,10 @@
 .dropdown-menu {
   left: unset;
   right: -3.5rem;
+  .dropdown-item:active {
+    background-color: $selector-marked-color;
+    color: $theme-secondary;
+  }
 }
 
 .line{
@@ -100,7 +92,7 @@
 
 
 .af-user {
-  color: $secondary;
+  color: $theme-primary-text;
 
   &--displayname {
     color: inherit;
@@ -108,12 +100,10 @@
 
   &--displaycompany {
     color: inherit;
-    // padding-right: 0.5rem;
   }
 
   &:hover {
-    color: $moderate-cyan;
-    // text-decoration: underline;
+    color: $theme-secondary;
   }
 
   &-caret-box {
@@ -125,23 +115,6 @@
 
     @include media-breakpoint-down(md) {
       margin-right: 0.5rem;
-    }
-
-    // &--careticon {
-      // color: $secondary;
-      // @include media-breakpoint-down(md) {
-        // color: white;
-    //   }
-    // }
-  }
-}
-
-.af-user {
-  .landing-page {
-    color: $landing-text-color;
-
-    &:hover {
-      text-decoration: underline;
     }
   }
 }

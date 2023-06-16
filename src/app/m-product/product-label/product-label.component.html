@@ -310,7 +310,7 @@
                 <div class="col-1 px-0">
                 </div>
                 <div class="col-11 px-0" i18n="@@productLabel.companySection.subtitle">
-                  <p style="font-weight: 300">If you want to edit company details, please first save all changes and proceed to the <a *ngIf="productForm?.get('company.id')?.value" [routerLink]="['/', 'companies', productForm.get('company.id')?.value]" style="font-weight: 300; font-size: 1rem; text-decoration: underline;">company section</a>. Please note that company information will change on all of your products.</p>
+                  <p>If you want to edit company details, please first save all changes and proceed to the <a *ngIf="productForm?.get('company.id')?.value" [routerLink]="['/', 'companies', productForm.get('company.id')?.value]" style="font-size: 1rem; text-decoration: underline;">company section</a>. Please note that company information will change on all of your products.</p>
                 </div>
               </div>
 
@@ -546,7 +546,7 @@
       </map-marker>
       <map-info-window>{{gInfoWindowText}}</map-info-window>
     </google-map>
-    <small style="font-weight: 300;" i18n="@@productLabel.origin.helpText">
+    <small i18n="@@productLabel.origin.helpText">
       Double click on the map to drop a pin and mark the locations of farmers / suppliers. Indicate the number of farmers / suppliers you work with directly or indirectly at each location. You can also name each location.
     </small>
     <ng-container *ngIf="submitted">
@@ -1203,7 +1203,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabFairPrices')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFairPrices">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabFairPrices">
           Enable 'Fair prices' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1238,7 +1238,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabProducers')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabProducers">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabProducers">
           Enable 'Producers' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1262,7 +1262,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabQuality')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabQuality">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabQuality">
           Enable 'Quality' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1286,7 +1286,7 @@
       <checkbox-input
               [form]="$any(productForm).get('businessToCustomerSettings.tabFeedback')"
               [disabled]="!canEdit()">
-        <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.tabFeedback">
+        <checkbox-input-rich-label i18n="@@productLabel.b2c.tabFeedback">
           Enable 'Feedback' tab
         </checkbox-input-rich-label>
       </checkbox-input>
@@ -1394,7 +1394,7 @@
     <checkbox-input
             [form]="$any(productForm).get('businessToCustomerSettings.graphicQuality')"
             [disabled]="!canEdit()">
-      <checkbox-input-rich-label style="font-weight: 300" i18n="@@productLabel.b2c.graphicQuality">
+      <checkbox-input-rich-label i18n="@@productLabel.b2c.graphicQuality">
         Enable 'Quality' graphic
       </checkbox-input-rich-label>
     </checkbox-input>
@@ -1411,7 +1411,7 @@
     <ng-container *ngFor="let video of videoList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(video).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(video)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
@@ -1431,7 +1431,7 @@
     <ng-container *ngFor="let farmer of farmerList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(farmer).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(farmer)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>
@@ -1443,7 +1443,7 @@
     <ng-container *ngFor="let record of productionRecordList">
       <div class="d-flex flex-row align-items-end">
         <checkbox-input [form]="$any(record).get('active')" [disabled]="!canEdit()">
-          <checkbox-input-rich-label style="font-weight: 300">
+          <checkbox-input-rich-label>
             <app-document-preview [document]="$any(record)"></app-document-preview>
           </checkbox-input-rich-label>
         </checkbox-input>

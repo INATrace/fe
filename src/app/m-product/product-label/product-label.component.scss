@@ -12,16 +12,6 @@
   display: block
 }
 
-.user-line {
-  border: 1px solid $primary-light;
-  border-radius: 4px;
-  padding: 0.25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  // background-color: $primary-light;
-  color: $primary-light;
-}
-
 .search-field .form-group {
   margin-bottom: 0.5rem;
 }
@@ -85,7 +75,7 @@ button.btn-del {
 }
 
 .tool-button {
-  background-color: $white; //  #F7F7F7;  // #ffffff;
+  background-color: $white;
   color: #25265E;
   font-size: 12px;
   font-weight: 500;
@@ -98,26 +88,20 @@ button.btn-del {
   margin-top: 1rem;
   margin-bottom: 1rem;
   margin-right: 0.5rem;
-  // background-color: $gray-semi;
-  // padding: 0.5rem;
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
-  // text-transform: uppercase;
-  // color: $secondary;
-  // font-size: 0.7rem;
-  // line-height: 0.85rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   cursor: pointer;
 
   &:hover {
-    color: $moderate-cyan;
+    color: $theme-primary;
     background-color: white;
-    border: 1px solid $moderate-cyan;
+    border: 1px solid $theme-primary;
 
     .button-icon2 {
-      color: $moderate-cyan;
+      color: $theme-primary;
     }
   }
 

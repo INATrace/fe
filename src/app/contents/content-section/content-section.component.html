@@ -3,9 +3,6 @@
     #parent
     class="row"
     style="position: relative;">
-    <!-- <div class="faq-icon sp-faq-icon-large show-for-small" (click)="openFaqs()" *ngIf="faqs.length > 0">
-                <fa-icon [icon]="faQuestionCircle" fsize="2x" style="color: red;"></fa-icon>
-            </div> -->
     <div *ngIf="spacingNedded" class="col-sm-0 col-lg-1"></div>
     <div class="d-flex d-flex-column">
       <h5
@@ -32,9 +29,6 @@
   <div class="content-section"
     [class.active-content]="isActive"
     [class.sc-invalid-section-border]="error$ | async">
-    <!-- <div class="faq-icon sp-faq-icon-large" (click)="openFaqs()" *ngIf="faqs.length> 0">
-      <fa-icon [icon]="faQuestionCircle"></fa-icon>
-    </div> -->
     <ng-content></ng-content>
   </div>
 </section>

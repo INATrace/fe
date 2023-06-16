@@ -78,7 +78,7 @@ $bigger-circle-size: $circle-size*1.1;
   cursor: pointer;
   margin-bottom: 0;
   text-decoration: underline;
-  color: $secondary;
+  color: $theme-primary-text;
   margin-left: 0.5rem;
 }
 
@@ -95,7 +95,6 @@ $bigger-circle-size: $circle-size*1.1;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
   color: $secondary;
-  // background-color: $tag-background;
   border: $gray;
   border-style: dashed;
   border-width: 1px;

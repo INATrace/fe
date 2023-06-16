@@ -5,10 +5,8 @@
 @import '~ngx-toastr/toastr';
 @import 'scss/fontawesome.scss';
 @import 'scss/solid.scss';
-@import 'scss/signika-font.scss';
 @import 'scss/pathway-gothic-one-regular';
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap");
 
 html {
@@ -17,36 +15,39 @@ html {
 
 body {
   height: 100%;
-    margin:0;
-    // font-family: 'Signika','Helvetica Neue','sans-serif';
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem; //16px
-    font-weight:normal;
-    line-height: 1.563; //25px
-    color:$secondary;
-    text-align:left;
-    background-color:$body-background;
-    // letter-spacing: 0.5px;
-}
-hr {
-    box-sizing:content-box;
-    height:0;
-    overflow:visible
-}
-h1,h2,h3,h4,h5,h6 {
-    margin-top:0;
-    margin-bottom:.5rem
-}
-p {
-    margin-top:0;
-    margin-bottom:1rem
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem; //16px
+  font-weight: 400;
+  line-height: 1.563; //25px
+  color: $theme-primary-text;
+  text-align: left;
+  background-color: $body-background;
 }
 
-.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
-    margin-bottom:.5rem;
-    font-weight:500;
-    line-height:1.2;
-    color:$primary;
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: .5rem
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+  color: $primary;
 }
 .h1,h1 {
     font-size:2.5rem
@@ -65,12 +66,6 @@ p {
 }
 .h6,h6 {
     font-size:1rem
-}
-
-.font-pathway-gothic-one {
-  font-family: 'PathwayGothicOne-Regular', sans-serif;
-  font-weight: normal;
-  font-style: normal;
 }
 
 .cursor-pointer {
@@ -116,14 +111,9 @@ p {
 }
 
 .text-input-label {
-  size: 13px;
   line-height: 20px;
   letter-spacing: 0.5px;
-  color: $secondary;
-
-  &.landing-page {
-    color: $landing-primary;
-  }
+  color: $theme-primary-text;
 }
 
 .text-input {
@@ -139,12 +129,11 @@ p {
   border-top: none;
   border-right: none;
   border-left: none;
-  border-radius: 0px;
+  border-radius: 0;
   width: 300px;
-  margin-bottom:0px;;
-
-    padding-top: 0px;
-  padding-bottom: 0px;
+  margin-bottom:0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .text-input-without-border:focus {
@@ -153,12 +142,11 @@ p {
   border-top: none;
   border-right: none;
   border-left: none;
-  border-radius: 0px;
+  border-radius: 0;
   width: 300px;
-  margin-bottom:0px;
-
-    padding-top: 0px;
-  padding-bottom: 0px;
+  margin-bottom:0;
+  padding-top: 0;
+  padding-bottom: 0;
 
 }
 
@@ -167,39 +155,43 @@ p {
   padding-bottom: 29px;
   border-radius: 5px;
   background-color: #FFFFFF;
-  font-weight: 300;
 }
 
 .login-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 2rem;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
-  color: $landing-primary;
+  color: $theme-primary;
 }
-.login-subtitle{
-  color: $login-title-color;
+
+.login-subtitle {
+  color: $theme-secondary-text;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 20px;
 }
 
-.login-small-spacer{
+.login-small-spacer {
   height: 12px;
 }
-.login-medium-spacer{
+
+.login-medium-spacer {
   height: 19px;
 }
-.login-big-spacer{
+
+.login-big-spacer {
   height: 53px;
 }
-.login-right-side-text{
+
+.login-right-side-text {
   font-size: 30px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 36px;
-  color: $landing-primary;
+  color: $theme-primary;
 
   margin-top: 0;
   margin-right: 80px;
@@ -213,16 +205,13 @@ p {
   }
 }
 
-.login-right-side-subtext{
-  color: $login-title-color;
+.login-right-side-subtext {
+  color: $theme-secondary-text;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 22px;
 
   margin-top: 0;
-  margin-right: 0;
-  margin-left: 0;
-
   margin-left: 50px;
   margin-right: 80px;
 
@@ -231,10 +220,10 @@ p {
     margin-right: 109px;
     margin-left: 129px;
   }
-
 }
+
 .login-forgot-password{
-  color: $login-title-color;
+  color: $theme-secondary-text;
   font-size: 14px;
   letter-spacing: 0;
   line-height: 22px;
@@ -249,110 +238,18 @@ p {
   margin-right: 80px;
 }
 
-// @import 'variables';
-// @import '~bootstrap/scss/bootstrap';
-// @import "~@ng-select/ng-select/scss/default.theme.scss";
-// @import '~ngx-toastr/toastr';
-// @import 'scss/fontawesome.scss';
-// @import 'scss/solid.scss';
-// @import 'scss/signika-font.scss';
-
-// body{
-//     margin:0;
-//     font-family: 'Signika','Helvetica Neue','sans-serif';
-//     font-size: 1rem; //16px
-//     font-weight:normal;
-//     line-height: 1.563rem; //25px
-//     color:$tertiary;
-//     text-align:left;
-//     background-color:#fff
-// }
-// hr{
-//     box-sizing:content-box;
-//     height:0;
-//     overflow:visible
-// }
-// h1,h2,h3,h4,h5,h6{
-//     margin-top:0;
-//     margin-bottom:.5rem
-// }
-// p{
-//     margin-top:0;
-//     margin-bottom:1rem
-// }
-
-// .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{
-//     margin-bottom:.5rem;
-//     font-weight:500;
-//     line-height:1.2;
-//     color:$primary;
-// }
-// .h1,h1{
-//     font-size:2.5rem
-// }
-// .h2,h2{
-//     font-size:2.25rem
-// }
-// .h3,h3{
-//     font-size:1.75rem
-// }
-// .h4,h4{
-//     font-size:1.5rem
-// }
-// .h5,h5{
-//     font-size:1.25rem
-// }
-// .h6,h6{
-//     font-size:1rem
-// }
-
-
-
-// .container{
-//     width:100%;
-//     padding-right:15px;
-//     padding-left:15px;
-//     margin-right:auto;
-//     margin-left:auto;
-// }
-// @media (min-width:576px){
-//     .container{
-//         max-width:540px
-//     }
-// }
-// @media (min-width:768px){
-//     .container{
-//         max-width:720px
-//     }
-// }
-// @media (min-width:992px){
-//     .container{
-//         max-width:960px
-//     }
-// }
-// @media (min-width:1200px){
-//     .container{
-//         max-width:1140px
-//     }
-// }
-
 // /////////////////////////////////////////
 // //// Button style override
 // /////////////////////////////////////////
-
 button.btn, a.btn {
   color: white;
-  background-color: $primary;
+  background-color: $theme-primary;
   font-size: 1rem;
   line-height: 25px;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal;
   letter-spacing: 0.46px;
-  //https://codepen.io/sdthornton/pen/wBZdXq
-  // box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  // // box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  // transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   transition: none;   // overriding fom tmp.css transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
-
 
   &.btn-link {
       text-transform: none;
@@ -364,23 +261,13 @@ button.btn, a.btn {
           color: $color-primary;
       }
   }
-  &.btn-outlined {
-  color: $primary;
-  background-color: transparent;
-  border: 1px solid $primary;
-  }
-  // ellipsis on 6ch, until md'
-  // &--el6ch {
-  //   max-width: 6ch;
-  //   display: block;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
 
-  //   @include media-breakpoint-up(md) {
-  //     max-width: 100%;
-  //   }
-  // }
+  &.btn-outlined {
+    color: $theme-primary;
+    background-color: transparent;
+    border: 1px solid $theme-primary;
+  }
+
   &--el {
     max-width: 100%;
     display: block;
@@ -392,172 +279,57 @@ button.btn, a.btn {
       max-width: 100%;
     }
   }
+
+  &:focus {
+    border-color: $theme-primary;
+    box-shadow: 0 0 0 0.2rem $theme-primary-light;
+  }
 }
 
 button.btn:hover, a.btn:hover {
-    &.no-hover {
-      color: white;
-      background-color: $primary;
-      border: 1px solid $primary;
+  &.no-hover {
+    color: white;
+    background-color: $theme-primary;
+    border: 1px solid $theme-primary;
 
-      &.btn-link {
-        box-shadow: none;
-      }
-
-      &.btn-outlined {
-        color:$primary;
-        background-color: transparent;
-      }
+    &.btn-link {
+      box-shadow: none;
     }
 
-    &:not(.no-hover) {
-      color:$primary;
-      background-color: $very-pale-cyan;
-      border: 1px solid $primary;
-
-      &.btn-link {
-        box-shadow: none;
-      }
-      &.btn-outlined {
-        color:$primary;
-        background-color: $very-pale-cyan;
-      }
+    &.btn-outlined {
+      color: $theme-primary;
+      background-color: transparent;
     }
+  }
+
+  &:not(.no-hover) {
+    color: $theme-primary;
+    background-color: $theme-primary-lighter;
+    border: 1px solid $theme-primary;
+
+    &.btn-link {
+      box-shadow: none;
+    }
+
+    &.btn-outlined {
+      color: $theme-primary;
+      background-color: $theme-primary-lighter;
+    }
+  }
 }
 
 button.no-shadow {
     box-shadow: none !important;
 }
 
-// Button styles used on landing page
-button.btn, a.btn {
-  &.landing-page {
-    color: white;
-    background-color: $landing-primary;
-    border-color: $landing-primary;
-    transition: background-color 0.4s ease-out 0s;
-
-    &:hover {
-      color: white;
-      background-color: $landing-primary;
-      border-color: $landing-primary;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-
-    &:focus {
-      border-color: $landing-primary;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-  }
-}
-
-button.btn.btn-outlined, a.btn.btn-outlined {
-  &.landing-page {
-    background-color: transparent;
-    color: $landing-primary;
-
-    &:hover {
-      background-color: transparent;
-      color: $landing-primary;
-    }
-  }
-}
-
-// ///////////////////////////////////////
-// ///// Button circles
-// ///////////////////////////////////////
-
-// .btn-circle.btn-xl {
-//     width: 70px;
-//     height: 70px;
-//     padding: 10px 16px;
-//     border-radius: 35px;
-//     font-size: 24px;
-//     line-height: 1.33;
-// }
-
-// .btn-circle.btn-lg {
-//     width: 40px;
-//     height: 40px;
-//     padding-top: 8px;
-//     border-radius: 20px;
-//     font-size: 20px;
-//     line-height: 1.2;
-// }
-
-// .btn-circle {
-//     width: 30px;
-//     height: 30px;
-//     padding: 6px 0px;
-//     border-radius: 15px;
-//     text-align: center;
-//     font-size: 15px;
-//     // line-height: 1.42857;
-//     line-height: 1
-// }
-
-// .btn-in-title-circle {
-//     margin-left: 0.5rem;
-// }
-
-// ////////////////////////////////////////
-// /// Custom styles
-// ////////////////////////////////////////
-
-// .heavy-label, .c-heavy-label-title {
-//     font-weight: bold;
-//     text-transform: uppercase;
-// }
-
-// .c-heavy-label-title {
-//     margin-bottom: map-get($spacers, 0)
-// }
-
-// .c-heavy-label-title-as-single-choice {
-//     font-weight: bold;
-//     text-transform: uppercase;
-//     margin-bottom: map-get($spacers, 2)
-// }
-
-// .c-before-infoblock-title {
-//     font-size: 1.2rem;
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: map-get($spacers, 2);
-//     margin-bottom: map-get($spacers, 2);
-// }
-
-// // .tagitem {
-// //     display: inline-block;
-// //     margin-right: map-get($spacers, 2);
-// //     margin-bottom: map-get($spacers, 2);
-// //     padding: map-get($spacers, 1) map-get($spacers, 3);
-// //     @include themify {
-// //         color: $color-tag-text;
-// //     }
-// //     // color: $tag-text;
-// //     // background-color: $tag-background;
-// //     @include themify {
-// //         background-color: $color-tag-background;
-// //         border: 1px solid $color-tag-border;
-// //     }
-
-// //     border-radius: $border-radius;//0.25rem;
-// // }
-
 .tagitem {
-  // display: inline-block;
-  // margin-right: 0.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  color: $gray;
-  background-color: $tag-background;
-  border: $tag-border;
+  color: $white;
+  background-color: $theme-primary;
+  border: lighten($theme-primary, 20%);
   border-radius: 0.25rem;
 }
-
 
 .ro-tagitem {
     display: inline;
@@ -573,39 +345,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     cursor: pointer;
 }
 
-// .translation {
-//     display: none;
-// }
-
-// .card-border-like-textfield {
-//     background-color: #fff;
-//     background-clip: padding-box;
-//     border: 1px solid $gray-400;
-//     border-radius: 0.25rem;
-// }
-
-// span.newline {
-//     display: block;
-// }
-
-// .side-block {
-//     background: $gray-100;
-// }
-
-// .c-disabled {
-//     opacity: 0.65;
-//     @include themify {
-//         background-color: $color-secondary !important
-//     }
-
-
-// }
-
-// .c-capitalize-first:first-letter {
-//     text-transform: capitalize
-// }
-
-
 // ///////////////////////////////////////////////////////////////
 // // Typeahead dropdown
 // ///////////////////////////////////////////////////////////////
@@ -620,15 +359,12 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     padding: 0.25rem 1.5rem;
     clear: both;
     font-weight: 400;
-    color:$secondary;
+    color: $theme-primary-text;
     text-align: inherit;
     white-space: nowrap;
     background-color: transparent;
     border: 0;
-
 }
-
-
 
 .dropdown-menu {
     padding-left: 1px;
@@ -636,7 +372,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 }
 
 .dropdown-menu.show {
-    // display: block;
     will-change: unset !important;
     max-height: 90vh !important;
     overflow-y: auto !important;
@@ -647,15 +382,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     overflow-y: auto !important;
   }
 }
-
-// body .dropdown {
-//   .dropdown-menu.show {
-//     top: 0px;
-//     left: 0px;
-//     will-change: transform;
-//     transform: translate(158px, 50px) !important;
-//   }
-// }
 
 // Textfield warning colors
 .dropdown-menu-warning .dropdown-menu {
@@ -680,8 +406,6 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 ///////////////////////////////////////////////////////////////
 // ng-select fix
 ///////////////////////////////////////////////////////////////
-
-// senčka za selected
 .ng-dropdown-panel
 .ng-dropdown-panel-items
 .ng-option.ng-option-marked {
@@ -722,15 +446,11 @@ button.btn.btn-outlined, a.btn.btn-outlined {
     height: calc(1.5em + 0.75rem + 2px);
 }
 
-// tako uvozimo lokalne stile. Poglej na vrhu, kaj od bootstrapa moramo uvoziti na vrhu lokalnega scss
-// @import "./app/shared/single-choice/single-choice.component.scss";
-
 .ng-dropdown-panel
 .ng-dropdown-panel-items
 .ng-option {
     background-color: #fff;
-    color: $secondary;
-    // padding: 8px 10px;
+    color: $theme-primary-text;
     padding: 0.25rem 1.5rem;
 }
 
@@ -758,17 +478,8 @@ button.btn.btn-outlined, a.btn.btn-outlined {
 }
 
 ng-select.ng-invalid.ng-touched .ng-select-container {
-    // border-color: #dc3545;
-    // @include themify {
-    //     border-color: $color-danger;
-    // }
     border-color: $danger;
-    // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
 }
-
-// .ng-dropdown-footer {
-//     // background-color: $gray-300;
-// }
 
 .sc-invalid-feedback {
     width: 100%;
@@ -786,221 +497,9 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   color: $warning;
 }
 
-// .ab-invalid-feedback {
-//     width: 100%;
-//     margin-top: 0.25rem;
-//     font-size: 80%;
-//     @include themify {
-//         color: $color-danger;
-//     }
-// }
-
-// .ab-invalid-feedback-label-color {
-//     @include themify {
-//         color: $color-danger;
-//     }
-// }
-
-
-
-// .no-focus-highlight:focus,.no-focus-highlight:active {
-//     outline: none !important;
-//     box-shadow: none;
-//  }
-
-
-// ///////////////////////////////////////////////////////////////
-// // breadcrumb
-// ///////////////////////////////////////////////////////////////
-// .breadcrumb {
-//     background-color: transparent;
-//     padding-inline-start: 0px;
-// }
-
-// .breadcrumb-item + .breadcrumb-item::before {
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     font-weight: 600;
-//     content: ">";
-// }
-
-
-
-// ///////////////////////////////////////////////////////////////
-// // dashboard pages, breadcrumb
-// ///////////////////////////////////////////////////////////////
-
-// .main-page-title {
-//     margin-top: 1.5rem;
-//     margin-bottom: 1rem;
-//     font-size: 1.5rem;
-//     @include themify {
-//         color: $color-dark;
-//     }
-// }
-
-// .full-page {
-//     min-height: 100vh;
-//     padding-left: 3rem;
-// }
-
-// .dashboard--font {
-//     font-weight: 100;
-// }
-
-// .dashboard-card-title {
-//     font-weight: 300;
-//     font-size: 1.1rem;
-//     margin-top: 1rem;
-//     margin-bottom: 1rem;
-// }
-
-// .c-comment-text {
-//     color: $gray-600;
-//     font-size: 0.9em;
-//     font-weight: 100;
-// }
-
-// .c-separator {
-//     height: 1px;
-//     border-bottom:1px solid $gray-400;
-//     margin-top: 1px;
-//     margin-bottom: 1px;
-// }
-
-// .c-separator-2 {
-//     height: 1px;
-//     border-bottom:2px solid $gray-400;
-//     margin-top: 1px;
-//     margin-bottom: 1px;
-// }
-
-// .c-operation-title {
-//     text-transform: uppercase;
-//     font-size: 28px;
-// }
-
-// .c-card-capital-title {
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 1rem;
-//     margin-bottom: 1rem;
-// }
-
-// .c-key-value-listing {
-//     font-weight: 400;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-// }
-
-// .c-listing-title {
-//     text-transform: uppercase;
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 0.5rem;
-//     margin-bottom: 0.5rem;
-// }
-
-// .c-listing-title-no-upper {
-//     @include themify {
-//         color: $color-secondary;
-//     }
-//     margin-top: 0.5rem;
-//     margin-bottom: 0.5rem;
-// }
-
-// .c-step-title {
-//     @include themify {
-//         color: $color-dark;
-//     }
-//     font-weight: bold;
-//     font-size: 1.3rem;
-//     text-transform: uppercase;
-//     margin-bottom: 1rem;
-// }
-
-// /////////////////////////////////////
-// // Accordion
-// /////////////////////////////////////
-
-// .accordion {
-//     background-color: $gray-100;
-//     margin-left: 0;
-//     padding-left: 0;
-//     padding-top: 4em;
-//     width: 100%;
-// }
-
-// .accordion .card {
-//     border-radius: 0;
-//     background-color: $gray-100;
-//     border-right-width: 0;
-//     border-left-width: 0;
-// }
-
-// .accordion .card .card-header {
-//     background-color: $gray-100;
-// }
-
-// /////////////////////////////////////
-// // Page transitions
-// /////////////////////////////////////
-
-// .generic-main-panel-fade-in {
-// 	opacity: 1;
-// 	animation-name: fadeInOpacity;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 0.4s;
-// }
-
-// @keyframes fadeInOpacity {
-// 	0% {
-// 		opacity: 0;
-// 	}
-// 	100% {
-// 		opacity: 1;
-// 	}
-// }
-
-// .blink-priloga-on-create > div {
-// 	opacity: 1;
-// 	animation-name: blinkOnCreate;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 1s;
-// }
-
-// @keyframes blinkOnCreate {
-// 	0% {
-//         opacity: 1;
-//     }
-// 	50% {
-//         opacity: 1;
-//     }
-// 	75% {
-//         opacity: 0.5;
-//         transform: scale(1.02);
-// 	}
-// 	100% {
-//         opacity: 1;
-// 	}
-// }
-
-// /////////////////////////////////////
-// // Invalid fields
-// /////////////////////////////////////
-
-
 .form-control.is-invalid {
     background-image: none;
 }
-
 
 .ab-edit-link {
     @include themify {
@@ -1014,78 +513,34 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 }
 
 .af-form-element {
-  // ul {                  // you're a bold one cotton!
-  //   margin-bottom: 0;
-  // }
   a.ab-edit-link:not([href]) {
     text-decoration: underline;
 
     &:hover {
-      color: $moderate-cyan;
+      color: $theme-secondary;
     }
   }
 }
 
-
-
-// ////////////////////////////////
-// // right menu
-
-// .right-menu {
-//     background-color: $gray-100;
-// }
-
-// .right-menu-section-title,
-// .right-menu-item {
-//     display: block;
-//     width: 100%;
-//     padding: 0.25rem 1rem;
-//     border: none;
-//     box-shadow: none;
-//     outline: none;
-//     border-top: 1px solid $gray-200;
-//     border-bottom: 1px solid $gray-200;
-//     line-height: $line-height-base;
-//     text-align: left;
-// }
-
-// .right-menu-section-title {
-//     font-weight: bold;
-//     text-transform: uppercase;
-//     background-color: white;
-// }
-
-// .right-menu-item {
-//     color: $link-color;
-//     text-decoration: $link-decoration;
-//     background-color: transparent;
-//     &:hover {
-//         color: $link-hover-color;
-//         text-decoration: $link-hover-decoration;
-//     }
-// }
-
-
 // //////////// Bootstrap theme override
-
-a{
+a {
     text-decoration:none;
     background-color:transparent;
     font-size: 0.875rem;
-    font-weight: 300;
     color: $secondary;
 }
-a:hover{
-    color:$secondary;
-    text-decoration:text-decoration-line
+a:hover {
+    color: $theme-secondary;
+    text-decoration: underline;
 }
-// a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):focus,a:not([href]):not([tabindex]):hover{
-//     color:inherit;
-//     text-decoration:none
-// }
-// a:not([href]):not([tabindex]):focus{
-//     outline:0
-// }
+a:not([href]):hover {
+  color: $theme-secondary;
+}
+
+// ngb overrides
+.ngb-dp-weekday {
+  color: $theme-secondary !important;
+}
 
 // btn colors
 .btn-primary {
@@ -1144,7 +599,6 @@ a:hover{
     }
 }
 
-
 #content {
   padding-top: 150px;
   padding-bottom: 150px;
@@ -1158,33 +612,35 @@ a:hover{
 
 #content #landing-h2 {
   font-size: 68px;
-  color: $landing-text-color;
+  color: $theme-primary-text;
   font-weight: 700;
   margin-bottom: 26px
 }
 
 #content #landing-h4 {
-  font-size: 20px;
-  color: $landing-text-color;
-  font-weight: 700;
+  font-size: 20pt;
+  color: $theme-primary-text;
   line-height: 1.764em;
   margin-bottom: 60px
 }
 
-#main-header-overlay{
+#main-header-overlay {
     width:100%;
     position:absolute;
     top:0;
     left:0
 }
-#main-header-overlay .mainbar-wrap{
-    padding:0 35px
+
+#main-header-overlay .mainbar-wrap {
+  padding: 0 35px
 }
-#main-header-overlay .navbar-brand.white{
-    padding:35px 0
+
+#main-header-overlay .navbar-brand.white {
+  padding: 35px 0
 }
-#main-header-overlay .navbar-brand.white img{
-    max-width:230px
+
+#main-header-overlay .navbar-brand.white img {
+  max-width: 230px
 }
 
 #main-header .navbar-brand.white img {
@@ -1386,7 +842,7 @@ a:hover{
 
 footer.main-footer {
   background-color: white;
-  color: $landing-text-color;
+  color: $theme-primary-text;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -1437,9 +893,7 @@ footer.main-footer .logos {
     height:100%
 }
 
-//
-// //sidebar
-
+// Sidebar
 .af-layout {
   &--aside {
     height: auto;
@@ -1456,29 +910,17 @@ footer.main-footer .logos {
 
     &-nav {
       width: $navbar-width;
-      // background-color: $secondary;
       background-color: inherit;
 
       @include media-breakpoint-up(lg) {
-      //   width: $navbar-width;
-        background-color: $secondary;
-        // margin-left: $navbar-width;
+        background-color: $theme-secondary;
       }
 
       ul {
         display: none;
         opacity: 0;
-        // TODO: this is here left navigation kicks in
-        // position: absolute;
-        // top: 1rem;
-        // right: -44px;
-        // height: 44px;
-        // width: 44px;
-        // background-color: red;
         overflow: hidden;
 
-
-        // @media (min-width:576px) {
         @include media-breakpoint-up(lg) {
           position: relative;
           display: flex;
@@ -1492,26 +934,22 @@ footer.main-footer .logos {
       }
     }
   }
+
   &--main {
     margin-left: 0;
     display: block;
-
-    @include media-breakpoint-up(lg) {
-      // background-color: $secondary;
-      // margin-left: $navbar-width;
-    }
   }
+
   &--system {
     display: block;
     margin-left: 0;
-    // background-color: red !important;
 
     @include media-breakpoint-up(lg) {
       display: block;
-      // background-color: $secondary;
       margin-left: 0;
     }
   }
+
   &--authorised {
     margin-left: 8px;
     margin-right: 8px;
@@ -1520,11 +958,8 @@ footer.main-footer .logos {
       margin-left: 2rem;
       margin-right: 2rem;
     }
-
   }
 }
-
-
 
 .af-nav {
   &--topnav {
@@ -1544,7 +979,6 @@ footer.main-footer .logos {
     margin-top: 0.5rem;
 
     @include media-breakpoint-up(lg) {
-      // background-color: $secondary;
       right: 0;
       position: fixed;
       border: none;
@@ -1552,9 +986,6 @@ footer.main-footer .logos {
     }
   }
 }
-
-
-
 
 .af-topnav {
   &-more {
@@ -1579,27 +1010,7 @@ footer.main-footer .logos {
   }
 }
 
-// .topnav-tabs li {
-//   float: left;
-//   color: $secondary;
-//   padding-left: 25px;
-//   padding-right: 25px;
-//   padding-top: 12px;
-//   margin-top: 35px;
-
-//   &:hover {
-//     color: $moderate-cyan;
-//   }
-// }
 .topnav-tabs {
-  // todo: this needs to get icon, and actuall
-  // option to toggle nagivation options into view.
-  // position: absolute;
-  // height: 44px;
-  // width: 44px;
-  // left: 125px;
-  // margin-top: 0.5rem;
-  // background-color: gainsboro;
 
   display: none;
   opacity: 0;
@@ -1614,37 +1025,25 @@ footer.main-footer .logos {
     margin-top: 12px; // inherit;
     background-color: inherit;
   }
-  // margin-left:-25px;
-
-
-  // @include media-breakpoint-up(lg) {
-  //   // background-color: $secondary;
-  //   right: 0;
-  //   position: fixed;
-  //   border: none;
-  //   margin-top: 0;
-  // }
 
   li {
-    // float: left;
-    color: $secondary;
+    color: $theme-primary-text;
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 12px;
-    // margin-top: 11px; // was 35px
     margin-top: 0;
     display: none;
 
     @include media-breakpoint-up(lg) {
       float: left;
       display: inline;
-      color: $secondary;
+      color: $theme-primary-text;
       padding-left: 25px;
       padding-right: 25px;
-      padding-top: 11px;                // was 35px
+      padding-top: 11px;
 
       &:hover {
-        color: $moderate-cyan;
+        color: $theme-secondary;
       }
     }
 
@@ -1657,15 +1056,22 @@ footer.main-footer .logos {
       text-decoration: none;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 400;
       letter-spacing: 0;
       line-height: 22px;
+    }
+
+    &.active {
+      a {
+        color: $theme-secondary;
+      }
     }
   }
 
   &-bottom.active {
     margin-top: 22px;
     height: 4px;
-    background-color: $primary;
+    background-color: $theme-secondary;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
@@ -1695,26 +1101,12 @@ footer.main-footer .logos {
   }
 }
 
-// .topnav-tabs li a.active {
-//   color: $tertiary;
-//   border-bottom: 4px solid $primary;
-// }
-
-
 .main {
   margin-left: 8px;
   margin-right: 8px;
 
   max-width: 100%;
-
-  // @include media-breakpoint-up(lg) {
-  //   margin-left: calc(458px); //458px;
-  // // width: 870px;
-  // }
 }
-
-// 367px
-// 70px
 
 @media (min-width:576px){
   .main{
@@ -1753,14 +1145,6 @@ footer.main-footer .logos {
   }
 }
 
-
-
-// .auth-side-navbar {
-//   // width: 90px;
-//   width: $navbar-width;
-//   background-color: $secondary;
-//   height: 100vh;
-// }
 .auth-side-logo {
   margin-top: ($navbar-width - $navbar-logo-width)/2;
   margin-left: ($navbar-width - $navbar-logo-width)/2;
@@ -1775,63 +1159,16 @@ footer.main-footer .logos {
   align-items:center;
   justify-content:center;
 }
-// #sidebar-guest-shadow {
-// height: 100vh;
-// width: 16px;
-// background-color: $primary-light;
-// }
-// #sidebar-register-shadow {
-// height: 100vh;
-// width: 16px;
-// background-color: $primary-light;
-// }
 
-
-
-// #topbar-product-label-front-shadow {
-//   height: 8px;
-//   background-color: $primary-lighter;
-// }
-
-// #topbar-guest-shadow {
-//   height: 16px;
-//   background-color: $primary-lighter;
-// }
-
-
-// .btn-icon{
-//     display:inline-flex;
-//     align-items:center;
-//     justify-content:center;
-//     font-size:1em;
-//     letter-spacing:0;
-//     transition:inherit;
-//     background-size:99.99%!important
-// }
-
-
-// //registration forms
-// .col-register {
-//   width: 350px;
-// }
-// .row-register {
-//   text-align: center;
-//   justify-content: center
-// }
-// .register-text-left{
-//   text-align:left;
-// }
 .btn-register {
   width: 280px;
   height: 45px;
 }
 
-
 button.btn-search,
 button.btn-filter {
   background-color: #FFFFFF;
-  // width: 90px;
-  color: $secondary;
+  color: $theme-primary-text;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.34px;
@@ -1840,6 +1177,7 @@ button.btn-filter {
   border-radius: 7px;
   height: $button-icon-bg-size;
 }
+
 button.btn-search:hover,
 button.btn-filter:hover {
   background-color: #FFFFFF;
@@ -1847,9 +1185,8 @@ button.btn-filter:hover {
 
   .button {
     &-icon {
-
       &-shape {
-        background: $moderate-cyan;  // initiall color of icon
+        background: currentColor;
       }
     }
   }
@@ -1868,29 +1205,10 @@ button.btn-filter:hover {
   }
 }
 
-
-// button.btn-filter {
-//   background-color: #FFFFFF;
-//   // width: 90px;
-//   color: $secondary;
-//   font-size: 12px;
-//   font-weight: 500;
-//   letter-spacing: 0.34px;
-//   line-height: 18px;
-//   border: none;
-//   border-radius: 7px;
-// }
-//  {
-//   background-color: #FFFFFF;
-//   color: $primary;
-// }
-
 button.btn-search,
 button.btn-filter {
   height: $button-icon-bg-size;
 }
-
-
 
 .button {
   &-icon {
@@ -1906,10 +1224,9 @@ button.btn-filter {
       display: inline-block;
       width: $button-icon-size;
       height: $button-icon-size;
-      background: $dark-blue;  // initiall color of icon
+      background: $theme-primary-text;
       mask-size: cover;
       margin-left: -2px; // visually align space
-      // margin: ($button-icon-bg-size - $button-icon-size) / 2; // (34 - 24)/2
 
       &:hover,
       &:focus {
@@ -1958,30 +1275,26 @@ button.btn-filter {
   font-weight: 500;
   letter-spacing: 0.34px;
   line-height: 18px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 7px;
-
   margin-left: 1rem;
-  // &:first-child {
-  //   margin-left: 0;
-  // }
 
   &:hover {
     background-color: #FFFFFF;
-    color: $primary;
+    color: $theme-primary;
+    border: 1px solid $theme-primary;
   }
-  // disabled variation
 
+  // disabled variation
   &--disabled {
-    color: $secondary;
     color: #939393;
     background-color: #efefef;
     &:hover {
       background-color: #efefef;
       color: #939393;
+      border: 1px solid transparent;
     }
   }
-
 
   // actions button with icon
   //
@@ -1996,7 +1309,7 @@ button.btn-filter {
     // border-radius: 17px;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $button-icon-size;
       height: $button-icon-size;
@@ -2004,14 +1317,6 @@ button.btn-filter {
       mask-size: cover;
       margin-left: -2px; // visually align space
       margin-top: 5px;
-      // margin: ($button-icon-bg-size - $button-icon-size) / 2; // (34 - 24)/2
-
-      // Todo: need to figure out how to hover this alongside hover of the button
-      // to remove split hover effect.
-      // &:hover,
-      // &:focus {
-      //   background: $moderate-cyan;  // this overrides color of icon for states
-      // }
 
       // list icon sources here
       &--filter {
@@ -2050,20 +1355,6 @@ button.btn-filter {
   }
 }
 
-
-
-
-//label
-.labelPlaceholder{
-  font-weight: 300;
-  // color: red;
-}
-
-
-// .fontTertiary {
-//   color: $tertiary
-// }
-
 ////////////// RIPPLE ////////////
 .global-overlay-backdrop {
   position: fixed;
@@ -2074,13 +1365,6 @@ button.btn-filter {
   z-index: 1000;
   background-color: rgba(0,0,0,0.2);
 }
-
-// .modal-content:has(> div.modal-no-bg-spinner) {
-//   background-color:transparent;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
 
 .spinner-fade-in {
 opacity: 1;
@@ -2143,14 +1427,7 @@ animation-timing-function: ease-in;
 
 
  ////// Scrollspy settings
-
-// .sp-aside-toc ul {
-  // background-color: orange;
-  // position: fixed;
-  // position: absolute;
-  // right: 1rem;
-// }
-.above-sidenav-home{
+.above-sidenav-home {
   margin-left: $navbar-width;
   height: 80px; /* Full-height: remove this if you want "auto" height */
   width: 368px; /* Set the width of the sidebar */
@@ -2162,7 +1439,8 @@ animation-timing-function: ease-in;
   overflow-x: hidden; /* Disable horizontal scroll */
   border-bottom: 1px solid $top-bar-border;
 }
-.above-sidenav{
+
+.above-sidenav {
   margin-left: 0;
   height: 80px;
   position: relative;
@@ -2174,7 +1452,6 @@ animation-timing-function: ease-in;
     margin-left: $navbar-width;
     height: 80px; /* Full-height: remove this if you want "auto" height */
     width: 368px; /* Set the width of the sidebar */
-    position: relative; /* Fixed Sidebar (stay in place on scroll) */
     z-index: 1050; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
@@ -2184,22 +1461,25 @@ animation-timing-function: ease-in;
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   }
 }
-.above-sidenav-title{
-  font-size: 22px;
-  font-weight: 500;
+
+.above-sidenav-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
+  font-size: 22pt;
   letter-spacing: 0;
   line-height: 30px;
   margin-left: 8px;
   padding-top: 25px;
+  color: $theme-secondary;
 
   @include media-breakpoint-up(lg) {
     margin-left: 40px;
   }
-
 }
-.above-sidenav-title-cursor{
+
+.above-sidenav-title-cursor {
   cursor: pointer;
 }
+
 .above-sidenav {
   &-icon {
     // This adds basic shape of icon with a background
@@ -2211,17 +1491,17 @@ animation-timing-function: ease-in;
     margin-top: -2px;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $sidenav-icon-size;
       height: $sidenav-icon-size;
-      background: $dark-blue;  // initiall color of icon
+      background: $theme-primary-text;
       mask-size: cover;
       margin: ($sidenav-icon-bg-size - $sidenav-icon-size) / 2; // (34 - 24)/2
 
       &:hover,
       &:focus {
-        background: $moderate-cyan;  // this overrides color of icon for states
+        background: $theme-secondary;  // this overrides color of icon for states
       }
 
       // list icon sources here
@@ -2242,8 +1522,6 @@ animation-timing-function: ease-in;
   }
 }
 
-
-
 .sidebar {
   &-icon {
     // This adds basic shape of icon with a background
@@ -2254,17 +1532,17 @@ animation-timing-function: ease-in;
     align-items: center;
 
     &-shape {
-      // This defines placement of icon as mask, backtround color defines color of icon
+      // This defines placement of icon as mask, background color defines color of icon
       display: inline-block;
       width: $sidebar-icon-size;
       height: $sidebar-icon-size;
-      background: white;  // initiall color of icon
+      background: white;  // initial color of icon
       mask-size: cover;
-      //margin: ($sidebar-icon-bg-size - $sidebar-icon-size) / 2; // (34 - 24)/2
+      transition: scale 150ms ease-out;
 
       &:hover,
       &:focus {
-        background: $moderate-cyan;  // this overrides color of icon for states
+        scale: 1.15;
       }
 
       // list icon sources here
@@ -2293,7 +1571,6 @@ animation-timing-function: ease-in;
   background-color: $sidenav-bg-colour;
   overflow-x: inherit; /* Disable horizontal scroll */
 
-
   @include media-breakpoint-up(lg) {
     margin-top: 80px;
     margin-left: $navbar-width;
@@ -2304,17 +1581,14 @@ animation-timing-function: ease-in;
     width: 368px; /* Set the width of the sidebar */
     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
     overflow-x: hidden; /* Disable horizontal scroll */
-
-
   }
 }
 
 .sidenav a {
   display: block;
   padding: 0.25rem;
-  color: $secondary;
+  color: $theme-primary-text;
   text-decoration: none;
-  transition: all 0.15s ease-out 0.15s;
   cursor: pointer;
   font-size: 18px;
   letter-spacing: 0;
@@ -2323,18 +1597,20 @@ animation-timing-function: ease-in;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-left: 4px solid $sidenav-bg-colour; // offsets border on .active
-  // padding-left: 4px;
 
   &:hover {
-    color: $moderate-cyan;
+    color: $theme-secondary;
   }
 }
 
 .sidenav a.active {
-  color: $secondary;
+  color: $theme-secondary;
   background-color: $body-background;
-  border-left: 4px solid $primary;
-  // padding-left: 0;
+  border-left: 4px solid $theme-secondary;
+
+  &:hover {
+    color: $theme-secondary;
+  }
 }
 
 .sidenav a.link-error {
@@ -2343,11 +1619,9 @@ animation-timing-function: ease-in;
 }
 
 .sidenav a.active.parent {
-  margin-left: 0rem !important;
+  margin-left: 0 !important;
   font-size: rem-calc(14px);
 }
-
-
 
 .af-sidenav {
   &--block {
@@ -2364,8 +1638,6 @@ animation-timing-function: ease-in;
     }
   }
 }
-
-
 
 .main-inside-top {
   margin-top: 20px;
@@ -2405,96 +1677,6 @@ animation-timing-function: ease-in;
   border-radius: 9px;
 }
 
-
-// .sp-contents-table {
-//   // Do not use margin here. It will be overwritten.
-//   // position: absolute; // <-- must have.
-//   padding: 0.125rem;
-//   font-size: rem-calc(14px);
-//   background-color: red;
-//   height: 100vh;
-// }
-
-// .sp-contents-table.sticky {
-//   position: fixed; // <-- must have.
-//   // top: 5rem; // <-- must have.
-//   // right: 0;
-//   // left:0;
-//   // max-width: 200px;
-//   width: 368px;
-// }
-
-// .sp-contents-table {
-//   list-style: none;
-//   margin: 0;
-
-
-//   @include media-breakpoint-down(md) {
-//       display: none;
-//   }
-//   @include media-breakpoint-down(lg) {
-//       max-width: 200px;
-//   }
-
-// }
-
-// .sp-contents-table-subsections {
-//   list-style: none;
-//   margin: 0;
-//   margin-left: 1.5rem;
-//   @include media-breakpoint-down(md) {
-//       display: none;
-//   }
-// }
-
-// .sp-contents-table a {
-//   // border-radius: 4px;
-//   display: block;
-//   padding: 0.25rem;
-//   color: $tertiary;
-//   text-decoration: none;
-//   transition: all 0.3s ease-out 0.3s;
-//   cursor: pointer;
-//   font-size: 1rem;
-//   font-weight: 400;
-// }
-
-// .sp-contents-table a.active {
-//   // background-color: #000;
-//   color: $secondary;
-//   background-color: white;
-//   // font-weight: 600;
-//   // margin-left: -1rem;
-// }
-
-// .sp-contents-table a.link-error {
-//   color: $danger;
-//   font-weight: 500;
-// }
-
-// .sp-contents-table a.active.parent {
-//   margin-left: 0rem !important;
-//   font-size: rem-calc(14px);
-// }
-
-// .sp-parent-content-section {
-//   display: block;
-//   border-bottom: 3px solid $secondary;
-//   color: $secondary;
-//   font-size: 2rem;
-//   margin-top: 4rem;
-//   margin-bottom: 0;
-//   // margin-right: 3rem;
-//   margin-left: rem-calc(20px);   // 1rem + 4px for border on left
-//   width: calc(100% - 2rem);
-
-//   @include media-breakpoint-up(lg) {
-//       // margin-right: 1rem;
-//       // padding-left: 1rem;
-//     width: calc(100% - 2rem - 1rem - 20px); // hopefully, we get aligned to bottom element
-//   }
-// }
-
 .left-contents-panel {
   background-color: #FFFFFF;
 }
@@ -2502,37 +1684,6 @@ animation-timing-function: ease-in;
 .search-field .form-group {
   margin-bottom: 0.5rem;
 }
-
-// .side-nav-buffer {
-//   margin-left: 80px;
-// }
-
-// ///////// MINI ANIMACIJE
-// .sp-page-fade-in {
-// 	opacity: 1;
-// 	animation-name: fadeInOpacity;
-// 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in;
-// 	animation-duration: 0.5s;
-// }
-
-// @keyframes fadeInOpacity {
-// 	0% {
-// 		opacity: 0.1;
-// 	}
-// 	100% {
-// 		opacity: 1;
-// 	}
-// }
-
-// .edit-field {
-//   cursor: pointer;
-// }
-
-// .edit-field:hover {
-//   text-decoration: underline;
-// }
-
 
 .container-landing-page {
   background-color: transparent;
@@ -2546,13 +1697,10 @@ animation-timing-function: ease-in;
     position: fixed;
     left: 6rem;
     bottom: 1rem;
-    // right: 1rem;
-    // top: 0.5rem;
     padding: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
     border-radius: 4px;
-    background-color: $secondary;
     background-color: $gray-light;
     z-index: 9999;
 
@@ -2563,82 +1711,58 @@ animation-timing-function: ease-in;
   @include media-breakpoint-down(md) {
     left: 1rem;
   }
-
 }
-
-// .no-list-results {
-//   font-size: 1.5rem;
-//   margin-left: 1rem;
-//   color: $gray;
-//   text-align: center;
-//   margin-top: 1rem;
-// }
-
-// ///// Datepicker fix
-// .ngb-dp-navigation-chevron {
-//   padding: 0 !important;
-// }
-
-// .ngb-dp-arrow-btn {
-//   border: 0 !important;
-// }
-
-
-// .page-list-container {
-//   max-width: 1140px;
-//   padding-top: 5px;
-
-//   @include media-breakpoint-up(xl) {
-//     width: 1140px;
-//   }
-//   @include media-breakpoint-up(lg) {
-//     width: 960px;
-//   }
-//   @include media-breakpoint-up(md) {
-//     width: 720px;
-//   }
-// }
-
 
 .news-content-footer-divider{
   height: 60px;
 }
+
 .news-title-content-divider{
   height: 32px;
 }
+
 .news-content-divider{
   height: 24px;
 }
+
 .news-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 48px;
   margin-top: 72px;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-section-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   margin-top: 40px;
   font-size: 2rem;
   font-weight: 600;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-section-subtitle {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: $landing-primary;
+  color: $theme-primary;
 }
+
 .news-summary {
   font-size: 1rem;
   font-weight: 300;
-  color: $secondary;
+  color: $theme-primary-text;
 }
+
 .news-content {
   font-size: 1.125rem;
   font-weight: 300;
-  color: $secondary;
+  color: $theme-primary-text;
 }
-.news-content a{
+
+.news-content a {
   font-size: 1.125rem;
   font-weight: 300;
-  color: $landing-primary;
+  color: $theme-primary;
   text-decoration: underline;
 }
 
@@ -2648,8 +1772,6 @@ animation-timing-function: ease-in;
   font-weight: 400;
   text-decoration: underline;
 }
-
-
 
 @media screen and (max-width: 640px) {
   table {
@@ -2733,10 +1855,10 @@ table, td, th {
 }
 
 tr:nth-child(odd) {
-  background-color: $odd-table-color;
+  background-color: #F8F8F8;
 }
 
-.title-page{
+.title-page {
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 0;
@@ -2750,21 +1872,11 @@ tr:nth-child(odd) {
 }
 
 .counting-page{
-  color: $counting-page;
+  color: #8F92A1;
   font-size: 12px;
   letter-spacing: 0;
   line-height: 18px;
-  // margin-top: -14px;
 }
-
-// ng-select.custom {
-//     border: none;
-// }
-// ng-select.dropdown {
-//     border: none;
-// }
-
-
 
 .ngb-pagination {
   border-color: red;
@@ -2782,9 +1894,10 @@ tr:nth-child(odd) {
   letter-spacing: 0;
   line-height: 18px;
   text-align: right;
+  cursor: default;
 
   &:hover {
-    color: $moderate-cyan;
+    color: $theme-primary;
   }
 }
 
@@ -2802,17 +1915,12 @@ tr:nth-child(odd) {
 .main-inside-top,
 .content-element {
   &--row1 {
-    // button {
-      // margin-bottom: 1rem;
-    // }
-
     margin-bottom: 0.5rem;
     min-height: 39px;
     background-color: $row-1;
-    // height: 32px;
   }
+
   &--row2 {
-    // margin-top: -16px;
     background-color: $row-2;
   }
 
@@ -2820,17 +1928,22 @@ tr:nth-child(odd) {
     background-color: $row-1-title;
     padding-top: 0.375rem;
     line-height: 1.25;
+    color: $theme-primary;
+    font-family: 'PathwayGothicOne-Regular', sans-serif;
+    font-size: 22pt;
     span {
       font-weight: normal;
     }
   }
+
   &--btn {
-    // background-color: greenyellow;
     min-width: 150px;
   }
+
   &--subtitle {
     background-color: $row-2-subtitle;
   }
+
   &--counting {
     background-color: $row-2-counting;
   }
@@ -2856,6 +1969,8 @@ tr:nth-child(odd) {
 
     .content-element--title {
       margin-bottom: $af-spacing-three; // 3rem
+      font-family: 'PathwayGothicOne-Regular', sans-serif;
+      font-size: 22pt;
     }
 
     &--nomargin {
@@ -3125,9 +2240,8 @@ tr:nth-child(odd) {
   &-block--c8,
   &-block--c12 {
     h2, h3 {
-      font-family: Poppins-Regular, sans-serif;
-      font-size: 20px;
-      color: #181B31;
+      font-size: 18pt;
+      color: $theme-primary-text;
       text-align: left;
       position: relative;
 
@@ -3145,15 +2259,6 @@ tr:nth-child(odd) {
       font-size: 18px;
     }
   }
-  // &-element {
-    // h2 {
-    //   display: block;
-    // }
-    // &--one {
-    //   &:first-child {
-    //   }
-    // }
-  // }
 }
 
 
@@ -3407,7 +2512,6 @@ $ustwo-colour-delux: #666;
 
 small,
 .small {
-  font-weight: 300;
   line-height: 1.2;
   display: inline-block;
 }
@@ -3556,15 +2660,6 @@ $chechboxSize-1: 1rem !important;
   content: "";
   position: absolute;
   top: -1rem;
-}
-
-.form-control {
-  &.landing-page {
-    &:focus {
-      border-color: $landing-primary-lightest;
-      box-shadow: 0 0 0 0.2rem $landing-primary-lightest;
-    }
-  }
 }
 
 // HERE BE PLACEHOLDER
@@ -3835,7 +2930,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
     .small {
       font-size: 14px;
       line-height: 21px;
-      font-weight: 300;
       color: #ABABAB;
       text-align: center;
 
@@ -4234,32 +3328,17 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
 .af-journey {
 
   &-wrapper {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // height: calc(96px + 20px);
-    // background-color: $af-header;
-    // padding-top: rem-calc(32px);
     list-style-type: none;
     margin-left: 0;
-    padding-left: 0;                    // remove dedault UL padding
-
-
-    // li {
-    //   text-align: -webkit-match-parent;
-    // }
-
+    padding-left: 0;                    // remove default UL padding
   }
+
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: rem-calc(45px);
 
-  // &:first-child {
-    // padding-top: 0;
-    // background-color: red;
-  // }
   &:last-child {
     .af-journey-info {
 
@@ -4270,28 +3349,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
 
     }
   }
-  // &::before {
-  //   content: "";
-  //   border-left: 5px solid red;
-  //   margin-left: -10px;
-  //   display: block;
-  // }
-
-  // z-index: 3;
-  // height: calc(96px + 20px);
-  // background-color: $af-header;
-
-  // &::before {
-  //   content: " ";
-  //   position: absolute;
-  //   // z-index: 1;
-  //   top: 5px;
-  //   left: 5px;
-  //   right: 5px;
-  //   bottom: 5px;
-  //   // background: orange;
-  //   // border-left: 5px solid red;
-  // }
 
   &-dot {
     display: inline-block;
@@ -4369,7 +3426,6 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
       font-size: 14px;
       color: rgba(0,0,0,0.70);
       line-height: 1.5;
-      font-weight: 300;
     }
   }
 
@@ -4810,4 +3866,57 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label {
 input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
   left: calc(100% - 5px);
   transform: translateX(-100%);
+}
+
+///////////////////////////////////////////////////////////////
+// Translation selection component
+///////////////////////////////////////////////////////////////
+.af-translation-language {
+  div {
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 0.25rem;
+    border: 1px solid $theme-primary;
+    padding: 0.125rem 0.375rem;
+    color: $theme-primary;
+
+    &:hover {
+      background-color: $theme-primary-lighter
+    }
+
+    img {
+      margin-right: 0.5rem;
+      border-radius: 2px;
+      height: 12px;
+      width: 12px;
+      margin-top: -2px;
+      opacity: 0.75;
+    }
+  }
+
+  div:last-child {
+    margin-right: 0;
+  }
+
+  .af-translation-language--selected {
+    color: white;
+    background-color: $theme-primary;
+
+    &:hover {
+      color: white;
+      background-color: $theme-primary;
+    }
+  }
+
+  .af-translation-language--error {
+    color: white;
+    border-color: $red;
+    background-color: $red-light;
+
+    &:hover {
+      color: white;
+      background-color: $red;
+    }
+
+  }
 }
