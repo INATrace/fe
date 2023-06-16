@@ -75,7 +75,7 @@ export class CompanyDashboardComponent implements OnInit {
     },
     yAxis: {},
     series: [{
-      name: 'Conventional (in kg)',
+      name: 'Quantity (in kg)',
       type: 'bar',
       label: {
         show: true,
