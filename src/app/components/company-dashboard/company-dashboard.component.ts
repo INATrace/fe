@@ -359,12 +359,6 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
-    let measureUnitVal = '';
-    if (this.processingPerformanceForm?.get('measuringUnit')?.value) {
-      // first 3 chars are used in label
-      measureUnitVal = this.measureUnitTypes.find(unitType => unitType.id === this.processingPerformanceForm?.get('measuringUnit')?.value)?.label.substring(0, 3);
-    }
-
     this.dashboardControllerService
       .calculateProcessingPerformanceDataUsingPOST({
       companyId: this.companyId,
@@ -397,12 +391,14 @@ export class CompanyDashboardComponent implements OnInit {
           },
           yAxis: [{
             axisLabel: {
-              formatter: `{value} ${measureUnitVal}`
+              formatter: `{value} ${next.data.measureUnitType.label}`
             }
           }],
           series: [{
+              name: `Input (in ${next.data.measureUnitType.label})`,
               data: inputQuantityData
             }, {
+              name: `Output (in ${next.data.measureUnitType.label})`,
               data: outputQuantityData
             }, {
               data: ratioData
