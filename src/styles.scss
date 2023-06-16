@@ -68,12 +68,6 @@ p {
     font-size:1rem
 }
 
-.font-pathway-gothic-one {
-  font-family: 'PathwayGothicOne-Regular', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -164,6 +158,7 @@ p {
 }
 
 .login-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 2rem;
   font-weight: 500;
   letter-spacing: 0;
@@ -625,25 +620,27 @@ a:not([href]):hover {
 #content #landing-h4 {
   font-size: 20pt;
   color: $theme-primary-text;
-  font-weight: 700;
   line-height: 1.764em;
   margin-bottom: 60px
 }
 
-#main-header-overlay{
+#main-header-overlay {
     width:100%;
     position:absolute;
     top:0;
     left:0
 }
-#main-header-overlay .mainbar-wrap{
-    padding:0 35px
+
+#main-header-overlay .mainbar-wrap {
+  padding: 0 35px
 }
-#main-header-overlay .navbar-brand.white{
-    padding:35px 0
+
+#main-header-overlay .navbar-brand.white {
+  padding: 35px 0
 }
-#main-header-overlay .navbar-brand.white img{
-    max-width:230px
+
+#main-header-overlay .navbar-brand.white img {
+  max-width: 230px
 }
 
 #main-header .navbar-brand.white img {
@@ -981,7 +978,6 @@ footer.main-footer .logos {
     margin-top: 0.5rem;
 
     @include media-breakpoint-up(lg) {
-      // background-color: $secondary;
       right: 0;
       position: fixed;
       border: none;
@@ -1704,7 +1700,6 @@ animation-timing-function: ease-in;
     padding-left: 2rem;
     padding-right: 2rem;
     border-radius: 4px;
-    background-color: $secondary;
     background-color: $gray-light;
     z-index: 9999;
 
@@ -1730,12 +1725,14 @@ animation-timing-function: ease-in;
 }
 
 .news-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 48px;
   margin-top: 72px;
   color: $theme-primary;
 }
 
 .news-section-title {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   margin-top: 40px;
   font-size: 2rem;
   font-weight: 600;
@@ -1743,6 +1740,7 @@ animation-timing-function: ease-in;
 }
 
 .news-section-subtitle {
+  font-family: 'PathwayGothicOne-Regular', sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
   color: $theme-primary;
@@ -1751,13 +1749,13 @@ animation-timing-function: ease-in;
 .news-summary {
   font-size: 1rem;
   font-weight: 300;
-  color: $secondary;
+  color: $theme-primary-text;
 }
 
 .news-content {
   font-size: 1.125rem;
   font-weight: 300;
-  color: $secondary;
+  color: $theme-primary-text;
 }
 
 .news-content a {

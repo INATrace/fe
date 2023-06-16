@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-lg-6 align-self-center pt-5 pt-lg-0">
       <div class="login-left-inner">
 
-        <div class="login-title font-pathway-gothic-one" i18n="@@login.title">Welcome back!</div>
+        <div class="login-title" i18n="@@login.title">Welcome back!</div>
         <div class="login-small-spacer"></div>
         <div class="login-subtitle" i18n="@@login.subtitle">Sign in to continue</div>
         <div class="login-big-spacer"></div>
@@ -19,14 +19,13 @@
             </div>
           </label>
           <input
-            class="form-control text-input-bigger"
+            class="form-control text-input-bigger mb-0"
             id="username"
             [ngClass]="{ 'is-invalid': submitted && loginForm.get('username').invalid }"
-            style="margin-bottom: 0;"
             placeholder="Enter your username"
             type="text"
             i18n-placeholder="@@login.input.username.placeholder"
-            [formControl]="loginForm.get('username')">
+            [formControl]="$any(loginForm.get('username'))">
           <ng-container *ngIf="submitted">
             <div *ngIf="loginForm.get('username').errors as errors" class="sc-invalid-feedback">
               <div *ngIf="errors.required" i18n="@@login.input.username.error">
@@ -53,7 +52,7 @@
               type="password"
               placeholder="Enter your password"
               i18n-placeholder="@@login.input.password.placeholder"
-              [formControl]="loginForm.get('password')"
+              [formControl]="$any(loginForm.get('password'))"
               (keyup.enter)="login()">
 
           </div>
