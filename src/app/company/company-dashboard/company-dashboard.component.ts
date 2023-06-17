@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { FacilityControllerService } from '../../api/api/facilityController.service';
-import { ApiFacility } from '../../api/model/apiFacility';
+import { FacilityControllerService } from '../../../api/api/facilityController.service';
+import { ApiFacility } from '../../../api/model/apiFacility';
 import { EChartsOption } from 'echarts';
-import { dateISOString } from '../../shared/utils';
-import { CompanyUserCustomersByRoleService } from '../shared-services/company-user-customers-by-role.service';
-import { CompanyControllerService } from '../../api/api/companyController.service';
-import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
-import { CompanyProcessingActionsService } from '../shared-services/company-processing-actions.service';
-import { ProcessingActionControllerService } from '../../api/api/processingActionController.service';
-import { ValueChainControllerService } from '../../api/api/valueChainController.service';
+import { dateISOString } from '../../../shared/utils';
+import { CompanyUserCustomersByRoleService } from '../../shared-services/company-user-customers-by-role.service';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
+import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
+import { CompanyProcessingActionsService } from '../../shared-services/company-processing-actions.service';
+import { ProcessingActionControllerService } from '../../../api/api/processingActionController.service';
+import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import {
   ApiProcessingPerformanceRequestEvidenceField
-} from '../../api/model/apiProcessingPerformanceRequestEvidenceField';
-import { DashboardControllerService } from '../../api/api/dashboardController.service';
+} from '../../../api/model/apiProcessingPerformanceRequestEvidenceField';
+import { DashboardControllerService } from '../../../api/api/dashboardController.service';
 import { FileSaverService } from 'ngx-filesaver';
-import { CompanyCollectingFacilitiesService } from '../shared-services/company-collecting-facilities.service';
-import { GeneralSifrantService } from '../shared-services/general-sifrant.service';
-import { ApiProcessingAction } from '../../api/model/apiProcessingAction';
+import { CompanyCollectingFacilitiesService } from '../../shared-services/company-collecting-facilities.service';
+import { GeneralSifrantService } from '../../shared-services/general-sifrant.service';
+import { ApiProcessingAction } from '../../../api/model/apiProcessingAction';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-company-dashboard',
+  templateUrl: './company-dashboard.component.html',
+  styleUrls: ['./company-dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class CompanyDashboardComponent implements OnInit {
 
   facilityCodebook: GeneralSifrantService<any>;
   farmersCodebook: CompanyUserCustomersByRoleService;

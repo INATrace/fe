@@ -11,7 +11,7 @@
       <li>
         <div class="left-border-active"
              routerLinkActive="active"
-             [ngClass]="{'active': myOrdersActive.isActive || myFarmersActive.isActive || myCollectorsActive.isActive || myCustomersActive.isActive }">
+             [ngClass]="{'active': myOrdersActive.isActive || myFarmersActive.isActive || myCollectorsActive.isActive || myCustomersActive.isActive || companyDashboardActive.isActive }">
           <button class="btn-icon-sidebar"
                   [disabled]="isConfirmedOnly"
                   data-toggle="tooltip"
@@ -73,6 +73,7 @@
       <button routerLink="/my-farmers" routerLinkActive #myFarmersActive="routerLinkActive" style="display: none"></button>
       <button routerLink="/my-collectors" routerLinkActive #myCollectorsActive="routerLinkActive" style="display: none"></button>
       <button routerLink="/my-customers" routerLinkActive #myCustomersActive="routerLinkActive" style="display: none"></button>
+      <button routerLink="/company-dashboard" routerLinkActive #companyDashboardActive="routerLinkActive" style="display: none"></button>
       <button routerLink="/value-chains" routerLinkActive #valueChainsActive="routerLinkActive" style="display: none"></button>
       <button routerLink="/currencies" routerLinkActive #currenciesActive="routerLinkActive" style="display: none"></button>
 

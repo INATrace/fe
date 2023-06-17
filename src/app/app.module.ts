@@ -70,7 +70,8 @@ import { CompanyDetailProcessingActionsListComponent } from './company/company-d
 import { CurrencyListComponent } from './currency-list/currency-list.component';
 import { LanguageInterceptor } from './core/language.interceptor';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { CompanyDashboardComponent } from './company/company-dashboard/company-dashboard.component';
+import { CompanyCommonModule } from './company/company-common/company-common.module';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -96,7 +97,7 @@ export function getConfiguration(): Configuration {
     LoginComponent,
     RegisterComponent,
     UserHomeComponent,
-    DashboardComponent,
+    CompanyDashboardComponent,
     ConfirmEmailComponent,
     UserListComponent,
     UserDetailComponent,
@@ -169,7 +170,8 @@ export function getConfiguration(): Configuration {
     ChartsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    CompanyCommonModule
   ],
   providers: [
     {

@@ -39,7 +39,7 @@ import {
 import { AdminOrCompanyAdminGuardService } from './core/guards/admin-or-company-admin-guard.service';
 import { ActivatedUserGuardService } from './core/guards/activated-user-guard.service';
 import { CompanyAdminGuardService } from './core/guards/company-admin-guard.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { CompanyDashboardComponent } from './company/company-dashboard/company-dashboard.component';
 
 export function loginMatcher(url) {
   if (url.length > 0 && url[0].path === 'login') {
@@ -91,15 +91,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: UserHomeComponent,
-    pathMatch: 'full',
-    canActivate: [ActivatedUserGuardService],
-    data: {
-      drobtinice: null
-    }
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
     pathMatch: 'full',
     canActivate: [ActivatedUserGuardService],
     data: {
@@ -331,6 +322,15 @@ const routes: Routes = [
     path: 'my-customers',
     canActivate: [ActivatedUserGuardService],
     loadChildren: () => import('./company/company-customers/company-customers.module').then(m => m.CompanyCustomersModule)
+  },
+  {
+    path: 'company-dashboard',
+    component: CompanyDashboardComponent,
+    pathMatch: 'full',
+    canActivate: [ActivatedUserGuardService],
+    data: {
+      drobtinice: null
+    }
   },
   ///////////////////////
   ///////////////////////

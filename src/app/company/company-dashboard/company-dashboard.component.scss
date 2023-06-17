@@ -1,0 +1,10 @@
+@import "../../../variables";
+
+.dashboard-container {
+  padding-bottom: 64px;
+}
+
+.button-selected {
+  color: white;
+  background-color: $theme-primary;
+}
