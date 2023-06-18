@@ -258,7 +258,7 @@
                         label="Facility"
                         i18n-label="@@companyDashboardComponent.singleChoice.processingFacility.label"
                         [formControlInput]="processingFacilityFormControl"
-                        [codebookService]="facilityCodebook"
+                        [codebookService]="companyFacilityCodebook"
                         (onChange)="refreshProcessingPerformanceData()">
                     </single-choice>
 

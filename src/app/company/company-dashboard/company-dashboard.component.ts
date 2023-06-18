@@ -19,6 +19,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { CompanyCollectingFacilitiesService } from '../../shared-services/company-collecting-facilities.service';
 import { GeneralSifrantService } from '../../shared-services/general-sifrant.service';
 import { ApiProcessingAction } from '../../../api/model/apiProcessingAction';
+import {CompanyFacilitiesService} from '../../shared-services/company-facilities.service';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -28,6 +29,7 @@ import { ApiProcessingAction } from '../../../api/model/apiProcessingAction';
 export class CompanyDashboardComponent implements OnInit {
 
   facilityCodebook: GeneralSifrantService<any>;
+  companyFacilityCodebook: GeneralSifrantService<any>;
   farmersCodebook: CompanyUserCustomersByRoleService;
   collectorsCodebook: CompanyUserCustomersByRoleService;
   procActionsCodebook: CompanyProcessingActionsService;
@@ -203,6 +205,7 @@ export class CompanyDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.companyId = Number(localStorage.getItem('selectedUserCompany'));
     this.facilityCodebook = new CompanyCollectingFacilitiesService(this.facilityController, this.companyId);
+    this.companyFacilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
 
     this.companyControllerService.getCompanyUsingGET(this.companyId).subscribe(
       next => {
