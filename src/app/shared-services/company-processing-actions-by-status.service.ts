@@ -20,7 +20,6 @@ export class CompanyProcessingActionsByStatusService extends GeneralSifrantServi
   constructor(
     private processingActionController: ProcessingActionControllerService,
     private companyId: number,
-
     private types: ProcessingActionType[]
   ) {
     super();
@@ -43,7 +42,7 @@ export class CompanyProcessingActionsByStatusService extends GeneralSifrantServi
     const lkey = key ? key.toLocaleLowerCase() : null;
     return this.sifrant$.pipe(
       map((allChoices: PagedSearchResults<ApiProcessingAction>) => {
-        const filtered = allChoices.results.filter((pa: ApiProcessingAction) => this.types.some(type => type === pa.type));
+        allChoices.results.filter((pa: ApiProcessingAction) => this.types.some(type => type === pa.type));
         return {
           results: allChoices.results.filter((x: ApiProcessingAction) => lkey == null || x.name.toLocaleLowerCase().indexOf(lkey) >= 0),
           offset: allChoices.offset,
