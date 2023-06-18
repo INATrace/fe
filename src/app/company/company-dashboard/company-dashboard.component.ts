@@ -20,6 +20,10 @@ import { CompanyCollectingFacilitiesService } from '../../shared-services/compan
 import { GeneralSifrantService } from '../../shared-services/general-sifrant.service';
 import { ApiProcessingAction } from '../../../api/model/apiProcessingAction';
 import {CompanyFacilitiesService} from '../../shared-services/company-facilities.service';
+import {
+  CompanyProcessingActionsByStatusService
+} from '../../shared-services/company-processing-actions-by-status.service';
+import {ProcessingActionType} from '../../../shared/types';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -32,7 +36,7 @@ export class CompanyDashboardComponent implements OnInit {
   companyFacilityCodebook: GeneralSifrantService<any>;
   farmersCodebook: CompanyUserCustomersByRoleService;
   collectorsCodebook: CompanyUserCustomersByRoleService;
-  procActionsCodebook: CompanyProcessingActionsService;
+  procActionsCodebook: CompanyProcessingActionsByStatusService;
 
   constructor(
     private fb: FormBuilder,
@@ -231,7 +235,7 @@ export class CompanyDashboardComponent implements OnInit {
     this.collectorsCodebook = new CompanyUserCustomersByRoleService(this.companyControllerService, this.companyId, 'COLLECTOR');
 
     this.procActionsCodebook =
-      new CompanyProcessingActionsService(this.procActionController, this.companyId);
+      new CompanyProcessingActionsByStatusService(this.procActionController, this.companyId, ['PROCESSING', 'FINAL_PROCESSING']);
 
     this.procActionController.listProcessingActionsByCompanyUsingGETByMap({
       limit: 1000,
@@ -239,7 +243,7 @@ export class CompanyDashboardComponent implements OnInit {
       id: this.companyId
     }).subscribe(next => {
       if (next?.data) {
-        this.processingActions = next.data.items;
+        this.processingActions = next.data.items.filter(pa => ['PROCESSING', 'FINAL_PROCESSING'].some(type => type === pa.type))
         setTimeout(() => {
           this.processingPerformanceForm.get('process')?.setValue(this.processingActions[0]);
           this.reloadProcessingFields(this.processingActions[0]);
@@ -395,13 +399,16 @@ export class CompanyDashboardComponent implements OnInit {
             ratioData.push(total.ratio);
           });
 
+        // if larger label use only value
+        const yAxisLabel = (next.data.measureUnitType.label.length < 5) ? next.data.measureUnitType.label : '';
+
         this.processingPerformanceMergeOptions = {
           xAxis: {
             data: labelData
           },
           yAxis: [{
             axisLabel: {
-              formatter: `{value} ${next.data.measureUnitType.label}`
+              formatter: `{value} ${yAxisLabel}`
             }
           }],
           series: [{
