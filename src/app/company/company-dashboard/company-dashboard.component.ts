@@ -213,7 +213,7 @@ export class CompanyDashboardComponent implements OnInit {
             vchain => {
               if (vchain?.data?.measureUnitTypes) {
                 vchain.data.measureUnitTypes.forEach(unitType => {
-                  if (!this.measureUnitTypes.some(ut => ut.id === unitType.id)) {
+                  if (!this.measureUnitTypes.some(ut => ut?.id === unitType?.id)) {
                     this.measureUnitTypes.push(unitType);
                   }
                 });
@@ -238,7 +238,7 @@ export class CompanyDashboardComponent implements OnInit {
       if (next?.data) {
         this.processingActions = next.data.items;
         setTimeout(() => {
-          this.processingPerformanceForm.get('process').setValue(this.processingActions[0]);
+          this.processingPerformanceForm.get('process')?.setValue(this.processingActions[0]);
           this.reloadProcessingFields(this.processingActions[0]);
         });
       }
@@ -249,16 +249,18 @@ export class CompanyDashboardComponent implements OnInit {
       offset: 0,
       id: this.companyId
     }).subscribe(next => {
-      this.facilities.push(next.data.items[0]);
-      this.refreshSemiProducts();
-      this.semiProductModelChoice = next.data.items[0].facilitySemiProductList[0]?.id;
-      setTimeout(() => {
-        this.semiProductSelected(next.data.items[0].facilitySemiProductList[0]?.id?.toString());
-      });
+      if (next?.data?.items[0]) {
+        this.facilities.push(next.data.items[0]);
+        this.refreshSemiProducts();
+        this.semiProductModelChoice = next.data.items[0].facilitySemiProductList[0]?.id;
+        setTimeout(() => {
+          this.semiProductSelected(next.data.items[0].facilitySemiProductList[0]?.id?.toString());
+        });
+      }
     });
 
     // Init interval for delivery graph
-    let diff = Math.abs(this.deliveriesForm.get('from').value.getTime() - this.deliveriesForm.get('to').value.getTime());
+    let diff = Math.abs(this.deliveriesForm.get('from')?.value?.getTime() - this.deliveriesForm.get('to')?.value?.getTime());
     let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     if (diffDays < 7) {
       this.deliveriesForm.get('timeUnitGraphType').setValue('DAY');
@@ -271,7 +273,7 @@ export class CompanyDashboardComponent implements OnInit {
     }
     
     // Init interval for processing performance
-    diff = Math.abs(this.processingPerformanceForm.get('from').value.getTime() - this.processingPerformanceForm.get('to').value.getTime());
+    diff = Math.abs(this.processingPerformanceForm.get('from')?.value?.getTime() - this.processingPerformanceForm.get('to')?.value?.getTime());
     diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     if (diffDays < 7) {
       this.processingPerformanceForm.get('timeUnitGraphType').setValue('DAY');
@@ -303,9 +305,9 @@ export class CompanyDashboardComponent implements OnInit {
           priceDeterminedLater: productInDepositFilter,
           productionDateStart: dateISOString(this.deliveriesForm.get('from')?.value),
           productionDateEnd: dateISOString(this.deliveriesForm.get('to')?.value),
-          aggregationType: this.deliveriesForm.get('timeUnitGraphType').value
+          aggregationType: this.deliveriesForm.get('timeUnitGraphType')?.value
         }).subscribe(next => {
-          if (next.data) {
+          if (next?.data) {
             const labelData = [];
             const graphData = [];
 
@@ -371,10 +373,10 @@ export class CompanyDashboardComponent implements OnInit {
       processActionId: this.processingPerformanceForm.get('process')?.value?.id,
       dateStart: dateISOString(this.processingPerformanceForm.get('from')?.value),
       dateEnd: dateISOString(this.processingPerformanceForm.get('to')?.value),
-      aggregationType: this.processingPerformanceForm.get('timeUnitGraphType').value,
+      aggregationType: this.processingPerformanceForm.get('timeUnitGraphType')?.value,
       evidenceFields: efs
       }).subscribe(next => {
-      if (next.data) {
+      if (next?.data) {
         const labelData = [];
         const inputQuantityData = [];
         const outputQuantityData = [];
@@ -468,20 +470,20 @@ export class CompanyDashboardComponent implements OnInit {
 
   semiProductSelected(id: string) {
     if (id) {
-      this.deliveriesForm.get('semiProduct').setValue({ id });
+      this.deliveriesForm.get('semiProduct')?.setValue({ id });
     } else {
-      this.deliveriesForm.get('semiProduct').setValue(null);
+      this.deliveriesForm.get('semiProduct')?.setValue(null);
     }
 
-    this.deliveriesForm.get('semiProduct').markAsDirty();
-    this.deliveriesForm.get('semiProduct').updateValueAndValidity();
+    this.deliveriesForm.get('semiProduct')?.markAsDirty();
+    this.deliveriesForm.get('semiProduct')?.updateValueAndValidity();
 
     setTimeout(() => this.refreshDeliveriesData());
   }
 
   setDeliveryInterval(interval: string) {
 
-    const previousVal = this.deliveriesForm.get('timeUnitGraphType').value;
+    const previousVal = this.deliveriesForm.get('timeUnitGraphType')?.value;
     let newVal;
 
     if (interval === 'day') {
@@ -495,14 +497,14 @@ export class CompanyDashboardComponent implements OnInit {
     }
 
     if (previousVal !== newVal) {
-      this.deliveriesForm.get('timeUnitGraphType').setValue(newVal);
+      this.deliveriesForm.get('timeUnitGraphType')?.setValue(newVal);
       this.refreshDeliveriesData();
     }
   }
 
   setProcessingPerformanceInterval(interval: string) {
 
-    const previousVal = this.processingPerformanceForm.get('timeUnitGraphType').value;
+    const previousVal = this.processingPerformanceForm.get('timeUnitGraphType')?.value;
     let newVal;
 
     if (interval === 'day') {
@@ -516,7 +518,7 @@ export class CompanyDashboardComponent implements OnInit {
     }
 
     if (previousVal !== newVal) {
-      this.processingPerformanceForm.get('timeUnitGraphType').setValue(newVal);
+      this.processingPerformanceForm.get('timeUnitGraphType')?.setValue(newVal);
       this.refreshProcessingPerformanceData();
     }
   }
@@ -528,13 +530,13 @@ export class CompanyDashboardComponent implements OnInit {
     }
     if (this.facilities.some(s => s.id === facility.id)) {
       // same element selected. refresh the input element, but do not update the list
-      setTimeout(() => this.deliveriesForm.get('facility').setValue(null));
+      setTimeout(() => this.deliveriesForm.get('facility')?.setValue(null));
       return;
     }
     this.facilities.push(facility);
     this.refreshSemiProducts();
     this.refreshDeliveriesData();
-    setTimeout(() => this.deliveriesForm.get('facility').setValue(null));
+    setTimeout(() => this.deliveriesForm.get('facility')?.setValue(null));
   }
 
   deleteFacility(facility: ApiFacility, idx: number) {
@@ -547,7 +549,7 @@ export class CompanyDashboardComponent implements OnInit {
     this.semiProductOptions = [];
 
     this.facilities.forEach(f => {
-      if (f.facilitySemiProductList) {
+      if (f?.facilitySemiProductList) {
         f.facilitySemiProductList.forEach((sp => {
           if (!this.semiProductOptions.some(el => el.id === sp.id)) {
             this.semiProductOptions.push(sp);
@@ -576,7 +578,7 @@ export class CompanyDashboardComponent implements OnInit {
       priceDeterminedLater: productInDepositFilter,
       productionDateStart: dateISOString(this.deliveriesForm.get('from')?.value),
       productionDateEnd: dateISOString(this.deliveriesForm.get('to')?.value),
-      aggregationType: this.deliveriesForm.get('timeUnitGraphType').value,
+      aggregationType: this.deliveriesForm.get('timeUnitGraphType')?.value,
       exportType
     }).subscribe(next => {
       if (exportType === 'CSV') {
@@ -633,7 +635,7 @@ export class CompanyDashboardComponent implements OnInit {
           processActionId: this.processingPerformanceForm.get('process')?.value?.id,
           dateStart: dateISOString(this.processingPerformanceForm.get('from')?.value),
           dateEnd: dateISOString(this.processingPerformanceForm.get('to')?.value),
-          aggregationType: this.processingPerformanceForm.get('timeUnitGraphType').value,
+          aggregationType: this.processingPerformanceForm.get('timeUnitGraphType')?.value,
           evidenceFields: efs,
           exportType
         }).subscribe(next => {
@@ -660,7 +662,7 @@ export class CompanyDashboardComponent implements OnInit {
 
       const foundProcAction = this.processingActions.find(pa => pa.id === procAction.id);
       if (foundProcAction) {
-        foundProcAction.requiredEvidenceFields.forEach(evidenceField => {
+        foundProcAction.requiredEvidenceFields?.forEach(evidenceField => {
           if (!this.evidenceFields.some(ef => ef.fieldName === evidenceField.fieldName)) {
             this.evidenceFields.push(evidenceField);
             this.processingPerformanceForm.addControl(evidenceField.fieldName, this.fb.control(undefined));

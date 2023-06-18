@@ -26,7 +26,7 @@
                           label="Select date from"
                           i18n-label="@@companyDashboardComponent.datepicker.deliveryDateFrom.label"
                           [form]="deliveriesForm.get('from')"
-                          [invalid]="deliveriesForm.get('from').invalid"
+                          [invalid]="deliveriesForm.get('from')?.invalid"
                           (onChange)="onFilterDateRangeChange()"
                           style="width: 150px; margin-left: 1rem;">
                       </app-datepicker>
@@ -34,7 +34,7 @@
                           label="Select date to"
                           i18n-label="@@companyDashboardComponent.datepicker.deliveryDateTo.label"
                           [form]="deliveriesForm.get('to')"
-                          [invalid]="deliveriesForm.get('to').invalid"
+                          [invalid]="deliveriesForm.get('to')?.invalid"
                           (onChange)="onFilterDateRangeChange()"
                           style="width: 150px; margin-left: 1rem;">
                       </app-datepicker>
@@ -99,14 +99,16 @@
                           (onChange)="addSelectedFacility($event)">
                       </single-choice>
 
-                      <div *ngFor="let sp of this.facilities; index as idx">
-                        <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
-                          <div>{{ sp.name }}</div>
-                          <div (click)="deleteFacility(sp, idx)" style="cursor: pointer;">
-                            <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                      <ng-container *ngIf="this.facilities">
+                        <div *ngFor="let sp of this.facilities; index as idx">
+                          <div class="d-flex justify-content-between user-line pl-3 pr-3 mb-1">
+                            <div>{{ sp?.name }}</div>
+                            <div (click)="deleteFacility(sp, idx)" style="cursor: pointer;">
+                              <fa-icon class="del-icon" [icon]="faTimes"></fa-icon>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </ng-container>
                     </div>
 
                     <div class="form-group">
@@ -271,19 +273,19 @@
                     <ng-container *ngIf="evidenceFields?.length > 0">
                       <ng-container *ngFor="let field of evidenceFields; let i=index;">
 
-                        <ng-container *ngIf="field.type === 'DATE'">
+                        <ng-container *ngIf="field?.type === 'DATE'">
                           <app-datepicker
-                              [label]="field.label"
-                              [form]="processingEvidenceInputField(field.fieldName)"
-                              [invalid]="processingEvidenceInputField(field.fieldName).invalid"
+                              [label]="field?.label"
+                              [form]="processingEvidenceInputField(field?.fieldName)"
+                              [invalid]="processingEvidenceInputField(field?.fieldName).invalid"
                               (onChange)="refreshProcessingPerformanceData()"
                               style="width: 150px;">
                           </app-datepicker>
                         </ng-container>
-                        <ng-container *ngIf="field.type !== 'DATE'">
+                        <ng-container *ngIf="field?.type !== 'DATE'">
                           <textinput
-                              [form]="processingEvidenceInputField(field.fieldName)"
-                              [label]="field.label"
+                              [form]="processingEvidenceInputField(field?.fieldName)"
+                              [label]="field?.label"
                               (onBlur)="refreshProcessingPerformanceData()"
                               style="width: 100%">
                           </textinput>
