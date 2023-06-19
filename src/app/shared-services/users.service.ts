@@ -52,13 +52,13 @@ export class UsersService extends GeneralSifrantService<ApiUserBase> {
             query: key
         };
 
-        this.authService.userProfile$.pipe(
+        return this.authService.userProfile$.pipe(
           take(1),
           switchMap(up => {
               if (up?.role === 'REGIONAL_ADMIN') {
                   return this.userController.regionalAdminListUsersUsingGETByMap(reqPars);
               } else {
-                  this.userController.adminListUsersUsingGETByMap(reqPars);
+                  return this.userController.adminListUsersUsingGETByMap(reqPars);
               }
           }),
           map((resp: ApiPaginatedResponseApiUserBase) => {
