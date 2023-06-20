@@ -3004,7 +3004,7 @@
     "collectorDetail.textinput.numberOfPlants.label": "Número de plantas",
     "collectorDetail.textinput.numberOfPlants.placeholder": "Introduzca número de plantas",
     "settingsPage.title.productTypes": "Tipo de productos",
-    "settingsPage.button.newProductType": "Añadir",
+    "settingsPage.button.newProductType": " + Añadir",
     "settingsPage.subTitle.listOfProductTypes": "Lista de tipos de productos",
     "settingsPage.subTitle.showingProductTypes": "Mostrar {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productTypeDetail.textinput.name.label": "Nombre",
