@@ -802,6 +802,7 @@
     "productLabelStockProcessingOrderDetail.section.supplierDetails": "Detalles de proveedor",
     "productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle": "Resultados de registración",
     "productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle": "Salidas de este proceso",
+    "productLabelStockProcessingOrderDetail.section.output.button.addAdditionalOutput": "Agregar salida adicional",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.label": "Nombre del lote interno",
     "productLabelStockProcessingOrderDetail.textinput.internalLotNumber.placeholder": "Ingrese el nombre de lote interno",
     "productLabelStockProcessingOrderDetail.outputsSemiProductForm.label": "Tipo de semiproducto",

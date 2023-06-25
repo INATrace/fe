@@ -1212,6 +1212,7 @@
     "productLabelStockProcessingOrderDetail.section.supplierDetails": "Angaben zum Lieferanten",
     "productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle": "Ergebnisse der Aufzeichnung",
     "productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle": "Ergebnisse dieser Verarbeitung",
+    "productLabelStockProcessingOrderDetail.section.output.button.addAdditionalOutput": "Fügen Sie zusätzliche Ausgabe hinzu",
     "gradeAbbreviation codebook.input.placehoder": "Qualität auswählen",
     "productLabelStockProcessingOrderDetail.textinput.comments.label": "Kommentare",
     "productLabelStockProcessingOrderDetail.processingActionForm.label": "Verarbeitung",

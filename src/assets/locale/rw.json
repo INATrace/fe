@@ -1213,6 +1213,7 @@
     "productLabelStockProcessingOrderDetail.section.supplierDetails": "Ubusobanuro bw'abajyana umusaruro",
     "productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle": "Ibyavuye mu byo mwabitse",
     "productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle": "Ibyavuye mu bitunganywa",
+    "productLabelStockProcessingOrderDetail.section.output.button.addAdditionalOutput": "Ongeraho ibisohoka",
     "gradeAbbreviation codebook.input.placehoder": "Hitamo garade",
     "productLabelStockProcessingOrderDetail.textinput.comments.label": "Ibitekerezo",
     "productLabelStockProcessingOrderDetail.processingActionForm.label": "Igikorwa cyo gutunganya",

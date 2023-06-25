@@ -1496,6 +1496,7 @@
     "productLabelStockProcessingOrderDetail.section.supplierDetails": "Supplier details",
     "productLabelStockProcessingOrderDetail.section.output.commonFieldsSectionTitle": "Results of recording",
     "productLabelStockProcessingOrderDetail.section.output.outputsSectionTitle": "Outputs of this processing",
+    "productLabelStockProcessingOrderDetail.section.output.button.addAdditionalOutput": "Add additional output",
     "productLabelStockProcessingOrderDetail.section.processingEvidence": "Processing evidence",
     "productLabelStockProcessingOrderDetail.footer.buttons": "{$START_TAG_BUTTON}{$START_TAG_SPAN}Cancel{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}{$START_TAG_BUTTON_1}{$START_TAG_SPAN}Save{$CLOSE_TAG_SPAN}{$CLOSE_TAG_BUTTON}",
     "productLabelStockProcessingOrderDetail.processingActionForm.error": "Action is required",
