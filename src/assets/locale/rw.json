@@ -3121,6 +3121,7 @@
     "companyDashboardComponent.singleChoice.processingFacility.label": "uruganda",
     "companyDashboardComponent.singleChoice.processingAction.label": "Gutunganya",
     "companyDashboardComponent.singleChoice.measuringUnit.placeholder": "Hitamo urugero rwo gupima",
-    "companyDashboardComponent.singleChoice.measuringUnit.nothing": "Nta kintu cyabonetse"
+    "companyDashboardComponent.singleChoice.measuringUnit.nothing": "Nta kintu cyabonetse",
+    "companyDashboardComponent.button.export": "Kohereza amakuru"
   }
 }

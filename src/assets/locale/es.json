@@ -3075,6 +3075,7 @@
     "companyDashboardComponent.singleChoice.processingAction.label": "Proceso",
     "companyDashboardComponent.singleChoice.measuringUnit.placeholder": "Seleccione unidad de medida",
     "companyDashboardComponent.singleChoice.measuringUnit.nothing": "No se encontró nada",
-    "companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm": "Introduzca el término de búsqueda"
+    "companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm": "Introduzca el término de búsqueda",
+    "companyDashboardComponent.button.export": "Exportar datos"
   }
 }

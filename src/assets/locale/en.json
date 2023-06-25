@@ -3117,6 +3117,7 @@
     "companyDashboardComponent.singleChoice.measuringUnit.placeholder": "Select measuring unit",
     "companyDashboardComponent.singleChoice.measuringUnit.nothing": "Nothing found",
     "companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm": "Enter search term",
+    "companyDashboardComponent.button.export": "Export data",
     "productLabelStockProcessingOrderDetail.textinput.quantity.min.error": "Input is too small. Stock order is already partially used."
   }
 }
