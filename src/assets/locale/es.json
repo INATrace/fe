@@ -3006,7 +3006,7 @@
     "settingsPage.title.productTypes": "Tipo de productos",
     "settingsPage.button.newProductType": " + Añadir",
     "settingsPage.subTitle.listOfProductTypes": "Lista de tipos de productos",
-    "settingsPage.subTitle.showingProductTypes": "Mostrar {$INTERPOLATION}/{$INTERPOLATION_1}",
+    "settingsPage.subTitle.showingProductTypes": "Mostrando {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productTypeDetail.textinput.name.label": "Nombre",
     "productTypeDetail.textinput.name.placeholder": "Introduzca nombre de tipo de producto",
     "productTypeDetail.textinput.name.error": "Se requiere nombre",
