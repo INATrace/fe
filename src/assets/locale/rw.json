@@ -75,7 +75,7 @@
     "register.error.somethingWentWrong": "Hari ikitagenze neza mu gihe cyo kwiyandikisha",
     "welcomeScreen.modal.title": "Ishyuka!",
     "welcomeScreen.modal.bodyTodal.subtitle": "Wiyandikije neza muri {$INTERPOLATION} kandi uri munzira yo kumenyekanisha gukorera mu mucyo kugirango inyungu ziva mu bucuruzi bwawe ziyongere!",
-    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}Intambwe ikurikira niyo kugenzura konti yawe. Kurikira amabwiriza wahawe muri imeri wakiriye kugirango utegure ibyangombwa bikenewe kugirango konti ndetse na kompanyi yawe bigenzurwe kubwiki gikorwa kugirango kigende neza bishoboka.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Ushobora gutangira gutegura umwirondoro wuzuza amakuru ajyanye n'umwirondoro wawe ku giti cyawe ndetse na kompanyi yawe. Ibi ni amakuru ateganijwe uzakenera konti yawe imaze kugenzurwa. Rero, kugirango inzira yihute, ushobora kubikora nonaha.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Niba kompanyi yawe isanzwe iri mo{$INTERPOLATION}, uzuza umwirondoro wawe bwite, noneho uraza kongerwa kuri kompanyi yawe. Ntukeneywe kongeraho kompanyi nshashya .{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Niba ukeneywe ubufasha, ushobora kutwandikira unyuze ku ruganiriro rwo gufasha (green button in the bottom right corner) cyangwa imeri{$START_LINK}info@af-coffee.com{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
+    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}Intambwe ikurikira niyo kugenzura konti yawe. Kurikira amabwiriza wahawe muri imeri wakiriye kugirango utegure ibyangombwa bikenewe kugirango konti ndetse na kompanyi yawe bigenzurwe kubwiki gikorwa kugirango kigende neza bishoboka.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Ushobora gutangira gutegura umwirondoro wuzuza amakuru ajyanye n'umwirondoro wawe ku giti cyawe ndetse na kompanyi yawe. Ibi ni amakuru ateganijwe uzakenera konti yawe imaze kugenzurwa. Rero, kugirango inzira yihute, ushobora kubikora nonaha.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Niba kompanyi yawe isanzwe iri mo{$INTERPOLATION}, uzuza umwirondoro wawe bwite, noneho uraza kongerwa kuri kompanyi yawe. Ntukeneywe kongeraho kompanyi nshashya .{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Niba ukeneywe ubufasha, ushobora kutwandikira unyuze ku ruganiriro rwo gufasha (green button in the bottom right corner) cyangwa imeri{$START_LINK}info@inatrace.org{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
     "welcomeScreen.modal.button.profile": "{$START_TAG_SPAN}Uzuza umwirondoro wawe{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.addCompany": "{$START_TAG_SPAN}Kongeraho kompanyi{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.editCompany": "{$START_TAG_SPAN}Hindura kompanyi$CLOSE_TAG_SPAN}",
@@ -3125,10 +3125,10 @@
     "companyDashboardComponent.singleChoice.measuringUnit.nothing": "Nta kintu cyabonetse",
     "companyDashboardComponent.button.export": "Kohereza amakuru",
     "companyDashboardComponent.graph.timeUnit.week": "Icyumweru",
-    "companyDashboardComponent.graph.labels.quantity": "Quantity",
-    "companyDashboardComponent.graph.labels.in": "in",
-    "companyDashboardComponent.graph.labels.input": "Input",
-    "companyDashboardComponent.graph.labels.output": "Output",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output ratio in %"
+    "companyDashboardComponent.graph.labels.quantity": "Ingano",
+    "companyDashboardComponent.graph.labels.in": "mu",
+    "companyDashboardComponent.graph.labels.input": "Ibyinjira",
+    "companyDashboardComponent.graph.labels.output": "Ibisohoka",
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Ijanisha ku byinjira n'ibisohoka (%)"
   }
 }

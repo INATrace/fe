@@ -75,7 +75,7 @@
     "register.error.somethingWentWrong": "Bei der Registrierung ist ein Fehler aufgetreten",
     "welcomeScreen.modal.title": "Herzlichen Glückwunsch!",
     "welcomeScreen.modal.bodyTodal.subtitle": "Sie haben sich erfolgreich bei {$INTERPOLATION} registriert und sind auf dem Weg, Transparenz für eine bessere Rendite Ihres Unternehmens einzuführen!",
-    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}Der nächste Schritt ist die Überprüfung Ihres Kontos. Befolgen Sie die Anweisungen in der E-Mail, die Sie erhalten haben, um die richtigen Unterlagen vorzubereiten, die zur Überprüfung Ihres Kontos und Ihres Unternehmens erforderlich sind, damit dieser Prozess so effizient wie möglich verläuft. {$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Sie können auch damit beginnen, ihr Profil zu vervollständigen, indem Sie ihr persönliches Nutzerprofil ausfüllen und Unternehmensinformationen hinzufügen. Um den Prozess zu beschleunigen, können Sie dies sofort tun.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Wenn Ihr Unternehmen bereits Teil von {$INTERPOLATION} ist, ergänzen Sie die Informationen in Ihrem persönlichen Profil und Sie werden Ihrem Unternehmen hinzugefügt. Sie müssen kein neues Unternehmen hinzufügen.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Wenn Sie Hilfe benötigen, können Sie uns über den Support Chat (grüner Button in der unteren rechten Ecke) oder per Email kontaktieren {$START_LINK}info@af-coffee.com{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
+    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}Der nächste Schritt ist die Überprüfung Ihres Kontos. Befolgen Sie die Anweisungen in der E-Mail, die Sie erhalten haben, um die richtigen Unterlagen vorzubereiten, die zur Überprüfung Ihres Kontos und Ihres Unternehmens erforderlich sind, damit dieser Prozess so effizient wie möglich verläuft. {$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Sie können auch damit beginnen, ihr Profil zu vervollständigen, indem Sie ihr persönliches Nutzerprofil ausfüllen und Unternehmensinformationen hinzufügen. Um den Prozess zu beschleunigen, können Sie dies sofort tun.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Wenn Ihr Unternehmen bereits Teil von {$INTERPOLATION} ist, ergänzen Sie die Informationen in Ihrem persönlichen Profil und Sie werden Ihrem Unternehmen hinzugefügt. Sie müssen kein neues Unternehmen hinzufügen.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Wenn Sie Hilfe benötigen, können Sie uns über den Support Chat (grüner Button in der unteren rechten Ecke) oder per Email kontaktieren {$START_LINK}info@inatrace.org{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
     "welcomeScreen.modal.button.profile": "{$START_TAG_SPAN}Vervollständigen Sie Ihr Profil{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.addCompany": "{$START_TAG_SPAN}Unternehmen hinzufügen{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.editCompany": "{$START_TAG_SPAN}Unternehmen bearbeiten{$CLOSE_TAG_SPAN}",
@@ -3128,10 +3128,10 @@
     "companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm": "Suchbegriff eingeben",
     "companyDashboardComponent.button.export": "Daten exportieren",
     "companyDashboardComponent.graph.timeUnit.week": "Woche",
-    "companyDashboardComponent.graph.labels.quantity": "Quantity",
+    "companyDashboardComponent.graph.labels.quantity": "Menge",
     "companyDashboardComponent.graph.labels.in": "in",
     "companyDashboardComponent.graph.labels.input": "Input",
     "companyDashboardComponent.graph.labels.output": "Output",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output ratio in %"
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output-Ratio in %"
   }
 }

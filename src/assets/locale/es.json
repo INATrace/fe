@@ -1591,7 +1591,7 @@
     "userDetail.confirmEmail.error.message": "No se puede confirmar el correo electrónico del usuario.",
     "welcomeScreen.modal.title": "¡Enhorabuena!",
     "welcomeScreen.modal.bodyTodal.subtitle": "Se ha registrado con éxito en {$INTERPOLATION} y está en camino de introducir la transparencia para mejorar el rendimiento de su negocio!",
-    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}El siguiente paso es verificar su cuenta. Siga las instrucciones del correo electrónico que ha recibido para preparar la documentación adecuada para verificar su cuenta y su empresa para que este proceso sea lo más eficiente posible {$CLOSE_PARAGRAPH}{$START_PARAGRAPH}También puede empezar a preparar su perfil completando la información de su perfil personal de usuario, así como añadiendo la información de la empresa. Esta será la información obligatoria que necesitará una vez que su cuenta sea verificada. Aun así, para agilizar el proceso, puede hacerlo ahora.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Si su empresa ya forma parte de {$INTERPOLATION}, complete la información de su perfil personal, y se añadirá a su empresa. No es necesario añadir una nueva empresa.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Si necesita ayuda, puede ponerse en contacto con nosotros a través del chat de soporte (botón verde en la esquina inferior derecha) o enviar un correo electrónico a{$START_LINK}info@af-coffee.com{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
+    "welcomeScreen.modal.bodyText": "{$START_PARAGRAPH}El siguiente paso es verificar su cuenta. Siga las instrucciones del correo electrónico que ha recibido para preparar la documentación adecuada para verificar su cuenta y su empresa para que este proceso sea lo más eficiente posible {$CLOSE_PARAGRAPH}{$START_PARAGRAPH}También puede empezar a preparar su perfil completando la información de su perfil personal de usuario, así como añadiendo la información de la empresa. Esta será la información obligatoria que necesitará una vez que su cuenta sea verificada. Aun así, para agilizar el proceso, puede hacerlo ahora.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Si su empresa ya forma parte de {$INTERPOLATION}, complete la información de su perfil personal, y se añadirá a su empresa. No es necesario añadir una nueva empresa.{$CLOSE_PARAGRAPH}{$START_PARAGRAPH}Si necesita ayuda, puede ponerse en contacto con nosotros a través del chat de soporte (botón verde en la esquina inferior derecha) o enviar un correo electrónico a{$START_LINK}info@inatrace.org{$CLOSE_LINK}.{$CLOSE_PARAGRAPH}",
     "welcomeScreen.modal.button.profile": "{$START_TAG_SPAN}Completar tu perfil{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.logout": "{$START_TAG_SPAN}Cerrar sesión{$CLOSE_TAG_SPAN}",
     "welcomeScreen.modal.button.addCompany": "{$START_TAG_SPAN}Añadir empresa{$CLOSE_TAG_SPAN}",
@@ -3079,10 +3079,10 @@
     "companyDashboardComponent.singleChoice.measuringUnit.enterSearchTerm": "Introduzca el término de búsqueda",
     "companyDashboardComponent.button.export": "Exportar datos",
     "companyDashboardComponent.graph.timeUnit.week": "Semana",
-    "companyDashboardComponent.graph.labels.quantity": "Quantity",
-    "companyDashboardComponent.graph.labels.in": "in",
-    "companyDashboardComponent.graph.labels.input": "Input",
-    "companyDashboardComponent.graph.labels.output": "Output",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output ratio in %"
+    "companyDashboardComponent.graph.labels.quantity": "Cantidad",
+    "companyDashboardComponent.graph.labels.in": "en",
+    "companyDashboardComponent.graph.labels.input": "Entrada",
+    "companyDashboardComponent.graph.labels.output": "Salida",
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Rendimiento en %"
   }
 }
