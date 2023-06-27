@@ -8,7 +8,6 @@ import { dateISOString } from '../../../shared/utils';
 import { CompanyUserCustomersByRoleService } from '../../shared-services/company-user-customers-by-role.service';
 import { CompanyControllerService } from '../../../api/api/companyController.service';
 import { ApiSemiProduct } from '../../../api/model/apiSemiProduct';
-import { CompanyProcessingActionsService } from '../../shared-services/company-processing-actions.service';
 import { ProcessingActionControllerService } from '../../../api/api/processingActionController.service';
 import { ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import {
@@ -23,7 +22,6 @@ import {CompanyFacilitiesService} from '../../shared-services/company-facilities
 import {
   CompanyProcessingActionsByStatusService
 } from '../../shared-services/company-processing-actions-by-status.service';
-import {ProcessingActionType} from '../../../shared/types';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -56,6 +54,14 @@ export class CompanyDashboardComponent implements OnInit {
 
   semiProductModelChoice = null;
 
+  graphTranslations = {
+    quantity: $localize `:@@companyDashboardComponent.graph.labels.quantity:Quantity`,
+    in:  $localize `:@@companyDashboardComponent.graph.labels.in:in`,
+    input: $localize `:@@companyDashboardComponent.graph.labels.input:Input`,
+    output: $localize `:@@companyDashboardComponent.graph.labels.output:Output`,
+    ratioInPercent:  $localize `:@@companyDashboardComponent.graph.labels.ratioInPercent:Input-Output ratio in %`
+  };
+
   companyValueChains = [];
 
   evidenceFields = [];
@@ -79,7 +85,7 @@ export class CompanyDashboardComponent implements OnInit {
     },
     yAxis: {},
     series: [{
-      name: 'Quantity (in kg)',
+      name: `${this.graphTranslations.quantity} (${this.graphTranslations.in} kg)`,
       type: 'bar',
       label: {
         show: true,
@@ -331,6 +337,7 @@ export class CompanyDashboardComponent implements OnInit {
                 data: labelData
               },
               series: [{
+                name: `${this.graphTranslations.quantity} (${this.graphTranslations.in} kg)`,
                 data: graphData
               }]
             };
@@ -412,12 +419,13 @@ export class CompanyDashboardComponent implements OnInit {
             }
           }],
           series: [{
-              name: `Input (in ${next.data.measureUnitType.label})`,
+              name: `${this.graphTranslations.input} (${this.graphTranslations.in} ${next.data.measureUnitType.label})`,
               data: inputQuantityData
             }, {
-              name: `Output (in ${next.data.measureUnitType.label})`,
+              name: `${this.graphTranslations.output} (${this.graphTranslations.in} ${next.data.measureUnitType.label})`,
               data: outputQuantityData
             }, {
+              name: `${this.graphTranslations.ratioInPercent}`,
               data: ratioData
             }]
         };
