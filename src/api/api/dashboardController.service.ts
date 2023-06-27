@@ -124,6 +124,10 @@ export namespace ExportDeliveriesDataUsingGET {
        * Production date range end
        */
       productionDateEnd?: string;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -177,7 +181,11 @@ export namespace ExportDeliveriesDataUsingGET {
       /**
        * Production date range end
        */
-      productionDateEnd = 'productionDateEnd'
+      productionDateEnd = 'productionDateEnd',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -212,6 +220,8 @@ export namespace ExportDeliveriesDataUsingGET {
       ],
       productionDateEnd: [
       ],
+      language: [
+      ],
     };
 }
 
@@ -227,6 +237,10 @@ export namespace ExportProcessingPerformanceDataUsingPOST {
        * processingPerformanceRequest
        */
       ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
@@ -236,7 +250,11 @@ export namespace ExportProcessingPerformanceDataUsingPOST {
       /**
        * processingPerformanceRequest
        */
-      ApiProcessingPerformanceRequest = 'ApiProcessingPerformanceRequest'
+      ApiProcessingPerformanceRequest = 'ApiProcessingPerformanceRequest',
+      /**
+       * language
+       */
+      language = 'language'
     }
 
     /**
@@ -244,6 +262,8 @@ export namespace ExportProcessingPerformanceDataUsingPOST {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof ExportProcessingPerformanceDataUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      language: [
+      ],
     };
 }
 
@@ -544,6 +564,7 @@ export class DashboardControllerService {
       map.priceDeterminedLater,
       map.productionDateStart,
       map.productionDateEnd,
+      map.language,
       observe,
       reportProgress
     );
@@ -565,13 +586,14 @@ export class DashboardControllerService {
      * @param priceDeterminedLater Price determined later
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesDataUsingGET.');
         }
@@ -623,6 +645,9 @@ export class DashboardControllerService {
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
@@ -685,6 +710,7 @@ export class DashboardControllerService {
     reportProgress: boolean = false): Observable<any> {
     return this.exportProcessingPerformanceDataUsingPOST(
       map.ApiProcessingPerformanceRequest,
+      map.language,
       observe,
       reportProgress
     );
@@ -695,18 +721,22 @@ export class DashboardControllerService {
      * Exports processing performance data to the requested format
      * 
      * @param ApiProcessingPerformanceRequest processingPerformanceRequest
+     * @param language language
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingPerformanceRequest === null || ApiProcessingPerformanceRequest === undefined) {
             throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling exportProcessingPerformanceDataUsingPOST.');
         }
 
         let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
