@@ -11,6 +11,8 @@ import { LanguageCodeHelper } from '../language-code-helper';
 })
 export class AuthService {
 
+  private readonly pathsToIgnoreRefresh = ['login', 'p-cd', 'q-cd'];
+
   private readonly userProfileSubject = new ReplaySubject<ApiUserGet | null>(1);
   userProfile$ = this.userProfileSubject.asObservable();
 
@@ -19,7 +21,16 @@ export class AuthService {
     private router: Router,
     private userController: UserControllerService
   ) {
-    setTimeout(() => this.refreshUserProfile());
+
+    let skipRefresh = false;
+    this.route.snapshot.children.forEach(routeChild => {
+      skipRefresh = routeChild.url.map(urlSegment => urlSegment.path).some(path => this.pathsToIgnoreRefresh.includes(path));
+      if (skipRefresh) { return; }
+    });
+
+    if (!skipRefresh) {
+      setTimeout(() => this.refreshUserProfile());
+    }
   }
 
   private async refreshUserProfile() {
