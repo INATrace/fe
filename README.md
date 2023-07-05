@@ -4,7 +4,7 @@ Open-source blockchain-based track and trace system for an agricultural commodit
 chain run. It provides transparency and creation of trust through
 digitalization of supply chains, connects every actor along the supply chain, assures quality and fair pricing.
 
-Project is composed from 3 parts:
+Project is composed of 3 parts:
 
 * [Angular frontend](https://github.com/INATrace/fe/tree/main)
 * [Java backend](https://github.com/INATrace/backend/tree/main)
@@ -67,13 +67,17 @@ This new major release includes new functionalities, refactorings, optimizations
    7. `relativeImageUploadUrlAllSizes`: `'/api/common/image'`
    8. `googleMapsApiKey`: have to obtain a key yourself
 
-6. Run Angular server with `npm run dev`
+6. If using Beybo integration, add the following configuration keys in `environment.ts` (the values should be obtained from Beyco):
+   1. `beycoAuthURL`: `url`
+   2. `beycoClientId`: `clientId`
+
+7. Run Angular server with `npm run dev`
 
 ## How it works
 
 ### Welcome page
 
-This is the welcome page at [inatrace.org](https://inatrace.org/). From here, existing users can login by clicking "Login" in the top right corner. New users can click on either one of the two "Get started" buttons to register. 
+This is the welcome page at [inatrace.org](https://inatrace.org/). From here, existing users can login by clicking "Login" in the top right corner. New users can click on "Read more" button, where they can get more info on how to get registered. 
 
 ![INAtrace welcome](docs/images/inatrace_welcome.png)
 
@@ -91,10 +95,9 @@ This is the home page. In the left sidebar from top to bottom, we have the follo
 - Home
 - Company
 - Products
-- Settings (Admin only)
+- Settings (System admin and Regional admin only)
 
-The current user's products are displayed in the center, along with quick access links to stock, orders, customers, farmers and collectors.
-
+The current user's products are displayed in the center, along with quick access links to stock, orders, customers, farmers, collectors and dashboard. Collectors quick access is shown only if the current user company has facilities that work with collectors. Customers quick access is shown only if the current user company has "Buyer" role in any Product. 
 In the top right corner, an expandable menu contains quick links, user profile settings and a logout button.
 
 If the user has multiple companies, an active company can be selected in the "User profile" section.
@@ -133,7 +136,7 @@ Stakeholders are companies participating in the production of the final product.
 
 #### Final products
 
-Final products are retail products for sale to end customers.
+Final products are retail products for sale to the end customers.
 
 ![Product_final_products](docs/images/inatrace_product_final_product.png)
 
@@ -168,19 +171,20 @@ The following values can be customized:
 
 ### Companies
 
-The currently active company is displayed when opening the company tab. "Purchases" tab of "My stock" is opened by default.
+The currently active company is displayed when opening the company tab. "Deliveries" tab of "My stock" is opened by default.
 
-#### Purchases
+#### Deliveries
 
-Shows purchases of products from farmers and collectors. By selecting a facility, new purchases can be added by clicking "Add purchase" or "Add bulk purchase".
+Shows deliveries of semi-products from farmers and collectors. By selecting a facility, new deliveries can be recorded by clicking "Add delivery" or "Add bulk delivery".
 
-![Company_purchases](docs/images/inatrace_company_purchases.png)
+![Company_purchases](docs/images/inatrace_company_deliveries.png)
 
 #### Processing
 
 This is where processing actions are recorded e.g. roasting green coffee beans to make roasted coffee beans. Input and output items and quantity are defined and processing evidence can be added.
 
 ![Company_processing](docs/images/inatrace_company_processing_action.png)
+![Company_processing](docs/images/inatrace_company_processing_action_quantities.png)
 
 #### Payments
 
@@ -192,7 +196,22 @@ On this tab payments to farmers and collectors are recorded.
 
 Here, farmers and collectors with their personal and banking details are recorded. For each farmer and collector there is also an aggregation of past payments. Each person has a unique QR code.
 
-![Company_farmers_collectors](docs/images/inatrace_farmer.png)
+![Company_farmers_collectors](docs/images/inatrace_farmer_profile_1.png)
+![Company_farmers_collectors](docs/images/inatrace_farmer_profile_2.png)
+
+### Dashboard
+
+The Dashboard contains graphical representation of selected Company data. Currently, there is support for display the Deliveries for selected time frame and displaying processing performance for selected Processing action and time frame.
+
+#### Deliveries
+
+![INAtrace_user_profile](docs/images/inatrace_dashboard_deliveries.png)
+
+#### Processing performance
+
+![INAtrace_user_profile](docs/images/inatrace_processing_performance.png)
+
+For every graphical representation section, the user can export the data for the selected parameters in either Excel, PDF or CSV format. 
 
 ### Settings
 
@@ -202,11 +221,11 @@ This section is dedicated to system settings. Settings are accessible by clickin
 
 Here, new companies can be added and existing ones can be edited.
 
-![INAtrace company](docs/images/inatrace_settings_companies.png)
+![INATrace company](docs/images/inatrace_settings_companies.png)
 
 #### Users
 
-This is the list of system users. To show all users, the "My users" filter needs to be deactivated. Users can be edited, activated, deactivated and promoted or demoted out of the admin role.
+This is the list of system users. To show all users, the "My users" filter needs to be deactivated. Users can be edited, activated, deactivated and promoted or demoted out of the System admin role. Users can also be set as a Regional admin, which can administer resources owned by the companies where the user is part of.
 
 Users who confirmed their emails can be activated by clicking "Activate". After that, they can login and start using the app.
 
@@ -214,19 +233,19 @@ Users who confirmed their emails can be activated by clicking "Activate". After 
 
 #### Settings
 
-Under the "Settings" page and "Types" tab, we find constants and system-level values like semi-products, facility types, measurement units, processing evidence types and processing evidence fields. Add, edit or remove any of these values to fit your use case.
+Under the "Settings" page and "Types" tab, we can find constants and system-level values like Semi-products, Facility types, Measurement units, Processing evidence types, Processing evidence fields and Product types. Add, edit or remove any of these values to fit your use case.
 
 ![INAtrace_settings](docs/images/inatrace_settings_types.png)
 
 #### Value chains
 
-Value chains are listed on this tab. From here, create a new or edit an existing value chain. Value chains contains facility types, measuring unit types and other constants added in the types settings. 
+Value chains are listed on this tab. From here, create a new or edit an existing value chain. Value chains contains Facility types, Measuring unit types and other constants added in the types settings.
 
 ![INAtrace_settings_value_chains](docs/images/inatrace_settings_value_chains_details.png)
 
 #### Currencies
 
-The system supports 168 different currencies, provided by [exchangeratesapi.io](https://exchangeratesapi.io/). To use a currency, an admin has to manualy activate it before it can be selected in currency lists.
+The system supports 168 different currencies, provided by [exchangeratesapi.io](https://exchangeratesapi.io/). To use a currency, a System or Regional admin has to manually activate it before it can be selected in currency lists.
 
 To search for a currency, click the "Search" button above the enabled or disabled list and type the ISO code or full name.  
 
