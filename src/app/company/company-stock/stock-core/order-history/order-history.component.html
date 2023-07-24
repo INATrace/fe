@@ -217,37 +217,6 @@
         </div>
 
         <div class="af-form-row">
-          <span i18n="@@orderHistoryView.history.legend">Legend:</span>
-          <span i18n="@@orderHistoryView.history.requiredPresent" class="required-present ml-1">required in process - present</span>,
-          <span i18n="@@orderHistoryView.history.requiredMissing" class="required-missing ml-1">required in process - missing</span>,
-          <span i18n="@@orderHistoryView.history.additionalDocument" class="non-required-present ml-1">additional document in process</span>,
-          <span i18n="@@orderHistoryView.history.requiredOnQuotePresent" class="ml-1">
-            <fa-icon
-              class="quote-required-present"
-              [icon]="faCheckCircle">
-            </fa-icon>
-            required on quote - present</span>,
-          <span i18n="@@orderHistoryView.history.requiredOnQuoteMissing" class="ml-1">
-            <fa-icon
-              class="quote-required-missing"
-              [icon]="faExclamationCircle">
-            </fa-icon>
-            required on quote - missing</span>,
-          <span i18n="@@orderHistoryView.history.requiredOnQuoteOneOfPresent" class="ml-1">
-            <span
-              class="quote-required-one-of quote-required-one-of-present ml-1">G1
-            </span>
-
-            one of required documents on quote in group G1 present</span>,
-          <span i18n="@@orderHistoryView.history.requiredOnQuoteOneOfMissing" class="ml-1">
-            <span
-              class="quote-required-one-of quote-required-one-of-missing ml-1">G1
-            </span>
-
-            all of required documents on quote in group G1 missing</span>
-        </div>
-
-        <div class="af-form-row">
           <div class="af-form-block--c6">
             <div>
               <h2 i18n="@@orderHistoryView.title.history">History</h2>
@@ -262,6 +231,8 @@
 
                     <ul>
                       <ng-container *ngFor="let targetStockOrder of getTargetStockOrders(historyItem)">
+
+                        <!-- SINGLE OUTPUTS -->
                         <li>
                           <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, targetStockOrder)"
                              (click)="goToOrderView(targetStockOrder)">
@@ -270,18 +241,37 @@
                           </a>
 
                           <ul>
-
-                            <!-- TODO: add fields and docs -->
-<!--                            <ng-container *ngFor="let field of agg.fields">-->
-<!--                              <li><app-field-or-doc-info [field]="field"></app-field-or-doc-info></li>-->
-<!--                            </ng-container>-->
-<!--                            <ng-container *ngFor="let doc of agg.documents">-->
-<!--                              <li><app-field-or-doc-info [document]="doc"></app-field-or-doc-info></li>-->
-<!--                            </ng-container>-->
+                            <ng-container *ngFor="let evidenceField of targetStockOrder.requiredEvidenceFieldValues">
+                              <li><app-field-or-doc-info [evidenceField]="evidenceField" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
+                            </ng-container>
                           </ul>
                         </li>
+
+                        <!-- TODO: handle grouped stock orders -->
+                        <!-- GROUPED OUTPUTS (ALL STOCK ORDERS IN A GROUP HAVE THE SAME PROCESSING EVIDENCE FIELD VALUES) -->
+<!--                        <li></li>-->
                       </ng-container>
                     </ul>
+
+                    <!-- SECTION FOR DISPLAYING REQUIRED PROCESSING EVIDENCE DOCUMENTS (VISIBLE ONLY WHEN THEY ARE PROVIDED) -->
+                    <ng-container *ngIf="historyItem.requiredEvidenceDocuments?.length > 0">
+                      <h6 class="af-timeline-box-evidence-doc-title">Processing evidence documents</h6>
+                      <ul>
+                        <ng-container *ngFor="let reqEvidenceDoc of historyItem.requiredEvidenceDocuments">
+                          <li><app-field-or-doc-info [evidenceDocument]="reqEvidenceDoc" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
+                        </ng-container>
+                      </ul>
+                    </ng-container>
+
+                    <!-- SECTION FOR DISPLAYING ADDITIONAL EVIDENCE DOCUMENTS (VISIBLE ONLY WHEN THEY ARE PROVIDED) -->
+                    <ng-container *ngIf="historyItem.otherEvidenceDocuments?.length > 0">
+                      <h6 class="af-timeline-box-evidence-doc-title">Other evidence documents</h6>
+                      <ul>
+                        <ng-container *ngFor="let otherEvidenceDoc of historyItem.otherEvidenceDocuments">
+                          <li><app-field-or-doc-info [evidenceDocument]="otherEvidenceDoc" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
+                        </ng-container>
+                      </ul>
+                    </ng-container>
 
                     <div class="af-timeline-bullet"></div>
                   </div>

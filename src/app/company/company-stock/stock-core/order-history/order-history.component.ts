@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
-import { faCheckCircle, faExclamationCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
@@ -22,28 +22,22 @@ export class OrderHistoryComponent implements OnInit {
 
   qrCodeSize = 150;
 
-  faCheckCircle = faCheckCircle;
-  faExclamationCircle = faExclamationCircle;
   faTimes = faTimes;
 
   reloadPing$ = new BehaviorSubject<boolean>(false);
 
   productId = this.route.snapshot.params.id;
 
-  history$: Observable<ApiStockOrderHistory> = combineLatest(
-    this.reloadPing$,
-    this.route.params,
-    (ping: boolean, params: any ) =>
-    {
-      return params;
-    })
+  history$: Observable<ApiStockOrderHistory> = combineLatest([this.reloadPing$, this.route.params])
     .pipe(
       tap(() => this.globalEventsManager.showLoading(true)),
       switchMap(val => {
-        return this.stockOrderService.getStockOrderAggregatedHistoryUsingGET(val.stockOrderId);
+        return this.stockOrderService.getStockOrderAggregatedHistoryUsingGET(val[1].stockOrderId);
       }),
       map(val => {
         if (val && val.status === 'OK') {
+
+          // TODO: process target stock orders (repacked stock orders and transfer order should be grouped)
           return val.data;
         }
         return null;

@@ -16,6 +16,7 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { QRCodeModule } from 'angular2-qrcode';
 import { GroupStockUnitListComponent } from './group-stock-unit-list/group-stock-unit-list.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { FieldOrDocInfoComponent } from './order-history/field-or-doc-info/field-or-doc-info.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     StockBulkDeliveryDetailsComponent,
     AdditionalProofItemComponent,
     OrderHistoryComponent,
-    GroupStockUnitListComponent
+    GroupStockUnitListComponent,
+    FieldOrDocInfoComponent
   ],
     imports: [
         CommonModule,
