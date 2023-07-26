@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ApiTransaction } from '../../../../../api/model/apiTransaction';
 import { ApiStockOrder } from '../../../../../api/model/apiStockOrder';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { StockOrderType } from '../../../../../shared/types';
 import { ApiStockOrderHistory } from '../../../../../api/model/apiStockOrderHistory';
 import { ApiStockOrderHistoryTimelineItem } from '../../../../../api/model/apiStockOrderHistoryTimelineItem';
+import { ApiFacility } from '../../../../../api/model/apiFacility';
+import { ApiMeasureUnitType } from '../../../../../api/model/apiMeasureUnitType';
+
+interface GroupedStockOrders {
+  processingDate: string;
+  facility: ApiFacility;
+  internalLotNumber: string;
+  stockOrders: ApiStockOrder[];
+  summedUpQuantity: number;
+  measureUnitType: ApiMeasureUnitType;
+}
 
 @Component({
   selector: 'app-order-history',
@@ -37,8 +46,55 @@ export class OrderHistoryComponent implements OnInit {
       map(val => {
         if (val && val.status === 'OK') {
 
-          // TODO: process target stock orders (repacked stock orders and transfer order should be grouped)
-          return val.data;
+          const stockOrderHistory = val.data;
+
+          stockOrderHistory.timelineItems.forEach(timelineItem => {
+            if (timelineItem.processingOrder) {
+
+              const groups = new Map<string, ApiStockOrder[]>();
+              for (const tso of timelineItem.processingOrder.targetStockOrders) {
+                if (tso.sacNumber != null) {
+
+                  // If sac number is present, parse the internal LOT number without the sac number part
+                  const lastSlashIndex = tso.internalLotNumber.lastIndexOf('/');
+                  if (lastSlashIndex !== -1) {
+
+                    const internalLOTNumber = tso.internalLotNumber.substring(0, lastSlashIndex);
+                    if (groups.has(internalLOTNumber)) {
+                      groups.get(internalLOTNumber).push(tso);
+                    } else {
+                      groups.set(internalLOTNumber, [tso]);
+                    }
+                  }
+                }
+              }
+
+              // Add the grouped stock orders into the Stock order history
+              const groupsArray: GroupedStockOrders[] = [];
+              groups.forEach((stockOrders, internalLOTNumber) => {
+                const stockOrdersGroup: GroupedStockOrders = {
+                  stockOrders,
+                  facility: stockOrders[0].facility,
+                  internalLotNumber: internalLOTNumber,
+                  processingDate: stockOrders[0].productionDate,
+                  summedUpQuantity: stockOrders.map(so => so.totalQuantity).reduce((previousValue, currentValue) => {
+                    return (previousValue ?? 0) + currentValue;
+                  }),
+                  measureUnitType: stockOrders[0].measureUnitType
+                };
+                groupsArray.push(stockOrdersGroup);
+
+                // Remove the stock orders from the original target stock order array
+                stockOrders.forEach(so => {
+                  const removeIndex = timelineItem.processingOrder.targetStockOrders.findIndex(tso => tso.id === so.id);
+                  timelineItem.processingOrder.targetStockOrders.splice(removeIndex, 1);
+                });
+              });
+              timelineItem.processingOrder['stockOrderGroups'] = groupsArray;
+            }
+          });
+
+          return stockOrderHistory;
         }
         return null;
       }),
@@ -50,13 +106,15 @@ export class OrderHistoryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private stockOrderService: StockOrderControllerService,
-    private processingOrderService: ProcessingOrderControllerService,
-    private modalService: NgbModalImproved,
     private globalEventsManager: GlobalEventManagerService
   ) { }
 
   getTargetStockOrders(timelineItem: ApiStockOrderHistoryTimelineItem) {
     return timelineItem.purchaseOrders?.length > 0 ? timelineItem.purchaseOrders : timelineItem.processingOrder.targetStockOrders;
+  }
+
+  getStockOrderGroups(timelineItem: ApiStockOrderHistoryTimelineItem): GroupedStockOrders[] {
+    return timelineItem.processingOrder ? timelineItem.processingOrder['stockOrderGroups'] : [];
   }
 
   isRoot(root: ApiStockOrder, one: ApiStockOrder) {

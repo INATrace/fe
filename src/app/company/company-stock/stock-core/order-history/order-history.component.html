@@ -230,9 +230,9 @@
                     </h5>
 
                     <ul>
-                      <ng-container *ngFor="let targetStockOrder of getTargetStockOrders(historyItem)">
 
-                        <!-- SINGLE OUTPUTS -->
+                      <!-- SINGLE OUTPUTS -->
+                      <ng-container *ngFor="let targetStockOrder of getTargetStockOrders(historyItem)">
                         <li>
                           <a class="ab-edit-link" [class.root-order]="isRoot(stockOrder, targetStockOrder)"
                              (click)="goToOrderView(targetStockOrder)">
@@ -246,10 +246,22 @@
                             </ng-container>
                           </ul>
                         </li>
+                      </ng-container>
 
-                        <!-- TODO: handle grouped stock orders -->
-                        <!-- GROUPED OUTPUTS (ALL STOCK ORDERS IN A GROUP HAVE THE SAME PROCESSING EVIDENCE FIELD VALUES) -->
-<!--                        <li></li>-->
+                      <!-- GROUPED OUTPUTS (ALL STOCK ORDERS IN A GROUP HAVE THE SAME PROCESSING EVIDENCE FIELD VALUES) -->
+                      <ng-container *ngFor="let stockOrderGroup of getStockOrderGroups(historyItem)">
+                        <li>
+                          <a class="ab-edit-link" (click)="goToOrderView(stockOrderGroup.stockOrders[0])">
+                            <span class="mr-2">{{ stockOrderGroup.processingDate | date: 'yyyy-MM-dd' }} @ {{ stockOrderGroup.facility?.name }} : {{ stockOrderGroup.internalLotNumber }}</span>
+                            (<span>Number of bags:</span><span> {{ stockOrderGroup.stockOrders.length }} - {{ stockOrderGroup.summedUpQuantity }} {{ stockOrderGroup.measureUnitType?.label }}</span>)
+                          </a>
+
+                          <ul>
+                            <ng-container *ngFor="let evidenceField of stockOrderGroup.stockOrders[0].requiredEvidenceFieldValues">
+                              <li><app-field-or-doc-info [evidenceField]="evidenceField" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
+                            </ng-container>
+                          </ul>
+                        </li>
                       </ng-container>
                     </ul>
 
