@@ -8,6 +8,7 @@
             <tr *ngFor="let payment of payments.items; index as i">
                 <td *ngIf="!sortOptions[0].hide" scope="row" [attr.data-label]="sortOptions[0].name">
                     <checkbox-input *ngIf="this.currentData[i].paymentStatus === paymentStatusEnum.UNCONFIRMED"
+                                    inTable="true"
                                     (onClick)="cbSelected(payment, i)"
                                     [checked]="this.currentData[i].selected && this.currentData[i].paymentStatus === paymentStatusEnum.UNCONFIRMED">
                     </checkbox-input>

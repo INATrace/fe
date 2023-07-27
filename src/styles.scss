@@ -2556,19 +2556,22 @@ $chechboxSize-1: 1rem !important;
     }
     .checkbox,
     input[type="checkbox"] {
-      // -webkit-appearance: none;
-      border: 1px solid #ccc !important;
-      // border-radius: 5px;
-      // display: inline-block;
-      // position: relative;
-      // vertical-align: middle;
+      border: 1px solid $theme-primary !important;
       width: $chechboxSize-1; // was 1.5rem before
       min-width: $chechboxSize-1;
       height: $chechboxSize-1;
       min-height: $chechboxSize-1;
-      // text-align: center;
-      // line-height: 0.7rem;
       margin-top: 0;
+
+      &:checked::after {
+        position: absolute;
+        font-size: 0.75rem;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-top: 1px;
+      }
     }
   }
   // checkbox in th needs some love
