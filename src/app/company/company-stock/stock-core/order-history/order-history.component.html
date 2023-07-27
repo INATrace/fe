@@ -253,7 +253,7 @@
                         <li>
                           <a class="ab-edit-link" (click)="goToOrderView(stockOrderGroup.stockOrders[0])">
                             <span class="mr-2">{{ stockOrderGroup.processingDate | date: 'yyyy-MM-dd' }} @ {{ stockOrderGroup.facility?.name }} : {{ stockOrderGroup.internalLotNumber }}</span>
-                            (<span>Number of bags:</span><span> {{ stockOrderGroup.stockOrders.length }} - {{ stockOrderGroup.summedUpQuantity }} {{ stockOrderGroup.measureUnitType?.label }}</span>)
+                            (<span i18n="@@orderHistoryView.history.timelineItem.numberOfSacs.label">Number of sacs:</span><span> {{ stockOrderGroup.stockOrders.length }} - {{ stockOrderGroup.summedUpQuantity }} {{ stockOrderGroup.measureUnitType?.label }}</span>)
                           </a>
 
                           <ul>
@@ -267,7 +267,7 @@
 
                     <!-- SECTION FOR DISPLAYING REQUIRED PROCESSING EVIDENCE DOCUMENTS (VISIBLE ONLY WHEN THEY ARE PROVIDED) -->
                     <ng-container *ngIf="historyItem.requiredEvidenceDocuments?.length > 0">
-                      <h6 class="af-timeline-box-evidence-doc-title">Processing evidence documents</h6>
+                      <h6 class="af-timeline-box-evidence-doc-title" i18n="@@orderHistoryView.history.timelineItem.procEvidenceDocuments.title">Processing evidence documents</h6>
                       <ul>
                         <ng-container *ngFor="let reqEvidenceDoc of historyItem.requiredEvidenceDocuments">
                           <li><app-field-or-doc-info [evidenceDocument]="reqEvidenceDoc" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
@@ -277,7 +277,7 @@
 
                     <!-- SECTION FOR DISPLAYING ADDITIONAL EVIDENCE DOCUMENTS (VISIBLE ONLY WHEN THEY ARE PROVIDED) -->
                     <ng-container *ngIf="historyItem.otherEvidenceDocuments?.length > 0">
-                      <h6 class="af-timeline-box-evidence-doc-title">Other evidence documents</h6>
+                      <h6 class="af-timeline-box-evidence-doc-title" i18n="@@orderHistoryView.history.timelineItem.otherEvidenceDocuments.title">Other evidence documents</h6>
                       <ul>
                         <ng-container *ngFor="let otherEvidenceDoc of historyItem.otherEvidenceDocuments">
                           <li><app-field-or-doc-info [evidenceDocument]="otherEvidenceDoc" [processingAction]="historyItem.processingOrder.processingAction"></app-field-or-doc-info></li>
