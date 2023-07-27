@@ -13,10 +13,10 @@
       </div>
 
       <div class="af-form-row af-form-row--nomargin">
-        <div class="af-form-block--c6">
+        <div class="af-form-block--c8">
           <div class="af-form-element">
-            <div class="af-row">
-              <div class="af-c12">
+            <div class="row">
+              <div class="col-12">
                 <single-choice *ngIf="facilityCodebook"
                                label="Select facility"
                                i18n-label="@@productLabelStockPurchaseOrdersModal.singleChoice.facilityForStockOrder"
@@ -27,15 +27,17 @@
                 </single-choice>
               </div>
             </div>
-            <div class="af-row">
-              <div class="af-c12">
-                <button class="btn btn-solid round btn-table-new content-element--btn"
+            <div class="row">
+              <div class="col-12 col-xl-6 mb-2 mb-xl-0">
+                <button class="btn btn-solid round btn-table-new content-element--btn w-100"
                         i18n="@@productLabelStock.button.newPurchaseOrders"
                         (click)="newPurchaseOrder()"
                         [disabled]="selectedFacilityId == null">
                   <span>+ Add purchase</span>
                 </button>
-                <button class="ml-4 btn btn-solid round btn-table-new content-element--btn"
+              </div>
+              <div class="col-12 col-xl-6">
+                <button class="btn btn-solid round btn-table-new content-element--btn w-100"
                         i18n="@@productLabelStock.button.newPurchaseOrdersBulk"
                         (click)="newPurchaseOrderBulk()"
                         [disabled]="selectedFacilityId == null">

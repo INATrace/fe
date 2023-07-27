@@ -2030,6 +2030,7 @@ tr:nth-child(odd) {
       margin-left: 0;
     }
   }
+
   &-block--c8 {
     @include make-col-ready();
 
@@ -2050,7 +2051,6 @@ tr:nth-child(odd) {
       margin-left: 0;
     }
   }
-
 
   // and this one is full with element, for those
   // extra long form lines
