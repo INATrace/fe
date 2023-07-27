@@ -10,48 +10,49 @@ import { uuidv4 } from 'src/shared/utils';
 export class CheckboxInputComponent implements OnInit {
 
     @Input()
-    form: FormControl = null
+    form: FormControl = null;
 
     @Input()
-    label: string = null
+    label: string = null;
 
     @Input()
     id: string = uuidv4();
 
     @Input()
-    labelSpacer: boolean = true;
+    labelSpacer = true;
 
     @Input()
-    checked: boolean = false
+    checked = false;
 
     @Input()
-    disabled: boolean = null
+    disabled: boolean = null;
 
     @Input()
-    invalid = false
+    invalid = false;
 
     @Input()
-    transparentBackgroud = false
+    transparentBackgroud = false;
 
-    @Output() onClick = new EventEmitter<any>();
-
-    @Input()
-    inTable = false
+    @Output()
+    onClick = new EventEmitter<any>();
 
     @Input()
-    noBottomMargin = false
+    inTable = false;
+
+    @Input()
+    noBottomMargin = false;
 
     @ViewChildren('inputfield') inputfield;
 
     isDisabled() {
         if (this.disabled != null) {
-            return this.disabled
+            return this.disabled;
         }
-        return this.form && this.form.enabled === false
+        return this.form && this.form.enabled === false;
     }
 
     onToggle($event) {
-        this.onClick.next($event)
+        this.onClick.next($event);
     }
 
     constructor() { }
@@ -60,8 +61,8 @@ export class CheckboxInputComponent implements OnInit {
     }
 
     isRequired() {
-        if(!this.form) {
-            return false
+        if (!this.form) {
+            return false;
         }
         if (!this.form.validator) {
             return false;

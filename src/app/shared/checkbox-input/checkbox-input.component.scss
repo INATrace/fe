@@ -3,17 +3,13 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
-// @import 'styles-basic.scss';
-
 $chechboxSize: 1.5rem;
 .checkbox {
   -webkit-appearance: none;
   border: 1px solid #CCC;
   border-radius: 5px;
-  // padding: 1rem;
   display: inline-block;
   position: relative;
-  // outline: none;
   vertical-align: middle;
   width: $chechboxSize;
   min-width: $chechboxSize;
@@ -26,7 +22,7 @@ $chechboxSize: 1.5rem;
 
 .checkbox:active,
 .checkbox:checked:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .checkbox:checked {
@@ -36,7 +32,7 @@ $chechboxSize: 1.5rem;
 }
 
 .checkbox:focus {
-  border-width: 3px !important;
+  box-shadow: 0 0 0 0.2rem $theme-primary-light;
 }
 
 .checkbox:checked:after {
@@ -45,12 +41,11 @@ $chechboxSize: 1.5rem;
   position: absolute;
   bottom: 0.2rem;
   left: 0.2rem;
-  // margin-bottom: 10px;
   color: white;
 }
 
 .checkbox-container {
-  flex: 1 1 0px;
+  flex: 1 1 0;
   display: flex;
   align-items: center;
 }
@@ -65,67 +60,6 @@ $chechboxInTableFontSize: 1rem;
 $chechboxInTableFontLineHeightSize: 1.5rem;
 $chechboxInTableActiveFontSize: 0.5rem;
 
-.checkbox-in-table {
-    -webkit-appearance: none;
-    border: 2px solid $primary;
-    // padding: 1rem;
-    display: inline-block;
-    position: relative;
-    // outline: none;
-    vertical-align: middle;
-    width: $chechboxInTableSize;
-    min-width: $chechboxInTableSize;
-    height: $chechboxInTableSize;
-    min-height: $chechboxInTableSize;
-    text-align: center;
-    font-size: $chechboxInTableFontSize;
-    line-height:$chechboxInTableFontLineHeightSize;
-    margin-bottom: 0px;
-  }
-
-  .checkbox-in-table:active,
-  .checkbox-in-table:checked:active {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .checkbox-in-table:checked {
-    border: 2px solid $primary;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
-    color: $primary;
-  }
-
-  .checkbox-in-table:focus {
-    border-width: 3px !important;
-  }
-
-  .checkbox-in-table:checked:after {
-    content: '✓';
-    // position: absolute;
-    // bottom: -0.2rem;
-    // left: 0.2rem;
-    color: $primary;
-  }
-
-  .checkbox-in-table:checked:active:after {
-    content: '✓';
-    // position: absolute;
-    // bottom: -0.2rem;
-    // left: 0.2rem;
-    color: $primary;
-  }
-
-  .checkbox-in-table-container {
-    //flex: 1 1 0px;
-    display: flex;
-    align-items: center;
-  }
-
-  .checkbox-in-table-label {
-    // color: $primary;
-    margin-left: 0px;
-    margin-bottom: 0px;
-  }
-
-  .no-bottom-margin {
-    margin-bottom: 0 !important;
-  }
+.no-bottom-margin {
+  margin-bottom: 0 !important;
+}
