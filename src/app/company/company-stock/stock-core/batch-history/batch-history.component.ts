@@ -23,11 +23,11 @@ interface GroupedStockOrders {
 }
 
 @Component({
-  selector: 'app-order-history',
-  templateUrl: './order-history.component.html',
-  styleUrls: ['./order-history.component.scss']
+  selector: 'app-batch-history',
+  templateUrl: './batch-history.component.html',
+  styleUrls: ['./batch-history.component.scss']
 })
-export class OrderHistoryComponent implements OnInit {
+export class BatchHistoryComponent implements OnInit {
 
   qrCodeSize = 150;
 

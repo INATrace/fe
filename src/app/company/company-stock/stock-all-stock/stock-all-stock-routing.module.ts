@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StockAllStockTabComponent } from './stock-all-stock-tab/stock-all-stock-tab.component';
-import { OrderHistoryComponent } from '../stock-core/order-history/order-history.component';
+import { BatchHistoryComponent } from '../stock-core/batch-history/batch-history.component';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'stock-order/:stockOrderId/view',
-    component: OrderHistoryComponent,
+    component: BatchHistoryComponent,
     pathMatch: 'full',
     data: {
       drobtinice: {

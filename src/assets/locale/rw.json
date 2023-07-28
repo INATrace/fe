@@ -1637,7 +1637,7 @@
     "stockOrderFieldTranslations.prefillOutputFacility": "Uzuzamo mbere ikifashishwa ku bisohoka",
     "stockOrderFieldTranslations.transactionType": "Ubwoko bw'igikorwa",
     "stockOrderFieldTranslations.flavourProfile": "Ibyanga",
-    "orderHistoryView.title.orderDetails": "Ubusobanuro by'igikorwa cyo kwaka igicuruzwa",
+    "orderHistoryView.title.batchHistory": "Batch history",
     "orderHistoryView.tableCol.created": "Byakozwe",
     "orderHistoryView.tableCol.formalCreationTime": "Itariki yo kubikora",
     "orderHistoryView.tableCol.lastChange": "Impinduka ziheruka",

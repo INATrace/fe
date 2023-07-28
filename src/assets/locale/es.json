@@ -913,7 +913,7 @@
     "stockOrderFieldTranslations.prefillOutputFacility": "Prellenar área de salida",
     "stockOrderFieldTranslations.transactionType": "Tipo de transacción",
     "stockOrderFieldTranslations.flavourProfile": "Perfil de sabor",
-    "orderHistoryView.title.orderDetails": "Detalles del pedido",
+    "orderHistoryView.title.batchHistory": "Batch history",
     "orderHistoryView.formTitle.basicInformation": "Información básica",
     "orderHistoryView.tableCol.internalLotNumber": "Nombre del lote interno",
     "orderHistoryView.tableCol.facilityName": "Área",

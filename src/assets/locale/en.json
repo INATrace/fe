@@ -1464,7 +1464,7 @@
     "customerOrderDetails.lineLabel.samplingNote": "Sampling note",
     "customerOrderDetails.lineLabel.womenShare": "Women's share",
     "customerOrderDetails.label.manageQRCodes": "Manage QR codes",
-    "orderHistoryView.title.orderDetails": "Order details",
+    "orderHistoryView.title.batchHistory": "Batch history",
     "orderHistoryView.history.legend": "Legend:",
     "orderHistoryView.history.requiredPresent": "{$START_TAG_SPAN}required in process - present{$CLOSE_TAG_SPAN}",
     "orderHistoryView.history.requiredMissing": "{$START_TAG_SPAN}required in process - missing{$CLOSE_TAG_SPAN}",

@@ -1636,7 +1636,7 @@
     "stockOrderFieldTranslations.prefillOutputFacility": "Output-Anlage vorausfüllen",
     "stockOrderFieldTranslations.transactionType": "Art der Transaktion",
     "stockOrderFieldTranslations.flavourProfile": "Geschmacksprofil",
-    "orderHistoryView.title.orderDetails": "Bestell-Details",
+    "orderHistoryView.title.batchHistory": "Batch history",
     "orderHistoryView.tableCol.created": "Erstellt",
     "orderHistoryView.tableCol.formalCreationTime": "Formelles Erstellungsdatum",
     "orderHistoryView.tableCol.lastChange": "Letzte Änderung",
