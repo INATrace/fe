@@ -2441,7 +2441,7 @@
     "facilityStockOrderPaymentModal.modal.button.cancel": "{$START_TAG_SPAN}Cancel{$CLOSE_TAG_SPAN}",
     "facilityStockOrderPaymentModal.modal.button.confirm": "{$START_TAG_SPAN}Confirm{$CLOSE_TAG_SPAN}",
     "facilityStockOrderPaymentModal.singleChoice.farmers": "Farmer",
-    "facilityStockOrderPaymentModal.singleChoice.womenCoffeeOnly": "Women coffee only",
+    "facilityStockOrderPaymentModal.singleChoice.womenOnly": "Women only",
     "facilityStockOrderPaymentModal.singleChoice.deliveryDate": "Delivery date",
     "facilityStockOrderPaymentModal.title": "Select farmer and delivery",
     "facilityStockOrderPaymentModal.womenShareTypes.yes": "YES",

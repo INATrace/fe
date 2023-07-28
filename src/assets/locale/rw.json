@@ -2107,7 +2107,7 @@
     "codebookTranslations.process_action.description.CBT_f102dc84-1dd5-451e-ac18-14bae0db2426.description": "Gupakira ikawa itonoye mu mifuka ya grainpro ",
     "codebookTranslations.process_action.description.CBT_f50648e2-72bc-49a3-8518-ea22beb65fc6.description": "Nyiri igicuruzwa ahabwa inyemezabuguzi yo gukaranga.",
     "codebookTranslations.process_action.description.CBT_fea71cf1-9ed2-406e-8235-c67c30bf5340.description": "Nyiri igicuruzwa asaba gukaranga kandi akanagaragaza kode ya QR",
-    "facilityStockOrderPaymentModal.singleChoice.womenCoffeeOnly": "Ikawa y'abagore gusa",
+    "facilityStockOrderPaymentModal.singleChoice.womenOnly": "Abagore gusa",
     "facilityStockOrderPaymentModal.singleChoice.deliveryDate": "Itariki yo kugemura",
     "facilityStockOrderPaymentModal.womenShareTypes.yes": "YEGO",
     "facilityStockOrderPaymentModal.womenShareTypes.no": "OYA",
