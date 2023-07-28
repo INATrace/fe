@@ -68,6 +68,10 @@ p {
     font-size:1rem
 }
 
+.text-color-primary {
+  color: $theme-primary-text;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
