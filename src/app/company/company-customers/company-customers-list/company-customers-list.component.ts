@@ -33,7 +33,7 @@ export class CompanyCustomersListComponent implements OnInit {
   ping$ = new BehaviorSubject(null);
 
   items = [
-    { name: $localize`:@@productLabelStakeholders.search.name:name`,
+    { name: $localize`:@@productLabelStakeholders.search.customerName:Customer name`,
       category: 'BY_NAME'
     }
   ];

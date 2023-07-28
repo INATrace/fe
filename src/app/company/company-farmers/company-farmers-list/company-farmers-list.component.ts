@@ -38,10 +38,10 @@ export class CompanyFarmersListComponent implements OnInit {
   showHonduras = false;
 
   items = [
-    { name: $localize`:@@productLabelStakeholders.search.name:name`,
+    { name: $localize`:@@productLabelStakeholders.search.firstName:First name`,
       category: 'BY_NAME'
     },
-    { name: $localize`:@@productLabelStakeholders.search.surname:surname`,
+    { name: $localize`:@@productLabelStakeholders.search.lastName:Last name`,
       category: 'BY_SURNAME'
     }
   ];
