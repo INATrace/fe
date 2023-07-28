@@ -3129,6 +3129,7 @@
     "companyDashboardComponent.graph.labels.in": "in",
     "companyDashboardComponent.graph.labels.input": "Input",
     "companyDashboardComponent.graph.labels.output": "Output",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output ratio in %"
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output ratio in %",
+    "companyDashboardComponent.graph.values.trunked": "Only the first {$INTERPOLATION} values are shown."
   }
 }

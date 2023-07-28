@@ -64,7 +64,12 @@
                       </button>
                     </div>
 
-                    <div echarts [options]="deliveriesOptions" [merge]="mergeOptions"></div>
+                    <div>
+                      <div echarts [options]="deliveriesOptions" [merge]="deliveriesMergeOptions"></div>
+                      <div *ngIf="deliveriesGraphTrunked" class="mt-2 d-flex justify-content-center chart-info-message">
+                        <p><em i18n="@@companyDashboardComponent.graph.values.trunked">Only the first {{ maxShownOnDeliveriesGraphs }} values are shown.</em></p>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="col-12 col-xs-6 col-md-4">
@@ -228,7 +233,12 @@
                       </button>
                     </div>
 
-                    <div echarts [options]="processingPerformanceOption" [merge]="processingPerformanceMergeOptions"></div>
+                    <div>
+                      <div echarts [options]="processingPerformanceOption" [merge]="processingPerformanceMergeOptions"></div>
+                      <div *ngIf="procPerformanceGraphTrunked" class="mt-2 d-flex justify-content-center chart-info-message">
+                        <p><em i18n="@@companyDashboardComponent.graph.values.trunked">Only the first {{ maxShownOnProcPerformanceGraph }} values are shown.</em></p>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="col-12 col-xs-6 col-md-4">

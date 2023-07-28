@@ -48,7 +48,11 @@ export class CompanyDashboardComponent implements OnInit {
 
   faTimes = faTimes;
 
-  maxShownOnGraphs = 30;
+  readonly maxShownOnDeliveriesGraphs = 24;
+  readonly maxShownOnProcPerformanceGraph = 12;
+
+  deliveriesGraphTrunked = false;
+  procPerformanceGraphTrunked = false;
 
   companyId: number = Number(localStorage.getItem('selectedUserCompany'));
 
@@ -76,11 +80,17 @@ export class CompanyDashboardComponent implements OnInit {
 
   deliveriesOptions: EChartsOption = {
     legend: {
-      bottom: 0
+      show: true
     },
     tooltip: {},
     xAxis: {
       type: 'category',
+      axisTick: {
+        alignWithLabel: true,
+      },
+      axisLabel: {
+        rotate: 45
+      },
       data: []
     },
     yAxis: {},
@@ -91,11 +101,14 @@ export class CompanyDashboardComponent implements OnInit {
         show: true,
         position: 'top'
       },
+      itemStyle: {
+        color: 'rgb(200,119,17)',
+      },
       data: []
     }],
   };
 
-  mergeOptions: EChartsOption;
+  deliveriesMergeOptions: EChartsOption;
 
   // search fields form control
   deliveriesForm: FormGroup = this.fb.group({
@@ -112,13 +125,19 @@ export class CompanyDashboardComponent implements OnInit {
     exportType: this.fb.control('EXCEL')
   });
 
-  processingPerformanceOption = {
+  processingPerformanceOption: EChartsOption = {
     legend: {
-      bottom: 0
+      show: true
     },
     tooltip: {},
     xAxis: {
       type: 'category',
+      axisTick: {
+        alignWithLabel: true
+      },
+      axisLabel: {
+        rotate: 45
+      },
       data: []
     },
     yAxis: [{
@@ -140,6 +159,9 @@ export class CompanyDashboardComponent implements OnInit {
         show: true,
         position: 'top'
       },
+      itemStyle: {
+        color: 'rgb(157,160,66)'
+      },
       yAxisIndex: 0,
       data: []
     }, {
@@ -149,7 +171,9 @@ export class CompanyDashboardComponent implements OnInit {
         show: true,
         position: 'top'
       },
-      color: '#ff8c00',
+      itemStyle: {
+        color: 'rgb(200,119,17)'
+      },
       yAxisIndex: 0,
       data: []
     }, {
@@ -249,7 +273,7 @@ export class CompanyDashboardComponent implements OnInit {
       id: this.companyId
     }).subscribe(next => {
       if (next?.data) {
-        this.processingActions = next.data.items.filter(pa => ['PROCESSING', 'FINAL_PROCESSING'].some(type => type === pa.type))
+        this.processingActions = next.data.items.filter(pa => ['PROCESSING', 'FINAL_PROCESSING'].some(type => type === pa.type));
         setTimeout(() => {
           this.processingPerformanceForm.get('process')?.setValue(this.processingActions[0]);
           this.reloadProcessingFields(this.processingActions[0]);
@@ -324,15 +348,16 @@ export class CompanyDashboardComponent implements OnInit {
             const labelData = [];
             const graphData = [];
 
-            // only first n results are shown in the graph
-            next.data.totals?.slice(0, this.maxShownOnGraphs).forEach(
-              total => {
+            this.deliveriesGraphTrunked = next.data.totals?.length > this.maxShownOnDeliveriesGraphs;
+
+            // Only first n results are shown in the graph
+            next.data.totals?.slice(0, this.maxShownOnDeliveriesGraphs).forEach(total => {
                 const timeUnit = this.calculateTimeUnit(total.unit, total.year, this.deliveriesForm.get('timeUnitGraphType').value);
                 labelData.push(timeUnit);
                 graphData.push(total.totalQuantity);
             });
 
-            this.mergeOptions = {
+            this.deliveriesMergeOptions = {
               xAxis: {
                 data: labelData
               },
@@ -380,8 +405,7 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
-    this.dashboardControllerService
-      .calculateProcessingPerformanceDataUsingPOST({
+    this.dashboardControllerService.calculateProcessingPerformanceDataUsingPOST({
       companyId: this.companyId,
       facilityId: this.processingPerformanceForm.get('facility')?.value?.id,
       processActionId: this.processingPerformanceForm.get('process')?.value?.id,
@@ -391,13 +415,16 @@ export class CompanyDashboardComponent implements OnInit {
       evidenceFields: efs
       }).subscribe(next => {
       if (next?.data) {
+
         const labelData = [];
         const inputQuantityData = [];
         const outputQuantityData = [];
         const ratioData = [];
 
-        // only first n results are shown in the graph
-        next.data.totals?.slice(0, this.maxShownOnGraphs).forEach(
+        this.procPerformanceGraphTrunked = next.data.totals?.length > this.maxShownOnProcPerformanceGraph;
+
+        // Only first n results are shown in the graph
+        next.data.totals?.slice(0, this.maxShownOnProcPerformanceGraph).forEach(
           total => {
             const timeUnit = this.calculateTimeUnit(total.unit, total.year, this.processingPerformanceForm.get('timeUnitGraphType').value);
             labelData.push(timeUnit);
@@ -406,7 +433,7 @@ export class CompanyDashboardComponent implements OnInit {
             ratioData.push(total.ratio);
           });
 
-        // if larger label use only value
+        // If larger label use only value
         const yAxisLabel = (next.data.measureUnitType.label.length < 5) ? next.data.measureUnitType.label : '';
 
         this.processingPerformanceMergeOptions = {
