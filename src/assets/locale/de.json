@@ -1075,8 +1075,8 @@
     "productLabelStock.search.purchase": "Lieferung",
     "productLabelStock.button.export": "Exportieren",
     "productLabelStakeholdersCollectors.noFarmers": "Keine Landwirt*innen gefunden",
-    "productLabelStakeholders.search.firstName": "First name",
-    "productLabelStakeholders.search.lastName": "Last name",
+    "productLabelStakeholders.search.firstName": "Vorname",
+    "productLabelStakeholders.search.lastName": "Nachname",
     "productLabelStakeholders.search.id": "ID",
     "productLabelStakeholders.search.customerName": "Customer name",
     "paymentForm.datepicker.date.label": "Zahlungsdatum",
@@ -1637,7 +1637,7 @@
     "stockOrderFieldTranslations.prefillOutputFacility": "Output-Anlage vorausfüllen",
     "stockOrderFieldTranslations.transactionType": "Art der Transaktion",
     "stockOrderFieldTranslations.flavourProfile": "Geschmacksprofil",
-    "orderHistoryView.title.batchHistory": "Batch history",
+    "orderHistoryView.title.batchHistory": "Batch-Historie",
     "orderHistoryView.tableCol.created": "Erstellt",
     "orderHistoryView.tableCol.formalCreationTime": "Formelles Erstellungsdatum",
     "orderHistoryView.tableCol.lastChange": "Letzte Änderung",
@@ -2671,7 +2671,7 @@
     "valueChainList.action.disable.error.title": "Fehler",
     "valueChainList.action.disable.error.message": "Wertschöpfungskette kann nicht deaktiviert werden",
     "valueChainList.action.delete.error.title": "Fehler",
-    "valueChainList.action.delete.error.message": "Wertschöpfungskette kann nciht gelöscht werden",
+    "valueChainList.action.delete.error.message": "Wertschöpfungskette kann nicht gelöscht werden",
     "valueChainList.action.delete.success.title": "Gelöscht!",
     "valueChainList.action.delete.success.message": "Wertschöpfungskette erfolgreich gelöscht",
     "valueChainDetail.title.edit": "Wertschöpfungskette bearbeiten",
@@ -3133,6 +3133,9 @@
     "companyDashboardComponent.graph.labels.in": "in",
     "companyDashboardComponent.graph.labels.input": "Input",
     "companyDashboardComponent.graph.labels.output": "Output",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output-Ratio in %"
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Input-Output-Ratio in %",
+    "orderHistoryView.history.timelineItem.numberOfSacs.label": "Anzahl Säcke:",
+    "orderHistoryView.history.timelineItem.procEvidenceDocuments.title": "Nachweisdokumente der Verarbeitung",
+    "orderHistoryView.history.timelineItem.otherEvidenceDocuments.title": "Andere Nachweisdokumente"
   }
 }

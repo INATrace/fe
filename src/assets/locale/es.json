@@ -323,8 +323,8 @@
     "productLabelStakeholders.tab1.title": "Colectores",
     "productLabelStakeholders.tab2.title": "Agricultores",
     "productLabelStakeholders.tab3.title": "Clientes",
-    "productLabelStakeholders.search.firstName": "First name",
-    "productLabelStakeholders.search.lastName": "Last name",
+    "productLabelStakeholders.search.firstName": "Nombre",
+    "productLabelStakeholders.search.lastName": "Apellido",
     "productLabelStakeholders.search.id": "número de identificación",
     "productLabelStakeholders.search.customerName": "Customer name",
     "productLabelStakeholders.modal.buyer.title": "Añada el comprador",
@@ -914,7 +914,7 @@
     "stockOrderFieldTranslations.prefillOutputFacility": "Prellenar área de salida",
     "stockOrderFieldTranslations.transactionType": "Tipo de transacción",
     "stockOrderFieldTranslations.flavourProfile": "Perfil de sabor",
-    "orderHistoryView.title.batchHistory": "Batch history",
+    "orderHistoryView.title.batchHistory": "Historial de lotes",
     "orderHistoryView.formTitle.basicInformation": "Información básica",
     "orderHistoryView.tableCol.internalLotNumber": "Nombre del lote interno",
     "orderHistoryView.tableCol.facilityName": "Área",
@@ -3084,6 +3084,9 @@
     "companyDashboardComponent.graph.labels.in": "en",
     "companyDashboardComponent.graph.labels.input": "Entrada",
     "companyDashboardComponent.graph.labels.output": "Salida",
-    "companyDashboardComponent.graph.labels.ratioInPercent": "Rendimiento en %"
+    "companyDashboardComponent.graph.labels.ratioInPercent": "Rendimiento en %",
+    "orderHistoryView.history.timelineItem.numberOfSacs.label": "Numero de sacos:",
+    "orderHistoryView.history.timelineItem.procEvidenceDocuments.title": "Prueba de procesamiento",
+    "orderHistoryView.history.timelineItem.otherEvidenceDocuments.title": "Otros documentos de prueba"
   }
 }
