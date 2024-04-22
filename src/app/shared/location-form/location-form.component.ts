@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, ControlContainer, NgForm, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -24,7 +24,7 @@ export class LocationFormComponent implements OnInit {
   submitted: boolean = false;
 
   @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) { this.gMap = map; this.fitBounds() };
+    if (map) { this.gMap = map; this.fitBounds() }
   };
 
   gMap = null;
@@ -35,7 +35,6 @@ export class LocationFormComponent implements OnInit {
     lng: 21.514503
   };
   defaultZoom = 3;
-  zoomForOnePin = 10;
   bounds: any;
   initialBounds: any = [];
   subs: Subscription[] = [];
@@ -55,18 +54,18 @@ export class LocationFormComponent implements OnInit {
 
     let sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
       loaded => {
-        // console.log("EMM:", loaded)
         if (loaded) this.isGoogleMapsLoaded = true;
         this.initializeMarker();
         let tmpVis = this.form.get("publiclyVisible").value;
         if (tmpVis != null) this.form.get("publiclyVisible").setValue(tmpVis.toString());
       },
-      error => { }
+      () => { }
     )
     this.subs.push(sub2);
 
     let sub3 = this.form.get('address.country').valueChanges
       .subscribe(value => {
+
         // Honduras specifics
         if (this.showHondurasFields()) {
           this.enableValidationHonduras();
@@ -253,14 +252,13 @@ export class LocationFormComponent implements OnInit {
     if (this.marker) {
       this.updateMarkerLocation(event.latLng.toJSON());
     } else {
-      let tmp = {
+      this.marker = {
         position: event.latLng.toJSON(),
         label: {
           text: ' '
         },
         infoText: ' '
-      }
-      this.marker = tmp;
+      };
       this.updateLonLat()
     }
   }
@@ -271,21 +269,18 @@ export class LocationFormComponent implements OnInit {
 
   updateMarkerLocation(loc) {
     let tmpCurrent = this.marker;
-    let tmp = {
+    this.marker = {
       position: loc,
       label: tmpCurrent.label,
       infoText: tmpCurrent.infoText
-    }
-    this.marker = tmp;
+    };
     this.updateLonLat()
   }
-
 
   removeOriginLocation() {
     this.marker = null;
     this.initialBounds = [];
   }
-
 
   get publiclyVisible() {
     let obj = {}

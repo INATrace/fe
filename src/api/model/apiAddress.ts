@@ -53,6 +53,10 @@ export interface ApiAddress {
      */
     hondurasVillage?: string;
     /**
+     * Other/additional address field
+     */
+    otherAddress?: string;
+    /**
      * Village sector
      */
     sector?: string;
@@ -107,6 +111,10 @@ export namespace ApiAddress {
          * Honduras village name
          */
         hondurasVillage = 'hondurasVillage',
+        /**
+         * Other/additional address field
+         */
+        otherAddress = 'otherAddress',
         /**
          * Village sector
          */
@@ -224,6 +232,17 @@ export namespace ApiAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'otherAddress',
+                    classname: 'ApiAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'sector',
                     classname: 'ApiAddress',
                     dataType: 'string',
@@ -282,6 +301,8 @@ export namespace ApiAddress {
                 ],
                 hondurasVillage: [
                 ],
+                otherAddress: [
+                ],
                 sector: [
                 ],
                 state: [
@@ -319,6 +340,9 @@ export namespace ApiAddress {
   //                   validators: []
   //               },
   //               hondurasVillage: {
+  //                   validators: []
+  //               },
+  //               otherAddress: {
   //                   validators: []
   //               },
   //               sector: {

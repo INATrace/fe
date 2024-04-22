@@ -61,6 +61,10 @@ export interface ApiGeoAddress {
      */
     longitude?: number;
     /**
+     * Other/additional address field
+     */
+    otherAddress?: string;
+    /**
      * Village sector
      */
     sector?: string;
@@ -123,6 +127,10 @@ export namespace ApiGeoAddress {
          * location longitude
          */
         longitude = 'longitude',
+        /**
+         * Other/additional address field
+         */
+        otherAddress = 'otherAddress',
         /**
          * Village sector
          */
@@ -262,6 +270,17 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'otherAddress',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'sector',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
@@ -324,6 +343,8 @@ export namespace ApiGeoAddress {
                 ],
                 longitude: [
                 ],
+                otherAddress: [
+                ],
                 sector: [
                 ],
                 state: [
@@ -367,6 +388,9 @@ export namespace ApiGeoAddress {
   //                   validators: []
   //               },
   //               longitude: {
+  //                   validators: []
+  //               },
+  //               otherAddress: {
   //                   validators: []
   //               },
   //               sector: {

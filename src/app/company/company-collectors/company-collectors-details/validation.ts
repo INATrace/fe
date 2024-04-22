@@ -26,6 +26,9 @@ export const ApiAddressValidationScheme = {
     zip: {
       validators: [Validators.maxLength(50)]
     },
+    otherAddress: {
+      validators: [Validators.maxLength(1000)]
+    },
     hondurasDepartment: {
       validators: []
     },

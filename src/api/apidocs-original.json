@@ -11653,6 +11653,10 @@
             "description": "Honduras village name",
             "type": "string"
           },
+          "otherAddress": {
+            "description": "Other/additional address field",
+            "type": "string"
+          },
           "sector": {
             "description": "Village sector",
             "type": "string"
@@ -13493,6 +13497,10 @@
             "description": "location longitude",
             "format": "double",
             "type": "number"
+          },
+          "otherAddress": {
+            "description": "Other/additional address field",
+            "type": "string"
           },
           "sector": {
             "description": "Village sector",
@@ -20270,7 +20278,8 @@
             "enum": [
               "FEMALE",
               "MALE",
-              "N_A"
+              "N_A",
+              "DIVERSE"
             ],
             "type": "string"
           },
