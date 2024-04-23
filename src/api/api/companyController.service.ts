@@ -39,10 +39,12 @@ import { ApiPaginatedResponseApiCompanyListResponse } from '../model/apiPaginate
 import { ApiPaginatedResponseApiProductType } from '../model/apiPaginatedResponseApiProductType';
 import { ApiPaginatedResponseApiUserCustomer } from '../model/apiPaginatedResponseApiUserCustomer';
 import { ApiPaginatedResponseApiValueChain } from '../model/apiPaginatedResponseApiValueChain';
+import { ApiPlot } from '../model/apiPlot';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiCompanyCustomer } from '../model/apiResponseApiCompanyCustomer';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
 import { ApiResponseApiCompanyName } from '../model/apiResponseApiCompanyName';
+import { ApiResponseApiPlot } from '../model/apiResponseApiPlot';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
@@ -165,6 +167,59 @@ export namespace CreateCompanyUsingPOST {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof CreateCompanyUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    };
+}
+
+/**
+ * Namespace for createUserCustomerPlotUsingPOST.
+ */
+export namespace CreateUserCustomerPlotUsingPOST {
+    /**
+     * Parameter map for createUserCustomerPlotUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+      /**
+       * request
+       */
+      ApiPlot: ApiPlot;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for createUserCustomerPlotUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id',
+      /**
+       * request
+       */
+      ApiPlot = 'ApiPlot',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createUserCustomerPlotUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CreateUserCustomerPlotUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
     };
 }
 
@@ -1322,6 +1377,62 @@ export namespace ListCompaniesUsingGET {
 }
 
 /**
+ * Namespace for refreshGeoIDForUserCustomerPlotUsingPOST.
+ */
+export namespace RefreshGeoIDForUserCustomerPlotUsingPOST {
+    /**
+     * Parameter map for refreshGeoIDForUserCustomerPlotUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+      /**
+       * Plot ID
+       */
+      plotId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for refreshGeoIDForUserCustomerPlotUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id',
+      /**
+       * Plot ID
+       */
+      plotId = 'plotId',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of refreshGeoIDForUserCustomerPlotUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      plotId: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for updateCompanyCustomerUsingPUT.
  */
 export namespace UpdateCompanyCustomerUsingPUT {
@@ -1733,6 +1844,104 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createCompanyUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Add new plot for the provided user customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiPlot>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPlot>>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPlot>>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.createUserCustomerPlotUsingPOST(
+      map.id,
+      map.ApiPlot,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Add new plot for the provided user customer
+     * 
+     * @param id User customer ID
+     * @param ApiPlot request
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPlot>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPlot>>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPlot>>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling createUserCustomerPlotUsingPOST.');
+        }
+        if (ApiPlot === null || ApiPlot === undefined) {
+            throw new Error('Required parameter ApiPlot was null or undefined when calling createUserCustomerPlotUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiPlot>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/plots/add`,
+            ApiPlot,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createUserCustomerPlotUsingPOST')));
         }
         return handle;
     }
@@ -3441,6 +3650,99 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listCompaniesUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Add new plot for the provided user customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiPlot>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPlot>>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPlot>>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.refreshGeoIDForUserCustomerPlotUsingPOST(
+      map.id,
+      map.plotId,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Add new plot for the provided user customer
+     * 
+     * @param id User customer ID
+     * @param plotId Plot ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPlot>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPlot>>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPlot>>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling refreshGeoIDForUserCustomerPlotUsingPOST.');
+        }
+        if (plotId === null || plotId === undefined) {
+            throw new Error('Required parameter plotId was null or undefined when calling refreshGeoIDForUserCustomerPlotUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiPlot>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/plots/${encodeURIComponent(String(plotId))}/updateGeoID`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'refreshGeoIDForUserCustomerPlotUsingPOST')));
         }
         return handle;
     }

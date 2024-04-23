@@ -21,6 +21,7 @@
 import { ApiBankInformation } from './apiBankInformation';
 import { ApiCertification } from './apiCertification';
 import { ApiFarmInformation } from './apiFarmInformation';
+import { ApiPlot } from './apiPlot';
 import { ApiProductType } from './apiProductType';
 import { ApiUserCustomerAssociation } from './apiUserCustomerAssociation';
 import { ApiUserCustomerCooperative } from './apiUserCustomerCooperative';
@@ -76,6 +77,10 @@ export interface ApiUserCustomer {
      * Phone
      */
     phone?: string;
+    /**
+     * Plots in possession of the user customer (only applicable for type FARMER)
+     */
+    plots?: Array<ApiPlot>;
     /**
      * User customer product types
      */
@@ -145,6 +150,10 @@ export namespace ApiUserCustomer {
          * Phone
          */
         phone = 'phone',
+        /**
+         * Plots in possession of the user customer (only applicable for type FARMER)
+         */
+        plots = 'plots',
         /**
          * User customer product types
          */
@@ -345,6 +354,18 @@ export namespace ApiUserCustomer {
                     complexType: ''
                 },
                 {
+                    metadata: ApiPlot.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'plots',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiPlot&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPlot'
+                },
+                {
                     metadata: ApiProductType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -409,6 +430,8 @@ export namespace ApiUserCustomer {
                 ],
                 phone: [
                 ],
+                plots: [
+                ],
                 productTypes: [
                 ],
                 surname: [
@@ -462,6 +485,9 @@ export namespace ApiUserCustomer {
   //                   validators: []
   //               },
   //               phone: {
+  //                   validators: []
+  //               },
+  //               plots: {
   //                   validators: []
   //               },
   //               productTypes: {

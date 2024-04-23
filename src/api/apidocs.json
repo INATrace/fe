@@ -7534,6 +7534,125 @@
         "summary": "Get user customer by id"
       }
     },
+    "/api/company/userCustomers/{id}/plots/add": {
+      "post": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPlot_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "createUserCustomerPlotUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiPlot"
+              }
+            }
+          },
+          "description": "request",
+          "required": true
+        },
+        "summary": "Add new plot for the provided user customer"
+      }
+    },
+    "/api/company/userCustomers/{id}/plots/{plotId}/updateGeoID": {
+      "post": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Plot ID",
+            "in": "path",
+            "name": "plotId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPlot_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "refreshGeoIDForUserCustomerPlotUsingPOST",
+        "summary": "Add new plot for the provided user customer"
+      }
+    },
     "/api/company/{id}/connected-companies": {
       "get": {
         "parameters": [
@@ -15788,6 +15907,74 @@
         },
         "type": "object"
       },
+      "ApiPlot": {
+        "properties": {
+          "coordinates": {
+            "description": "The list of coordinates of the plot",
+            "items": {
+              "$ref": "#/components/schemas/ApiPlotCoordinate"
+            },
+            "type": "array"
+          },
+          "crop": {
+            "$ref": "#/components/schemas/ApiProductType",
+            "description": "Product type of this plot"
+          },
+          "geoId": {
+            "description": "The Geoid of the plot",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "numberOfPlants": {
+            "description": "Number of plants",
+            "format": "int32",
+            "type": "integer"
+          },
+          "organicStartOfTransition": {
+            "description": "Date of transitioning into organic production",
+            "format": "date-time",
+            "type": "string"
+          },
+          "plotName": {
+            "description": "Plot name",
+            "type": "string"
+          },
+          "size": {
+            "description": "The total size of the plot",
+            "format": "double",
+            "type": "number"
+          },
+          "unit": {
+            "description": "The unit in which the size of the plot is expressed",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPlotCoordinate": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "latitude": {
+            "description": "The latitude of the coordinate",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "The longitude of the coordinate",
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiProcess": {
         "properties": {
           "production": {
@@ -18192,6 +18379,50 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiPlot_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPlot",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiProcessingAction_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -20304,6 +20535,13 @@
           "phone": {
             "description": "Phone",
             "type": "string"
+          },
+          "plots": {
+            "description": "Plots in possession of the user customer (only applicable for type FARMER)",
+            "items": {
+              "$ref": "#/components/schemas/ApiPlot"
+            },
+            "type": "array"
           },
           "productTypes": {
             "description": "User customer product types",
