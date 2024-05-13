@@ -58,13 +58,13 @@
                       [class.btn-outlined]="!showGroupView"
                       [class.no-hover]="showGroupView"
                       (click)="changeShowGroupView(true)">
-                <span>Group view</span>
+                <span i18n="@@productLabelStock.subTitle.groupedOrdersButton">Group view</span>
               </button>
               <button class="btn"
                       [class.btn-outlined]="showGroupView"
                       [class.no-hover]="!showGroupView"
                       (click)="changeShowGroupView(false)">
-                <span>Single view</span>
+                <span i18n="@@productLabelStock.subTitle.singleOrdersButton">Single view</span>
               </button>
             </div>
           </div>
