@@ -12,6 +12,7 @@
     window['env']['relativeImageUploadUrlAllSizes'] = '${RELATIVE_IMAGE_UPLOAD_URL_ALL_SIZES}'
     window['env']['googleMapsApiKey'] = '${GOOGLE_MAPS_API_KEY}';
     window['env']['tokenForPublicLogRoute'] = '${TOKEN_FOR_PUBLIC_LOG_ROUTE}';
+    window['env']['mapboxAccessToken'] = '${MAPBOX_ACCESS_TOKEN}';
 
     // Environment variables for Beyco integration
     window['env']['beycoAuthURL'] = '${BEYCO_AUTH_URL}'
