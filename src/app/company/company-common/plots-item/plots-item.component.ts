@@ -9,6 +9,7 @@ import { PlotCoordinatesManagerService } from '../../../shared-services/plot-coo
 import { ApiPlotCoordinate } from '../../../../api/model/apiPlotCoordinate';
 import { PlotCoordinateAction } from '../../../shared-services/plot-coordinate-action-enum';
 import { ApiPlot } from '../../../../api/model/apiPlot';
+import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
 
 @Component({
   selector: 'app-plots-item',
@@ -23,17 +24,21 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   @Input()
   formTitle = null;
 
+  @Input()
+  productTypesCodebook: CompanyProductTypesService;
+
   plotCoordinatesManager: PlotCoordinatesManagerService = new PlotCoordinatesManagerService();
 
   readonly = false;
 
   plotCoordinates: Array<ApiPlotCoordinate> = [];
-  showDeforestationData = true;
+
 
   plotShown = false;
   showPlotSubject = new Subject<boolean>();
   existingPlotCoordinatesSubject = new Subject<ApiPlotCoordinate[]>();
   tagOpened = false;
+  mapEditable = true;
 
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
@@ -43,6 +48,10 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   }
 
   ngOnInit() {
+
+    if (this.form.get('id').value) {
+      this.mapEditable = false;
+    }
 
     if (this.form.get('coordinates')) {
       this.plotCoordinates = this.form.get('coordinates').value;
@@ -58,6 +67,12 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
     setTimeout(() => {
       this.tagOpened = true;
     }, 500);
+  }
+
+  get name() {
+    if (this.form.get('plotName').value) {
+      return this.form.get('plotName').value;
+    }
   }
 
   public generateForm(value: any): FormGroup {

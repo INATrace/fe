@@ -21,10 +21,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   private map: mapboxgl.Map;
   private mapStyle = 'mapbox://styles/mapbox/outdoors-v12'; // style of the map
-  private LAYER_ID = 'deforestation_layer';
-
-  private mapTitle: string;
-  private mapUrl;
 
   @Input()
   mapId = 'map';
@@ -34,9 +30,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   plotCoordinatesManager: PlotCoordinatesManagerService;
-
-  @Input()
-  deforestationObs: Observable<boolean>;
 
   @Input()
   showPlotSubject: Subject<boolean>;
@@ -57,13 +50,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   plotCoordinatesChange = new EventEmitter<Array<ApiPlotCoordinate>>();
 
   @Input()
-  dfDataVisible = true;
-
-  @Output()
-  dfDataVisibleChange = new EventEmitter<boolean>();
+  showPlotVisible = false;
 
   @Input()
-  showPlotVisible = false;
+  editable: boolean;
   
   subscriptions: Subscription = new Subscription();
   markers: Array<mapboxgl.Marker> = [];
@@ -219,25 +209,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.map.on('click', e => this.mapClicked(e));
     this.map.on('load', () => this.mapLoaded());
-    this.map.on('zoom', () => this.reactToZoom());
     
   }
 
-  reactToZoom() {
-    if (this.map.getZoom() > 12 && this.map.getLayer(this.LAYER_ID)) {
-      this.map.removeLayer(this.LAYER_ID);
-      this.dfDataVisible = false;
-      this.dfDataVisibleChange.emit(false);
-    }
-  }
-
-  placeMarkerOnMap(lat: number, lng: number, plot?: ApiPlot) {
+  placeMarkerOnMap(lat: number, lng: number, plot?: ApiPlot, isPin?: boolean) {
     const idx = this.plotCoordinates.length;
 
     // create a HTML element for each feature
     const el = document.createElement('div');
     el.classList.add('marker');
-    el.innerHTML = '<span><b>' + (idx + 1) + '</b></span>';
+    el.innerHTML = isPin ? '<span></span>' : '<span><b>' + (idx + 1) + '</b></span>';
 
 
     if (plot) {
@@ -249,6 +230,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       const name = plot.plotName;
       const crop = plot.crop?.name;
       const size = plot.size;
+      const unit = plot.unit;
       const geoId = plot.geoId;
       const popupHtml = `<div class="marker-popup">
                                   <div class="marker-popup-row-header">${name}</div>
@@ -258,7 +240,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${sizeLabel}</div>
-                                    <div class="row-right">${size}</div>
+                                    <div class="row-right">${size} ${unit}</div>
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${geoIdLabel}</div>
@@ -308,6 +290,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   // when the map is clicked, we add the plot-coordinate to the coordinates
   mapClicked(e) {
+
+    if (!this.editable) {
+      return;
+    }
+
     if (this.editMode) {
 
       this.showPlotSubject.next(false);
@@ -352,66 +339,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       dismissable: false
     });
   }
-  async callApiDatasetMetadata(uuid: string) {
-      const response = await fetch('https://api.resourcewatch.org/v1/dataset/' + uuid + '?includes=layer,metadata');
-      if (!response.ok) {
-        console.error(`Error while retrieving resources, status: ${response.status}`);
-      }
-      return response.json();
-  }
-
-  getTileLayerUrlForTreeCoverLoss(obj) {
-      // drill down to get a useful object
-      const layerConfig = obj['data']['attributes']['layer'][0]['attributes']['layerConfig'];
-      // get the URL template parameters
-      const defaultParams = layerConfig['params_config'];
-
-      // get the full templated URL
-      let url = layerConfig['source']['tiles'][0];
-      // substitute default parameters iteratively
-      for (const param of defaultParams) {
-          url = url.replace('{' + param['key'] + '}', param['default'].toString());
-      }
-      return url;
-  }
-
-
-  getLayerSlug(obj) {
-      return obj['data']['attributes']['layer'][0]['attributes']['slug'];
-  }
-
-  addTileLayerToMap(mapVar) {
-      mapVar.addSource(this.mapTitle, {
-          id: 10,
-          type: 'raster',
-          tiles: [
-              this.mapUrl
-          ],
-          tilesize: 256
-      });
-
-      this.addLayer();
-    }
-    
-  addLayer() {
-    this.map.addLayer({
-        id: this.LAYER_ID,
-        type: 'raster',
-        source: this.mapTitle,
-        paint: {
-            'raster-opacity': 1  // let mapbox baselayer peak through
-        }
-    });
-  }
 
   async mapLoaded() {
-      const datasetId = environment.mapboxDeforestationDatasetId;
-      const metadata = await this.callApiDatasetMetadata(datasetId);
-      const slug = this.getLayerSlug(metadata);
-      const tileLayerUrl = this.getTileLayerUrlForTreeCoverLoss(metadata);
-      this.mapTitle = slug;
-      this.mapUrl = tileLayerUrl;
-      this.addTileLayerToMap(this.map);
 
       this.map.resize();
 
@@ -432,6 +361,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           this.plotCoordinates = [];
           this.setExistingPlotCoordinates(plotCoordinates);
         }
+
+        if (!this.editable) {
+          this.markers.forEach(marker => marker.setDraggable(false));
+        }
       }
   }
 
@@ -441,7 +374,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers = [];
     this.plotCoordinates = [];
 
-    this.placeMarkerOnMap(pin.latitude, pin.longitude);
+    this.placeMarkerOnMap(pin.latitude, pin.longitude, null, true);
     this.plotCoordinatesChange.emit(this.plotCoordinates);
   }
 

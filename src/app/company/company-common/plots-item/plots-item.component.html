@@ -8,7 +8,9 @@
   <tag-closed>
     <div *ngIf="contentObject" class="c-capitalize-first">
       <div class="tagitem-text-container">
-        <span i18n="@@plotsItem.header.text">Plot coordinates</span>
+        <div>
+          {{name}}
+        </div>
       </div>
     </div>
   </tag-closed>
@@ -16,20 +18,92 @@
     <subform-layout *ngIf="this.form">
       <subform-form>
 
-        <button class="btn mr-2" (click)="showHidePlot()" i18n="@@plotsItem.action.showHidePlot">Show/hide plot</button>
+        <div class="af-row mt-2">
+            <div class="af-c12">
+              <button *ngIf="mapEditable" class="btn mr-2" (click)="showHidePlot()" i18n="@@plotsItem.action.showHidePlotArea">Show/hide plot area</button>
 
-        <button class="btn mr-2" (click)="undoLastPoint()" i18n="@@plotsItem.action.undoLastPoint">Undo last point</button>
+              <button *ngIf="mapEditable" class="btn mr-2" (click)="undoLastPoint()" i18n="@@plotsItem.action.undoLastPoint">Undo last point</button>
 
-        <button class="btn" (click)="deletePlot()" i18n="@@plotsItem.action.deletePlot">Delete plot</button>
+              <button *ngIf="mapEditable" class="btn" (click)="deletePlot()" i18n="@@plotsItem.action.deletePlot">Delete plot</button>
+            </div>
 
-        <app-map *ngIf="tagOpened" style="width: 100%; display: block;"
-          [plotCoordinatesManager]="plotCoordinatesManager"
-          [(plotCoordinates)]="plotCoordinates"
-          (plotCoordinatesChange)="updateFormCoordinates($event)"
-          [dfDataVisible]="showDeforestationData"
-          [showPlotSubject]="showPlotSubject"
-          [mapId]="'item-map' + listEditorManagerPosition"
-          [editMode]="true"></app-map>
+          <div class="af-c12">
+              <label i18n="@@plotsItem.header.text">Plot coordinates</label>
+          </div>
+
+          <div class="af-c12">
+            <app-map *ngIf="tagOpened" style="width: 100%; display: block;"
+              [plotCoordinatesManager]="plotCoordinatesManager"
+              [(plotCoordinates)]="plotCoordinates"
+              (plotCoordinatesChange)="updateFormCoordinates($event)"
+              [showPlotSubject]="showPlotSubject"
+              [editable]="mapEditable"
+              [mapId]="'item-map' + listEditorManagerPosition"
+              [editMode]="true"></app-map>
+          </div>
+
+          <div class="af-c12">
+              <textinput
+                [form]="$any(this.form.get('plotName'))"
+                label="Plot name"
+                style="width: 100%"
+                placeholder="Enter plot name"
+                i18n-label="@@collectorDetail.textinput.plotName.label"
+                i18n-placeholder="@@collectorDetail.textinput.plotName.placeholder">
+              </textinput>
+              <single-choice
+                label="Crop"
+                i18n-label="@@collectorDetail.textinput.crop.label"
+                [formControlInput]="$any(this.form.get('crop'))"
+                [codebookService]="productTypesCodebook">
+                  <ng-container *ngIf="submitted">
+                      <div *ngIf="form.get('plots').errors as errors" class="sc-invalid-feedback">
+                          <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.productTypes.error">
+                              <span>Product types are required</span>
+                          </div>
+                      </div>
+                  </ng-container>
+              </single-choice>
+              <textinput
+                [form]="$any(this.form.get('numberOfPlants'))"
+                label="Number of plants"
+                style="width: 100%"
+                placeholder="Enter number of plants"
+                i18n-label="@@collectorDetail.textinput.numberOfPlants.label"
+                i18n-placeholder="@@collectorDetail.textinput.numberOfPlants.placeholder">
+              </textinput>
+              <textinput
+                [form]="$any(this.form.get('size'))"
+                label="Size"
+                style="width: 100%"
+                placeholder="Enter size"
+                i18n-label="@@collectorDetail.textinput.size.label"
+                i18n-placeholder="@@collectorDetail.textinput.size.placeholder">
+              </textinput>
+              <textinput
+                [form]="$any(this.form.get('unit'))"
+                label="Unit"
+                style="width: 100%"
+                placeholder="Enter unit"
+                i18n-label="@@collectorDetail.textinput.unit.label"
+                i18n-placeholder="@@collectorDetail.textinput.unit.placeholder">
+              </textinput>
+              <app-datepicker
+                [form]="$any(this.form.get('organicStartOfTransition'))"
+                label="Start transition to organic"
+                style="width: 100%"
+                i18n-label="@@collectorDetail.textinput.startTransitionToOrganic.label">
+              </app-datepicker>
+              <label class="pt-2 pr-2" i18n="@@collectorDetail.textinput.lastUpdate.label">Last update:</label>
+              <ng-container *ngIf="$any(this.form.get('lastUpdated')); else noLastUpdated">
+                  <label class="pt-2">{{ this.form.get('lastUpdated').value | date: 'yyyy-MM-dd hh:mm' }}</label>
+              </ng-container>
+              <ng-template #noLastUpdated>
+                  <label>/</label>
+              </ng-template>
+          </div>
+
+        </div>
 
       </subform-form>
 

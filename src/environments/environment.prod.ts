@@ -19,7 +19,6 @@ export const environment = {
     googleMapsApiKey: window['env']['googleMapsApiKey'] || '',
     googleAnalyticsId: '',
     mapboxAccessToken: window['env']['mapboxAccessToken'] || '',
-    mapboxDeforestationDatasetId:  window['env']['mapboxDeforestationDatasetId'] || '',
     facebookPixelId: null,
     intercomAppId: null,
     chatApp: null,
