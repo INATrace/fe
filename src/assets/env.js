@@ -12,6 +12,7 @@
     window['env']['relativeImageUploadUrlAllSizes'] = ''
     window['env']['googleMapsApiKey'] = '';
     window['env']['tokenForPublicLogRoute'] = '';
+    window['env']['mapboxAccessToken'] = '';
 
     // Environment variables for Beyco integration
     window['env']['beycoAuthURL'] = ''
