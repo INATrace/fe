@@ -44,72 +44,66 @@ export class LocationFormComponent implements OnInit, OnDestroy {
     public globalEventsManager: GlobalEventManagerService
   ) { }
 
-
   ngOnInit(): void {
-    setTimeout(() => {
-      this.form.get('address.village').setValidators([Validators.required]);
-      this.form.get('address.cell').setValidators([Validators.required]);
-      this.form.get('address.sector').setValidators([Validators.required]);
-    });
 
-    const sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
-      loaded => {
-        if (loaded) { this.isGoogleMapsLoaded = true; }
-        this.initializeMarker();
-        const tmpVis = this.form.get('publiclyVisible').value;
-        if (tmpVis != null) { this.form.get('publiclyVisible').setValue(tmpVis.toString()); }
-      },
-      () => { }
+    this.subs.push(
+        this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
+            loaded => {
+              if (loaded) { this.isGoogleMapsLoaded = true; }
+              this.initializeMarker();
+              const tmpVis = this.form.get('publiclyVisible').value;
+              if (tmpVis != null) { this.form.get('publiclyVisible').setValue(tmpVis.toString()); }
+            },
+            () => { }
+        )
     );
-    this.subs.push(sub2);
 
-    const sub3 = this.form.get('address.country').valueChanges
-      .subscribe(value => {
+    this.subs.push(
+        this.form.get('address.country').valueChanges
+            .subscribe(() => {
 
-        // Honduras specifics
-        if (this.showHondurasFields()) {
-          this.enableValidationHonduras();
-        } else {
-          this.disableValidationHonduras();
-          this.clearValuesHonduras();
-        }
-        this.updateHonduras();
+              // Honduras specifics
+              if (this.showHondurasFields()) {
+                this.enableValidationHonduras();
+              } else {
+                this.disableValidationHonduras();
+                this.clearValuesHonduras();
+              }
+              this.updateHonduras();
 
-        // Rwanda specifics
-        if (this.showVillageCellSector()) {
-          this.enableValidationRwanda();
-        } else {
-          this.disableValidationRwanda();
-          this.clearValuesRwanda();
-        }
-        this.updateRwanda();
+              // Rwanda specifics
+              if (this.showRwandaFields()) {
+                this.enableValidationRwanda();
+              } else {
+                this.disableValidationRwanda();
+                this.clearValuesRwanda();
+              }
+              this.updateRwanda();
 
-        if (this.showHondurasFields() || this.showVillageCellSector()) {
-          this.disableValidationOther();
-          this.clearValuesOther();
-        } else {
-          this.enableValidationOther();
-        }
-        this.updateOther();
-
-      });
-    this.subs.push(sub3);
+              if (this.showHondurasFields() || this.showRwandaFields()) {
+                this.disableValidationOther();
+                this.clearValuesOther();
+              } else {
+                this.enableValidationOther();
+              }
+              this.updateOther();
+            })
+    );
 
     // Trigger valueChanges to set validators accordingly
-    this.form.get('address.country').updateValueAndValidity({emitEvent: true});
+    this.form.get('address.country').updateValueAndValidity({ emitEvent: true });
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => { sub.unsubscribe(); });
   }
 
-  showVillageCellSector() {
-    return this.form.get('address.country').invalid ||
-      _.isEqual(this.form.get('address.country').value, { id: 184, code: 'RW', name: 'Rwanda' });
+  showRwandaFields() {
+    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 184, code: 'RW', name: 'Rwanda' });
   }
 
   showHondurasFields() {
-    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras'});
+    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras' });
   }
 
   enableValidationHonduras() {
@@ -165,17 +159,13 @@ export class LocationFormComponent implements OnInit, OnDestroy {
   }
 
   enableValidationOther() {
-    this.form.get('address.address').setValidators([Validators.required]);
     this.form.get('address.city').setValidators([Validators.required]);
     this.form.get('address.state').setValidators([Validators.required]);
-    this.form.get('address.zip').setValidators([Validators.required]);
   }
 
   disableValidationOther() {
-    this.form.get('address.address').setValidators(null);
     this.form.get('address.city').setValidators(null);
     this.form.get('address.state').setValidators(null);
-    this.form.get('address.zip').setValidators(null);
   }
 
   clearValuesOther() {

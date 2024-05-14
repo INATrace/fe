@@ -8,16 +8,13 @@ export const ApiAddressValidationScheme = {
   forceExpand: true,
   validators: [],
   fields: {
-    address: {
+    country: {
       validators: [Validators.required]
     },
-    cell: {
-      validators: [Validators.required]
+    address: {
+      validators: []
     },
     city: {
-      validators: [Validators.required]
-    },
-    country: {
       validators: [Validators.required]
     },
     state: {
@@ -28,6 +25,15 @@ export const ApiAddressValidationScheme = {
     },
     otherAddress: {
       validators: [Validators.maxLength(1000)]
+    },
+    village: {
+      validators: []
+    },
+    cell: {
+      validators: []
+    },
+    sector: {
+      validators: []
     },
     hondurasDepartment: {
       validators: []

@@ -22,77 +22,7 @@
 <div class="af-row">
     <div class="af-c6">
 
-        <ng-container *ngIf="showHondurasFields()">
-            <textinput
-                    [form]="$any(form.get('address.hondurasFarm'))"
-                    label="Farm"
-                    style=""
-                    placeholder="Enter farm"
-                    i18n-label="@@locationForm.textinput.farm.label"
-                    i18n-placeholder="@@locationForm.textinput.farm.placeholder"
-                    [isInvalid]="submitted && form.get('address.hondurasFarm').invalid">
-                <ng-container *ngIf="submitted">
-                    <div *ngIf="form.get('address.hondurasFarm').errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.farm.error">
-                            Farm is required
-                        </div>
-                    </div>
-                </ng-container>
-            </textinput>
-
-            <textinput
-                    [form]="$any(form.get('address.hondurasVillage'))"
-                    label="Village"
-                    style=""
-                    placeholder="Enter village"
-                    i18n-label="@@locationForm.textinput.village.label"
-                    i18n-placeholder="@@locationForm.textinput.village.placeholder"
-                    [isInvalid]="submitted && form.get('address.hondurasVillage').invalid">
-                <ng-container *ngIf="submitted">
-                    <div *ngIf="form.get('address.hondurasVillage').errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.village.error">
-                            Village is required
-                        </div>
-                    </div>
-                </ng-container>
-            </textinput>
-
-            <textinput
-                    [form]="$any(form.get('address.hondurasMunicipality'))"
-                    label="Municipality"
-                    style=""
-                    placeholder="Enter municipality"
-                    i18n-label="@@locationForm.textinput.municipality.label"
-                    i18n-placeholder="@@locationForm.textinput.municipality.placeholder"
-                    [isInvalid]="submitted && form.get('address.hondurasMunicipality').invalid">
-                <ng-container *ngIf="submitted">
-                    <div *ngIf="form.get('address.hondurasMunicipality').errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.municipality.error">
-                            Municipality is required
-                        </div>
-                    </div>
-                </ng-container>
-            </textinput>
-
-            <textinput
-                    [form]="$any(form.get('address.hondurasDepartment'))"
-                    label="Department"
-                    style=""
-                    placeholder="Enter department"
-                    i18n-label="@@locationForm.textinput.department.label"
-                    i18n-placeholder="@@locationForm.textinput.department.placeholder"
-                    [isInvalid]="submitted && form.get('address.hondurasDepartment').invalid">
-                <ng-container *ngIf="submitted">
-                    <div *ngIf="form.get('address.hondurasDepartment').errors as errors" class="sc-invalid-feedback">
-                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.department.error">
-                            Department is required
-                        </div>
-                    </div>
-                </ng-container>
-            </textinput>
-        </ng-container>
-
-        <ng-container *ngIf="showVillageCellSector()">
+        <ng-container *ngIf="showRwandaFields()">
             <textinput
                     [form]="$any(form.get('address.village'))"
                     label="Village"
@@ -145,36 +75,114 @@
             </textinput>
         </ng-container>
 
-        <ng-container *ngIf="!showVillageCellSector() && !showHondurasFields()">
+        <ng-container *ngIf="showHondurasFields()">
+            <textinput
+                    [form]="$any(form.get('address.hondurasFarm'))"
+                    label="Farm"
+                    placeholder="Enter farm"
+                    i18n-label="@@locationForm.textinput.farm.label"
+                    i18n-placeholder="@@locationForm.textinput.farm.placeholder"
+                    [isInvalid]="submitted && form.get('address.hondurasFarm').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.hondurasFarm').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.farm.error">
+                            Farm is required
+                        </div>
+                    </div>
+                </ng-container>
+            </textinput>
+
+            <textinput
+                    [form]="$any(form.get('address.hondurasVillage'))"
+                    label="Village"
+                    placeholder="Enter village"
+                    i18n-label="@@locationForm.textinput.village.label"
+                    i18n-placeholder="@@locationForm.textinput.village.placeholder"
+                    [isInvalid]="submitted && form.get('address.hondurasVillage').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.hondurasVillage').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.village.error">
+                            Village is required
+                        </div>
+                    </div>
+                </ng-container>
+            </textinput>
+
+            <textinput
+                    [form]="$any(form.get('address.hondurasMunicipality'))"
+                    label="Municipality"
+                    placeholder="Enter municipality"
+                    i18n-label="@@locationForm.textinput.municipality.label"
+                    i18n-placeholder="@@locationForm.textinput.municipality.placeholder"
+                    [isInvalid]="submitted && form.get('address.hondurasMunicipality').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.hondurasMunicipality').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.municipality.error">
+                            Municipality is required
+                        </div>
+                    </div>
+                </ng-container>
+            </textinput>
+
+            <textinput
+                    [form]="$any(form.get('address.hondurasDepartment'))"
+                    label="Department"
+                    placeholder="Enter department"
+                    i18n-label="@@locationForm.textinput.department.label"
+                    i18n-placeholder="@@locationForm.textinput.department.placeholder"
+                    [isInvalid]="submitted && form.get('address.hondurasDepartment').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.hondurasDepartment').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.department.error">
+                            Department is required
+                        </div>
+                    </div>
+                </ng-container>
+            </textinput>
+        </ng-container>
+
+        <ng-container *ngIf="!showRwandaFields() && !showHondurasFields()">
             <textinput
                     [form]="$any(form.get('address.address'))"
                     label="Street address"
-                    style="width: 100%"
                     placeholder="Enter street address"
                     i18n-label="@@locationForm.textinput.address.label"
                     i18n-placeholder="@@locationForm.textinput.address.placeholder">
             </textinput>
             <textinput
                     [form]="$any(form.get('address.city'))"
-                    label="City"
-                    style="width: 100%"
-                    placeholder="Enter city"
+                    label="City / Town / Village"
+                    placeholder="Enter City / Town / Village"
                     i18n-label="@@locationForm.textinput.city.label"
-                    i18n-placeholder="@@locationForm.textinput.city.placeholder">
+                    i18n-placeholder="@@locationForm.textinput.city.placeholder"
+                    [isInvalid]="submitted && form.get('address.city').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.city').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.city.error">
+                            City / Town / Village is required.
+                        </div>
+                    </div>
+                </ng-container>
             </textinput>
             <textinput
                     [form]="$any(form.get('address.state'))"
                     label="State / Province / Region"
-                    style="width: 100%"
                     placeholder="Enter State / Province / Region"
                     i18n-label="@@locationForm.textinput.state.label"
-                    i18n-placeholder="@@locationForm.textinput.state.placeholder">
+                    i18n-placeholder="@@locationForm.textinput.state.placeholder"
+                    [isInvalid]="submitted && form.get('address.state').invalid">
+                <ng-container *ngIf="submitted">
+                    <div *ngIf="form.get('address.state').errors as errors" class="sc-invalid-feedback">
+                        <div *ngIf="errors.required" i18n="@@locationForm.textinput.state.error">
+                            State / Province / Region is required.
+                        </div>
+                    </div>
+                </ng-container>
             </textinput>
             <textinput
                     [form]="$any(form.get('address.zip'))"
                     label="Zip / Postal Code / P.O. Box"
-                    style="width: 100%"
-                    placeholder="Enter Zip / Postal Code / P.O. Box"
+                    placeholder="Enter Zip /Postal Code / P.O. Box"
                     i18n-label="@@locationForm.textinput.zip.label"
                     i18n-placeholder="@@locationForm.textinput.zip.placeholder">
             </textinput>
@@ -183,8 +191,7 @@
                     [textarea]="true"
                     [rows]="2"
                     label="Additional / Other address"
-                    style="width: 100%"
-                    placeholder="Enter additional / other address"
+                    placeholder="Enter Additional / Other address"
                     i18n-label="@@locationForm.textinput.otherAddress.label"
                     i18n-placeholder="@@locationForm.textinput.otherAddress.placeholder">
             </textinput>
