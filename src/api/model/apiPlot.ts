@@ -38,6 +38,10 @@ export interface ApiPlot {
      */
     id?: number;
     /**
+     * Date of last update
+     */
+    lastUpdated?: Date;
+    /**
      * Number of plants
      */
     numberOfPlants?: number;
@@ -80,6 +84,10 @@ export namespace ApiPlot {
          * Entity id
          */
         id = 'id',
+        /**
+         * Date of last update
+         */
+        lastUpdated = 'lastUpdated',
         /**
          * Number of plants
          */
@@ -158,6 +166,17 @@ export namespace ApiPlot {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'lastUpdated',
+                    classname: 'ApiPlot',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'numberOfPlants',
                     classname: 'ApiPlot',
                     dataType: 'number',
@@ -219,6 +238,8 @@ export namespace ApiPlot {
                 ],
                 id: [
                 ],
+                lastUpdated: [
+                ],
                 numberOfPlants: [
                 ],
                 organicStartOfTransition: [
@@ -246,6 +267,9 @@ export namespace ApiPlot {
   //                   validators: []
   //               },
   //               id: {
+  //                   validators: []
+  //               },
+  //               lastUpdated: {
   //                   validators: []
   //               },
   //               numberOfPlants: {

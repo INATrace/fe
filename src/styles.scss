@@ -3927,3 +3927,61 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
 
   }
 }
+
+/* style for the numbers to be displayed inside the marker */
+.marker {
+  width: 0;
+  height: 0;
+}
+
+.marker span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  background: #EC6E00;
+  border: solid 2px;
+  border-radius: 0 70% 70%;
+  box-shadow: 0 0 2px #000;
+  cursor: pointer;
+  transform-origin: 0 0;
+  transform: rotateZ(-135deg);
+}
+
+.marker b {
+  transform: rotateZ(135deg);
+}
+
+.mapboxgl-popup-tip {
+  border-bottom-color: #999933 !important;
+}
+
+.mapboxgl-popup-content {
+
+  padding: 0;
+
+  .marker-popup {
+    .marker-popup-row-header {
+      background-color: #999933;
+      padding: 16px;
+    }
+
+    .marker-popup-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+      .row-left {
+        padding-right: 0.5em;
+      }
+
+      .row-right {
+        opacity: 20%;
+      }
+    }
+  }
+}

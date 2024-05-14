@@ -18,7 +18,7 @@
     </label> -->
 
 
-    <div class="sp-textinput-label" style="display: flex; flex: 1 1 0; justify-content: space-between;">
+    <div class="sp-textinput-label" style="display: flex; flex: 1 1 0; justify-content: space-between;" [class.d-none]="addExternalSubj">
         <div *ngIf="label">
             <label class="sp-textinput-label" style="margin-bottom: 0px;" [class.sc-invalid-feedback-label-color]="invalid" [class.ab-closed-label]="labelClosedIndicator">{{label}}</label>
         </div>
@@ -34,7 +34,7 @@
             </a>
         </div>
     </div>
-    <div *ngIf="listEditorManager.arrayLength === 0 && !hideItems" class="le-tagitem" style="margin-top: 0rem; margin-bottom: 0px;" (click)="!isDisabled() && canAdd && !hideItems && addElementEnabled() && addElement()">
+    <div *ngIf="listEditorManager.arrayLength === 0 && !hideItems" [class.d-none]="addExternalSubj" class="le-tagitem" style="margin-top: 0rem; margin-bottom: 0px;" (click)="!isDisabled() && canAdd && !hideItems && addElementEnabled() && addElement()">
         <span class="le-tagitem-empty-text">{{textPrazno}}</span>
     </div>
     <ng-content select="list-editor-errors"></ng-content>

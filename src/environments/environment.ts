@@ -18,6 +18,7 @@ export const environment = {
 
     googleMapsApiKey: window['env']['googleMapsApiKey'] || '',
     googleAnalyticsId: '',
+    mapboxAccessToken: window['env']['mapboxAccessToken'] || '',
     facebookPixelId: null,
     intercomAppId: null,
     chatApp: null,
