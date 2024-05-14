@@ -413,6 +413,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mapUrl = tileLayerUrl;
       this.addTileLayerToMap(this.map);
 
+      this.map.resize();
+
       if (!this.editMode) {
         // load plots
         if (this.plots && this.plots.length > 0) {

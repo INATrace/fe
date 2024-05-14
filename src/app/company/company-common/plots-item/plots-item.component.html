@@ -22,7 +22,7 @@
 
         <button class="btn" (click)="deletePlot()" i18n="@@plotsItem.action.deletePlot">Delete plot</button>
 
-        <app-map *ngIf="tagOpened"
+        <app-map *ngIf="tagOpened" style="width: 100%; display: block;"
           [plotCoordinatesManager]="plotCoordinatesManager"
           [(plotCoordinates)]="plotCoordinates"
           (plotCoordinatesChange)="updateFormCoordinates($event)"
