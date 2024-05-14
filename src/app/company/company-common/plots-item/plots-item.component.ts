@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as turf from '@turf/turf';
 import { generateFormFromMetadata } from 'src/shared/utils';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { GenericEditableItemComponent } from 'src/app/shared/generic-editable-item/generic-editable-item.component';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { Subject } from 'rxjs/internal/Subject';
@@ -10,6 +11,7 @@ import { ApiPlotCoordinate } from '../../../../api/model/apiPlotCoordinate';
 import { PlotCoordinateAction } from '../../../shared-services/plot-coordinate-action-enum';
 import { ApiPlot } from '../../../../api/model/apiPlot';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
+import {Feature, Polygon} from '@turf/turf';
 
 @Component({
   selector: 'app-plots-item',
@@ -105,10 +107,34 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
         coordinatesFormArray.push(nextPlotCoordinate);
       });
 
+      if (this.mapEditable) {
+        const coordinates2Darray = this.getCoordinatesArray(coordinates);
+        const geoJsonA: Feature<Polygon> = {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [
+              coordinates2Darray
+            ],
+          },
+          properties: null,
+        };
+
+        const calculatedArea = (turf.area(geoJsonA) / 1000).toFixed(2);
+        this.form.get('size').setValue(calculatedArea);
+        this.form.get('unit').setValue('ha');
+      }
+
     } else {
       this.form.get('coordinates').setValue(null);
     }
     this.form.get('coordinates').markAsDirty();
   }
 
+  getCoordinatesArray(plotCoordinates: ApiPlotCoordinate[]): number[][] {
+    const coords = [];
+    plotCoordinates.forEach(v => coords.push([v.longitude, v.latitude]));
+    coords.push(coords[0]);
+    return coords;
+  }
 }
