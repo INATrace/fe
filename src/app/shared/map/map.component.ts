@@ -88,6 +88,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           this.togglePlot(show);
           this.showPlotVisible = show;
         }));
+
+        // show plot at first
+        setTimeout(() => {
+          this.showPlotSubject.next(true);
+        }, 200);
       }
     }
   }
@@ -99,13 +104,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   handlePlotCoordinateEvent(actionWrapper: PlotActionWrapper) {
     switch (actionWrapper.action) {
       case PlotCoordinateAction.DELETE_LAST_COORDINATE:
-        this.undoLastPlotCoordinate(actionWrapper.plotId);
+        this.undoLastPlotCoordinate();
         break;
       case PlotCoordinateAction.DELETE_PLOT:
         this.deletePlot(actionWrapper.plotId);
         break;
       case PlotCoordinateAction.ADD_COORDINATE_CURRENT_LOCATION:
-        this.addPlotCoordinateCurrentLocation(actionWrapper.plotId);
+        this.addPlotCoordinateCurrentLocation();
         break;
     }
   }
@@ -152,11 +157,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.plotCoordinatesChange.emit(this.plotCoordinates);
   }
 
-  undoLastPlotCoordinate(plotId?: string) {
+  undoLastPlotCoordinate() {
+
+    this.showPlotSubject.next(false);
+
     const lastMarker = this.markers.pop();
     lastMarker.remove();
     this.plotCoordinates.pop();
     this.plotCoordinatesChange.emit(this.plotCoordinates);
+
+    setTimeout(() => {
+      this.showPlotSubject.next(true);
+    }, 200);
   }
 
   deletePlot(plotId?: string) {
@@ -168,9 +180,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.plotCoordinates = [];
       this.plotCoordinatesChange.emit(this.plotCoordinates);
     }
+
+    setTimeout(() => {
+      this.showPlotSubject.next(false);
+    }, 200);
   }
 
-  addPlotCoordinateCurrentLocation(plotId?: string) {
+  addPlotCoordinateCurrentLocation() {
     navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
@@ -293,10 +309,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   // when the map is clicked, we add the plot-coordinate to the coordinates
   mapClicked(e) {
     if (this.editMode) {
+
+      this.showPlotSubject.next(false);
+
       const lng = e.lngLat.wrap()['lng'];
       const lat = e.lngLat.wrap()['lat'];
       this.placeMarkerOnMap(lat, lng);
       this.plotCoordinatesChange.emit(this.plotCoordinates);
+
+      setTimeout(() => {
+        this.showPlotSubject.next(true);
+      }, 200);
+
     } else {
 
       if (!this.plots || this.plots.length === 0) {
@@ -422,6 +446,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   showPlot(name: string, coordinates: number[][]) {
+
+    if (this.map.getLayer(name)) {
+      return;
+    }
+
     this.map.addSource(name, {
       type: 'geojson',
       data: {
@@ -467,14 +496,26 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   hidePlot(plotName?: string) {
     if (!plotName) {
-      this.map.removeLayer('polygonPreview');
-      this.map.removeLayer('polygonPreviewBorder');
-      this.map.removeSource('polygonPreview');
+      if (this.map.getLayer('polygonPreview')) {
+        this.map.removeLayer('polygonPreview');
+      }
+      if (this.map.getLayer('polygonPreviewBorder')) {
+        this.map.removeLayer('polygonPreviewBorder');
+      }
+      if (this.map.getSource('polygonPreview')) {
+        this.map.removeSource('polygonPreview');
+      }
     } else {
-      this.map.removeLayer(plotName);
+      if (this.map.getLayer(plotName)) {
+        this.map.removeLayer(plotName);
+      }
       const borderName = plotName + 'Border';
-      this.map.removeLayer(borderName);
-      this.map.removeSource(plotName);
+      if (this.map.getLayer(borderName)) {
+        this.map.removeLayer(borderName);
+      }
+      if (this.map.getSource(plotName)) {
+        this.map.removeSource(plotName);
+      }
     }
   }
 
