@@ -1,0 +1,47 @@
+<smart-tag
+  [isOpen]="isOpen && !rawObjectData"
+  [readOnly]="rawObjectData"
+  (onDelete)="delete()"
+  (onEdit)="toggle($event)"
+  [formControlInput]="originalFormControl"
+  [disableDelete]="disableDelete">
+  <tag-closed>
+    <div *ngIf="contentObject" class="c-capitalize-first">
+      <div class="tagitem-text-container">
+        <span i18n="@@plotsItem.header.text">Plot coordinates</span>
+      </div>
+    </div>
+  </tag-closed>
+  <tag-open>
+    <subform-layout *ngIf="this.form">
+      <subform-form>
+
+        <button class="btn mr-2" (click)="showHidePlot()" i18n="@@plotsItem.action.showHidePlot">Show/hide plot</button>
+
+        <button class="btn mr-2" (click)="undoLastPoint()" i18n="@@plotsItem.action.undoLastPoint">Undo last point</button>
+
+        <button class="btn" (click)="deletePlot()" i18n="@@plotsItem.action.deletePlot">Delete plot</button>
+
+        <app-map *ngIf="tagOpened"
+          [plotCoordinatesManager]="plotCoordinatesManager"
+          [(plotCoordinates)]="plotCoordinates"
+          (plotCoordinatesChange)="updateFormCoordinates($event)"
+          [dfDataVisible]="showDeforestationData"
+          [showPlotSubject]="showPlotSubject"
+          [mapId]="'item-map' + listEditorManagerPosition"
+          [editMode]="true"></app-map>
+
+      </subform-form>
+
+      <subform-mini-buttons style="width: 100%;" class="d-flex justify-content-end">
+        <mini-buttons
+          (onSave)="save()"
+          (onCancel)="cancel()"
+          [error]="submitted && form.invalid">
+        </mini-buttons>
+      </subform-mini-buttons>
+
+    </subform-layout>
+
+  </tag-open>
+</smart-tag>

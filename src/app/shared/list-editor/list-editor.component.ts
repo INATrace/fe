@@ -14,6 +14,7 @@ import { faHandMiddleFinger, faPlusCircle } from '@fortawesome/free-solid-svg-ic
 import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { ClosableComponent } from '../closable/closable.component';
 import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs/internal/Subject';
 
 @Component({
     selector: 'list-editor',
@@ -132,6 +133,9 @@ export class ListEditorComponent implements OnInit {
     @Input()
     hideItems = false
 
+    @Input()
+    addExternalSubj: Subject<boolean>;
+
     @ContentChildren(LinkDirective)
     links: QueryList<LinkDirective>;
 
@@ -157,6 +161,14 @@ export class ListEditorComponent implements OnInit {
         this.closableSub2 = this.closable.hideField$.subscribe(val => {
           this.labelClosedIndicator = val
         })
+      }
+
+      if (this.addExternalSubj) {
+          this.addExternalSubj.asObservable().subscribe(() => {
+             if (this.addElementEnabled()) {
+                 this.addElement();
+             }
+          });
       }
     }
 

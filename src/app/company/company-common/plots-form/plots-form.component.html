@@ -1,0 +1,96 @@
+<div class="af-row">
+    <div class="af-c12">
+        <button class="btn mr-2" i18n="@@collectorDetail.plots.button.uploadGeo">
+            <span>Upload geo-data</span>
+        </button>
+        <button class="btn mr-2" (click)="drawPlot()" i18n="@@collectorDetail.plots.button.drawPlot">
+            <span>Draw plot</span>
+        </button>
+        <button class="btn" i18n="@@collectorDetail.plots.button.exportGeo">
+            <span>Export geo-data</span>
+        </button>
+    </div>
+</div>
+
+<div class="af-row">
+    <app-map
+      [mapId]="'map-viewer'"
+      [plots]="plots"
+      [plotCoordinates]="plotCoordinates"
+      (plotCoordinatesChange)="updateLonLat($event)"
+      [pin]="pin"
+      [plotCoordinatesManager]="plotCoordinatesManager"
+      [dfDataVisible]="showDeforestationData"
+    ></app-map>
+</div>
+
+<div *ngIf="form.get('plots')">
+<list-editor *ngIf="plotsListManager"
+             [listEditorManager]="plotsListManager"
+             [canAdd]="true"
+             [addExternalSubj]="drawPlotSubject"
+             label=""
+             addText=""
+             [invalid]="submitted && form.get('plots')?.invalid">
+    <list-editor-items>
+        <div *ngFor="let item of form.get('plots').controls; let i=index;">
+
+            <div class="af-row mt-2">
+                <div class="af-c12">
+                    <textinput
+                      [form]="$any(plotForms[i].get('plotName'))"
+                      (change)="updateForm(i, 'plotName')"
+                      label="Plot name"
+                      style="width: 100%"
+                      placeholder="Enter plot name"
+                      i18n-label="@@collectorDetail.textinput.plotName.label"
+                      i18n-placeholder="@@collectorDetail.textinput.plotName.placeholder">
+                    </textinput>
+                    <label class="text-input-label mb-0">GeoID: {{ (item.value.geoId) ? item.value.geoId : '/' }}</label>
+                </div>
+                <div class="af-c4 ml-0">
+                    <single-choice
+                      [formControlInput]="$any(plotForms[i].get('crop'))"
+                      (onChange)="updateForm(i, 'crop')"
+                      [codebookService]="productTypesCodebook">
+                        <ng-container *ngIf="submitted">
+                            <div *ngIf="form.get('plots').errors as errors" class="sc-invalid-feedback">
+                                <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.productTypes.error">
+                                    <span>Product types are required</span>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </single-choice>
+                </div>
+                <div class="af-c6">
+                    <label class="pt-2 pr-2">Last update:</label>
+                    <ng-container *ngIf="item.value.lastUpdated; else noLastUpdated">
+                        <label class="pt-2">{{ item.value.lastUpdated | date: 'yyyy-MM-dd hh:mm' }}</label>
+                    </ng-container>
+                    <ng-template #noLastUpdated>
+                        <label>/</label>
+                    </ng-template>
+                </div>
+            </div>
+
+            <app-plots-item [title]="item.value.plotName"
+                            [formControlInput]="item"
+                            [isOpen]="plotsListManager.isOpen(i)"
+                            [listEditorManager]="this.plotsListManager"
+                            [listEditorManagerPosition]="i">
+            </app-plots-item>
+        </div>
+    </list-editor-items>
+    <list-editor-errors>
+        <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('plots').errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.plots.error">
+                    <span>
+                        Plot is required
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </list-editor-errors>
+</list-editor>
+</div>

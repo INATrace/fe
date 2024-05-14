@@ -10,6 +10,8 @@ import { StockPaymentsListComponent } from '../company-stock/stock-payments/stoc
 import { ComponentsModule } from '../../components/components.module';
 import { ProducersItemComponent } from './producers-item/producers-item.component';
 import { CompanySelectModalComponent } from './company-select-modal/company-select-modal.component';
+import { PlotsItemComponent } from './plots-item/plots-item.component';
+import { PlotsFormComponent } from './plots-form/plots-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CompanySelectModalComponent } from './company-select-modal/company-sele
     CompanySelectModalComponent,
     StockUnitListComponent,
     StockPaymentsListComponent,
-    ProducersItemComponent
+    ProducersItemComponent,
+    PlotsItemComponent,
+    PlotsFormComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,9 @@ import { CompanySelectModalComponent } from './company-select-modal/company-sele
     CompanySelectModalComponent,
     StockUnitListComponent,
     StockPaymentsListComponent,
-    ProducersItemComponent
+    ProducersItemComponent,
+    PlotsItemComponent,
+    PlotsFormComponent,
   ]
 })
 export class CompanyCommonModule { }

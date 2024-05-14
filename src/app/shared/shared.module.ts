@@ -72,6 +72,7 @@ import { GeoaddressFormComponent } from './geoaddress-form/geoaddress-form.compo
 import { ColorInputComponent } from './color-input/color-input.component';
 import { DocumentPreviewComponent } from './document-preview/document-preview.component';
 import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
     declarations: [
@@ -123,6 +124,7 @@ import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
         DatepickerComponent,
         SearchTextinputComponent,
         LocationFormComponent,
+        MapComponent,
         ContactFormComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
@@ -197,6 +199,7 @@ import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
         DatepickerComponent,
         SearchTextinputComponent,
         LocationFormComponent,
+        MapComponent,
         CertificationAndStandardItemComponent,
         CompanyDocumentItemComponent,
         CompanyDocumentCategoryFilterPipe,

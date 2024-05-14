@@ -1,0 +1,14 @@
+@import "src/_variables";
+
+.company-action {
+  margin: 0.25rem;
+  cursor: pointer;
+}
+
+.enabled-action {
+  color: $primary;
+}
+
+.enabled-action:hover {
+  text-decoration: underline;
+}
