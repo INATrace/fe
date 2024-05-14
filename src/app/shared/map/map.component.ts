@@ -332,7 +332,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   async dialogEUDR() {
     return await this.globalEventsManager.openMessageModal({
       type: 'warning',
-      message: $localize`:@@map.modal.eudr.warning.title:European legislation (EUDR) requires polygon data instead of single pin for all plots of land >4ha. Would you like to proceed anyways?.`,
+      message: $localize`:@@map.modal.eudr.warning.title:European legislation (EUDR) requires polygon data instead of single pin for all plots of land > 4ha. Would you like to proceed anyways?`,
       options: {
         centered: true
       },
