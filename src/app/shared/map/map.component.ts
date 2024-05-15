@@ -365,7 +365,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.plots && this.plots.length > 0) {
           this.setExistingPlots(this.plots);
         } else {
-         if (this.pin) {
+         if (this.pin.latitude && this.pin.longitude) {
           this.setPin(this.pin);
           this.map.fitBounds(this.getInitialMapExtremes(this.plotCoordinates));
          }
