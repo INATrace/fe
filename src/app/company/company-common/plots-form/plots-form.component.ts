@@ -6,7 +6,7 @@ import {ApiPlotCoordinate} from '../../../../api/model/apiPlotCoordinate';
 import {PlotCoordinatesManagerService} from '../../../shared-services/plot-coordinates-manager.service';
 import {ApiPlot} from '../../../../api/model/apiPlot';
 import {ListEditorManager} from '../../../shared/list-editor/list-editor-manager';
-import {defaultEmptyObject, generateFormFromMetadata} from '../../../../shared/utils';
+import {defaultEmptyObject} from '../../../../shared/utils';
 import {Subject} from 'rxjs/internal/Subject';
 import {ApiPlotValidationScheme} from './validation';
 
@@ -27,7 +27,6 @@ export class PlotsFormComponent implements OnInit {
   submitted = false;
 
   plotCoordinates: Array<ApiPlotCoordinate> = [];
-  showDeforestationData = true;
 
   plots: Array<ApiPlot> = [];
   productTypes: Array<ApiProductType> = [];
@@ -35,8 +34,6 @@ export class PlotsFormComponent implements OnInit {
 
   pin: ApiPlotCoordinate;
   plotsListManager: any;
-
-  plotForms: FormGroup[] = [];
 
   drawPlotSubject = new Subject<boolean>();
 
@@ -58,13 +55,6 @@ export class PlotsFormComponent implements OnInit {
       latitude: this.form.get('location').value.latitude,
       longitude: this.form.get('location').value.latitude,
     };
-
-    if (this.plots) {
-      this.plots.forEach(plot => {
-        const plotForm: FormGroup = this.generatePlotForm(plot);
-        this.plotForms.push(plotForm);
-      });
-    }
 
     this.initializeListManager();
     this.initializeMarker();
@@ -106,26 +96,18 @@ export class PlotsFormComponent implements OnInit {
     this.form.get('location.longitude').markAsDirty();
   }
 
-  private generatePlotForm(value: any): FormGroup {
-    return generateFormFromMetadata(ApiPlot.formMetadata(), value, ApiPlotValidationScheme);
-  }
-
-  updateForm(index: number, controlName: string) {
-    const plotsArray = this.form.get('plots') as FormArray;
-    const updatedValue = this.plotForms[index].get(controlName).value;
-
-    const previousParentValue = plotsArray.controls[index].value;
-    previousParentValue[controlName] = updatedValue;
-
-    plotsArray.controls[index].setValue(previousParentValue);
-    plotsArray.controls[index].markAsDirty();
-  }
-
   drawPlot() {
-    const apiPlot: ApiPlot = {};
-    const plotForm: FormGroup = this.generatePlotForm(apiPlot);
-    this.plotForms.push(plotForm);
-
     this.drawPlotSubject.next(true);
+  }
+
+  updateFormGeoId(apiPlot: ApiPlot) {
+    const currentPlotsValue = this.form.get('plots').value as Array<ApiPlot>;
+    currentPlotsValue.forEach(plot => {
+      if (plot.id === apiPlot.id) {
+        plot.geoId = apiPlot.geoId;
+      }
+    });
+    // update
+    this.form.get('plots').setValue(currentPlotsValue);
   }
 }

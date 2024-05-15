@@ -3163,6 +3163,7 @@
     "map.modal.size.title": "Size:",
     "map.modal.geoId.title": "Geo-ID:",
     "map.modal.certification.title": "Certification:",
-    "map.modal.eu.organic.title": "EU Organic"
+    "map.modal.eu.organic.title": "EU Organic",
+    "map.modal.button.refresh.title": "Refresh"
   }
 }

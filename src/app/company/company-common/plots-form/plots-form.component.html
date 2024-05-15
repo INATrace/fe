@@ -19,7 +19,9 @@
       [plots]="plots"
       [plotCoordinates]="plotCoordinates"
       (plotCoordinatesChange)="updateLonLat($event)"
+      (plotGeoIdChange)="updateFormGeoId($event)"
       [pin]="pin"
+      [farmerId]="form.get('id')?.value"
       [plotCoordinatesManager]="plotCoordinatesManager"
     ></app-map>
 </div>
@@ -35,7 +37,8 @@
     <list-editor-items>
         <div *ngFor="let item of form.get('plots').controls; let i=index;">
 
-            <app-plots-item [title]="item.value.plotName"
+            <app-plots-item *ngIf="form"
+                            [title]="item.value.plotName"
                             [formControlInput]="item"
                             [isOpen]="plotsListManager.isOpen(i)"
                             [productTypesCodebook]="productTypesCodebook"

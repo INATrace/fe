@@ -8,6 +8,7 @@ import {PlotActionWrapper, PlotCoordinateAction} from '../../shared-services/plo
 import {ApiPlot} from '../../../api/model/apiPlot';
 import {GlobalEventManagerService} from '../../core/global-event-manager.service';
 import {Subject} from 'rxjs/internal/Subject';
+import {CompanyControllerService} from '../../../api/api/companyController.service';
 
 @Component({
   selector: 'app-map',
@@ -46,8 +47,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   pin: ApiPlotCoordinate;
 
+  @Input()
+  farmerId: number;
+
   @Output()
   plotCoordinatesChange = new EventEmitter<Array<ApiPlotCoordinate>>();
+
+  @Output()
+  plotGeoIdChange = new EventEmitter<ApiPlot>();
 
   @Input()
   showPlotVisible = false;
@@ -58,11 +65,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
   markers: Array<mapboxgl.Marker> = [];
   
-  constructor(private globalEventsManager: GlobalEventManagerService) {
+  constructor(private globalEventsManager: GlobalEventManagerService,
+              private companyControllerService: CompanyControllerService) {
   }
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit() {
@@ -240,9 +247,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (unit === undefined) {
         unit = '';
       }
+
+      const buttonId = 'refresh-geo-btn-' + idx;
       let geoId = plot.geoId;
       if (geoId === undefined) {
-        geoId = '/';
+        const refreshText = $localize`:@@map.modal.button.refresh.title:Refresh`;
+        geoId = `<button id="${buttonId}" class="btn btn-sm" style="font-size: smaller; line-height: normal;">${refreshText}</button>`;
       }
       const isCertified = plot.organicStartOfTransition !== undefined;
       if (!isCertified) {
@@ -259,7 +269,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                                     <div class="row-right"><b>${size} ${unit}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
-                                    <div class="row-left">${geoIdLabel}</div>
+                                    <div class="row-left align-content-center">${geoIdLabel}</div>
                                     <div class="row-right"><b>${geoId}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
@@ -275,6 +285,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           closeOnClick: true
         }
       ).setHTML(popupHtml);
+
+      if (plot.geoId === undefined) {
+        const farmerId = this.farmerId;
+
+        popup.on('open', () => {
+          // popup opened so we fire an event
+          document.getElementById(buttonId).addEventListener('click', () => {
+            this.refreshGeoId(farmerId, plot, buttonId);
+          });
+        });
+      }
 
       // make a marker for each feature and add it to the map
       const marker = new mapboxgl.Marker(el)
@@ -302,6 +323,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.plotCoordinates.push(coord);
 
+  }
+
+  refreshGeoId(farmerId: number, plot: ApiPlot, buttonId: string) {
+
+    this.companyControllerService.refreshGeoIDForUserCustomerPlotUsingPOST(farmerId, plot.id).subscribe(res => {
+      const data = res.data;
+
+      const dataGeoId = data.geoId;
+
+      if (data.geoId) {
+        document.getElementById(buttonId).outerHTML = `<div style="text-align: end;"><b>${dataGeoId}</b></div>`;
+      }
+
+      this.emitRefreshedData(data);
+    });
+  }
+
+  emitRefreshedData(plot: ApiPlot) {
+    this.plotGeoIdChange.emit(plot);
   }
   
   // when the map is clicked, we add the plot-coordinate to the coordinates
