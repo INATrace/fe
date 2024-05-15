@@ -72,8 +72,25 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   }
 
   get name() {
-    if (this.form.get('plotName').value) {
-      return this.form.get('plotName').value;
+    const plotName = this.form.get('plotName').value;
+    let returnStr = plotName;
+    const crop = this.form.get('crop').value?.name ? this.form.get('crop').value?.name : '/';
+    const size = this.form.get('size').value ? this.form.get('size').value : '/';
+    const unit = this.form.get('unit').value ? this.form.get('unit').value : '/';
+    const geoId = this.form.get('geoId').value ? this.form.get('geoId').value : '/';
+    if (plotName) {
+       if (this.form.get('crop').value?.name) {
+         returnStr += ' - ' + crop;
+       }
+       if (this.form.get('size').value) {
+        returnStr += ' - ' + size;
+       }
+       if (this.form.get('unit').value) {
+        returnStr += unit;
+       }
+       returnStr += ' - ' + geoId;
+
+       return returnStr;
     }
   }
 
