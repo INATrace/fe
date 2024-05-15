@@ -12,6 +12,7 @@ import { PlotCoordinateAction } from '../../../shared-services/plot-coordinate-a
 import { ApiPlot } from '../../../../api/model/apiPlot';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
 import {Feature, Polygon} from '@turf/turf';
+import {ApiPlotValidationScheme} from '../plots-form/validation';
 
 @Component({
   selector: 'app-plots-item',
@@ -95,7 +96,7 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   }
 
   public generateForm(value: any): FormGroup {
-    return generateFormFromMetadata(ApiPlot.formMetadata(), value, null);
+    return generateFormFromMetadata(ApiPlot.formMetadata(), value, ApiPlotValidationScheme);
   }
 
   showHidePlot() {

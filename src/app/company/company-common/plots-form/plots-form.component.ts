@@ -8,6 +8,7 @@ import {ApiPlot} from '../../../../api/model/apiPlot';
 import {ListEditorManager} from '../../../shared/list-editor/list-editor-manager';
 import {defaultEmptyObject, generateFormFromMetadata} from '../../../../shared/utils';
 import {Subject} from 'rxjs/internal/Subject';
+import {ApiPlotValidationScheme} from './validation';
 
 @Component({
   selector: 'app-plots-form',
@@ -46,7 +47,7 @@ export class PlotsFormComponent implements OnInit {
 
   static ApiPlotEmptyObjectFormFactory(): () => FormControl {
     return () => {
-      return new FormControl(PlotsFormComponent.ApiPlotCreateEmptyObject(), []);
+      return new FormControl(PlotsFormComponent.ApiPlotCreateEmptyObject(), ApiPlotValidationScheme.validators);
     };
   }
 
@@ -89,7 +90,7 @@ export class PlotsFormComponent implements OnInit {
     this.plotsListManager = new ListEditorManager<ApiPlot>(
       this.form.get('plots') as FormArray,
       PlotsFormComponent.ApiPlotEmptyObjectFormFactory(),
-      null
+      ApiPlotValidationScheme
     );
   }
 
@@ -106,7 +107,7 @@ export class PlotsFormComponent implements OnInit {
   }
 
   private generatePlotForm(value: any): FormGroup {
-    return generateFormFromMetadata(ApiPlot.formMetadata(), value, null);
+    return generateFormFromMetadata(ApiPlot.formMetadata(), value, ApiPlotValidationScheme);
   }
 
   updateForm(index: number, controlName: string) {

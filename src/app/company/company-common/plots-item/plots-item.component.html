@@ -46,6 +46,7 @@
               <textinput
                 [form]="$any(this.form.get('plotName'))"
                 label="Plot name"
+                [isInvalid]="submitted && form.get('plotName').invalid"
                 style="width: 100%"
                 placeholder="Enter plot name"
                 i18n-label="@@collectorDetail.textinput.plotName.label"
@@ -55,9 +56,10 @@
                 label="Crop"
                 i18n-label="@@collectorDetail.textinput.crop.label"
                 [formControlInput]="$any(this.form.get('crop'))"
-                [codebookService]="productTypesCodebook">
+                [codebookService]="productTypesCodebook"
+                [isInvalidChoice]="submitted && form.get('crop').invalid">
                   <ng-container *ngIf="submitted">
-                      <div *ngIf="form.get('plots').errors as errors" class="sc-invalid-feedback">
+                      <div *ngIf="form.get('crop').errors as errors" class="sc-invalid-feedback">
                           <div *ngIf="errors.required" i18n-title="@@collectorDetail.list-editor.productTypes.error">
                               <span>Product types are required</span>
                           </div>
