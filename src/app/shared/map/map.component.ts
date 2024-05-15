@@ -211,7 +211,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       container: this.mapId, // id of div that holds the map
       style: this.mapStyle,
       zoom: 10,
-      center: [this.lng, this.lat]
+      center: [this.lng, this.lat],
+      cooperativeGestures: true
     });
 
     this.map.on('click', e => this.mapClicked(e));
