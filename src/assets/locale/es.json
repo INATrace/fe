@@ -3116,10 +3116,10 @@
     "collectorDetail.textinput.lastUpdate.label": "Ultima actualización",
     "collectorDetail.list-editor.plots.error": "Se requieren parcelas",
     "map.modal.eudr.warning.title": "La legislación europea (EUDR) exige datos poligonales en lugar de una única chincheta para todas las parcelas de más de 4 ha. ¿Desea continuar de todos modos?",
-    "map.modal.crop.title": "Cultivo",
-    "map.modal.size.title": "Área",
-    "map.modal.geoId.title": "Geo-ID",
-    "map.modal.certification.title": "Certificación",
+    "map.modal.crop.title": "Cultivo:",
+    "map.modal.size.title": "Área:",
+    "map.modal.geoId.title": "Geo-ID:",
+    "map.modal.certification.title": "Certificación:",
     "map.modal.eu.organic.title": "EU Organic"
   }
 }

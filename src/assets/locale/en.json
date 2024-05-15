@@ -3159,10 +3159,10 @@
     "collectorDetail.textinput.lastUpdate.label": "Last update",
     "collectorDetail.list-editor.plots.error": "Plots are required",
     "map.modal.eudr.warning.title": "European legislation (EUDR) requires polygon data instead of single pin for all plots of land > 4ha. Would you like to proceed anyways?",
-    "map.modal.crop.title": "Crop",
-    "map.modal.size.title": "Size",
-    "map.modal.geoId.title": "Geo-ID",
-    "map.modal.certification.title": "Certification",
+    "map.modal.crop.title": "Crop:",
+    "map.modal.size.title": "Size:",
+    "map.modal.geoId.title": "Geo-ID:",
+    "map.modal.certification.title": "Certification:",
     "map.modal.eu.organic.title": "EU Organic"
   }
 }

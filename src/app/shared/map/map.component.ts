@@ -222,33 +222,49 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     if (plot) {
-      const cropLabel = $localize`:@@map.modal.crop.title:Crop`;
-      const sizeLabel = $localize`:@@map.modal.size.title:Size`;
-      const geoIdLabel = $localize`:@@map.modal.geoId.title:GeoId`;
-      const certificationLabel = $localize`:@@map.modal.certification.title:Certification`;
-      const euOrganic = $localize`:@@map.modal.eu.organic.title:EU Organic`;
+      const cropLabel = $localize`:@@map.modal.crop.title:Crop:`;
+      const sizeLabel = $localize`:@@map.modal.size.title:Size:`;
+      const geoIdLabel = $localize`:@@map.modal.geoId.title:Geo-ID:`;
+      const certificationLabel = $localize`:@@map.modal.certification.title:Certification:`;
+      let euOrganic = $localize`:@@map.modal.eu.organic.title:EU Organic`;
       const name = plot.plotName;
-      const crop = plot.crop?.name;
-      const size = plot.size;
-      const unit = plot.unit;
-      const geoId = plot.geoId;
+      let crop = plot.crop?.name;
+      if (crop === undefined) {
+        crop = '/';
+      }
+      let size: any = plot.size;
+      if (size === undefined) {
+        size = '/';
+      }
+      let unit = plot.unit;
+      if (unit === undefined) {
+        unit = '';
+      }
+      let geoId = plot.geoId;
+      if (geoId === undefined) {
+        geoId = '/';
+      }
+      const isCertified = plot.organicStartOfTransition !== undefined;
+      if (!isCertified) {
+        euOrganic = '/';
+      }
       const popupHtml = `<div class="marker-popup">
                                   <div class="marker-popup-row-header">${name}</div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${cropLabel}</div>
-                                    <div class="row-right">${crop}</div>
+                                    <div class="row-right"><b>${crop}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${sizeLabel}</div>
-                                    <div class="row-right">${size} ${unit}</div>
+                                    <div class="row-right"><b>${size} ${unit}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${geoIdLabel}</div>
-                                    <div class="row-right">${geoId}</div>
+                                    <div class="row-right"><b>${geoId}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${certificationLabel}</div>
-                                    <div class="row-right">${euOrganic}</div>
+                                    <div class="row-right"><b>${euOrganic}</b></div>
                                   </div>
                                 </div>`;
 
