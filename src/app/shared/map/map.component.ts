@@ -194,15 +194,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   initializeMap(): void {
     if (this.editMode) {
-      navigator.geolocation.getCurrentPosition( position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        });
-      });
+      this.flyToCurrentPosition();
+    } else {
+      if (!this.plots || this.plots.length === 0) {
+        this.flyToCurrentPosition();
+      }
     }
     this.buildMap();
+  }
+
+  flyToCurrentPosition(): void {
+    navigator.geolocation.getCurrentPosition( position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      this.map.flyTo({
+        center: [this.lng, this.lat]
+      });
+    });
   }
   
   buildMap(): void {
