@@ -3121,6 +3121,7 @@
     "map.modal.geoId.title": "Geo-ID:",
     "map.modal.certification.title": "Certificación:",
     "map.modal.eu.organic.title": "EU Organic",
-    "map.modal.button.refresh.title": "Actualizar"
+    "map.modal.button.refresh.title": "Actualizar",
+    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data"
   }
 }
