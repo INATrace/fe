@@ -74,24 +74,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.initializeMap();
-    if (this.plotCoordinatesManager) {
-      this.subscriptions.add(this.plotCoordinatesManager.plotCoordinateAction$.subscribe(actionWrapper => {
-        this.handlePlotCoordinateEvent(actionWrapper);
-      }));
-    }
-    if (this.editMode) {
-      if (this.showPlotSubject) {
-        this.subscriptions.add(this.showPlotSubject.asObservable().subscribe(show => {
-          this.togglePlot(show);
-          this.showPlotVisible = show;
-        }));
-
-        // show plot at first
-        setTimeout(() => {
-          this.showPlotSubject.next(true);
-        }, 200);
-      }
-    }
   }
 
   ngOnDestroy(): void {
@@ -415,6 +397,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.map.resize();
 
+      if (this.plotCoordinatesManager) {
+        this.subscriptions.add(this.plotCoordinatesManager.plotCoordinateAction$.subscribe(actionWrapper => {
+          this.handlePlotCoordinateEvent(actionWrapper);
+        }));
+      }
+
       if (!this.editMode) {
         // load plots
         if (this.plots && this.plots.length > 0) {
@@ -426,6 +414,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
          }
         }
       } else {
+
+        if (this.showPlotSubject) {
+          this.subscriptions.add(this.showPlotSubject.asObservable().subscribe(show => {
+            this.togglePlot(show);
+            this.showPlotVisible = show;
+          }));
+          // show plot at first
+          setTimeout(() => {
+            this.showPlotSubject.next(true);
+          }, 200);
+        }
+
         // edit mode
         if (this.plotCoordinates && this.plotCoordinates.length > 0) {
           const plotCoordinates = [...this.plotCoordinates];
