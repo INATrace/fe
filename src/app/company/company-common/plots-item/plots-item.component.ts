@@ -130,9 +130,6 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
         const nextPlotCoordinate = generateFormFromMetadata(ApiPlotCoordinate.formMetadata(), c, null);
         coordinatesFormArray.push(nextPlotCoordinate);
       });
-      // also add first as last coordinate
-      //const lastCoordinate = generateFormFromMetadata(ApiPlotCoordinate.formMetadata(), coordinates[0], null);
-      //coordinatesFormArray.push(lastCoordinate);
 
       if (this.mapEditable) {
         const coordinates2Darray = this.getCoordinatesArray(coordinates);
