@@ -37,7 +37,7 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   plotCoordinates: Array<ApiPlotCoordinate> = [];
 
 
-  plotShown = false;
+  plotShown = true;
   showPlotSubject = new Subject<boolean>();
   existingPlotCoordinatesSubject = new Subject<ApiPlotCoordinate[]>();
   tagOpened = false;
@@ -62,8 +62,14 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
       this.existingPlotCoordinatesSubject.next(this.plotCoordinates);
     }
 
+    this.showPlotSubject.asObservable().subscribe(next =>  {
+      this.plotShown = next;
+    });
+
     this.plotShown = false;
     this.showPlotSubject.next(this.plotShown);
+
+
 
     this.form.markAsDirty();
 

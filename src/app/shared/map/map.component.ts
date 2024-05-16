@@ -457,6 +457,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    if (coordinates.length < 3) {
+      return;
+    }
+
     this.map.addSource(name, {
       type: 'geojson',
       data: {
