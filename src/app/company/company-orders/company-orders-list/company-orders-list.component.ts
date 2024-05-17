@@ -18,6 +18,7 @@ import { ApproveRejectTransactionModalComponent } from '../approve-reject-transa
 import { GenerateQRCodeModalComponent } from '../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { ProcessingOrderControllerService } from '../../../../api/api/processingOrderController.service';
 import {FileSaverService} from 'ngx-filesaver';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-company-orders-list',
@@ -70,6 +71,7 @@ export class CompanyOrdersListComponent implements OnInit {
   constructor(
     private router: Router,
     private globalEventsManager: GlobalEventManagerService,
+    private toastService: ToastrService,
     private stockOrderController: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
     private fileSaverService: FileSaverService,
@@ -333,10 +335,24 @@ export class CompanyOrdersListComponent implements OnInit {
   }
 
   async exportGeoData(order: ApiStockOrder) {
-    const res = await this.stockOrderController.exportGeoDataUsingGET(order.id)
-      .pipe(take(1))
-      .toPromise();
 
-    this.fileSaverService.save(res, 'geoData.json');
+    this.globalEventsManager.showLoading(true);
+
+    const res = await this.stockOrderController.exportGeoDataUsingGET(order.id)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.globalEventsManager.showLoading(false);
+        })
+      ).toPromise();
+
+    if (res.size > 0) {
+      this.fileSaverService.save(res, 'geoData.json');
+    } else {
+      this.toastService.error($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
+      return;
+    }
+
+
   }
 }

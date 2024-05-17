@@ -3122,6 +3122,7 @@
     "map.modal.certification.title": "Certificación:",
     "map.modal.eu.organic.title": "EU Organic",
     "map.modal.button.refresh.title": "Actualizar",
-    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data"
+    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data",
+    "orderList.export.geojson.noDataAvailable": "Los datos geoespaciales no están disponibles para este pedido"
   }
 }

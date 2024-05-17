@@ -3168,6 +3168,7 @@
     "map.modal.certification.title": "Certification:",
     "map.modal.eu.organic.title": "EU Organic",
     "map.modal.button.refresh.title": "Refresh",
-    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data"
+    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data",
+    "orderList.export.geojson.noDataAvailable": "There is no Geo data available for this order"
   }
 }
