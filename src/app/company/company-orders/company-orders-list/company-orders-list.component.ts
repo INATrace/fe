@@ -349,10 +349,9 @@ export class CompanyOrdersListComponent implements OnInit {
     if (res.size > 0) {
       this.fileSaverService.save(res, 'geoData.json');
     } else {
-      this.toastService.error($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
+      this.toastService.info($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
       return;
     }
-
 
   }
 }
