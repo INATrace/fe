@@ -176,7 +176,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   initializeMap(): void {
     if (this.editMode) {
-      this.flyToCurrentPosition();
+      if (this.editable) {
+        this.flyToCurrentPosition();
+      }
     } else {
       if (!this.plots || this.plots.length === 0) {
         this.flyToCurrentPosition();
