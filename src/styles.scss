@@ -3982,6 +3982,15 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
       .row-right {
         opacity: 1;
       }
+
+      .geoid-label {
+        flex: 0 0 55px;
+      }
+
     }
   }
+}
+
+.geoid-content {
+  word-break: break-all;
 }

@@ -43,6 +43,15 @@
           </div>
 
           <div class="af-c12">
+              <label class="mt-2 mb-0" i18n="@@map.modal.geoId.title">Geo-ID:</label>
+              <ng-container *ngIf="$any(this.form.get('geoId')?.value); else noGeoId">
+                <div>
+                  <label class="geoid-content">{{ this.form.get('geoId').value }}</label>
+                </div>
+              </ng-container>
+              <ng-template #noGeoId>
+                <label>&nbsp;/</label>
+              </ng-template>
               <textinput
                 [form]="$any(this.form.get('plotName'))"
                 label="Plot name"

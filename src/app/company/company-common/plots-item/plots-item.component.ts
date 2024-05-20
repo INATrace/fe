@@ -84,7 +84,6 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
     const crop = this.form.get('crop').value?.name ? this.form.get('crop').value?.name : '/';
     const size = this.form.get('size').value ? this.form.get('size').value : '/';
     const unit = this.form.get('unit').value ? this.form.get('unit').value : '/';
-    const geoId = this.form.get('geoId').value ? this.form.get('geoId').value : '/';
     if (plotName) {
        if (this.form.get('crop').value?.name) {
          returnStr += ' - ' + crop;
@@ -95,7 +94,6 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
        if (this.form.get('unit').value) {
         returnStr += unit;
        }
-       returnStr += ' - ' + geoId;
 
        return returnStr;
     }

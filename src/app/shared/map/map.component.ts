@@ -250,6 +250,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (geoId === undefined) {
         const refreshText = $localize`:@@map.modal.button.refresh.title:Refresh`;
         geoId = `<button id="${buttonId}" class="btn btn-sm" style="font-size: smaller; line-height: normal;">${refreshText}</button>`;
+      } else {
+        geoId = `<span class="geoid-content">${geoId}</span>`;
       }
       const isCertified = plot.organicStartOfTransition !== undefined;
       if (!isCertified) {
@@ -266,7 +268,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                                     <div class="row-right"><b>${size} ${unit}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
-                                    <div class="row-left align-content-center">${geoIdLabel}</div>
+                                    <div class="row-left align-content-center geoid-label">${geoIdLabel}</div>
                                     <div class="row-right"><b>${geoId}</b></div>
                                   </div>
                                   <div class="marker-popup-row">
