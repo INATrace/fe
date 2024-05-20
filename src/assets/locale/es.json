@@ -943,7 +943,7 @@
     "productLabelStock.subTitle.listOfGroupedOrders": "Lista de pedidos agrupados",
     "productLabelStock.subTitle.showingOrders": "Mostrando {$INTERPOLATION}/{$INTERPOLATION_1}",
     "productLabelStock.subTitle.groupedOrdersButton": "Vista Grupal",
-    "productLabelStock.subTitle.singleOrdersButton": "Vista Individua",
+    "productLabelStock.subTitle.singleOrdersButton": "Vista Individual",
     "productLabelStock.filter.purchaseOrderOnly.filter": "Sólo entregas {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "productLabelStock.filter.availableOnly.filter": "Sólo disponibles {$START_TAG_DIV}{$START_TAG_FA_ICON}{$CLOSE_TAG_FA_ICON}{$CLOSE_TAG_DIV}",
     "productLabelStock.filter.purchaseOrderOnly.button": "Sólo entregas",
@@ -3122,7 +3122,7 @@
     "map.modal.certification.title": "Certificación:",
     "map.modal.eu.organic.title": "EU Organic",
     "map.modal.button.refresh.title": "Actualizar",
-    "productLabelPurchaseOrder.tableCol.exportGeoData": "Export Geo Data",
-    "orderList.export.geojson.noDataAvailable": "Los datos geoespaciales no están disponibles para este pedido"
+    "productLabelPurchaseOrder.tableCol.exportGeoData": "Exportar geodatos",
+    "orderList.export.geojson.noDataAvailable": "No hay geodatos disponibles para este pedido"
   }
 }
