@@ -13,6 +13,7 @@ import { ApiPlot } from '../../../../api/model/apiPlot';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
 import {Feature, Polygon} from '@turf/turf';
 import {ApiPlotValidationScheme} from '../plots-form/validation';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-plots-item',
@@ -29,6 +30,8 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
 
   @Input()
   productTypesCodebook: CompanyProductTypesService;
+
+  faCopy = faCopy;
 
   plotCoordinatesManager: PlotCoordinatesManagerService = new PlotCoordinatesManagerService();
 
@@ -159,4 +162,9 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
     coords.push(coords[0]);
     return coords;
   }
+
+  copyToClipboard() {
+    document.execCommand('copy');
+  }
+
 }

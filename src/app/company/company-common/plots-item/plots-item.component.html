@@ -46,7 +46,9 @@
               <label class="mt-2 mb-0" i18n="@@map.modal.geoId.title">Geo-ID:</label>
               <ng-container *ngIf="$any(this.form.get('geoId')?.value); else noGeoId">
                 <div>
-                  <label class="geoid-content">{{ this.form.get('geoId').value }}</label>
+                  <label class="geoid-content pr-1">{{ this.form.get('geoId').value }}</label>
+                  <fa-icon class="copy-icon" [icon]="faCopy" (click)="geoId.select(); copyToClipboard();"></fa-icon>
+                  <input #geoId value="{{ this.form.get('geoId').value }}" class="offscreen">
                 </div>
               </ng-container>
               <ng-template #noGeoId>
