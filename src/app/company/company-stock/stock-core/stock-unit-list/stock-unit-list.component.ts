@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rx
 import { DeliveryDates, StockOrderListingPageMode } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
@@ -20,6 +20,7 @@ import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ToastrService } from 'ngx-toastr';
+import {FileSaverService} from 'ngx-filesaver';
 
 @Component({
   selector: 'app-stock-unit-list',
@@ -115,6 +116,7 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private globalEventsManager: GlobalEventManagerService,
+    private fileSaverService: FileSaverService,
     private stockOrderControllerService: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
     private modalService: NgbModalImproved,
@@ -684,6 +686,23 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
     }
 
     return '';
+  }
+
+  async exportGeoData(order: ApiStockOrder) {
+    this.globalEventsManager.showLoading(true);
+    const res = await this.stockOrderControllerService.exportGeoDataUsingGET(order.id)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.globalEventsManager.showLoading(false);
+        })
+      ).toPromise();
+    if (res.size > 0) {
+      this.fileSaverService.save(res, 'geoData.geojson');
+    } else {
+      this.toasterService.info($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
+      return;
+    }
   }
 
 }

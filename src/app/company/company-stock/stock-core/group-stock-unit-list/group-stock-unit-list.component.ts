@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rx
 import { DeliveryDates } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import { map, skip, switchMap, take, tap } from 'rxjs/operators';
+import {finalize, map, skip, switchMap, take, tap} from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedListApiStockOrder } from '../../../../../api/model/apiPaginatedListApiStockOrder';
@@ -19,6 +19,8 @@ import { ApiPaginatedResponseApiGroupStockOrder } from '../../../../../api/model
 import { ApiPaginatedListApiGroupStockOrder } from '../../../../../api/model/apiPaginatedListApiGroupStockOrder';
 import { ApiGroupStockOrder } from '../../../../../api/model/apiGroupStockOrder';
 import { AggregatedStockItem } from '../stock-unit-list/models';
+import {FileSaverService} from 'ngx-filesaver';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-group-stock-unit-list',
@@ -82,6 +84,8 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
       private router: Router,
       private route: ActivatedRoute,
       private globalEventsManager: GlobalEventManagerService,
+      private fileSaverService: FileSaverService,
+      private toastService: ToastrService,
       private stockOrderControllerService: StockOrderControllerService,
       private groupStockOrderControllerService: GroupStockOrderControllerService,
       private processingOrderController: ProcessingOrderControllerService,
@@ -525,6 +529,26 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
         }, new Map<string, AggregatedStockItem>());
 
     return [...Array.from(aggregatedSemiProductsMap.values()), ...Array.from(aggregatedFinalProducts.values())];
+  }
+
+  async exportGeoData(order: ApiGroupStockOrder) {
+
+    const firstOrderId = order.groupedIds[0];
+
+    this.globalEventsManager.showLoading(true);
+    const res = await this.stockOrderControllerService.exportGeoDataUsingGET(firstOrderId)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.globalEventsManager.showLoading(false);
+        })
+      ).toPromise();
+    if (res.size > 0) {
+      this.fileSaverService.save(res, 'geoData.geojson');
+    } else {
+      this.toastService.info($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
+      return;
+    }
   }
 
 }
