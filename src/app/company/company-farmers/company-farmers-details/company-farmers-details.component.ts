@@ -265,7 +265,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   private prefillFarmPlantInformation(): void {
-    const listControls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
+
+    const farmPlantInformationList = this.farmerForm.get('farm.farmPlantInformationList') as FormArray;
+    if (farmPlantInformationList == null) {
+      return;
+    }
+
+    const listControls = (farmPlantInformationList).controls;
     const newListControls: AbstractControl[] = [];
     listControls.forEach(control => {
       const farmPlantInformation = control.value as ApiFarmPlantInformation;
@@ -332,33 +338,42 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
 
   initValueChangeListeners() {
-    this.subscriptions.push(this.areaUnit.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
-    this.subscriptions.push(this.totalCultivatedArea.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
-    this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
+
+    if (this.areaUnit != null) {
+      this.subscriptions.push(this.areaUnit.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
+
+    if (this.totalCultivatedArea != null) {
+      this.subscriptions.push(this.totalCultivatedArea.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
+
+    if (this.areaOrganicCertified != null) {
+      this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
   }
 
   private addControlValueChangeListener(control: FormControl) {
@@ -575,6 +590,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   updateAreaUnitValidators() {
+    if (this.areaUnit == null) {
+      return;
+    }
     this.areaUnit.clearValidators();
     this.areaUnit.setValidators(
       this.checkAreaFieldsRequired() ?
@@ -590,17 +608,20 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   checkAreaFieldsRequired() {
     return (!this.checkNullEmpty(this.totalCultivatedArea) ||
-      this.checkPlantsCutivatedAreaFields() ||
+      this.checkPlantsCultivatedAreaFields() ||
       !this.checkNullEmpty(this.areaOrganicCertified));
   }
 
   checkNullEmpty(control: FormControl){
-    return control.value === null || control.value === undefined || control.value === '';
+    return control == null || control.value == null || control.value === '';
   }
 
-  checkPlantsCutivatedAreaFields() {
-    const controls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
-    return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
+  checkPlantsCultivatedAreaFields() {
+    const farmPlantInformationList = this.farmerForm.get('farm.farmPlantInformationList') as FormArray;
+    if (farmPlantInformationList != null) {
+      const controls = farmPlantInformationList.controls;
+      return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
+    }
   }
 
   public get areaUnit(): FormControl {
