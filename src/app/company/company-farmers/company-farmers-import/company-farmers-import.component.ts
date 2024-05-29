@@ -36,19 +36,24 @@ export class CompanyFarmersImportComponent implements OnInit {
       private location: Location,
       private globalEventsManager: GlobalEventManagerService,
       private selUserCompanyService: SelectedUserCompanyService
-  ) {
-
-    if (LanguageCodeHelper.getCurrentLocale() === 'es') {
-      this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado%20de%20agricultores_es.xlsx';
-    } else {
-      this.farmerImportTemplateHref = '/assets/farmer-import/Template_list%20of%20farmers_en.xlsx';
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
     this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
       if (cp) {
         this.companyId = cp.id;
+
+        // Depending on the selected user company, set the appropriate farmer import template for download
+        const companyCountryCode = cp.headquarters?.country?.code;
+        if (companyCountryCode === 'RW') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Template_list_of_farmers_Rwanda_en.xlsx';
+        } else if (companyCountryCode === 'HN') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado_de_agricultores_Honduras_es.xlsx';
+        } else if (LanguageCodeHelper.getCurrentLocale() === 'es') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado_de_agricultores_otros_paises_es.xlsx';
+        } else {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Template_list_of_farmers_other_countries_en.xlsx';
+        }
       }
     });
   }
