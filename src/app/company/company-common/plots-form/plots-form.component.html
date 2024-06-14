@@ -20,6 +20,7 @@
       [plotCoordinates]="plotCoordinates"
       (plotCoordinatesChange)="updateLonLat($event)"
       (plotGeoIdChange)="updateFormGeoId($event)"
+      (geoIdOpenChange)="openGeoIdWhisp($event)"
       [pin]="pin"
       [farmerId]="form.get('id')?.value"
       [plotCoordinatesManager]="plotCoordinatesManager"

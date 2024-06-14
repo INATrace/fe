@@ -9,6 +9,10 @@ import {ListEditorManager} from '../../../shared/list-editor/list-editor-manager
 import {defaultEmptyObject} from '../../../../shared/utils';
 import {Subject} from 'rxjs/internal/Subject';
 import {ApiPlotValidationScheme} from './validation';
+import {NgbModalImproved} from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import {
+  OpenPlotDetailsExternallyModalComponent
+} from '../../company-farmers/open-plot-details-externally-modal/open-plot-details-externally-modal.component';
 
 @Component({
   selector: 'app-plots-form',
@@ -46,6 +50,9 @@ export class PlotsFormComponent implements OnInit {
     return () => {
       return new FormControl(PlotsFormComponent.ApiPlotCreateEmptyObject(), ApiPlotValidationScheme.validators);
     };
+  }
+  
+  constructor(private modalService: NgbModalImproved) {
   }
 
   ngOnInit(): void {
@@ -109,5 +116,19 @@ export class PlotsFormComponent implements OnInit {
     });
     // update
     this.form.get('plots').setValue(currentPlotsValue);
+  }
+
+  openGeoIdWhisp($geoId: string) {
+    const modalRef = this.modalService.open(OpenPlotDetailsExternallyModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'xxl',
+      scrollable: true
+    });
+    Object.assign(modalRef.componentInstance, {
+      geoId: $geoId
+    });
+    modalRef.result.then();
   }
 }

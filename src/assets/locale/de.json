@@ -3168,6 +3168,7 @@
     "map.modal.crop.title": "Crop:",
     "map.modal.size.title": "Size:",
     "map.modal.geoId.title": "Geo-ID:",
+    "map.modal.openInWhisp.title": "Open in Whisp",
     "map.modal.certification.title": "Certification:",
     "map.modal.eu.organic.title": "EU Organic",
     "map.modal.button.refresh.title": "Aktualisierung",
