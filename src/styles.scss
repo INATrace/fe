@@ -2423,6 +2423,10 @@ $ustwo-colour-delux: #666;
   margin-bottom: 16px;
 }
 
+.modal-xxl {
+  width: 90vw;
+  max-width: 90vw;
+}
 
 .af-bottom-buttons {
   display: flex;
@@ -3985,6 +3989,11 @@ input.toggle-switch-checkbox:checked + label.toggle-switch-label:after {
 
       .geoid-label {
         flex: 0 0 55px;
+      }
+
+      .popup-button {
+        font-size: smaller;
+        line-height: normal;
       }
 
     }

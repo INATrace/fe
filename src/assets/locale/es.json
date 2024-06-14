@@ -3118,6 +3118,7 @@
     "map.modal.crop.title": "Cultivo:",
     "map.modal.size.title": "Área:",
     "map.modal.geoId.title": "Geo-ID:",
+    "map.modal.openInWhisp.title": "Open in Whisp",
     "map.modal.certification.title": "Certificación:",
     "map.modal.eu.organic.title": "EU Organic",
     "map.modal.button.refresh.title": "Actualizar",

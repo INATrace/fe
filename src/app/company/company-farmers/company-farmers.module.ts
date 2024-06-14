@@ -13,11 +13,14 @@ import { ProductStakeholdersModule } from '../../m-product/product-stakeholders/
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanyFarmersImportComponent } from './company-farmers-import/company-farmers-import.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {
+  OpenPlotDetailsExternallyModalComponent
+} from './open-plot-details-externally-modal/open-plot-details-externally-modal.component';
 
 
 
 @NgModule({
-  declarations: [CompanyFarmersListComponent, CompanyFarmersDetailsComponent, CompanyFarmersImportComponent],
+  declarations: [CompanyFarmersListComponent, CompanyFarmersDetailsComponent, CompanyFarmersImportComponent, OpenPlotDetailsExternallyModalComponent],
     imports: [
         CommonModule,
         LayoutModule,

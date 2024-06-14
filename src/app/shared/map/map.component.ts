@@ -55,6 +55,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output()
   plotGeoIdChange = new EventEmitter<ApiPlot>();
+  
+  @Output()
+  geoIdOpenChange = new EventEmitter<string>();
 
   @Input()
   showPlotVisible = false;
@@ -231,6 +234,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       const cropLabel = $localize`:@@map.modal.crop.title:Crop:`;
       const sizeLabel = $localize`:@@map.modal.size.title:Size:`;
       const geoIdLabel = $localize`:@@map.modal.geoId.title:Geo-ID:`;
+      const openInGeoIdLabel = $localize`:@@map.modal.openInWhisp.title:Open in Whisp`;
       const certificationLabel = $localize`:@@map.modal.certification.title:Certification:`;
       let euOrganic = $localize`:@@map.modal.eu.organic.title:EU Organic`;
       const name = plot.plotName;
@@ -251,10 +255,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       let geoId = plot.geoId;
       if (geoId === undefined) {
         const refreshText = $localize`:@@map.modal.button.refresh.title:Refresh`;
-        geoId = `<button id="${buttonId}" class="btn btn-sm" style="font-size: smaller; line-height: normal;">${refreshText}</button>`;
+        geoId = `<button id="${buttonId}" class="btn btn-sm popup-button">${refreshText}</button>`;
       } else {
         geoId = `<span class="geoid-content">${geoId}</span>`;
       }
+      
+      const buttonOpenGeoIdLink = 'open-whisp-a-' + idx;
+      let openGeoIdLinkHtml = '';
+      if (plot.geoId !== undefined) {
+        openGeoIdLinkHtml = `<div class="pt-2">
+                                <button id="${buttonOpenGeoIdLink}" class="btn btn-sm popup-button">${openInGeoIdLabel}</button>
+                             </div>`;
+      }
+      
       const isCertified = plot.organicStartOfTransition !== undefined;
       if (!isCertified) {
         euOrganic = '/';
@@ -271,7 +284,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left align-content-center geoid-label">${geoIdLabel}</div>
-                                    <div class="row-right"><b>${geoId}</b></div>
+                                    <div class="row-right"><b>${geoId}</b>
+                                      ${openGeoIdLinkHtml}
+                                    </div>
                                   </div>
                                   <div class="marker-popup-row">
                                     <div class="row-left">${certificationLabel}</div>
@@ -294,6 +309,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           // popup opened so we fire an event
           document.getElementById(buttonId).addEventListener('click', () => {
             this.refreshGeoId(farmerId, plot, buttonId);
+          });
+        });
+      } else {
+        popup.on('open', () => {
+          // popup open wnen geoId exist
+          document.getElementById(buttonOpenGeoIdLink).addEventListener('click', () => {
+            this.emitGeoIdOpenInWhispClick(plot.geoId);
           });
         });
       }
@@ -343,6 +365,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   emitRefreshedData(plot: ApiPlot) {
     this.plotGeoIdChange.emit(plot);
+  }
+  
+  emitGeoIdOpenInWhispClick(geoId: string) {
+    this.geoIdOpenChange.emit(geoId);
   }
   
   // when the map is clicked, we add the plot-coordinate to the coordinates
