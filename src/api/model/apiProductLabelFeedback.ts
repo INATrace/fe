@@ -47,6 +47,10 @@ export interface ApiProductLabelFeedback {
      */
     privacyPolicyConsent?: boolean;
     /**
+     * The product name of label for which the feedback was provided
+     */
+    productName?: string;
+    /**
      * questionnaire answers - key-answer map
      */
     questionnaireAnswers?: { [key: string]: string; };
@@ -92,6 +96,10 @@ export namespace ApiProductLabelFeedback {
          * Privacy policy consent
          */
         privacyPolicyConsent = 'privacyPolicyConsent',
+        /**
+         * The product name of label for which the feedback was provided
+         */
+        productName = 'productName',
         /**
          * questionnaire answers - key-answer map
          */
@@ -191,6 +199,17 @@ export namespace ApiProductLabelFeedback {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'productName',
+                    classname: 'ApiProductLabelFeedback',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'questionnaireAnswers',
                     classname: 'ApiProductLabelFeedback',
                     dataType: '{ [key: string]: string; }',
@@ -235,6 +254,8 @@ export namespace ApiProductLabelFeedback {
                 ],
                 privacyPolicyConsent: [
                 ],
+                productName: [
+                ],
                 questionnaireAnswers: [
                 ],
                 termsOfUseConsent: [
@@ -264,6 +285,9 @@ export namespace ApiProductLabelFeedback {
   //                   validators: []
   //               },
   //               privacyPolicyConsent: {
+  //                   validators: []
+  //               },
+  //               productName: {
   //                   validators: []
   //               },
   //               questionnaireAnswers: {

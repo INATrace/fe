@@ -27,7 +27,10 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
     private productController: ProductControllerService,
     private modalService: NgbModalImproved
   ) {
-    if (this.router.getCurrentNavigation() && this.router.getCurrentNavigation().extras && this.router.getCurrentNavigation().extras.state && this.router.getCurrentNavigation().extras.state.data) {
+    if (this.router.getCurrentNavigation() &&
+        this.router.getCurrentNavigation().extras &&
+        this.router.getCurrentNavigation().extras.state &&
+        this.router.getCurrentNavigation().extras.state.data) {
       this.labelId = this.router.getCurrentNavigation().extras.state.data;
       localStorage.setItem('statisticsUUID', this.labelId);
     } else {
@@ -38,40 +41,39 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
   faTimes = faTimes;
   faFilter = faFilter;
   routerSub: Subscription;
-  searchName = new FormControl(null)
-  searchStatus = new FormControl("")
+  searchName = new FormControl(null);
+  searchStatus = new FormControl('');
 
-  reloadPing$ = new BehaviorSubject<boolean>(false)
-  pagingParams$ = new BehaviorSubject({})
-  sortingParams$ = new BehaviorSubject({ sortBy: 'email', sort: 'ASC' })
+  reloadPing$ = new BehaviorSubject<boolean>(false);
+  pagingParams$ = new BehaviorSubject({});
+  sortingParams$ = new BehaviorSubject({ sortBy: 'email', sort: 'ASC' });
   paging$ = new BehaviorSubject<number>(1);
 
-  page: number = 0;
+  page = 0;
   pageSize = 10;
-  labelId: string = "";
-  goToLink: string = this.router.url.substr(0, this.router.url.lastIndexOf("/"));
+  labelId = '';
 
-  allFeedbacks: number = 0;
-  showedFeedbacks: number = 0;
+  allFeedbacks = 0;
+  showedFeedbacks = 0;
 
   ngOnInit(): void {
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/feedback') {
-        this.reloadPage()
+        this.reloadPage();
       }
-    })
-    this.setAllFeedbacks();
+    });
+    this.setAllFeedbacks().then();
   }
 
   async setAllFeedbacks() {
-    let res = await this.publicController.listProductLabelFeedbacksUsingGET(this.labelId, 'COUNT').pipe(take(1)).toPromise();
+    const res = await this.publicController.listProductLabelFeedbacksUsingGET(this.labelId, 'COUNT').pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
       this.allFeedbacks = res.data.count;
     }
   }
 
   reloadPage() {
-    this.reloadPing$.next(true)
+    this.reloadPing$.next(true);
   }
 
   onPageChange(event) {
@@ -91,27 +93,27 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
       startWith(null)
     ),
     (email: string, type: string) => {
-      return { email, type }
+      return { email, type };
     }
-  )
+  );
 
   get statusList() {
-    let obj = {}
-    obj[""] = $localize`:@@productLabelFeedback.statusList.all:All`
-    obj['PRAISE'] = $localize`:@@productLabelFeedback.statusList.registred:Praise`
-    obj['PROPOSAL'] = $localize`:@@productLabelFeedback.statusList.active:Proposal`
-    obj['COMPLAINT'] = $localize`:@@productLabelFeedback.statusList.deactivated:Complaint`
+    const obj = {};
+    obj[''] = $localize`:@@productLabelFeedback.statusList.all:All`;
+    obj['PRAISE'] = $localize`:@@productLabelFeedback.statusList.registred:Praise`;
+    obj['PROPOSAL'] = $localize`:@@productLabelFeedback.statusList.active:Proposal`;
+    obj['COMPLAINT'] = $localize`:@@productLabelFeedback.statusList.deactivated:Complaint`;
     return obj;
   }
 
-  codebookStatus = EnumSifrant.fromObject(this.statusList)
+  codebookStatus = EnumSifrant.fromObject(this.statusList);
 
   showStatus(status: string) {
     this.searchStatus.setValue(status);
   }
 
   clearValue() {
-    this.searchStatus.setValue("");
+    this.searchStatus.setValue('');
   }
 
   feedbacks$ = combineLatest(this.reloadPing$, this.paging$, this.searchParams$, this.sortingParams$,
@@ -121,27 +123,28 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
         ...sorting,
         offset: (page - 1) * this.pageSize,
         limit: this.pageSize
-      }
+      };
     }).pipe(
       tap(val => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
-        let labelUid = this.labelId
-        let newParams = { labelUid, ...params };
-        return this.publicController.listProductLabelFeedbacksUsingGETByMap(newParams)
+        const labelUid = this.labelId;
+        const newParams = { labelUid, ...params };
+        return this.publicController.listProductLabelFeedbacksUsingGETByMap(newParams);
       }),
       map((resp: ApiPaginatedResponseApiProductLabelFeedback) => {
         if (resp) {
-          if (resp.data && resp.data.count && (this.pageSize - resp.data.count > 0)) this.showedFeedbacks = resp.data.count;
-          else {
-            let temp = resp.data.count - (this.pageSize * (this.page - 1));
+          if (resp.data && resp.data.count && (this.pageSize - resp.data.count > 0)) {
+            this.showedFeedbacks = resp.data.count;
+          } else {
+            const temp = resp.data.count - (this.pageSize * (this.page - 1));
             this.showedFeedbacks = temp >= this.pageSize ? this.pageSize : temp;
           }
-          return resp.data
+          return resp.data;
         }
       }),
       tap(val => this.globalEventsManager.showLoading(false)),
       shareReplay(1)
-    )
+    );
 
   sortOptions = [
     {
@@ -192,17 +195,18 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
       centered: true
     });
     Object.assign(modalRef.componentInstance, {
-      feedback: feedback
-    })
+      feedback
+    });
   }
 
   ngOnDestroy() {
-    if (this.routerSub) this.routerSub.unsubscribe()
+    if (this.routerSub) {
+      this.routerSub.unsubscribe();
+    }
   }
 
   showPagination() {
-    if (((this.showedFeedbacks - this.pageSize) == 0 && this.allFeedbacks >= this.pageSize) || this.page > 1) return true;
-    else return false
+    return ((this.showedFeedbacks - this.pageSize) === 0 && this.allFeedbacks >= this.pageSize) || this.page > 1;
   }
 
   setBoolean(b: boolean) {

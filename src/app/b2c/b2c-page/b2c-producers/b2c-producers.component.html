@@ -10,13 +10,11 @@
             [b2cSettings]="b2cSettings">
     </app-b2c-carousel>
 
-    <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{titleCooperative}}</h1>
+    <h1 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ titleCooperative }}</h1>
 
-    <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{companyNameCooperative}}</h2>
+    <h2 [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ companyNameCooperative }}</h2>
 
-    <p *ngIf="this.coopAbout" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{this.coopAbout}}</p>
-
-    <h2 i18n="@@frontPage.producers.subtitle.processingStory" class="text-center" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Processing story</h2>
+    <p *ngIf="this.coopAbout" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">{{ this.coopAbout }}</p>
 
     <app-b2c-carousel
             [slides]="picsProduction"
@@ -24,7 +22,7 @@
             [b2cSettings]="b2cSettings">
     </app-b2c-carousel>
 
-    <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">The brand {{ productName }} owned by local producers</h1>
+    <h1 i18n="@@frontPage.producers.title.meetOwner" [style.font-family]="b2cSettings.textFont ? 'custom-text' : ''">Learn more about {{ productName }}</h1>
 
     <ng-container *ngIf="videoRWurl">
         <iframe [src]="this.videoRWurl" frameborder="0" allowfullscreen></iframe>

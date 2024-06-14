@@ -1,12 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { generateFormFromMetadata, defaultEmptyObject } from 'src/shared/utils';
+import { defaultEmptyObject, generateFormFromMetadata } from 'src/shared/utils';
 import { ApiProductLabelFeedback } from 'src/api/model/apiProductLabelFeedback';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { PublicControllerService } from 'src/api/api/publicController.service';
 import { take } from 'rxjs/operators';
-import { ApiProductLabelFeedbackValidationScheme, questionnaireAnswersValidationScheme, questionnaireAnswersFormMetadata } from './validation';
+import {
+  ApiProductLabelFeedbackValidationScheme,
+  questionnaireAnswersFormMetadata,
+  questionnaireAnswersValidationScheme
+} from './validation';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 
 @Component({
@@ -16,7 +20,7 @@ import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 })
 export class FeedbackModalComponent implements OnInit {
 
-  submitted: boolean = false;
+  submitted = false;
 
   @Input()
   labelId;
@@ -27,15 +31,11 @@ export class FeedbackModalComponent implements OnInit {
   @Input()
   feedback;
 
-  filterCoffeeForm = new FormControl(null);
-  espressoForm = new FormControl(null);
-  frenchPressForm = new FormControl(null);
-  fullyAutomaticForm = new FormControl(null);
-  stovetopForm = new FormControl(null);
-  otherForm = new FormControl(null);
   feedbackForm: FormGroup;
 
-  readOnly: boolean = false;
+  productName: string;
+
+  readOnly = false;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -44,33 +44,24 @@ export class FeedbackModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.labelId) {
-      this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(), defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
-      let questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), {}, questionnaireAnswersValidationScheme);
+    if (this.labelId) {
+      this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(),
+          defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
+      const questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), {}, questionnaireAnswersValidationScheme);
       this.feedbackForm.setControl('questionnaireAnswers', questionnaireAnswersForm);
 
       this.feedbackForm.updateValueAndValidity();
     } else {
       this.readOnly = true;
       this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(), this.feedback, ApiProductLabelFeedbackValidationScheme);
-      let questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), this.feedback.questionnaireAnswers, questionnaireAnswersValidationScheme);
+      const questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), this.feedback.questionnaireAnswers, questionnaireAnswersValidationScheme);
       this.feedbackForm.setControl('questionnaireAnswers', questionnaireAnswersForm);
 
-      if (this.feedback.questionnaireAnswers.howDoYouPrepare) {
-        let howDoYouPrepare = JSON.parse(this.feedback.questionnaireAnswers.howDoYouPrepare);
-        this.filterCoffeeForm.setValue(howDoYouPrepare.FILTER_COFFE);
-        this.espressoForm.setValue(howDoYouPrepare.ESPRESSO_MACHINE);
-        this.frenchPressForm.setValue(howDoYouPrepare.FRENCH_PRESS);
-        this.fullyAutomaticForm.setValue(howDoYouPrepare.FULLY_AUTOMATIC_MACHINE);
-        this.stovetopForm.setValue(howDoYouPrepare.STOVETOP_MOKA_POT);
-        this.otherForm.setValue(howDoYouPrepare.OTHER);
+      this.feedbackForm.get('questionnaireAnswers.rateTaste').disable();
+      this.feedbackForm.get('questionnaireAnswers.gender').disable();
 
-        this.feedbackForm.get('questionnaireAnswers.rateTaste').disable();
-        this.feedbackForm.get('questionnaireAnswers.gender').disable();
-      }
-
+      this.productName = this.feedback.productName;
     }
-
   }
 
   dismiss() {
@@ -85,8 +76,8 @@ export class FeedbackModalComponent implements OnInit {
     let result = false;
     try {
       this.globalEventsManager.showLoading(true);
-      let data = this.prepareData();
-      let res = await this.publicController.addProductLabelFeedbackUsingPOST(this.labelId, data).pipe(take(1)).toPromise()
+      const data = this.prepareData();
+      const res = await this.publicController.addProductLabelFeedbackUsingPOST(this.labelId, data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         result = true;
       }
@@ -100,46 +91,35 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   prepareData() {
-    let data = this.feedbackForm.value;
-
-    data.questionnaireAnswers.howDoYouPrepare = JSON.stringify({
-      FILTER_COFFEE: this.filterCoffeeForm.value,
-      ESPRESSO_MACHINE: this.espressoForm.value,
-      FRENCH_PRESS: this.frenchPressForm.value,
-      FULLY_AUTOMATIC_MACHINE: this.fullyAutomaticForm.value,
-      STOVETOP_MOKA_POT: this.stovetopForm.value,
-      OTHER: this.otherForm.value
-    })
-
-    return data;
+    return this.feedbackForm.value;
   }
 
   get statusList() {
-    let obj = {}
+    const obj = {};
     obj['PRAISE'] = $localize`:@@productLabelFrontFeedback.statusList.registred:Praise`
     obj['PROPOSAL'] = $localize`:@@productLabelFrontFeedback.statusList.active:Proposal`
     obj['COMPLAINT'] = $localize`:@@productLabelFrontFeedback.statusList.deactivated:Complaint`
     return obj;
   }
-  codebookStatus = EnumSifrant.fromObject(this.statusList)
+  codebookStatus = EnumSifrant.fromObject(this.statusList);
 
   get ageCodes() {
-    let obj = {}
-    obj['Male'] = $localize`:@@customerDetail.ageCodes.male:Male`
-    obj['Female'] = $localize`:@@customerDetail.ageCodes.female:Female`
-    obj['N/A'] = $localize`:@@customerDetail.ageCodes.na:N/A`
+    const obj = {};
+    obj['Male'] = $localize`:@@customerDetail.ageCodes.male:Male`;
+    obj['Female'] = $localize`:@@customerDetail.ageCodes.female:Female`;
+    obj['N/A'] = $localize`:@@customerDetail.ageCodes.na:N/A`;
     return obj;
   }
-  codebookAgeCodes = EnumSifrant.fromObject(this.ageCodes)
+  codebookAgeCodes = EnumSifrant.fromObject(this.ageCodes);
 
 
   get tasteCodes() {
-    let obj = {}
-    obj['Better'] = $localize`:@@customerDetail.tasteCodes.better:Better`
-    obj['Same'] = $localize`:@@customerDetail.tasteCodes.same:Same`
-    obj['Worse'] = $localize`:@@customerDetail.tasteCodes.worse:Worse`
+    const obj = {};
+    obj['Better'] = $localize`:@@customerDetail.tasteCodes.better:Better`;
+    obj['Same'] = $localize`:@@customerDetail.tasteCodes.same:Same`;
+    obj['Worse'] = $localize`:@@customerDetail.tasteCodes.worse:Worse`;
     return obj;
   }
-  codebookTasteCodes = EnumSifrant.fromObject(this.tasteCodes)
+  codebookTasteCodes = EnumSifrant.fromObject(this.tasteCodes);
 
 }

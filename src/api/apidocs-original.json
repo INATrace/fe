@@ -17087,6 +17087,10 @@
             "example": false,
             "type": "boolean"
           },
+          "productName": {
+            "description": "The product name of label for which the feedback was provided",
+            "type": "string"
+          },
           "questionnaireAnswers": {
             "additionalProperties": {
               "type": "string"
