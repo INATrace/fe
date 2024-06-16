@@ -391,36 +391,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showPlotSubject.next(true);
       }, 200);
 
-    } else {
-
-      if (!this.plots || this.plots.length === 0) {
-        this.dialogEUDR().then(
-          (res) => {
-            if (res === 'ok') {
-              const lng = e.lngLat.wrap()['lng'];
-              const lat = e.lngLat.wrap()['lat'];
-
-              this.pin = {
-                latitude: lat,
-                longitude: lng
-              };
-              this.setPin(this.pin);
-            }
-          }
-        );
-      }
     }
-  }
-
-  async dialogEUDR() {
-    return await this.globalEventsManager.openMessageModal({
-      type: 'warning',
-      message: $localize`:@@map.modal.eudr.warning.title:European legislation (EUDR) requires polygon data instead of single pin for all plots of land > 4ha. Would you like to proceed anyways?`,
-      options: {
-        centered: true
-      },
-      dismissable: false
-    });
   }
 
   async mapLoaded() {

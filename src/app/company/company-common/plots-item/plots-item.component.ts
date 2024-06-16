@@ -167,4 +167,30 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
     document.execCommand('copy');
   }
 
+  savePlot() {
+    if (this.plotCoordinates.length < 3) {
+      this.dialogEUDR().then(
+        (res) => {
+          if (res === 'ok') {
+            this.save();
+          }
+        }
+      );
+    } else {
+      this.save();
+    }
+  }
+
+  async dialogEUDR() {
+    return await this.globalEventsManager.openMessageModal({
+      type: 'warning',
+      message: $localize`:@@map.modal.eudr.warning.title:European legislation (EUDR) requires polygon data instead of single pin for all plots of land > 4ha. Would you like to proceed anyways?`,
+      options: {
+        centered: true,
+        size: 'lg'
+      },
+      dismissable: false,
+      buttonTitles: { ok: $localize`:@@map.modal.eudr.warning.ok:Yes, add single pin.`, cancel: $localize`:@@map.modal.eudr.warning.cancel:No, add polygon instead.` }
+    });
+  }
 }
