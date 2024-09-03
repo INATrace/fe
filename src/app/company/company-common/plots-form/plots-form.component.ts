@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {ApiProductType} from '../../../../api/model/apiProductType';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
@@ -29,6 +29,15 @@ export class PlotsFormComponent implements OnInit {
 
   @Input()
   submitted = false;
+
+  @Input()
+  updateMode: boolean;
+
+  @Output()
+  uploadGeoData = new EventEmitter<void>();
+
+  @Output()
+  exportGeoData = new EventEmitter<void>();
 
   plotCoordinates: Array<ApiPlotCoordinate> = [];
 

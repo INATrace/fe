@@ -2948,17 +2948,10 @@ $af-b2c-font-family: 'Open Sans', sans-serif;
       padding-bottom: $af-spacing-one-and-a-treequarters;
     }
 
-
-    // tweak google maps corners
-    // google-map {
-    //   border-radius: 16px;
-    // }
     .map-container {
       border-radius: $larger-corner-radius; // 16px;
     }
   }
-
-
 
   &-sliders {
     display: flex;

@@ -142,6 +142,51 @@ export namespace DeleteStockOrderUsingDELETE {
 }
 
 /**
+ * Namespace for exportDeliveriesByCompanyUsingGET.
+ */
+export namespace ExportDeliveriesByCompanyUsingGET {
+    /**
+     * Parameter map for exportDeliveriesByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for exportDeliveriesByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportDeliveriesByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ExportDeliveriesByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for exportGeoDataUsingGET.
  */
 export namespace ExportGeoDataUsingGET {
@@ -1436,6 +1481,94 @@ export class StockOrderControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteStockOrderUsingDELETE')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Export deliveries (stock orders of type PURCHASE_ORDER) for the provided company ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public exportDeliveriesByCompanyUsingGETByMap(
+    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<Blob>;
+  public exportDeliveriesByCompanyUsingGETByMap(
+    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+  public exportDeliveriesByCompanyUsingGETByMap(
+    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+  public exportDeliveriesByCompanyUsingGETByMap(
+    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.exportDeliveriesByCompanyUsingGET(
+      map.companyId,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Export deliveries (stock orders of type PURCHASE_ORDER) for the provided company ID
+     * 
+     * @param companyId Company ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesByCompanyUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/stock-order/export/deliveries/company/${encodeURIComponent(String(companyId))}`,
+            {
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportDeliveriesByCompanyUsingGET')));
         }
         return handle;
     }

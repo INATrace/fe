@@ -34,6 +34,8 @@ import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
 import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInformation';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { FileSaverService } from "ngx-filesaver";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -165,12 +167,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
       private location: Location,
-      private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
       private selUserCompanyService: SelectedUserCompanyService,
-      public theme: ThemeService
+      public theme: ThemeService,
+      private fileSaverService: FileSaverService,
+      private httpClient: HttpClient
   ) { }
 
   static ApiUserCustomerCooperativeCreateEmptyObject(): ApiUserCustomerCooperative {
@@ -336,7 +339,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     resultArrayControls.forEach(res => plantInfoListArray.push(res));
   }
 
-
   initValueChangeListeners() {
 
     if (this.areaUnit != null) {
@@ -407,6 +409,48 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.farmer, ApiUserCustomerValidationScheme);
 
     this.prefillFarmPlantInformation();
+  }
+
+  async geoJSONSelectedToUpload($event: Event) {
+
+    if (!this.update) {
+      return;
+    }
+
+    const fileInput: HTMLInputElement = $event.target as HTMLInputElement;
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      await this.httpClient.post(
+          `${ this.companyService.configuration.basePath }/api/company/userCustomers/${ this.farmer.id }/uploadGeoData`, formData, {observe: 'response'})
+          .pipe(take(1))
+          .toPromise();
+
+      this.ngOnInit();
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
+  }
+
+  async exportGeoData() {
+
+    if (!this.update) {
+      return;
+    }
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      const res = await this.companyService.exportUserCustomerGeoDataUsingGET(this.farmer.id)
+          .pipe(take(1))
+          .toPromise();
+      this.fileSaverService.save(res, 'farmer_geo_data.json');
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   emptyFarmer() {

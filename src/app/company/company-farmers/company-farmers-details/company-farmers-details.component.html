@@ -124,7 +124,14 @@
                         <app-plots-form
                           [productTypesCodebook]="productTypesCodebook"
                           [form]="$any(farmerForm)"
-                          [submitted]="submitted"></app-plots-form>
+                          [submitted]="submitted"
+                          [updateMode]="update"
+                          (uploadGeoData)="fileUpload.click()"
+                          (exportGeoData)="exportGeoData()"></app-plots-form>
+                        <input type="file"
+                               (change)="geoJSONSelectedToUpload($event)"
+                               [multiple]="false"
+                               accept="application/json" class="d-none" #fileUpload>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,6 @@ import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-
 import { StockPaymentsSelectorForNewPaymentModalComponent } from '../stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
 import { AuthService } from '../../../../core/auth.service';
 import { CompanyControllerService } from '../../../../../api/api/companyController.service';
-import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 
@@ -47,8 +46,6 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
       protected authService: AuthService,
       protected companyController: CompanyControllerService,
       private paymentControllerService: PaymentControllerService,
-      private companyService: CompanyControllerService,
-      private commonCsvControllerService: CommonCsvControllerService,
       private fileSaverService: FileSaverService,
       protected selUserCompanyService: SelectedUserCompanyService
   ) {
@@ -108,13 +105,27 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
     this.selectedIdsChanged(this.selectedPayments);
   }
 
-  async generatePaymentsCsv(){
+  async exportPaymentsExcel(): Promise<void> {
 
-    const res = await this.commonCsvControllerService.generatePaymentsByCompanyCsvUsingPOST(this.companyId)
-    .pipe(take(1))
-    .toPromise();
+    this.globalEventManager.showLoading(true);
+    try {
+      const res = await this.paymentControllerService.exportPaymentsByCompanyUsingGET(this.companyId)
+          .pipe(take(1))
+          .toPromise();
 
-    this.fileSaverService.save(res, 'payments.csv');
+      this.fileSaverService.save(res, 'payments.xlsx');
+    } finally {
+      this.globalEventManager.showLoading(false);
+    }
+  }
+
+  async exportBulkPaymentsExcel(): Promise<void> {
+
+    const res = await this.paymentControllerService.exportBulkPaymentsByCompanyUsingGET(this.companyId)
+        .pipe(take(1))
+        .toPromise();
+
+    this.fileSaverService.save(res, 'bulk_payments.xlsx');
   }
 
   onShowPayments(event) {

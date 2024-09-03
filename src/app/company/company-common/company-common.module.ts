@@ -12,6 +12,7 @@ import { ProducersItemComponent } from './producers-item/producers-item.componen
 import { CompanySelectModalComponent } from './company-select-modal/company-select-modal.component';
 import { PlotsItemComponent } from './plots-item/plots-item.component';
 import { PlotsFormComponent } from './plots-form/plots-form.component';
+import { FormatFarmerImportValidationErrorPipe } from "./pipes/format-farmer-import-validation-error.pipe";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PlotsFormComponent } from './plots-form/plots-form.component';
     ProducersItemComponent,
     PlotsItemComponent,
     PlotsFormComponent,
+    FormatFarmerImportValidationErrorPipe
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { PlotsFormComponent } from './plots-form/plots-form.component';
     ProducersItemComponent,
     PlotsItemComponent,
     PlotsFormComponent,
+    FormatFarmerImportValidationErrorPipe
   ]
 })
 export class CompanyCommonModule { }

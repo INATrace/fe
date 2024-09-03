@@ -1,14 +1,15 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {environment} from 'src/environments/environment';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import * as mapboxgl from 'mapbox-gl';
-import {Observable, Subscription} from 'rxjs';
-import {ApiPlotCoordinate} from '../../../api/model/apiPlotCoordinate';
-import {PlotCoordinatesManagerService} from '../../shared-services/plot-coordinates-manager.service';
-import {PlotActionWrapper, PlotCoordinateAction} from '../../shared-services/plot-coordinate-action-enum';
-import {ApiPlot} from '../../../api/model/apiPlot';
-import {GlobalEventManagerService} from '../../core/global-event-manager.service';
-import {Subject} from 'rxjs/internal/Subject';
-import {CompanyControllerService} from '../../../api/api/companyController.service';
+import { Observable, Subscription } from 'rxjs';
+import { ApiPlotCoordinate } from '../../../api/model/apiPlotCoordinate';
+import { PlotCoordinatesManagerService } from '../../shared-services/plot-coordinates-manager.service';
+import { PlotActionWrapper, PlotCoordinateAction } from '../../shared-services/plot-coordinate-action-enum';
+import { ApiPlot } from '../../../api/model/apiPlot';
+import { GlobalEventManagerService } from '../../core/global-event-manager.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { CompanyControllerService } from '../../../api/api/companyController.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-map',
@@ -21,7 +22,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private lng = 13.7; // initial values for focus
   
   private map: mapboxgl.Map;
-  private mapStyle = 'mapbox://styles/mapbox/outdoors-v12'; // style of the map
+  private MAPBOX_STYLE_BASE_PATH = 'mapbox://styles/mapbox/';
 
   @Input()
   mapId = 'map';
@@ -67,6 +68,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   
   subscriptions: Subscription = new Subscription();
   markers: Array<mapboxgl.Marker> = [];
+
+  mapStyle: FormControl = new FormControl('satellite-streets-v12');
   
   constructor(private globalEventsManager: GlobalEventManagerService,
               private companyControllerService: CompanyControllerService) {
@@ -188,6 +191,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     this.buildMap();
+
+    // Subscribe to Map style radio group changes
+    this.subscriptions.add(
+      this.mapStyle.valueChanges.subscribe(value => {
+        this.map.setStyle(`${this.MAPBOX_STYLE_BASE_PATH}${value}`);
+      })
+    );
   }
 
   flyToCurrentPosition(): void {
@@ -204,7 +214,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map = new mapboxgl.Map({
       accessToken: environment.mapboxAccessToken,
       container: this.mapId, // id of div that holds the map
-      style: this.mapStyle,
+      style: `${this.MAPBOX_STYLE_BASE_PATH}${this.mapStyle.value}`,
       zoom: 10,
       center: [this.lng, this.lat],
       cooperativeGestures: true
@@ -218,7 +228,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.map.on('click', e => this.mapClicked(e));
     this.map.on('load', () => this.mapLoaded());
-    
   }
 
   placeMarkerOnMap(lat: number, lng: number, plot?: ApiPlot, isPin?: boolean) {
@@ -228,7 +237,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     const el = document.createElement('div');
     el.classList.add('marker');
     el.innerHTML = isPin ? '<span></span>' : '<span><b>' + (idx + 1) + '</b></span>';
-
 
     if (plot) {
       const cropLabel = $localize`:@@map.modal.crop.title:Crop:`;
@@ -303,7 +311,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       ).setHTML(popupHtml);
 
       if (plot.geoId === undefined) {
-        const farmerId = this.farmerId;
+        const farmerId = this.farmerId ?? plot['farmerId'];
 
         popup.on('open', () => {
           // popup opened so we fire an event
@@ -313,7 +321,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       } else {
         popup.on('open', () => {
-          // popup open wnen geoId exist
+          // popup open when geoId exist
           document.getElementById(buttonOpenGeoIdLink).addEventListener('click', () => {
             this.emitGeoIdOpenInWhispClick(plot.geoId);
           });
@@ -345,7 +353,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.plotCoordinates.push(coord);
-
   }
 
   refreshGeoId(farmerId: number, plot: ApiPlot, buttonId: string) {
@@ -390,7 +397,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       setTimeout(() => {
         this.showPlotSubject.next(true);
       }, 200);
-
     }
   }
 
@@ -409,7 +415,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.plots && this.plots.length > 0) {
           this.setExistingPlots(this.plots);
         } else {
-         if (this.pin.latitude && this.pin.longitude) {
+         if (this.pin?.latitude && this.pin?.longitude) {
           this.setPin(this.pin);
           this.map.fitBounds(this.getInitialMapExtremes(this.plotCoordinates));
          }
@@ -449,8 +455,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.placeMarkerOnMap(pin.latitude, pin.longitude, null, true);
     this.plotCoordinatesChange.emit(this.plotCoordinates);
   }
-
-
 
   showPlot(name: string, coordinates: number[][]) {
 
@@ -502,7 +506,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       'line-width': 1
       }
     });
-    
   }
 
   hidePlot(plotName?: string) {
@@ -557,4 +560,5 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.placeMarkerOnMap(latCenter, lonCenter, plot);
   }
+
 }

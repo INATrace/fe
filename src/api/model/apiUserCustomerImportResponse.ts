@@ -19,12 +19,14 @@
 
 
 import { ApiUserCustomer } from './apiUserCustomer';
+import { ApiUserCustomerImportRowValidationError } from './apiUserCustomerImportRowValidationError';
 
 
 
 export interface ApiUserCustomerImportResponse { 
     duplicates?: Array<ApiUserCustomer>;
     successful?: number;
+    validationErrors?: Array<ApiUserCustomerImportRowValidationError>;
 }
 
 /**
@@ -36,7 +38,8 @@ export namespace ApiUserCustomerImportResponse {
      */
     export enum Properties {
         duplicates = 'duplicates',
-        successful = 'successful'
+        successful = 'successful',
+        validationErrors = 'validationErrors'
     }
 
 
@@ -68,11 +71,25 @@ export namespace ApiUserCustomerImportResponse {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiUserCustomerImportRowValidationError.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'validationErrors',
+                    classname: 'ApiUserCustomerImportResponse',
+                    dataType: 'Array&lt;ApiUserCustomerImportRowValidationError&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiUserCustomerImportRowValidationError'
+                },
             ],
             validators: {
                 duplicates: [
                 ],
                 successful: [
+                ],
+                validationErrors: [
                 ],
             }
         }
@@ -85,6 +102,9 @@ export namespace ApiUserCustomerImportResponse {
   //                   validators: []
   //               },
   //               successful: {
+  //                   validators: []
+  //               },
+  //               validationErrors: {
   //                   validators: []
   //               },
   //     }

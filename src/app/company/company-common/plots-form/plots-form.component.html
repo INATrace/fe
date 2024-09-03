@@ -1,14 +1,14 @@
 <div class="af-row">
     <div class="af-c12">
-<!--        <button class="btn mr-2" i18n="@@collectorDetail.plots.button.uploadGeo">-->
-<!--            <span>Upload geo-data</span>-->
-<!--        </button>-->
+        <button *ngIf="updateMode" (click)="uploadGeoData.emit()" class="btn mr-2" i18n="@@collectorDetail.plots.button.uploadGeo">
+            <span>Upload geo-data</span>
+        </button>
         <button class="btn mr-2" (click)="drawPlot()" i18n="@@collectorDetail.plots.button.drawPlot">
             <span>Draw plot</span>
         </button>
-<!--        <button class="btn" i18n="@@collectorDetail.plots.button.exportGeo">-->
-<!--            <span>Export geo-data</span>-->
-<!--        </button>-->
+        <button *ngIf="updateMode" (click)="exportGeoData.emit()" class="btn" i18n="@@collectorDetail.plots.button.exportGeo">
+            <span>Export geo-data</span>
+        </button>
     </div>
 </div>
 
@@ -23,8 +23,8 @@
       (geoIdOpenChange)="openGeoIdWhisp($event)"
       [pin]="pin"
       [farmerId]="form.get('id')?.value"
-      [plotCoordinatesManager]="plotCoordinatesManager"
-    ></app-map>
+      [plotCoordinatesManager]="plotCoordinatesManager">
+    </app-map>
 </div>
 
 <div *ngIf="form.get('plots')">

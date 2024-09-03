@@ -30,6 +30,10 @@ export interface ApiPlot {
     coordinates?: Array<ApiPlotCoordinate>;
     crop?: ApiProductType;
     /**
+     * Date of last update
+     */
+    farmerId?: number;
+    /**
      * The Geoid of the plot
      */
     geoId?: string;
@@ -76,6 +80,10 @@ export namespace ApiPlot {
          */
         coordinates = 'coordinates',
         crop = 'crop',
+        /**
+         * Date of last update
+         */
+        farmerId = 'farmerId',
         /**
          * The Geoid of the plot
          */
@@ -139,6 +147,17 @@ export namespace ApiPlot {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiProductType'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farmerId',
+                    classname: 'ApiPlot',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -234,6 +253,8 @@ export namespace ApiPlot {
                 ],
                 crop: [
                 ],
+                farmerId: [
+                ],
                 geoId: [
                 ],
                 id: [
@@ -261,6 +282,9 @@ export namespace ApiPlot {
   //                   validators: []
   //               },
   //               crop: {
+  //                   validators: []
+  //               },
+  //               farmerId: {
   //                   validators: []
   //               },
   //               geoId: {

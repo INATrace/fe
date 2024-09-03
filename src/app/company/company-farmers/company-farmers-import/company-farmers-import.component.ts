@@ -9,6 +9,7 @@ import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { LanguageCodeHelper } from '../../../language-code-helper';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { ApiUserCustomerImportRowValidationError } from "../../../../api/model/apiUserCustomerImportRowValidationError";
 
 @Component({
   selector: 'app-company-farmers-import',
@@ -25,6 +26,8 @@ export class CompanyFarmersImportComponent implements OnInit {
   faFileExcel = faFileExcel;
   
   duplicates: Array<ApiUserCustomer> = [];
+
+  validationErrors: Array<ApiUserCustomerImportRowValidationError> = [];
 
   importInProgress = false;
 
@@ -79,19 +82,29 @@ export class CompanyFarmersImportComponent implements OnInit {
           )
           .subscribe(value => {
             if (value) {
-              if (value.successful === 0 && value.duplicates && value.duplicates.length === 0) {
-                this.toastService.error($localize`:@@companyDetail.farmers.import.noFarmers.error:No farmers imported`);
+
+              // If there are validation errors present, display error
+              if (value.validationErrors && value.validationErrors.length > 0) {
+
+                this.toastService.error($localize`:@@companyDetail.farmers.import.validationErrors.message:There are validation errors in the provided spreadsheet of farmers. Please check them below.`);
+                this.validationErrors = value.validationErrors;
                 return;
-              }
-              if (value.successful > 0 && value.duplicates && value.duplicates.length === 0) {
-                this.toastService.success($localize`:@@companyDetail.farmers.import.success.label:Farmers successfully imported. Please check the data on Company > Farmers tab`);
-                this.location.back();
-                return;
-              }
-              if (value.duplicates && value.duplicates.length > 0) {
-                this.toastService.warning($localize`:@@companyDetail.farmers.import.duplicates.error:Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates`);
-                this.duplicates = value.duplicates;
-                return;
+              } else {
+
+                if (value.successful === 0 && value.duplicates && value.duplicates.length === 0) {
+                  this.toastService.error($localize`:@@companyDetail.farmers.import.noFarmers.error:No farmers imported`);
+                  return;
+                }
+                if (value.successful > 0 && value.duplicates && value.duplicates.length === 0) {
+                  this.toastService.success($localize`:@@companyDetail.farmers.import.success.label:Farmers successfully imported. Please check the data on Company > Farmers tab`);
+                  this.location.back();
+                  return;
+                }
+                if (value.duplicates && value.duplicates.length > 0) {
+                  this.toastService.warning($localize`:@@companyDetail.farmers.import.duplicates.error:Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates`);
+                  this.duplicates = value.duplicates;
+                  return;
+                }
               }
             }
           });

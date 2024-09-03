@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } from '../../../../api/api/companyController.service';
@@ -10,6 +10,12 @@ import { AuthService } from '../../../core/auth.service';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
 import RoleEnum = ApiUserGet.RoleEnum;
+import { FileSaverService } from 'ngx-filesaver';
+import { ApiPlot } from '../../../../api/model/apiPlot';
+import {
+  OpenPlotDetailsExternallyModalComponent
+} from '../open-plot-details-externally-modal/open-plot-details-externally-modal.component';
+import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -28,7 +34,8 @@ export class CompanyFarmersListComponent implements OnInit {
   searchNameFarmers = new FormControl('');
   byCategory = 'BY_NAME';
 
-  farmer$;
+  farmers$: Observable<any>;
+  plots$: Observable<ApiPlot[]>;
   sorting$ = new BehaviorSubject<{ key: string, sortOrder: SortOrder }>({ key: 'BY_NAME', sortOrder: 'ASC'});
   query$ = new BehaviorSubject('');
   pagination$ = new BehaviorSubject(1);
@@ -165,7 +172,9 @@ export class CompanyFarmersListComponent implements OnInit {
       private companyController: CompanyControllerService,
       private router: Router,
       private authService: AuthService,
-      private selUserCompanyService: SelectedUserCompanyService
+      private selUserCompanyService: SelectedUserCompanyService,
+      private fileSaverService: FileSaverService,
+      private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -195,7 +204,8 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   private async loadFarmers() {
-    this.farmer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
+
+    this.farmers$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
               const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
@@ -216,11 +226,17 @@ export class CompanyFarmersListComponent implements OnInit {
               if (response) {
                 this.farmerCount = response.data.count;
                 this.showing = this.farmerCount >= this.pageSize ? Math.min(this.page * this.pageSize, this.farmerCount) : this.farmerCount;
+
                 return response.data;
               }
             }),
             tap(() => this.globalEventsManager.showLoading(false)),
             shareReplay(1)
+        );
+
+    this.plots$ = this.companyController.getUserCustomersPlotsForCompanyUsingGET(this.organizationId)
+        .pipe(
+            map(response => response.data)
         );
   }
 
@@ -230,6 +246,20 @@ export class CompanyFarmersListComponent implements OnInit {
 
   editFarmer(id) {
     this.router.navigate(['my-farmers', 'edit', id]).then();
+  }
+
+  async exportFarmerData(): Promise<void> {
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      const res = await this.companyController.exportFarmerDataByCompanyUsingGET(this.organizationId)
+          .pipe(take(1))
+          .toPromise();
+
+      this.fileSaverService.save(res, 'farmers_data.zip');
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   async deleteFarmer(id) {
@@ -284,6 +314,20 @@ export class CompanyFarmersListComponent implements OnInit {
 
   onCategoryChange(event) {
     this.search$.next(event);
+  }
+
+  openGeoIdWhisp($geoId: string) {
+    const modalRef = this.modalService.open(OpenPlotDetailsExternallyModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'xxl',
+      scrollable: true
+    });
+    Object.assign(modalRef.componentInstance, {
+      geoId: $geoId
+    });
+    modalRef.result.then();
   }
 
 }

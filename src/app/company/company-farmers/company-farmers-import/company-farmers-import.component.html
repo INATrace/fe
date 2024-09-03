@@ -33,7 +33,7 @@
                     <div class="spacer-title-section"></div>
 
                     <ng-container *ngIf="duplicates && duplicates.length > 0">
-                        <h6 i18n="@@companyDetail.farmers.import.duplicates.label">Duplicates</h6>
+                        <h4 i18n="@@companyDetail.farmers.import.duplicates.label">Duplicates</h4>
                         <div class="d-flex justify-content-between mb-3" *ngFor="let duplicate of duplicates; index as i">
                             <p class="m-0">{{ duplicate.name }} {{ duplicate.surname }}, {{ duplicate.location.address.village}}</p>
                             <div class="d-flex justify-content-end">
@@ -45,6 +45,21 @@
                                         (click)="rejectDuplicate(duplicate, i)">Reject</button>
                             </div>
                         </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="validationErrors && validationErrors.length > 0">
+                        <h4 i18n="@@companyDetail.farmers.import.validationErrors.label">Validation errors</h4>
+                        <ul>
+                            <li *ngFor="let rowError of validationErrors;">
+                                <span i18n="@@companyDetail.farmers.import.validationErrors.rowError.label">Errors in row {{ rowError.rowIndex + 1 }}:</span>
+                                <ul>
+                                    <li *ngFor="let cellError of rowError.columnValidationErrors;">
+                                        <span i18n="@@companyDetail.farmers.import.validationErrors.cellError.label">Error in cell {{ cellError.cellAddress }} - </span>
+                                        <span>{{ cellError.errorType | formatFarmerImportValidationError}}</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </ng-container>
                 </div>
             </div>

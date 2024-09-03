@@ -10,9 +10,9 @@ import { PlotCoordinatesManagerService } from '../../../shared-services/plot-coo
 import { ApiPlotCoordinate } from '../../../../api/model/apiPlotCoordinate';
 import { PlotCoordinateAction } from '../../../shared-services/plot-coordinate-action-enum';
 import { ApiPlot } from '../../../../api/model/apiPlot';
-import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
-import {Feature, Polygon} from '@turf/turf';
-import {ApiPlotValidationScheme} from '../plots-form/validation';
+import { CompanyProductTypesService } from '../../../shared-services/company-product-types.service';
+import { Feature, Polygon } from '@turf/turf';
+import { ApiPlotValidationScheme } from '../plots-form/validation';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -39,12 +39,14 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
 
   plotCoordinates: Array<ApiPlotCoordinate> = [];
 
-
   plotShown = true;
   showPlotSubject = new Subject<boolean>();
   existingPlotCoordinatesSubject = new Subject<ApiPlotCoordinate[]>();
   tagOpened = false;
   mapEditable = true;
+
+  plotType: 'boundaries' | 'single_point' = 'boundaries';
+  selectPlotType = true;
 
   constructor(
     protected globalEventsManager: GlobalEventManagerService,
@@ -57,6 +59,7 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
 
     if (this.form.get('id').value) {
       this.mapEditable = false;
+      this.selectPlotType = false;
     }
 
     if (this.form.get('coordinates')) {
@@ -72,8 +75,6 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
     this.plotShown = false;
     this.showPlotSubject.next(this.plotShown);
 
-
-
     this.form.markAsDirty();
 
     setTimeout(() => {
@@ -82,6 +83,7 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   }
 
   get name() {
+
     const plotName = this.form.get('plotName').value;
     let returnStr = plotName;
     const crop = this.form.get('crop').value?.name ? this.form.get('crop').value?.name : '/';
@@ -95,7 +97,7 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
         returnStr += ' - ' + size;
        }
        if (this.form.get('unit').value) {
-        returnStr += unit;
+        returnStr += ' ' + unit;
        }
 
        return returnStr;
@@ -104,6 +106,11 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
 
   public generateForm(value: any): FormGroup {
     return generateFormFromMetadata(ApiPlot.formMetadata(), value, ApiPlotValidationScheme);
+  }
+
+  setPlotType(plotType: 'boundaries' | 'single_point') {
+    this.plotType = plotType;
+    this.selectPlotType = false;
   }
 
   showHidePlot() {
