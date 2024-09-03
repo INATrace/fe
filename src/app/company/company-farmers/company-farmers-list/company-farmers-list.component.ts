@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } from '../../../../api/api/companyController.service';
@@ -10,6 +10,12 @@ import { AuthService } from '../../../core/auth.service';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { ApiUserGet } from '../../../../api/model/apiUserGet';
 import RoleEnum = ApiUserGet.RoleEnum;
+import { FileSaverService } from 'ngx-filesaver';
+import { ApiPlot } from '../../../../api/model/apiPlot';
+import {
+  OpenPlotDetailsExternallyModalComponent
+} from '../open-plot-details-externally-modal/open-plot-details-externally-modal.component';
+import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -28,13 +34,15 @@ export class CompanyFarmersListComponent implements OnInit {
   searchNameFarmers = new FormControl('');
   byCategory = 'BY_NAME';
 
-  farmer$;
+  farmers$: Observable<any>;
+  plots$: Observable<ApiPlot[]>;
   sorting$ = new BehaviorSubject<{ key: string, sortOrder: SortOrder }>({ key: 'BY_NAME', sortOrder: 'ASC'});
   query$ = new BehaviorSubject('');
   pagination$ = new BehaviorSubject(1);
   search$ = new BehaviorSubject('BY_NAME');
   ping$ = new BehaviorSubject(null);
 
+  showRwanda = false;
   showHonduras = false;
 
   items = [
@@ -47,6 +55,43 @@ export class CompanyFarmersListComponent implements OnInit {
   ];
 
   sortOptions: SortOption[] = [
+    {
+      key: 'name',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.name.name:First name`,
+      defaultSortOrder: 'ASC'
+    },
+    {
+      key: 'surname',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.surname.name:Last name`,
+      defaultSortOrder: 'ASC'
+    },
+    {
+      key: 'gender',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.gender.name:Gender`,
+      inactive: true
+    },
+    {
+      key: 'id',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.id.name:Id`,
+    },
+    {
+      key: 'city',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.city.name:City/Town/Village`,
+      inactive: true
+    },
+    {
+      key: 'state',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.state.name:State/Province/Region`,
+      inactive: true
+    },
+    {
+      key: 'actions',
+      name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.actions.name:Actions`,
+      inactive: true
+    }
+  ];
+
+  sortOptionsRwanda: SortOption[] = [
     {
       key: 'name',
       name: $localize`:@@productLabelStakeholdersCollectors.sortOptions.name.name:First name`,
@@ -127,7 +172,9 @@ export class CompanyFarmersListComponent implements OnInit {
       private companyController: CompanyControllerService,
       private router: Router,
       private authService: AuthService,
-      private selUserCompanyService: SelectedUserCompanyService
+      private selUserCompanyService: SelectedUserCompanyService,
+      private fileSaverService: FileSaverService,
+      private modalService: NgbModalImproved
   ) { }
 
   ngOnInit(): void {
@@ -138,18 +185,27 @@ export class CompanyFarmersListComponent implements OnInit {
 
     this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
       if (cp) {
+
         this.organizationId = cp.id;
+
+        this.showRwanda = cp.headquarters &&
+            cp.headquarters.country &&
+            cp.headquarters.country.code &&
+            cp.headquarters.country.code === 'RW';
+
         this.showHonduras = cp.headquarters &&
           cp.headquarters.country &&
           cp.headquarters.country.code &&
           cp.headquarters.country.code === 'HN';
+
         this.loadFarmers().then();
       }
     });
   }
 
   private async loadFarmers() {
-    this.farmer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
+
+    this.farmers$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
               const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
@@ -170,11 +226,17 @@ export class CompanyFarmersListComponent implements OnInit {
               if (response) {
                 this.farmerCount = response.data.count;
                 this.showing = this.farmerCount >= this.pageSize ? Math.min(this.page * this.pageSize, this.farmerCount) : this.farmerCount;
+
                 return response.data;
               }
             }),
             tap(() => this.globalEventsManager.showLoading(false)),
             shareReplay(1)
+        );
+
+    this.plots$ = this.companyController.getUserCustomersPlotsForCompanyUsingGET(this.organizationId)
+        .pipe(
+            map(response => response.data)
         );
   }
 
@@ -184,6 +246,20 @@ export class CompanyFarmersListComponent implements OnInit {
 
   editFarmer(id) {
     this.router.navigate(['my-farmers', 'edit', id]).then();
+  }
+
+  async exportFarmerData(): Promise<void> {
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      const res = await this.companyController.exportFarmerDataByCompanyUsingGET(this.organizationId)
+          .pipe(take(1))
+          .toPromise();
+
+      this.fileSaverService.save(res, 'farmers_data.zip');
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   async deleteFarmer(id) {
@@ -204,7 +280,7 @@ export class CompanyFarmersListComponent implements OnInit {
   }
 
   importFarmers() {
-    this.router.navigate(['my-farmers', 'import']);
+    this.router.navigate(['my-farmers', 'import']).then();
   }
 
   changeSort(event) {
@@ -224,21 +300,6 @@ export class CompanyFarmersListComponent implements OnInit {
     this.sorting$.next(event);
   }
 
-  showLocation(key, location) {
-    if (location && location.address) {
-      switch (key) {
-        case 'cell':
-          return location.address.cell ? location.address.cell : '-';
-        case 'village':
-          return location.address.village ? location.address.village : '-';
-        case 'hondurasMunicipality':
-          return location.address.hondurasMunicipality ? location.address.hondurasMunicipality : '-';
-        case 'hondurasVillage':
-          return location.address.hondurasVillage ? location.address.hondurasVillage : '-';
-      }
-    }
-  }
-
   showPagination() {
     return this.farmerCount && this.farmerCount > this.pageSize;
   }
@@ -253,6 +314,20 @@ export class CompanyFarmersListComponent implements OnInit {
 
   onCategoryChange(event) {
     this.search$.next(event);
+  }
+
+  openGeoIdWhisp($geoId: string) {
+    const modalRef = this.modalService.open(OpenPlotDetailsExternallyModalComponent, {
+      centered: true,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'xxl',
+      scrollable: true
+    });
+    Object.assign(modalRef.componentInstance, {
+      geoId: $geoId
+    });
+    modalRef.result.then();
   }
 
 }

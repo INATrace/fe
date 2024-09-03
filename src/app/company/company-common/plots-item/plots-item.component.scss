@@ -1,0 +1,23 @@
+@import "src/_variables";
+
+.copy-icon {
+  cursor: pointer;
+}
+
+.offscreen {
+  position: fixed;
+  left: -1000px;
+}
+
+.select-plot-type-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.select-plot-type-message {
+  display: flex;
+  justify-content: center;
+  color: $theme-primary;
+  padding-top: 2rem;
+}

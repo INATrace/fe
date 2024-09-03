@@ -94,7 +94,7 @@
                 <button class="af-actions-btn" style="margin-top: 1.7rem"
                         [class.af-actions-btn--disabled]="allPayments < 1"
                         [disabled]="allPayments < 1"
-                        (click)="generatePaymentsCsv()">
+                        (click)="exportPaymentsExcel()">
                     <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export data</span>
                 </button>
             </div>
@@ -132,9 +132,19 @@
                     </div>
                     <div class="counting-page content-element--counting"
                          i18n="@@productLabelStock.subTitle.showingBulkPayments">
-                        Showing {{showedBulkPayments}}/{{allBulkPayments}}
+                        Showing {{ showedBulkPayments }}/{{ allBulkPayments }}
                     </div>
                 </div>
+
+            </div>
+
+            <div class="d-flex">
+                <button class="af-actions-btn" style="margin-top: 1rem; margin-left: 0;"
+                        [class.af-actions-btn--disabled]="allBulkPayments < 1"
+                        [disabled]="allBulkPayments < 1"
+                        (click)="exportBulkPaymentsExcel()">
+                    <span class="af-actions-btn-label" i18n="@@productLabelPayments.button.export">Export data</span>
+                </button>
             </div>
 
             <app-stock-payments-bulk-list

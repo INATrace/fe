@@ -12,9 +12,9 @@ import { FacilitySemiProductsCodebookService } from '../../../../shared-services
 import { map, startWith } from 'rxjs/operators';
 import { CodebookTranslations } from '../../../../shared-services/codebook-translations';
 import { ApiFacility } from '../../../../../api/model/apiFacility';
-import { CommonCsvControllerService } from '../../../../../api/api/commonCsvController.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { StockOrderControllerService } from "../../../../../api/api/stockOrderController.service";
 
 @Component({
   selector: 'app-stock-deliveries-tab',
@@ -64,7 +64,7 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
     protected facilityControllerService: FacilityControllerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
-    private commonCsvControllerService: CommonCsvControllerService,
+    private stockOrderControllerService: StockOrderControllerService,
     private codebookTranslations: CodebookTranslations,
     private fileSaverService: FileSaverService,
     protected selUserCompanyService: SelectedUserCompanyService
@@ -109,13 +109,18 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
     this.router.navigate(['my-stock', 'deliveries', 'facility', this.selectedFacilityId, 'deliveries', 'new-bulk']).then();
   }
 
-  async generatePurchasesCsv(){
+  async exportDeliveriesExcel(): Promise<void> {
 
-    const res = await this.commonCsvControllerService.generatePurchasesByCompanyCsvUsingPOST(this.companyId)
-      .pipe(take(1))
-      .toPromise();
+    this.globalEventManager.showLoading(true);
+    try {
+      const res = await this.stockOrderControllerService.exportDeliveriesByCompanyUsingGET(this.companyId)
+          .pipe(take(1))
+          .toPromise();
 
-    this.fileSaverService.save(res, 'purchases.csv');
+      this.fileSaverService.save(res, 'deliveries.xlsx');
+    } finally {
+      this.globalEventManager.showLoading(false);
+    }
   }
 
   onShowPO(event) {

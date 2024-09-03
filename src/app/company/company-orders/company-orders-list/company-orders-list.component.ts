@@ -4,7 +4,7 @@ import { ApiPaginatedListApiStockOrder } from '../../../../api/model/apiPaginate
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
 import { ApiStockOrder } from '../../../../api/model/apiStockOrder';
-import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../api/model/apiPaginatedResponseApiStockOrder';
 import {
@@ -17,6 +17,8 @@ import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-imp
 import { ApproveRejectTransactionModalComponent } from '../approve-reject-transaction-modal/approve-reject-transaction-modal.component';
 import { GenerateQRCodeModalComponent } from '../../../components/generate-qr-code-modal/generate-qr-code-modal.component';
 import { ProcessingOrderControllerService } from '../../../../api/api/processingOrderController.service';
+import {FileSaverService} from 'ngx-filesaver';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-company-orders-list',
@@ -69,8 +71,10 @@ export class CompanyOrdersListComponent implements OnInit {
   constructor(
     private router: Router,
     private globalEventsManager: GlobalEventManagerService,
+    private toastService: ToastrService,
     private stockOrderController: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
+    private fileSaverService: FileSaverService,
     private modalService: NgbModalImproved
   ) { }
 
@@ -330,4 +334,24 @@ export class CompanyOrdersListComponent implements OnInit {
       );
   }
 
+  async exportGeoData(order: ApiStockOrder) {
+
+    this.globalEventsManager.showLoading(true);
+
+    const res = await this.stockOrderController.exportGeoDataUsingGET(order.id)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.globalEventsManager.showLoading(false);
+        })
+      ).toPromise();
+
+    if (res.size > 0) {
+      this.fileSaverService.save(res, 'geoData.geojson');
+    } else {
+      this.toastService.info($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
+      return;
+    }
+
+  }
 }

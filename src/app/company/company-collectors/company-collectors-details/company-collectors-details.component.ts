@@ -77,7 +77,8 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
     FEMALE: $localize`:@@collectorDetail.gender.female:Female`,
-    N_A: 'N/A'
+    N_A: 'N/A',
+    DIVERSE: $localize`:@@collectorDetail.gender.diverse:Diverse`
   });
 
   readonly collectorType = UserCustomerTypeEnum.COLLECTOR;

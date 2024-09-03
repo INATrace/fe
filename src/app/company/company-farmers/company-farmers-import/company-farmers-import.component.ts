@@ -9,6 +9,7 @@ import { ApiUserCustomer } from '../../../../api/model/apiUserCustomer';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { LanguageCodeHelper } from '../../../language-code-helper';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { ApiUserCustomerImportRowValidationError } from "../../../../api/model/apiUserCustomerImportRowValidationError";
 
 @Component({
   selector: 'app-company-farmers-import',
@@ -26,6 +27,8 @@ export class CompanyFarmersImportComponent implements OnInit {
   
   duplicates: Array<ApiUserCustomer> = [];
 
+  validationErrors: Array<ApiUserCustomerImportRowValidationError> = [];
+
   importInProgress = false;
 
   farmerImportTemplateHref = '';
@@ -36,19 +39,24 @@ export class CompanyFarmersImportComponent implements OnInit {
       private location: Location,
       private globalEventsManager: GlobalEventManagerService,
       private selUserCompanyService: SelectedUserCompanyService
-  ) {
-
-    if (LanguageCodeHelper.getCurrentLocale() === 'es') {
-      this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado%20de%20agricultores_es.xlsx';
-    } else {
-      this.farmerImportTemplateHref = '/assets/farmer-import/Template_list%20of%20farmers_en.xlsx';
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
     this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).subscribe(cp => {
       if (cp) {
         this.companyId = cp.id;
+
+        // Depending on the selected user company, set the appropriate farmer import template for download
+        const companyCountryCode = cp.headquarters?.country?.code;
+        if (companyCountryCode === 'RW') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Template_list_of_farmers_Rwanda_en.xlsx';
+        } else if (companyCountryCode === 'HN') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado_de_agricultores_Honduras_es.xlsx';
+        } else if (LanguageCodeHelper.getCurrentLocale() === 'es') {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Plantilla_listado_de_agricultores_otros_paises_es.xlsx';
+        } else {
+          this.farmerImportTemplateHref = '/assets/farmer-import/Template_list_of_farmers_other_countries_en.xlsx';
+        }
       }
     });
   }
@@ -74,19 +82,29 @@ export class CompanyFarmersImportComponent implements OnInit {
           )
           .subscribe(value => {
             if (value) {
-              if (value.successful === 0 && value.duplicates && value.duplicates.length === 0) {
-                this.toastService.error($localize`:@@companyDetail.farmers.import.noFarmers.error:No farmers imported`);
+
+              // If there are validation errors present, display error
+              if (value.validationErrors && value.validationErrors.length > 0) {
+
+                this.toastService.error($localize`:@@companyDetail.farmers.import.validationErrors.message:There are validation errors in the provided spreadsheet of farmers. Please check them below.`);
+                this.validationErrors = value.validationErrors;
                 return;
-              }
-              if (value.successful > 0 && value.duplicates && value.duplicates.length === 0) {
-                this.toastService.success($localize`:@@companyDetail.farmers.import.success.label:Farmers successfully imported. Please check the data on Company > Farmers tab`);
-                this.location.back();
-                return;
-              }
-              if (value.duplicates && value.duplicates.length > 0) {
-                this.toastService.warning($localize`:@@companyDetail.farmers.import.duplicates.error:Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates`);
-                this.duplicates = value.duplicates;
-                return;
+              } else {
+
+                if (value.successful === 0 && value.duplicates && value.duplicates.length === 0) {
+                  this.toastService.error($localize`:@@companyDetail.farmers.import.noFarmers.error:No farmers imported`);
+                  return;
+                }
+                if (value.successful > 0 && value.duplicates && value.duplicates.length === 0) {
+                  this.toastService.success($localize`:@@companyDetail.farmers.import.success.label:Farmers successfully imported. Please check the data on Company > Farmers tab`);
+                  this.location.back();
+                  return;
+                }
+                if (value.duplicates && value.duplicates.length > 0) {
+                  this.toastService.warning($localize`:@@companyDetail.farmers.import.duplicates.error:Some duplicate farmers with same name, surname and village were found. Please accept or reject duplicates`);
+                  this.duplicates = value.duplicates;
+                  return;
+                }
               }
             }
           });

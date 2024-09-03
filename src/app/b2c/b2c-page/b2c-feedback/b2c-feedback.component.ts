@@ -1,13 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { B2cPageComponent } from '../b2c-page.component';
 import { ApiBusinessToCustomerSettings } from '../../../../api/model/apiBusinessToCustomerSettings';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { defaultEmptyObject, generateFormFromMetadata } from '../../../../shared/utils';
 import { ApiProductLabelFeedback } from '../../../../api/model/apiProductLabelFeedback';
 import {
   ApiProductLabelFeedbackValidationScheme,
-  questionnaireAnswersFormMetadata, questionnaireAnswersValidationScheme
+  questionnaireAnswersFormMetadata,
+  questionnaireAnswersValidationScheme
 } from '../../../m-product/product-label-feedback-page/feedback-modal/validation';
 import { EnumSifrant } from '../../../shared-services/enum-sifrant';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
@@ -24,12 +25,6 @@ export class B2cFeedbackComponent implements OnInit {
 
   submitted = false;
 
-  filterCoffeeForm = new FormControl(null);
-  espressoForm = new FormControl(null);
-  frenchPressForm = new FormControl(null);
-  fullyAutomaticForm = new FormControl(null);
-  stovetopForm = new FormControl(null);
-  otherForm = new FormControl(null);
   feedbackForm: FormGroup;
 
   tab: string = null;
@@ -51,7 +46,8 @@ export class B2cFeedbackComponent implements OnInit {
   ngOnInit(): void {
     this.initLabel();
 
-    this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(), defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
+    this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(),
+        defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
     const questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), {}, questionnaireAnswersValidationScheme);
     this.feedbackForm.setControl('questionnaireAnswers', questionnaireAnswersForm);
     this.feedbackForm.updateValueAndValidity();
@@ -90,16 +86,11 @@ export class B2cFeedbackComponent implements OnInit {
           title: $localize`:@@frontPage.feedback.success.title:Submitted`,
           message: $localize`:@@frontPage.feedback.success.message:Successfully submitted.`
         });
-        this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(), defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
+        this.feedbackForm = generateFormFromMetadata(ApiProductLabelFeedback.formMetadata(),
+            defaultEmptyObject(ApiProductLabelFeedback.formMetadata()), ApiProductLabelFeedbackValidationScheme);
         const questionnaireAnswersForm = generateFormFromMetadata(questionnaireAnswersFormMetadata(), {}, questionnaireAnswersValidationScheme);
         this.feedbackForm.setControl('questionnaireAnswers', questionnaireAnswersForm);
         this.feedbackForm.updateValueAndValidity();
-        this.filterCoffeeForm.setValue(null);
-        this.espressoForm.setValue(null);
-        this.frenchPressForm.setValue(null);
-        this.fullyAutomaticForm.setValue(null);
-        this.stovetopForm.setValue(null);
-        this.otherForm.setValue(null);
       }
     } catch (e) {
       this.globalEventsManager.push({
@@ -116,18 +107,7 @@ export class B2cFeedbackComponent implements OnInit {
   }
 
   prepareData() {
-    const data = this.feedbackForm.value;
-
-    data.questionnaireAnswers.howDoYouPrepare = JSON.stringify({
-      FILTER_COFFEE: this.filterCoffeeForm.value,
-      ESPRESSO_MACHINE: this.espressoForm.value,
-      FRENCH_PRESS: this.frenchPressForm.value,
-      FULLY_AUTOMATIC_MACHINE: this.fullyAutomaticForm.value,
-      STOVETOP_MOKA_POT: this.stovetopForm.value,
-      OTHER: this.otherForm.value
-    });
-
-    return data;
+    return this.feedbackForm.value;
   }
 
   get statusList() {
@@ -157,11 +137,5 @@ export class B2cFeedbackComponent implements OnInit {
     return obj;
   }
   codebookTasteCodes = EnumSifrant.fromObject(this.tasteCodes);
-
-
-  conditionConfirmation(control: AbstractControl): ValidationErrors | null {
-    const condition = control.value;
-    return condition === true ? null : { conditionsNotConfirmed: true };
-  }
 
 }

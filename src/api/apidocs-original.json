@@ -342,6 +342,7 @@
         "tags": [
           "common-csv-controller"
         ],
+        "deprecated": true,
         "operationId": "generatePaymentsByCompanyCsvUsingPOST",
         "summary": "Generate a csv file with a list of filtered payments by companyId."
       }
@@ -505,6 +506,7 @@
         "tags": [
           "common-csv-controller"
         ],
+        "deprecated": true,
         "operationId": "generatePurchasesByCompanyCsvUsingPOST",
         "summary": "Generate a csv file with a list of filtered purchases by companyId."
       }
@@ -2231,6 +2233,106 @@
         ],
         "operationId": "getBulkPaymentUsingGET",
         "summary": "Get a single bulk payment with the provided ID."
+      }
+    },
+    "/api/chain/payment/export/bulk-payment/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "exportBulkPaymentsByCompanyUsingGET",
+        "summary": "Export bulk-payments for provided company ID"
+      }
+    },
+    "/api/chain/payment/export/company/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "exportPaymentsByCompanyUsingGET",
+        "summary": "Export payments for provided company ID"
       }
     },
     "/api/chain/payment/list/bulk-payment/company/{id}": {
@@ -4519,6 +4621,56 @@
         "summary": "Creates a list of purchase orders."
       }
     },
+    "/api/chain/stock-order/export/deliveries/company/{companyId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "exportDeliveriesByCompanyUsingGET",
+        "summary": "Export deliveries (stock orders of type PURCHASE_ORDER) for the provided company ID"
+      }
+    },
     "/api/chain/stock-order/list/company/{companyId}": {
       "get": {
         "parameters": [
@@ -5534,6 +5686,56 @@
         ],
         "operationId": "getStockOrderAggregatedHistoryUsingGET",
         "summary": "getStockOrderAggregatedHistory"
+      }
+    },
+    "/api/chain/stock-order/{id}/exportGeoData": {
+      "get": {
+        "parameters": [
+          {
+            "description": "StockOrder ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "stock-order-controller"
+        ],
+        "operationId": "exportGeoDataUsingGET",
+        "summary": "Generate a geoJSON file with a list of polygons."
       }
     },
     "/api/chain/stock-order/{id}/processing-order": {
@@ -7316,6 +7518,105 @@
         "summary": "Upload .xls or .xlsx spreadsheet of farmers to import into DB"
       }
     },
+    "/api/company/userCustomers/{companyId}/exportFarmerData": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "exportFarmerDataByCompanyUsingGET",
+        "summary": "Export payments for provided company ID"
+      }
+    },
+    "/api/company/userCustomers/{companyId}/plots": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Company ID",
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ApiPlot_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "getUserCustomersPlotsForCompanyUsingGET",
+        "summary": "Get all user customers plots that are part of the company with the provided ID"
+      }
+    },
     "/api/company/userCustomers/{companyId}/{type}": {
       "get": {
         "parameters": [
@@ -7532,6 +7833,203 @@
         ],
         "operationId": "getUserCustomerUsingGET",
         "summary": "Get user customer by id"
+      }
+    },
+    "/api/company/userCustomers/{id}/exportGeoData": {
+      "get": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "exportUserCustomerGeoDataUsingGET",
+        "summary": "Export the Geo-data for the user customer with the provided ID"
+      }
+    },
+    "/api/company/userCustomers/{id}/plots/add": {
+      "post": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPlot_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "createUserCustomerPlotUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiPlot"
+              }
+            }
+          },
+          "description": "request",
+          "required": true
+        },
+        "summary": "Add new plot for the provided user customer"
+      }
+    },
+    "/api/company/userCustomers/{id}/plots/{plotId}/updateGeoID": {
+      "post": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Plot ID",
+            "in": "path",
+            "name": "plotId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "language",
+            "in": "header",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "default": "EN",
+              "enum": [
+                "EN",
+                "DE",
+                "RW",
+                "ES"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_ApiPlot_"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "refreshGeoIDForUserCustomerPlotUsingPOST",
+        "summary": "Add new plot for the provided user customer"
+      }
+    },
+    "/api/company/userCustomers/{id}/uploadGeoData": {
+      "post": {
+        "parameters": [
+          {
+            "description": "User customer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiDefaultResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "company-controller"
+        ],
+        "operationId": "uploadUserCustomerGeoDataUsingPOST",
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "format": "binary",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "summary": "Upload Geo-data for the user customer with the provided ID"
       }
     },
     "/api/company/{id}/connected-companies": {
@@ -11653,6 +12151,10 @@
             "description": "Honduras village name",
             "type": "string"
           },
+          "otherAddress": {
+            "description": "Other/additional address field",
+            "type": "string"
+          },
           "sector": {
             "description": "Village sector",
             "type": "string"
@@ -13493,6 +13995,10 @@
             "description": "location longitude",
             "format": "double",
             "type": "number"
+          },
+          "otherAddress": {
+            "description": "Other/additional address field",
+            "type": "string"
           },
           "sector": {
             "description": "Village sector",
@@ -15780,6 +16286,84 @@
         },
         "type": "object"
       },
+      "ApiPlot": {
+        "properties": {
+          "coordinates": {
+            "description": "The list of coordinates of the plot",
+            "items": {
+              "$ref": "#/components/schemas/ApiPlotCoordinate"
+            },
+            "type": "array"
+          },
+          "crop": {
+            "$ref": "#/components/schemas/ApiProductType",
+            "description": "Product type of this plot"
+          },
+          "farmerId": {
+            "description": "Date of last update",
+            "format": "int64",
+            "type": "integer"
+          },
+          "geoId": {
+            "description": "The Geoid of the plot",
+            "type": "string"
+          },
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "lastUpdated": {
+            "description": "Date of last update",
+            "format": "date-time",
+            "type": "string"
+          },
+          "numberOfPlants": {
+            "description": "Number of plants",
+            "format": "int32",
+            "type": "integer"
+          },
+          "organicStartOfTransition": {
+            "description": "Date of transitioning into organic production",
+            "format": "date-time",
+            "type": "string"
+          },
+          "plotName": {
+            "description": "Plot name",
+            "type": "string"
+          },
+          "size": {
+            "description": "The total size of the plot",
+            "format": "double",
+            "type": "number"
+          },
+          "unit": {
+            "description": "The unit in which the size of the plot is expressed",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ApiPlotCoordinate": {
+        "properties": {
+          "id": {
+            "description": "Entity id",
+            "format": "int64",
+            "type": "integer"
+          },
+          "latitude": {
+            "description": "The latitude of the coordinate",
+            "format": "double",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "The longitude of the coordinate",
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
       "ApiProcess": {
         "properties": {
           "production": {
@@ -16836,6 +17420,10 @@
             "description": "Privacy policy consent",
             "example": false,
             "type": "boolean"
+          },
+          "productName": {
+            "description": "The product name of label for which the feedback was provided",
+            "type": "string"
           },
           "questionnaireAnswers": {
             "additionalProperties": {
@@ -18184,6 +18772,50 @@
         ],
         "type": "object"
       },
+      "ApiResponse_ApiPlot_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ApiPlot",
+            "description": "Response body for successful responses."
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_ApiProcessingAction_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -19290,6 +19922,53 @@
         ],
         "type": "object"
       },
+      "ApiResponse_List_ApiPlot_": {
+        "description": "Generic API response. See documentation for data type for specific type details.",
+        "properties": {
+          "data": {
+            "description": "Response body for successful responses.",
+            "items": {
+              "$ref": "#/components/schemas/ApiPlot"
+            },
+            "type": "array"
+          },
+          "errorDetails": {
+            "description": "Optional details for unexpected error responses.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "Simple message to explain client developers the reason for error.",
+            "type": "string"
+          },
+          "status": {
+            "description": "Response status. OK for successful reponses.",
+            "enum": [
+              "OK",
+              "ERROR",
+              "REQUEST_BODY_ERROR",
+              "VALIDATION_ERROR",
+              "TOO_MANY_REQUESTS",
+              "UNAUTHORIZED",
+              "AUTH_ERROR",
+              "UPSTREAM_HTTP_ERROR",
+              "INVALID_REQUEST",
+              "INVALID_OR_EXPIRED_STORAGE_KEY",
+              "NOT_IMPLEMENTED",
+              "NOT_FOUND"
+            ],
+            "example": "OK",
+            "type": "string"
+          },
+          "validationErrorDetails": {
+            "$ref": "#/components/schemas/ApiValidationErrorDetails",
+            "description": "Optional details for validation error responses."
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
       "ApiResponse_List_ApiProductLabelBase_": {
         "description": "Generic API response. See documentation for data type for specific type details.",
         "properties": {
@@ -20270,7 +20949,8 @@
             "enum": [
               "FEMALE",
               "MALE",
-              "N_A"
+              "N_A",
+              "DIVERSE"
             ],
             "type": "string"
           },
@@ -20295,6 +20975,13 @@
           "phone": {
             "description": "Phone",
             "type": "string"
+          },
+          "plots": {
+            "description": "Plots in possession of the user customer (only applicable for type FARMER)",
+            "items": {
+              "$ref": "#/components/schemas/ApiPlot"
+            },
+            "type": "array"
           },
           "productTypes": {
             "description": "User customer product types",
@@ -20362,6 +21049,22 @@
         },
         "type": "object"
       },
+      "ApiUserCustomerImportColumnValidationError": {
+        "properties": {
+          "cellAddress": {
+            "type": "string"
+          },
+          "errorType": {
+            "enum": [
+              "INCORRECT_TYPE",
+              "REQUIRED",
+              "INVALID_VALUE"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "ApiUserCustomerImportResponse": {
         "properties": {
           "duplicates": {
@@ -20371,6 +21074,27 @@
             "type": "array"
           },
           "successful": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "validationErrors": {
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomerImportRowValidationError"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ApiUserCustomerImportRowValidationError": {
+        "properties": {
+          "columnValidationErrors": {
+            "items": {
+              "$ref": "#/components/schemas/ApiUserCustomerImportColumnValidationError"
+            },
+            "type": "array"
+          },
+          "rowIndex": {
             "format": "int32",
             "type": "integer"
           }

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, ControlContainer, NgForm, Validators } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import _ from 'lodash-es';
   templateUrl: './location-form.component.html',
   styleUrls: ['./location-form.component.scss']
 })
-export class LocationFormComponent implements OnInit {
+export class LocationFormComponent implements OnInit, OnDestroy {
 
   faTimes = faTimes;
 
@@ -21,21 +21,20 @@ export class LocationFormComponent implements OnInit {
   form: FormGroup;
 
   @Input()
-  submitted: boolean = false;
+  submitted = false;
 
   @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) { this.gMap = map; this.fitBounds() };
-  };
+    if (map) { this.gMap = map; this.fitBounds(); }
+  }
 
   gMap = null;
-  isGoogleMapsLoaded: boolean = false;
+  isGoogleMapsLoaded = false;
   markers: any = [];
   defaultCenter = {
     lat: 5.274054,
     lng: 21.514503
   };
   defaultZoom = 3;
-  zoomForOnePin = 10;
   bounds: any;
   initialBounds: any = [];
   subs: Subscription[] = [];
@@ -45,72 +44,66 @@ export class LocationFormComponent implements OnInit {
     public globalEventsManager: GlobalEventManagerService
   ) { }
 
-
   ngOnInit(): void {
-    setTimeout(() => {
-      this.form.get('address.village').setValidators([Validators.required])
-      this.form.get('address.cell').setValidators([Validators.required])
-      this.form.get('address.sector').setValidators([Validators.required])
-    })
 
-    let sub2 = this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
-      loaded => {
-        // console.log("EMM:", loaded)
-        if (loaded) this.isGoogleMapsLoaded = true;
-        this.initializeMarker();
-        let tmpVis = this.form.get("publiclyVisible").value;
-        if (tmpVis != null) this.form.get("publiclyVisible").setValue(tmpVis.toString());
-      },
-      error => { }
-    )
-    this.subs.push(sub2);
+    this.subs.push(
+        this.globalEventsManager.loadedGoogleMapsEmitter.subscribe(
+            loaded => {
+              if (loaded) { this.isGoogleMapsLoaded = true; }
+              this.initializeMarker();
+              const tmpVis = this.form.get('publiclyVisible').value;
+              if (tmpVis != null) { this.form.get('publiclyVisible').setValue(tmpVis.toString()); }
+            },
+            () => { }
+        )
+    );
 
-    let sub3 = this.form.get('address.country').valueChanges
-      .subscribe(value => {
-        // Honduras specifics
-        if (this.showHondurasFields()) {
-          this.enableValidationHonduras();
-        } else {
-          this.disableValidationHonduras();
-          this.clearValuesHonduras();
-        }
-        this.updateHonduras();
+    this.subs.push(
+        this.form.get('address.country').valueChanges
+            .subscribe(() => {
 
-        // Rwanda specifics
-        if (this.showVillageCellSector()) {
-          this.enableValidationRwanda();
-        } else {
-          this.disableValidationRwanda();
-          this.clearValuesRwanda();
-        }
-        this.updateRwanda();
+              // Honduras specifics
+              if (this.showHondurasFields()) {
+                this.enableValidationHonduras();
+              } else {
+                this.disableValidationHonduras();
+                this.clearValuesHonduras();
+              }
+              this.updateHonduras();
 
-        if (this.showHondurasFields() || this.showVillageCellSector()) {
-          this.disableValidationOther();
-          this.clearValuesOther();
-        } else {
-          this.enableValidationOther();
-        }
-        this.updateOther();
+              // Rwanda specifics
+              if (this.showRwandaFields()) {
+                this.enableValidationRwanda();
+              } else {
+                this.disableValidationRwanda();
+                this.clearValuesRwanda();
+              }
+              this.updateRwanda();
 
-      });
-    this.subs.push(sub3);
+              if (this.showHondurasFields() || this.showRwandaFields()) {
+                this.disableValidationOther();
+                this.clearValuesOther();
+              } else {
+                this.enableValidationOther();
+              }
+              this.updateOther();
+            })
+    );
 
     // Trigger valueChanges to set validators accordingly
-    this.form.get('address.country').updateValueAndValidity({emitEvent: true});
+    this.form.get('address.country').updateValueAndValidity({ emitEvent: true });
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => { sub.unsubscribe(); });
   }
 
-  showVillageCellSector() {
-    return this.form.get('address.country').invalid ||
-      _.isEqual(this.form.get('address.country').value, { id: 184, code: "RW", name: "Rwanda" })
+  showRwandaFields() {
+    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 184, code: 'RW', name: 'Rwanda' });
   }
 
   showHondurasFields() {
-    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras'});
+    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras' });
   }
 
   enableValidationHonduras() {
@@ -166,17 +159,13 @@ export class LocationFormComponent implements OnInit {
   }
 
   enableValidationOther() {
-    this.form.get('address.address').setValidators([Validators.required]);
     this.form.get('address.city').setValidators([Validators.required]);
     this.form.get('address.state').setValidators([Validators.required]);
-    this.form.get('address.zip').setValidators([Validators.required]);
   }
 
   disableValidationOther() {
-    this.form.get('address.address').setValidators(null);
     this.form.get('address.city').setValidators(null);
     this.form.get('address.state').setValidators(null);
-    this.form.get('address.zip').setValidators(null);
   }
 
   clearValuesOther() {
@@ -194,74 +183,72 @@ export class LocationFormComponent implements OnInit {
   }
 
   initializeMarker() {
-    if (!this.form.get('latitude') || !this.form.get('longitude')) return;
-    let lat = this.form.get('latitude').value;
-    let lng = this.form.get('longitude').value;
-    if (lng == null || lat == null) return;
+    if (!this.form.get('latitude') || !this.form.get('longitude')) { return; }
+    const lat = this.form.get('latitude').value;
+    const lng = this.form.get('longitude').value;
+    if (lng == null || lat == null) { return; }
 
-    let tmp = {
+    const tmp = {
       position: {
-        lat: lat,
-        lng: lng
+        lat,
+        lng
       }
-    }
+    };
     this.marker = tmp;
     this.initialBounds.push(tmp.position);
   }
 
   fitBounds() {
-    this.bounds = new google.maps.LatLngBounds()
-    for (let bound of this.initialBounds) {
+    this.bounds = new google.maps.LatLngBounds();
+    for (const bound of this.initialBounds) {
       this.bounds.extend(bound);
     }
     if (this.bounds.isEmpty()) {
-      this.gMap.googleMap.setCenter(this.defaultCenter)
+      this.gMap.googleMap.setCenter(this.defaultCenter);
       this.gMap.googleMap.setZoom(this.defaultZoom);
       return;
     }
-    let center = this.bounds.getCenter()
-    let offset = 0.02
-    let northEast = new google.maps.LatLng(
+    const center = this.bounds.getCenter();
+    const offset = 0.02;
+    const northEast = new google.maps.LatLng(
       center.lat() + offset,
       center.lng() + offset
-    )
-    let southWest = new google.maps.LatLng(
+    );
+    const southWest = new google.maps.LatLng(
       center.lat() - offset,
       center.lng() - offset
-    )
-    let minBounds = new google.maps.LatLngBounds(southWest, northEast)
-    this.gMap.fitBounds(this.bounds.union(minBounds))
+    );
+    const minBounds = new google.maps.LatLngBounds(southWest, northEast);
+    this.gMap.fitBounds(this.bounds.union(minBounds));
   }
 
   marker = null;
 
-
   updateLonLat() {
 
     if (this.marker) {
-      this.form.get('latitude').setValue(this.marker.position.lat)
-      this.form.get('longitude').setValue(this.marker.position.lng)
+      this.form.get('latitude').setValue(this.marker.position.lat);
+      this.form.get('longitude').setValue(this.marker.position.lng);
     } else {
-      this.form.get('latitude').setValue(null)
-      this.form.get('longitude').setValue(null)
+      this.form.get('latitude').setValue(null);
+      this.form.get('longitude').setValue(null);
     }
     this.form.get('latitude').markAsDirty();
-    this.form.get('longitude').markAsDirty()
+    this.form.get('longitude').markAsDirty();
   }
 
   dblClick(event: google.maps.MouseEvent) {
     if (this.marker) {
       this.updateMarkerLocation(event.latLng.toJSON());
     } else {
-      let tmp = {
+      this.marker = {
         position: event.latLng.toJSON(),
         label: {
           text: ' '
         },
         infoText: ' '
-      }
-      this.marker = tmp;
-      this.updateLonLat()
+      };
+      this.updateLonLat();
     }
   }
 
@@ -270,29 +257,26 @@ export class LocationFormComponent implements OnInit {
   }
 
   updateMarkerLocation(loc) {
-    let tmpCurrent = this.marker;
-    let tmp = {
+    const tmpCurrent = this.marker;
+    this.marker = {
       position: loc,
       label: tmpCurrent.label,
       infoText: tmpCurrent.infoText
-    }
-    this.marker = tmp;
-    this.updateLonLat()
+    };
+    this.updateLonLat();
   }
-
 
   removeOriginLocation() {
     this.marker = null;
     this.initialBounds = [];
   }
 
-
   get publiclyVisible() {
-    let obj = {}
+    const obj = {};
     obj['true'] = $localize`:@@locationForm.publiclyVisible.yes:YES`;
     obj['false'] = $localize`:@@locationForm.publiclyVisible.no:NO`;
     return obj;
   }
 
-  codebookStatus = EnumSifrant.fromObject(this.publiclyVisible)
+  codebookStatus = EnumSifrant.fromObject(this.publiclyVisible);
 }

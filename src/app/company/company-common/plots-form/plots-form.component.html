@@ -1,0 +1,63 @@
+<div class="af-row">
+    <div class="af-c12">
+        <button *ngIf="updateMode" (click)="uploadGeoData.emit()" class="btn mr-2" i18n="@@collectorDetail.plots.button.uploadGeo">
+            <span>Upload geo-data</span>
+        </button>
+        <button class="btn mr-2" (click)="drawPlot()" i18n="@@collectorDetail.plots.button.drawPlot">
+            <span>Draw plot</span>
+        </button>
+        <button *ngIf="updateMode" (click)="exportGeoData.emit()" class="btn" i18n="@@collectorDetail.plots.button.exportGeo">
+            <span>Export geo-data</span>
+        </button>
+    </div>
+</div>
+
+<div class="af-row">
+    <app-map
+      style="width: 100%"
+      [mapId]="'map-viewer'"
+      [plots]="plots"
+      [plotCoordinates]="plotCoordinates"
+      (plotCoordinatesChange)="updateLonLat($event)"
+      (plotGeoIdChange)="updateFormGeoId($event)"
+      (geoIdOpenChange)="openGeoIdWhisp($event)"
+      [pin]="pin"
+      [farmerId]="form.get('id')?.value"
+      [plotCoordinatesManager]="plotCoordinatesManager">
+    </app-map>
+</div>
+
+<div *ngIf="form.get('plots')">
+<list-editor *ngIf="plotsListManager"
+             [listEditorManager]="plotsListManager"
+             [canAdd]="true"
+             [addExternalSubj]="drawPlotSubject"
+             label=""
+             addText=""
+             [invalid]="submitted && form.get('plots')?.invalid">
+    <list-editor-items>
+        <div *ngFor="let item of form.get('plots').controls; let i=index;">
+
+            <app-plots-item *ngIf="form"
+                            [title]="item.value.plotName"
+                            [formControlInput]="item"
+                            [isOpen]="plotsListManager.isOpen(i)"
+                            [productTypesCodebook]="productTypesCodebook"
+                            [listEditorManager]="this.plotsListManager"
+                            [listEditorManagerPosition]="i">
+            </app-plots-item>
+        </div>
+    </list-editor-items>
+    <list-editor-errors>
+        <ng-container *ngIf="submitted">
+            <div *ngIf="form.get('plots').errors as errors" class="sc-invalid-feedback">
+                <div *ngIf="errors.required" i18n="@@collectorDetail.list-editor.plots.error">
+                    <span>
+                        Plot is required
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </list-editor-errors>
+</list-editor>
+</div>

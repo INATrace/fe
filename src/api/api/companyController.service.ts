@@ -39,12 +39,15 @@ import { ApiPaginatedResponseApiCompanyListResponse } from '../model/apiPaginate
 import { ApiPaginatedResponseApiProductType } from '../model/apiPaginatedResponseApiProductType';
 import { ApiPaginatedResponseApiUserCustomer } from '../model/apiPaginatedResponseApiUserCustomer';
 import { ApiPaginatedResponseApiValueChain } from '../model/apiPaginatedResponseApiValueChain';
+import { ApiPlot } from '../model/apiPlot';
 import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiCompanyCustomer } from '../model/apiResponseApiCompanyCustomer';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
 import { ApiResponseApiCompanyName } from '../model/apiResponseApiCompanyName';
+import { ApiResponseApiPlot } from '../model/apiResponseApiPlot';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
+import { ApiResponseListApiPlot } from '../model/apiResponseListApiPlot';
 import { ApiUserCustomer } from '../model/apiUserCustomer';
 import { ApiUserCustomerImportResponse } from '../model/apiUserCustomerImportResponse';
 
@@ -169,6 +172,59 @@ export namespace CreateCompanyUsingPOST {
 }
 
 /**
+ * Namespace for createUserCustomerPlotUsingPOST.
+ */
+export namespace CreateUserCustomerPlotUsingPOST {
+    /**
+     * Parameter map for createUserCustomerPlotUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+      /**
+       * request
+       */
+      ApiPlot: ApiPlot;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for createUserCustomerPlotUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id',
+      /**
+       * request
+       */
+      ApiPlot = 'ApiPlot',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createUserCustomerPlotUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof CreateUserCustomerPlotUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for deleteCompanyCustomerUsingDELETE.
  */
 export namespace DeleteCompanyCustomerUsingDELETE {
@@ -276,6 +332,86 @@ export namespace ExecuteActionUsingPOST {
      */
     export const ParamValidators: {[K in keyof ExecuteActionUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
       action: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for exportFarmerDataByCompanyUsingGET.
+ */
+export namespace ExportFarmerDataByCompanyUsingGET {
+    /**
+     * Parameter map for exportFarmerDataByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for exportFarmerDataByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportFarmerDataByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ExportFarmerDataByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for exportUserCustomerGeoDataUsingGET.
+ */
+export namespace ExportUserCustomerGeoDataUsingGET {
+    /**
+     * Parameter map for exportUserCustomerGeoDataUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for exportUserCustomerGeoDataUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportUserCustomerGeoDataUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ExportUserCustomerGeoDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
               ['required', Validators.required],
       ],
     };
@@ -1058,6 +1194,51 @@ export namespace GetUserCustomersForCompanyAndTypeUsingGET {
 }
 
 /**
+ * Namespace for getUserCustomersPlotsForCompanyUsingGET.
+ */
+export namespace GetUserCustomersPlotsForCompanyUsingGET {
+    /**
+     * Parameter map for getUserCustomersPlotsForCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      companyId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getUserCustomersPlotsForCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      companyId = 'companyId',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getUserCustomersPlotsForCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetUserCustomersPlotsForCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      companyId: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for importFarmersSpreadsheetUsingPOST.
  */
 export namespace ImportFarmersSpreadsheetUsingPOST {
@@ -1322,6 +1503,62 @@ export namespace ListCompaniesUsingGET {
 }
 
 /**
+ * Namespace for refreshGeoIDForUserCustomerPlotUsingPOST.
+ */
+export namespace RefreshGeoIDForUserCustomerPlotUsingPOST {
+    /**
+     * Parameter map for refreshGeoIDForUserCustomerPlotUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+      /**
+       * Plot ID
+       */
+      plotId: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for refreshGeoIDForUserCustomerPlotUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id',
+      /**
+       * Plot ID
+       */
+      plotId = 'plotId',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of refreshGeoIDForUserCustomerPlotUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      plotId: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for updateCompanyCustomerUsingPUT.
  */
 export namespace UpdateCompanyCustomerUsingPUT {
@@ -1423,6 +1660,46 @@ export namespace UpdateUserCustomerUsingPUT {
      */
     export const ParamValidators: {[K in keyof UpdateUserCustomerUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
       language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for uploadUserCustomerGeoDataUsingPOST.
+ */
+export namespace UploadUserCustomerGeoDataUsingPOST {
+    /**
+     * Parameter map for uploadUserCustomerGeoDataUsingPOST.
+     */
+    export interface PartialParamMap {
+      /**
+       * User customer ID
+       */
+      id: number;
+      body: Blob;
+    }
+
+    /**
+     * Enumeration of all parameters for uploadUserCustomerGeoDataUsingPOST.
+     */
+    export enum Parameters {
+      /**
+       * User customer ID
+       */
+      id = 'id',
+      body = 'body'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of uploadUserCustomerGeoDataUsingPOST
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof UploadUserCustomerGeoDataUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      body: [
+              ['required', Validators.required],
       ],
     };
 }
@@ -1739,6 +2016,104 @@ export class CompanyControllerService {
 
 
   /**
+   * Add new plot for the provided user customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiPlot>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPlot>>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPlot>>;
+  public createUserCustomerPlotUsingPOSTByMap(
+    map: CreateUserCustomerPlotUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.createUserCustomerPlotUsingPOST(
+      map.id,
+      map.ApiPlot,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Add new plot for the provided user customer
+     * 
+     * @param id User customer ID
+     * @param ApiPlot request
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPlot>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPlot>>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPlot>>;
+    public createUserCustomerPlotUsingPOST(id: number, ApiPlot: ApiPlot, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling createUserCustomerPlotUsingPOST.');
+        }
+        if (ApiPlot === null || ApiPlot === undefined) {
+            throw new Error('Required parameter ApiPlot was null or undefined when calling createUserCustomerPlotUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiPlot>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/plots/add`,
+            ApiPlot,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createUserCustomerPlotUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Delete company customer with ID by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -1990,6 +2365,177 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'executeActionUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Export payments for provided company ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public exportFarmerDataByCompanyUsingGETByMap(
+    map: ExportFarmerDataByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<Blob>;
+  public exportFarmerDataByCompanyUsingGETByMap(
+    map: ExportFarmerDataByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+  public exportFarmerDataByCompanyUsingGETByMap(
+    map: ExportFarmerDataByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+  public exportFarmerDataByCompanyUsingGETByMap(
+    map: ExportFarmerDataByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.exportFarmerDataByCompanyUsingGET(
+      map.companyId,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Export payments for provided company ID
+     * 
+     * @param companyId Company ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportFarmerDataByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportFarmerDataByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportFarmerDataByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportFarmerDataByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling exportFarmerDataByCompanyUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(companyId))}/exportFarmerData`,
+            {
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportFarmerDataByCompanyUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Export the Geo-data for the user customer with the provided ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public exportUserCustomerGeoDataUsingGETByMap(
+    map: ExportUserCustomerGeoDataUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<Blob>;
+  public exportUserCustomerGeoDataUsingGETByMap(
+    map: ExportUserCustomerGeoDataUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+  public exportUserCustomerGeoDataUsingGETByMap(
+    map: ExportUserCustomerGeoDataUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+  public exportUserCustomerGeoDataUsingGETByMap(
+    map: ExportUserCustomerGeoDataUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.exportUserCustomerGeoDataUsingGET(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Export the Geo-data for the user customer with the provided ID
+     * 
+     * @param id User customer ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportUserCustomerGeoDataUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportUserCustomerGeoDataUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportUserCustomerGeoDataUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportUserCustomerGeoDataUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling exportUserCustomerGeoDataUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/exportGeoData`,
+            {
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportUserCustomerGeoDataUsingGET')));
         }
         return handle;
     }
@@ -3114,6 +3660,93 @@ export class CompanyControllerService {
 
 
   /**
+   * Get all user customers plots that are part of the company with the provided ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getUserCustomersPlotsForCompanyUsingGETByMap(
+    map: GetUserCustomersPlotsForCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseListApiPlot>;
+  public getUserCustomersPlotsForCompanyUsingGETByMap(
+    map: GetUserCustomersPlotsForCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiPlot>>;
+  public getUserCustomersPlotsForCompanyUsingGETByMap(
+    map: GetUserCustomersPlotsForCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiPlot>>;
+  public getUserCustomersPlotsForCompanyUsingGETByMap(
+    map: GetUserCustomersPlotsForCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getUserCustomersPlotsForCompanyUsingGET(
+      map.companyId,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get all user customers plots that are part of the company with the provided ID
+     * 
+     * @param companyId Company ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUserCustomersPlotsForCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiPlot>;
+    public getUserCustomersPlotsForCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiPlot>>;
+    public getUserCustomersPlotsForCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiPlot>>;
+    public getUserCustomersPlotsForCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (companyId === null || companyId === undefined) {
+            throw new Error('Required parameter companyId was null or undefined when calling getUserCustomersPlotsForCompanyUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseListApiPlot>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(companyId))}/plots`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getUserCustomersPlotsForCompanyUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Upload .xls or .xlsx spreadsheet of farmers to import into DB by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -3447,6 +4080,99 @@ export class CompanyControllerService {
 
 
   /**
+   * Add new plot for the provided user customer by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiPlot>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPlot>>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPlot>>;
+  public refreshGeoIDForUserCustomerPlotUsingPOSTByMap(
+    map: RefreshGeoIDForUserCustomerPlotUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.refreshGeoIDForUserCustomerPlotUsingPOST(
+      map.id,
+      map.plotId,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Add new plot for the provided user customer
+     * 
+     * @param id User customer ID
+     * @param plotId Plot ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPlot>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPlot>>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPlot>>;
+    public refreshGeoIDForUserCustomerPlotUsingPOST(id: number, plotId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling refreshGeoIDForUserCustomerPlotUsingPOST.');
+        }
+        if (plotId === null || plotId === undefined) {
+            throw new Error('Required parameter plotId was null or undefined when calling refreshGeoIDForUserCustomerPlotUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiResponseApiPlot>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/plots/${encodeURIComponent(String(plotId))}/updateGeoID`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'refreshGeoIDForUserCustomerPlotUsingPOST')));
+        }
+        return handle;
+    }
+
+
+  /**
    * Update company customer by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
@@ -3710,6 +4436,99 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateUserCustomerUsingPUT')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Upload Geo-data for the user customer with the provided ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public uploadUserCustomerGeoDataUsingPOSTByMap(
+    map: UploadUserCustomerGeoDataUsingPOST.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiDefaultResponse>;
+  public uploadUserCustomerGeoDataUsingPOSTByMap(
+    map: UploadUserCustomerGeoDataUsingPOST.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
+  public uploadUserCustomerGeoDataUsingPOSTByMap(
+    map: UploadUserCustomerGeoDataUsingPOST.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
+  public uploadUserCustomerGeoDataUsingPOSTByMap(
+    map: UploadUserCustomerGeoDataUsingPOST.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.uploadUserCustomerGeoDataUsingPOST(
+      map.id,
+      map.body,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Upload Geo-data for the user customer with the provided ID
+     * 
+     * @param id User customer ID
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public uploadUserCustomerGeoDataUsingPOST(id: number, body: Blob, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public uploadUserCustomerGeoDataUsingPOST(id: number, body: Blob, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public uploadUserCustomerGeoDataUsingPOST(id: number, body: Blob, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public uploadUserCustomerGeoDataUsingPOST(id: number, body: Blob, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling uploadUserCustomerGeoDataUsingPOST.');
+        }
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling uploadUserCustomerGeoDataUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/octet-stream'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.post<ApiDefaultResponse>(`${this.configuration.basePath}/api/company/userCustomers/${encodeURIComponent(String(id))}/uploadGeoData`,
+            body,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'uploadUserCustomerGeoDataUsingPOST')));
         }
         return handle;
     }

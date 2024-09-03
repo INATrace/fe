@@ -11,7 +11,12 @@ export abstract class LanguageCodeHelper {
       return;
     }
     if (urlLocaleId) {
-      window.location.href = window.location.href.replace(`/${ urlLocaleId }/`, `/${ localeId.toLowerCase() }/`);
+
+      if (window.location.href.endsWith('/login')) {
+        window.location.href = window.location.href.replace(`/${ urlLocaleId }/login`, `/${ localeId.toLowerCase() }/home`);
+      } else {
+        window.location.href = window.location.href.replace(`/${ urlLocaleId }/`, `/${ localeId.toLowerCase() }/`);
+      }
     } else {
 
       let newUrl;

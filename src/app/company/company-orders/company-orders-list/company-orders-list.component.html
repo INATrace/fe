@@ -75,6 +75,13 @@
                  [class.enabled-action]="true">
                 QR
               </a>
+              <a i18n="@@productLabelPurchaseOrder.tableCol.exportGeoData"
+                 *ngIf="orderType == 'PLACED'"
+                 (click)="exportGeoData(order)"
+                 class="company-action"
+                 [class.enabled-action]="true">
+                Export Geo Data
+              </a>
             </span>
         </td>
       </tr>

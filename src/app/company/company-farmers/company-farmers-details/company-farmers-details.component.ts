@@ -34,6 +34,8 @@ import { ListNotEmptyValidator } from '../../../../shared/validation';
 import { ApiPayment } from '../../../../api/model/apiPayment';
 import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInformation';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
+import { FileSaverService } from "ngx-filesaver";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -69,7 +71,8 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   genderCodebook = EnumSifrant.fromObject({
     MALE: $localize`:@@collectorDetail.gender.male:Male`,
     FEMALE: $localize`:@@collectorDetail.gender.female:Female`,
-    N_A: 'N/A'
+    N_A: 'N/A',
+    DIVERSE: $localize`:@@collectorDetail.gender.diverse:Diverse`
   });
 
   readonly farmerType = UserCustomerTypeEnum.FARMER;
@@ -164,12 +167,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
       private location: Location,
-      private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private companyService: CompanyControllerService,
       private globalEventsManager: GlobalEventManagerService,
       private selUserCompanyService: SelectedUserCompanyService,
-      public theme: ThemeService
+      public theme: ThemeService,
+      private fileSaverService: FileSaverService,
+      private httpClient: HttpClient
   ) { }
 
   static ApiUserCustomerCooperativeCreateEmptyObject(): ApiUserCustomerCooperative {
@@ -264,7 +268,13 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   private prefillFarmPlantInformation(): void {
-    const listControls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
+
+    const farmPlantInformationList = this.farmerForm.get('farm.farmPlantInformationList') as FormArray;
+    if (farmPlantInformationList == null) {
+      return;
+    }
+
+    const listControls = (farmPlantInformationList).controls;
     const newListControls: AbstractControl[] = [];
     listControls.forEach(control => {
       const farmPlantInformation = control.value as ApiFarmPlantInformation;
@@ -329,35 +339,43 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     resultArrayControls.forEach(res => plantInfoListArray.push(res));
   }
 
-
   initValueChangeListeners() {
-    this.subscriptions.push(this.areaUnit.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
-    this.subscriptions.push(this.totalCultivatedArea.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
-    this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
-      startWith(null),
-      debounceTime(100)).subscribe(
-      val => {
-        if (val !== null && val !== undefined) {
-          this.updateAreaUnitValidators();
-        }
-      }
-    ));
+
+    if (this.areaUnit != null) {
+      this.subscriptions.push(this.areaUnit.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
+
+    if (this.totalCultivatedArea != null) {
+      this.subscriptions.push(this.totalCultivatedArea.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
+
+    if (this.areaOrganicCertified != null) {
+      this.subscriptions.push(this.areaOrganicCertified.valueChanges.pipe(
+          startWith(null),
+          debounceTime(100)).subscribe(
+          val => {
+            if (val !== null && val !== undefined) {
+              this.updateAreaUnitValidators();
+            }
+          }
+      ));
+    }
   }
 
   private addControlValueChangeListener(control: FormControl) {
@@ -391,6 +409,48 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.farmer, ApiUserCustomerValidationScheme);
 
     this.prefillFarmPlantInformation();
+  }
+
+  async geoJSONSelectedToUpload($event: Event) {
+
+    if (!this.update) {
+      return;
+    }
+
+    const fileInput: HTMLInputElement = $event.target as HTMLInputElement;
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      await this.httpClient.post(
+          `${ this.companyService.configuration.basePath }/api/company/userCustomers/${ this.farmer.id }/uploadGeoData`, formData, {observe: 'response'})
+          .pipe(take(1))
+          .toPromise();
+
+      this.ngOnInit();
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
+  }
+
+  async exportGeoData() {
+
+    if (!this.update) {
+      return;
+    }
+
+    this.globalEventsManager.showLoading(true);
+    try {
+      const res = await this.companyService.exportUserCustomerGeoDataUsingGET(this.farmer.id)
+          .pipe(take(1))
+          .toPromise();
+      this.fileSaverService.save(res, 'farmer_geo_data.json');
+    } finally {
+      this.globalEventsManager.showLoading(false);
+    }
   }
 
   emptyFarmer() {
@@ -574,6 +634,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   updateAreaUnitValidators() {
+    if (this.areaUnit == null) {
+      return;
+    }
     this.areaUnit.clearValidators();
     this.areaUnit.setValidators(
       this.checkAreaFieldsRequired() ?
@@ -589,17 +652,20 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   checkAreaFieldsRequired() {
     return (!this.checkNullEmpty(this.totalCultivatedArea) ||
-      this.checkPlantsCutivatedAreaFields() ||
+      this.checkPlantsCultivatedAreaFields() ||
       !this.checkNullEmpty(this.areaOrganicCertified));
   }
 
   checkNullEmpty(control: FormControl){
-    return control.value === null || control.value === undefined || control.value === '';
+    return control == null || control.value == null || control.value === '';
   }
 
-  checkPlantsCutivatedAreaFields() {
-    const controls = (this.farmerForm.get('farm.farmPlantInformationList') as FormArray).controls;
-    return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
+  checkPlantsCultivatedAreaFields() {
+    const farmPlantInformationList = this.farmerForm.get('farm.farmPlantInformationList') as FormArray;
+    if (farmPlantInformationList != null) {
+      const controls = farmPlantInformationList.controls;
+      return controls.some(control => !this.checkNullEmpty(control.get('plantCultivatedArea') as FormControl));
+    }
   }
 
   public get areaUnit(): FormControl {

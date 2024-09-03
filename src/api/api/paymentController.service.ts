@@ -141,6 +141,96 @@ export namespace DeletePaymentUsingDELETE {
 }
 
 /**
+ * Namespace for exportBulkPaymentsByCompanyUsingGET.
+ */
+export namespace ExportBulkPaymentsByCompanyUsingGET {
+    /**
+     * Parameter map for exportBulkPaymentsByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for exportBulkPaymentsByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportBulkPaymentsByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ExportBulkPaymentsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for exportPaymentsByCompanyUsingGET.
+ */
+export namespace ExportPaymentsByCompanyUsingGET {
+    /**
+     * Parameter map for exportPaymentsByCompanyUsingGET.
+     */
+    export interface PartialParamMap {
+      /**
+       * Company ID
+       */
+      id: number;
+      /**
+       * language
+       */
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for exportPaymentsByCompanyUsingGET.
+     */
+    export enum Parameters {
+      /**
+       * Company ID
+       */
+      id = 'id',
+      /**
+       * language
+       */
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportPaymentsByCompanyUsingGET
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof ExportPaymentsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
  * Namespace for getBulkPaymentUsingGET.
  */
 export namespace GetBulkPaymentUsingGET {
@@ -875,6 +965,182 @@ export class PaymentControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deletePaymentUsingDELETE')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Export bulk-payments for provided company ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public exportBulkPaymentsByCompanyUsingGETByMap(
+    map: ExportBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<Blob>;
+  public exportBulkPaymentsByCompanyUsingGETByMap(
+    map: ExportBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+  public exportBulkPaymentsByCompanyUsingGETByMap(
+    map: ExportBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+  public exportBulkPaymentsByCompanyUsingGETByMap(
+    map: ExportBulkPaymentsByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.exportBulkPaymentsByCompanyUsingGET(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Export bulk-payments for provided company ID
+     * 
+     * @param id Company ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportBulkPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportBulkPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportBulkPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportBulkPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling exportBulkPaymentsByCompanyUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/payment/export/bulk-payment/company/${encodeURIComponent(String(id))}`,
+            {
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportBulkPaymentsByCompanyUsingGET')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Export payments for provided company ID by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public exportPaymentsByCompanyUsingGETByMap(
+    map: ExportPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<Blob>;
+  public exportPaymentsByCompanyUsingGETByMap(
+    map: ExportPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
+  public exportPaymentsByCompanyUsingGETByMap(
+    map: ExportPaymentsByCompanyUsingGET.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
+  public exportPaymentsByCompanyUsingGETByMap(
+    map: ExportPaymentsByCompanyUsingGET.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.exportPaymentsByCompanyUsingGET(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Export payments for provided company ID
+     * 
+     * @param id Company ID
+     * @param language language
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public exportPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportPaymentsByCompanyUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling exportPaymentsByCompanyUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/payment/export/company/${encodeURIComponent(String(id))}`,
+            {
+                responseType: "blob",
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportPaymentsByCompanyUsingGET')));
         }
         return handle;
     }
